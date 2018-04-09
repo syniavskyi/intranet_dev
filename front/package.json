@@ -5,9 +5,10 @@
     "author": "syniavskyi <syniavskyi.pavlo@gmail.com>",
     "private": true,
     "scripts": {
-        "start": "node server.js",
-        "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+        "dev": "node build/dev-server.js",
+        "start": "node build/dev-server.js",
         "build": "node build/build.js",
+        // "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
         "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
     },
     "dependencies": {
