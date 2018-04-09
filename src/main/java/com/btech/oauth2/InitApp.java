@@ -23,7 +23,7 @@ public class InitApp {
 	public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository repo, UserService userService) throws Exception {
 		//if necessary add user manually
 		/*		if(repo.count() == 0) {
-					userService.save(new User("admin", "adminPassword", Arrays.asList(new Role("USER"), new Role("ACTUATOR") , new Role("ADMIN"))));
+					userService.save(new User("admin", "password", Arrays.asList(new Role("USER"), new Role("ACTUATOR") , new Role("ADMIN"))));
 			}*/
 		builder.userDetailsService (s -> new CustomUserDetails(repo.findByUsername(s)));
 	}
