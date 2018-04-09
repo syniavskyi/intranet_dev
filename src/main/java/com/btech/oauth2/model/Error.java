@@ -3,47 +3,48 @@ package com.btech.oauth2.model;
 
 public class Error {
 	
-	private int errorID;
-	private String errorText;
-	private String accessTokenPath;
+	private int error_id;
+	private String error_text;
+	private String access_token_path;
 	
-	public Error(int errorID, String errorText, String accessTokenPath) {
-		this.errorID = errorID;
-		this.errorText = errorText;
-		this.accessTokenPath = accessTokenPath;
+	public Error(int error_id, String error_text, String access_token_path) {
+		this.error_id = error_id;
+		this.error_id = error_id;
+		this.access_token_path = access_token_path;
 	}
 	
-	public Error(int errorID, String errorText) {
-		this.errorID = errorID;
-		this.errorText = errorText;
+	public Error(int error_id, String error_text) {
+		this.error_id = error_id;
+		this.error_text = error_text;
 	}
 	
 	public Error() {
 		
 	}
+
+	public int getError_id() {
+		return error_id;
+	}
+
+	public void setError_id(int error_id) {
+		this.error_id = error_id;
+	}
+
+	public String getError_text() {
+		return error_text;
+	}
+
+	public void setError_text(String error_text) {
+		this.error_text = error_text;
+	}
+
+	public String getAccess_token_path() {
+		return access_token_path;
+	}
+
+	public void setAccess_token_path(String access_token_path) {
+		this.access_token_path = access_token_path;
+	}
 	
-	public int getErrorID() {
-		return errorID;
-	}
-
-	public void setErrorID(int errorID) {
-		this.errorID = errorID;
-	}
-
-	public String getErrorText() {
-		return errorText;
-	}
-
-	public void setErrorText(String errorText) {
-		this.errorText = errorText;
-	}
-
-	public String getAccessTokenPath() {
-		return accessTokenPath;
-	}
-
-	public void setAccessTokenPath(String accessTokenPath) {
-		this.accessTokenPath = accessTokenPath;
-	}
 	
 }

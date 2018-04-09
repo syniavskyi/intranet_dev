@@ -13,7 +13,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().exceptionHandling().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/authentication-error")).accessDeniedPage("/accessDenied").and().authorizeRequests()
+		http.csrf().disable().exceptionHandling().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/authentication-error"))
+							 .accessDeniedPage("/accessDenied")
+							 .and().authorizeRequests()
 							 .antMatchers("/public").permitAll()
 							 .antMatchers("/secured").authenticated();
 	}
