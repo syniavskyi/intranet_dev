@@ -28,7 +28,7 @@ public class UserController {
         }
         
         userService.save(new User(userRegistration.getUsername(), userRegistration.getPassword(), Arrays.asList(new Role("USER"), new Role("ACTUATOR"))));
-        return "User created";
+        return "User created successfully";
     }
 
     @GetMapping(value="/users")

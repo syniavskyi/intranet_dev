@@ -4,12 +4,15 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name="user")
 public class User {
 
     @Id
     @GeneratedValue
     private Long id;
+    @Column(name="username")
     private String username;
+    @Column(name="password")
     private String password;
     @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private List<Role> roles;

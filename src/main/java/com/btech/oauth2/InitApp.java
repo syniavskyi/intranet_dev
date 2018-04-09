@@ -22,8 +22,9 @@ public class InitApp {
 
 	@Autowired
 	public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository repo, UserService userService) throws Exception {
+		
 		if(repo.count() == 0) {
-			userService.save(new User("admin", "adminPassword", Arrays.asList(new Role("USER"), new Role("ACTUATOR") , new Role("ADMIN"))));
+			/*userService.save(new User("admin", "adminPassword", Arrays.asList(new Role("USER"), new Role("ACTUATOR") , new Role("ADMIN"))));*/
 		}
 		builder.userDetailsService (s -> new CustomUserDetails(repo.findByUsername(s)));
 	}
