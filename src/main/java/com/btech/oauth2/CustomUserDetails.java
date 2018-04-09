@@ -14,11 +14,9 @@ import com.btech.oauth2.model.User;
 
 public class CustomUserDetails implements UserDetails {
 
-	/**
-	 * 
-	 */
-	
 	private static final long serialVersionUID = 1L;
+	
+	
 	private String username;
 	private String password;
 	Collection<? extends GrantedAuthority> authorities;
