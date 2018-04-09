@@ -1,6 +1,5 @@
 package com.btech.oauth2;
 
-import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -22,10 +21,10 @@ public class InitApp {
 
 	@Autowired
 	public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository repo, UserService userService) throws Exception {
-		
-		if(repo.count() == 0) {
-			/*userService.save(new User("admin", "adminPassword", Arrays.asList(new Role("USER"), new Role("ACTUATOR") , new Role("ADMIN"))));*/
-		}
+		//if necessary add user manually
+		/*if(repo.count() == 0) {
+			userService.save(new User("admin", "password", Arrays.asList(new Role("USER"), new Role("ACTUATOR") , new Role("ADMIN"))));
+		}*/
 		builder.userDetailsService (s -> new CustomUserDetails(repo.findByUsername(s)));
 	}
 	
