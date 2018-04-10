@@ -1,6 +1,6 @@
 # intranet
 
-> BTech Intranet 2.0 VueJS + Spring
+> BTech Intranet 2.0 by Fiori Team
 
 ## Build Setup
 
