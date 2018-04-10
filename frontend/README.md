@@ -1,6 +1,6 @@
 # intranet
 
-> Intranet  Btech intranet VueJS projectVueJS project
+> BTech Intranet 2.0 VueJS + Spring
 
 ## Build Setup
 
