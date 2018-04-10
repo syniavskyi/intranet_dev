@@ -10,7 +10,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import './assets/styles/style.css'
-@import './assets/styles/login.css'
+<style>
+
 </style>
