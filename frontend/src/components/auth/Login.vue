@@ -12,17 +12,18 @@
                 <div class="plane--right">
                     <div class="image--logo"></div>
                     <div class="login--credentials">
-                        <input class="input" id="username" type="email" v-model="username"/>
+                        <input class="input" id="username" type="email" v-model="username" :class="{invalid: $v.username.$error}" @blur="$v.username.$touch()"/>
                         <label class="label plane--right__label1" for="username">Użytkownik</label>
-                        <input class="input" id="password" type="password" v-model="password"/>
-                        <label class="label plane--right__label2" for="password" >Hasło</label>
+                        <input class="input" id="password" type="password" v-model="password" :class="{invalid: $v.password.$error}" @blur="$v.password.$touch()"/>
+                        <label class="label plane--right__label2" for="password">Hasło</label>
                     </div>
-        </div>
+                </div>
         </div>
     </div>
 </template>
 
 <script>
+    import { required, minLength } from 'vuelidate/lib/validators'
 	export default {
 	    name: 'Login',
 	    data () {
@@ -30,6 +31,15 @@
                 username: '',
                 password: ''
 	        }
+        },
+        validations: {
+            password: {
+                required,
+                minLen: minLength(8)
+            },
+            username: {
+                required
+            }
         },
         methods: {
             onSubmit() {
@@ -43,4 +53,7 @@
 </script>
 
 <style scoped>
+.invalid  {
+
+}
 </style>
