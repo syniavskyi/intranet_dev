@@ -9,7 +9,7 @@ import axios from 'axios'
 import Vuelidate from 'vuelidate'
 import Vuex from 'vuex'
 
-import { store } from './store/store'
+import store from './store/store'
 
 Vue.use(Vuelidate);
 Vue.use(Vuex);
@@ -20,6 +20,8 @@ require('./assets/styles/style.css')
 require('./assets/styles/login.css')
 
 Vue.config.productionTip = false
+
+// axios.defaults.baseURL = '';
 
 /* eslint-disable no-new */
 new Vue({
