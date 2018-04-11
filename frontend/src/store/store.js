@@ -5,7 +5,7 @@ import registration from './modules/registration'
 
 Vue.use(Vuex);
 
-export const store = new Vuex.store({
+export default new Vuex.store({
     modules: {
         login,
         registration
