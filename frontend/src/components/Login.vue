@@ -4,7 +4,7 @@
                 <div class="plane--left">
                     <h1 class="intranet--title">{{ Hello }}</h1>
                     <div class="image--user"></div>
-                    <p class="intranet--subtitle">Zaloguj się do Intranetu</p>
+                    <p class="intranet--subtitle">{{ login }}</p>
                 </div>
          </div>
 <!--            <div class="clearfix"></div>-->
@@ -27,7 +27,8 @@
 	  name: 'Login',
 	  data () {
 	    return {
-	      Hello: "Witaj"
+	      Hello: "Witaj",
+	      login: "Zaloguj się do Intranetu"
 	    }
 	  }
 	}
