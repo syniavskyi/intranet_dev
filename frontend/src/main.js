@@ -19,6 +19,8 @@ Vue.use(VueAuthenticate, {});
 require('./assets/styles/style.css');
 require('./assets/styles/shared.css');
 // require('./assets/styles/login.css')
+require('./assets/styles/login/login.css');
+require('./assets/styles/registration/registration.css');
 
 Vue.config.productionTip = false
 
