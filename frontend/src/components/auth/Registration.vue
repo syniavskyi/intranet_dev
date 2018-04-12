@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="plane-parent">
         <label for="">Imię i nazwisko</label>
         <input type="text" v-model="fullName">
         <label for="">E-mail</label>
