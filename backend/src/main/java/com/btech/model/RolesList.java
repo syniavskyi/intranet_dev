@@ -13,7 +13,7 @@ public class RolesList {
 	@Id
 	@GeneratedValue
 	@Column(name="role_id")
-	private Long roleId;
+	private String roleId;
 	@Column(name="role_name")
 	private String roleName;
 	
@@ -21,17 +21,17 @@ public class RolesList {
 		
 	}
 	
-	public RolesList(Long roleId, String roleName) {
+	public RolesList(String roleId, String roleName) {
 		this.roleId = roleId;
 		this.roleName = roleName;
 	}
 
 	
-	public Long getRoleId() {
+	public String getRoleId() {
 		return roleId;
 	}
 
-	public void setId(Long roleId) {
+	public void setId(String roleId) {
 		this.roleId = roleId;
 	}
 

@@ -19,7 +19,7 @@ public class UserController {
     public String register(@RequestBody UserRegistration userRegistration) {
     	
         if(!userRegistration.getPassword().equals(userRegistration.getPasswordConfirmation())) {
-            return "Error the two passwords do not match";
+            return "Error passwords do not match";
         } else if(userService.getUser(userRegistration.getUsername()) != null) {
             return "Error this username already exists";
         }

@@ -4,7 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.btech.model.RolesList;
 
-public interface RolesRepository extends JpaRepository<RolesList, Long> {
+
+public interface RolesRepository extends JpaRepository<RolesList, String> {
 
 	
 }
