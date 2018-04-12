@@ -1,22 +1,22 @@
-const state = {
+// const state = {
 
-};
+// };
 
-const mutations = {
+// const mutations = {
 
-};
+// };
 
-const action = {
+// const action = {
 
-};
+// };
 
-const getters = {
+// const getters = {
 
-};
+// };
 
-export default {
-    state,
-    mutations,
-    action,
-    getters
-}
+// export default {
+//     state,
+//     mutations,
+//     action,
+//     getters
+// }
