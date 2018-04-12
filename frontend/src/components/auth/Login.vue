@@ -1,25 +1,19 @@
 <template>
-	<div class="wrapper">
-        <div class="plane--left--parent">
-                <div class="plane--left">
-                    <h1 class="intranet--title">Witaj</h1>
-                    <div class="image--user"></div>
-                    <p class="intranet--subtitle">Zaloguj się do Intranetu</p>
+	<div class="plane-parent">
+            <div class="plane">
+                <div class="plane-left">
+                    <img class="img-user" src="images/grouper-256.png">
+                    <p class="p-login">Zaloguj się do Intranetu</p>
                 </div>
-        </div>
-<!--            <div class="clearfix"></div>-->
-        <div class="plane--right--parent">
-                <div class="plane--right">
-                    <div class="image--logo"></div>
-                    <div class="login--credentials">
-                        <input class="input" id="username" type="email" v-model="username" :class="{invalid: $v.username.$error}" @blur="$v.username.$touch()"/>
-                        <label class="label plane--right__label1" for="username">Użytkownik</label>
-                        <input class="input" id="password" type="password" v-model="password" :class="{invalid: $v.password.$error}" @blur="$v.password.$touch()"/>
-                        <label class="label plane--right__label2" for="password">Hasło</label>
-                    </div>
+                <div class="login-credentials">
+                    <input type="email" v-model="username" :class="{invalid: $v.username.$error}" @blur="$v.username.$touch()">
+                    <label class="email">Użytkownik</label>
+                    <input type="password" v-model="password" :class="{invalid: $v.password.$error}" @blur="$v.password.$touch()">
+                    <label for="password" class="password">Hasło</label>
+                    <button class="button"><span>Zaloguj</span></button>
                 </div>
+            </div>
         </div>
-    </div>
 </template>
 
 <script>
