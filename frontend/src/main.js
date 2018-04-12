@@ -16,8 +16,9 @@ Vue.use(Vuex);
 Vue.use(VueAxios, axios);
 Vue.use(VueAuthenticate, {});
 
-require('./assets/styles/style.css')
-require('./assets/styles/login.css')
+require('./assets/styles/style.css');
+require('./assets/styles/shared.css');
+// require('./assets/styles/login.css')
 
 Vue.config.productionTip = false
 
