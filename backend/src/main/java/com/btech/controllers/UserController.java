@@ -34,7 +34,11 @@ public class UserController {
 
     @GetMapping(value="/api/getUsername")
     public String getUsername() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
+    	String name = SecurityContextHolder.getContext().getAuthentication().getName();
+    	if (name == "anonymousUser") {
+    		return "You are not logged in !";
+    	}
+        return name;
     }
     
     @RequestMapping(value = "/api/users/{id}", method = RequestMethod.GET)
