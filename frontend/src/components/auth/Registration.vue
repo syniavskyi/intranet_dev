@@ -3,65 +3,159 @@
         <div class="plane">
             <div class="plane-left">
                 <img class="img-user" src="../../assets/images/grouper-256.png">
-                <p class="p-login">Zarejestruj pracownika w Intranecie</p>
+                <p class="p-registration">Rejestracja użytkownika</p>
             </div>
-            <div class="login-credentials">
-                <input type="text" name="fullName" v-model="fullName">
+            <div class="registration-credentials">
                 <label for="fullName">Imię i nazwisko</label>
-                <label for="">E-mail</label>
+                <input type="text" name="fullName" v-model="fullName">
+                <label for="email">E-mail</label>
                 <input type="email" disabled="false" v-model="fullNameToEmail">
-                <!-- <p>{{ fullName }}</p> -->
-                <label for="">Hasło</label>
+                <label for="password">Hasło</label>
                 <input type="password">
-                <button disabled="disabled">Wygeneruj hasło</button>
-                <label for="">Rola</label>
-                <select name="" id="">
-                    <option value="">Management</option>
-                    <option value="">Leader</option>
-                    <option value="">Office</option>
-                    <option value="">Basic</option>
-                </select>
-                <label for="">Oddział</label>
-                <select name="" id="">
-                    <option value="">Dąbrowa Górnicza</option>
-                    <option value="">Wrocław</option>
-                </select>
-                <button class="button"><span>Zarejestruj</span></button>
+                <div class="div-select">
+                    <label for="role">Rola</label>
+                    <select class="select">
+                        <option>Admin</option>
+                        <option>Management</option>
+                        <option>Liders</option>
+                        <option>Office</option>
+                        <option>Basic</option>
+                    </select>
+                </div>
+                <div class="div-select">
+                    <label for="role">Oddział</label>
+                    <select class="select" >
+                        <option>Wrocław</option>
+                        <option>Dąbrowa Górnicza</option>
+                    </select>
+                </div> 
             </div>
+        <button class="button"><span>Zarejestruj</span></button>
         </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
-    export default {
-        data() {
-            return {
-                fullName: '',
-                email: ''
-            }
-        },
-        created() {
-            return axios.get('/rolesList.json')
-                .then(res => {
-                    return console.log(res);
-                })
-        },
-        computed: {
-            fullNameToEmail() {
-                var sEmail = this.fullName.replace(' ', '.').toLowerCase(),
-                    sDomain = '@btech.pl',
-                    sReturnEmail;
-                
-                this.fullName === '' ? sDomain = '' : sReturnEmail = sEmail + sDomain;
+export default {
+  data() {
+    return {
+      fullName: "",
+      email: ""
+    };
+  },
+  created() {
+    return axios.get("/rolesList.json").then(res => {
+      return console.log(res);
+    });
+  },
+  computed: {
+    fullNameToEmail() {
+      var sEmail = this.fullName.replace(" ", ".").toLowerCase(),
+        sDomain = "@btech.pl",
+        sReturnEmail;
 
-                return sReturnEmail;
-            }
-        }
+      this.fullName === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
+
+      return sReturnEmail;
     }
+  }
+};
 </script>
 
 <style scoped>
+    @import url("https://fonts.googleapis.com/css?family=Raleway:400,500,600,700");
+    @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
 
+    /* body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans";
+    } */
+    .plane-parent {
+        min-height: 41.5rem;
+        flex-shrink: 0;
+    }
+
+    .registration-credentials {
+        width: 20rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .p-registration {
+        text-align: center;
+        max-width: 11rem;
+    }
+
+    .div-select {
+        width: 80%;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .div-select + .div-select {
+        margin-top: 1rem;
+    }
+
+    select {
+        background: transparent;
+        height: 2rem;
+        width: 12rem;
+        border: 1px solid lightgrey;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("../../assets/images/arrow.jpg");
+        background-repeat: no-repeat;
+        background-position: right;
+    }
+
+    input:hover,
+    input:focus {
+        border-bottom: 2px solid orange;
+    }
+
+    @media (min-width: 43rem) {
+        .div-select {
+            width: 90%;
+            align-self: flex-start;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+        }
+        select {
+            margin-left: auto;
+        }
+        label[for="role"] {
+            line-height: 2rem;
+        }
+    }
+
+    @media (min-height: 0rem) and (max-height: 25rem) and (min-width: 35rem) {
+        .plane {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            flex-direction: row;
+            background: radial-gradient(
+            ellipse 50% 150% at -1% 50%,
+            #f7f7f7 58%,
+            lightgray 60%,
+            white 60%
+            );
+            justify-content: flex-start;
+            min-height: 26rem;
+            flex-shrink: 0;
+        }
+        .plane-parent {
+            min-height: 29rem;
+        }
+    }
 </style>

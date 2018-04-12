@@ -1,52 +1,3 @@
-<template>
-	<div class="plane-parent">
-            <div class="plane">
-                <div class="plane-left">
-                    <img class="img-user" src="../../assets/images/grouper-256.png">
-                    <p class="p-login">Zaloguj się do Intranetu</p>
-                </div>
-                <div class="login-credentials">
-                    <input type="email" v-model="username" @blur="$v.username.$touch()">
-                    <label class="email">Użytkownik</label>
-                    <input type="password" v-model="password" @blur="$v.password.$touch()">
-                    <label for="password" class="password">Hasło</label>
-                    <button class="button" :disabled="$v.$invalid" @click="onSubmit"><span>Zaloguj</span></button>
-                </div>
-            </div>
-        </div>
-</template>
-
-<script>
-    import { required, minLength } from 'vuelidate/lib/validators'
-	export default {
-	    name: 'Login',
-	    data () {
-	        return {
-                username: '',
-                password: ''
-	        }
-        },
-        validations: {
-            password: {
-                required,
-                minLen: minLength(8)
-            },
-            username: {
-                required
-            }
-        },
-        methods: {
-            onSubmit() {
-                this.$store.dispatch('login', {
-                    username: this.username,
-                    password: this.password
-                })
-            }
-        }
-	}
-</script>
-
-<style scoped>
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,500,600,700');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
 body {
@@ -56,8 +7,6 @@ body {
     padding: 0;
     font-family: 'Open Sans';
 }
-
-
 
 input:focus + label {
     font-size: 1.2rem;
@@ -122,21 +71,6 @@ input[type="password"] {
     background: rgb(240, 134, 52);
 }
 
-button[disabled],
-button[disabled]:hover,
-button[disabled]:active,
-button[disabled]:focus  {
-    border: 1px solid #ccc;
-    background-color: transparent;
-    color: #ccc;
-    cursor: not-allowed;
-    box-shadow: none;
-}
-
-button[disabled] span {
-    cursor: not-allowed;
-}
-
 @media (min-width: 43rem) {
     .plane {
         display: flex;
@@ -157,7 +91,6 @@ button[disabled] span {
     }
 }
 
-
 @media (min-height: 0rem) and (max-height: 25rem) and (min-width: 35rem) {
     .plane {
         display: flex;
@@ -173,5 +106,3 @@ button[disabled] span {
         min-height: 18rem;
     }
 }
-
-</style>
