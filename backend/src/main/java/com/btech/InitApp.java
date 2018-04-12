@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 
+import com.btech.config.CustomUserDetails;
 import com.btech.repositories.UserRepository;
 import com.btech.service.UserService;
 
