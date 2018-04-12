@@ -34,10 +34,10 @@ import axios from 'axios'
             }
         },
         created() {
-            // return axios.get('/roles.json')
-            //     .then(res => {
-            //         return console.log(res);
-            //     })
+            return axios.get('/rolesList.json')
+                .then(res => {
+                    return console.log(res);
+                })
         },
         computed: {
             fullNameToEmail() {
@@ -48,12 +48,6 @@ import axios from 'axios'
                 this.fullName === '' ? sDomain = '' : sReturnEmail = sEmail + sDomain;
 
                 return sReturnEmail;
-                
-                // if(this.fullName === '') {
-                //     sDomain = '';
-                // } else {
-                //     return sEmail + sDomain;
-                // }
             }
         }
     }
