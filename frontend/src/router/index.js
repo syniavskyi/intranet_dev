@@ -6,7 +6,7 @@ import Registration from '@/components/auth/Registration'
 Vue.use(Router)
 
 export default new Router({
-    mode: 'history',
+    // mode: 'history',
     routes: [{
         path: '/',
         name: 'Login',
@@ -14,6 +14,7 @@ export default new Router({
     },
     {
         path: '/registration',
+        name: 'Registration',
         component: Registration
     }]
 })
