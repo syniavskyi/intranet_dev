@@ -11,17 +11,19 @@ public class UserRegistration {
 	private String passwordConfirmation;
 	private String email;
 	private List<Role> roles;
+	private int roleId;
 	
 	public UserRegistration() {
 		
 	}
 	
-	public UserRegistration(String username, String password, String passwordConfirmation, String email, List<Role> roles) {
+	public UserRegistration(String username, String password, String passwordConfirmation, String email, List<Role> roles, int roleId) {
 		this.username = username;
 		this.password = password;
 		this.passwordConfirmation = passwordConfirmation;
 		this.email = email;
 		this.roles = roles;
+		this.roleId = roleId;
 	}
 
 	public String getUsername() {
@@ -62,6 +64,14 @@ public class UserRegistration {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	public int getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 	
 }
