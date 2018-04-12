@@ -21,7 +21,8 @@ require('./assets/styles/login.css')
 
 Vue.config.productionTip = false
 
-// axios.defaults.baseURL = '';
+// axios.defaults.baseURL = 'https://btech-intranet.herokuapp.com/api';
+axios.defaults.baseURL = 'http://10.0.2.8:8080/api';
 
 /* eslint-disable no-new */
 new Vue({
