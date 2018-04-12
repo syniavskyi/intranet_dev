@@ -6,11 +6,11 @@
                     <p class="p-login">Zaloguj się do Intranetu</p>
                 </div>
                 <div class="login-credentials">
-                    <input type="email" v-model="username" :class="{invalid: $v.username.$error}" @blur="$v.username.$touch()">
+                    <input type="email" v-model="username" @blur="$v.username.$touch()">
                     <label class="email">Użytkownik</label>
-                    <input type="password" v-model="password" :class="{invalid: $v.password.$error}" @blur="$v.password.$touch()">
+                    <input type="password" v-model="password" @blur="$v.password.$touch()">
                     <label for="password" class="password">Hasło</label>
-                    <button class="button"><span>Zaloguj</span></button>
+                    <button class="button" :disabled="$v.$invalid" @click="onSubmit"><span>Zaloguj</span></button>
                 </div>
             </div>
         </div>
@@ -37,17 +37,28 @@
         },
         methods: {
             onSubmit() {
-                // this.$store.dispatch('login', {
-                //     username: this.username,
-                //     password: this.password
-                // })
+                this.$store.dispatch('login', {
+                    username: this.username,
+                    password: this.password
+                })
             }
         }
 	}
 </script>
 
 <style scoped>
-.invalid  {
+button[disabled],
+button[disabled]:hover,
+button[disabled]:active,
+button[disabled]:focus  {
+    border: 1px solid #ccc;
+    background-color: transparent;
+    color: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
 
+button[disabled] span {
+    cursor: not-allowed;
 }
 </style>
