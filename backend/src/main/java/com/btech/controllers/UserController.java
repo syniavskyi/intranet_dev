@@ -1,5 +1,4 @@
 package com.btech.controllers;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +25,8 @@ public class UserController {
         } else if(userService.getUser(userRegistration.getUsername()) != null) {
             return "Error this username already exists";
         }
-        
-        userService.save(new User(userRegistration.getUsername(), userRegistration.getPassword(), Arrays.asList(new Role("USER"))));
-        return "User created successfully";
+        userService.save(new User(userRegistration.getUsername(), userRegistration.getPassword(), userRegistration.getPasswordConfirmation(), userRegistration.getRoles(), userRegistration.getEmail()));
+        return "Account has been created successfully and is ready to use";
     }
 
     @GetMapping(value="/api/users")
