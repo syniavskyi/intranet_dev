@@ -3,16 +3,32 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import VueAxios from 'vue-axios'
+import VueAuthenticate from 'vue-authenticate'
+import axios from 'axios'
+import Vuelidate from 'vuelidate'
+import Vuex from 'vuex'
+
+import store from './store/store'
+
+Vue.use(Vuelidate);
+Vue.use(Vuex);
+Vue.use(VueAxios, axios);
+Vue.use(VueAuthenticate, {});
 
 require('./assets/styles/style.css')
 require('./assets/styles/login.css')
 
 Vue.config.productionTip = false
 
+// axios.defaults.baseURL = 'https://btech-intranet.herokuapp.com/api';
+axios.defaults.baseURL = 'http://10.0.2.8:8080/api';
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
     router,
+    store,
     components: {
         App
     },
