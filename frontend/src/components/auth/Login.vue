@@ -2,7 +2,7 @@
 	<div class="plane-parent">
             <div class="plane">
                 <div class="plane-left">
-                    <img class="img-user" src="images/grouper-256.png">
+                    <img class="img-user" src="../../assets/images/grouper-256.png">
                     <p class="p-login">Zaloguj się do Intranetu</p>
                 </div>
                 <div class="login-credentials">
