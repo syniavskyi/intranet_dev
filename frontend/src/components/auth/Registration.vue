@@ -16,10 +16,6 @@
                     <label for="role">Rola</label>
                     <select class="select">
                         <option v-for="roles in role">{{ roles }}</option>
-                        <!-- <option>Management</option>
-                        <option>Liders</option>
-                        <option>Office</option>
-                        <option>Basic</option> -->
                     </select>
                 </div>
                 <div class="div-select">
@@ -49,7 +45,6 @@ export default {
   created() {
     axios.get("/api/rolesList").then(res => {
         const data = res.data;
-        // const users = [];
 
         for(let key in data) {
             const role = data[key];
