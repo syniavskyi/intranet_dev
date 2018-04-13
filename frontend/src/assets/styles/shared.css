@@ -1,11 +1,12 @@
 .plane-parent {
     display: flex;
     background: lightgrey;
-/*    height: 100%;
-    width: 100%;*/
+    height: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 30rem;
     flex-shrink: 0;
 }
 
@@ -19,7 +20,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center; 
-/*    min-height: 18rem;*/
+    min-height: 18rem;
     /*background: radial-gradient(ellipse 50% 150% at 4% 50%, white 58%, #e5e5e5 60%, white 60%);*/
 }
 
@@ -62,7 +63,7 @@
     max-width: 11rem;
 }
 
-.input {
+input {
     font-family: inherit;
     margin-bottom: 2rem;
     outline: none;
@@ -85,52 +86,7 @@ label {
     transition: font-size 0.3s ease;
 }
 
-.input:hover,
-.input:focus {
+input:hover,
+input:focus {
     border-bottom: 2px solid orange;
-}
-
-.button {
-    height: 3.5rem;
-    width: 12rem;
-    background: #ff974b;
-    border: 0;
-    border-radius: 5px;
-    transition: all 0.4s ease;
-    font-family: inherit;
-    font-weight: 500;
-    color: white;
-    font-size: 1rem;
-}
-
-.button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.4s;
-}
-
-.button span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -1.2rem;
-  transition: 0.4s;
-}
-
-.button:hover span {
-  padding-right: 1.2rem;
-}
-
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
-}
-
-.button:hover,
-.button:focus {
-    cursor: pointer;
-    box-shadow: 1px 0px 50px rgba(255, 151, 71, 0.78);
-    background: rgb(240, 134, 52);
 }
