@@ -98,7 +98,7 @@ select {
     appearance: none;
     -webkit-appearance: none; 
     -moz-appearance: none;
-    background-image: url("../images/expand2.png");
+    background-image: url("../../images/expand2.png");
     background-repeat: no-repeat;
     background-position: right;
 }
