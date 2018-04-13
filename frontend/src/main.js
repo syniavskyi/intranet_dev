@@ -24,8 +24,12 @@ require('./assets/styles/registration/registration.css');
 
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = 'https://btech-intranet.herokuapp.com/api';
-// axios.defaults.baseURL = 'http://10.0.2.8:8080/api';
+// axios.defaults.baseURL = 'https://btech-intranet.herokuapp.com/api';
+<<<<<<< HEAD
+axios.defaults.baseURL = 'http://10.0.2.8:8080';
+=======
+axios.defaults.baseURL = 'http://10.0.2.8:8080/';
+>>>>>>> 87adbb215a8cb8fadbbfaf352b2e482974061b41
 
 /* eslint-disable no-new */
 new Vue({
