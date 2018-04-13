@@ -11,6 +11,7 @@
                     <input type="password" v-model="password" @blur="$v.password.$touch()">
                     <label for="password" class="password">Hasło</label>
                     <button class="button" :disabled="$v.$invalid" @click="onSubmit"><span>Zaloguj</span></button>
+                    <p v-if="loginError"> Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
                 </div>
             </div>
         </div>
@@ -41,6 +42,11 @@
                     username: this.username,
                     password: this.password
                 })
+            }
+        },
+        computed: {
+            loginError() {
+                return this.$store.getters.loginError
             }
         },
         created() {

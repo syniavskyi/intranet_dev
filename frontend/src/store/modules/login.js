@@ -3,11 +3,15 @@ import router from '@/router/index.js'
 
 const state = {
     idToken: null,
+    loginError: false
 }
 
 const mutations = {
-    AUTH_USER(state, userData){
-        state.idToken = userData.token;
+    AUTH_USER(state, token){
+        state.idToken = token;
+    },
+    SET_LOGIN_ERROR(state, isError){
+        state.loginError = isError
     },
     CLEAR_AUTH_DATA (state){
         state.idToken = null;
@@ -15,7 +19,9 @@ const mutations = {
 }
 
 const actions = {
+    
     login({commit, dispatch}, authData) {
+        commit('CLEAR_AUTH_DATA');
         //password: $2a$10$BC5wT8B8uSiPyWWQhYxmFuekdzDpUWnSPg4oPE2IQLSMJ/5EsXpD.
         var params = new URLSearchParams()
             params.append('grant_type', 'password')
@@ -32,16 +38,15 @@ const actions = {
             data: params   
         }).then(res =>{
             console.log(res)
-            commit('AUTH_USER', {
-                token: res.data.access_token,
-            })
+            commit('SET_LOGIN_ERROR', false)
+            commit('AUTH_USER', res.data.access_token)
             localStorage.setItem('token', res.data.access_token)
             dispatch('setExpirationDate', res.data.expires_in)
             dispatch('setLogoutTimer', res.data.expires_in)
             router.replace('/dashboard')
         }).catch(error => {
             console.log(error)
-            commit('CLEAR_AUTH_DATA');
+            commit('SET_LOGIN_ERROR', true)
         })
     },
     setLogoutTimer({commit, dispatch}, expirationTime) {
@@ -70,9 +75,7 @@ const actions = {
         if (now >= expirationDate) {
             return
         }
-        commit('AUTH_USER', {
-            token: token
-        })
+        commit('AUTH_USER', token )
         router.replace('/dashboard');
     }
 }
@@ -80,6 +83,9 @@ const actions = {
 const getters = {
     isAuthenticated (state) {
         return state.idToken !== null
+    },
+    isLoginError(state){
+        return state.loginError
     }
 }
 
