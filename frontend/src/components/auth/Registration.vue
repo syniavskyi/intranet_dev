@@ -14,6 +14,7 @@
                 <div class="div-pass">
                     <input class="input reg-pass-input" type="password">
                     <button class="gen-pass">Generuj hasło</button>
+                    <!-- <input class="gen-pass" value="Generuj Hasło">  -->
                 </div>
                 <div class="div-select">
                     <label class="label" for="role">Rola</label>
