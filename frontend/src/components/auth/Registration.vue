@@ -7,19 +7,19 @@
             </div>
             <div class="registration-credentials">
                 <label for="fullName">Imię i nazwisko</label>
-                <input type="text" name="fullName">
+                <input type="text" name="fullName" v-model="fullName">
                 <label for="email">E-mail</label>
-                <input type="email" disabled="false">
+                <input type="email" disabled="false" v-model="fullNameToEmail">
                 <label for="password">Hasło</label>
                 <input type="password">
                 <div class="div-select">
                     <label for="role">Rola</label>
                     <select class="select">
-                        <option>Admin</option>
-                        <option>Management</option>
+                        <option v-for="roles in role">{{ roles }}</option>
+                        <!-- <option>Management</option>
                         <option>Liders</option>
                         <option>Office</option>
-                        <option>Basic</option>
+                        <option>Basic</option> -->
                     </select>
                 </div>
                 <div class="div-select">
@@ -42,23 +42,31 @@ export default {
   data() {
     return {
       fullName: "",
-      email: ""
+      email: "",
+      role: [ ]
     };
   },
-//   created() {
-//     return axios.get("/rolesList.json").then(res => {
-//       return console.log(res);
-//     });
-//   },
+  created() {
+    axios.get("/api/rolesList").then(res => {
+        const data = res.data;
+        // const users = [];
+
+        for(let key in data) {
+            const role = data[key];
+            role.roleName = data[key].roleName;
+            this.role.push(role.roleName);
+        }
+    });
+  },
   computed: {
     fullNameToEmail() {
-      var sEmail = this.fullName.replace(" ", ".").toLowerCase(),
+    var sEmail = this.fullName.replace(" ", ".").toLowerCase(),
         sDomain = "@btech.pl",
         sReturnEmail;
 
-      this.fullName === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
+    this.fullName === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
 
-      return sReturnEmail;
+    return sReturnEmail;
     }
   }
 };
