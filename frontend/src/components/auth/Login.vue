@@ -42,6 +42,9 @@
                     password: this.password
                 })
             }
+        },
+        created() {
+            this.$store.dispatch('tryAutoLogin')
         }
 	}
 </script>

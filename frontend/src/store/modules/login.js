@@ -3,37 +3,24 @@ import router from '@/router/index.js'
 
 const state = {
     idToken: null,
-  	userId: null    
 }
 
 const mutations = {
     AUTH_USER(state, userData){
         state.idToken = userData.token;
-        state.userId = userData.userId;
     },
     CLEAR_AUTH_DATA (state){
         state.idToken = null;
-        state.userId = null;
     } 
 }
 
 const actions = {
     login({commit, dispatch}, authData) {
-        
+        //password: $2a$10$BC5wT8B8uSiPyWWQhYxmFuekdzDpUWnSPg4oPE2IQLSMJ/5EsXpD.
         var params = new URLSearchParams()
             params.append('grant_type', 'password')
             params.append('username', authData.username)
             params.append('password',authData.password)
-        // axios.post('/oauth/token', {
-        // // axios.post('/oauth/token?grant_type=password&username=mha&password=$2a$10$BC5wT8B8uSiPyWWQhYxmFuekdzDpUWnSPg4oPE2IQLSMJ/5EsXpD.', {
-        //     auth: {
-        //     username: 'vuejs-client',
-        //     password: 'password'
-        //     },
-        //     headers: {
-        //         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-        //     },
-        //     data: params
         axios({
             method: 'post',
             url: 'oauth/token',
@@ -41,21 +28,21 @@ const actions = {
             username: 'vuejs-client',
             password: 'password'
             },
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-            },
+            headers: { "Content-type": "application/x-www-form-urlencoded; charset=utf-8" },
             data: params   
         }).then(res =>{
             console.log(res)
-            // commit('AUTH_USER', {
-            //     token: res.data.idToken,
-            //     userId: res.data.localId
-            // })
-            // localStorage.setItem('token', res.data.idToken)
-            // localStorage.setItem('userId', res.data.localId)
-            // dispatch('setExpirationDate', res.data.expiresIn)
-          	// dispatch('setLogoutTimer', res.data.expiresIn)
-        }).catch(error => console.log(error))
+            commit('AUTH_USER', {
+                token: res.data.access_token,
+            })
+            localStorage.setItem('token', res.data.access_token)
+            dispatch('setExpirationDate', res.data.expires_in)
+            dispatch('setLogoutTimer', res.data.expires_in)
+            router.replace('/dashboard')
+        }).catch(error => {
+            console.log(error)
+            commit('CLEAR_AUTH_DATA');
+        })
     },
     setLogoutTimer({commit, dispatch}, expirationTime) {
         setTimeout(() => {
@@ -70,9 +57,23 @@ const actions = {
     logout({commit}){
         commit('CLEAR_AUTH_DATA');
         localStorage.removeItem('expirationDate')
-        localStorage.removeItem('userId')
         localStorage.removeItem('token')
         router.replace('/signin');
+    },
+    tryAutoLogin({commit}) {
+        const token = localStorage.getItem('token')
+        if (!token) {
+            return 
+        }
+        const expirationDate = localStorage.getItem('expirationDate')
+        const now = new Date()
+        if (now >= expirationDate) {
+            return
+        }
+        commit('AUTH_USER', {
+            token: token
+        })
+        router.replace('/dashboard');
     }
 }
 
