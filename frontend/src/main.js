@@ -9,7 +9,8 @@ import axios from 'axios'
 import Vuelidate from 'vuelidate'
 import Vuex from 'vuex'
 
-import { store } from './store/store'
+// import { store } from './store/store'
+import  store from './store/store'
 
 Vue.use(Vuelidate);
 Vue.use(Vuex);
