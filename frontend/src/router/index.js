@@ -4,8 +4,6 @@ import Login from '@/components/auth/Login'
 import Registration from '@/components/auth/Registration'
 import Dashboard from '@/components/Dashboard'
 
-
-
 Vue.use(Router)
 
 export default new Router({
