@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -17,11 +17,15 @@
                 </div>
                 <div class="registration-credentials">
                     <label for="name">Imie i nazwisko</label>
-                    <input type="text">
+                    <input class="input" type="text">
                     <label for="email">Email</label>
-                    <input type="email">
+                    <input class="input" type="email">
                     <label for="password">Hasło</label>
-                    <input type="password">
+                    <div class="div-pass">
+<!--                        <input class="gen-pass" type="button">-->
+                        <button class="gen-pass">Generuj hasło</button>
+                        <input class="input" type="password">
+                    </div>
                     <div class="div-select">
                         <label for="role">Rola</label>
                         <select class="select" >
@@ -38,9 +42,10 @@
                             <option>Wrocław</option>
                             <option>Dąbrowa Górnicza</option>
                         </select>
-                    </div> 
+                    </div>
+                    <button class="button"><span>Zarejestruj</span></button>
                 </div>
             </div>
         </div>
     </body>
-</html> -->
+</html>
