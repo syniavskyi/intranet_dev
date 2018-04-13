@@ -43,15 +43,9 @@ body {
     flex-direction: row;
 }
 
-/*.div-pass input[type="password"] {
-    order: 0;
-    margin-right: -1rem;
-    margin-bottom: 0;
-    z-index: 10;
-}*/
-
-input[type="password"] {
+.reg-pass-input {
     width: 10rem;
+    order: 0;
 }
 
 .gen-pass {
@@ -104,7 +98,7 @@ select {
     appearance: none;
     -webkit-appearance: none; 
     -moz-appearance: none;
-    background-image: url("../../images/expand2.png");
+    background-image: url("../images/expand2.png");
     background-repeat: no-repeat;
     background-position: right;
 }
@@ -124,7 +118,7 @@ select {
     .plane-left {
         width: 29%;
     }     
-    label {
+    .label {
         align-self: flex-start;
         margin-left: 2rem;
     }
