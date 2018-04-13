@@ -19,11 +19,24 @@ const mutations = {
 
 const actions = {
     login({commit, dispatch}, authData) {
+        
         var params = new URLSearchParams()
             params.append('grant_type', 'password')
             params.append('username', authData.username)
             params.append('password',authData.password)
-        axios.post('/oauth/token', {
+        // axios.post('/oauth/token', {
+        // // axios.post('/oauth/token?grant_type=password&username=mha&password=$2a$10$BC5wT8B8uSiPyWWQhYxmFuekdzDpUWnSPg4oPE2IQLSMJ/5EsXpD.', {
+        //     auth: {
+        //     username: 'vuejs-client',
+        //     password: 'password'
+        //     },
+        //     headers: {
+        //         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        //     },
+        //     data: params
+        axios({
+            method: 'post',
+            url: 'oauth/token',
             auth: {
             username: 'vuejs-client',
             password: 'password'
@@ -31,9 +44,9 @@ const actions = {
             headers: {
                 "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
             },
-            data: params
+            data: params   
         }).then(res =>{
-            console.log(res);
+            console.log(res)
             // commit('AUTH_USER', {
             //     token: res.data.idToken,
             //     userId: res.data.localId
