@@ -6,10 +6,10 @@
                     <p class="p-login">Zaloguj się do Intranetu</p>
                 </div>
                 <div class="login-credentials">
-                    <input type="email" class="input" v-model="username" @blur="$v.username.$touch()">
-                    <label class="email">Użytkownik</label>
-                    <input type="password" class="input" v-model="password" @blur="$v.password.$touch()">
-                    <label for="password" class="password">Hasło</label>
+                    <input type="email" class="input input-login-email" v-model="username" @blur="$v.username.$touch()">
+                    <label class="label label-login-email">Użytkownik</label>
+                    <input type="password" class="input input-login-pass" v-model="password" @blur="$v.password.$touch()">
+                    <label for="password" class="label label-login-pass">Hasło</label>
                     <p class="forgot-pass">Zapomniałeś hasło?</p>
                     <button class="button" :disabled="$v.$invalid" @click="onSubmit"><span>Zaloguj</span></button>
                     

@@ -43,15 +43,9 @@ body {
     flex-direction: row;
 }
 
-/*.div-pass input[type="password"] {
+.reg-pass-input {
+    width: 10.5rem;
     order: 0;
-    margin-right: -1rem;
-    margin-bottom: 0;
-    z-index: 10;
-}*/
-
-input[type="password"] {
-    width: 10rem;
 }
 
 .gen-pass {
@@ -63,15 +57,13 @@ input[type="password"] {
     width: 5rem;
     z-index: 100;
     background: transparent;
-    border-left: 2px solid transparent;
-    border-right: 2px solid transparent;
-    border-top: 2px solid transparent;
+    border: 2px 2px solid transparent;
     border-bottom: 2px solid grey;
     transition: border 0.5s ease;
 }
 
 .gen-pass:hover {
-    cursor: pointer;
+    cursor: text;
     border: 2px solid orange;
 }
 
@@ -124,7 +116,7 @@ select {
     .plane-left {
         width: 29%;
     }     
-    label {
+    .label {
         align-self: flex-start;
         margin-left: 2rem;
     }
@@ -166,6 +158,3 @@ select {
         flex-shrink: 0;
     }
 }
-
-
-

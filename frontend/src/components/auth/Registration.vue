@@ -6,25 +6,30 @@
                 <p class="p-registration">Rejestracja użytkownika</p>
             </div>
             <div class="registration-credentials">
-                <label for="fullName">Imię i nazwisko</label>
-                <input type="text" name="fullName" v-model="fullName">
-                <label for="email">E-mail</label>
-                <input type="email" disabled="false" v-model="fullNameToEmail">
-                <label for="password">Hasło</label>
-                <input type="password">
+                <label for="fullName" class="label">Imię i nazwisko</label>
+                <input type="text" name="fullName" v-model="fullName" @change="checkEmail()" class="input">
+                <label for="email" class="label">E-mail</label>
+                <input disabled="false" v-model="fullNameToEmail" class="input">
+                <label class="label" for="password">Hasło</label>
+                <div class="div-pass">
+                    <input class="input reg-pass-input" type="password">
+                    <button class="gen-pass">Generuj hasło</button>
+                    <!-- <input class="gen-pass" value="Generuj Hasło">  -->
+                </div>
                 <div class="div-select">
-                    <label for="role">Rola</label>
+                    <label class="label" for="role">Rola</label>
                     <select class="select">
                         <option v-for="roles in role">{{ roles }}</option>
                     </select>
                 </div>
                 <div class="div-select">
-                    <label for="role">Oddział</label>
+                    <label class="label" for="role">Oddział</label>
                     <select class="select" >
                         <option>Wrocław</option>
                         <option>Dąbrowa Górnicza</option>
                     </select>
                 </div> 
+                <button class="button"><span>Zarejestruj</span></button>
             </div>
         <!-- <button class="button"><span>Zarejestruj</span></button> -->
         </div>
@@ -39,7 +44,8 @@ export default {
     return {
       fullName: "",
       email: "",
-      role: [ ]
+      role: [ ],
+      emails: [ ]
     };
   },
   created() {
@@ -48,10 +54,31 @@ export default {
 
         for(let key in data) {
             const role = data[key];
+            let upper = data[key].roleName.substring(0, 1);
+            let toLower = data[key].roleName.slice(1, data[key].roleName.length).toLowerCase();
+            data[key].roleName = upper + toLower;
             role.roleName = data[key].roleName;
+            
             this.role.push(role.roleName);
         }
     });
+  },
+  methods: {
+    checkEmail() {
+        axios.get('/api/emailList').then(res => {
+            const data = res.data;
+
+            for(let key in data) {
+                const email = data[key];
+                email.email = data[key].email;
+
+                this.emails.push(email.email);
+            }
+        });
+        // if(this.emails.length > 0) {
+            console.log(typeof(this.emails));
+        // }
+    }
   },
   computed: {
     fullNameToEmail() {
@@ -60,9 +87,10 @@ export default {
         sReturnEmail;
 
     this.fullName === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
+    this.email = sReturnEmail;
 
     return sReturnEmail;
-    }
+    },
   }
 };
 </script>

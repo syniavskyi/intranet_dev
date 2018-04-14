@@ -78,7 +78,7 @@
     border-radius: 0px;
 }
 
-label {
+.label {
     height: 1.8rem;
     align-self: center;
     color: rgba(0,0,0, 0.6);
@@ -87,6 +87,7 @@ label {
 
 .input:hover,
 .input:focus {
+    cursor: pointer;
     border-bottom: 2px solid orange;
 }
 

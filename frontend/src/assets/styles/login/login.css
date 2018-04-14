@@ -20,28 +20,28 @@ body {
     min-height: 31rem;
 }
 
-.input:focus + label {
+.input:focus + label[class*='label-login'] {
     font-size: 1.2rem;
 }
 
-label[class="email"] {
+.label-login-email {
     order: 0; 
 }
-input[type="email"] {
+.input-login-email {
     order: 1;
 }
-label[class="password"] {
+.label-login-pass {
     order: 2; 
 }
-input[type="password"] {
+.input-login-pass {
     order: 3;
 }
 
-label + .forgot-pass {
+.label + .forgot-pass {
     margin-top: 0;
 }
 
-label + .input {
+.label + .input {
     margin-bottom: 0.5rem;
 }
 
@@ -94,7 +94,7 @@ button[disabled] span {
     .plane-left {
         width: 29%;
     }  
-    label {
+    .label {
         align-self: flex-start;
         margin-left: 2rem;
     }
