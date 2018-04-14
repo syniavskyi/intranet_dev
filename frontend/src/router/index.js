@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
+import store from '../store/store'
+
 import Login from '@/components/auth/Login'
 import Registration from '@/components/auth/Registration'
 import Dashboard from '@/components/Dashboard'
@@ -21,6 +24,15 @@ export default new Router({
     {
         path: '/dashboard',
         name: 'Dashboard',
-        component: Dashboard
-    }]
+        component: Dashboard,
+        beforeEnter (to, from, next) {
+            if (store.state.idToken) {
+                next()
+            } else {
+                next('/')
+            }
+        }
+    },
+    
+]
 })
