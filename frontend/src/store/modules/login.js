@@ -84,6 +84,9 @@ const actions = {
         }
         commit('AUTH_USER', token )
         router.replace('/dashboard');
+    },
+    resetPassword({commit}, email){
+        
     }
 }
 
