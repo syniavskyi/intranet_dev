@@ -13,10 +13,8 @@ const mutations = {
 
 const actions = {
     getRoleList({commit}) {
-        // var vm = this;
         axios.get("/api/rolesList").then(res => {
             const data = res.data;
-            // commit('GET_ROLE_LIST');
 
             for(let key in data) {
                 const role = data[key];
@@ -25,8 +23,6 @@ const actions = {
                 data[key].roleName = upper + toLower;
                 role.roleName = data[key].roleName;
                 commit('GET_ROLE_LIST', role.roleName);
-
-                // state.role.push(role.roleName);
             }
         });
     }

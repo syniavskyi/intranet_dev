@@ -50,7 +50,8 @@ export default {
   },
   created() {
     //   this.$store.dispatch('getRoleList');
-    return this.$store.getters.roleList;
+    // return this.$store.getters.roleList;
+    return this.getRoleList;
     // axios.get("/api/rolesList").then(res => {
     //     const data = res.data;
 
@@ -95,6 +96,9 @@ export default {
     }
   },
   computed: {
+    getRoleList() {
+        return this.$store.getters.roleList;
+    },
     fullNameToEmail() {
     var sEmail = this.fullName.replace(" ", ".").toLowerCase(),
         sDomain = "@btech.pl",
