@@ -37,12 +37,28 @@ body {
     order: 3;
 }
 
+.login-pass-div {
+    order: 3;
+}
+
 .label + .forgot-pass {
     margin-top: 0;
 }
 
 .label + .input {
     margin-bottom: 0.5rem;
+}
+
+.show-pass-eye {
+    width: 2rem;
+    margin-left: -2rem;
+}
+
+.login-pass-div {
+    align-self: flex-start;
+    margin-left: 1.9rem;
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 .forgot-pass {

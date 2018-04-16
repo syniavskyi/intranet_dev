@@ -8,8 +8,11 @@
                 <div class="login-credentials">
                     <input type="email" class="input input-login-email" v-model="username" @blur="$v.username.$touch()">
                     <label class="label label-login-email">Użytkownik</label>
-                    <input :type="passwordFieldType" @keyup.enter="onSubmit" class="input input-login-pass" v-model="password" @blur="$v.password.$touch()">
-                    <label for="password" class="label label-login-pass">Hasło <button class="show-pass-eye"  @click="switchPasswordVisibility"><icon :name="eyeType"></icon></button></label>
+                    <div class="login-pass-div">
+                        <input :type="passwordFieldType" @keyup.enter="onSubmit" class="input input-login-pass" v-model="password" @blur="$v.password.$touch()">
+                        <button class="show-pass-eye"  @click="switchPasswordVisibility"><icon :name="eyeType"></icon></button>
+                    </div>
+                    <label for="password" class="label label-login-pass">Hasło</label>
                     <p class="forgot-pass" @click="onForgotPassword">Nie pamiętasz hasła?</p>
                     <p class="login-error" v-if="loginError"> Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
                     <button class="button login-button" :disabled="$v.$invalid" @click="onSubmit"><span class="span-arrow">Zaloguj</span></button>
