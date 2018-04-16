@@ -11,8 +11,8 @@
                     <input type="password" class="input input-login-pass" v-model="password" @blur="$v.password.$touch()">
                     <label for="password" class="label label-login-pass">Hasło</label>
                     <p class="forgot-pass" @click="onForgotPassword">Zapomniałeś hasło?</p>
+                    <p class="login-error" v-if="loginError"> Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
                     <button class="button" :disabled="$v.$invalid" @click="onSubmit"><span>Zaloguj</span></button>
-                    <p v-if="loginError"> Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
                 </div>
             </div>
         </div>
