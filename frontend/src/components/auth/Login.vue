@@ -1,6 +1,6 @@
 <template>
-	<div class="plane-parent">
-            <div class="plane">
+	<div class="plane-parent plane-parent-login">
+            <div class="plane plane-login">
                 <div class="plane-left">
                     <img class="img-user" src="../../assets/images/grouper-256.png">
                     <p class="p-login">Zaloguj się do Intranetu</p>
@@ -8,7 +8,7 @@
                 <div class="login-credentials">
                     <input type="email" class="input input-login-email" v-model="username" @blur="$v.username.$touch()">
                     <label class="label label-login-email">Użytkownik</label>
-                    <input type="password" class="input input-login-pass" v-model="password" @blur="$v.password.$touch()">
+                    <input type="password" @keyup.enter="onSubmit" class="input input-login-pass" v-model="password" @blur="$v.password.$touch()">
                     <label for="password" class="label label-login-pass">Hasło</label>
                     <p class="forgot-pass" @click="onForgotPassword">Zapomniałeś hasło?</p>
                     <p class="login-error" v-if="loginError"> Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
@@ -26,7 +26,8 @@
 	        return {
                 username: '',
                 password: '',
-                showRemindPassword: false
+                showRemindPassword: false,
+                isLoading: false
 	        }
         },
         validations: {
@@ -40,10 +41,12 @@
         },
         methods: {
             onSubmit() {
+                this.isLoading = true
                 this.$store.dispatch('login', {
                     username: this.username,
                     password: this.password
                 })
+                this.isLoading = false
             },
             onForgotPassword() {
                 this.showRemindPassword = true 
