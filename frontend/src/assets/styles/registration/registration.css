@@ -33,6 +33,10 @@ body {
     justify-content: center;
 }
 
+.input-registration {
+    width: 15rem;
+}
+
 .p-registration {
     text-align: center;
     max-width: 11rem;
@@ -44,7 +48,7 @@ body {
 }
 
 .reg-pass-input {
-    width: 10.5rem;
+    width: 9.7rem;
     order: 0;
 }
 
