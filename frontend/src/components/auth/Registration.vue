@@ -49,22 +49,24 @@ export default {
     };
   },
   created() {
-    axios.get("/api/rolesList").then(res => {
-        const data = res.data;
+      this.$store.dispatch('getRoleList');
+    // axios.get("/api/rolesList").then(res => {
+    //     const data = res.data;
 
-        for(let key in data) {
-            const role = data[key];
-            let upper = data[key].roleName.substring(0, 1);
-            let toLower = data[key].roleName.slice(1, data[key].roleName.length).toLowerCase();
-            data[key].roleName = upper + toLower;
-            role.roleName = data[key].roleName;
+    //     for(let key in data) {
+    //         const role = data[key];
+    //         let upper = data[key].roleName.substring(0, 1);
+    //         let toLower = data[key].roleName.slice(1, data[key].roleName.length).toLowerCase();
+    //         data[key].roleName = upper + toLower;
+    //         role.roleName = data[key].roleName;
             
-            this.role.push(role.roleName);
-        }
-    });
+    //         this.role.push(role.roleName);
+    //     }
+    // });
   },
   methods: {
     checkEmail() {
+        var vm = this;
         axios.get('/api/emailList').then(res => {
             const data = res.data;
 
@@ -74,25 +76,21 @@ export default {
 
                 this.emails.push(email.email);
             }
-            for (var i = 0; i < this.emails.length; i++) {
-                if (this.email === this.emails[i]) {
-                    alert('znaleziono email');
-                } else {
-                    alert('nie znaleziono adresu email');
+
+            if(vm.emails.length > 0) {
+                var bIsEmail;
+                
+                for (var i = 0; i < vm.emails.length; i++) {
+                    if (vm.email === vm.emails[i]) {
+                        bIsEmail = true;
+                        break;
+                    } else {
+                       bIsEmail = false; 
+                    }
                 }
-            } 
+                bIsEmail ? alert('znaleziono email') : alert('nie znaleziono adresu email');
+            }
         });
-        // if(this.emails.length > 0) {
-            // console.log(this.emails);
-            // console.log(Array.values(this.emails));
-            // var iLength = Object.keys(this.emails).length;
-            // for (var i = 0; i < this.emails.length; i++) {
-            //     if (this.email == this.emails[i]) {
-            //         console.log(this.email);
-            //         console.log(this.emails[i]);
-            //     }
-            // } 
-        // }
     }
   },
   computed: {
@@ -106,6 +104,9 @@ export default {
 
     return sReturnEmail;
     },
+    generatePassword() {
+
+    }
   }
 };
 </script>
