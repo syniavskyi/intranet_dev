@@ -9,7 +9,8 @@
                     <input type="email" class="input input-login-email" v-model="username" @blur="$v.username.$touch()">
                     <label class="label label-login-email">Użytkownik</label>
                     <input :type="passwordFieldType" @keyup.enter="onSubmit" class="input input-login-pass" v-model="password" @blur="$v.password.$touch()">
-                    <label for="password" class="label label-login-pass">Hasło</label>
+                    <label for="password" class="label label-login-pass">Hasło <button class="show-pass-eye"  @click="switchPasswordVisibility"><icon :name="eyeType"></icon></button></label>
+                    
                     <p class="forgot-pass" @click="onForgotPassword">Nie pamiętasz hasła?</p>
                     <p class="login-error" v-if="loginError"> Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
                     <button class="button login-button" :disabled="$v.$invalid" @click="onSubmit"><span class="span-arrow">Zaloguj</span></button>
@@ -20,6 +21,8 @@
 
 <script>
     import { required, minLength } from 'vuelidate/lib/validators'
+    import Icon from 'vue-awesome/components/Icon'
+
 	export default {
 	    name: 'Login',
 	    data () {
@@ -28,8 +31,12 @@
                 password: '',
                 showRemindPassword: false,
                 isLoading: false,
-                passwordFieldType: 'password'
+                passwordFieldType: 'password',
+                eyeType: 'eye'
 	        }
+        },
+        components: {
+            Icon
         },
         validations: {
             password: {
@@ -54,6 +61,7 @@
             },
             switchPasswordVisibility() {
                 this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
+                this.eyeType = this.eyeType === 'eye' ? 'eye-slash' : 'eye'
             }
         },
         computed: {
@@ -67,3 +75,22 @@
 	}
 </script>
 
+<style>
+.show-pass-eye {
+   font-size: 0.8rem;
+   align-self: right;
+   order: 1;
+   height: 2.5rem;
+   width: 1rem;
+   z-index: 100;
+   background: transparent;
+   transition: border 0.5s ease;
+   border: none;
+   padding: none;
+   margin:none;
+}
+
+.show-pass-eye:focus {
+    border: none;
+}
+</style>
