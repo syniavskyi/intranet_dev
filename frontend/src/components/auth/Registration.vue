@@ -19,7 +19,7 @@
                 <div class="div-select">
                     <label class="label" for="role">Rola</label>
                     <select class="select">
-                        <option v-for="role in getRoleList">{{ role }}</option>
+                        <option :key="role" v-for="role in getRoleList">{{ role }}</option>
                     </select>
                 </div>
                 <div class="div-select">
