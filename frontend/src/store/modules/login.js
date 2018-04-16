@@ -60,12 +60,17 @@ const actions = {
         localStorage.setItem('expirationDate', expirationDate);
     },
     logout({commit}){
-        commit('CLEAR_AUTH_DATA');
-        localStorage.removeItem('expirationDate')
-        localStorage.removeItem('token')
-        router.replace('/signin');
+        axios.get("/api/logout").then(res => {
+            commit('CLEAR_AUTH_DATA');
+            localStorage.removeItem('expirationDate')
+            localStorage.removeItem('token')
+            router.replace('/signin');
+        }).catch(error => {
+            console.log(error)
+        })
     },
     tryAutoLogin({commit}) {
+        commit('SET_LOGIN_ERROR', false)
         const token = localStorage.getItem('token')
         if (!token) {
             return 

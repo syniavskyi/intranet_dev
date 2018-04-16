@@ -44,7 +44,7 @@ body {
 }
 
 .reg-pass-input {
-    width: 10rem;
+    width: 10.5rem;
     order: 0;
 }
 
@@ -57,15 +57,13 @@ body {
     width: 5rem;
     z-index: 100;
     background: transparent;
-    border-left: 2px solid transparent;
-    border-right: 2px solid transparent;
-    border-top: 2px solid transparent;
+    border: 2px 2px solid transparent;
     border-bottom: 2px solid grey;
     transition: border 0.5s ease;
 }
 
 .gen-pass:hover {
-    cursor: pointer;
+    cursor: text;
     border: 2px solid orange;
 }
 
