@@ -7,6 +7,8 @@ import Login from '@/components/auth/Login'
 import Registration from '@/components/auth/Registration'
 import Dashboard from '@/components/Dashboard'
 
+import AuthGuard from './auth-guard'
+
 Vue.use(Router)
 
 export default new Router({
@@ -25,13 +27,7 @@ export default new Router({
         path: '/dashboard',
         name: 'Dashboard',
         component: Dashboard,
-        beforeEnter (to, from, next) {
-            if (localStorage.getItem('token')) {
-                next()
-            } else {
-                next('/')
-            }
-        }
+        beforeEnter: AuthGuard
     },
     
 ]
