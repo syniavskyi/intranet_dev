@@ -55,17 +55,21 @@ body {
     font-family: 'Raleway';
     align-self: flex-start;
     order: 1;
-    height: 2.5rem;
+    height: 2.525rem;
     width: 5rem;
     z-index: 100;
     background: transparent;
-    border: 2px 2px solid transparent;
+    /* border: 2px 2px solid transparent; */
+    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
+    border-top: 2px solid transparent;
     border-bottom: 2px solid grey;
+    /* border-bottom: 2px solid grey; */
     transition: border 0.5s ease;
 }
 
 .gen-pass:hover {
-    cursor: text;
+    cursor: pointer;
     border: 2px solid orange;
 }
 
