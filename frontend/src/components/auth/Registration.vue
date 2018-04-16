@@ -75,7 +75,14 @@ export default {
             }
         });
         // if(this.emails.length > 0) {
-            console.log(typeof(this.emails));
+            // console.log(this.emails);
+            // console.log(Array.values(this.emails));
+            // var iLength = Object.keys(this.emails).length;
+            for (var i = 0; i < this.emails.length; i++) {
+                if (email === this.emails[i]) {
+                    
+                }
+            } 
         // }
     }
   },
