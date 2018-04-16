@@ -29,7 +29,7 @@
                         <option>Dąbrowa Górnicza</option>
                     </select>
                 </div> 
-                <button class="button"><span class="spin-arrow">Zarejestruj</span></button>
+                <button class="button"><span class="span-arrow">Zarejestruj</span></button>
             </div>
         <!-- <button class="button"><span>Zarejestruj</span></button> -->
         </div>
