@@ -26,7 +26,7 @@ export default new Router({
         name: 'Dashboard',
         component: Dashboard,
         beforeEnter (to, from, next) {
-            if (store.state.idToken) {
+            if (localStorage.getItem('token')) {
                 next()
             } else {
                 next('/')
