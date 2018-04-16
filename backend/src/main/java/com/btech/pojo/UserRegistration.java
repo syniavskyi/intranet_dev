@@ -11,18 +11,17 @@ public class UserRegistration {
 	private String passwordConfirmation;
 	private String email;
 	private List<Role> roles;
-	private int roleId;
+	private String roleId;
 	
 	public UserRegistration() {
 		
 	}
 	
-	public UserRegistration(String username, String password, String passwordConfirmation, String email, List<Role> roles, int roleId) {
+	public UserRegistration(String username, String password, String passwordConfirmation, String email, String roleId) {
 		this.username = username;
 		this.password = password;
 		this.passwordConfirmation = passwordConfirmation;
 		this.email = email;
-		this.roles = roles;
 		this.roleId = roleId;
 	}
 
@@ -66,11 +65,11 @@ public class UserRegistration {
 		this.roles = roles;
 	}
 
-	public int getRoleId() {
+	public String getRoleId() {
 		return roleId;
 	}
 
-	public void setRoleId(int roleId) {
+	public void setRoleId(String roleId) {
 		this.roleId = roleId;
 	}
 	

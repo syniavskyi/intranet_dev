@@ -24,11 +24,11 @@ public class User {
     @Column(name="email")
     private String email;
     @Column(name="role_id")
-    private int roleId;
+    private String roleId;
 
     public User() {}
 
-    public User(String username, String password, String passwordConfirmation, String email, int roleId) {
+    public User(String username, String password, String passwordConfirmation, String email, String roleId) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -67,11 +67,11 @@ public class User {
 		this.email = email;
 	}
 
-	public int getRoleId() {
+	public String getRoleId() {
 		return roleId;
 	}
 
-	public void setRoleId(int roleId) {
+	public void setRoleId(String roleId) {
 		this.roleId = roleId;
 	}
     
