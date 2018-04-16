@@ -8,9 +8,9 @@
                 <div class="login-credentials">
                     <input type="email" class="input input-login-email" v-model="username" @blur="$v.username.$touch()">
                     <label class="label label-login-email">Użytkownik</label>
-                    <input type="password" @keyup.enter="onSubmit" class="input input-login-pass" v-model="password" @blur="$v.password.$touch()">
+                    <input :type="passwordFieldType" @keyup.enter="onSubmit" class="input input-login-pass" v-model="password" @blur="$v.password.$touch()">
                     <label for="password" class="label label-login-pass">Hasło</label>
-                    <p class="forgot-pass" @click="onForgotPassword">Zapomniałeś hasło?</p>
+                    <p class="forgot-pass" @click="onForgotPassword">Nie pamiętasz hasła?</p>
                     <p class="login-error" v-if="loginError"> Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
                     <button class="button login-button" :disabled="$v.$invalid" @click="onSubmit"><span class="span-arrow">Zaloguj</span></button>
                 </div>
@@ -27,7 +27,8 @@
                 username: '',
                 password: '',
                 showRemindPassword: false,
-                isLoading: false
+                isLoading: false,
+                passwordFieldType: 'password'
 	        }
         },
         validations: {
@@ -50,6 +51,9 @@
             },
             onForgotPassword() {
                 this.showRemindPassword = true 
+            },
+            switchPasswordVisibility() {
+                this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
             }
         },
         computed: {
