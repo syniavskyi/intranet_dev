@@ -12,7 +12,7 @@
                     <label for="password" class="label label-login-pass">Hasło</label>
                     <p class="forgot-pass" @click="onForgotPassword">Zapomniałeś hasło?</p>
                     <p class="login-error" v-if="loginError"> Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
-                    <button class="button login-button" :disabled="$v.$invalid" @click="onSubmit"><span>Zaloguj</span></button>
+                    <button class="button login-button" :disabled="$v.$invalid" @click="onSubmit"><span class="spin-arrow">Zaloguj</span></button>
                 </div>
             </div>
         </div>

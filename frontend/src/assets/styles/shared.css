@@ -98,14 +98,14 @@
     font-size: 1rem;
 }
 
-.button span {
+.button .span-arrow {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.4s;
 }
 
-.button span:after {
+.button .span-arrow:after {
   content: '\00bb';
   position: absolute;
   opacity: 0;
@@ -114,11 +114,11 @@
   transition: 0.4s;
 }
 
-.button:hover span {
+.button:hover .span-arrow {
   padding-right: 1.2rem;
 }
 
-.button:hover span:after {
+.button:hover .span-arrow:after {
   opacity: 1;
   right: 0;
 }
