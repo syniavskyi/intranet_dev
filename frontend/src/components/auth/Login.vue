@@ -2,13 +2,13 @@
 	<div class="plane-parent plane-parent-login">
         <div class="backdrop" v-if="showRemindPassword"></div>
         <div class="modal" v-if="showRemindPassword">
-            <h1 class="modal-title">Nie pamiętasz hasła?</h1>
+            <h1 class="modal-title">Zapomniałeś hasło?</h1>
             <div class="modal-email">
-                <label class="modal-label">Wprowadź email</label>
-                <input class="input modal-input">
+                <label class="label modal-label">Wprowadź email</label>
+                <input class="input modal-input" v-model="email">
             </div>
             <div class="modal__actions">
-                <button class="button modal-button" type="button"><span class="span-arrow">Zresetuj hasło</span></button>
+                <button class="button modal-button" :disabled="$v.email.$invalid" type="button" @click="onResetPassword"><span class="span-arrow">Zresetuj hasło</span></button>
             </div>
         </div>
             <div class="plane plane-login">
