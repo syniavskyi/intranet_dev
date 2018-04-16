@@ -7,12 +7,12 @@
             </div>
             <div class="registration-credentials">
                 <label for="fullName" class="label">Imię i nazwisko</label>
-                <input type="text" name="fullName" v-model="fullName" @change="checkEmail()" class="input">
+                <input type="text" name="fullName" v-model="fullName" @change="checkEmail()" class="input input-registration">
                 <label for="email" class="label">E-mail</label>
-                <input disabled="false" v-model="fullNameToEmail" class="input">
+                <input disabled="false" v-model="fullNameToEmail" class="input input-registration">
                 <label class="label" for="password">Hasło</label>
                 <div class="div-pass">
-                    <input class="input reg-pass-input" type="password">
+                    <input class="input reg-pass-input input-registration" type="password">
                     <button class="gen-pass">Generuj hasło</button>
                     <!-- <input class="gen-pass" value="Generuj Hasło">  -->
                 </div>
