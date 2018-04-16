@@ -56,7 +56,7 @@ export default {
         this.$store.dispatch('checkEmail', this.email);
     },
     getFullNameToEmail() {
-        this.$store.dispatch('fullNameToEmail', this.fullName, this.email);
+        this.$store.dispatch('fullNameToEmail', {name: this.fullName, email: this.email});
         // return this.fullNameToEmail;
     }
   },
@@ -65,6 +65,7 @@ export default {
         return this.$store.getters.roleList;
     },
     fullNameToEmail() {
+        // this.getFullNameToEmail;
         return this.$store.getters.prefixEmail;
         // this.$store.dispatch('fullNameToEmail', this.fullName, this.email)
         // var sEmail = this.fullName.replace(" ", ".").toLowerCase(),

@@ -60,14 +60,14 @@ const actions = {
             }
         });
     },
-    fullNameToEmail({commit, state}, fullName, email) {
-        var sEmail = fullName.replace(" ", ".").toLowerCase(),
+    fullNameToEmail({commit, state}, data) {
+        var sEmail = data.fullName.replace(" ", ".").toLowerCase(),
             sDomain = "@btech.pl",
             sReturnEmail;
 
-        fullName === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
-        email = sReturnEmail;
-        commit('ADD_PREFIX_EMAIL', email);
+        data.fullName === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
+        data.email = sReturnEmail;
+        commit('ADD_PREFIX_EMAIL', data.email);
         // return sReturnEmail;
     }
 };
