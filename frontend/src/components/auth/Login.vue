@@ -1,7 +1,7 @@
 <template>
 	<div class="plane-parent plane-parent-login">
-        <div class="backdrop"></div>
-        <div class="modal">
+        <div class="backdrop" v-if="showRemindPassword"></div>
+        <div class="modal" v-if="showRemindPassword">
             <h1 class="modal-title">Zapomniałeś hasło?</h1>
             <div class="modal-email">
                 <label class="label modal-label">Wprowadź email</label>

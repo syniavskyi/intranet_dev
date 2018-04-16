@@ -22,7 +22,7 @@
 
 .backdrop { 
     position: fixed;
-    /* display: none; */
+    display: flex;
     top: 0;
     left: 0;
     z-index: 200;
