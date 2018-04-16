@@ -49,7 +49,8 @@ export default {
     };
   },
   created() {
-      this.$store.dispatch('getRoleList');
+    //   this.$store.dispatch('getRoleList');
+    return this.$store.getters.roleList;
     // axios.get("/api/rolesList").then(res => {
     //     const data = res.data;
 

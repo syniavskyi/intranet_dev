@@ -6,14 +6,17 @@ const state = {
 };
 
 const mutations = {
-
+    GET_ROLE_LIST(state, data) {
+        state.role.push(data);
+    }
 };
 
 const actions = {
     getRoleList({commit}) {
-        var vm = this;
+        // var vm = this;
         axios.get("/api/rolesList").then(res => {
             const data = res.data;
+            // commit('GET_ROLE_LIST');
 
             for(let key in data) {
                 const role = data[key];
@@ -21,15 +24,18 @@ const actions = {
                 let toLower = data[key].roleName.slice(1, data[key].roleName.length).toLowerCase();
                 data[key].roleName = upper + toLower;
                 role.roleName = data[key].roleName;
-                
-                role.push(role.roleName);
+                commit('GET_ROLE_LIST', role.roleName);
+
+                // state.role.push(role.roleName);
             }
         });
     }
 };
 
 const getters = {
-
+    roleList() {
+        return state.role;
+    }
 };
 
 export default {
