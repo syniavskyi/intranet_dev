@@ -10,9 +10,8 @@
                     <label class="label label-login-email">Użytkownik</label>
                     <input type="password" class="input input-login-pass" v-model="password" @blur="$v.password.$touch()">
                     <label for="password" class="label label-login-pass">Hasło</label>
-                    <p class="forgot-pass">Zapomniałeś hasło?</p>
+                    <p class="forgot-pass" @click="onForgotPassword">Zapomniałeś hasło?</p>
                     <button class="button" :disabled="$v.$invalid" @click="onSubmit"><span>Zaloguj</span></button>
-                    
                     <p v-if="loginError"> Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
                 </div>
             </div>
@@ -26,7 +25,8 @@
 	    data () {
 	        return {
                 username: '',
-                password: ''
+                password: '',
+                showRemindPassword: false
 	        }
         },
         validations: {
@@ -44,11 +44,14 @@
                     username: this.username,
                     password: this.password
                 })
+            },
+            onForgotPassword() {
+                this.showRemindPassword = true 
             }
         },
         computed: {
             loginError() {
-                return this.$store.getters.loginError
+                return this.$store.getters.isLoginError
             }
         },
         created() {

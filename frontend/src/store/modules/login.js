@@ -70,6 +70,7 @@ const actions = {
         })
     },
     tryAutoLogin({commit}) {
+        commit('SET_LOGIN_ERROR', false)
         const token = localStorage.getItem('token')
         if (!token) {
             return 
