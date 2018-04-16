@@ -15,6 +15,7 @@ public class UserController {
     @Autowired
     private UserService userService;  
 
+    @CrossOrigin
     @PostMapping(value="/api/register") 
     public String register(@RequestBody UserRegistration userRegistration) {
     	
@@ -27,11 +28,13 @@ public class UserController {
         return "Account has been created successfully and is ready to use";
     }
 
+    @CrossOrigin
     @GetMapping(value="/api/users")
     public List<User> users() {
         return userService.getAllUsers();
     }
 
+    @CrossOrigin
     @GetMapping(value="/api/getUsername")
     public String getUsername() {
     	String name = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -41,11 +44,13 @@ public class UserController {
         return name;
     }
     
+    @CrossOrigin
     @RequestMapping(value = "/api/users/{id}", method = RequestMethod.GET)
     public User getUserDetail(@PathVariable Long id) {
 		return userService.getUserById(id);
     }
     
+    @CrossOrigin
     @RequestMapping(value = "/api/user/{username}", method = RequestMethod.GET)
     public User getUserDetail(@PathVariable String username) {
 		return userService.getUser(username);

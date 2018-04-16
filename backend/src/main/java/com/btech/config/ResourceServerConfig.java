@@ -2,6 +2,7 @@ package com.btech.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -25,7 +26,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 							 .accessDeniedPage("/accessDenied")
 							 .and().authorizeRequests()
 							 .antMatchers("/api/public").permitAll()
-							 .antMatchers("/api/secured").authenticated();
+							 .antMatchers("/oauth/token").permitAll()
+							 .antMatchers("/api/secured").authenticated()
+					         .antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll();
 	}
 
 	@Override
