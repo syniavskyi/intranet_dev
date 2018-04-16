@@ -2,12 +2,20 @@ import axios from 'axios'
 import router from '@/router/index.js'
 
 const state = {
-    role: []
+    userRoles: [],
+    emails: [],
+    email: ''
 };
 
 const mutations = {
     GET_ROLE_LIST(state, data) {
-        state.role.push(data);
+        state.userRoles.push(data);
+    },
+    ADD_EMAILS(state, data) {
+        state.emails.push(data);
+    },
+    ADD_PREFIX_EMAIL(state, data) {
+        state.email = data;
     }
 };
 
@@ -25,12 +33,54 @@ const actions = {
                 commit('GET_ROLE_LIST', role.roleName);
             }
         });
+    },
+    checkEmail({commit, state}, email) {
+        axios.get('/api/emailList').then(res => {
+            const data = res.data;
+
+            for(let key in data) {
+                const email = data[key];
+
+                email.email = data[key].email;
+                commit('ADD_EMAILS', email.email);
+            }
+
+            if(state.emails.length > 0) {
+                var bIsEmail;
+                
+                for (var i = 0; i < state.emails.length; i++) {
+                    if (email === state.emails[i]) {
+                        bIsEmail = true;
+                        break;
+                    } else {
+                       bIsEmail = false; 
+                    }
+                }
+                bIsEmail ? alert('znaleziono email') : alert('nie znaleziono adresu email');
+            }
+        });
+    },
+    fullNameToEmail({commit, state}, fullName, email) {
+        var sEmail = fullName.replace(" ", ".").toLowerCase(),
+            sDomain = "@btech.pl",
+            sReturnEmail;
+
+        fullName === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
+        email = sReturnEmail;
+        commit('ADD_PREFIX_EMAIL', email);
+        // return sReturnEmail;
     }
 };
 
 const getters = {
     roleList() {
-        return state.role;
+        return state.userRoles;
+    },
+    emails() {
+        return state.emails;
+    },
+    prefixEmail() {
+        return state.email;
     }
 };
 

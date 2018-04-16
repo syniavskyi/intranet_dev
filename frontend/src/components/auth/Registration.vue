@@ -19,7 +19,7 @@
                 <div class="div-select">
                     <label class="label" for="role">Rola</label>
                     <select class="select">
-                        <option v-for="roles in role">{{ roles }}</option>
+                        <option v-for="role in getRoleList">{{ role }}</option>
                     </select>
                 </div>
                 <div class="div-select">
@@ -48,51 +48,16 @@ export default {
       emails: [ ]
     };
   },
-  created() {
-    //   this.$store.dispatch('getRoleList');
-    // return this.$store.getters.roleList;
-    return this.getRoleList;
-    // axios.get("/api/rolesList").then(res => {
-    //     const data = res.data;
-
-    //     for(let key in data) {
-    //         const role = data[key];
-    //         let upper = data[key].roleName.substring(0, 1);
-    //         let toLower = data[key].roleName.slice(1, data[key].roleName.length).toLowerCase();
-    //         data[key].roleName = upper + toLower;
-    //         role.roleName = data[key].roleName;
-            
-    //         this.role.push(role.roleName);
-    //     }
-    // });
+  beforeCreate() {
+      this.$store.dispatch('getRoleList');
   },
   methods: {
     checkEmail() {
-        var vm = this;
-        axios.get('/api/emailList').then(res => {
-            const data = res.data;
-
-            for(let key in data) {
-                const email = data[key];
-                email.email = data[key].email;
-
-                this.emails.push(email.email);
-            }
-
-            if(vm.emails.length > 0) {
-                var bIsEmail;
-                
-                for (var i = 0; i < vm.emails.length; i++) {
-                    if (vm.email === vm.emails[i]) {
-                        bIsEmail = true;
-                        break;
-                    } else {
-                       bIsEmail = false; 
-                    }
-                }
-                bIsEmail ? alert('znaleziono email') : alert('nie znaleziono adresu email');
-            }
-        });
+        this.$store.dispatch('checkEmail', this.email);
+    },
+    getFullNameToEmail() {
+        this.$store.dispatch('fullNameToEmail', this.fullName, this.email);
+        // return this.fullNameToEmail;
     }
   },
   computed: {
@@ -100,14 +65,16 @@ export default {
         return this.$store.getters.roleList;
     },
     fullNameToEmail() {
-    var sEmail = this.fullName.replace(" ", ".").toLowerCase(),
-        sDomain = "@btech.pl",
-        sReturnEmail;
+        return this.$store.getters.prefixEmail;
+        // this.$store.dispatch('fullNameToEmail', this.fullName, this.email)
+        // var sEmail = this.fullName.replace(" ", ".").toLowerCase(),
+        //     sDomain = "@btech.pl",
+        //     sReturnEmail;
 
-    this.fullName === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
-    this.email = sReturnEmail;
+        // this.fullName === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
+        // this.email = sReturnEmail;
 
-    return sReturnEmail;
+        // return sReturnEmail;
     },
     generatePassword() {
 
