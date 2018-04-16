@@ -8,6 +8,7 @@ import VueAuthenticate from 'vue-authenticate'
 import axios from 'axios'
 import Vuelidate from 'vuelidate'
 import Vuex from 'vuex'
+import Icon from 'vue-awesome/icons'
 
 // import { store } from './store/store'
 import store from './store/store'
@@ -16,6 +17,9 @@ Vue.use(Vuelidate);
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
 Vue.use(VueAuthenticate, {});
+
+
+Vue.component('icon', Icon)
 
 require('./assets/styles/style.css');
 require('./assets/styles/shared.css');
