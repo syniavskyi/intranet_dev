@@ -2,6 +2,7 @@
 	<div class="plane-parent plane-parent-login">
         <div class="backdrop" v-if="showRemindPassword"></div>
         <div class="modal" v-if="showRemindPassword">
+            <img src="../../assets/images/if_x.png" class="modal-exit">
             <h1 class="modal-title">Zapomniałeś hasło?</h1>
             <div class="modal-email">
                 <label class="label modal-label">Wprowadź email</label>
@@ -25,7 +26,7 @@
                     </div>
                     <label for="password" class="label label-login-pass">Hasło</label>
                     <p class="forgot-pass" @click="onForgotPassword">Nie pamiętasz hasła?</p>
-                    <p class="login-error" v-if="loginError"> Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
+                    <p class="login-error" v-if="loginError">Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
                     <button class="button login-button" :disabled="$v.password.$invalid" @click="onSubmit"><span class="span-arrow">Zaloguj</span></button>
                 </div>
             </div>
