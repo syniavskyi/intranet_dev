@@ -74,16 +74,24 @@ export default {
 
                 this.emails.push(email.email);
             }
+            for (var i = 0; i < this.emails.length; i++) {
+                if (this.email === this.emails[i]) {
+                    alert('znaleziono email');
+                } else {
+                    alert('nie znaleziono adresu email');
+                }
+            } 
         });
         // if(this.emails.length > 0) {
             // console.log(this.emails);
             // console.log(Array.values(this.emails));
             // var iLength = Object.keys(this.emails).length;
-            for (var i = 0; i < this.emails.length; i++) {
-                if (email === this.emails[i]) {
-                    
-                }
-            } 
+            // for (var i = 0; i < this.emails.length; i++) {
+            //     if (this.email == this.emails[i]) {
+            //         console.log(this.email);
+            //         console.log(this.emails[i]);
+            //     }
+            // } 
         // }
     }
   },
