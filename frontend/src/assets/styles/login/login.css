@@ -50,7 +50,7 @@ body {
     min-height: 37rem;
 }
 
-[class*="-login-"] {
+[class*="input-login-"] {
     width: 15rem;
 }
 
