@@ -1,5 +1,16 @@
 <template>
 	<div class="plane-parent plane-parent-login">
+        <div class="backdrop" v-if="showRemindPassword"></div>
+        <div class="modal" v-if="showRemindPassword">
+            <h1 class="modal-title">Zapomniałeś hasło?</h1>
+            <div class="modal-email">
+                <label class="label modal-label">Wprowadź email</label>
+                <input class="input modal-input">
+            </div>
+            <div class="modal__actions">
+                <button class="button" type="button">Zresetuj hasło<span class=""></span></button>
+            </div>
+        </div>
             <div class="plane plane-login">
                 <div class="plane-left">
                     <img class="img-user" src="../../assets/images/grouper-256.png">
