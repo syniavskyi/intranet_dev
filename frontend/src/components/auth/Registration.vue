@@ -7,7 +7,7 @@
             </div>
             <div class="registration-credentials">
                 <label for="fullName" class="label">Imię i nazwisko</label>
-                <input type="text" name="fullName" v-model="fullName" @change="checkEmail()" class="input input-registration">
+                <input type="text" name="fullName" @input="getFullNameToEmail()" v-model="fullName" @change="checkEmail()" class="input input-registration">
                 <label for="email" class="label">E-mail</label>
                 <input disabled="false" v-model="fullNameToEmail" class="input input-registration">
                 <label class="label" for="password">Hasło</label>
@@ -53,11 +53,10 @@ export default {
   },
   methods: {
     checkEmail() {
-        this.$store.dispatch('checkEmail', this.email);
+        this.$store.dispatch('checkEmail', this.fullNameToEmail);
     },
     getFullNameToEmail() {
         this.$store.dispatch('fullNameToEmail', {name: this.fullName, email: this.email});
-        // return this.fullNameToEmail;
     }
   },
   computed: {
@@ -65,17 +64,7 @@ export default {
         return this.$store.getters.roleList;
     },
     fullNameToEmail() {
-        // this.getFullNameToEmail;
         return this.$store.getters.prefixEmail;
-        // this.$store.dispatch('fullNameToEmail', this.fullName, this.email)
-        // var sEmail = this.fullName.replace(" ", ".").toLowerCase(),
-        //     sDomain = "@btech.pl",
-        //     sReturnEmail;
-
-        // this.fullName === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
-        // this.email = sReturnEmail;
-
-        // return sReturnEmail;
     },
     generatePassword() {
 

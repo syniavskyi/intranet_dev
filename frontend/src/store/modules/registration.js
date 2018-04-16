@@ -34,7 +34,7 @@ const actions = {
             }
         });
     },
-    checkEmail({commit, state}, email) {
+    checkEmail({commit, state}, typedEmail) {
         axios.get('/api/emailList').then(res => {
             const data = res.data;
 
@@ -49,7 +49,7 @@ const actions = {
                 var bIsEmail;
                 
                 for (var i = 0; i < state.emails.length; i++) {
-                    if (email === state.emails[i]) {
+                    if (typedEmail === state.emails[i]) {
                         bIsEmail = true;
                         break;
                     } else {
@@ -61,14 +61,13 @@ const actions = {
         });
     },
     fullNameToEmail({commit, state}, data) {
-        var sEmail = data.fullName.replace(" ", ".").toLowerCase(),
+        var sEmail = data.name.replace(" ", ".").toLowerCase(),
             sDomain = "@btech.pl",
             sReturnEmail;
 
-        data.fullName === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
+        data.name === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
         data.email = sReturnEmail;
         commit('ADD_PREFIX_EMAIL', data.email);
-        // return sReturnEmail;
     }
 };
 
