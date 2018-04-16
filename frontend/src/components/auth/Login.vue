@@ -1,6 +1,6 @@
 <template>
-	<div class="plane-parent">
-            <div class="plane">
+	<div class="plane-parent plane-parent-login">
+            <div class="plane plane-login">
                 <div class="plane-left">
                     <img class="img-user" src="../../assets/images/grouper-256.png">
                     <p class="p-login">Zaloguj się do Intranetu</p>

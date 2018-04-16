@@ -1,6 +1,6 @@
 <template>
-    <div class="plane-parent">
-        <div class="plane">
+    <div class="plane-parent plane-parent-registration">
+        <div class="plane plane-registration">
             <div class="plane-left">
                 <img class="img-user" src="../../assets/images/grouper-256.png">
                 <p class="p-registration">Rejestracja użytkownika</p>

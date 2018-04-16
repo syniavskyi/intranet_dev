@@ -7,7 +7,7 @@ body {
     padding: 0;
     font-family: 'Open Sans';
 }
-.plane-parent {
+.plane-parent-registration {
     min-height: 47rem;
 /*    min-height: 100%;*/
     flex-shrink: 0;
@@ -16,7 +16,7 @@ body {
     width: 100%;
 }
 
-.plane {
+.plane-registration {
     min-height: 47rem;
     flex-shrink: 0;
 }
