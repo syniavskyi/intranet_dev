@@ -4,8 +4,8 @@ import router from '@/router/index.js'
 const state = {
     userRoles: [],
     emails: [],
-    email: '',
-    password: ''
+    email: ''
+    
 };
 
 const mutations = {
@@ -17,9 +17,6 @@ const mutations = {
     },
     ADD_PREFIX_EMAIL(state, data) {
         state.email = data;
-    },
-    PASSWORD(state, data) {
-        state.password = data;
     }
 };
 
@@ -73,23 +70,8 @@ const actions = {
         data.name === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
         data.email = sReturnEmail;
         commit('ADD_PREFIX_EMAIL', data.email);
-    },
-    generatePassword({commit, state}) {
-        const bcrypt = require('bcryptjs')
-        var nLength = 8,
-            sCharset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]\:;?><,./-=",
-            sRetVal = "";
-
-        for (var i = 0, n = sCharset.length; i < nLength; ++i) {
-            sRetVal += sCharset.charAt(Math.floor(Math.random() * n));
-        }
-        bcrypt.genSalt(10, (error, salt) => {
-            bcrypt.hash(sRetVal, salt, (err, hash) => {
-                console.log(hash)
-            })
-        })
-        commit('PASSWORD', sRetVal);
     }
+
 };
 
 const getters = {
@@ -101,9 +83,6 @@ const getters = {
     },
     prefixEmail(state) {
         return state.email;
-    },
-    password(state) {
-        return state.password;
     }
 };
 

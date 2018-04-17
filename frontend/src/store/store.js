@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import login from './modules/login'
 import registration from './modules/registration'
 import dashboard from './modules/dashboard'
+import shared from './modules/shared'
 
 Vue.use(Vuex);
 
@@ -11,6 +12,7 @@ export default new Vuex.Store({
     modules: {
         login,
         registration,
-        dashboard
+        dashboard,
+        shared
     }
 });
