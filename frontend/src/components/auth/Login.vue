@@ -4,7 +4,6 @@
         <div class="modal" v-if="showRemindPassword">
             <div class="modal-header">
                 <h1 class="modal-title">Nie pamiętasz hasła?</h1>
-                <!-- <img src="../../assets/images/if_x.png" class="modal-exit"> -->
                 <button class="modal-exit" @click="switchForgotPassword">&#10006;</button>
             </div>
             <div class="modal-email">
