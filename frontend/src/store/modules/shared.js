@@ -4,7 +4,8 @@ import router from '@/router/index.js'
 
 const state = {
     idToken: null,
-    password: ''
+    password: '',
+    userRole: ''
 }
 
 const mutations = {
@@ -13,6 +14,9 @@ const mutations = {
     },
     SET_PASSWORD (state, data) {
         state.password = data;
+    },
+    SET_USER_ROLE (state, role) {
+        state.userRole = role;
     }
 }
 

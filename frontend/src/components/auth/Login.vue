@@ -84,7 +84,7 @@
                 this.eyeType = this.eyeType === 'eye' ? 'eye-slash' : 'eye'
             },
             onResetPassword(){ 
-                this.$store.dispatch('resetPassword', this.email)
+                this.$store.dispatch('generatePassword')
             }
         },
         computed: {

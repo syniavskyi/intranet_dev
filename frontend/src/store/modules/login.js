@@ -17,7 +17,6 @@ const mutations = {
 const actions = {
     login({commit, dispatch}, authData) {
         commit('CLEAR_AUTH_DATA');
-        //password: $2a$10$BC5wT8B8uSiPyWWQhYxmFuekdzDpUWnSPg4oPE2IQLSMJ/5EsXpD.
         var params = new URLSearchParams()
             params.append('grant_type', 'password')
             params.append('username', authData.username)
@@ -25,10 +24,7 @@ const actions = {
         axios({
             method: 'post',
             url: 'oauth/token',
-            auth: {
-            username: 'vuejs-client',
-            password: 'password'
-            },
+            auth: { username: 'vuejs-client', password: 'password' },
             headers: { "Content-type": "application/x-www-form-urlencoded; charset=utf-8" },
             data: params   
         }).then(res =>{
@@ -38,6 +34,7 @@ const actions = {
             localStorage.setItem('token', res.data.access_token)
             dispatch('setExpirationDate', res.data.expires_in)
             dispatch('setLogoutTimer', res.data.expires_in)
+            dispatch('getUserRole', res.data.access_token)
             router.replace('/dashboard')
         }).catch(error => {
             console.log(error)
@@ -67,6 +64,16 @@ const actions = {
         }
         commit('AUTH_USER', token )
         router.replace('/dashboard');
+    },
+    getUserRole({commit}, access_token){
+        var URL = '/api/getCurrentRole?access_token=' + access_token
+        axios.get(URL).then(res => {
+            const role = res.data.authority
+            localStorage.setItem('userRole', role)
+            commit('SET_USER_ROLE', role)
+        }).catch(error => {
+            console.log(error)
+        })
     }
 
 }
