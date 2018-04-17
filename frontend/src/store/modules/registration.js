@@ -4,7 +4,8 @@ import router from '@/router/index.js'
 const state = {
     userRoles: [],
     emails: [],
-    email: ''
+    email: '',
+    emailExists: false
 };
 
 const mutations = {
@@ -16,6 +17,9 @@ const mutations = {
     },
     ADD_PREFIX_EMAIL(state, data) {
         state.email = data;
+    },
+    EMAIL_EXISTS(state, data) {
+        state.emailExists = data;
     }
 };
 
@@ -57,7 +61,7 @@ const actions = {
                        bIsEmail = false; 
                     }
                 }
-                bIsEmail ? alert('znaleziono email') : alert('nie znaleziono adresu email');
+                commit('EMAIL_EXISTS', bIsEmail);
             }
         });
     },
@@ -82,6 +86,9 @@ const getters = {
     },
     prefixEmail(state) {
         return state.email;
+    },
+    isEmail(state) {
+        return state.emailExists;
     }
 };
 
