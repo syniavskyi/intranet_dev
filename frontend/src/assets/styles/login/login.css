@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,500,600,700');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
 body {
     height: 100vh;
     width: 100vw;
@@ -9,37 +11,60 @@ body {
 }
 
 .modal {
-    font-family: 'Raleway';
+    font-family: 'Lato';
     position: fixed;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-end;
+    justify-content: space-between;
+    /* align-items: flex-end; */
     z-index: 200;
     top: 15%;
     left: 17%;
     width: 60%;
     height: 17rem;
     background: white;
-    padding-top: 0;
-    /* padding-right: 0.5rem; */
-    padding-bottom: 1rem;
-    border: 1px solid #ccc;
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
-    border-radius: .5rem;
+    padding: 0;
+    margin: 0;
+    /* border: 1px solid #ccc; */
+    box-shadow: -1px 10px 10px rgba(0, 0, 0, 0.5);
+    border-radius: .3rem;
+}
+
+.modal-header {
+    padding: 0.5rem;
+    border: 0;
+    border-top-left-radius: .2rem;
+    border-top-right-radius: .2rem;
+    background: #ff974b;
+    color: white;
+    margin:0;
+    display: flex;
+    justify-content: space-between;
 }
 
 .modal-exit {
-    align-self: flex-end;
+    align-self: flex-start;
+    padding: .09rem;
+}
+
+.modal-exit:hover {
+    cursor: pointer;
+    background: lightgrey; 
+    padding: .09rem;
+    border-radius: 50%;
 }
 
 .modal-title {
-    /* width:  */
-    align-self: center;
+    margin: 0;
+    font-family: 'Lato';
 }
 
 .modal-email {
-    align-self: flex-end;
+    align-self: center;
+}
+
+.modal-label {
+    margin: 0;
 }
 
 .modal-input {
@@ -48,9 +73,8 @@ body {
 
 .modal-button {
     margin-top: 1rem;
+    align-self: center;
 }
-
-
 
 .plane-parent-login {
     flex-shrink: 0;
