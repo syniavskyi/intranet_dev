@@ -11,7 +11,7 @@ body {
 }
 
 .modal {
-    font-family: 'Lato';
+    font-family: 'Raleway';
     position: fixed;
     display: flex;
     flex-direction: column;
@@ -28,6 +28,8 @@ body {
     /* border: 1px solid #ccc; */
     box-shadow: -1px 10px 10px rgba(0, 0, 0, 0.5);
     border-radius: .3rem;
+    min-width: 15.5rem;
+    min-height: 17rem;
 }
 
 .modal-header {
@@ -37,17 +39,9 @@ body {
     border-top-right-radius: .2rem;
     background: #ff974b;
     color: white;
-    margin:0;
+    margin:0rem;
     display: flex;
     justify-content: space-between;
-}
-
-.modal-exit {
-    /* align-self: flex-start; */
-}
-
-.modal-exit:hover {
-    cursor: pointer;
 }
 
 .modal-title {
@@ -55,8 +49,24 @@ body {
     font-family: 'Lato';
 }
 
+.modal-exit {
+    /* align-self: flex-start; */
+    font-size: 1.3rem;
+    height: 1.5rem;
+    background: transparent;
+    border:0;
+    color: white;
+}
+
+.modal-exit:hover {
+    cursor: pointer;
+    color: lightgrey;
+}
+
 .modal-email {
+    padding-left: 1rem;
     align-self: center;
+    color: grey;
 }
 
 .modal-label {
@@ -64,11 +74,11 @@ body {
 }
 
 .modal-input {
-    width: 12rem;
+    width: 13rem;
 }
 
 .modal-button {
-    margin-top: 1rem;
+    margin-bottom: 1rem;
     align-self: center;
 }
 
