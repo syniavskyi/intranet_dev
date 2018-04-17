@@ -9,7 +9,10 @@
                 <label for="fullName" class="label">Imię i nazwisko</label>
                 <input type="text" name="fullName" @input="getFullNameToEmail()" v-model="fullName" @change="checkEmail()" class="input input-registration">
                 <label for="email" class="label">E-mail</label>
-                <input disabled="false" v-model="fullNameToEmail" class="input input-registration">
+                <div class="input-with-checkbox">
+                    <input disabled="false" v-model="fullNameToEmail" class="input input-registration input-highlight">
+                    <input class="checkbox" type="checkbox" disabled>
+                </div>
                 <label class="label" for="password">Hasło</label>
                 <div class="div-pass">
                     <input class="input reg-pass-input input-registration" type="password" v-model="setPassword">

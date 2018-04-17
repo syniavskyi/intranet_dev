@@ -31,6 +31,24 @@ body {
     justify-content: center;
 }
 
+input[class*="input-highlight"] {
+    width: 14rem;
+}
+
+.input-with-checkbox {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: flex-start;
+}
+.checkbox {
+    padding: 0;
+    margin: 0;
+    height:2rem;
+    width: 1rem;
+    color: white;
+}
+
 .input-registration {
     width: 15rem;
 }
@@ -59,12 +77,9 @@ body {
     width: 5rem;
     z-index: 100;
     background: transparent;
-    /* border: 2px 2px solid transparent; */
     border-left: 2px solid transparent;
     border-right: 2px solid transparent;
     border-top: 2px solid transparent;
-    /* border-bottom: 2px solid grey; */
-    /* border-bottom: 2px solid grey; */
     transition: border 0.5s ease;
 }
 
