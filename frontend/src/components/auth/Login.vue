@@ -2,11 +2,16 @@
 	<div class="plane-parent plane-parent-login">
         <div class="backdrop" v-if="showRemindPassword"></div>
         <div class="modal" v-if="showRemindPassword">
+<<<<<<< HEAD
             <div class="modal-header">
                 <h1 class="modal-title">Nie pamiętasz hasła?</h1>
                 <!-- <img src="../../assets/images/if_x.png" class="modal-exit"> -->
                 <p class="modal-exit">&#10006;</p>
             </div>
+=======
+            <img src="../../assets/images/if_x.png" class="modal-exit" @click="showRemindPassword = 'false'">
+            <h1 class="modal-title">Zapomniałeś hasło?</h1>
+>>>>>>> e42df2a0e93ad17def21fa5e31700470e7b80337
             <div class="modal-email">
                 <label class="modal-label">Wprowadź email</label>
                 <input class="input modal-input" v-model="email">
@@ -26,7 +31,7 @@
                         <button class="show-pass-eye"  @click="switchPasswordVisibility"><icon :name="eyeType"></icon></button>
                     </div>
                     <label for="password" class="label label-login-pass">Hasło</label>
-                    <p class="forgot-pass" @click="onForgotPassword">Nie pamiętasz hasła?</p>
+                    <p class="forgot-pass" @click="showRemindPassword = 'true'">Nie pamiętasz hasła?</p>
                     <p class="login-error" v-if="loginError">Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
                     <button class="button login-button" :disabled="$v.password.$invalid" @click="onSubmit"><span class="span-arrow">Zaloguj</span></button>
                 </div>
