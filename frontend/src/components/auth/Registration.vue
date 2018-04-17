@@ -7,19 +7,18 @@
             </div>
             <div class="registration-credentials">
                 <label for="fullName" class="label">Imię i nazwisko</label>
-                <input type="text" name="fullName" v-model="fullName" @change="checkEmail()" class="input">
+                <input type="text" name="fullName" @input="getFullNameToEmail()" v-model="fullName" @change="checkEmail()" class="input input-registration">
                 <label for="email" class="label">E-mail</label>
-                <input disabled="false" v-model="fullNameToEmail" class="input">
+                <input disabled="false" v-model="fullNameToEmail" class="input input-registration">
                 <label class="label" for="password">Hasło</label>
                 <div class="div-pass">
-                    <input class="input reg-pass-input" type="password">
-                    <button class="gen-pass">Generuj hasło</button>
-                    <!-- <input class="gen-pass" value="Generuj Hasło">  -->
+                    <input class="input reg-pass-input input-registration" type="password" v-model="setPassword">
+                    <button class="gen-pass" @click="generatePassword">Generuj hasło</button>
                 </div>
                 <div class="div-select">
                     <label class="label" for="role">Rola</label>
                     <select class="select">
-                        <option v-for="roles in role">{{ roles }}</option>
+                        <option :key="role" v-for="role in getRoleList">{{ role }}</option>
                     </select>
                 </div>
                 <div class="div-select">
@@ -31,7 +30,6 @@
                 </div> 
                 <button class="button"><span class="span-arrow">Zarejestruj</span></button>
             </div>
-        <!-- <button class="button"><span>Zarejestruj</span></button> -->
         </div>
     </div>
 </template>
@@ -44,68 +42,33 @@ export default {
     return {
       fullName: "",
       email: "",
-      role: [ ],
-      emails: [ ]
+      role: [ ]
     };
   },
-  created() {
-    axios.get("/api/rolesList").then(res => {
-        const data = res.data;
-
-        for(let key in data) {
-            const role = data[key];
-            let upper = data[key].roleName.substring(0, 1);
-            let toLower = data[key].roleName.slice(1, data[key].roleName.length).toLowerCase();
-            data[key].roleName = upper + toLower;
-            role.roleName = data[key].roleName;
-            
-            this.role.push(role.roleName);
-        }
-    });
+  beforeCreate() {
+      this.$store.dispatch('getRoleList');
   },
   methods: {
     checkEmail() {
-        axios.get('/api/emailList').then(res => {
-            const data = res.data;
-
-            for(let key in data) {
-                const email = data[key];
-                email.email = data[key].email;
-
-                this.emails.push(email.email);
-            }
-            for (var i = 0; i < this.emails.length; i++) {
-                if (this.email === this.emails[i]) {
-                    alert('znaleziono email');
-                } else {
-                    alert('nie znaleziono adresu email');
-                }
-            } 
-        });
-        // if(this.emails.length > 0) {
-            // console.log(this.emails);
-            // console.log(Array.values(this.emails));
-            // var iLength = Object.keys(this.emails).length;
-            // for (var i = 0; i < this.emails.length; i++) {
-            //     if (this.email == this.emails[i]) {
-            //         console.log(this.email);
-            //         console.log(this.emails[i]);
-            //     }
-            // } 
-        // }
+        this.$store.dispatch('checkEmail', this.fullNameToEmail);
+    },
+    getFullNameToEmail() {
+        this.$store.dispatch('fullNameToEmail', {name: this.fullName, email: this.email});
+    },
+    generatePassword() {
+        this.$store.dispatch('generatePassword');
     }
   },
   computed: {
-    fullNameToEmail() {
-    var sEmail = this.fullName.replace(" ", ".").toLowerCase(),
-        sDomain = "@btech.pl",
-        sReturnEmail;
-
-    this.fullName === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
-    this.email = sReturnEmail;
-
-    return sReturnEmail;
+    getRoleList() {
+        return this.$store.getters.roleList;
     },
+    fullNameToEmail() {
+        return this.$store.getters.prefixEmail;
+    },
+    setPassword() {
+        return this.$store.getters.password;
+    }
   }
 };
 </script>

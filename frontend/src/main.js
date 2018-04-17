@@ -8,6 +8,7 @@ import VueAuthenticate from 'vue-authenticate'
 import axios from 'axios'
 import Vuelidate from 'vuelidate'
 import Vuex from 'vuex'
+import Icon from 'vue-awesome/icons'
 
 // import { store } from './store/store'
 import store from './store/store'
@@ -17,6 +18,9 @@ Vue.use(Vuex);
 Vue.use(VueAxios, axios);
 Vue.use(VueAuthenticate, {});
 
+
+Vue.component('icon', Icon)
+
 require('./assets/styles/style.css');
 require('./assets/styles/shared.css');
 // require('./assets/styles/login.css')
@@ -25,8 +29,8 @@ require('./assets/styles/registration/registration.css');
 
 Vue.config.productionTip = false
 
-// axios.defaults.baseURL = 'https://btech-intranet.herokuapp.com/api';
-axios.defaults.baseURL = 'http://10.0.2.8:8080/';
+axios.defaults.baseURL = 'https://btech-intranet.herokuapp.com';
+// axios.defaults.baseURL = 'http://10.0.2.8:8080/';
 
 /* eslint-disable no-new */
 new Vue({

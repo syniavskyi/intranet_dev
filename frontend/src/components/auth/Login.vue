@@ -1,5 +1,18 @@
 <template>
 	<div class="plane-parent plane-parent-login">
+        <div class="backdrop" v-if="showRemindPassword"></div>
+        <div class="modal" v-if="showRemindPassword">
+            <div class="modal-header">
+                <h1 class="modal-title">Nie pamiętasz hasła?</h1>
+                <!-- <img src="../../assets/images/if_x.png" class="modal-exit"> -->
+                <button class="modal-exit" @click="switchForgotPassword">&#10006;</button>
+            </div>
+            <div class="modal-email">
+                <label class="modal-label">Wprowadź email</label>
+                <input class="input modal-input" v-model="email">
+            </div>
+            <button class="button modal-button" :disabled="$v.email.$invalid" type="button" @click="onResetPassword"><span class="span-arrow">Zresetuj hasło</span></button>
+        </div>
             <div class="plane plane-login">
                 <div class="plane-left">
                     <img class="img-user" src="../../assets/images/grouper-256.png">
@@ -8,18 +21,23 @@
                 <div class="login-credentials">
                     <input type="email" class="input input-login-email" v-model="username" @blur="$v.username.$touch()">
                     <label class="label label-login-email">Użytkownik</label>
-                    <input type="password" @keyup.enter="onSubmit" class="input input-login-pass" v-model="password" @blur="$v.password.$touch()">
+                    <div class="login-pass-div">
+                        <input :type="passwordFieldType" @keyup.enter="onSubmit" class="input input-login-pass" v-model="password" @blur="$v.password.$touch()">
+                        <button class="show-pass-eye"  @click="switchPasswordVisibility"><icon :name="eyeType"></icon></button>
+                    </div>
                     <label for="password" class="label label-login-pass">Hasło</label>
-                    <p class="forgot-pass" @click="onForgotPassword">Zapomniałeś hasło?</p>
-                    <p class="login-error" v-if="loginError"> Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
-                    <button class="button login-button" :disabled="$v.$invalid" @click="onSubmit"><span class="span-arrow">Zaloguj</span></button>
+                    <p class="forgot-pass" @click="switchForgotPassword">Nie pamiętasz hasła?</p>
+                    <p class="login-error" v-if="loginError">Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
+                    <button class="button login-button" :disabled="$v.password.$invalid" @click="onSubmit"><span class="span-arrow">Zaloguj</span></button>
                 </div>
             </div>
         </div>
 </template>
 
 <script>
-    import { required, minLength } from 'vuelidate/lib/validators'
+    import { required, minLength, email } from 'vuelidate/lib/validators'
+    import Icon from 'vue-awesome/components/Icon'
+
 	export default {
 	    name: 'Login',
 	    data () {
@@ -27,8 +45,14 @@
                 username: '',
                 password: '',
                 showRemindPassword: false,
-                isLoading: false
+                isLoading: false,
+                passwordFieldType: 'password',
+                eyeType: 'eye',
+                email:''
 	        }
+        },
+        components: {
+            Icon
         },
         validations: {
             password: {
@@ -37,6 +61,10 @@
             },
             username: {
                 required
+            },
+            email: {
+                required,
+                email
             }
         },
         methods: {
@@ -48,8 +76,15 @@
                 })
                 this.isLoading = false
             },
-            onForgotPassword() {
-                this.showRemindPassword = true 
+            switchForgotPassword() {
+                this.showRemindPassword = !this.showRemindPassword
+            },
+            switchPasswordVisibility() {
+                this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
+                this.eyeType = this.eyeType === 'eye' ? 'eye-slash' : 'eye'
+            },
+            onResetPassword(){ 
+                this.$store.dispatch('resetPassword', this.email)
             }
         },
         computed: {
@@ -63,3 +98,24 @@
 	}
 </script>
 
+<style>
+.show-pass-eye {
+   font-size: 0.8rem;
+   align-self: right;
+   order: 1;
+   height: 2.5rem;
+   width: 1rem;
+   z-index: 100;
+   background: transparent;
+   transition: border 0.5s ease;
+   border: none;
+   padding: none;
+   margin:none;
+}
+.show-pass-eye:hover {
+    cursor: pointer;
+}
+.show-pass-eye:focus {
+    outline: none;
+}
+</style>

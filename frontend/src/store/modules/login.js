@@ -2,7 +2,6 @@ import axios from 'axios'
 import router from '@/router/index.js'
 
 const state = {
-    idToken: null,
     loginError: false
 }
 
@@ -12,14 +11,10 @@ const mutations = {
     },
     SET_LOGIN_ERROR(state, isError){
         state.loginError = isError
-    },
-    CLEAR_AUTH_DATA (state){
-        state.idToken = null;
-    } 
+    }
 }
 
 const actions = {
-    
     login({commit, dispatch}, authData) {
         commit('CLEAR_AUTH_DATA');
         //password: $2a$10$BC5wT8B8uSiPyWWQhYxmFuekdzDpUWnSPg4oPE2IQLSMJ/5EsXpD.
@@ -59,16 +54,6 @@ const actions = {
         const expirationDate = new Date(now.getTime() + expiresIn * 1000)
         localStorage.setItem('expirationDate', expirationDate);
     },
-    logout({commit}){
-        axios.get("/api/logout").then(res => {
-            commit('CLEAR_AUTH_DATA');
-            localStorage.removeItem('expirationDate')
-            localStorage.removeItem('token')
-            router.replace('/signin');
-        }).catch(error => {
-            console.log(error)
-        })
-    },
     tryAutoLogin({commit}) {
         commit('SET_LOGIN_ERROR', false)
         const token = localStorage.getItem('token')
@@ -83,6 +68,7 @@ const actions = {
         commit('AUTH_USER', token )
         router.replace('/dashboard');
     }
+
 }
 
 const getters = {
@@ -91,7 +77,8 @@ const getters = {
     },
     isLoginError(state){
         return state.loginError
-    }
+    },
+    
 }
 
 export default {

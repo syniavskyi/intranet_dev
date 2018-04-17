@@ -9,9 +9,7 @@ body {
 }
 .plane-parent-registration {
     min-height: 47rem;
-/*    min-height: 100%;*/
     flex-shrink: 0;
-/*    flex: 0;*/
     height: 100%;
     width: 100%;
 }
@@ -33,6 +31,10 @@ body {
     justify-content: center;
 }
 
+.input-registration {
+    width: 15rem;
+}
+
 .p-registration {
     text-align: center;
     max-width: 11rem;
@@ -44,7 +46,7 @@ body {
 }
 
 .reg-pass-input {
-    width: 10.5rem;
+    width: 9.7rem;
     order: 0;
 }
 
@@ -53,17 +55,21 @@ body {
     font-family: 'Raleway';
     align-self: flex-start;
     order: 1;
-    height: 2.5rem;
+    height: 2.525rem;
     width: 5rem;
     z-index: 100;
     background: transparent;
-    border: 2px 2px solid transparent;
-    border-bottom: 2px solid grey;
+    /* border: 2px 2px solid transparent; */
+    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
+    border-top: 2px solid transparent;
+    /* border-bottom: 2px solid grey; */
+    /* border-bottom: 2px solid grey; */
     transition: border 0.5s ease;
 }
 
 .gen-pass:hover {
-    cursor: text;
+    cursor: pointer;
     border: 2px solid orange;
 }
 
@@ -102,7 +108,7 @@ select {
 }
 
 @media (min-width: 43rem) {
-    .plane {
+    .plane-registration {
         display: flex;
         width: 70%;
         height: 70%;
@@ -135,14 +141,14 @@ select {
         margin-top: 1rem;
         line-height: 2rem;
     }
-    .plane-parent {
+    .plane-parent-registration {
         height: 100%;
         min-height: 0;
     }
 }
 
 @media (min-height: 0rem) and (max-height: 35rem) and (min-width: 43rem) {
-    .plane {
+    .plane-registration {
         display: flex;
         width: 100%;
         height: 100%;
@@ -152,7 +158,7 @@ select {
         min-height: 32rem;
         flex-shrink: 0;
     }
-    .plane-parent {
+    .plane-parent-registration {
         min-height: 32rem;
         height: 100%;
         flex-shrink: 0;

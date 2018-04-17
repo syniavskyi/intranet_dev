@@ -8,6 +8,7 @@ import Registration from '@/components/auth/Registration'
 import Dashboard from '@/components/Dashboard'
 
 import AuthGuard from './auth-guard'
+import authGuard from './auth-guard';
 
 Vue.use(Router)
 
@@ -22,6 +23,7 @@ export default new Router({
         path: '/registration',
         name: 'Registration',
         component: Registration
+        // beforeEnter: AuthGuard
     },
     {
         path: '/dashboard',
@@ -32,3 +34,4 @@ export default new Router({
     
 ]
 })
+
