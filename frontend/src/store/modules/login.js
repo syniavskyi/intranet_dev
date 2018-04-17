@@ -68,7 +68,7 @@ const actions = {
     getUserRole({commit}, access_token){
         var URL = '/api/getCurrentRole?access_token=' + access_token
         axios.get(URL).then(res => {
-            const role = res.data.authority
+            const role = res.data[0].authority
             localStorage.setItem('userRole', role)
             commit('SET_USER_ROLE', role)
         }).catch(error => {
