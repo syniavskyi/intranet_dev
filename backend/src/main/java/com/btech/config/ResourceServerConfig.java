@@ -27,7 +27,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 							 .and().authorizeRequests()
 							 .antMatchers("/api/public").permitAll()
 							 .antMatchers("/oauth/token").permitAll()
-							 .antMatchers("/api/secured").authenticated()
+							 .antMatchers("/api/secured").hasRole("MANAGEMENT")
 					         .antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll();
 	}
 

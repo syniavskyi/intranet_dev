@@ -25,6 +25,5 @@ public class InitApp {
 			userService.save(new User("admin", "password", Arrays.asList(new Role("USER"), new Role("ACTUATOR") , new Role("ADMIN"))));
 		}*/
 		builder.userDetailsService (s -> new CustomUserDetails(repo.findByUsername(s)));
-	}
-	
+	}	
 }
