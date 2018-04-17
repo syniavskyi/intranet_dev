@@ -1,16 +1,18 @@
 <template>
-	<div class="plane-parent">
-            <div class="plane">
+	<div class="plane-parent plane-parent-login">
+            <div class="plane plane-login">
                 <div class="plane-left">
                     <img class="img-user" src="../../assets/images/grouper-256.png">
                     <p class="p-login">Zaloguj się do Intranetu</p>
                 </div>
                 <div class="login-credentials">
-                    <input type="email" v-model="username" @blur="$v.username.$touch()">
-                    <label class="email">Użytkownik</label>
-                    <input type="password" v-model="password" @blur="$v.password.$touch()">
-                    <label for="password" class="password">Hasło</label>
-                    <button class="button" :disabled="$v.$invalid" @click="onSubmit"><span>Zaloguj</span></button>
+                    <input type="email" class="input input-login-email" v-model="username" @blur="$v.username.$touch()">
+                    <label class="label label-login-email">Użytkownik</label>
+                    <input type="password" @keyup.enter="onSubmit" class="input input-login-pass" v-model="password" @blur="$v.password.$touch()">
+                    <label for="password" class="label label-login-pass">Hasło</label>
+                    <p class="forgot-pass" @click="onForgotPassword">Zapomniałeś hasło?</p>
+                    <p class="login-error" v-if="loginError"> Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
+                    <button class="button login-button" :disabled="$v.$invalid" @click="onSubmit"><span class="span-arrow">Zaloguj</span></button>
                 </div>
             </div>
         </div>
@@ -23,7 +25,9 @@
 	    data () {
 	        return {
                 username: '',
-                password: ''
+                password: '',
+                showRemindPassword: false,
+                isLoading: false
 	        }
         },
         validations: {
@@ -37,141 +41,25 @@
         },
         methods: {
             onSubmit() {
+                this.isLoading = true
                 this.$store.dispatch('login', {
                     username: this.username,
                     password: this.password
                 })
+                this.isLoading = false
+            },
+            onForgotPassword() {
+                this.showRemindPassword = true 
             }
+        },
+        computed: {
+            loginError() {
+                return this.$store.getters.isLoginError
+            }
+        },
+        created() {
+            this.$store.dispatch('tryAutoLogin')
         }
 	}
 </script>
 
-<style scoped>
-@import url('https://fonts.googleapis.com/css?family=Raleway:400,500,600,700');
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
-body {
-    height: 100vh;
-    width: 100vw;
-    margin: 0;
-    padding: 0;
-    font-family: 'Open Sans';
-}
-
-
-
-input:focus + label {
-    font-size: 1.2rem;
-}
-
-label[class="email"] {
-    order: 0; 
-}
-input[type="email"] {
-    order: 1;
-}
-label[class="password"] {
-    order: 2; 
-}
-input[type="password"] {
-    order: 3;
-}
-
-.button {
-    order: 4;
-    height: 3.5rem;
-    width: 12rem;
-    background: #ff974b;
-    border: 0;
-    border-radius: 5px;
-    transition: all 0.4s ease;
-    font-family: inherit;
-    font-weight: 500;
-    color: white;
-    font-size: 1rem;
-}
-
-.button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.4s;
-}
-
-.button span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -1.2rem;
-  transition: 0.4s;
-}
-
-.button:hover span {
-  padding-right: 1.2rem;
-}
-
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
-}
-
-.button:hover,
-.button:focus {
-    cursor: pointer;
-    box-shadow: 1px 0px 50px rgba(255, 151, 71, 0.78);
-    background: rgb(240, 134, 52);
-}
-
-button[disabled],
-button[disabled]:hover,
-button[disabled]:active,
-button[disabled]:focus  {
-    border: 1px solid #ccc;
-    background-color: transparent;
-    color: #ccc;
-    cursor: not-allowed;
-    box-shadow: none;
-}
-
-button[disabled] span {
-    cursor: not-allowed;
-}
-
-@media (min-width: 43rem) {
-    .plane {
-        display: flex;
-        width: 70%;
-        height: 70%;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
-        border-radius: 10px;
-        background: radial-gradient(ellipse 50% 150% at -1% 50%, #f7f7f7 58%, lightgray 60%, white 60%);
-        flex-direction: row;
-        justify-content: flex-start;
-    }
-    .plane-left {
-        width: 29%;
-    }  
-    label {
-        align-self: flex-start;
-        margin-left: 2rem;
-    }
-}
-
-
-@media (min-height: 0rem) and (max-height: 25rem) and (min-width: 35rem) {
-    .plane {
-        display: flex;
-        width: 100%;
-        height: 100%;
-        flex-direction: row;
-        background: radial-gradient(ellipse 50% 150% at -1% 50%, #f7f7f7 58%, lightgray 60%, white 60.7%);
-        justify-content: flex-start;
-        min-height: 15rem;
-        flex-shrink: 0;
-    }
-    .plane-parent {
-        min-height: 18rem;
-    }
-}
-
-</style>

@@ -8,67 +8,99 @@ body {
     font-family: 'Open Sans';
 }
 
-input:focus + label {
+.plane-parent-login {
+    flex-shrink: 0;
+    min-height: 36rem;
+    width: 100%;
+    height: 100%;
+}
+
+.plane-login {
+    flex-shrink: 0;
+    min-height: 36rem;
+}
+
+.input:focus + label[class*='label-login'] {
     font-size: 1.2rem;
 }
 
-label[class="email"] {
+.label-login-email {
     order: 0; 
 }
-input[type="email"] {
+.input-login-email {
     order: 1;
 }
-label[class="password"] {
+.label-login-pass {
     order: 2; 
 }
-input[type="password"] {
+.input-login-pass {
     order: 3;
 }
 
-.button {
+.label + .forgot-pass {
+    margin-top: 0;
+}
+
+.label + .input {
+    margin-bottom: 0.5rem;
+}
+
+.forgot-pass {
+    font-size: 0.8rem;
+    color: lightslategray;
+    line-height: 1rem;
+    text-align: right;
     order: 4;
-    height: 3.5rem;
-    width: 12rem;
-    background: #ff974b;
-    border: 0;
-    border-radius: 5px;
-    transition: all 0.4s ease;
-    font-family: inherit;
-    font-weight: 500;
-    color: white;
-    font-size: 1rem;
+    width: 80%;
+    margin-bottom: .5rem;
+    transition: color 0.3s ease;
 }
 
-.button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.4s;
-}
-
-.button span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -1.2rem;
-  transition: 0.4s;
-}
-
-.button:hover span {
-  padding-right: 1.2rem;
-}
-
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
-}
-
-.button:hover,
-.button:focus {
+.forgot-pass:hover {
     cursor: pointer;
-    box-shadow: 1px 0px 50px rgba(255, 151, 71, 0.78);
-    background: rgb(240, 134, 52);
+    color: orange;
+}
+
+.forgot-pass + .login-error {
+    margin-top: 0rem;
+}
+
+.login-error {
+    display: flex;
+    font-family: 'Raleway';
+    order: 5;
+    background: rgba(255, 0, 0, 0.4);
+    text-align: center;
+    width: 16rem;
+    padding: 0.05rem;
+    height: 4rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    align-items: center;
+}
+
+.login-button {
+    margin-top: 1rem;
+    order: 6;
+}
+
+.login-error + .button-login {
+    margin-top: 0rem;
+}
+
+button[disabled],
+button[disabled]:hover,
+button[disabled]:active,
+button[disabled]:focus  {
+   border: 1px solid #ccc;
+   background-color: transparent;
+   color: #ccc;
+   cursor: not-allowed;
+   box-shadow: none;
+}
+
+button[disabled] span {
+   cursor: not-allowed;
 }
 
 @media (min-width: 43rem) {
@@ -85,13 +117,16 @@ input[type="password"] {
     .plane-left {
         width: 29%;
     }  
-    label {
+    .label {
         align-self: flex-start;
         margin-left: 2rem;
     }
+    .plane-parent {
+        height: 100%;
+    }
 }
 
-@media (min-height: 0rem) and (max-height: 25rem) and (min-width: 35rem) {
+@media (min-height: 0rem) and (max-height: 30rem) and (min-width: 43rem) {
     .plane {
         display: flex;
         width: 100%;
@@ -99,10 +134,13 @@ input[type="password"] {
         flex-direction: row;
         background: radial-gradient(ellipse 50% 150% at -1% 50%, #f7f7f7 58%, lightgray 60%, white 60.7%);
         justify-content: flex-start;
-        min-height: 15rem;
+        min-height: 22rem;
         flex-shrink: 0;
     }
     .plane-parent {
-        min-height: 18rem;
+        min-height: 22rem;
     }
 }
+
+
+
