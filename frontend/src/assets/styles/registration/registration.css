@@ -14,6 +14,17 @@ body {
     width: 100%;
 }
 
+.modal-text {
+    font-family: 'Raleway';
+    color: grey;
+    display: flex;
+    align-self: center;
+}
+
+.modal-text > p {
+    padding: 5rem;
+}
+
 .plane-registration {
     min-height: 47rem;
     flex-shrink: 0;

@@ -1,5 +1,15 @@
 <template>
     <div class="plane-parent plane-parent-registration">
+        <!-- <div class="backdrop"></div>
+        <div class="modal">
+            <div class="modal-header">
+                <h1 class="modal-title">Utworzono Konto!</h1>
+                <button class="modal-exit">&#10006;</button>
+            </div>
+            <div class="modal-text">
+                <p>Utworzono nowe konto. Na maila wysłano hasło do konta.</p>
+            </div>
+        </div> -->
         <div class="plane plane-registration">
             <div class="plane-left">
                 <img class="img-user" src="../../assets/images/grouper-256.png">
