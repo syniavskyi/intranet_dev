@@ -12,8 +12,8 @@
                 <input disabled="false" v-model="fullNameToEmail" class="input input-registration">
                 <label class="label" for="password">Hasło</label>
                 <div class="div-pass">
-                    <input class="input reg-pass-input input-registration" type="password">
-                    <button class="gen-pass">Generuj hasło</button>
+                    <input class="input reg-pass-input input-registration" v-model="setPassword">
+                    <button class="gen-pass" @click="generatePassword">Generuj hasło</button>
                     <!-- <input class="gen-pass" value="Generuj Hasło">  -->
                 </div>
                 <div class="div-select">
@@ -57,6 +57,9 @@ export default {
     },
     getFullNameToEmail() {
         this.$store.dispatch('fullNameToEmail', {name: this.fullName, email: this.email});
+    },
+    generatePassword() {
+        this.$store.dispatch('generatePassword');
     }
   },
   computed: {
@@ -66,8 +69,8 @@ export default {
     fullNameToEmail() {
         return this.$store.getters.prefixEmail;
     },
-    generatePassword() {
-
+    setPassword() {
+        return this.$store.getters.password;
     }
   }
 };

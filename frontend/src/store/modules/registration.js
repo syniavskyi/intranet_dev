@@ -4,7 +4,8 @@ import router from '@/router/index.js'
 const state = {
     userRoles: [],
     emails: [],
-    email: ''
+    email: '',
+    password: ''
 };
 
 const mutations = {
@@ -16,6 +17,9 @@ const mutations = {
     },
     ADD_PREFIX_EMAIL(state, data) {
         state.email = data;
+    },
+    PASSWORD(state, data) {
+        state.password = data;
     }
 };
 
@@ -26,8 +30,9 @@ const actions = {
 
             for(let key in data) {
                 const role = data[key];
-                let upper = data[key].roleName.substring(0, 1);
-                let toLower = data[key].roleName.slice(1, data[key].roleName.length).toLowerCase();
+                let upper = data[key].roleName.substring(0, 1),
+                    toLower = data[key].roleName.slice(1, data[key].roleName.length).toLowerCase();
+
                 data[key].roleName = upper + toLower;
                 role.roleName = data[key].roleName;
                 commit('GET_ROLE_LIST', role.roleName);
@@ -68,6 +73,16 @@ const actions = {
         data.name === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
         data.email = sReturnEmail;
         commit('ADD_PREFIX_EMAIL', data.email);
+    },
+    generatePassword({commit, state}) {
+        var nLength = 8,
+            sCharset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]\:;?><,./-=",
+            sRetVal = "";
+
+        for (var i = 0, n = sCharset.length; i < nLength; ++i) {
+            sRetVal += sCharset.charAt(Math.floor(Math.random() * n));
+        }
+        commit('PASSWORD', sRetVal);
     }
 };
 
@@ -80,6 +95,9 @@ const getters = {
     },
     prefixEmail() {
         return state.email;
+    },
+    password() {
+        return state.password;
     }
 };
 
