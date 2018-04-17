@@ -12,9 +12,8 @@
                 <input disabled="false" v-model="fullNameToEmail" class="input input-registration">
                 <label class="label" for="password">Hasło</label>
                 <div class="div-pass">
-                    <input class="input reg-pass-input input-registration" v-model="setPassword">
+                    <input class="input reg-pass-input input-registration" type="password" v-model="setPassword">
                     <button class="gen-pass" @click="generatePassword">Generuj hasło</button>
-                    <!-- <input class="gen-pass" value="Generuj Hasło">  -->
                 </div>
                 <div class="div-select">
                     <label class="label" for="role">Rola</label>
@@ -31,7 +30,6 @@
                 </div> 
                 <button class="button"><span class="span-arrow">Zarejestruj</span></button>
             </div>
-        <!-- <button class="button"><span>Zarejestruj</span></button> -->
         </div>
     </div>
 </template>
