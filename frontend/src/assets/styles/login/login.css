@@ -43,15 +43,11 @@ body {
 }
 
 .modal-exit {
-    align-self: flex-start;
-    padding: .09rem;
+    /* align-self: flex-start; */
 }
 
 .modal-exit:hover {
     cursor: pointer;
-    background: lightgrey; 
-    padding: .09rem;
-    border-radius: 50%;
 }
 
 .modal-title {

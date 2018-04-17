@@ -3,7 +3,7 @@
         <div class="plane plane-registration">
             <div class="plane-left">
                 <img class="img-user" src="../../assets/images/grouper-256.png">
-                <p class="p-registration">Rejestracja użytkownika</p>
+                <button class="p-registration">Rejestracja użytkownika</button>
             </div>
             <div class="registration-credentials">
                 <label for="fullName" class="label">Imię i nazwisko</label>
