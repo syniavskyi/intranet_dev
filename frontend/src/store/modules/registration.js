@@ -5,7 +5,6 @@ const state = {
     userRoles: [],
     emails: [],
     email: ''
-    
 };
 
 const mutations = {
