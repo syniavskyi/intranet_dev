@@ -75,6 +75,7 @@ const actions = {
         commit('ADD_PREFIX_EMAIL', data.email);
     },
     generatePassword({commit, state}) {
+        const bcrypt = require('bcryptjs')
         var nLength = 8,
             sCharset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]\:;?><,./-=",
             sRetVal = "";
@@ -82,21 +83,26 @@ const actions = {
         for (var i = 0, n = sCharset.length; i < nLength; ++i) {
             sRetVal += sCharset.charAt(Math.floor(Math.random() * n));
         }
+        bcrypt.genSalt(10, (error, salt) => {
+            bcrypt.hash(sRetVal, salt, (err, hash) => {
+                console.log(hash)
+            })
+        })
         commit('PASSWORD', sRetVal);
     }
 };
 
 const getters = {
-    roleList() {
+    roleList(state) {
         return state.userRoles;
     },
-    emails() {
+    emails(state) {
         return state.emails;
     },
-    prefixEmail() {
+    prefixEmail(state) {
         return state.email;
     },
-    password() {
+    password(state) {
         return state.password;
     }
 };

@@ -42,8 +42,7 @@ export default {
     return {
       fullName: "",
       email: "",
-      role: [ ],
-      emails: [ ]
+      role: [ ]
     };
   },
   beforeCreate() {
