@@ -5,7 +5,7 @@
             <div class="modal-header">
                 <h1 class="modal-title">Nie pamiętasz hasła?</h1>
                 <!-- <img src="../../assets/images/if_x.png" class="modal-exit"> -->
-                <button class="modal-exit">&#10006;</button>
+                <button class="modal-exit" @click="switchForgotPassword">&#10006;</button>
             </div>
             <div class="modal-email">
                 <label class="modal-label">Wprowadź email</label>
@@ -26,7 +26,7 @@
                         <button class="show-pass-eye"  @click="switchPasswordVisibility"><icon :name="eyeType"></icon></button>
                     </div>
                     <label for="password" class="label label-login-pass">Hasło</label>
-                    <p class="forgot-pass" @click="showRemindPassword = 'true'">Nie pamiętasz hasła?</p>
+                    <p class="forgot-pass" @click="switchForgotPassword">Nie pamiętasz hasła?</p>
                     <p class="login-error" v-if="loginError">Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
                     <button class="button login-button" :disabled="$v.password.$invalid" @click="onSubmit"><span class="span-arrow">Zaloguj</span></button>
                 </div>
@@ -76,8 +76,8 @@
                 })
                 this.isLoading = false
             },
-            onForgotPassword() {
-                this.showRemindPassword = true 
+            switchForgotPassword() {
+                this.showRemindPassword = !this.showRemindPassword
             },
             switchPasswordVisibility() {
                 this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
