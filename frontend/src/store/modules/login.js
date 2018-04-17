@@ -54,7 +54,6 @@ const actions = {
         const expirationDate = new Date(now.getTime() + expiresIn * 1000)
         localStorage.setItem('expirationDate', expirationDate);
     },
-    
     tryAutoLogin({commit}) {
         commit('SET_LOGIN_ERROR', false)
         const token = localStorage.getItem('token')
@@ -68,10 +67,8 @@ const actions = {
         }
         commit('AUTH_USER', token )
         router.replace('/dashboard');
-    },
-    resetPassword({commit}, email){
-        
     }
+
 }
 
 const getters = {
@@ -80,7 +77,8 @@ const getters = {
     },
     isLoginError(state){
         return state.loginError
-    }
+    },
+    
 }
 
 export default {
