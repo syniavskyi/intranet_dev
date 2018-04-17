@@ -40,10 +40,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory().withClient("vuejs-client")
+		clients.inMemory().withClient("vuejs-client-admin")
 			.authorizedGrantTypes("client_credentials", "password", "authorization_code", "refresh_token")
-			.authorities("1", "2", "3", "4", "5")
+			.authorities("ROLE_ADMIN")
 			.scopes("read", "write")
+			.resourceIds("oauth2-resource")
+			.accessTokenValiditySeconds(5000)
+			.refreshTokenValiditySeconds(3600)
+			.secret("password")
+			.and()
+			.withClient("vuejs-client-management")
+			.authorizedGrantTypes("client_credentials", "password", "authorization_code", "refresh_token")
+			.authorities("ROLE_MANAGEMENT")
+			.scopes("read")
 			.resourceIds("oauth2-resource")
 			.accessTokenValiditySeconds(5000)
 			.refreshTokenValiditySeconds(3600)

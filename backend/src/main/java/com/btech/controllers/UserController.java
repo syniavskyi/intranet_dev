@@ -1,12 +1,16 @@
 package com.btech.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import com.btech.model.User;
 import com.btech.pojo.UserRegistration;
 import com.btech.service.UserService;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -35,14 +39,11 @@ public class UserController {
     }
 
     @CrossOrigin
-    @GetMapping(value="/api/getUsername")
-    public String getUsername() {
-    	String name = SecurityContextHolder.getContext().getAuthentication().getName();
-    	if (name == "anonymousUser") {
-    		return "You are not logged in !";
-    	}
-        return name;
-    }
+    @GetMapping(value="/api/getCurrentRole")
+        public Collection<? extends GrantedAuthority> currentUserName(Authentication authentication) {
+    		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+    		return userDetails.getAuthorities();
+        }
     
     @CrossOrigin
     @RequestMapping(value = "/api/users/{id}", method = RequestMethod.GET)

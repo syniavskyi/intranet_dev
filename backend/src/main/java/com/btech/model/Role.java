@@ -2,17 +2,19 @@ package com.btech.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="roles_list")
+@Table(name="role")
 public class Role {
 
     @Id
-    @Column(name="role_id")
+    @GeneratedValue
+    @Column(name="id")
     private String roleId;
-    @Column(name="role_name")
+    @Column(name="name")
     private String roleName;
 
     public Role() {
