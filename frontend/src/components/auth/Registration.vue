@@ -1,15 +1,15 @@
 <template>
     <div class="plane-parent plane-parent-registration">
-        <!-- <div class="backdrop"></div>
-        <div class="modal">
+        <div class="backdrop" v-if="closeSuccessDialog"></div>
+        <div class="modal" v-if="closeSuccessDialog">
             <div class="modal-header">
                 <h1 class="modal-title">Utworzono Konto!</h1>
-                <button class="modal-exit">&#10006;</button>
+                <button class="modal-exit" @click="closeDialog">&#10006;</button>
             </div>
             <div class="modal-text">
                 <p>Utworzono nowe konto. Na maila wysłano hasło do konta.</p>
             </div>
-        </div> -->
+        </div>
         <div class="plane plane-registration">
             <div class="plane-left">
                 <img class="img-user" src="../../assets/images/grouper-256.png">
@@ -55,7 +55,8 @@ export default {
     return {
       fullName: "",
       email: "",
-      role: [ ]
+      role: [ ],
+      closeSuccessDialog: true
     };
   },
   beforeCreate() {
@@ -70,6 +71,9 @@ export default {
     },
     generatePassword() {
         this.$store.dispatch('generatePassword');
+    },
+    closeDialog() {
+        this.closeSuccessDialog = !this.closeSuccessDialog;
     }
   },
   computed: {

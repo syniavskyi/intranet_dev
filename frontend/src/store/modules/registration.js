@@ -74,7 +74,6 @@ const actions = {
         data.email = sReturnEmail;
         commit('ADD_PREFIX_EMAIL', data.email);
     }
-
 };
 
 const getters = {
