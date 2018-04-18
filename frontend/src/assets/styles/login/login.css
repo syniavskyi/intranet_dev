@@ -20,18 +20,19 @@ body {
     top: 15%;
     left: 17%;
     width: 60%;
-    height: 17rem;
+    height: 18rem;
     background: white;
     padding: 0;
     margin: 0;
     box-shadow: -1px 10px 10px rgba(0, 0, 0, 0.5);
     border-radius: .3rem;
     min-width: 15.5rem;
-    min-height: 17rem;
+    min-height: 20rem;
 }
 
 .modal-header {
     padding: 0.5rem;
+    word-wrap: break-word;
     border: 0;
     border-top-left-radius: .2rem;
     border-top-right-radius: .2rem;
@@ -49,7 +50,6 @@ body {
 
 .modal-exit {
     font-size: 1.3rem;
-    height: 1.5rem;
     background: transparent;
     border:0;
     color: white;
@@ -74,6 +74,11 @@ body {
     width: 13rem;
 }
 
+.p-modal-txt {
+    align-self: center;
+    font-family: inherit;
+    color: grey;
+}
 .modal-button {
     margin-bottom: 1rem;
     align-self: center;
@@ -81,14 +86,14 @@ body {
 
 .plane-parent-login {
     flex-shrink: 0;
-    min-height: 34.6rem;
+    min-height: 35rem;
     width: 100%;
     height: 100%;
 }
 
 .plane-login {
     flex-shrink: 0;
-    min-height: 34.6rem;
+    min-height: 35rem;
 }
 
 [class*="input-login-"] {
@@ -226,7 +231,7 @@ button[disabled] span {
     }
 }
 
-@media (min-height: 0rem) and (max-height: 35rem) and (min-width: 43rem) {
+@media (min-height: 0rem) and (max-height: 35rem) and (min-width: 35rem) {
     .plane-login {
         display: flex;
         width: 100%;
@@ -244,5 +249,9 @@ button[disabled] span {
         top: 10%;
         width: 40%;
         left: 30%;
+    }
+    .label {
+        margin-left: 2rem;
+        align-self: flex-start;
     }
 }

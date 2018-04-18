@@ -9,6 +9,7 @@
             <div class="modal-email">
                 <label class="modal-label">Wprowadź email</label>
                 <input class="input modal-input" v-model="email">
+                <!-- <p class="p-modal-txt">na który otrzymasz link resetujący.</p> -->
             </div>
             <button class="button modal-button" :disabled="$v.email.$invalid" type="button" @click="onResetPassword"><span class="span-arrow">Zresetuj hasło</span></button>
         </div>
