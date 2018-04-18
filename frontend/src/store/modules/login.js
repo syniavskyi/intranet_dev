@@ -84,8 +84,7 @@ const getters = {
     },
     isLoginError(state){
         return state.loginError
-    },
-    
+    }    
 }
 
 export default {
