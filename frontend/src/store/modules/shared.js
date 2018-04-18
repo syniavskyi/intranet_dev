@@ -1,7 +1,6 @@
 import axios from 'axios'
 import router from '@/router/index.js'
 
-
 const state = {
     idToken: null,
     password: '',
@@ -50,8 +49,6 @@ const actions = {
         commit('SET_PASSWORD', sRetVal);
     }
 }
-
-
 
 const getters = {
     password(state) {
