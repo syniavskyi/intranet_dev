@@ -28,7 +28,10 @@
                     <label for="password" class="label label-login-pass">Hasło</label>
                     <p class="forgot-pass" @click="switchForgotPassword">Nie pamiętasz hasła?</p>
                     <p class="login-error" v-if="loginError">Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
-                    <button class="button login-button" :disabled="$v.password.$invalid" @click="onSubmit"><span class="span-arrow">Zaloguj</span></button>
+                    <button class="button login-button" :disabled="$v.password.$invalid" @click="onSubmit">
+                        <span class="loading-icon"><img  src="../../assets/images/loading-white.png" v-show="isLoading"></span>
+                        <span class="span-arrow" v-show="!isLoading">Zaloguj</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -75,6 +78,7 @@
                     password: this.password
                 })
                 this.isLoading = false
+
             },
             switchForgotPassword() {
                 this.showRemindPassword = !this.showRemindPassword
@@ -99,23 +103,5 @@
 </script>
 
 <style>
-.show-pass-eye {
-   font-size: 0.8rem;
-   align-self: right;
-   order: 1;
-   height: 2.5rem;
-   width: 1rem;
-   z-index: 100;
-   background: transparent;
-   transition: border 0.5s ease;
-   border: none;
-   padding: none;
-   margin:none;
-}
-.show-pass-eye:hover {
-    cursor: pointer;
-}
-.show-pass-eye:focus {
-    outline: none;
-}
+
 </style>

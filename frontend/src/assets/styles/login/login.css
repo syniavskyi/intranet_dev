@@ -202,6 +202,37 @@ button[disabled] span {
    cursor: not-allowed;
 }
 
+.show-pass-eye {
+    font-size: 0.8rem;
+    align-self: right;
+    order: 1;
+    height: 2.5rem;
+    width: 1rem;
+    z-index: 100;
+    background: transparent;
+    transition: border 0.5s ease;
+    border: none;
+    padding: none;
+    margin:none;
+ }
+ .show-pass-eye:hover {
+     cursor: pointer;
+ }
+ .show-pass-eye:focus {
+     outline: none;
+ }
+ .loading-icon {
+     margin-right: 2px;
+     display: inline-block;
+     animation: spin 2s linear infinite;
+ }
+ 
+ @keyframes spin {
+     100%  {
+         transform: rotate(360deg);
+     }
+ }
+
 @media (min-width: 43rem) {
     .plane-login {
         display: flex;

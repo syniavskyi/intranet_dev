@@ -1,10 +1,10 @@
 import axios from 'axios'
 import router from '@/router/index.js'
 
-
 const state = {
     idToken: null,
     password: '',
+    hashedPassword: '',
     userRole: ''
 }
 
@@ -17,6 +17,9 @@ const mutations = {
     },
     SET_USER_ROLE (state, role) {
         state.userRole = role;
+    },
+    SET_HASHED_PASSWORD (state, password) {
+        state.hashedPassword = password
     }
 }
 
@@ -45,13 +48,12 @@ const actions = {
         bcrypt.genSalt(10, (error, salt) => {
             bcrypt.hash(sRetVal, salt, (err, hash) => {
                 console.log(hash)
+                commit('SET_HASHED_PASSWORD', hash)
             })
         })
         commit('SET_PASSWORD', sRetVal);
     }
 }
-
-
 
 const getters = {
     password(state) {
