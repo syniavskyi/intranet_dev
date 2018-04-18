@@ -1,15 +1,21 @@
 <template>
     <div class="plane-parent plane-parent-registration">
-        <!-- <div class="backdrop"></div>
-        <div class="modal">
-            <div class="modal-header">
-                <h1 class="modal-title">Utworzono Konto!</h1>
-                <button class="modal-exit">&#10006;</button>
+        <!-- dialog -->
+        <transition name="slide-backdrop" v-if="closeSuccessDialog">
+            <div class="backdrop" v-if="closeSuccessDialog"></div>
+        </transition>
+        <transition name="slide" v-if="closeSuccessDialog">
+            <div class="modal" v-if="closeSuccessDialog">
+                <div class="modal-header">
+                    <h1 class="modal-title">Utworzono Konto!</h1>
+                    <button class="modal-exit" @click="closeDialog">&#10006;</button>
+                </div>
+                <div class="modal-text">
+                    <p>Utworzono nowe konto. Na maila wysłano hasło do konta.</p>
+                </div>
             </div>
-            <div class="modal-text">
-                <p>Utworzono nowe konto. Na maila wysłano hasło do konta.</p>
-            </div>
-        </div> -->
+        </transition>
+        <!-- dialog -->
         <div class="plane plane-registration">
             <div class="plane-left">
                 <img class="img-user" src="../../assets/images/grouper-256.png">
@@ -36,9 +42,10 @@
                 </div>
                 <div class="div-select">
                     <label class="label" for="role">Oddział</label>
-                    <select class="select" >
-                        <option>Wrocław</option>
-                        <option>Dąbrowa Górnicza</option>
+                    <select class="select">
+                        <option :key="department" v-for="department in getDepartmentList">{{ department }}</option>
+                        <!-- <option>Wrocław</option>
+                        <option>Dąbrowa Górnicza</option> -->
                     </select>
                 </div> 
                 <button class="button"><span class="span-arrow">Zarejestruj</span></button>
@@ -55,11 +62,14 @@ export default {
     return {
       fullName: "",
       email: "",
-      role: [ ]
+      role: [ ],
+      department: [ ],
+      closeSuccessDialog: true
     };
   },
   beforeCreate() {
       this.$store.dispatch('getRoleList');
+      this.$store.dispatch('getDepartmentList');
   },
   methods: {
     checkEmail() {
@@ -70,11 +80,17 @@ export default {
     },
     generatePassword() {
         this.$store.dispatch('generatePassword');
+    },
+    closeDialog() {
+        this.closeSuccessDialog = !this.closeSuccessDialog;
     }
   },
   computed: {
     getRoleList() {
         return this.$store.getters.roleList;
+    },
+    getDepartmentList() {
+        return this.$store.getters.depList;
     },
     fullNameToEmail() {
         return this.$store.getters.prefixEmail;
@@ -88,3 +104,48 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+    .slide-enter-active {
+        animation: slide-in 500ms ease-out forwards;
+    }   
+
+    .slide-leave-active {
+        animation: slide-out 500ms ease-out forwards;
+    }
+
+    .slide-backdrop-leave-active {
+        animation: slide-backdrop-out 500ms;
+    }
+
+    @keyframes slide-in {
+        from {
+            transform: translateY(-30px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slide-out {
+        from {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(-30px);
+            opacity: 0;
+        }
+    }
+
+    @keyframes slide-backdrop-out {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
+    }
+</style>
