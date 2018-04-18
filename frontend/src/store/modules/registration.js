@@ -3,6 +3,7 @@ import router from '@/router/index.js'
 
 const state = {
     userRoles: [],
+    departmentList: [],
     emails: [],
     email: '',
     emailExists: false
@@ -11,6 +12,9 @@ const state = {
 const mutations = {
     GET_ROLE_LIST(state, data) {
         state.userRoles.push(data);
+    },
+    GET_DEP_LIST(state, data) {
+        state.departmentList.push(data);
     },
     ADD_EMAILS(state, data) {
         state.emails.push(data);
@@ -36,6 +40,24 @@ const actions = {
                 data[key].roleName = upper + toLower;
                 role.roleName = data[key].roleName;
                 commit('GET_ROLE_LIST', role.roleName);
+            }
+        });
+    },
+    getDepartmentList({commit}) {
+        axios.get("/api/depsList").then(res => {
+            const data = res.data;
+
+            for(let key in data) {
+                const dep = data[key];
+                
+                //for now
+                if(data[key].depName.includes('Dabrowa')) {
+                    data[key].depName = 'Dąbrowa Górnicza';
+                } else if (data[key].depName.includes('Wroclaw')) {
+                    data[key].depName = 'Wrocław';
+                }
+                dep.depName = data[key].depName;
+                commit('GET_DEP_LIST', dep.depName);
             }
         });
     },
@@ -79,6 +101,9 @@ const actions = {
 const getters = {
     roleList(state) {
         return state.userRoles;
+    },
+    depList(state) {
+        return state.departmentList;
     },
     emails(state) {
         return state.emails;
