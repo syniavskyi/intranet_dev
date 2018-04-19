@@ -1,8 +1,10 @@
 package com.btech.controllers;
 
+import com.btech.model.DepsList;
 import com.btech.model.Email;
 import com.btech.model.RolesList;
 import com.btech.pojo.Error;
+import com.btech.service.DepsListService;
 import com.btech.service.RolesListService;
 import com.btech.service.UserService;
 
@@ -30,6 +32,9 @@ public class MainController {
 	
 	@Autowired
 	private RolesListService rolesListService;
+	
+	@Autowired
+	private DepsListService depsListService;
 	
 	@Autowired
 	private AuthorizationServerTokenServices authorizationServerTokenServices;
@@ -66,6 +71,12 @@ public class MainController {
 	}
 	
 	@CrossOrigin
+	@RequestMapping(value="/api/depsList", method = RequestMethod.GET)
+	public List<DepsList> getDepsList() {
+		return depsListService.getAllDeps();
+	}
+	
+	@CrossOrigin
 	@RequestMapping("/api/logout")
 	public String logout(Principal principal, HttpServletRequest request, HttpServletResponse response) throws IOException {
 	    OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) principal;
@@ -79,4 +90,5 @@ public class MainController {
 	public List<Email> getEmails() {
 		return userService.getAllEmails();
 	}
+	
 }

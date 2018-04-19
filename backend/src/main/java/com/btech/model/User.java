@@ -1,9 +1,8 @@
 package com.btech.model;
 
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -12,30 +11,32 @@ public class User {
 
     @Id
     @GeneratedValue
+    @Column(name="id")
     private Long id;
     @Column(name="username")
     private String username;
+
+    @JsonIgnore
     @Column(name="password")
-    @JsonIgnore
     private String password;
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    private List<Role> roles;
     @Column(name="email")
     private String email;
-    @Column(name="role_id")
-    private String roleId;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Role> roles;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Dep> deps;
 
 
     public User() {
     	
     }
 
-    public User(String username, String password, String passwordConfirmation, String email, String roleId) {
+    public User(String username, String password, String email, List<Role> roles, List<Dep> deps) {
         this.username = username;
         this.password = password;
+        this.roles = roles;
         this.email = email;
-        this.roleId = roleId;
+        this.deps = deps;
     }
 
     public String getUsername() {
@@ -62,11 +63,24 @@ public class User {
         this.roles = roles;
     }
 
+    public Long getId() {
+        return id;
+    }
+
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
-	}   
+	}
+
+	public List<Dep> getDeps() {
+		return deps;
+	}
+
+	public void setDeps(List<Dep> deps) {
+		this.deps = deps;
+	}	
+  
 }

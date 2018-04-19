@@ -2,27 +2,28 @@ package com.btech.pojo;
 
 import java.util.List;
 
+import com.btech.model.Dep;
 import com.btech.model.Role;
 
 public class UserRegistration {
 	
 	private String username;
 	private String password;
-	private String passwordConfirmation;
 	private String email;
 	private List<Role> roles;
-	private String roleId;
+	private List<Dep> deps;
+
 	
 	public UserRegistration() {
 		
 	}
 	
-	public UserRegistration(String username, String password, String passwordConfirmation, String email, String roleId) {
+	public UserRegistration(String username, String password, String email, List<Role> roles, List<Dep> deps) {
 		this.username = username;
 		this.password = password;
-		this.passwordConfirmation = passwordConfirmation;
 		this.email = email;
-		this.roleId = roleId;
+		this.roles = roles;
+		this.deps = deps;
 	}
 
 	public String getUsername() {
@@ -41,14 +42,6 @@ public class UserRegistration {
 		this.password = password;
 	}
 
-	public String getPasswordConfirmation() {
-		return passwordConfirmation;
-	}
-
-	public void setPasswordConfirmation(String passwordConfirmation) {
-		this.passwordConfirmation = passwordConfirmation;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -65,12 +58,12 @@ public class UserRegistration {
 		this.roles = roles;
 	}
 
-	public String getRoleId() {
-		return roleId;
+	public List<Dep> getDeps() {
+		return deps;
 	}
 
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
+	public void setDeps(List<Dep> deps) {
+		this.deps = deps;
 	}
-	
+		
 }

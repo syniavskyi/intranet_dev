@@ -10,6 +10,7 @@ import com.btech.model.User;
 import com.btech.pojo.UserRegistration;
 import com.btech.service.UserService;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,13 +23,7 @@ public class UserController {
     @CrossOrigin
     @PostMapping(value="/api/register") 
     public String register(@RequestBody UserRegistration userRegistration) {
-    	
-        if(!userRegistration.getPassword().equals(userRegistration.getPasswordConfirmation())) {
-            return "Error passwords do not match";
-        } else if(userService.getUser(userRegistration.getUsername()) != null) {
-            return "Error this username already exists";
-        }
-        userService.save(new User(userRegistration.getUsername(), userRegistration.getPassword(), userRegistration.getPasswordConfirmation(), userRegistration.getEmail(), userRegistration.getRoleId()));
+        userService.save(new User(userRegistration.getUsername(), userRegistration.getPassword(), userRegistration.getEmail(), userRegistration.getRoles(), userRegistration.getDeps()));
         return "Account has been created successfully and is ready to use";
     }
 
@@ -40,10 +35,10 @@ public class UserController {
 
     @CrossOrigin
     @GetMapping(value="/api/getCurrentRole")
-        public Collection<? extends GrantedAuthority> currentUserName(Authentication authentication) {
-    		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-    		return userDetails.getAuthorities();
-        }
+    public Collection<? extends GrantedAuthority> currentUserName(Authentication authentication) {
+    	UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+    	return userDetails.getAuthorities();
+    }
     
     @CrossOrigin
     @RequestMapping(value = "/api/users/{id}", method = RequestMethod.GET)

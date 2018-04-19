@@ -11,34 +11,23 @@ import javax.persistence.Table;
 public class Role {
 
     @Id
-    @GeneratedValue
     @Column(name="id")
-    private String roleId;
+    @GeneratedValue
+    private Long id;
     @Column(name="name")
-    private String roleName;
+    String name;
 
-    public Role() {
-    	
+    public Role() {}
+
+    public Role(String name) {
+        this.name = name;
     }
 
-    public Role(String roleName) {
-        this.roleName = roleName;
+    public String getName() {
+        return name;
     }
 
-	public String getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
-	}
-
-	public String getRoleName() {
-		return roleName;
-	}
-
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-   
+    public void setName(String name) {
+        this.name = name;
+    }
 }

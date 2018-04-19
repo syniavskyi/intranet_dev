@@ -17,6 +17,12 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+	
+	@Bean
+	@Primary
+	public TokenStore tokenStore() {
+	    return new InMemoryTokenStore();
+	}
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -26,34 +32,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		endpoints.authenticationManager(authenticationManager);
 	}
 
-
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+		security.checkTokenAccess("isAuthenticated()");
 	}
 	
-	@Bean
-	@Primary
-	public TokenStore tokenStore() {
-	    return new InMemoryTokenStore();
-	}
-
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory().withClient("vuejs-client-admin")
+		clients.inMemory().withClient("vuejs-client")
 			.authorizedGrantTypes("client_credentials", "password", "authorization_code", "refresh_token")
-			.authorities("ROLE_ADMIN")
+			.authorities("ROLE_ADMIN", "ROLE_MANAGEMENT", "ROlE_LEAD", "ROLE_OFFICE", "ROLE_BASIC")
 			.scopes("read", "write")
-			.resourceIds("oauth2-resource")
-			.accessTokenValiditySeconds(5000)
-			.refreshTokenValiditySeconds(3600)
-			.secret("password")
-			.and()
-			.withClient("vuejs-client-management")
-			.authorizedGrantTypes("client_credentials", "password", "authorization_code", "refresh_token")
-			.authorities("ROLE_MANAGEMENT")
-			.scopes("read")
-			.resourceIds("oauth2-resource")
+			.resourceIds("btech-resource-server")
 			.accessTokenValiditySeconds(5000)
 			.refreshTokenValiditySeconds(3600)
 			.secret("password");
