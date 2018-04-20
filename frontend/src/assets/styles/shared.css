@@ -138,6 +138,7 @@
     cursor: pointer;
     box-shadow: 1px 0px 50px rgba(255, 151, 71, 0.78);
     background: rgb(240, 134, 52);
+
     outline: none;
 }
 
@@ -149,3 +150,45 @@
     opacity: 0;
     transform: translateX(-30%);
   }
+.slide-enter-active {
+    animation: slide-in 500ms ease-out forwards;
+}   
+
+.slide-leave-active {
+    animation: slide-out 500ms ease-out forwards;
+}
+
+.slide-backdrop-leave-active {
+    animation: slide-backdrop-out 500ms;
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-out {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+}
+
+@keyframes slide-backdrop-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
