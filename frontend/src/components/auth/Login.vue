@@ -82,6 +82,7 @@
         },
         methods: {
             onSubmit() {
+
                 this.isLoading = true
                 this.$store.dispatch('login', {
                     username: this.username,
@@ -98,12 +99,6 @@
                 this.eyeType = this.eyeType === 'eye' ? 'eye-slash' : 'eye'
             },
             onResetPassword(){ 
-                // var pass = newPassword()
-                // const emailData = {
-                //     email: this.email,
-                //     password: pass
-                // }
-                
                 this.$store.dispatch('sendEmailWithPass', email)
             }
         },
