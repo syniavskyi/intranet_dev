@@ -6,8 +6,7 @@ const state = {
     departmentList: [],
     emails: [],
     email: '',
-    emailExists: false,
-    dialog: false
+    emailExists: false
 };
 
 const mutations = {
@@ -25,9 +24,6 @@ const mutations = {
     },
     EMAIL_EXISTS(state, data) {
         state.emailExists = data;
-    },
-    OPEN_DIALOG(state, data) {
-        state.dialog = data;
     }
 };
 
@@ -37,8 +33,8 @@ const actions = {
             const data = res.data;
 
             for(let key in data) {
-                let role = data[key],
-                    upper = data[key].roleName.substring(0, 1),
+                const role = data[key];
+                let upper = data[key].roleName.substring(0, 1),
                     toLower = data[key].roleName.slice(1, data[key].roleName.length).toLowerCase();
 
                 data[key].roleName = upper + toLower;
@@ -52,7 +48,7 @@ const actions = {
             const data = res.data;
 
             for(let key in data) {
-                let dep = data[key];
+                const dep = data[key];
                 
                 //for now
                 if(data[key].depName.includes('Dabrowa')) {
@@ -60,13 +56,9 @@ const actions = {
                 } else if (data[key].depName.includes('Wroclaw')) {
                     data[key].depName = 'Wrocław';
                 }
-                // dep.depName = data[key].depName;
-                // dep.depName = data[key].depName;
-                // dep = data[key].dep;
-                commit('GET_DEP_LIST', dep);
-                // commit('GET_DEP_LIST', dep.depName, dep.depId);
+                dep.depName = data[key].depName;
+                commit('GET_DEP_LIST', dep.depName);
             }
-            // commit('GET_DEP_LIST', aDep);
         });
     },
     checkEmail({commit, state}, typedEmail) {
@@ -83,7 +75,7 @@ const actions = {
             if(state.emails.length > 0) {
                 var bIsEmail;
                 
-                for (let i = 0; i < state.emails.length; i++) {
+                for (var i = 0; i < state.emails.length; i++) {
                     if (typedEmail === state.emails[i]) {
                         bIsEmail = true;
                         break;
@@ -95,7 +87,7 @@ const actions = {
             }
         });
     },
-    fullNameToEmail({commit}, data) {
+    fullNameToEmail({commit, state}, data) {
         var sEmail = data.name.replace(" ", ".").toLowerCase(),
             sDomain = "@btech.pl",
             sReturnEmail;
@@ -103,28 +95,6 @@ const actions = {
         data.name === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
         data.email = sReturnEmail;
         commit('ADD_PREFIX_EMAIL', data.email);
-    },
-    submitRegistration({commit}, data) {
-        data.openDialog = true;
-        commit('OPEN_DIALOG', data.openDialog);
-        // const data = data.department.id
-        // console.log(data);
-        axios.post('/api/register', {
-            username: data.name,
-            password: data.password,
-            passwordConfirmation: data.password,
-            email: data.email,
-            roles: ["ROLE_ADMIN"],
-            deps: [data.depId]
-        }).then(function(response) {
-            console.log(data);
-            console.log(response);
-        }).catch(function(error) {
-            console.log(error);
-        })
-    },
-    closeDialog({commit}, data) {
-        commit('OPEN_DIALOG', data);
     }
 };
 
@@ -143,9 +113,6 @@ const getters = {
     },
     isEmail(state) {
         return state.emailExists;
-    },
-    openDialog(state) {
-        return state.dialog;
     }
 };
 
