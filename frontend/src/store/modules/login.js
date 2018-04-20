@@ -80,7 +80,7 @@ const actions = {
             console.log(error)
         })
     },
-    sendEmailWithPass({commit, dispatch, state, getters}, email) {
+    sendEmailWithPass({commit, dispatch, getters}, email) {
         dispatch('generatePassword')
         var params = new URLSearchParams()
             params.append('password', getters.hashedPassword)
