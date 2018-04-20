@@ -27,7 +27,9 @@
                     </div>
                     <label for="password" class="label label-login-pass">Hasło</label>
                     <p class="forgot-pass" @click="switchForgotPassword">Nie pamiętasz hasła?</p>
-                    <p class="login-error" v-if="loginError">Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
+                    <transition name="show-alert"> 
+                        <p class="login-error" v-if="loginError">Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
+                    </transition>
                     <button class="button login-button" :disabled="$v.password.$invalid" @click="onSubmit">
                         <span class="loading-icon"><img  src="../../assets/images/loading-white.png" v-show="isLoading"></span>
                         <span class="span-arrow" v-show="!isLoading">Zaloguj</span>
@@ -103,5 +105,41 @@
 </script>
 
 <style>
+.show-alert-enter {
+    opacity: 0;
+}
 
+    .show-alert-move {
+        transition: transform 2s; 
+    }
+
+    .show-alert-enter-active {
+        animation: slide-in 2s ease-out forwards;
+        transition: opacity 2s;
+    }
+
+    .show-alert-leave-active {
+        animation: slide-out 2s ease-out forwards;
+        transition: opacity 2s;
+        opacity: 0;
+        position: absolute;
+    }
+
+   @keyframes show-alert-in {
+        from {
+            transform: translateY(20px);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes show-alert-out {
+        from {
+            transform: translateY(0);
+        }
+        to {
+            transform: translateY(20px);
+        }
+    }
 </style>

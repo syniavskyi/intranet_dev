@@ -138,8 +138,18 @@
     cursor: pointer;
     box-shadow: 1px 0px 50px rgba(255, 151, 71, 0.78);
     background: rgb(240, 134, 52);
+
+    outline: none;
 }
 
+.page-enter-active, .page-leave-active {
+  
+    transition: opacity .15s, transform .15s;
+  }
+  .page-enter, .page-leave-to {
+    opacity: 0;
+    transform: translateX(-30%);
+  }
 .slide-enter-active {
     animation: slide-in 500ms ease-out forwards;
 }   
