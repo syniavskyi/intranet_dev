@@ -80,15 +80,23 @@ const actions = {
             console.log(error)
         })
     },
-    sendEmailWithPass({commit, dispatch, state}, email) {
+    sendEmailWithPass({commit, dispatch, state, getters}, email) {
         dispatch('generatePassword')
-        const emailData = {
-            email: email,
-            pass: state.password
+        var params = new URLSearchParams()
+            params.append('password', getters.hashedPassword)
+            params.append('plain_password', getters.password)
+            params.append('email', email)
 
-        }
-        commit('SET_EMAIL_SUCCESS', true)
-
+        axios({
+            method: 'post',
+            url: '/api/user/password/reset',
+            headers: { "Content-type": "application/x-www-form-urlencoded; charset=utf-8" },
+            data: params   
+        }).then(res => {
+            commit('SET_EMAIL_SUCCESS', true)
+        }).catch(error => {
+            console.log(error)
+        }) 
     }
 
 }
@@ -102,7 +110,7 @@ const getters = {
     },
     isSendEmailSuccess(state) {
         return state.sendEmailSuccess
-    }    
+    }      
 }
 
 export default {
