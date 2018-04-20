@@ -178,6 +178,24 @@ body {
     align-items: center;
 }
 
+.success-alert {
+    display: flex;
+    font-family: 'Raleway';
+    order: 5;
+    background: rgba(118, 231, 143, 0.534);
+    text-align: center;
+    align-self: center;
+    color: darkslategrey;
+    width: 90%;
+    padding: 0.05rem;
+    padding-left: 30px;
+    height: 3rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    align-items: center;
+    
+}
+
 .login-button {
     margin-top: 1rem;
     order: 6;

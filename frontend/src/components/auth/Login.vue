@@ -1,6 +1,9 @@
 <template>
 	<div class="plane-parent plane-parent-login">
+         <transition name="slide-backdrop">
         <div class="backdrop" v-if="showRemindPassword"></div>
+         </transition>
+          <transition name="slide">
         <div class="modal" v-if="showRemindPassword">
             <div class="modal-header">
                 <h1 class="modal-title">Nie pamiętasz hasła?</h1>
@@ -9,10 +12,14 @@
             <div class="modal-email">
                 <label class="modal-label">Wprowadź email</label>
                 <input class="input modal-input" v-model="email">
+                <transition name="fade-alert">
+                    <p class="success-alert" v-if="sendEmailSuccess">Na podany adres email wysłano nowe hasło.</p>
+                </transition>
                 <!-- <p class="p-modal-txt">na który otrzymasz link resetujący.</p> -->
             </div>
             <button class="button modal-button" :disabled="$v.email.$invalid" type="button" @click="onResetPassword"><span class="span-arrow">Zresetuj hasło</span></button>
         </div>
+        </transition>
             <div class="plane plane-login">
                 <div class="plane-left">
                     <img class="img-user" src="../../assets/images/grouper-256.png">
@@ -54,6 +61,7 @@
                 passwordFieldType: 'password',
                 eyeType: 'eye',
                 email:''
+                
 	        }
         },
         components: {
@@ -74,6 +82,7 @@
         },
         methods: {
             onSubmit() {
+
                 this.isLoading = true
                 this.$store.dispatch('login', {
                     username: this.username,
@@ -90,12 +99,18 @@
                 this.eyeType = this.eyeType === 'eye' ? 'eye-slash' : 'eye'
             },
             onResetPassword(){ 
-                this.$store.dispatch('generatePassword')
+                this.$store.dispatch('sendEmailWithPass', email)
             }
         },
         computed: {
             loginError() {
                 return this.$store.getters.isLoginError
+            },
+            sendEmailSuccess() {
+                return this.$store.getters.isSendEmailSuccess
+            },
+            newPassword() {
+                return this.$store.getters.password
             }
         },
         created() {
@@ -105,6 +120,20 @@
 </script>
 
 <style>
+
+.fade-alert-enter {
+        opacity: 0;
+    }
+
+    .fade-alert-enter-active {
+        transition: opacity 2s;    
+    }
+
+
+    .fade-alert-leave-active  {
+        transition: opacity 2s;   
+        opacity: 0;
+}
 .show-alert-enter {
     opacity: 0;
 }
@@ -141,5 +170,6 @@
         to {
             transform: translateY(20px);
         }
+
     }
 </style>

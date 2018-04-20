@@ -2,7 +2,8 @@ import axios from 'axios'
 import router from '@/router/index.js'
 
 const state = {
-    loginError: false
+    loginError: false,
+    sendEmailSuccess: false
 }
 
 const mutations = {
@@ -11,7 +12,11 @@ const mutations = {
     },
     SET_LOGIN_ERROR(state, isError){
         state.loginError = isError
+    },
+    SET_EMAIL_SUCCESS(state, isSuccess){
+        state.sendEmailSuccess = isSuccess
     }
+
 }
 
 const actions = {
@@ -74,6 +79,16 @@ const actions = {
         }).catch(error => {
             console.log(error)
         })
+    },
+    sendEmailWithPass({commit, dispatch, state}, email) {
+        dispatch('generatePassword')
+        const emailData = {
+            email: email,
+            pass: state.password
+
+        }
+        commit('SET_EMAIL_SUCCESS', true)
+
     }
 
 }
@@ -84,6 +99,9 @@ const getters = {
     },
     isLoginError(state){
         return state.loginError
+    },
+    isSendEmailSuccess(state) {
+        return state.sendEmailSuccess
     }    
 }
 
