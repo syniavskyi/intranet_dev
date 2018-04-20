@@ -1,6 +1,5 @@
 <template>
     <div class="plane-parent plane-parent-registration">
-        <!-- dialog -->
         <transition name="slide-backdrop" v-if="closeSuccessDialog">
             <div class="backdrop" v-if="closeSuccessDialog"></div>
         </transition>
@@ -15,7 +14,6 @@
                 </div>
             </div>
         </transition>
-        <!-- dialog -->
         <div class="plane plane-registration">
             <div class="plane-left">
                 <img class="img-user" src="../../assets/images/grouper-256.png">
