@@ -1,6 +1,9 @@
 <template>
 	<div class="plane-parent plane-parent-login">
+         <transition name="slide-backdrop">
         <div class="backdrop" v-if="showRemindPassword"></div>
+         </transition>
+          <transition name="slide">
         <div class="modal" v-if="showRemindPassword">
             <div class="modal-header">
                 <h1 class="modal-title">Nie pamiętasz hasła?</h1>
@@ -9,10 +12,14 @@
             <div class="modal-email">
                 <label class="modal-label">Wprowadź email</label>
                 <input class="input modal-input" v-model="email">
+                <transition name="fade-alert">
+                    <p class="success-alert" v-if="sendEmailSuccess">Na podany adres email wysłano nowe hasło.</p>
+                </transition>
                 <!-- <p class="p-modal-txt">na który otrzymasz link resetujący.</p> -->
             </div>
             <button class="button modal-button" :disabled="$v.email.$invalid" type="button" @click="onResetPassword"><span class="span-arrow">Zresetuj hasło</span></button>
         </div>
+        </transition>
             <div class="plane plane-login">
                 <div class="plane-left">
                     <img class="img-user" src="../../assets/images/grouper-256.png">
@@ -27,7 +34,9 @@
                     </div>
                     <label for="password" class="label label-login-pass">Hasło</label>
                     <p class="forgot-pass" @click="switchForgotPassword">Nie pamiętasz hasła?</p>
-                    <p class="login-error" v-if="loginError">Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
+                    <transition name="fade-alert">
+                        <p class="login-error" v-if="loginError">Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe</p>
+                    </transition>
                     <button class="button login-button" :disabled="$v.password.$invalid" @click="onSubmit">
                         <span class="loading-icon"><img  src="../../assets/images/loading-white.png" v-show="isLoading"></span>
                         <span class="span-arrow" v-show="!isLoading">Zaloguj</span>
@@ -52,6 +61,7 @@
                 passwordFieldType: 'password',
                 eyeType: 'eye',
                 email:''
+                
 	        }
         },
         components: {
@@ -89,11 +99,15 @@
             },
             onResetPassword(){ 
                 this.$store.dispatch('generatePassword')
+                this.sendEmailSuccess = true
             }
         },
         computed: {
             loginError() {
                 return this.$store.getters.isLoginError
+            },
+            sendEmailSuccess() {
+                return this.$store.getters.isSendEmailSuccess
             }
         },
         created() {
@@ -103,5 +117,17 @@
 </script>
 
 <style>
+.fade-alert-enter {
+        opacity: 0;
+    }
 
+    .fade-alert-enter-active {
+        transition: opacity 2s;    
+    }
+
+
+    .fade-alert-leave-active  {
+        transition: opacity 2s;   
+        opacity: 0;
+    }
 </style>
