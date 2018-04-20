@@ -99,7 +99,7 @@
                 this.eyeType = this.eyeType === 'eye' ? 'eye-slash' : 'eye'
             },
             onResetPassword(){ 
-                this.$store.dispatch('sendEmailWithPass', email)
+                this.$store.dispatch('sendEmailWithPass', this.email)
             }
         },
         computed: {

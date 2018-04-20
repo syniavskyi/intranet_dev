@@ -37,7 +37,8 @@ const actions = {
         })
     },
     generatePassword({commit, state}) {
-        const bcrypt = require('bcryptjs')
+        const md5 = require('js-md5')
+
         var nLength = 8,
             sCharset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]\:;?><,./-=",
             sRetVal = "";
@@ -45,13 +46,18 @@ const actions = {
         for (var i = 0, n = sCharset.length; i < nLength; ++i) {
             sRetVal += sCharset.charAt(Math.floor(Math.random() * n));
         }
-        bcrypt.genSalt(10, (error, salt) => {
-            bcrypt.hash(sRetVal, salt, (err, hash) => {
-                console.log(hash)
-                commit('SET_HASHED_PASSWORD', hash)
-            })
-        })
-        commit('SET_PASSWORD', sRetVal);
+
+        var hash = md5(sRetVal)
+        commit('SET_HASHED_PASSWORD', hash)
+        commit('SET_PASSWORD', sRetVal)
+
+                // const bcrypt = require('bcryptjs')
+                // bcrypt.genSalt(10, (error, salt) => {
+        //     bcrypt.hash(sRetVal, salt, (err, hash) => {
+        //         console.log(hash)
+        //         commit('SET_HASHED_PASSWORD', hash)
+        //     })
+        // })
     }
 }
 
