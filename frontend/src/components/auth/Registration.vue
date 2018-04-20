@@ -24,7 +24,7 @@
                 <input type="text" name="fullName" @input="getFullNameToEmail()" v-model="fullName" @change="checkEmail()" class="input input-registration" @blur="$v.fullName.$touch()">
                 <label for="email" class="label">E-mail</label>
                 <div class="input-with-checkbox">
-                    <input :disabled="isEmail" @input="$v.fullNameToEmail.touch()" v-model="fullNameToEmail" class="input input-registration input-highlight">
+                    <input :disabled="isEmail" @blur="$v.fullNameToEmail.$touch()" :value="fullNameToEmail" class="input input-registration input-highlight">
                     <input class="checkbox" :checked="isEmail" type="checkbox" disabled>
                 </div>
                 <label class="label" for="password">Hasło</label>
@@ -35,15 +35,13 @@
                 <div class="div-select">
                     <label class="label" for="role">Rola</label>
                     <select class="select">
-                        <option :key="role" v-for="role in getRoleList">{{ role }}</option>
+                        <option v-for="role in getRoleList" :value="roleChosen = role">{{ role }}</option>
                     </select>
                 </div>
                 <div class="div-select">
                     <label class="label" for="role">Oddział</label>
                     <select class="select">
-                        <option :key="department" v-for="department in getDepartmentList">{{ department }}</option>
-                        <!-- <option>Wrocław</option>
-                        <option>Dąbrowa Górnicza</option> -->
+                        <option v-for="department in getDepartmentList" :value="depId = department.depId">{{ department.depName }}</option>
                     </select>
                 </div> 
                 <button class="button" :disabled="$v.$invalid" @click="submit"><span class="span-arrow">Zarejestruj</span></button>
@@ -62,6 +60,7 @@ export default {
       fullName: "",
       email: "",
       role: [],
+      roleChosen: "",
       department: [],
       depId: "",
       closeSuccessDialog: false
@@ -103,6 +102,7 @@ export default {
         email: this.fullNameToEmail,
         password: this.setPassword,
         department: this.depId,
+        role: this.roleChosen,
         openDialog: this.closeSuccessDialog
       });
     },
