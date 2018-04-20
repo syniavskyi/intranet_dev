@@ -24,6 +24,9 @@ const mutations = {
     },
     EMAIL_EXISTS(state, data) {
         state.emailExists = data;
+    },
+    OPEN_DIALOG(state, data) {
+        state.dialog = data;
     }
 };
 
@@ -34,6 +37,9 @@ const actions = {
 
             for(let key in data) {
                 const role = data[key];
+
+                data[key].roleName = data[key].roleName.slice(data[key].roleName.indexOf("_") + 1, data[key].roleName.length);
+
                 let upper = data[key].roleName.substring(0, 1),
                     toLower = data[key].roleName.slice(1, data[key].roleName.length).toLowerCase();
 
@@ -56,8 +62,9 @@ const actions = {
                 } else if (data[key].depName.includes('Wroclaw')) {
                     data[key].depName = 'Wrocław';
                 }
-                dep.depName = data[key].depName;
-                commit('GET_DEP_LIST', dep.depName);
+                // dep.depName = data[key].depName;
+                // commit('GET_DEP_LIST', dep.depName);
+                commit('GET_DEP_LIST', dep);
             }
         });
     },
@@ -95,7 +102,26 @@ const actions = {
         data.name === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
         data.email = sReturnEmail;
         commit('ADD_PREFIX_EMAIL', data.email);
-    }
+    },
+    submitRegistration({commit}, data) {
+        data.openDialog = true;
+        commit('OPEN_DIALOG', data.openDialog);
+        // const data = data.department.id
+        // console.log(data);
+        axios.post('/api/register', {
+            username: data.name,
+            password: data.password,
+            passwordConfirmation: data.password,
+            email: data.email,
+            roles: ["ROLE_ADMIN"],
+            deps: [data.depId]
+        }).then(function(response) {
+            console.log(data);
+            console.log(response);
+        }).catch(function(error) {
+            console.log(error);
+        })
+    },
 };
 
 const getters = {
@@ -113,6 +139,9 @@ const getters = {
     },
     isEmail(state) {
         return state.emailExists;
+    },
+    openDialog(state) {
+        return state.dialog;
     }
 };
 
