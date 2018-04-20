@@ -59,7 +59,9 @@ const getters = {
     password(state) {
         return state.password;
     },
-    
+    hashedPassword(state) {
+        return state.hashedPassword;
+    }
 }
 
 export default {
