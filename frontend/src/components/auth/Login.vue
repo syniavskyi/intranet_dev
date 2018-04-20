@@ -98,8 +98,13 @@
                 this.eyeType = this.eyeType === 'eye' ? 'eye-slash' : 'eye'
             },
             onResetPassword(){ 
-                this.$store.dispatch('generatePassword')
-                this.sendEmailSuccess = true
+                // var pass = newPassword()
+                // const emailData = {
+                //     email: this.email,
+                //     password: pass
+                // }
+                
+                this.$store.dispatch('sendEmailWithPass', email)
             }
         },
         computed: {
@@ -108,6 +113,9 @@
             },
             sendEmailSuccess() {
                 return this.$store.getters.isSendEmailSuccess
+            },
+            newPassword() {
+                return this.$store.getters.password
             }
         },
         created() {

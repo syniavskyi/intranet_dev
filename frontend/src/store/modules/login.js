@@ -79,6 +79,16 @@ const actions = {
         }).catch(error => {
             console.log(error)
         })
+    },
+    sendEmailWithPass({commit, dispatch, state}, email) {
+        dispatch('generatePassword')
+        const emailData = {
+            email: email,
+            pass: state.password
+
+        }
+        commit('SET_EMAIL_SUCCESS', true)
+
     }
 
 }
