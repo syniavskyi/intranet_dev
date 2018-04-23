@@ -5,7 +5,8 @@ const state = {
     idToken: null,
     password: '',
     hashedPassword: '',
-    userRole: ''
+    userRole: '',
+    showMenu: true
 }
 
 const mutations = {
@@ -20,6 +21,9 @@ const mutations = {
     },
     SET_HASHED_PASSWORD (state, password) {
         state.hashedPassword = password
+    },
+    DISPLAY_MENU (state, show) {
+        state.showMenu = show
     }
 }
 
@@ -31,6 +35,7 @@ const actions = {
             commit('CLEAR_AUTH_DATA');
             localStorage.removeItem('expirationDate')
             localStorage.removeItem('token')
+            commit('DISPLAY_MENU', true);
             router.replace('/');
         }).catch(error => {
             console.log(error)
@@ -67,6 +72,9 @@ const getters = {
     },
     hashedPassword(state) {
         return state.hashedPassword;
+    },
+    showMenu(state){
+        return state.showMenu
     }
 }
 

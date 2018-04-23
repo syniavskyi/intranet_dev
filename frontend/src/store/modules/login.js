@@ -42,6 +42,7 @@ const actions = {
             dispatch('setExpirationDate', res.data.expires_in)
             dispatch('setLogoutTimer', res.data.expires_in)
             dispatch('getUserRole', res.data.access_token)
+            commit('DISPLAY_MENU', true);
             router.replace('/dashboard')
         }).catch(error => {
             console.log(error)
@@ -70,6 +71,7 @@ const actions = {
             return
         }
         commit('AUTH_USER', token )
+        commit('DISPLAY_MENU', true);
         router.replace('/dashboard');
     },
     getUserRole({commit}, access_token){

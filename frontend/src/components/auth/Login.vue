@@ -64,6 +64,9 @@
                 
 	        }
         },
+        beforeCreate() {
+            this.$store.commit('DISPLAY_MENU', false)
+        },
         components: {
             Icon
         },
