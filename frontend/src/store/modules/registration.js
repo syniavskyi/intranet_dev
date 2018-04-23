@@ -6,7 +6,8 @@ const state = {
     departmentList: [],
     emails: [],
     email: '',
-    emailExists: false
+    emailExists: false,
+    dialog: false
 };
 
 const mutations = {
@@ -106,17 +107,15 @@ const actions = {
     submitRegistration({commit}, data) {
         data.openDialog = true;
         commit('OPEN_DIALOG', data.openDialog);
-        // const data = data.department.id
-        // console.log(data);
+        data.role = 'ROLE_' + data.role.toUpperCase();
         axios.post('/api/register', {
             username: data.name,
             password: data.password,
             passwordConfirmation: data.password,
             email: data.email,
-            roles: ["ROLE_ADMIN"],
-            deps: [data.depId]
+            roles: [data.role],
+            deps: [data.department]
         }).then(function(response) {
-            console.log(data);
             console.log(response);
         }).catch(function(error) {
             console.log(error);
