@@ -22,10 +22,12 @@ const mutations = {
 const actions = {
     login({commit, dispatch}, authData) {
         commit('CLEAR_AUTH_DATA');
+        const md5 = require('js-md5')
+        var hashedPassword = md5(authData.password)
         var params = new URLSearchParams()
             params.append('grant_type', 'password')
             params.append('username', authData.username)
-            params.append('password',authData.password)
+            params.append('password', hashedPassword)
         axios({
             method: 'post',
             url: 'oauth/token',
