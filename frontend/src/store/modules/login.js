@@ -22,10 +22,12 @@ const mutations = {
 const actions = {
     login({commit, dispatch}, authData) {
         commit('CLEAR_AUTH_DATA');
+        const md5 = require('js-md5')
+        var hashedPassword = md5(authData.password)
         var params = new URLSearchParams()
             params.append('grant_type', 'password')
             params.append('username', authData.username)
-            params.append('password',authData.password)
+            params.append('password', hashedPassword)
         axios({
             method: 'post',
             url: 'oauth/token',
@@ -40,6 +42,7 @@ const actions = {
             dispatch('setExpirationDate', res.data.expires_in)
             dispatch('setLogoutTimer', res.data.expires_in)
             dispatch('getUserRole', res.data.access_token)
+            commit('DISPLAY_MENU', true);
             router.replace('/dashboard')
         }).catch(error => {
             console.log(error)
@@ -68,6 +71,7 @@ const actions = {
             return
         }
         commit('AUTH_USER', token )
+        commit('DISPLAY_MENU', true);
         router.replace('/dashboard');
     },
     getUserRole({commit}, access_token){
