@@ -4,7 +4,9 @@ import login from './modules/login'
 import registration from './modules/registration'
 import dashboard from './modules/dashboard'
 import shared from './modules/shared'
+import profile from './modules/profile'
 import employees from './modules/employees'
+
 
 Vue.use(Vuex);
 
@@ -15,6 +17,8 @@ export default new Vuex.Store({
         registration,
         dashboard,
         shared,
+        profile,
         employees
+
     }
 });
