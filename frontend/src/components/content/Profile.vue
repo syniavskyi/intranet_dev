@@ -6,8 +6,8 @@
                     <div class="dashboard-content"> 
                       <h1>Profil</h1>
                       <button v-if="!editMode" @click="onEdit">Edytuj dane</button>
-                      <button v-if="editMode" @click="editMode = !editMode" :disabled="$v.$invalid">Zapisz zmiany</button>
-                      <button v-if="editMode" @click="cancelEdit"> Odrzuć zmiany</button>
+                      <button v-if="editMode" @click="onSaveChanges" :disabled="$v.$invalid">Zapisz zmiany</button>
+                      <button v-if="editMode" @click="onCancelEdit"> Odrzuć zmiany</button>
                       <div>             
                         <h3> {{userData.firstName}} {{userData.lastName}} </h3>
                       </div>  
@@ -102,7 +102,6 @@ export default {
   beforeCreate() {
     const username = localStorage.getItem('username')
     this.$store.dispatch('getUserData', username)
-    // this._beforeEditingCache = this.userData
   },
   computed: {
     ...mapGetters([
@@ -114,9 +113,13 @@ export default {
       this.editMode = !this.editMode
       this._beforeEditingCache = Object.assign({}, this.userData)
     },
-    cancelEdit() {
+    onCancelEdit() {
       Object.assign(this.userData, this._beforeEditingCache)
       this._beforeEditingCache = null
+      this.editMode = !this.editMode
+    },
+    onSaveChanges() {
+      this.$store.dispatch('saveUserData', this.userData)
       this.editMode = !this.editMode
     }
   }

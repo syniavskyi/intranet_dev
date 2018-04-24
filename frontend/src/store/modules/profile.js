@@ -37,7 +37,6 @@ const actions = {
                 address: res.data.userContacts[0].address,
             }
             
-
             localStorage.setItem('userRole', userdata.role)
             commit('SET_USER_ROLE', userdata.role)
             commit('SET_USER_DATA', userdata)
@@ -45,6 +44,9 @@ const actions = {
             console.log(error)
         })
     },
+    saveUserData({commit}, userData) {
+        commit('SET_USER_DATA', userData)
+    }
 };
 
 const getters = {
