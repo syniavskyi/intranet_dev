@@ -3,7 +3,8 @@ import router from '@/router/index.js'
 
 const state = {
     loginError: false,
-    sendEmailSuccess: false
+    sendEmailSuccess: false,
+    username: null
 }
 
 const mutations = {
@@ -15,6 +16,9 @@ const mutations = {
     },
     SET_EMAIL_SUCCESS(state, isSuccess){
         state.sendEmailSuccess = isSuccess
+    },
+    SET_USERNAME(state, username){
+        state.username = username
     }
 
 }
@@ -41,7 +45,7 @@ const actions = {
             localStorage.setItem('token', res.data.access_token)
             dispatch('setExpirationDate', res.data.expires_in)
             dispatch('setLogoutTimer', res.data.expires_in)
-            dispatch('getUserRole', res.data.access_token)
+            dispatch('getUsername', res.data.access_token)
             commit('DISPLAY_MENU', true);
             router.replace('/dashboard')
         }).catch(error => {
@@ -59,7 +63,7 @@ const actions = {
         const expirationDate = new Date(now.getTime() + expiresIn * 1000)
         localStorage.setItem('expirationDate', expirationDate);
     },
-    tryAutoLogin({commit}) {
+    tryAutoLogin({commit, dispatch}) {
         commit('SET_LOGIN_ERROR', false)
         const token = localStorage.getItem('token')
         if (!token) {
@@ -70,16 +74,18 @@ const actions = {
         if (now >= expirationDate) {
             return
         }
+        dispatch('getUsername', token)
         commit('AUTH_USER', token )
         commit('DISPLAY_MENU', true);
         router.replace('/dashboard');
     },
-    getUserRole({commit}, access_token){
-        var URL = '/api/getCurrentRole?access_token=' + access_token
+    getUsername({commit, dispatch}, token) {
+        var URL = '/api/getUsernameByToken?access_token=' + token
         axios.get(URL).then(res => {
-            const role = res.data[0].authority
-            localStorage.setItem('userRole', role)
-            commit('SET_USER_ROLE', role)
+            const username = res.data
+            localStorage.setItem('username', username)
+            commit('SET_USERNAME', username)
+            dispatch('getUserData', username)
         }).catch(error => {
             console.log(error)
         })
@@ -123,3 +129,16 @@ export default {
     actions,
     getters
 }
+
+
+
+// getUserRole({commit}, access_token){
+//     var URL = '/api/getCurrentRole?access_token=' + access_token
+//     axios.get(URL).then(res => {
+//         const role = res.data[0].authority
+//         localStorage.setItem('userRole', role)
+//         commit('SET_USER_ROLE', role)
+//     }).catch(error => {
+//         console.log(error)
+//     })
+// },

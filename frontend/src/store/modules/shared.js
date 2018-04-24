@@ -25,6 +25,7 @@ const mutations = {
     DISPLAY_MENU (state, show) {
         state.showMenu = show
     }
+    
 }
 
 const actions = {
@@ -56,13 +57,6 @@ const actions = {
         commit('SET_HASHED_PASSWORD', hash)
         commit('SET_PASSWORD', sRetVal)
 
-                // const bcrypt = require('bcryptjs')
-                // bcrypt.genSalt(10, (error, salt) => {
-        //     bcrypt.hash(sRetVal, salt, (err, hash) => {
-        //         console.log(hash)
-        //         commit('SET_HASHED_PASSWORD', hash)
-        //     })
-        // })
     }
 }
 
@@ -76,6 +70,7 @@ const getters = {
     showMenu(state){
         return state.showMenu
     }
+
 }
 
 export default {
@@ -84,3 +79,12 @@ export default {
     state,
     getters
 }
+
+
+        // const bcrypt = require('bcryptjs')
+        // bcrypt.genSalt(10, (error, salt) => {
+        //     bcrypt.hash(sRetVal, salt, (err, hash) => {
+        //         console.log(hash)
+        //         commit('SET_HASHED_PASSWORD', hash)
+        //     })
+        // })
