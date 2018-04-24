@@ -25,12 +25,16 @@ const actions = {
             const userdata = {
                 departmentId: departmentId,
                 departmentName: departmentName,
-                email: res.data.userInfo[0].email,
+                email: res.data.userContacts[0].email,
                 role: res.data.roles[0].name,
                 birthDate: res.data.userInfo[0].birthDate,
                 firstName: res.data.userInfo[0].firstName,
                 gender: res.data.userInfo[0].gender,
-                lastName: res.data.userInfo[0].lastName
+                lastName: res.data.userInfo[0].lastName,
+                skype: res.data.userContacts[0].skypeId,
+                slack: res.data.userContacts[0].slackId,
+                phone: res.data.userContacts[0].phone,
+                address: res.data.userContacts[0].address,
             }
             
 

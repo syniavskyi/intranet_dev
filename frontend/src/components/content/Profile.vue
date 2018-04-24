@@ -5,70 +5,70 @@
                 <div class="plane-dashboard-nav-and-content">
                     <div class="dashboard-content"> 
                       <h1>Profil</h1>
-                      <button v-if="!editMode" @click="editMode = !editMode">Edytuj dane</button>
-                      <button v-else @click="editMode = !editMode" :disabled="$v.$invalid">Zapisz zmiany</button>
-                      
-                      <div>   <!-- container for single label + input/p -->           
+                      <button v-if="!editMode" @click="onEdit">Edytuj dane</button>
+                      <button v-if="editMode" @click="editMode = !editMode" :disabled="$v.$invalid">Zapisz zmiany</button>
+                      <button v-if="editMode" @click="cancelEdit"> Odrzuć zmiany</button>
+                      <div>             
                         <h3> {{userData.firstName}} {{userData.lastName}} </h3>
                       </div>  
 
                       <h2>Dane kontaktowe</h2>
-                      <div>  <!-- container for section -->
-                        <div>   <!-- container for single label + input/p -->           
+                      <div> 
+                        <div>            
                           <label>Adres</label>
                           <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"  v-model="userData.address"> 
                         </div>  
-                        <div>   <!-- container for single label + input/p -->           
+                        <div>           
                           <label>Email</label>
                           <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()"> 
                           <p class="login-error" v-if="$v.userData.email.$invalid" >Adres email posiada nieprawidłowy format lub nie jest wprowadzony.</p>
                         </div> 
-                        <div>   <!-- container for single label + input/p -->           
+                        <div>             
                           <label>Telefon</label>
                           <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.phone"  @blur="$v.userData.phone.$touch()"> 
                           <p class="login-error" v-if="$v.userData.phone.$invalid" >Podany numer telefonu posiada nieprawidłowy format lub nie jest wprowadzony.</p>
                         </div> 
-                        <div>   <!-- container for single label + input/p -->           
+                        <div>           
                           <label>Skype</label>
                           <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.skype"> 
                         </div> 
-                        <div>   <!-- container for single label + input/p -->           
+                        <div>        
                           <label>Slack</label>
                           <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.slack"> 
                         </div> 
                       </div>
 
                       <h2>Dane pracownika</h2>
-                      <div>  <!-- container for section -->
-                        <div>   <!-- container for single label + input/p -->           
+                      <div>  
+                        <div>           
                             <label>Oddział</label>
                             <input class="inputDisabled" :disabled="true" v-model="userData.departmentName"> 
                         </div> 
-                        <div>   <!-- container for single label + input/p -->           
+                        <div>           
                             <label>Dział</label>
                             <input class="inputDisabled" :disabled="true" v-model="userData.dzial"> 
                         </div> 
-                        <div>   <!-- container for single label + input/p -->           
+                        <div>         
                             <label>Pozycja</label>
                             <input class="inputDisabled" :disabled="true" v-model="userData.position"> 
                         </div> 
-                        <div>   <!-- container for single label + input/p -->           
+                        <div>            
                             <label>Aktualny projekt</label>
                             <input class="inputDisabled" :disabled="true" v-model="userData.project"> 
                         </div> 
-                        <div>   <!-- container for single label + input/p -->           
+                        <div>           
                             <label>Etat</label>
                             <input class="inputDisabled" :disabled="true" v-model="userData.worktime"> 
                         </div> 
-                        <div>   <!-- container for single label + input/p -->           
+                        <div>           
                             <label>Data zatrudnienia</label>
                             <input class="inputDisabled" :disabled="true"  v-model="userData.date"> 
                         </div> 
-                        <div>   <!-- container for single label + input/p -->           
+                        <div>          
                             <label>Staż pracy</label>
                             <input class="inputDisabled" :disabled="true" v-model="userData.time"> 
                         </div>
-                        <div>   <!-- container for single label + input/p -->           
+                        <div>        
                             <label>CV</label>
                             <p> link </p>
                         </div>  
@@ -86,39 +86,39 @@ import {mapGetters} from 'vuex'
 export default {
   data() {
    return { 
-      editMode: false
-    }
+      editMode: false,
+      _beforeEditingCache: null
+  }
   },
   validations: {
     userData:{
-      address: {
-        required
-      },
-       email: {
-        required,
-        email
-      },
-      phone: {
-        required,
-        numeric
-      },
-      skype: {
-        required
-      },
-      slack: {
-        required
-      }
+      address: { required },
+      email: { required, email },
+      phone: { required },
+      skype: { required },
+      slack: { required }
     }
   },
   beforeCreate() {
     const username = localStorage.getItem('username')
     this.$store.dispatch('getUserData', username)
+    // this._beforeEditingCache = this.userData
   },
   computed: {
     ...mapGetters([
       'userData'
     ])
-    
+  },
+  methods: {
+    onEdit() {
+      this.editMode = !this.editMode
+      this._beforeEditingCache = Object.assign({}, this.userData)
+    },
+    cancelEdit() {
+      Object.assign(this.userData, this._beforeEditingCache)
+      this._beforeEditingCache = null
+      this.editMode = !this.editMode
+    }
   }
 }
 </script>
