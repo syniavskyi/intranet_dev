@@ -24,7 +24,7 @@
                 <input type="text" name="fullName" @input="getFullNameToEmail()" v-model="fullName" @change="checkEmail()" class="input input-registration" @blur="$v.fullName.$touch()">
                 <label for="email" class="label">E-mail</label>
                 <div class="input-with-checkbox">
-                    <input :disabled="isEmail" @blur="$v.fullNameToEmail.$touch()" :value="fullNameToEmail" class="input input-registration input-highlight">
+                    <input :disabled="isEmail" @blur="$v.fullNameToEmail.$touch()" :value="fullNameToEmail" @change="checkEmail($event.target.value)" class="input input-registration input-highlight">
                     <input class="checkbox" :checked="isEmail" type="checkbox" disabled>
                 </div>
                 <label class="label" for="password">Hasło</label>
@@ -59,6 +59,7 @@ export default {
     return {
       fullName: "",
       email: "",
+      mail: '',
       role: [],
       roleChosen: "",
       department: [],
@@ -82,15 +83,21 @@ export default {
   beforeCreate() {
     this.$store.dispatch("getRoleList");
     this.$store.dispatch("getDepartmentList");
+    this.$store.commit('DISPLAY_MENU', false);
   },
   methods: {
-    checkEmail() {
-      this.$store.dispatch("checkEmail", this.fullNameToEmail);
+    checkEmail(value) {
+      this.mail = value;
+      this.$store.dispatch("checkEmail", {
+        fullNameToEmail: this.fullNameToEmail,
+        mail: this.mail
+      });
     },
     getFullNameToEmail() {
       this.$store.dispatch("fullNameToEmail", {
         name: this.fullName,
-        email: this.email
+        email: this.email,
+        isEmail: this.isEmail
       });
     },
     generatePassword() {
@@ -99,7 +106,7 @@ export default {
     submit() {
       this.$store.dispatch("submitRegistration", {
         name: this.fullName,
-        email: this.fullNameToEmail,
+        email: this.mail,
         password: this.setPassword,
         department: this.depId,
         role: this.roleChosen,
@@ -131,6 +138,9 @@ export default {
     },
     openDialog() {
       return this.$store.getters.openDialog;
+    },
+    setMail() {
+      return this.$store.getters.setMail;
     }
   }
 };

@@ -6,6 +6,7 @@ const state = {
     departmentList: [],
     emails: [],
     email: '',
+    mail: '',
     emailExists: false,
     dialog: false
 };
@@ -28,6 +29,9 @@ const mutations = {
     },
     OPEN_DIALOG(state, data) {
         state.dialog = data;
+    },
+    SET_MAIL(state, data) {
+        state.mail = data;
     }
 };
 
@@ -69,7 +73,7 @@ const actions = {
             }
         });
     },
-    checkEmail({commit, state}, typedEmail) {
+    checkEmail({commit, state, dispatch}, props) {
         axios.get('/api/emailList').then(res => {
             const data = res.data;
 
@@ -84,14 +88,24 @@ const actions = {
                 var bIsEmail;
                 
                 for (var i = 0; i < state.emails.length; i++) {
-                    if (typedEmail === state.emails[i]) {
+                    if (props.fullNameToEmail === state.emails[i]) {
                         bIsEmail = true;
+                        // dispatch('fullNameToEmail', { bIsEmail, name: typedEmail })
                         break;
+                        // return;
                     } else {
                        bIsEmail = false; 
+                       commit('SET_MAIL', props.mail);
+                    //    dispatch('fullNameToEmail', { bIsEmail, name: typedEmail })
                     }
                 }
-                commit('EMAIL_EXISTS', bIsEmail);
+                // !(bIsEmail) ? dispatch('fullNameToEmail', { bIsEmail, typedEmail }) : commit('EMAIL_EXISTS', bIsEmail);
+                // if(!bIsEmail) {
+
+                // } else {
+
+                // }
+                // commit('EMAIL_EXISTS', bIsEmail);
             }
         });
     },
@@ -100,19 +114,34 @@ const actions = {
             sDomain = "@btech.pl",
             sReturnEmail;
 
-        data.name === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
-        data.email = sReturnEmail;
-        commit('ADD_PREFIX_EMAIL', data.email);
+        // if(data.isEmail) {
+            data.name === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
+            data.email = sReturnEmail
+        // } else {
+            // data.email = sEmail;
+            commit('ADD_PREFIX_EMAIL', data.email);
+        // }
+        // if(data.bIsEmail) {
+        //     var sDomain = "@btech.pl";
+
+        //     data.name === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
+        //     data.email = sReturnEmail;
+        //     commit('ADD_PREFIX_EMAIL', data.email);
+        // } else {
+        //     console.log(data.name);
+        //     commit('ADD_PREFIX_EMAIL', sEmail);
+        // }
     },
     submitRegistration({commit}, data) {
         data.openDialog = true;
         commit('OPEN_DIALOG', data.openDialog);
         data.role = 'ROLE_' + data.role.toUpperCase();
+        console.log(data);
         axios.post('/api/register', {
             username: data.name,
             password: data.password,
             passwordConfirmation: data.password,
-            email: data.email,
+            email: data.mail,
             roles: [data.role],
             deps: [data.department]
         }).then(function(response) {
@@ -141,6 +170,9 @@ const getters = {
     },
     openDialog(state) {
         return state.dialog;
+    },
+    setMail(state) {
+        return state.mail;
     }
 };
 
