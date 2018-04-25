@@ -100,8 +100,10 @@ export default {
     }
   },
   beforeCreate() {
-    const username = localStorage.getItem('username')
-    this.$store.dispatch('getUserData', username)
+    if (this.userData === undefined) {
+      const username = localStorage.getItem('username')
+      this.$store.dispatch('getUserData', username)
+    }
   },
   computed: {
     ...mapGetters([
