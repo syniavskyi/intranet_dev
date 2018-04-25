@@ -8,13 +8,14 @@ import axios from 'axios'
 import Vuelidate from 'vuelidate'
 import Vuex from 'vuex'
 import Icon from 'vue-awesome/icons'
-
+import VueI18n from 'vue-i18n'
 // import { store } from './store/store'
 import store from './store/store'
 
 Vue.use(Vuelidate);
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
+Vue.use(VueI18n)
 
 Vue.component('icon', Icon)
 
