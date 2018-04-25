@@ -4,7 +4,6 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueAxios from 'vue-axios'
-import VueAuthenticate from 'vue-authenticate'
 import axios from 'axios'
 import Vuelidate from 'vuelidate'
 import Vuex from 'vuex'
@@ -16,8 +15,6 @@ import store from './store/store'
 Vue.use(Vuelidate);
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
-// Vue.use(VueAuthenticate, {});
-
 
 Vue.component('icon', Icon)
 
