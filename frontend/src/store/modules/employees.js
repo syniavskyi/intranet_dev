@@ -7,7 +7,7 @@ const state = {
 
 const mutations = {
     GET_USER_LIST(state, data) {
-        state.userList.push(data);
+        state.userList = data;
     }
 };
 
@@ -15,7 +15,8 @@ const actions = {
     getUserInfo({commit}) {
         axios.get("/api/users")
             .then(res => {
-                const data = res.data;
+                const data = res.data,
+                      aData = [];
 
                 for(let key in data) {
                     const user = data[key];
@@ -28,8 +29,9 @@ const actions = {
                     user.email = user.userContacts[0] ? user.userContacts[0].email : "";
                     user.phone = user.userContacts[0] ? user.userContacts[0].phone : "";
 
-                    commit('GET_USER_LIST', user);
+                    aData.push(user);
                 }
+                commit('GET_USER_LIST', aData);
             })
             .catch(function (error) {
                 alert('brak połączenia');
