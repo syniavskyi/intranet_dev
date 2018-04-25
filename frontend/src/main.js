@@ -16,7 +16,7 @@ import store from './store/store'
 Vue.use(Vuelidate);
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
-Vue.use(VueAuthenticate, {});
+// Vue.use(VueAuthenticate, {});
 
 
 Vue.component('icon', Icon)
