@@ -49,6 +49,7 @@
 <script>
     import { required, minLength, email } from 'vuelidate/lib/validators'
     import Icon from 'vue-awesome/components/Icon'
+import { mapGetters } from 'vuex';
 
 	export default {
 	    name: 'Login',
@@ -106,15 +107,20 @@
             }
         },
         computed: {
-            loginError() {
-                return this.$store.getters.isLoginError
-            },
-            sendEmailSuccess() {
-                return this.$store.getters.isSendEmailSuccess
-            },
-            newPassword() {
-                return this.$store.getters.password
-            }
+            ...mapGetters({
+                loginError: 'isLoginError',
+                sendEmailSuccess: 'isSendEmailSuccess',
+                newPAssword: 'password'
+            })
+            // loginError() {
+            //     return this.$store.getters.isLoginError
+            // },
+            // sendEmailSuccess() {
+            //     return this.$store.getters.isSendEmailSuccess
+            // },
+            // newPassword() {
+            //     return this.$store.getters.password
+            // }
         },
         created() {
             this.$store.dispatch('tryAutoLogin')
