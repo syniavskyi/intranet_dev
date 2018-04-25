@@ -16,7 +16,8 @@ const mutations = {
         state.userRoles.push(data);
     },
     GET_DEP_LIST(state, data) {
-        state.departmentList.push(data);
+        // state.departmentList.push(data);
+        state.departmentList = data;
     },
     ADD_EMAILS(state, data) {
         state.emails.push(data);
@@ -56,7 +57,8 @@ const actions = {
     },
     getDepartmentList({commit}) {
         axios.get("/api/depsList").then(res => {
-            const data = res.data;
+            const data = res.data,
+                  aData = [];
 
             for(let key in data) {
                 const dep = data[key];
@@ -67,10 +69,12 @@ const actions = {
                 } else if (data[key].depName.includes('Wroclaw')) {
                     data[key].depName = 'Wrocław';
                 }
+                aData.push(dep);
                 // dep.depName = data[key].depName;
                 // commit('GET_DEP_LIST', dep.depName);
-                commit('GET_DEP_LIST', dep);
+                // commit('GET_DEP_LIST', dep);
             }
+            commit('GET_DEP_LIST', aData);
         });
     },
     checkEmail({commit, state, dispatch}, props) {
