@@ -90,22 +90,12 @@ const actions = {
                 for (var i = 0; i < state.emails.length; i++) {
                     if (props.fullNameToEmail === state.emails[i]) {
                         bIsEmail = true;
-                        // dispatch('fullNameToEmail', { bIsEmail, name: typedEmail })
                         break;
-                        // return;
                     } else {
                        bIsEmail = false; 
                        commit('SET_MAIL', props.mail);
-                    //    dispatch('fullNameToEmail', { bIsEmail, name: typedEmail })
                     }
                 }
-                // !(bIsEmail) ? dispatch('fullNameToEmail', { bIsEmail, typedEmail }) : commit('EMAIL_EXISTS', bIsEmail);
-                // if(!bIsEmail) {
-
-                // } else {
-
-                // }
-                // commit('EMAIL_EXISTS', bIsEmail);
             }
         });
     },
@@ -114,23 +104,9 @@ const actions = {
             sDomain = "@btech.pl",
             sReturnEmail;
 
-        // if(data.isEmail) {
-            data.name === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
-            data.email = sReturnEmail
-        // } else {
-            // data.email = sEmail;
-            commit('ADD_PREFIX_EMAIL', data.email);
-        // }
-        // if(data.bIsEmail) {
-        //     var sDomain = "@btech.pl";
-
-        //     data.name === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
-        //     data.email = sReturnEmail;
-        //     commit('ADD_PREFIX_EMAIL', data.email);
-        // } else {
-        //     console.log(data.name);
-        //     commit('ADD_PREFIX_EMAIL', sEmail);
-        // }
+        data.name === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
+        data.email = sReturnEmail
+        commit('ADD_PREFIX_EMAIL', data.email);
     },
     submitRegistration({commit}, data) {
         data.openDialog = true;
