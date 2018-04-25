@@ -68,32 +68,20 @@ import { mapGetters } from 'vuex';
         beforeCreate() {
             this.$store.commit('DISPLAY_MENU', false)
         },
-        components: {
-            Icon
-        },
+        components: { Icon },
         validations: {
-            password: {
-                required,
-                minLen: minLength(8)
-            },
-            username: {
-                required
-            },
-            email: {
-                required,
-                email
-            }
+            password: { required, minLen: minLength(8) },
+            username: { required },
+            email: { required, email }
         },
         methods: {
             onSubmit() {
-
                 this.isLoading = true
                 this.$store.dispatch('login', {
                     username: this.username,
                     password: this.password
                 })
                 this.isLoading = false
-
             },
             switchForgotPassword() {
                 this.showRemindPassword = !this.showRemindPassword
@@ -112,15 +100,6 @@ import { mapGetters } from 'vuex';
                 sendEmailSuccess: 'isSendEmailSuccess',
                 newPAssword: 'password'
             })
-            // loginError() {
-            //     return this.$store.getters.isLoginError
-            // },
-            // sendEmailSuccess() {
-            //     return this.$store.getters.isSendEmailSuccess
-            // },
-            // newPassword() {
-            //     return this.$store.getters.password
-            // }
         },
         created() {
             this.$store.dispatch('tryAutoLogin')
@@ -128,57 +107,3 @@ import { mapGetters } from 'vuex';
 	}
 </script>
 
-<style>
-
-.fade-alert-enter {
-        opacity: 0;
-    }
-
-    .fade-alert-enter-active {
-        transition: opacity 2s;    
-    }
-
-
-    .fade-alert-leave-active  {
-        transition: opacity 2s;   
-        opacity: 0;
-}
-.show-alert-enter {
-    opacity: 0;
-}
-
-    .show-alert-move {
-        transition: transform 2s; 
-    }
-
-    .show-alert-enter-active {
-        animation: slide-in 2s ease-out forwards;
-        transition: opacity 2s;
-    }
-
-    .show-alert-leave-active {
-        animation: slide-out 2s ease-out forwards;
-        transition: opacity 2s;
-        opacity: 0;
-        position: absolute;
-    }
-
-   @keyframes show-alert-in {
-        from {
-            transform: translateY(20px);
-        }
-        to {
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes show-alert-out {
-        from {
-            transform: translateY(0);
-        }
-        to {
-            transform: translateY(20px);
-        }
-
-    }
-</style>
