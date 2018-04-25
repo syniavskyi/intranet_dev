@@ -1,6 +1,7 @@
 import axios from 'axios'
 import router from '@/router/index.js'
 
+
 const state = {
     userData: {}
 };
@@ -35,6 +36,7 @@ const actions = {
                 slack: res.data.userContacts[0].slackId,
                 phone: res.data.userContacts[0].phone,
                 address: res.data.userContacts[0].address,
+                id: res.data.id
             }
             
             localStorage.setItem('userRole', userdata.role)
@@ -46,6 +48,24 @@ const actions = {
     },
     saveUserData({commit}, userData) {
         commit('SET_USER_DATA', userData)
+        var params = new URLSearchParams()
+            params.append('id', userData.id)
+            params.append('address', userData.address)
+            params.append('phone', userData.phone)
+            params.append('email', userData.email)
+            params.append('skypeId', userData.skype)
+            params.append('slackId', userData.slack)
+
+        axios({
+            method: 'post',
+            url: '/api/user/edit/contact',
+            headers: { "Content-type": "application/x-www-form-urlencoded; charset=utf-8" },
+            data: params   
+        }).then(res => {
+            console.log(res)
+        }).catch(error => {
+            console.log(error)
+        }) 
     }
 };
 

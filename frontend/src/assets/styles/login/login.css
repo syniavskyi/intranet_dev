@@ -280,6 +280,58 @@ button[disabled] span {
     }
 }
 
+.fade-alert-enter {
+    opacity: 0;
+}
+
+.fade-alert-enter-active {
+    transition: opacity 2s;    
+}
+
+
+.fade-alert-leave-active  {
+    transition: opacity 2s;   
+    opacity: 0;
+}
+.show-alert-enter {
+opacity: 0;
+}
+
+.show-alert-move {
+    transition: transform 2s; 
+}
+
+.show-alert-enter-active {
+    animation: slide-in 2s ease-out forwards;
+    transition: opacity 2s;
+}
+
+.show-alert-leave-active {
+    animation: slide-out 2s ease-out forwards;
+    transition: opacity 2s;
+    opacity: 0;
+    position: absolute;
+}
+
+@keyframes show-alert-in {
+    from {
+        transform: translateY(20px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes show-alert-out {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(20px);
+    }
+
+}
+
 @media (min-height: 0rem) and (max-height: 35rem) and (min-width: 35rem) {
     .plane-login {
         display: flex;

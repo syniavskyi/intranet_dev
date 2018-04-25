@@ -59,6 +59,7 @@
 <script>
 
    import router from '@/router/index.js'
+import { mapGetters } from 'vuex';
 
 	export default {
     data() {
@@ -66,8 +67,15 @@
         
       }
     },
+    computed: {
+        ...mapGetters([
+            'showMenu'
+        ])
+    },
     beforeCreate() {
-        this.$store.commit('DISPLAY_MENU', true)
+        if (this.showMenu === false) {
+            this.$store.commit('DISPLAY_MENU', true)
+        }
     },
     methods: {
       logout() {
