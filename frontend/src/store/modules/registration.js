@@ -13,14 +13,14 @@ const state = {
 
 const mutations = {
     GET_ROLE_LIST(state, data) {
-        state.userRoles.push(data);
+        state.userRoles = data;
     },
     GET_DEP_LIST(state, data) {
-        // state.departmentList.push(data);
         state.departmentList = data;
     },
     ADD_EMAILS(state, data) {
-        state.emails.push(data);
+        // state.emails.push(data);
+        state.emails = data;
     },
     ADD_PREFIX_EMAIL(state, data) {
         state.email = data;
@@ -39,7 +39,8 @@ const mutations = {
 const actions = {
     getRoleList({commit}) {
         axios.get("/api/rolesList").then(res => {
-            const data = res.data;
+            const data = res.data,
+                  aData = [];
 
             for(let key in data) {
                 const role = data[key];
@@ -50,9 +51,10 @@ const actions = {
                     toLower = data[key].roleName.slice(1, data[key].roleName.length).toLowerCase();
 
                 data[key].roleName = upper + toLower;
-                role.roleName = data[key].roleName;
-                commit('GET_ROLE_LIST', role.roleName);
+                // role.roleName = data[key].roleName;
+                aData.push(role.roleName);
             }
+            commit('GET_ROLE_LIST', aData);
         });
     },
     getDepartmentList({commit}) {
@@ -70,36 +72,37 @@ const actions = {
                     data[key].depName = 'Wrocław';
                 }
                 aData.push(dep);
-                // dep.depName = data[key].depName;
-                // commit('GET_DEP_LIST', dep.depName);
-                // commit('GET_DEP_LIST', dep);
             }
             commit('GET_DEP_LIST', aData);
         });
     },
     checkEmail({commit, state, dispatch}, props) {
         axios.get('/api/emailList').then(res => {
-            const data = res.data;
+            const data = res.data,
+                  aData = [];
 
             for(let key in data) {
                 const email = data[key];
 
                 email.email = data[key].email;
-                commit('ADD_EMAILS', email.email);
+                aData.push(email.email);
+                // commit('ADD_EMAILS', email.email);
             }
-
+            commit('ADD_EMAILS', aData);
             if(state.emails.length > 0) {
                 var bIsEmail;
                 
                 for (var i = 0; i < state.emails.length; i++) {
                     if (props.fullNameToEmail === state.emails[i]) {
                         bIsEmail = true;
+                        // dispatch('fullNameToEmail');
                         break;
                     } else {
                        bIsEmail = false; 
                        commit('SET_MAIL', props.mail);
                     }
                 }
+                commit('EMAIL_EXISTS', bIsEmail);
             }
         });
     },
