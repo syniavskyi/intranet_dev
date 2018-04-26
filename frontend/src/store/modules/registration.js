@@ -19,7 +19,6 @@ const mutations = {
         state.departmentList = data;
     },
     ADD_EMAILS(state, data) {
-        // state.emails.push(data);
         state.emails = data;
     },
     ADD_PREFIX_EMAIL(state, data) {
@@ -86,7 +85,6 @@ const actions = {
 
                 email.email = data[key].email;
                 aData.push(email.email);
-                // commit('ADD_EMAILS', email.email);
             }
             commit('ADD_EMAILS', aData);
             if(state.emails.length > 0) {
@@ -95,7 +93,6 @@ const actions = {
                 for (var i = 0; i < state.emails.length; i++) {
                     if (props.fullNameToEmail === state.emails[i]) {
                         bIsEmail = true;
-                        // dispatch('fullNameToEmail');
                         break;
                     } else {
                        bIsEmail = false; 
