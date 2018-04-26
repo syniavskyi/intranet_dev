@@ -10,7 +10,7 @@ import Dashboard from '@/components/content/Dashboard'
 import News from '@/components/content/News'
 import Profile from '@/components/content/Profile'
 import Employees from '@/components/content/Employees'
-import Calendar from '@/components/content/Calendar'
+import Calendar from '@/components/Calendar/Calendar'
 import Files from '@/components/content/Files'
 import Informations from '@/components/content/Informations'
 
