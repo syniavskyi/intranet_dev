@@ -36,11 +36,15 @@
         "calendar": "Kalendarz",
         "employees": "Pracownicy",
         "informations": "Informacje",
-        "files": "Pliki"
+        "files": "Pliki",
+        "contact": "Dane kontaktowe",
+        "employee": "Dane pracownika"
     },
     "message": {
         "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",
-        "sendEmailSuccess": "Na podany adres email wysłano nowe hasło."
+        "sendEmailSuccess": "Na podany adres email wysłano nowe hasło.",
+        "emailValidation": "Adres email posiada nieprawidłowy format lub nie jest wprowadzony.",
+        "phoneValidation": "Numer telefonu posiada nieprawidłowy format lub nie jest wprowadzony."
     },
     "select": {
         "language": {

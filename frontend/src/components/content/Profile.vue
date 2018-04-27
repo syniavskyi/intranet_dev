@@ -4,15 +4,15 @@
             <div class="plane-dashboard"> 
                 <div class="plane-dashboard-nav-and-content">
                     <div class="dashboard-content"> 
-                      <h1>Profil</h1>
+                      <h1>{{ $t("header.profile") }}</h1>
                       <button v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
                       <button v-if="editMode" @click="onSaveChanges" :disabled="$v.$invalid">{{ $t("button.saveChanges") }}</button>
                       <button v-if="editMode" @click="onCancelEdit"> {{ $t("button.cancel") }}</button>
                       <div>             
                         <h3> {{userData.firstName}} {{userData.lastName}} </h3>
                       </div>  
-
-                      <h2>Dane kontaktowe</h2>
+                     
+                      <h2>{{ $t("header.contact") }}</h2>
                       <div> 
                         <div>            
                           <label>{{ $t("label.address") }}</label>
@@ -21,12 +21,12 @@
                         <div>           
                           <label>{{ $t("label.email") }}</label>
                           <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()"> 
-                          <p class="login-error" v-if="$v.userData.email.$invalid" >Adres email posiada nieprawidłowy format lub nie jest wprowadzony.</p>
+                          <p class="login-error" v-if="$v.userData.email.$invalid" >{{ $t("message.emailValidation") }}</p>
                         </div> 
                         <div>             
                           <label>{{ $t("label.phone") }}</label>
                           <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.phone"  @blur="$v.userData.phone.$touch()"> 
-                          <p class="login-error" v-if="$v.userData.phone.$invalid" >Podany numer telefonu posiada nieprawidłowy format lub nie jest wprowadzony.</p>
+                          <p class="login-error" v-if="$v.userData.phone.$invalid" >{{ $t("message.phoneValidation") }}</p>
                         </div> 
                         <div>           
                           <label>{{ $t("label.skype") }}</label>
@@ -38,7 +38,7 @@
                         </div> 
                       </div>
 
-                      <h2>Dane pracownika</h2>
+                      <h2>{{ $t("header.employee") }}</h2>
                       <div>  
                         <div>           
                             <label>{{ $t("label.department") }}</label>

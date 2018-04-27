@@ -41,7 +41,9 @@
     },
     "message": {
         "loginError": "Password or username are invalid.",
-        "sendEmailSuccess": "New password was sent at your email address."
+        "sendEmailSuccess": "New password was sent at your email address.",
+        "emailValidation": "Email address is empty or is in incorrect format.",
+        "phoneValidation": "Phone number is empty or is in incorrect format."
     },
     "select": {
         "language": {
