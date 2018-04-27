@@ -8,7 +8,7 @@
         "user": "User",
         "password": "Password",
         "enterEmail": "Enter email",
-        "language": "Select language"
+        "language": "Language"
     },
     "header": {
         "login": "Log in to Intranet",

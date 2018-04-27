@@ -167,7 +167,7 @@ body {
 .login-error {
     display: flex;
     font-family: 'Raleway';
-    order: 5;
+    order: 6;
     background: rgba(255, 0, 0, 0.4);
     text-align: center;
     width: 16rem;
@@ -178,10 +178,38 @@ body {
     align-items: center;
 }
 
+.div-select-login {
+    width: 15rem;
+    align-items: center;
+    display: flex;
+    order: 5;
+    align-self: flex-start;
+    justify-content: space-between;
+ }
+
+.div-select-login + .button {
+    margin-top: 2rem;
+}
+.select-login {
+    width: 8rem;
+    outline: none;
+    text-indent: 2rem;
+    background: transparent;
+    height: 2rem;
+    width: 12rem;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    appearance: none;
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    background-image: url("../../images/expand2.png");
+    background-repeat: no-repeat;
+    background-position: right;
+}
 .success-alert {
     display: flex;
     font-family: 'Raleway';
-    order: 5;
+    order: 6;
     background: rgba(118, 231, 143, 0.534);
     text-align: center;
     align-self: center;
@@ -198,7 +226,7 @@ body {
 
 .login-button {
     margin-top: 1rem;
-    order: 6;
+    order: 7;
 }
 
 .login-error + .button-login {

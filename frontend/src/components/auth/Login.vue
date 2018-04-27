@@ -34,9 +34,9 @@
                     </div>
                     <label for="password" class="label label-login-pass">{{ $t("label.password") }}</label>
                     <p class="forgot-pass" @click="switchForgotPassword">{{ $t("button.forgotPass") }}</p>
-                    <div class="div-select">
+                    <div class="div-select-login">
                         <label class="label" for="role">{{ $t("label.language") }}</label>
-                            <select class="select" v-model="selectedLang">
+                            <select class="select-login" v-model="selectedLang">
                                 <option v-for="language in languageList" :key="language.id" :value="language.id">{{ language.description }}</option>
                             </select>
                     </div> 
