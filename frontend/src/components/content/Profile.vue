@@ -5,9 +5,9 @@
                 <div class="plane-dashboard-nav-and-content">
                     <div class="dashboard-content"> 
                       <h1>Profil</h1>
-                      <button v-if="!editMode" @click="onEdit">Edytuj dane</button>
-                      <button v-if="editMode" @click="onSaveChanges" :disabled="$v.$invalid">Zapisz zmiany</button>
-                      <button v-if="editMode" @click="onCancelEdit"> Odrzuć zmiany</button>
+                      <button v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
+                      <button v-if="editMode" @click="onSaveChanges" :disabled="$v.$invalid">{{ $t("button.saveChanges") }}</button>
+                      <button v-if="editMode" @click="onCancelEdit"> {{ $t("button.cancel") }}</button>
                       <div>             
                         <h3> {{userData.firstName}} {{userData.lastName}} </h3>
                       </div>  
@@ -15,25 +15,25 @@
                       <h2>Dane kontaktowe</h2>
                       <div> 
                         <div>            
-                          <label>Adres</label>
+                          <label>{{ $t("label.address") }}</label>
                           <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"  v-model="userData.address"> 
                         </div>  
                         <div>           
-                          <label>Email</label>
+                          <label>{{ $t("label.email") }}</label>
                           <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()"> 
                           <p class="login-error" v-if="$v.userData.email.$invalid" >Adres email posiada nieprawidłowy format lub nie jest wprowadzony.</p>
                         </div> 
                         <div>             
-                          <label>Telefon</label>
+                          <label>{{ $t("label.phone") }}</label>
                           <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.phone"  @blur="$v.userData.phone.$touch()"> 
                           <p class="login-error" v-if="$v.userData.phone.$invalid" >Podany numer telefonu posiada nieprawidłowy format lub nie jest wprowadzony.</p>
                         </div> 
                         <div>           
-                          <label>Skype</label>
+                          <label>{{ $t("label.skype") }}</label>
                           <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.skype"> 
                         </div> 
                         <div>        
-                          <label>Slack</label>
+                          <label>{{ $t("label.slack") }}</label>
                           <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.slack"> 
                         </div> 
                       </div>
@@ -41,35 +41,35 @@
                       <h2>Dane pracownika</h2>
                       <div>  
                         <div>           
-                            <label>Oddział</label>
+                            <label>{{ $t("label.department") }}</label>
                             <input class="inputDisabled" :disabled="true" v-model="userData.departmentName"> 
                         </div> 
                         <div>           
-                            <label>Dział</label>
+                            <label>{{ $t("label.branch") }}</label>
                             <input class="inputDisabled" :disabled="true" v-model="userData.dzial"> 
                         </div> 
                         <div>         
-                            <label>Pozycja</label>
+                            <label>{{ $t("label.position") }}</label>
                             <input class="inputDisabled" :disabled="true" v-model="userData.position"> 
                         </div> 
                         <div>            
-                            <label>Aktualny projekt</label>
+                            <label>{{ $t("label.project") }}</label>
                             <input class="inputDisabled" :disabled="true" v-model="userData.project"> 
                         </div> 
                         <div>           
-                            <label>Etat</label>
+                            <label>{{ $t("label.worktime") }}</label>
                             <input class="inputDisabled" :disabled="true" v-model="userData.worktime"> 
                         </div> 
                         <div>           
-                            <label>Data zatrudnienia</label>
+                            <label>{{ $t("label.employmentDate") }}</label>
                             <input class="inputDisabled" :disabled="true"  v-model="userData.date"> 
                         </div> 
                         <div>          
-                            <label>Staż pracy</label>
+                            <label>{{ $t("label.workExperience") }}</label>
                             <input class="inputDisabled" :disabled="true" v-model="userData.time"> 
                         </div>
                         <div>        
-                            <label>CV</label>
+                            <label>{{ $t("label.cv") }}</label>
                             <p> link </p>
                         </div>  
                       </div>
