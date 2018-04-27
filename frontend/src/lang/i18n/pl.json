@@ -12,7 +12,14 @@
     },
     "header": {
         "login": "Zaloguj się do Intranetu",
-        "forgotPass": "Nie pamiętasz hasła?"
+        "forgotPass": "Nie pamiętasz hasła?",
+        "profile": "Profil",
+        "home": "Strona główna",
+        "news": "Newsy",
+        "calendar": "Kalendarz",
+        "employees": "Pracownicy",
+        "informations": "Informacje",
+        "files": "Pliki"
     },
     "message": {
         "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",

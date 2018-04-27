@@ -12,7 +12,14 @@
     },
     "header": {
         "login": "Log in to Intranet",
-        "forgotPass": "Forgot password?"
+        "forgotPass": "Forgot password?",
+        "profile": "Profile",
+        "home": "Home",
+        "news": "News",
+        "calendar": "Calendar",
+        "employees": "Employees",
+        "informations": "Informations",
+        "files": "Files"
     },
     "message": {
         "loginError": "Password or username are invalid.",

@@ -13,7 +13,7 @@
                                     <router-link class="dash-nav-link" to="/profile">
                                     <button class="dashboard-nav-item dash-nav-link">
                                         <!-- <img class="dash-nav-img" src="../../images/nav/if_profile-32_wh.png"> -->
-                                    Profil
+                                    {{ $t("header.profile") }}
                                     </button>
                                     </router-link>
                                 </li>
@@ -21,7 +21,8 @@
                                     <!-- <button class="dashboard-nav-item"> -->
                                         <!-- <img class="dash-nav-img" src="../../images/nav/if_home_32_wh.png"> -->
                                         <router-link class="dash-nav-link" to="/dashboard">
-                                        <button class="dashboard-nav-item dash-nav-link">Home
+                                        <button class="dashboard-nav-item dash-nav-link">
+                                        {{ $t("header.home") }}
                                         </button>
                                         </router-link>
                                     <!-- </button> -->
@@ -30,7 +31,7 @@
                                     <router-link class="dash-nav-link" to="/news">
                                     <button class="dashboard-nav-item dash-nav-link">
                                         <!-- <img class="dash-nav-img" src="../../images/nav/if_docu_32_wh.png"> -->
-                                        Newsy
+                                     {{ $t("header.news") }}
                                     </button>
                                     </router-link>
                                 </li>
@@ -38,7 +39,7 @@
                                      <router-link class="dash-nav-link " to="/calendar">
                                     <button class="dashboard-nav-item  dash-nav-link">
                                         <!-- <img class="dash-nav-img" src="../../images/nav/if_docu_32_wh.png"> -->
-                                    Kalendarz
+                                    {{ $t("header.calendar") }}
                                     </button>
                                      </router-link>
                                 </li>
@@ -46,7 +47,7 @@
                                      <router-link class="dash-nav-link" to="/employees">
                                     <button class="dashboard-nav-item dash-nav-link">
                                         <!-- <img class="dash-nav-img" src="../../images/nav/if_docu_32_wh.png"> -->
-                                        Pracownicy
+                                    {{ $t("header.employees") }}
                                     </button>
                                      </router-link>
                                 </li>
@@ -54,7 +55,7 @@
                                      <router-link class="dash-nav-link" to="/informations">
                                     <button class="dashboard-nav-item dash-nav-link">
                                         <!-- <img class="dash-nav-img" src="../../images/nav/if_docu_32_wh.png"> -->
-                                        Informacje
+                                    {{ $t("header.informations") }}
                                     </button>
                                      </router-link>
                                 </li>
@@ -62,7 +63,7 @@
                                      <router-link class="dash-nav-link" to="/files">
                                     <button class="dashboard-nav-item dash-nav-link">
                                         <!-- <img class="dash-nav-img" src="../../images/nav/if-files_32_wh.png"> -->
-                                        Pliki
+                                    {{ $t("header.files") }}
                                     </button>
                                     </router-link>
                                 </li>
