@@ -82,7 +82,7 @@
 
 <script>
 import { required, numeric, email } from 'vuelidate/lib/validators'
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   data() {
    return { 
@@ -138,10 +138,10 @@ export default {
   text-align: center;
 }
 .inputEdit {
-  
+  text-align: center;
 }
 
 .inputDisabled {
-
+text-align: center; 
 }
 </style>

@@ -1,0 +1,27 @@
+{
+    "button": {
+        "login": "Log in",
+        "forgotPass": "Forgot password?",
+        "resetPass": "Reset password"
+    },
+    "label": {
+        "user": "User",
+        "password": "Password",
+        "enterEmail": "Enter email",
+        "language": "Select language"
+    },
+    "header": {
+        "login": "Log in to Intranet",
+        "forgotPass": "Forgot password?"
+    },
+    "message": {
+        "loginError": "Password or username are invalid.",
+        "sendEmailSuccess": "New password was sent at your email address."
+    },
+    "select": {
+        "language": {
+            "english": "English",
+            "polish": "Polish"
+        }
+    }
+}

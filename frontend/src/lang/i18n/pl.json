@@ -1,0 +1,27 @@
+{
+    "button": {
+        "login": "zaloguj się",
+        "forgotPass": "Nie pamiętasz hasła?",
+        "resetPass": "Zresetuj hasło"
+    },
+    "label": {
+        "user": "Użytkownik",
+        "password": "Hasło",
+        "enterEmail": "Wprowadź email",
+        "language": "Wybierz język"
+    },
+    "header": {
+        "login": "Zaloguj się do Intranetu",
+        "forgotPass": "Nie pamiętasz hasła?"
+    },
+    "message": {
+        "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",
+        "sendEmailSuccess": "Na podany adres email wysłano nowe hasło."
+    },
+    "select": {
+        "language": {
+            "english": "Angielski",
+            "polish": "Polski"
+        }
+    }
+}
