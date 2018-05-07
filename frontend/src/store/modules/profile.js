@@ -1,55 +1,21 @@
 import axios from 'axios'
 import router from '@/router/index.js'
 
-
 const state = {
-    userData: {}
+    saveChangesSuccess: true
 };
 
 const mutations = {
-    SET_USER_DATA (state, data) {
-        state.userData = data;
+    SET_SAVE_CHANGES_STATE (state, isSuccess) {
+        state.saveChangesSuccess = isSuccess
     }
 };
 
 const actions = {
-    getUserData({commit, getters, dispatch},  username){
-        dispatch('getDepartmentList')
-        var URL = '/api/user/' + username
-        axios.get(URL).then(res => {
-            var departmentId = res.data.deps[0].depName;
-            for (var i=0; i < getters.depList.length; i++) {
-                if (departmentId = getters.depList[i].depId) {
-                    var departmentName = getters.depList[i].depName
-                }
-            }
-            const userdata = {
-                departmentId: departmentId,
-                departmentName: departmentName,
-                email: res.data.userContacts[0].email,
-                role: res.data.roles[0].name,
-                birthDate: res.data.userInfo[0].birthDate,
-                firstName: res.data.userInfo[0].firstName,
-                gender: res.data.userInfo[0].gender,
-                lastName: res.data.userInfo[0].lastName,
-                skype: res.data.userContacts[0].skypeId,
-                slack: res.data.userContacts[0].slackId,
-                phone: res.data.userContacts[0].phone,
-                address: res.data.userContacts[0].address,
-                id: res.data.id
-            }
-            
-            localStorage.setItem('userRole', userdata.role)
-            commit('SET_USER_ROLE', userdata.role)
-            commit('SET_USER_DATA', userdata)
-        }).catch(error => {
-            console.log(error)
-        })
-    },
-    saveUserData({commit}, userData) {
+    saveContactData({commit}, userData) {
         commit('SET_USER_DATA', userData)
         var params = new URLSearchParams()
-            params.append('id', userData.id)
+            params.append('id', localStorage.getItem('id'))
             params.append('address', userData.address)
             params.append('phone', userData.phone)
             params.append('email', userData.email)
@@ -58,11 +24,30 @@ const actions = {
 
         axios({
             method: 'post',
-            url: '/api/user/edit/contact',
+            url: '/api/user/edit/contactNew/',
             headers: { "Content-type": "application/x-www-form-urlencoded; charset=utf-8" },
             data: params   
         }).then(res => {
+            commit('SET_SAVE_CHANGES_STATE', true)
             console.log(res)
+        }).catch(error => {
+            commit('SET_SAVE_CHANGES_STATE', false)
+            console.log(error)
+        }) 
+    },
+
+    submitPhoto({commit}, data) {
+        let formData = new FormData()
+        formData.append('file', data.file)
+        formData.append('id', data.id)
+        axios({
+            method: 'post',
+            url: 'http://10.0.2.60:8080/api/files/uploadImage',
+            headers: { "Content-type": "multipart/form-data" },
+            data: formData   
+        }).then(res => {
+            console.log(res)
+            commit('SET_PHOTO', res.data.fileDownloadUri)
         }).catch(error => {
             console.log(error)
         }) 
@@ -70,10 +55,9 @@ const actions = {
 };
 
 const getters = {
-    userData(state){
-        return state.userData
+    isSaveChangesSuccess(state) {
+        return state.saveChangesSuccess
     }
-
 };
 
 export default {
