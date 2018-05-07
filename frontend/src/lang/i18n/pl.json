@@ -1,0 +1,55 @@
+{
+    "button": {
+        "login": "zaloguj się",
+        "forgotPass": "Nie pamiętasz hasła?",
+        "resetPass": "Zresetuj hasło",
+        "editData": "Edytuj dane",
+        "saveChanges": "Zapisz zmiany",
+        "cancel": "Anuluj"
+    },
+    "label": {
+        "user": "Użytkownik",
+        "password": "Hasło",
+        "enterEmail": "Wprowadź email",
+        "language": "Język",
+        "address": "Adres",
+        "email": "Email",
+        "phone": "Telefon",
+        "skype": "Skype",
+        "slack": "Slack",
+        "department": "Oddział",
+        "branch": "Dział",
+        "position": "Pozycja",
+        "project": "Aktualny projekt",
+        "worktime": "Etat",
+        "employmentDate": "Data zatrudnienia",
+        "workExperience": "Staż pracy",
+        "cv": "CV"
+
+    },
+    "header": {
+        "login": "Zaloguj się do Intranetu",
+        "forgotPass": "Nie pamiętasz hasła?",
+        "profile": "Profil",
+        "home": "Strona główna",
+        "news": "Newsy",
+        "calendar": "Kalendarz",
+        "employees": "Pracownicy",
+        "informations": "Informacje",
+        "files": "Pliki",
+        "contact": "Dane kontaktowe",
+        "employee": "Dane pracownika"
+    },
+    "message": {
+        "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",
+        "sendEmailSuccess": "Na podany adres email wysłano nowe hasło.",
+        "emailValidation": "Adres email posiada nieprawidłowy format lub nie jest wprowadzony.",
+        "phoneValidation": "Numer telefonu posiada nieprawidłowy format lub nie jest wprowadzony."
+    },
+    "select": {
+        "language": {
+            "english": "Angielski",
+            "polish": "Polski"
+        }
+    }
+}

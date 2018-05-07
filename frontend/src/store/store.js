@@ -8,6 +8,7 @@ import profile from './modules/profile'
 import employees from './modules/employees'
 import calendar from './modules/calendar'
 
+import settings from './modules/settings'
 
 Vue.use(Vuex);
 
@@ -20,6 +21,7 @@ export default new Vuex.Store({
         shared,
         profile,
         employees,
-        calendar
+        calendar,
+        settings
     }
 });
