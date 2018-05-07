@@ -8,6 +8,7 @@
                       <button v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
                       <button v-if="editMode" @click="onSaveChanges" :disabled="$v.$invalid">{{ $t("button.saveChanges") }}</button>
                       <button v-if="editMode" @click="onCancelEdit"> {{ $t("button.cancel") }}</button>
+                      <p class="login-error" v-show="!saveChangesSuccess" >{{ $t("message.saveChangesError") }}</p>
                       <div>             
                         <h3> {{userData.firstName}} {{userData.lastName}} </h3>
                       </div>  
@@ -112,9 +113,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'userData'
-    ])
+    ...mapGetters({
+      userData: 'userData',
+      saveChangesSuccess: 'isSaveChangesSuccess'
+    })
   },
   methods: {
     onEdit() {

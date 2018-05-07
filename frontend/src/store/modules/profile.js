@@ -2,11 +2,13 @@ import axios from 'axios'
 import router from '@/router/index.js'
 
 const state = {
-    
+    saveChangesSuccess: true
 };
 
 const mutations = {
-
+    SET_SAVE_CHANGES_STATE (state, isSuccess) {
+        state.saveChangesSuccess = isSuccess
+    }
 };
 
 const actions = {
@@ -22,12 +24,14 @@ const actions = {
 
         axios({
             method: 'post',
-            url: '/api/user/edit/contactNew',
+            url: '/api/user/edit/contactNew/',
             headers: { "Content-type": "application/x-www-form-urlencoded; charset=utf-8" },
             data: params   
         }).then(res => {
+            commit('SET_SAVE_CHANGES_STATE', true)
             console.log(res)
         }).catch(error => {
+            commit('SET_SAVE_CHANGES_STATE', false)
             console.log(error)
         }) 
     },
@@ -51,7 +55,9 @@ const actions = {
 };
 
 const getters = {
-
+    isSaveChangesSuccess(state) {
+        return state.saveChangesSuccess
+    }
 };
 
 export default {
