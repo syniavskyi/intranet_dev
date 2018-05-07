@@ -65,6 +65,7 @@ const actions = {
 
       localStorage.setItem('token', res.data.access_token)
 
+     
       dispatch('setExpirationDate', res.data.expires_in)
       dispatch('setLogoutTimer', res.data.expires_in)
       dispatch('getUsername', res.data.access_token)
@@ -109,21 +110,18 @@ const actions = {
     commit('DISPLAY_MENU', true);
     router.replace('/dashboard');
   },
-  getUsername({
-    commit,
-    getters,
-    dispatch
-  }, token) {
+  getUsername({ commit, getters, dispatch }, token) {
+    dispatch('getDepartmentList')
     var URL = '/api/getUsernameByToken?access_token=' + token
 
     axios.get(URL).then(res => {
-      dispatch('getDepartmentList')
       var departmentId = res.data.deps[0].depName;
       for (var i = 0; i < getters.depList.length; i++) {
         if (departmentId = getters.depList[i].depId) {
           var departmentName = getters.depList[i].depName
         }
       }
+
       const userdata = {
         departmentId: departmentId,
         departmentName: departmentName,
