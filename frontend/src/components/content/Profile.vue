@@ -11,7 +11,11 @@
                       <div>             
                         <h3> {{userData.firstName}} {{userData.lastName}} </h3>
                       </div>  
-                     
+                     <img :src ="userData.image"/>
+                     <label>
+                       <input type="file" id="file" ref="file" @change="handleFileUpload"/>
+                     </label>
+                     <button @click="submitFile" :disabled="disableSubmit"> Dodaj zdjęcie </button>
                       <h2>{{ $t("header.contact") }}</h2>
                       <div> 
                         <div>            
@@ -87,7 +91,9 @@ export default {
   data() {
    return { 
       editMode: false,
-      _beforeEditingCache: null
+      _beforeEditingCache: null,
+      file: '',
+      disableSubmit: true
   }
   },
   validations: {
@@ -100,9 +106,9 @@ export default {
     }
   },
   beforeCreate() {
-    if (this.userData === undefined) {
-      const username = localStorage.getItem('username')
-      this.$store.dispatch('getUserData', username)
+    if (this.contactData === undefined) {
+      const token = localStorage.getItem('token')
+      this.$store.dispatch('getUsername', token)
     }
   },
   computed: {
@@ -121,8 +127,20 @@ export default {
       this.editMode = !this.editMode
     },
     onSaveChanges() {
-      this.$store.dispatch('saveUserData', this.userData)
+      this.$store.dispatch('saveContactData', this.userData)
       this.editMode = !this.editMode
+    },
+    handleFileUpload() {
+      this.file = this.$refs.file.files[0];
+      this.disableSubmit = false
+    },
+    submitFile(){
+      let data  = {
+        file: this.file,
+        id: localStorage.getItem('id')
+      }
+      this.$store.dispatch('submitPhoto', data)
+      this.disableSubmit = true
     }
   }
 }
