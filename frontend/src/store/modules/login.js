@@ -137,8 +137,17 @@ const actions = {
         phone: res.data.userContacts[0].phone,
         address: res.data.userContacts[0].address,
         id: res.data.id,
-        image: res.data.userInfo[0].image
+        image: res.data.userInfo[0].image,
+        branch: res.data.userDetails[0].branch,
+        currentProject: res.data.userDetails[0].currentProject,
+        cv: res.data.userDetails[0].cv,
+        employmentDate: res.data.userDetails[0].employmentDate,
+        position: res.data.userDetails[0].position,
+        section: res.data.userDetails[0].secition,
+        seniority: res.data.userDetails[0].seniority,
+        state: res.data.userDetails[0].state
       }
+
 
       localStorage.setItem('username', userdata.username)
       localStorage.setItem('role', userdata.role)

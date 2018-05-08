@@ -14,9 +14,14 @@
                       </div>  
                      <img :src ="userData.image"/>
                      <label>
-                       <input type="file" id="file" ref="file" @change="handleFileUpload"/>
+                       <input type="file" id="photo" ref="photo" @change="handlePhotoUpload"/>
                      </label>
-                     <button @click="submitFile" :disabled="disableSubmit"> Dodaj zdjęcie </button>
+                     <button @click="submitPhoto" :disabled="disableSubmit"> Dodaj zdjęcie </button>
+
+                     <label>
+                       <input type="file" id="cv" ref="file" @change="handleCvUpload"/>
+                     </label>
+                     <button @click="submitCv" > Dodaj Cv </button>
                       <h2>{{ $t("header.contact") }}</h2>
                       <div> 
                         <div>            
@@ -47,11 +52,11 @@
                       <div>  
                         <div>           
                             <label>{{ $t("label.department") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.departmentName"> 
+                            <input class="inputDisabled" :disabled="true" v-model="userData.branch"> 
                         </div> 
                         <div>           
                             <label>{{ $t("label.branch") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.dzial"> 
+                            <input class="inputDisabled" :disabled="true" v-model="userData.section"> 
                         </div> 
                         <div>         
                             <label>{{ $t("label.position") }}</label>
@@ -59,19 +64,19 @@
                         </div> 
                         <div>            
                             <label>{{ $t("label.project") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.project"> 
+                            <input class="inputDisabled" :disabled="true" v-model="userData.currentProject"> 
                         </div> 
                         <div>           
                             <label>{{ $t("label.worktime") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.worktime"> 
+                            <input class="inputDisabled" :disabled="true" v-model="userData.state"> 
                         </div> 
                         <div>           
                             <label>{{ $t("label.employmentDate") }}</label>
-                            <input class="inputDisabled" :disabled="true"  v-model="userData.date"> 
+                            <input class="inputDisabled" :disabled="true"  v-model="userData.employmentDate"> 
                         </div> 
                         <div>          
                             <label>{{ $t("label.workExperience") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.time"> 
+                            <input class="inputDisabled" :disabled="true" v-model="userData.seniority"> 
                         </div>
                         <div>        
                             <label>{{ $t("label.cv") }}</label>
@@ -94,7 +99,8 @@ export default {
       editMode: false,
       _beforeEditingCache: null,
       file: '',
-      disableSubmit: true
+      disableSubmit: true,
+      photo: ''
   }
   },
   validations: {
@@ -132,17 +138,27 @@ export default {
       this.$store.dispatch('saveContactData', this.userData)
       this.editMode = !this.editMode
     },
-    handleFileUpload() {
-      this.file = this.$refs.file.files[0];
+    handlePhotoUpload() {
+      this.photo = this.$refs.photo.files[0];
       this.disableSubmit = false
     },
-    submitFile(){
+    submitPhoto(){
       let data  = {
-        file: this.file,
+        file: this.photo,
         id: localStorage.getItem('id')
       }
       this.$store.dispatch('submitPhoto', data)
       this.disableSubmit = true
+    },
+    handleCvUpload() {
+      this.file = this.$refs.file.files[0];
+    },
+    submitCv(){
+      let data  = {
+        file: this.file,
+        id: localStorage.getItem('id')
+      }
+      this.$store.dispatch('submitCv', data)
     }
   }
 }

@@ -51,6 +51,21 @@ const actions = {
         }).catch(error => {
             console.log(error)
         }) 
+    },
+    submitCv({commit}, data){
+        let formData = new FormData()
+        formData.append('file', data.file)
+        formData.append('id', data.id)
+        axios({
+            method: 'post',
+            url: 'http://10.0.2.60:8080/api/files/uploadFile',
+            headers: { "Content-type": "multipart/form-data" },
+            data: formData   
+        }).then(res => {
+            console.log(res)
+        }).catch(error => {
+            console.log(error)
+        }) 
     }
 };
 
