@@ -30,8 +30,11 @@ const mutations = {
   },
   SET_PHOTO(state, photoUrl) {
     state.userData.image = photoUrl
+  },
+  SET_CV(state, cvUrl){
+    state.userData.cv = cvUrl
   }
-
+ 
 }
 
 const actions = {
@@ -64,7 +67,6 @@ const actions = {
       commit('DISPLAY_MENU', true)
 
       localStorage.setItem('token', res.data.access_token)
-
      
       dispatch('setExpirationDate', res.data.expires_in)
       dispatch('setLogoutTimer', res.data.expires_in)
