@@ -24,7 +24,8 @@
         "worktime": "Work time",
         "employmentDate": "Employment date",
         "workExperience": "Work experience",
-        "cv": "CV"
+        "cv": "CV",
+        "fulltime": "Fulltime"
     },
     "header": {
         "login": "Log in to Intranet",

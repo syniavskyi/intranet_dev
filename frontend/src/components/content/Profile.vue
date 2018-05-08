@@ -36,7 +36,7 @@
                         <div>             
                           <label>{{ $t("label.phone") }}</label>
                           <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.phone"  @blur="$v.userData.phone.$touch()"> 
-                          <p class="login-error" v-if="$v.userData.phone.$invalid" >{{ $t("message.phoneValidation") }}</p>
+                          <!-- <p class="login-error" v-if="$v.userData.phone.$invalid" >{{ $t("message.phoneValidation") }}</p> -->
                         </div> 
                         <div>           
                           <label>{{ $t("label.skype") }}</label>
@@ -64,15 +64,27 @@
                         </div> 
                         <div>            
                             <label>{{ $t("label.project") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.currentProject"> 
+                            <input class="inputDisabled" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"  v-model="userData.currentProject"> 
                         </div> 
                         <div>           
                             <label>{{ $t("label.worktime") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.state"> 
+                            <!-- <input class="inputDisabled" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"  v-model="userData.state">  -->
+                            <select v-model="userData.state" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode">
+                              <option value="Full">{{ $t("label.fulltime") }}</option>
+                              <option value="1/2">1/2</option>
+                              <option value="1/3">1/3</option>
+                              <option value="2/3">2/3</option>
+                              <option value="1/4">1/4</option>
+                              <option value="3/4">3/4</option>
+                              <option value="1/5">1/5</option>
+                              <option value="2/5">2/5</option>
+                              <option value="3/5">3/5</option>
+                              <option value="4/5">4/5</option>
+                            </select>
                         </div> 
                         <div>           
                             <label>{{ $t("label.employmentDate") }}</label>
-                            <input class="inputDisabled" :disabled="true"  v-model="userData.employmentDate"> 
+                            <masked-input mask="11.11.1111"  :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"   v-model="userData.employmentDate"/> 
                         </div> 
                         <div>          
                             <label>{{ $t("label.workExperience") }}</label>
@@ -80,7 +92,7 @@
                         </div>
                         <div>        
                             <label>{{ $t("label.cv") }}</label>
-                            <p> link </p>
+                            <a :href="userData.cv"> link </a>
                         </div>  
                       </div>
                    </div>
@@ -91,7 +103,8 @@
 </template>
 
 <script>
-import { required, numeric, email } from 'vuelidate/lib/validators'
+import MaskedInput from 'vue-masked-input' 
+import { required, email } from 'vuelidate/lib/validators'
 import { mapGetters } from 'vuex'
 export default {
   data() {
@@ -105,12 +118,11 @@ export default {
   },
   validations: {
     userData:{
-      address: { required },
-      email: { required, email },
-      phone: { required },
-      skype: { required },
-      slack: { required }
+     email: { required, email }
     }
+  },
+  components: { 
+    MaskedInput 
   },
   beforeCreate() {
     if (this.contactData === undefined) {
@@ -136,6 +148,7 @@ export default {
     },
     onSaveChanges() {
       this.$store.dispatch('saveContactData', this.userData)
+      this.$store.dispatch('saveUserData', this.userData)
       this.editMode = !this.editMode
     },
     handlePhotoUpload() {
