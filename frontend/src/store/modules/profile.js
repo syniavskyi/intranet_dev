@@ -16,7 +16,7 @@ const actions = {
         commit('SET_USER_DATA', userData)
         var params = new URLSearchParams()
             params.append('id', localStorage.getItem('id'))
-            params.append('address', userData.address)
+            params.append('address', encodeURI(userData.address))
             params.append('phone', userData.phone)
             params.append('email', userData.email)
             params.append('skypeId', userData.skype)
@@ -25,6 +25,30 @@ const actions = {
         axios({
             method: 'post',
             url: '/api/user/edit/contactNew/',
+            headers: { "Content-type": "application/x-www-form-urlencoded; charset=utf-8" },
+            data: params   
+        }).then(res => {
+            commit('SET_SAVE_CHANGES_STATE', true)
+            console.log(res)
+        }).catch(error => {
+            commit('SET_SAVE_CHANGES_STATE', false)
+            console.log(error)
+        }) 
+    },
+    saveUserData({commit}, userData) {
+        commit('SET_USER_DATA', userData)
+        var params = new URLSearchParams()
+            params.append('id', localStorage.getItem('id'))
+            params.append('branch', encodeURI(userData.branch))
+            params.append('section', encodeURI(userData.section))
+            params.append('currentProject', encodeURI(userData.currentProject))
+            params.append('employmentDate', userData.employmentDate)
+            params.append('state', encodeURI(userData.state))
+            params.append('position', encodeURI(userData.position))
+            params.append('seniority', encodeURI(userData.seniority))
+        axios({
+            method: 'post',
+            url: '/api/user/edit/detail',
             headers: { "Content-type": "application/x-www-form-urlencoded; charset=utf-8" },
             data: params   
         }).then(res => {

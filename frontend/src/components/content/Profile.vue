@@ -56,11 +56,11 @@
                         </div> 
                         <div>           
                             <label>{{ $t("label.branch") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.section"> 
+                            <input class="inputDisabled" :disabled="true"  v-model="userData.section"> 
                         </div> 
                         <div>         
                             <label>{{ $t("label.position") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.position"> 
+                            <input class="inputDisabled" :disabled="true"  v-model="userData.position"> 
                         </div> 
                         <div>            
                             <label>{{ $t("label.project") }}</label>
