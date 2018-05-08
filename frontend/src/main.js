@@ -10,10 +10,16 @@ import Vuex from 'vuex'
 import Icon from 'vue-awesome/icons'
 import i18n from './lang/lang'
 import store from './store/store'
+import VCalendar from 'v-calendar';
+import 'v-calendar/lib/v-calendar.min.css';
 
 Vue.use(Vuelidate)
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
+Vue.use(VCalendar, {
+    firstDayOfWeek: 2,
+    locale: 'pl-PL'
+});
 
 Vue.component('icon', Icon)
 
