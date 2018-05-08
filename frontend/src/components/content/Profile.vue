@@ -5,6 +5,7 @@
                 <div class="plane-dashboard-nav-and-content">
                     <div class="dashboard-content"> 
                       <h1>{{ $t("header.profile") }}</h1>
+                       <p class="login-error" v-if="showNoChangesAlert" >{{ $t("message.noChanges") }}</p>
                       <button v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
                       <button v-if="editMode" @click="onSaveChanges" :disabled="$v.$invalid">{{ $t("button.saveChanges") }}</button>
                       <button v-if="editMode" @click="onCancelEdit"> {{ $t("button.cancel") }}</button>
@@ -113,7 +114,9 @@ export default {
       _beforeEditingCache: null,
       file: '',
       disableSubmit: true,
-      photo: ''
+      photo: '',
+      hasDataChanged: false,
+      showNoChangesAlert: false
   }
   },
   validations: {
@@ -138,18 +141,38 @@ export default {
   },
   methods: {
     onEdit() {
+      this.showNoChangesAlert = false
       this.editMode = !this.editMode
       this._beforeEditingCache = Object.assign({}, this.userData)
     },
     onCancelEdit() {
       Object.assign(this.userData, this._beforeEditingCache)
       this._beforeEditingCache = null
+      this.showNoChangesAlert = false
       this.editMode = !this.editMode
     },
     onSaveChanges() {
-      this.$store.dispatch('saveContactData', this.userData)
-      this.$store.dispatch('saveUserData', this.userData)
-      this.editMode = !this.editMode
+      this.showNoChangesAlert = false
+      this.hasDataChanged = false
+      let currentData = Object.assign({}, this.userData)
+      
+      var currDataProps = Object.getOwnPropertyNames(currentData)
+      var beforeDataProps = Object.getOwnPropertyNames(this._beforeEditingCache)
+      
+      for (var i = 0; i < beforeDataProps.length; i++) {
+        var propName = beforeDataProps[i];
+        if (currentData[propName] !== this._beforeEditingCache[propName]) {
+          this.hasDataChanged = true
+          this.$store.dispatch('saveContactData', this.userData)
+          this.$store.dispatch('saveUserData', this.userData)
+          this.editMode = !this.editMode
+          return
+        }
+      }
+     if(this.hasDataChanged === false) {
+       this.showNoChangesAlert = true
+     }
+
     },
     handlePhotoUpload() {
       this.photo = this.$refs.photo.files[0];

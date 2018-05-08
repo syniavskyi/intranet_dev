@@ -45,7 +45,8 @@
         "sendEmailSuccess": "New password was sent at your email address.",
         "emailValidation": "Email address is empty or is in incorrect format.",
         "phoneValidation": "Phone number is empty or is in incorrect format.",
-        "saveChangesError": "The changes weren't saved."
+        "saveChangesError": "The changes weren't saved.",
+        "noChanges": "No changes were made"
     },
     "select": {
         "language": {

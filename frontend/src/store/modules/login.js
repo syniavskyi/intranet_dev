@@ -157,7 +157,7 @@ const actions = {
       commit('SET_USER_DATA', userdata)
       commit('SET_USERNAME', userdata.username)
       commit('SET_USER_ID', userdata.id)
-
+      console.log(res)
     }).catch(error => {
       console.log(error)
     })
