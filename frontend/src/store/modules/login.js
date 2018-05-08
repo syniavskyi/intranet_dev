@@ -124,21 +124,30 @@ const actions = {
 
       const userdata = {
         departmentId: departmentId,
-        departmentName: departmentName,
+        departmentName: decodeURI(departmentName),
         username: res.data.username,
         email: res.data.userContacts[0].email,
-        role: res.data.roles[0].name,
+        role: decodeURI(res.data.roles[0].name),
         birthDate: res.data.userInfo[0].birthDate,
-        firstName: res.data.userInfo[0].firstName,
-        gender: res.data.userInfo[0].gender,
-        lastName: res.data.userInfo[0].lastName,
+        firstName: decodeURI(res.data.userInfo[0].firstName),
+        gender: decodeURI(res.data.userInfo[0].gender),
+        lastName: decodeURI(res.data.userInfo[0].lastName),
         skype: res.data.userContacts[0].skypeId,
         slack: res.data.userContacts[0].slackId,
         phone: res.data.userContacts[0].phone,
-        address: res.data.userContacts[0].address,
+        address: decodeURI(res.data.userContacts[0].address),
         id: res.data.id,
-        image: res.data.userInfo[0].image
+        image: res.data.userInfo[0].image,
+        branch: decodeURI(res.data.userDetails[0].branch),
+        currentProject: decodeURI(res.data.userDetails[0].currentProject),
+        cv: res.data.userDetails[0].cv,
+        employmentDate: res.data.userDetails[0].employmentDate,
+        position: decodeURI(res.data.userDetails[0].position),
+        section: decodeURI(res.data.userDetails[0].section),
+        seniority: decodeURI(res.data.userDetails[0].seniority),
+        state: decodeURI(res.data.userDetails[0].state)
       }
+
 
       localStorage.setItem('username', userdata.username)
       localStorage.setItem('role', userdata.role)

@@ -24,7 +24,8 @@
         "worktime": "Etat",
         "employmentDate": "Data zatrudnienia",
         "workExperience": "Staż pracy",
-        "cv": "CV"
+        "cv": "CV",
+        "fulltime": "Pełny"
 
     },
     "header": {

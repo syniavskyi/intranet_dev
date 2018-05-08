@@ -14,9 +14,14 @@
                       </div>  
                      <img :src ="userData.image"/>
                      <label>
-                       <input type="file" id="file" ref="file" @change="handleFileUpload"/>
+                       <input type="file" id="photo" ref="photo" @change="handlePhotoUpload"/>
                      </label>
-                     <button @click="submitFile" :disabled="disableSubmit"> Dodaj zdjęcie </button>
+                     <button @click="submitPhoto" :disabled="disableSubmit"> Dodaj zdjęcie </button>
+
+                     <label>
+                       <input type="file" id="cv" ref="file" @change="handleCvUpload"/>
+                     </label>
+                     <button @click="submitCv" > Dodaj Cv </button>
                       <h2>{{ $t("header.contact") }}</h2>
                       <div> 
                         <div>            
@@ -31,7 +36,7 @@
                         <div>             
                           <label>{{ $t("label.phone") }}</label>
                           <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.phone"  @blur="$v.userData.phone.$touch()"> 
-                          <p class="login-error" v-if="$v.userData.phone.$invalid" >{{ $t("message.phoneValidation") }}</p>
+                          <!-- <p class="login-error" v-if="$v.userData.phone.$invalid" >{{ $t("message.phoneValidation") }}</p> -->
                         </div> 
                         <div>           
                           <label>{{ $t("label.skype") }}</label>
@@ -47,35 +52,47 @@
                       <div>  
                         <div>           
                             <label>{{ $t("label.department") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.departmentName"> 
+                            <input class="inputDisabled" :disabled="true" v-model="userData.branch"> 
                         </div> 
                         <div>           
                             <label>{{ $t("label.branch") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.dzial"> 
+                            <input class="inputDisabled" :disabled="true"  v-model="userData.section"> 
                         </div> 
                         <div>         
                             <label>{{ $t("label.position") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.position"> 
+                            <input class="inputDisabled" :disabled="true"  v-model="userData.position"> 
                         </div> 
                         <div>            
                             <label>{{ $t("label.project") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.project"> 
+                            <input class="inputDisabled" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"  v-model="userData.currentProject"> 
                         </div> 
                         <div>           
                             <label>{{ $t("label.worktime") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.worktime"> 
+                            <!-- <input class="inputDisabled" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"  v-model="userData.state">  -->
+                            <select v-model="userData.state" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode">
+                              <option value="Full">{{ $t("label.fulltime") }}</option>
+                              <option value="1/2">1/2</option>
+                              <option value="1/3">1/3</option>
+                              <option value="2/3">2/3</option>
+                              <option value="1/4">1/4</option>
+                              <option value="3/4">3/4</option>
+                              <option value="1/5">1/5</option>
+                              <option value="2/5">2/5</option>
+                              <option value="3/5">3/5</option>
+                              <option value="4/5">4/5</option>
+                            </select>
                         </div> 
                         <div>           
                             <label>{{ $t("label.employmentDate") }}</label>
-                            <input class="inputDisabled" :disabled="true"  v-model="userData.date"> 
+                            <masked-input mask="11.11.1111"  :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"   v-model="userData.employmentDate"/> 
                         </div> 
                         <div>          
                             <label>{{ $t("label.workExperience") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.time"> 
+                            <input class="inputDisabled" :disabled="true" v-model="userData.seniority"> 
                         </div>
                         <div>        
                             <label>{{ $t("label.cv") }}</label>
-                            <p> link </p>
+                            <a :href="userData.cv"> link </a>
                         </div>  
                       </div>
                    </div>
@@ -86,7 +103,8 @@
 </template>
 
 <script>
-import { required, numeric, email } from 'vuelidate/lib/validators'
+import MaskedInput from 'vue-masked-input' 
+import { required, email } from 'vuelidate/lib/validators'
 import { mapGetters } from 'vuex'
 export default {
   data() {
@@ -94,17 +112,17 @@ export default {
       editMode: false,
       _beforeEditingCache: null,
       file: '',
-      disableSubmit: true
+      disableSubmit: true,
+      photo: ''
   }
   },
   validations: {
     userData:{
-      address: { required },
-      email: { required, email },
-      phone: { required },
-      skype: { required },
-      slack: { required }
+     email: { required, email }
     }
+  },
+  components: { 
+    MaskedInput 
   },
   beforeCreate() {
     if (this.contactData === undefined) {
@@ -130,19 +148,30 @@ export default {
     },
     onSaveChanges() {
       this.$store.dispatch('saveContactData', this.userData)
+      this.$store.dispatch('saveUserData', this.userData)
       this.editMode = !this.editMode
     },
-    handleFileUpload() {
-      this.file = this.$refs.file.files[0];
+    handlePhotoUpload() {
+      this.photo = this.$refs.photo.files[0];
       this.disableSubmit = false
     },
-    submitFile(){
+    submitPhoto(){
       let data  = {
-        file: this.file,
+        file: this.photo,
         id: localStorage.getItem('id')
       }
       this.$store.dispatch('submitPhoto', data)
       this.disableSubmit = true
+    },
+    handleCvUpload() {
+      this.file = this.$refs.file.files[0];
+    },
+    submitCv(){
+      let data  = {
+        file: this.file,
+        id: localStorage.getItem('id')
+      }
+      this.$store.dispatch('submitCv', data)
     }
   }
 }
