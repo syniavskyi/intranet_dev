@@ -1,11 +1,9 @@
 package com.btech.controllers;
 
-import com.btech.model.DepsList;
-import com.btech.model.Email;
-import com.btech.model.RolesList;
-import com.btech.pojo.Error;
-import com.btech.service.DepsListService;
-import com.btech.service.RolesListService;
+import com.btech.pojo.DepsList;
+import com.btech.pojo.Email;
+import com.btech.pojo.RolesList;
+import com.btech.service.RepoService;
 import com.btech.service.UserService;
 
 import java.io.IOException;
@@ -30,20 +28,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MainController {
 	
-	@Autowired
-	private RolesListService rolesListService;
-	
-	@Autowired
-	private DepsListService depsListService;
-	
-	@Autowired
-	private AuthorizationServerTokenServices authorizationServerTokenServices;
+	private final RepoService repoService;
+	private final AuthorizationServerTokenServices authorizationServerTokenServices;
+	private final ConsumerTokenServices consumerTokenServices;
+	private final UserService userService;
 
-	@Autowired
-	private ConsumerTokenServices consumerTokenServices;
 	
 	@Autowired
-	private UserService userService;
+	public MainController(RepoService repoService,AuthorizationServerTokenServices authorizationServerTokenServices, ConsumerTokenServices consumerTokenServices, UserService userService) {
+		this.repoService = repoService;
+		this.authorizationServerTokenServices = authorizationServerTokenServices;
+		this.consumerTokenServices = consumerTokenServices;
+		this.userService = userService;
+	}
 
 	@CrossOrigin
 	@GetMapping(value="/api")
@@ -54,26 +51,25 @@ public class MainController {
 	@CrossOrigin
 	@GetMapping(value="/api/secured")
 	public String privateArea() {
-		return "Secured Area - Acces granted with token";
+		return "Secured Area - Acces for [ADMIN] || [MANAGEMENT] authorities";
 	}
 	
 	@CrossOrigin
 	@GetMapping("/api/authentication-error")
-	public Error authenticationError() {
-		Error error = new Error(530, "You are not authenticated !", "/oauth/token");
-		return error;
+	public String authenticationError() {
+		return "Access denied";
 	}
 	
 	@CrossOrigin
 	@RequestMapping(value="/api/rolesList", method = RequestMethod.GET)
 	public List<RolesList> getRolesList() {
-		return rolesListService.getAllRoles();
+		return repoService.getAllRoles();
 	}
 	
 	@CrossOrigin
 	@RequestMapping(value="/api/depsList", method = RequestMethod.GET)
 	public List<DepsList> getDepsList() {
-		return depsListService.getAllDeps();
+		return repoService.getAllDeps();
 	}
 	
 	@CrossOrigin

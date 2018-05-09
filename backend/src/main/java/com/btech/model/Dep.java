@@ -17,9 +17,7 @@ public class Dep {
 	@Column(name="name")
 	private String depName;
 	
-	public Dep() {
-		
-	}
+	public Dep() {}
 	
 	public Dep(String name) {
 		this.depName = name;
@@ -32,6 +30,5 @@ public class Dep {
 	public void setDepName(String depName) {
 		this.depName = depName;
 	}
-	
-	
+
 }

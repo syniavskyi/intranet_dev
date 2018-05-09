@@ -43,10 +43,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		clients.inMemory().withClient("vuejs-client")
 			.authorizedGrantTypes("client_credentials", "password", "authorization_code", "refresh_token")
 			.authorities("ROLE_ADMIN", "ROLE_MANAGEMENT", "ROlE_LEAD", "ROLE_OFFICE", "ROLE_BASIC")
-			.scopes("read", "write")
-			.resourceIds("btech-resource-server")
-			.accessTokenValiditySeconds(5000)
-			.refreshTokenValiditySeconds(3600)
+			.scopes("read", "write", "trust")
+			.resourceIds("oauth2-resource")
+			.accessTokenValiditySeconds(6000) //seconds
+			.refreshTokenValiditySeconds(36000)
 			.secret("password");
 	}
 	

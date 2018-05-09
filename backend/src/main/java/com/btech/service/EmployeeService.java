@@ -11,9 +11,13 @@ import com.btech.repositories.EmployeeRepository;
 @Service
 public class EmployeeService {
 	
-	@Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
+    @Autowired
+    public EmployeeService(EmployeeRepository employeeRepository) {
+    	this.employeeRepository = employeeRepository;
+    }
+    
 	public Employee getEmployees(Long id) {
 		return employeeRepository.findOne(id);
 	}
