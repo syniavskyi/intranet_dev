@@ -63,6 +63,7 @@ const actions = {
 
             for(let key in data) {
                 const dep = data[key];
+                
                 //for now
                 if(data[key].depName.includes('Dabrowa')) {
                     data[key].depName = 'Dąbrowa Górnicza';
@@ -88,12 +89,13 @@ const actions = {
             commit('ADD_EMAILS', aData);
             if(state.emails.length > 0) {
                 var bIsEmail;
+                
                 for (var i = 0; i < state.emails.length; i++) {
                     if (props.fullNameToEmail === state.emails[i]) {
                         bIsEmail = true;
                         break;
                     } else {
-                       bIsEmail = false;
+                       bIsEmail = false; 
                        commit('SET_MAIL', props.mail);
                     }
                 }
