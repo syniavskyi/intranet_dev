@@ -26,6 +26,7 @@ Vue.component('icon', Icon)
 require('./assets/styles/style.css');
 require('./assets/styles/shared.css');
 require('./assets/styles/login/login.css');
+require('./assets/styles/profile/profile.css');
 require('./assets/styles/registration/registration.css');
 require('./assets/styles/dashboard/dashboard.css');
 

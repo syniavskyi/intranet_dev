@@ -1,105 +1,168 @@
 <template>
-<div id="profile">
-  <div class="plane-dashboard-parent">
-            <div class="plane-dashboard"> 
-                <div class="plane-dashboard-nav-and-content">
-                    <div class="dashboard-content"> 
-                      <h1>{{ $t("header.profile") }}</h1>
-                      <button v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
-                      <button v-if="editMode" @click="onSaveChanges" :disabled="$v.$invalid">{{ $t("button.saveChanges") }}</button>
-                      <button v-if="editMode" @click="onCancelEdit"> {{ $t("button.cancel") }}</button>
-                      <p class="login-error" v-show="!saveChangesSuccess" >{{ $t("message.saveChangesError") }}</p>
-                      <div>             
-                        <h3> {{userData.firstName}} {{userData.lastName}} </h3>
-                      </div>  
-                     <img :src ="userData.image"/>
-                     <label>
-                       <input type="file" id="photo" ref="photo" @change="handlePhotoUpload"/>
-                     </label>
-                     <button @click="submitPhoto" :disabled="disableSubmit"> Dodaj zdjęcie </button>
-
-                     <label>
-                       <input type="file" id="cv" ref="file" @change="handleCvUpload"/>
-                     </label>
-                     <button @click="submitCv" > Dodaj Cv </button>
-                      <h2>{{ $t("header.contact") }}</h2>
-                      <div> 
-                        <div>            
-                          <label>{{ $t("label.address") }}</label>
-                          <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"  v-model="userData.address"> 
-                        </div>  
-                        <div>           
-                          <label>{{ $t("label.email") }}</label>
-                          <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()"> 
-                          <p class="login-error" v-if="$v.userData.email.$invalid" >{{ $t("message.emailValidation") }}</p>
-                        </div> 
-                        <div>             
-                          <label>{{ $t("label.phone") }}</label>
-                          <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.phone"  @blur="$v.userData.phone.$touch()"> 
-                          <!-- <p class="login-error" v-if="$v.userData.phone.$invalid" >{{ $t("message.phoneValidation") }}</p> -->
-                        </div> 
-                        <div>           
-                          <label>{{ $t("label.skype") }}</label>
-                          <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.skype"> 
-                        </div> 
-                        <div>        
-                          <label>{{ $t("label.slack") }}</label>
-                          <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.slack"> 
-                        </div> 
-                      </div>
-
-                      <h2>{{ $t("header.employee") }}</h2>
-                      <div>  
-                        <div>           
-                            <label>{{ $t("label.department") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.branch"> 
-                        </div> 
-                        <div>           
-                            <label>{{ $t("label.branch") }}</label>
-                            <input class="inputDisabled" :disabled="true"  v-model="userData.section"> 
-                        </div> 
-                        <div>         
-                            <label>{{ $t("label.position") }}</label>
-                            <input class="inputDisabled" :disabled="true"  v-model="userData.position"> 
-                        </div> 
-                        <div>            
-                            <label>{{ $t("label.project") }}</label>
-                            <input class="inputDisabled" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"  v-model="userData.currentProject"> 
-                        </div> 
-                        <div>           
-                            <label>{{ $t("label.worktime") }}</label>
-                            <!-- <input class="inputDisabled" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"  v-model="userData.state">  -->
-                            <select v-model="userData.state" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode">
-                              <option value="Full">{{ $t("label.fulltime") }}</option>
-                              <option value="1/2">1/2</option>
-                              <option value="1/3">1/3</option>
-                              <option value="2/3">2/3</option>
-                              <option value="1/4">1/4</option>
-                              <option value="3/4">3/4</option>
-                              <option value="1/5">1/5</option>
-                              <option value="2/5">2/5</option>
-                              <option value="3/5">3/5</option>
-                              <option value="4/5">4/5</option>
-                            </select>
-                        </div> 
-                        <div>           
-                            <label>{{ $t("label.employmentDate") }}</label>
-                            <masked-input mask="11.11.1111"  :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"   v-model="userData.employmentDate"/> 
-                        </div> 
-                        <div>          
-                            <label>{{ $t("label.workExperience") }}</label>
-                            <input class="inputDisabled" :disabled="true" v-model="userData.seniority"> 
+            <div class="plane-profile">
+                <div class="profile-nav-and-content">
+                   
+                    <div class="profile-content">
+                        <div class="profile-header">
+                            <div class="profile-header-title-and-menu">
+                                 <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="profile-header-menu">
+                                <p class="profile-header-title">{{ $t("header.profile") }}</p>
+                            </div>
+                            <button class="profile-header-button" v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
+                            <div v-if="editMode" class="header-button-save-reject" >
+                                <button class="border-btn save-btn"  @click="onSaveChanges" :disabled="$v.$invalid">{{ $t("button.saveChanges") }}</button>
+                                <button class="border-btn reject-btn"  @click="onCancelEdit">{{ $t("button.cancel") }}</button>
+                            </div>
                         </div>
-                        <div>        
-                            <label>{{ $t("label.cv") }}</label>
-                            <a :href="userData.cv"> link </a>
-                        </div>  
-                      </div>
-                   </div>
+                        <p class="login-error" v-if="showNoChangesAlert" >{{ $t("message.noChanges") }}</p>
+                        <p class="login-error" v-show="!saveChangesSuccess" >{{ $t("message.saveChangesError") }}</p>
+                        <h3 class="user-header-name">{{userData.firstName}} {{userData.lastName}}</h3>
+                    <div class="profile-tiles"> 
+                        <div class="profile-tile">  <!-- container for section -->
+                            <div class="profile-tile-header">
+                                <h2>{{ $t("header.contact") }}</h2>
+                                <div class="tile-underscore"></div>
+                            </div>  
+                            <div class="profile-tile-content">
+                                <div class="profile-tile-inputs-section">
+                                    <div class="profile-tile-inputs">
+                                        <div>
+                                            <label class="label-profile">{{ $t("label.address") }}</label>
+                                            <input class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"  v-model="userData.address">
+                                        </div>
+                                        <div>
+                                            <label class="label-profile">{{ $t("label.email") }}</label>
+                                            <input class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()">
+                                            <div class="error-wrapper">
+                                                <p class="profile-error profile-error-email" v-if="$v.userData.email.$invalid">{{ $t("message.emailValidation") }}</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="label-profile">{{ $t("label.phone") }}</label>
+                                            <input class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.phone"  @input="phoneValidation">
+                                            <div class="error-wrapper">
+                                                <p class="profile-error profile-error-phone" v-if="invalidPhone" >{{ $t("message.phoneValidation") }}</p>  
+                                            </div>    
+                                        </div>
+                                    </div>
+                                    <div class="profile-tile-inputs">
+                                        <div>
+                                            <label class="label-profile">{{ $t("label.skype") }}</label> 
+                                            <input class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.skype">  
+                                        </div>
+                                        <div>
+                                            <label class="label-profile">{{ $t("label.slack") }}</label>
+                                            <input class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.slack">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="profile-user-header">
+                                    <div class="profile-user-img">
+<!--                                        <div class="overlay">-->
+                                            <img class="img-user-class" :src="userData.image" width="100px">
+                                            <label for="change-user-image" class="change-user-img profile-header-button">Zmień zdjęcie</label>
+                                            <input type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
+<!--                                        </div>-->
+                                    </div>
+                                </div>   
+                            </div>
+                        </div>
+                        <div class="profile-tile">
+                            <div class="profile-tile-header">
+                                <h2>{{ $t("header.employee") }}</h2>
+                                <div class="tile-underscore"></div>
+                            </div> 
+                            <div class="profile-tile-content">
+                                <div class="profile-tile-inputs-section">
+                                    <div  class="profile-tile-inputs">
+                                        <div>   <!-- container for single label + input/p -->           
+                                            <label class="label-profile">{{ $t("label.department") }}</label>
+                                            <input  class="inputDisabled inputProfile" :disabled="true" v-model="userData.branch">
+                                        </div> 
+                                        <div>   <!-- container for single label + input/p -->           
+                                            <label class="label-profile">{{ $t("label.branch") }}</label>
+                                            <input   class="inputDisabled inputProfile" :disabled="true" v-model="userData.section">
+                                        </div>
+                                        <div>   <!-- container for single label + input/p -->           
+                                            <label class="label-profile">{{ $t("label.position") }}</label>
+                                            <input  class="inputDisabled inputProfile" :disabled="true" v-model="userData.position">
+                                        </div> 
+                                        <div>   <!-- container for single label + input/p -->           
+                                            <label class="label-profile">{{ $t("label.project") }}</label>
+                                            <input  class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.currentProject">
+                                        </div>
+                                    </div>
+                                    <div class="profile-tile-inputs">
+                                        <div>   <!-- container for single label + input/p -->           
+                                            <label class="label-profile">{{ $t("label.worktime") }}</label>
+                                            <select v-model="userData.state" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode">
+                                                <option value="Full">{{ $t("label.fulltime") }}</option>
+                                                <option value="1/2">1/2</option>
+                                                <option value="1/3">1/3</option>
+                                                <option value="2/3">2/3</option>
+                                                <option value="1/4">1/4</option>
+                                                <option value="3/4">3/4</option>
+                                                <option value="1/5">1/5</option>
+                                                <option value="2/5">2/5</option>
+                                                <option value="3/5">3/5</option>
+                                                <option value="4/5">4/5</option>
+                                            </select>
+                                            <!-- <input  value="Pełny" class="inputDisabled inputProfile" :disabled="true" v-model="userData.worktime"> -->
+                                        </div> 
+                                        <div>   <!-- container for single label + input/p -->           
+                                            <label class="label-profile">{{ $t("label.employmentDate") }}</label>
+                                            <masked-input mask="11.11.1111" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"   v-model="userData.employmentDate"/>
+                                        </div> 
+                                        <div>   <!-- container for single label + input/p -->           
+                                            <label class="label-profile">{{ $t("label.workExperience") }}</label>
+                                            <input  class="inputDisabled inputProfile" :disabled="true" v-model="userData.seniority">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="side-content">
+                                    <p class="cv-title">{{ $t("label.cv") }}</p>
+                                    <div class="cv-buttons">
+                                        <div class="button-cv">
+                                            <a>
+                                                <span class="button-circle lang-circle">PL</span>
+                                            </a>
+                                            <div class="add-download">
+                                                <label class="add" for="add-docx-pl">+</label>
+                                                <input id="add-docx-pl" type="file" class="add doc-add-pl"  ref="file" @change="handleCvUpload">
+                                                <div class="docx">.docx</div>
+                                                <a :href="userData.cv" class="download doc-dowload-pl">&#x21e3;</a>
+                                            </div>
+                                            <div class="add-download">
+                                                <label for="add-pdf-pl" class="add pdf-add-pl">+</label>
+                                                <input id="add-pdf-pl" type="file">
+                                                <div class="pdf">.pdf</div>
+                                                <a class="download pdf-add-pl">&#x21e3;</a>
+                                            </div>
+                                        </div>
+                                        <div class="button-cv">
+                                            <a>
+                                                <span class="button-circle lang-circle">EN</span></a>
+                                            <div class="add-download">
+                                                <label class="add" for="add-docx-en">+</label>
+                                                <input id="add-docx-en" type="file">
+                                                <div class="docx">.docx</div>
+                                                <a href class="download">&#x21e3;</a>
+                                            </div>
+                                            <div class="add-download">
+                                                <label class="add" for="add-pdf-en">+</label>
+                                                <input id="add-pdf-en" type=file>
+                                                <div class="pdf">.pdf</div>
+                                                <a class="download">&#x21e3;</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                    </div>
                 </div>
-            </div> 
-  </div>
-</div>
+            </div>
 </template>
 
 <script>
@@ -112,8 +175,11 @@ export default {
       editMode: false,
       _beforeEditingCache: null,
       file: '',
-      disableSubmit: true,
-      photo: ''
+      photo: '',
+      hasDataChanged: false,
+      showNoChangesAlert: false,
+      invalidPhone: false,
+      invalidDate: false
   }
   },
   validations: {
@@ -125,7 +191,7 @@ export default {
     MaskedInput 
   },
   beforeCreate() {
-    if (this.contactData === undefined) {
+    if (this.userData === undefined) {
       const token = localStorage.getItem('token')
       this.$store.dispatch('getUsername', token)
     }
@@ -138,40 +204,63 @@ export default {
   },
   methods: {
     onEdit() {
+      this.showNoChangesAlert = false
       this.editMode = !this.editMode
       this._beforeEditingCache = Object.assign({}, this.userData)
     },
     onCancelEdit() {
       Object.assign(this.userData, this._beforeEditingCache)
       this._beforeEditingCache = null
+      this.showNoChangesAlert = false
       this.editMode = !this.editMode
     },
     onSaveChanges() {
-      this.$store.dispatch('saveContactData', this.userData)
-      this.$store.dispatch('saveUserData', this.userData)
-      this.editMode = !this.editMode
+      this.showNoChangesAlert = false
+      this.hasDataChanged = false
+      let currentData = Object.assign({}, this.userData)
+      
+      var currDataProps = Object.getOwnPropertyNames(currentData)
+      var beforeDataProps = Object.getOwnPropertyNames(this._beforeEditingCache)
+      
+      for (var i = 0; i < beforeDataProps.length; i++) {
+        var propName = beforeDataProps[i];
+        if (currentData[propName] !== this._beforeEditingCache[propName]) {
+          this.hasDataChanged = true
+          this.$store.dispatch('saveContactData', this.userData)
+          this.$store.dispatch('saveUserData', this.userData)
+          this.editMode = !this.editMode
+          return
+        }
+      }
+     if(this.hasDataChanged === false) {
+       this.showNoChangesAlert = true
+     }
+
     },
     handlePhotoUpload() {
       this.photo = this.$refs.photo.files[0];
       this.disableSubmit = false
-    },
-    submitPhoto(){
-      let data  = {
+            let data  = {
         file: this.photo,
         id: localStorage.getItem('id')
       }
       this.$store.dispatch('submitPhoto', data)
-      this.disableSubmit = true
     },
     handleCvUpload() {
       this.file = this.$refs.file.files[0];
-    },
-    submitCv(){
       let data  = {
         file: this.file,
         id: localStorage.getItem('id')
       }
       this.$store.dispatch('submitCv', data)
+    },
+    phoneValidation(value) {
+      const regex = new RegExp("^(?=.*[0-9])[- +()0-9]+$")
+      if (regex.test(value.target.value)) {
+        this.invalidPhone = false
+      } else {
+        this.invalidPhone = true
+      }
     }
   }
 }

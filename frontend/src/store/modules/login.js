@@ -30,8 +30,11 @@ const mutations = {
   },
   SET_PHOTO(state, photoUrl) {
     state.userData.image = photoUrl
+  },
+  SET_CV(state, cvUrl){
+    state.userData.cv = cvUrl
   }
-
+ 
 }
 
 const actions = {
@@ -64,7 +67,6 @@ const actions = {
       commit('DISPLAY_MENU', true)
 
       localStorage.setItem('token', res.data.access_token)
-
      
       dispatch('setExpirationDate', res.data.expires_in)
       dispatch('setLogoutTimer', res.data.expires_in)
@@ -144,10 +146,9 @@ const actions = {
         employmentDate: res.data.userDetails[0].employmentDate,
         position: decodeURI(res.data.userDetails[0].position),
         section: decodeURI(res.data.userDetails[0].section),
-        seniority: decodeURI(res.data.userDetails[0].seniority),
+        seniority: res.data.userDetails[0].seniority,
         state: decodeURI(res.data.userDetails[0].state)
       }
-
 
       localStorage.setItem('username', userdata.username)
       localStorage.setItem('role', userdata.role)
@@ -157,10 +158,13 @@ const actions = {
       commit('SET_USER_DATA', userdata)
       commit('SET_USERNAME', userdata.username)
       commit('SET_USER_ID', userdata.id)
-
+      console.log(res)
     }).catch(error => {
       console.log(error)
     })
+  },
+  logout(){
+
   },
   sendEmailWithPass({
     commit,
@@ -185,7 +189,8 @@ const actions = {
     }).catch(error => {
       console.log(error)
     })
-  }
+  },
+
 
 }
 

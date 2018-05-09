@@ -1,69 +1,64 @@
 <template>
-                     <div class="plane-dashboard-nav">
-                        <div class="dashboard-nav-title">
-                            <div class="dashboard-nav-logo-continer">
-                                <!-- <img class="dashboard-nav-logo"  src="../../images/nav/if_world.png"> -->
-                            </div>
-                            <p class="dashboard-nav-title">BTech</p>
+ <div class="plane-nav">
+                            <p class="nav-title">BTech</p>
+                        <div class="nav-user">
+                            <img class="nav-user-img" width="130px" :src="userData.image">
                         </div>
-                        <!-- <img class="dashboard-user-img" width="100px" src="../../images/if_users.png"> -->
-                        <nav>
-                            <ul>
+                        <nav class="nav">
+                            <ul class="nav-list">
                                 <li>
-                                    <router-link class="dash-nav-link" to="/profile">
-                                    <button class="dashboard-nav-item dash-nav-link">
-                                        <!-- <img class="dash-nav-img" src="../../images/nav/if_profile-32_wh.png"> -->
-                                    {{ $t("header.profile") }}
+                                    <router-link class="nav-item" to="/profile">
+                                    <button class="nav-item">
+                                        <img class="nav-item-img" src="../assets/images/nav/if_profile-32_wh.png">
+                                        <p>{{ $t("header.profile") }}</p>
                                     </button>
                                     </router-link>
                                 </li>
                                 <li>
-                                    <!-- <button class="dashboard-nav-item"> -->
-                                        <!-- <img class="dash-nav-img" src="../../images/nav/if_home_32_wh.png"> -->
-                                        <router-link class="dash-nav-link" to="/dashboard">
-                                        <button class="dashboard-nav-item dash-nav-link">
-                                        {{ $t("header.home") }}
-                                        </button>
-                                        </router-link>
-                                    <!-- </button> -->
-                                </li>
-                                <li>
-                                    <router-link class="dash-nav-link" to="/news">
-                                    <button class="dashboard-nav-item dash-nav-link">
-                                        <!-- <img class="dash-nav-img" src="../../images/nav/if_docu_32_wh.png"> -->
-                                     {{ $t("header.news") }}
+                                    <router-link class="nav-item" to="/dashboard">
+                                    <button class="nav-item">
+                                        <img class="nav-item-img" src="../assets/images/nav/if_home_32_wh.png">
+                                        <p>{{ $t("header.home") }}</p>
                                     </button>
                                     </router-link>
                                 </li>
                                 <li>
-                                     <router-link class="dash-nav-link " to="/calendar">
-                                    <button class="dashboard-nav-item  dash-nav-link">
-                                        <!-- <img class="dash-nav-img" src="../../images/nav/if_docu_32_wh.png"> -->
-                                    {{ $t("header.calendar") }}
+                                    <router-link class="nav-item" to="/news">
+                                    <button class="nav-item">
+                                        <img class="nav-item-img" src="../assets/images/nav/if_docu_32_wh.png">
+                                        <p>{{ $t("header.news") }}</p>
                                     </button>
-                                     </router-link>
+                                    </router-link>
                                 </li>
                                 <li>
-                                     <router-link class="dash-nav-link" to="/employees">
-                                    <button class="dashboard-nav-item dash-nav-link">
-                                        <!-- <img class="dash-nav-img" src="../../images/nav/if_docu_32_wh.png"> -->
-                                    {{ $t("header.employees") }}
+                                    <router-link class="nav-item " to="/calendar">
+                                    <button class="nav-item">
+                                        <img class="nav-item-img" src="../assets/images/nav/if_calendar_32 (2).png">
+                                        <p>{{ $t("header.calendar") }}</p>
                                     </button>
-                                     </router-link>
+                                    </router-link>
                                 </li>
                                 <li>
-                                     <router-link class="dash-nav-link" to="/informations">
-                                    <button class="dashboard-nav-item dash-nav-link">
-                                        <!-- <img class="dash-nav-img" src="../../images/nav/if_docu_32_wh.png"> -->
-                                    {{ $t("header.informations") }}
+                                    <router-link class="nav-item"  to="/employees">
+                                    <button class="nav-item">
+                                        <img class="nav-item-img" src="../assets/images/nav/if_docu_32_wh.png">
+                                        <p>{{ $t("header.employees") }}</p>
                                     </button>
-                                     </router-link>
+                                    </router-link>
                                 </li>
                                 <li>
-                                     <router-link class="dash-nav-link" to="/files">
-                                    <button class="dashboard-nav-item dash-nav-link">
-                                        <!-- <img class="dash-nav-img" src="../../images/nav/if-files_32_wh.png"> -->
-                                    {{ $t("header.files") }}
+                                    <router-link class="nav-item" to="/informations">
+                                    <button class="nav-item">
+                                        <img class="nav-item-img" src="../assets/images/nav/if_docu_32_wh.png">
+                                        <p>{{ $t("header.informations") }}</p>
+                                    </button>
+                                    </router-link>
+                                </li>
+                                <li>
+                                    <router-link class="nav-item" to="/files">
+                                    <button class="nav-item">
+                                        <img class="nav-item-img" src="../assets/images/nav/if-files_32_wh.png">
+                                        <p>{{ $t("header.files") }}</p>
                                     </button>
                                     </router-link>
                                 </li>
@@ -71,3 +66,14 @@
                         </nav>
                     </div>
 </template>
+
+<script>
+import { mapGetters } from 'vuex'
+export default {
+computed: {
+    ...mapGetters({
+      userData: 'userData',
+    })
+  }
+}
+</script>

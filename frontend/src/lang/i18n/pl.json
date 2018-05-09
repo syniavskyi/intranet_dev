@@ -24,7 +24,7 @@
         "worktime": "Etat",
         "employmentDate": "Data zatrudnienia",
         "workExperience": "Staż pracy",
-        "cv": "CV",
+        "cv": "CV użytkownika",
         "fulltime": "Pełny"
 
     },
@@ -45,8 +45,9 @@
         "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",
         "sendEmailSuccess": "Na podany adres email wysłano nowe hasło.",
         "emailValidation": "Adres email posiada nieprawidłowy format lub nie jest wprowadzony.",
-        "phoneValidation": "Numer telefonu posiada nieprawidłowy format lub nie jest wprowadzony.",
-        "saveChangesError": "Niepowodzenie podczas zapisu danych."
+        "phoneValidation": "Numer telefonu posiada nieprawidłowy format",
+        "saveChangesError": "Niepowodzenie podczas zapisu danych.",
+        "noChanges": "Nie wprowadzono zmian"
     },
     "select": {
         "language": {

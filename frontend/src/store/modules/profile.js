@@ -39,13 +39,10 @@ const actions = {
         commit('SET_USER_DATA', userData)
         var params = new URLSearchParams()
             params.append('id', localStorage.getItem('id'))
-            params.append('branch', encodeURI(userData.branch))
-            params.append('section', encodeURI(userData.section))
             params.append('currentProject', encodeURI(userData.currentProject))
             params.append('employmentDate', userData.employmentDate)
             params.append('state', encodeURI(userData.state))
             params.append('position', encodeURI(userData.position))
-            params.append('seniority', encodeURI(userData.seniority))
         axios({
             method: 'post',
             url: '/api/user/edit/detail',
@@ -86,6 +83,7 @@ const actions = {
             headers: { "Content-type": "multipart/form-data" },
             data: formData   
         }).then(res => {
+            commit('SET_CV', res.data.fileDownloadUri)
             console.log(res)
         }).catch(error => {
             console.log(error)
