@@ -83,6 +83,7 @@ const actions = {
             headers: { "Content-type": "multipart/form-data" },
             data: formData   
         }).then(res => {
+            commit('SET_CV', res.data.fileDownloadUri)
             console.log(res)
         }).catch(error => {
             console.log(error)

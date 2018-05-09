@@ -146,10 +146,9 @@ const actions = {
         employmentDate: res.data.userDetails[0].employmentDate,
         position: decodeURI(res.data.userDetails[0].position),
         section: decodeURI(res.data.userDetails[0].section),
-        seniority: decodeURI(res.data.userDetails[0].seniority),
+        seniority: res.data.userDetails[0].seniority,
         state: decodeURI(res.data.userDetails[0].state)
       }
-
 
       localStorage.setItem('username', userdata.username)
       localStorage.setItem('role', userdata.role)
@@ -187,7 +186,8 @@ const actions = {
     }).catch(error => {
       console.log(error)
     })
-  }
+  },
+
 
 }
 

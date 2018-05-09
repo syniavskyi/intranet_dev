@@ -5,6 +5,7 @@
                 <div class="plane-dashboard-nav-and-content">
                     <div class="dashboard-content"> 
                       <h1>{{ $t("header.profile") }}</h1>
+                      
                        <p class="login-error" v-if="showNoChangesAlert" >{{ $t("message.noChanges") }}</p>
                       <button v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
                       <button v-if="editMode" @click="onSaveChanges" :disabled="$v.$invalid">{{ $t("button.saveChanges") }}</button>
@@ -17,14 +18,14 @@
                      <label>
                        <input type="file" id="photo" ref="photo" @change="handlePhotoUpload"/>
                      </label>
-                     <button @click="submitPhoto" :disabled="disableSubmit"> Dodaj zdjęcie </button>
+                     <!-- <button @click="submitPhoto" :disabled="disableSubmit"> Dodaj zdjęcie </button> -->
 
                      <label>
                        <input type="file" id="cv" ref="file" @change="handleCvUpload"/>
                      </label>
-                     <button @click="submitCv" > Dodaj Cv </button>
+                     <!-- <button @click="submitCv" > Dodaj Cv </button> -->
                       <h2>{{ $t("header.contact") }}</h2>
-                      <div> 
+                    <div> 
                         <div>            
                           <label>{{ $t("label.address") }}</label>
                           <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"  v-model="userData.address"> 
@@ -36,8 +37,8 @@
                         </div> 
                         <div>             
                           <label>{{ $t("label.phone") }}</label>
-                          <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.phone"  @blur="$v.userData.phone.$touch()"> 
-                          <!-- <p class="login-error" v-if="$v.userData.phone.$invalid" >{{ $t("message.phoneValidation") }}</p> -->
+                          <input :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.phone"  @input="phoneValidation"> 
+                          <p class="login-error" v-if="invalidPhone" >{{ $t("message.phoneValidation") }}</p>
                         </div> 
                         <div>           
                           <label>{{ $t("label.skype") }}</label>
@@ -113,10 +114,10 @@ export default {
       editMode: false,
       _beforeEditingCache: null,
       file: '',
-      disableSubmit: true,
       photo: '',
       hasDataChanged: false,
-      showNoChangesAlert: false
+      showNoChangesAlert: false,
+      invalidPhone: false
   }
   },
   validations: {
@@ -177,24 +178,27 @@ export default {
     handlePhotoUpload() {
       this.photo = this.$refs.photo.files[0];
       this.disableSubmit = false
-    },
-    submitPhoto(){
-      let data  = {
+            let data  = {
         file: this.photo,
         id: localStorage.getItem('id')
       }
       this.$store.dispatch('submitPhoto', data)
-      this.disableSubmit = true
     },
     handleCvUpload() {
       this.file = this.$refs.file.files[0];
-    },
-    submitCv(){
       let data  = {
         file: this.file,
         id: localStorage.getItem('id')
       }
       this.$store.dispatch('submitCv', data)
+    },
+    phoneValidation(value) {
+      const regex = new RegExp("^(?=.*[0-9])[- +()0-9]+$")
+      if (regex.test(value.target.value)) {
+        this.invalidPhone = false
+      } else {
+        this.invalidPhone = true
+      }
     }
   }
 }
