@@ -17,8 +17,12 @@ import com.btech.service.EmployeeService;
 
 public class EmployeeController {
 	
+	private final EmployeeService employeeService;
+	
 	@Autowired
-	private EmployeeService employeeService;
+	public EmployeeController(EmployeeService employeeService) {
+		this.employeeService = employeeService;
+	}
 	
 	@CrossOrigin
     @RequestMapping(value = "/api/employee/{id}", method = RequestMethod.GET)
@@ -31,7 +35,5 @@ public class EmployeeController {
     public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
-    
-    
-
+	
 }

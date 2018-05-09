@@ -26,8 +26,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 							 .accessDeniedPage("/accessDenied")
 							 .and().authorizeRequests()
 							 .antMatchers("/api/public").permitAll()
+							 .antMatchers("/api/users/").hasAnyRole("BASIC","LEAD", "MANAGEMENT", "OFFICE", "ADMIN")
 							 .antMatchers("/oauth/token").permitAll()
-							 .antMatchers("/api/secured").hasRole("MANAGEMENT")
+							 .antMatchers("/api/secured").hasAnyRole("MANAGEMENT", "ADMIN")
 					         .antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll();
 	}
 

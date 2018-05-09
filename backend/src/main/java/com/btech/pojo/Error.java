@@ -46,5 +46,4 @@ public class Error {
 		this.access_token_path = access_token_path;
 	}
 	
-	
 }

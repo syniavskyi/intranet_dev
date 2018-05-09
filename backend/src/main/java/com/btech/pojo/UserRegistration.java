@@ -2,27 +2,34 @@ package com.btech.pojo;
 
 import java.util.List;
 
-import com.btech.model.Role;
+import com.btech.model.*;
 
 public class UserRegistration {
 	
 	private String username;
 	private String password;
-	private String passwordConfirmation;
 	private String email;
 	private List<Role> roles;
-	private String roleId;
+	private List<Dep> deps;
+	private List<UserInfo> userInfo;
+	private List<UserContacts> userContacts;
+	private List<UserDetail> userDetails;
+	private String fullName;
+	private String slackName;
+
+	public UserRegistration() {}
 	
-	public UserRegistration() {
-		
-	}
-	
-	public UserRegistration(String username, String password, String passwordConfirmation, String email, String roleId) {
+	public UserRegistration(String username, String password, String email, List<Role> roles, List<Dep> deps, List<UserInfo> userInfo, List<UserContacts> userContacts, List<UserDetail> userDetails, String fullName, String slackName) {
 		this.username = username;
 		this.password = password;
-		this.passwordConfirmation = passwordConfirmation;
 		this.email = email;
-		this.roleId = roleId;
+		this.roles = roles;
+		this.deps = deps;
+		this.userInfo = userInfo;
+		this.userContacts = userContacts;
+		this.userDetails = userDetails;
+		this.fullName = fullName;
+		this.slackName = slackName;
 	}
 
 	public String getUsername() {
@@ -41,14 +48,6 @@ public class UserRegistration {
 		this.password = password;
 	}
 
-	public String getPasswordConfirmation() {
-		return passwordConfirmation;
-	}
-
-	public void setPasswordConfirmation(String passwordConfirmation) {
-		this.passwordConfirmation = passwordConfirmation;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -65,12 +64,53 @@ public class UserRegistration {
 		this.roles = roles;
 	}
 
-	public String getRoleId() {
-		return roleId;
+	public List<Dep> getDeps() {
+		return deps;
 	}
 
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
+	public void setDeps(List<Dep> deps) {
+		this.deps = deps;
+	}
+
+	public List<UserInfo> getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(List<UserInfo> userInfo) {
+		this.userInfo = userInfo;
+	}
+
+	public List<UserContacts> getUserContacts() {
+		return userContacts;
+	}
+
+	public void setUserContacts(List<UserContacts> userContacts) {
+		this.userContacts = userContacts;
+	}
+
+	public List<UserDetail> getUserDetails() {
+		return userDetails;
+	}
+
+	public void setUserDetails(List<UserDetail> userDetails) {
+		this.userDetails = userDetails;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getSlackName() {
+		return slackName;
+	}
+
+	public void setSlackName(String slackName) {
+		this.slackName = slackName;
 	}
 	
+		
 }
