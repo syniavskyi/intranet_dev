@@ -58,13 +58,13 @@
                                 </div>
                                 <div class="profile-user-header">
                                     <div class="profile-user-img">
-                                        <div class="overlay">
-                                            <p>Zmień zdjęcie</p>
-                                             <img class="img-user-class" width="50px" :src="userData.image">
-                                            <!-- <img class="img-user-class" src="../../../asstets/images/if_camera2_254216.png" width="30px"> -->
-                                        </div>
+<!--                                        <div class="overlay">-->
+                                            <img class="img-user-class" :src="userData.image" width="100px">
+                                            <label for="change-user-image" class="change-user-img profile-header-button">Zmień zdjęcie</label>
+                                            <input type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
+<!--                                        </div>-->
                                     </div>
-                                </div>  
+                                </div>   
                             </div>
                         </div>
                         <div class="profile-tile">

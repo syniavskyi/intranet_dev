@@ -111,11 +111,6 @@ body {
     border: 2px solid transparent;
 }
 
-.profile-user-img:hover .overlay {
-    opacity: 1;
-    cursor: pointer;
-}
-
 .overlay p {
     display: flex;
     margin:0;
@@ -289,10 +284,9 @@ body {
 }
 
 .profile-user-img {
-    position: relative;
-    height: 8rem;
-    width: 8rem;
-    /* background: url("../../images/if_users.png") no-repeat center; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border-radius: 2px;
 }
 
@@ -356,7 +350,8 @@ body {
 #add-docx-pl,
 #add-pdf-pl,
 #add-docx-en,
-#add-pdf-en{
+#add-pdf-en,
+#change-user-image{
     opacity:0;
     position: absolute;
     z-index: -1;
