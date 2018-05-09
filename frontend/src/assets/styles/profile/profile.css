@@ -292,7 +292,7 @@ body {
     position: relative;
     height: 8rem;
     width: 8rem;
-    background: url("../../images/if_users.png") no-repeat center;
+    /* background: url("../../images/if_users.png") no-repeat center; */
     border-radius: 2px;
 }
 
@@ -438,26 +438,30 @@ body {
 }
 
 .inputEdit {
+    box-sizing: border-box;
     padding-bottom:0;
     align-self: center;
     font-family: 'Open Sans';
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     height: 2.3rem;
     background: transparent;
     border: 0;
     border-bottom: 2px solid grey;
     transition: border .3s ease;
     width: 18.4rem;
+
 }
 
 .inputDisabled {
+    box-sizing: border-box;
     height: 2.3rem;
     font-size: 1.3rem;
     text-align: center;
     font-family: 'Open Sans';
     background: transparent;
     border: 0;
-    width: 14.4rem;
+    width: 18.4rem;
+    border-bottom: 2px solid transparent;
 }
 
 .inputEdit:hover,
@@ -597,7 +601,7 @@ body {
     }
     .profile-content {
         height: 100%;
-        width: 80%;
+        width: 100%;
     }
     .profile-tile-content {
         display: flex;

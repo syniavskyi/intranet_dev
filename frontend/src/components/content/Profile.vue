@@ -5,15 +5,17 @@
                     <div class="profile-content">
                         <div class="profile-header">
                             <div class="profile-header-title-and-menu">
-                                <img :src="userData.image" width="32px" class="profile-header-menu">
+                                 <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="profile-header-menu">
                                 <p class="profile-header-title">{{ $t("header.profile") }}</p>
                             </div>
                             <button class="profile-header-button" v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
-                            <div class="header-button-save-reject" >
-                                <button class="border-btn save-btn" v-if="editMode" @click="onSaveChanges" :disabled="$v.$invalid">{{ $t("button.saveChanges") }}</button>
-                                <button class="border-btn reject-btn" v-if="editMode" @click="onCancelEdit">{{ $t("button.cancel") }}</button>
+                            <div v-if="editMode" class="header-button-save-reject" >
+                                <button class="border-btn save-btn"  @click="onSaveChanges" :disabled="$v.$invalid">{{ $t("button.saveChanges") }}</button>
+                                <button class="border-btn reject-btn"  @click="onCancelEdit">{{ $t("button.cancel") }}</button>
                             </div>
                         </div>
+                        <p class="login-error" v-if="showNoChangesAlert" >{{ $t("message.noChanges") }}</p>
+                        <p class="login-error" v-show="!saveChangesSuccess" >{{ $t("message.saveChangesError") }}</p>
                         <h3 class="user-header-name">{{userData.firstName}} {{userData.lastName}}</h3>
                     <div class="profile-tiles"> 
                         <div class="profile-tile">  <!-- container for section -->
@@ -26,18 +28,18 @@
                                     <div class="profile-tile-inputs">
                                         <div>
                                             <label class="label-profile">{{ $t("label.address") }}</label>
-                                            <input class="inputEdit inputProfile" :disabled="!editMode"  v-model="userData.address">
+                                            <input class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"  v-model="userData.address">
                                         </div>
                                         <div>
                                             <label class="label-profile">{{ $t("label.email") }}</label>
-                                            <input class="inputEdit inputProfile" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()">
+                                            <input class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()">
                                             <div class="error-wrapper">
                                                 <p class="profile-error profile-error-email" v-if="$v.userData.email.$invalid">{{ $t("message.emailValidation") }}</p>
                                             </div>
                                         </div>
                                         <div>
                                             <label class="label-profile">{{ $t("label.phone") }}</label>
-                                            <input class="inputEdit inputProfile" :disabled="!editMode" v-model="userData.phone"  @input="phoneValidation">
+                                            <input class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.phone"  @input="phoneValidation">
                                             <div class="error-wrapper">
                                                 <p class="profile-error profile-error-phone" v-if="invalidPhone" >{{ $t("message.phoneValidation") }}</p>  
                                             </div>    
@@ -46,11 +48,11 @@
                                     <div class="profile-tile-inputs">
                                         <div>
                                             <label class="label-profile">{{ $t("label.skype") }}</label> 
-                                            <input class="inputEdit inputProfile" :disabled="!editMode" v-model="userData.skype">  
+                                            <input class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.skype">  
                                         </div>
                                         <div>
                                             <label class="label-profile">{{ $t("label.slack") }}</label>
-                                            <input class="inputEdit inputProfile" :disabled="!editMode" v-model="userData.slack">
+                                            <input class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.slack">
                                         </div>
                                     </div>
                                 </div>
@@ -58,6 +60,7 @@
                                     <div class="profile-user-img">
                                         <div class="overlay">
                                             <p>Zmień zdjęcie</p>
+                                             <img class="img-user-class" width="50px" :src="userData.image">
                                             <!-- <img class="img-user-class" src="../../../asstets/images/if_camera2_254216.png" width="30px"> -->
                                         </div>
                                     </div>
@@ -86,13 +89,13 @@
                                         </div> 
                                         <div>   <!-- container for single label + input/p -->           
                                             <label class="label-profile">{{ $t("label.project") }}</label>
-                                            <input  class="inputDisabled inputProfile" :disabled="true" v-model="userData.currentProject">
+                                            <input  class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.currentProject">
                                         </div>
                                     </div>
                                     <div class="profile-tile-inputs">
                                         <div>   <!-- container for single label + input/p -->           
                                             <label class="label-profile">{{ $t("label.worktime") }}</label>
-                                            <select v-model="userData.state" class="inputDisabled inputProfile" :disabled="!editMode">
+                                            <select v-model="userData.state" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode">
                                                 <option value="Full">{{ $t("label.fulltime") }}</option>
                                                 <option value="1/2">1/2</option>
                                                 <option value="1/3">1/3</option>
@@ -108,7 +111,7 @@
                                         </div> 
                                         <div>   <!-- container for single label + input/p -->           
                                             <label class="label-profile">{{ $t("label.employmentDate") }}</label>
-                                            <masked-input mask="11.11.1111" class="inputDisabled inputProfile" :disabled="!editMode"   v-model="userData.employmentDate"/>
+                                            <masked-input mask="11.11.1111" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"   v-model="userData.employmentDate"/>
                                         </div> 
                                         <div>   <!-- container for single label + input/p -->           
                                             <label class="label-profile">{{ $t("label.workExperience") }}</label>
@@ -188,7 +191,7 @@ export default {
     MaskedInput 
   },
   beforeCreate() {
-    if (this.contactData === undefined) {
+    if (this.userData === undefined) {
       const token = localStorage.getItem('token')
       this.$store.dispatch('getUsername', token)
     }

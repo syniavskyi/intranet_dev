@@ -163,6 +163,9 @@ const actions = {
       console.log(error)
     })
   },
+  logout(){
+
+  },
   sendEmailWithPass({
     commit,
     dispatch,
