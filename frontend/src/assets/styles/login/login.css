@@ -16,24 +16,23 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* align-items: flex-end; */
     z-index: 200;
     top: 15%;
     left: 17%;
     width: 60%;
-    height: 17rem;
+    height: 18rem;
     background: white;
     padding: 0;
     margin: 0;
-    /* border: 1px solid #ccc; */
     box-shadow: -1px 10px 10px rgba(0, 0, 0, 0.5);
     border-radius: .3rem;
     min-width: 15.5rem;
-    min-height: 17rem;
+    min-height: 20rem;
 }
 
 .modal-header {
     padding: 0.5rem;
+    word-wrap: break-word;
     border: 0;
     border-top-left-radius: .2rem;
     border-top-right-radius: .2rem;
@@ -50,9 +49,7 @@ body {
 }
 
 .modal-exit {
-    /* align-self: flex-start; */
     font-size: 1.3rem;
-    height: 1.5rem;
     background: transparent;
     border:0;
     color: white;
@@ -77,6 +74,11 @@ body {
     width: 13rem;
 }
 
+.p-modal-txt {
+    align-self: center;
+    font-family: inherit;
+    color: grey;
+}
 .modal-button {
     margin-bottom: 1rem;
     align-self: center;
@@ -84,14 +86,14 @@ body {
 
 .plane-parent-login {
     flex-shrink: 0;
-    min-height: 34.6rem;
+    min-height: 35rem;
     width: 100%;
     height: 100%;
 }
 
 .plane-login {
     flex-shrink: 0;
-    min-height: 34.6rem;
+    min-height: 35rem;
 }
 
 [class*="input-login-"] {
@@ -112,7 +114,7 @@ body {
     order: 2; 
 }
 .input-login-pass {
-    width: 14.9rem;
+    width: 14rem;
     order: 3;
 }
 
@@ -125,15 +127,14 @@ body {
 }
 
 .show-pass-eye {
-    width: 2rem;
-    margin-left: -2rem;
+    width: 1rem;
+    padding: 0;
 }
 
 .login-pass-div {
     order: 3;
-    width: 15.5rem;
-    align-self: flex-start;
-    margin-left: 1.55rem;
+    width: 20rem;
+    justify-content: center;
     display: flex;
     flex-direction: row-reverse;
 }
@@ -150,6 +151,7 @@ body {
     order: 4;
     width: 80%;
     margin-bottom: .5rem;
+    margin-right: 2rem;
     transition: color 0.3s ease;
 }
 
@@ -165,7 +167,7 @@ body {
 .login-error {
     display: flex;
     font-family: 'Raleway';
-    order: 5;
+    order: 6;
     background: rgba(255, 0, 0, 0.4);
     text-align: center;
     width: 16rem;
@@ -176,9 +178,55 @@ body {
     align-items: center;
 }
 
+.div-select-login {
+    width: 15rem;
+    align-items: center;
+    display: flex;
+    order: 5;
+    align-self: flex-start;
+    justify-content: space-between;
+ }
+
+.div-select-login + .button {
+    margin-top: 2rem;
+}
+.select-login {
+    width: 8rem;
+    outline: none;
+    text-indent: 2rem;
+    background: transparent;
+    height: 2rem;
+    width: 12rem;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    appearance: none;
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    background-image: url("../../images/expand2.png");
+    background-repeat: no-repeat;
+    background-position: right;
+}
+.success-alert {
+    display: flex;
+    font-family: 'Raleway';
+    order: 6;
+    background: rgba(118, 231, 143, 0.534);
+    text-align: center;
+    align-self: center;
+    color: darkslategrey;
+    width: 90%;
+    padding: 0.05rem;
+    padding-left: 30px;
+    height: 3rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    align-items: center;
+    
+}
+
 .login-button {
     margin-top: 1rem;
-    order: 6;
+    order: 7;
 }
 
 .login-error + .button-login {
@@ -200,7 +248,38 @@ button[disabled] span {
    cursor: not-allowed;
 }
 
-@media (min-width: 35rem) {
+.show-pass-eye {
+    font-size: 0.8rem;
+    align-self: right;
+    order: 1;
+    height: 2.5rem;
+    width: 1rem;
+    z-index: 100;
+    background: transparent;
+    transition: border 0.5s ease;
+    border: none;
+    padding: none;
+    margin:none;
+ }
+ .show-pass-eye:hover {
+     cursor: pointer;
+ }
+ .show-pass-eye:focus {
+     outline: none;
+ }
+ .loading-icon {
+     margin-right: 2px;
+     display: inline-block;
+     animation: spin 2s linear infinite;
+ }
+ 
+ @keyframes spin {
+     100%  {
+         transform: rotate(360deg);
+     }
+ }
+
+@media (min-width: 43rem) {
     .plane-login {
         display: flex;
         width: 70%;
@@ -229,6 +308,58 @@ button[disabled] span {
     }
 }
 
+.fade-alert-enter {
+    opacity: 0;
+}
+
+.fade-alert-enter-active {
+    transition: opacity 2s;    
+}
+
+
+.fade-alert-leave-active  {
+    transition: opacity 2s;   
+    opacity: 0;
+}
+.show-alert-enter {
+opacity: 0;
+}
+
+.show-alert-move {
+    transition: transform 2s; 
+}
+
+.show-alert-enter-active {
+    animation: slide-in 2s ease-out forwards;
+    transition: opacity 2s;
+}
+
+.show-alert-leave-active {
+    animation: slide-out 2s ease-out forwards;
+    transition: opacity 2s;
+    opacity: 0;
+    position: absolute;
+}
+
+@keyframes show-alert-in {
+    from {
+        transform: translateY(20px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes show-alert-out {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(20px);
+    }
+
+}
+
 @media (min-height: 0rem) and (max-height: 35rem) and (min-width: 35rem) {
     .plane-login {
         display: flex;
@@ -247,5 +378,9 @@ button[disabled] span {
         top: 10%;
         width: 40%;
         left: 30%;
+    }
+    .label {
+        margin-left: 2rem;
+        align-self: flex-start;
     }
 }

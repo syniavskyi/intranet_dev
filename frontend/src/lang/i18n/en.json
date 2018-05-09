@@ -1,0 +1,57 @@
+{
+    "button": {
+        "login": "Log in",
+        "forgotPass": "Forgot password?",
+        "resetPass": "Reset password",
+        "editData": "Edit data",
+        "saveChanges": "Save changes",
+        "cancel": "Cancel"
+    },
+    "label": {
+        "user": "User",
+        "password": "Password",
+        "enterEmail": "Enter email",
+        "language": "Language",
+        "address": "Address",
+        "email": "Email",
+        "phone": "Phone",
+        "skype": "Skype",
+        "slack": "Slack",
+        "department": "Department",
+        "branch": "Branch",
+        "position": "Position",
+        "project": "Current project",
+        "worktime": "Work time",
+        "employmentDate": "Employment date",
+        "workExperience": "Work experience",
+        "cv": "User's CV",
+        "fulltime": "Fulltime"
+    },
+    "header": {
+        "login": "Log in to Intranet",
+        "forgotPass": "Forgot password?",
+        "profile": "Profile",
+        "home": "Home",
+        "news": "News",
+        "calendar": "Calendar",
+        "employees": "Employees",
+        "informations": "Informations",
+        "files": "Files",
+        "contact": "Contact details",
+        "employee": "Personal details"
+    },
+    "message": {
+        "loginError": "Password or username are invalid.",
+        "sendEmailSuccess": "New password was sent at your email address.",
+        "emailValidation": "Email address is empty or is in incorrect format.",
+        "phoneValidation": "Phone number has incorrect format.",
+        "saveChangesError": "The changes weren't saved.",
+        "noChanges": "No changes were made"
+    },
+    "select": {
+        "language": {
+            "english": "English",
+            "polish": "Polish"
+        }
+    }
+}
