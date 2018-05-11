@@ -25,17 +25,17 @@
     <transition name="slide">
       <div class="modal" v-if="dialogEvent">
         <div class="modal-header">
-          <h1 class="modal-title">Dodaj nowe wydarzenie</h1>
+          <h1 class="modal-title">{{ $t("header.addNewEvent") }}</h1>
           <button class="modal-exit" @click="performDialog">&#10006;</button>
         </div>
         <div class="modal-email">
-          <label class="modal-label">Podaj nazwę wydarzenia</label>
+          <label class="modal-label">{{ $t("label.eventTitle") }}</label>
           <input class="input modal-input" v-model="eventName" @blur="$v.eventName.touch()">
-          <label class="modal-label">Podaj godzinę wydarzenia</label>
+          <label class="modal-label">{{ $t("label.eventTime") }}</label>
           <input class="modal-input" type="time" v-model="eventTime" @blur="$v.eventTime.touch()">
-          <label class="modal-label">Podaj opis wydarzenia</label>
+          <label class="modal-label">{{ $t("label.eventDescription") }}</label>
           <input class="input modal-input" v-model="eventDescription">
-          <label class="modal-label">Priorytet</label>
+          <label class="modal-label">{{ $t("label.priority") }}</label>
           <select @change="checkPriority" v-model="priority">
             <option>Wysoki</option>
             <option>Średni</option>
@@ -47,7 +47,7 @@
             <option>Impreza integracyjna</option>
           </select>
         </div>
-        <button :disabled="$v.$invalid" class="button modal-button" type="button" @click="addNewEvent"><span class="span-arrow">Dodaj wydarzenie</span></button>
+        <button :disabled="$v.$invalid" class="button modal-button" type="button" @click="addNewEvent"><span class="span-arrow">{{ $t("button.addEvent") }}</span></button>
       </div>
     </transition>
   <!-- End modal for add event -->
@@ -57,6 +57,7 @@
 <script>
 import moment from "moment";
 import { required, minLength, email } from "vuelidate/lib/validators";
+import i18n from "../../lang/lang";
 
 export default {
   data() {
@@ -150,7 +151,6 @@ export default {
       // this.dayClicked(this.selectedDay);
     },
     checkPriority() {
-      console.log(this.priority);
       this.$store.dispatch("setColorPriority", {
         priority: this.priority
       });
