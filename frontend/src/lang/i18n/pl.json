@@ -5,7 +5,9 @@
         "resetPass": "Zresetuj hasło",
         "editData": "Edytuj dane",
         "saveChanges": "Zapisz zmiany",
-        "cancel": "Anuluj"
+        "cancel": "Anuluj",
+        "register": "Zarejestruj",
+        "addEvent": "Dodaj wydarzenie"
     },
     "label": {
         "user": "Użytkownik",
@@ -25,8 +27,13 @@
         "employmentDate": "Data zatrudnienia",
         "workExperience": "Staż pracy",
         "cv": "CV użytkownika",
-        "fulltime": "Pełny"
-
+        "fulltime": "Pełny",
+        "fullName": "Imię i nazwisko",
+        "role": "Rola",
+        "eventTitle": "Nazwa wydarzenia",
+        "eventTime": "Godzina wydarzenia",
+        "eventDescription": "Opis wydarzenia",
+        "priority": "Priorytet"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",
@@ -39,7 +46,10 @@
         "informations": "Informacje",
         "files": "Pliki",
         "contact": "Dane kontaktowe",
-        "employee": "Dane pracownika"
+        "employee": "Dane pracownika",
+        "userRegister": "Rejestracja użytkownika",
+        "accountCreated": "Utworzono Konto!",
+        "addNewEvent": "Dodaj nowe wydarzenie"
     },
     "message": {
         "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",
@@ -47,7 +57,8 @@
         "emailValidation": "Adres email posiada nieprawidłowy format lub nie jest wprowadzony.",
         "phoneValidation": "Numer telefonu posiada nieprawidłowy format",
         "saveChangesError": "Niepowodzenie podczas zapisu danych.",
-        "noChanges": "Nie wprowadzono zmian"
+        "noChanges": "Nie wprowadzono zmian",
+        "newAccountPassword": "Utworzono nowe konto. Na maila wysłano hasło do konta."
     },
     "select": {
         "language": {
