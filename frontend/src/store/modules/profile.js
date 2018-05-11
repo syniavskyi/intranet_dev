@@ -42,6 +42,8 @@ const actions = {
             params.append('currentProject', encodeURI(userData.currentProject))
             params.append('employmentDate', userData.employmentDate)
             params.append('state', encodeURI(userData.state))
+            params.append('branch', encodeURI(userData.branch))
+            params.append('section', encodeURI(userData.section))
             params.append('position', encodeURI(userData.position))
         axios({
             method: 'post',
@@ -50,6 +52,7 @@ const actions = {
             data: params   
         }).then(res => {
             commit('SET_SAVE_CHANGES_STATE', true)
+            commit('SET_SENIORITY', res.data)
             console.log(res)
         }).catch(error => {
             commit('SET_SAVE_CHANGES_STATE', false)

@@ -5,8 +5,7 @@ const state = {
     idToken: null,
     password: '',
     hashedPassword: '',
-    userRole: '',
-    showMenu: true
+    userRole: ''    
 }
 
 const mutations = {
@@ -21,28 +20,11 @@ const mutations = {
     },
     SET_HASHED_PASSWORD (state, password) {
         state.hashedPassword = password
-    },
-    DISPLAY_MENU (state, show) {
-        state.showMenu = show
-    }
-    
+    }    
 }
 
 const actions = {
-    logout({commit}){
-        var token = localStorage.getItem('token')
-        var URL = '/api/logout?access_token=' + token
-        axios.get(URL).then(res => {
-            commit('CLEAR_AUTH_DATA');
-            localStorage.removeItem('expirationDate')
-            localStorage.removeItem('token')
-            commit('DISPLAY_MENU', true);
-            router.replace('/');
-        }).catch(error => {
-            console.log(error)
-        })
-    },
-    generatePassword({commit, state}) {
+        generatePassword({commit, state}) {
         const md5 = require('js-md5')
 
         var nLength = 8,
@@ -56,7 +38,6 @@ const actions = {
         var hash = md5(sRetVal)
         commit('SET_HASHED_PASSWORD', hash)
         commit('SET_PASSWORD', sRetVal)
-
     }
 }
 
@@ -66,11 +47,7 @@ const getters = {
     },
     hashedPassword(state) {
         return state.hashedPassword;
-    },
-    showMenu(state){
-        return state.showMenu
     }
-
 }
 
 export default {

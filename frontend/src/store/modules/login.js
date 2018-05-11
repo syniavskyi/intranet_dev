@@ -4,6 +4,7 @@ import router from '@/router/index.js'
 const state = {
   loginError: false,
   sendEmailSuccess: false,
+  sendEmailError: false,
   username: null,
   userId: null,
   userData: {}
@@ -19,6 +20,9 @@ const mutations = {
   SET_EMAIL_SUCCESS(state, isSuccess) {
     state.sendEmailSuccess = isSuccess
   },
+  SET_EMAIL_ERROR(state, isError) {
+    state.sendEmailError = isError
+  },
   SET_USERNAME(state, username) {
     state.username = username
   },
@@ -33,7 +37,10 @@ const mutations = {
   },
   SET_CV(state, cvUrl){
     state.userData.cv = cvUrl
-  }
+  },
+  SET_SENIORITY (state, seniority) {
+    state.userData.seniority = seniority
+}
  
 }
 
@@ -163,14 +170,6 @@ const actions = {
       console.log(error)
     })
   },
-  logout(){
-      localStorage.removeItem('expirationDate')
-      localStorage.removeItem('username')
-      localStorage.removeItem('role')
-  		localStorage.removeItem('id')
-  		localStorage.removeItem('token')
-  		router.replace('/')
-  },
   sendEmailWithPass({
     commit,
     dispatch,
@@ -192,6 +191,7 @@ const actions = {
     }).then(res => {
       commit('SET_EMAIL_SUCCESS', true)
     }).catch(error => {
+      commit('SET_EMAIL_ERROR', true)
       console.log(error)
     })
   },
@@ -208,6 +208,9 @@ const getters = {
   },
   isSendEmailSuccess(state) {
     return state.sendEmailSuccess
+  },
+  isSendEmailError(state) {
+    return state.sendEmailError
   },
   userData(state) {
     return state.userData
