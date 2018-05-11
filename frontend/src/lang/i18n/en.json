@@ -6,7 +6,7 @@
         "editData": "Edit data",
         "saveChanges": "Save changes",
         "cancel": "Cancel",
-        "changePhoto": "Change photo"
+        "changePhoto": "Change photo",
         "register": "Register",
         "addEvent": "Add Event"
 
@@ -60,7 +60,7 @@
         "phoneValidation": "Phone number has incorrect format.",
         "saveChangesError": "The changes weren't saved.",
         "noChanges": "No changes were made",
-        "dateValidation": "Date has incorrect format."
+        "dateValidation": "Date has incorrect format.",
         "newAccountPassword": "A new account has been created. An account password was sent to the mail"
 
     },

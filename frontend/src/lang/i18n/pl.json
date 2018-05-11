@@ -6,7 +6,7 @@
         "editData": "Edytuj dane",
         "saveChanges": "Zapisz zmiany",
         "cancel": "Anuluj",
-        "changePhoto": "Zmień zdjęcie"
+        "changePhoto": "Zmień zdjęcie",
         "register": "Zarejestruj",
         "addEvent": "Dodaj wydarzenie"
      },
@@ -60,7 +60,7 @@
         "phoneValidation": "Numer telefonu posiada nieprawidłowy format",
         "saveChangesError": "Niepowodzenie podczas zapisu danych.",
         "noChanges": "Nie wprowadzono zmian",
-        "dateValidation": "Wprowadzona data posiada nieprawidłowy forma
+        "dateValidation": "Wprowadzona data posiada nieprawidłowy forma",
         "newAccountPassword": "Utworzono nowe konto. Na maila wysłano hasło do konta."
     },
     "select": {
