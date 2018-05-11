@@ -61,7 +61,7 @@
                             <div class="profile-user-img">
                                 <!--                                        <div class="overlay">-->
                                 <img class="img-user-class" :src="userData.image" width="100px">
-                                <label for="change-user-image" class="change-user-img profile-header-button">Zmień zdjęcie</label>
+                                <label for="change-user-image" class="change-user-img profile-header-button">{{ $t("button.changePhoto") }}</label>
                                 <input type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
                                 <!--                                        </div>-->
                             </div>
@@ -196,7 +196,7 @@ export default {
             showNoChangesAlert: false,
             invalidPhone: false,
             invalidDate: false,
-            disableSaveBtn: false
+            disableSaveBtn: true
         }
     },
     validations: {

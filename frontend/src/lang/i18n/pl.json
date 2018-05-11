@@ -5,7 +5,8 @@
         "resetPass": "Zresetuj hasło",
         "editData": "Edytuj dane",
         "saveChanges": "Zapisz zmiany",
-        "cancel": "Anuluj"
+        "cancel": "Anuluj",
+        "changePhoto": "Zmień zdjęcie"
     },
     "label": {
         "user": "Użytkownik",

@@ -42,6 +42,8 @@ const actions = {
             params.append('currentProject', encodeURI(userData.currentProject))
             params.append('employmentDate', userData.employmentDate)
             params.append('state', encodeURI(userData.state))
+            params.append('branch', encodeURI(userData.branch))
+            params.append('section', encodeURI(userData.section))
             params.append('position', encodeURI(userData.position))
         axios({
             method: 'post',

@@ -5,7 +5,8 @@
         "resetPass": "Reset password",
         "editData": "Edit data",
         "saveChanges": "Save changes",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "changePhoto": "Change photo"
     },
     "label": {
         "user": "User",
