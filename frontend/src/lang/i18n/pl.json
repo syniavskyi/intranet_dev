@@ -47,7 +47,8 @@
         "emailValidation": "Adres email posiada nieprawidłowy format lub nie jest wprowadzony.",
         "phoneValidation": "Numer telefonu posiada nieprawidłowy format",
         "saveChangesError": "Niepowodzenie podczas zapisu danych.",
-        "noChanges": "Nie wprowadzono zmian"
+        "noChanges": "Nie wprowadzono zmian",
+        "dateValidation": "Wprowadzona data posiada nieprawidłowy format"
     },
     "select": {
         "language": {

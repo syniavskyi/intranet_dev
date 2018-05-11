@@ -10,7 +10,7 @@
                             </div>
                             <button class="profile-header-button" v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
                             <div v-if="editMode" class="header-button-save-reject" >
-                                <button class="border-btn save-btn"  @click="onSaveChanges" :disabled="$v.$invalid">{{ $t("button.saveChanges") }}</button>
+                                <button class="border-btn save-btn"  @click="onSaveChanges" :disabled="disableSaveBtn">{{ $t("button.saveChanges") }}</button>
                                 <button class="border-btn reject-btn"  @click="onCancelEdit">{{ $t("button.cancel") }}</button>
                             </div>
                         </div>
@@ -112,6 +112,9 @@
                                         <div>   <!-- container for single label + input/p -->           
                                             <label class="label-profile">{{ $t("label.employmentDate") }}</label>
                                             <masked-input mask="11.11.1111" @input="dateValidation" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"   v-model="userData.employmentDate"/>
+                                            <div class="error-wrapper">
+                                                <p class="profile-error profile-error-email" v-if="invalidDate">{{ $t("message.dateValidation") }}</p>
+                                            </div>
                                         </div> 
                                         <div>   <!-- container for single label + input/p -->           
                                             <label class="label-profile">{{ $t("label.workExperience") }}</label>
@@ -179,7 +182,8 @@ export default {
       hasDataChanged: false,
       showNoChangesAlert: false,
       invalidPhone: false,
-      invalidDate: false
+      invalidDate: false,
+      disableSaveBtn: false
   }
   },
   validations: {
@@ -258,11 +262,26 @@ export default {
       const regex = new RegExp("^(?=.*[0-9])[- +()0-9]+$")
       if (regex.test(value.target.value)) {
         this.invalidPhone = false
+        this.disableSaveBtn = true
       } else {
         this.invalidPhone = true
       }
     }, 
     dateValidation(value){
+        const day = parseInt(value.slice(0,2)),
+              month = parseInt(value.slice(3, 5)),
+              year = parseInt(value.slice(6,10)),
+              currYear = (new Date()).getFullYear()
+        
+        if (day > 31 || month >12 || year>currYear) {
+           this.invalidDate = true
+           this.disableSaveBtn = true
+           this.checkFormFields
+        } else {
+            this.invalidDate = false
+        }
+    },
+    checkFormFields() {
 
     }
   }
