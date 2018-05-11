@@ -8,7 +8,7 @@
                         <nav class="nav">
                             <ul class="nav-list">
                                 <li>
-                                    <router-link class="nav-item" to="/profile">
+                                    <router-link class="nav-router-link" to="/profile">
                                     <button class="nav-item">
                                         <img class="nav-item-img" src="../assets/images/nav/if_profile-32_wh.png">
                                         <p>{{ $t("header.profile") }}</p>
@@ -16,7 +16,7 @@
                                     </router-link>
                                 </li>
                                 <li>
-                                    <router-link class="nav-item" to="/dashboard">
+                                    <router-link class="nav-router-link" to="/dashboard">
                                     <button class="nav-item">
                                         <img class="nav-item-img" src="../assets/images/nav/if_home_32_wh.png">
                                         <p>{{ $t("header.home") }}</p>
@@ -24,7 +24,7 @@
                                     </router-link>
                                 </li>
                                 <li>
-                                    <router-link class="nav-item" to="/news">
+                                    <router-link class="nav-router-link" to="/news">
                                     <button class="nav-item">
                                         <img class="nav-item-img" src="../assets/images/nav/if_docu_32_wh.png">
                                         <p>{{ $t("header.news") }}</p>
@@ -32,7 +32,7 @@
                                     </router-link>
                                 </li>
                                 <li>
-                                    <router-link class="nav-item " to="/calendar">
+                                    <router-link class="nav-router-link" to="/calendar">
                                     <button class="nav-item">
                                         <img class="nav-item-img" src="../assets/images/nav/if_calendar_32 (2).png">
                                         <p>{{ $t("header.calendar") }}</p>
@@ -40,7 +40,7 @@
                                     </router-link>
                                 </li>
                                 <li>
-                                    <router-link class="nav-item"  to="/employees">
+                                    <router-link class="nav-router-link"  to="/employees">
                                     <button class="nav-item">
                                         <img class="nav-item-img" src="../assets/images/nav/if_docu_32_wh.png">
                                         <p>{{ $t("header.employees") }}</p>
@@ -48,7 +48,7 @@
                                     </router-link>
                                 </li>
                                 <li>
-                                    <router-link class="nav-item" to="/informations">
+                                    <router-link class="nav-router-link" to="/informations">
                                     <button class="nav-item">
                                         <img class="nav-item-img" src="../assets/images/nav/if_docu_32_wh.png">
                                         <p>{{ $t("header.informations") }}</p>
@@ -56,7 +56,7 @@
                                     </router-link>
                                 </li>
                                 <li>
-                                    <router-link class="nav-item" to="/files">
+                                    <router-link class="nav-router-link" to="/files">
                                     <button class="nav-item">
                                         <img class="nav-item-img" src="../assets/images/nav/if-files_32_wh.png">
                                         <p>{{ $t("header.files") }}</p>
