@@ -7,9 +7,14 @@
       <h3>{{ selectedDay.date.toDateString() }}</h3>
       <button @click="performDialog">+</button>
       <ul>
-        <li v-for='attr in selectedDay.attributes'>
+        <li v-for='attr in selectedDay.attributes' :key='attr.customData.eventName'>
+        <!-- <li v-for="attr in todos"> -->
           <!-- :key='attr.key' -->
           {{ attr.customData.eventName }}, {{ attr.customData.time }}: {{ attr.customData.description }}
+          <!-- <slot v-bind:attr="attr">
+            {{ attr.customData.eventName }}, {{ attr.customData.time }}: {{ attr.customData.description }}
+          </slot> -->
+          <!-- {{ attr.eventName }}, {{ attr.time }}: {{ attr.description }} -->
         </li>
        </ul>
     </div>
@@ -25,13 +30,13 @@
         </div>
         <div class="modal-email">
           <label class="modal-label">Podaj nazwę wydarzenia</label>
-          <input class="input modal-input" v-model="eventName">
+          <input class="input modal-input" v-model="eventName" @blur="$v.eventName.touch()">
           <label class="modal-label">Podaj godzinę wydarzenia</label>
-          <input class="modal-input" type="time" v-model="eventTime">
+          <input class="modal-input" type="time" v-model="eventTime" @blur="$v.eventTime.touch()">
           <label class="modal-label">Podaj opis wydarzenia</label>
-          <input class="modal-input" v-model="eventDescription">
+          <input class="input modal-input" v-model="eventDescription">
           <label class="modal-label">Priorytet</label>
-          <select>
+          <select @change="checkPriority" v-model="priority">
             <option>Wysoki</option>
             <option>Średni</option>
             <option>Niski</option>
@@ -42,7 +47,7 @@
             <option>Impreza integracyjna</option>
           </select>
         </div>
-        <button class="button modal-button" type="button" @click="addNewEvent"><span class="span-arrow">Dodaj wydarzenie</span></button>
+        <button :disabled="$v.$invalid" class="button modal-button" type="button" @click="addNewEvent"><span class="span-arrow">Dodaj wydarzenie</span></button>
       </div>
     </transition>
   <!-- End modal for add event -->
@@ -51,6 +56,7 @@
 
 <script>
 import moment from "moment";
+import { required, minLength, email } from "vuelidate/lib/validators";
 
 export default {
   data() {
@@ -60,25 +66,29 @@ export default {
       dialogEvent: false,
       todos: [
         {
-          time: '14:30',
-          id: 2,
-          description: "Clean the house.",
-          date: new Date(2018, 4, 15),
+          id: 1,
+          description: 'Clean the house.',
+          // date: new Date(2018, 4, 15),
+          dates: {
+            start: new Date('1/1/2018'),
+            monthlyInterval: 2,           // Every other month
+            ordinalWeekdays: { [-1]: 6 }  // ...on the last Friday
+          },
           isCompleted: false,
-          color: "red"
+          color: 'red'
         },
         {
-          time: '13:30',
-          id: 1,
-          description: "Meeting.",
+          id: 2,
+          description: 'Meeting.',
           date: new Date(2018, 4, 15),
           isCompleted: false,
-          color: "green"
+          color: 'pink'
         }
-      ].sort(),
+      ],
       eventDescription: '',
       eventTime: null,
-      eventName: ''
+      eventName: '',
+      priority: ''
       // attributes: [
       //   {
       //     highlight({ onStart }) {
@@ -91,6 +101,14 @@ export default {
       //   }
       // ]
     };
+  },
+  validations: {
+    eventName: {
+      required
+    },
+    eventTime: {
+      required
+    }
   },
   computed: {
     attributes() {
@@ -107,6 +125,9 @@ export default {
           label: t.description
         }
       }));
+    },
+    eventColor() {
+      return this.$store.getters.priorityColor;
     }
   },
   methods: {
@@ -120,12 +141,19 @@ export default {
       var oEvent = {
         description: this.eventDescription,
         date: new Date(this.selectedValue.getFullYear(), this.selectedValue.getMonth(), this.selectedValue.getDate()),
-        color: 'pink',
+        color: this.eventColor,
         time: this.eventTime,
         eventName: this.eventName
       };
       this.todos.push(oEvent);
       this.performDialog();
+      // this.dayClicked(this.selectedDay);
+    },
+    checkPriority() {
+      console.log(this.priority);
+      this.$store.dispatch("setColorPriority", {
+        priority: this.priority
+      });
     }
   }
 };
