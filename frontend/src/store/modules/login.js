@@ -164,7 +164,12 @@ const actions = {
     })
   },
   logout(){
-
+      localStorage.removeItem('expirationDate')
+      localStorage.removeItem('username')
+      localStorage.removeItem('role')
+  		localStorage.removeItem('id')
+  		localStorage.removeItem('token')
+  		router.replace('/')
   },
   sendEmailWithPass({
     commit,

@@ -111,7 +111,7 @@
                                         </div> 
                                         <div>   <!-- container for single label + input/p -->           
                                             <label class="label-profile">{{ $t("label.employmentDate") }}</label>
-                                            <masked-input mask="11.11.1111" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"   v-model="userData.employmentDate"/>
+                                            <masked-input mask="11.11.1111" @input="dateValidation" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode"   v-model="userData.employmentDate"/>
                                         </div> 
                                         <div>   <!-- container for single label + input/p -->           
                                             <label class="label-profile">{{ $t("label.workExperience") }}</label>
@@ -261,6 +261,9 @@ export default {
       } else {
         this.invalidPhone = true
       }
+    }, 
+    dateValidation(value){
+
     }
   }
 }

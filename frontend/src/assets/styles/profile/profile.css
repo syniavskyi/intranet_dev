@@ -507,6 +507,9 @@ body {
         height: 7%;
         min-height: 3rem;
     }
+    .profile-header-menu {
+        display: none;
+    }
     .profile-tile-inputs-section {
         width: 70%;    
     }
@@ -569,9 +572,7 @@ body {
     .plane-nav {
         min-height: 47rem;
     }
-    .profile-header-menu {
-        display: none;
-    }
+
     .profile-tile:nth-child(1) {
         height: 45%;
         min-height: 18rem;
