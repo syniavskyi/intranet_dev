@@ -1,6 +1,5 @@
 <template>
-  <div>
-        <div class="plane-dashboard-parent">
+       <div class="plane-dashboard-parent">
             <div class="plane-dashboard">
                 <div class="plane-dashboard-nav-and-content">
                     <div class="dashboard-content">
@@ -52,8 +51,6 @@
                 </div>
             </div>
         </div>
-      
-  </div>
 </template>
 
 
