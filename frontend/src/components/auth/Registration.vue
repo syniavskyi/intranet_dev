@@ -6,23 +6,23 @@
     <transition name="slide" v-if="closeSuccessDialog">
       <div class="modal" v-if="closeSuccessDialog">
         <div class="modal-header">
-          <h1 class="modal-title">Utworzono Konto!</h1>
+          <h1 class="modal-title">{{ $t("header.accountCreated") }}</h1>
           <button class="modal-exit" @click="closeDialog">&#10006;</button>
         </div>
         <div class="modal-text">
-          <p>Utworzono nowe konto. Na maila wysłano hasło do konta.</p>
+          <p>{{ $t("message.newAccountPassword") }}</p>
         </div>
       </div>
     </transition>
     <div class="plane plane-registration">
       <div class="plane-left">
         <img class="img-user" src="../../assets/images/grouper-256.png">
-        <p class="p-registration">Rejestracja użytkownika</p>
+        <p class="p-registration">{{ $t("header.userRegister") }}</p>
       </div>
       <div class="registration-credentials">
-        <label for="fullName" class="label">Imię i nazwisko</label>
+        <label for="fullName" class="label">{{ $t("label.fullName") }}</label>
         <input type="text" name="fullName" @input="getFullNameToEmail()" v-model="fullName" @change="checkEmail()" class="input input-registration" @blur="$v.fullName.$touch()">
-        <label for="email" class="label">E-mail</label>
+        <label for="email" class="label">{{ $t("label.email") }}</label>
         <div class="input-with-checkbox">
           <input :disabled="isEmail" @blur="$v.fullNameToEmail.$touch()" :value="fullNameToEmail" @change="checkEmail($event.target.value)" class="input input-registration input-highlight">
           <input class="checkbox" :checked="isEmail" type="checkbox" disabled>
@@ -33,18 +33,18 @@
                     <button class="gen-pass" @click="generatePassword">Generuj hasło</button>
                 </div> -->
         <div class="div-select">
-          <label class="label" for="role">Rola</label>
+          <label class="label" for="role">{{ $t("label.role") }}</label>
           <select class="select">
             <option v-for="role in getRoleList" :value="roleChosen = role">{{ role }}</option>
           </select>
         </div>
         <div class="div-select">
-          <label class="label" for="role">Oddział</label>
+          <label class="label" for="role">{{ $t("label.department") }}</label>
           <select class="select">
             <option v-for="department in getDepartmentList" :value="depId = department.depId">{{ department.depName }}</option>
           </select>
-        </div> 
-        <button class="button" :disabled="$v.$invalid" @click="submit"><span class="span-arrow">Zarejestruj</span></button>
+        </div>
+        <button class="button" :disabled="$v.$invalid" @click="submit"><span class="span-arrow">{{ $t("button.register") }}</span></button>
       </div>
     </div>
   </div>
@@ -53,6 +53,7 @@
 <script>
 import axios from "axios";
 import { required, minLength, email } from "vuelidate/lib/validators";
+import i18n from '../../lang/lang'
 
 export default {
   data() {

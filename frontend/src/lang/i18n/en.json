@@ -5,7 +5,9 @@
         "resetPass": "Reset password",
         "editData": "Edit data",
         "saveChanges": "Save changes",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "register": "Register",
+        "addEvent": "Add Event"
     },
     "label": {
         "user": "User",
@@ -25,7 +27,12 @@
         "employmentDate": "Employment date",
         "workExperience": "Work experience",
         "cv": "User's CV",
-        "fulltime": "Fulltime"
+        "fulltime": "Fulltime",
+        "role": "Role",
+        "eventTitle": "Event title",
+        "eventTime": "Event time",
+        "eventDescription": "Event description",
+        "priority": "Priority"
     },
     "header": {
         "login": "Log in to Intranet",
@@ -38,7 +45,10 @@
         "informations": "Informations",
         "files": "Files",
         "contact": "Contact details",
-        "employee": "Personal details"
+        "employee": "Personal details",
+        "userRegister": "User register",
+        "accountCreated": "Account Created!",
+        "addNewEvent": "Add new event"
     },
     "message": {
         "loginError": "Password or username are invalid.",
@@ -46,7 +56,8 @@
         "emailValidation": "Email address is empty or is in incorrect format.",
         "phoneValidation": "Phone number has incorrect format.",
         "saveChangesError": "The changes weren't saved.",
-        "noChanges": "No changes were made"
+        "noChanges": "No changes were made",
+        "newAccountPassword": "A new account has been created. An account password was sent to the mail"
     },
     "select": {
         "language": {
