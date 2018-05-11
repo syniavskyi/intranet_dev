@@ -1,6 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,500,600,700');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
 
+/* * {
+    background: #000 !important;
+    color: #0f0 !important;
+    outline: solid #f00 1px !important;
+} */
+
+html {
+    height: 100%;
+    width: 100vw;
+}
 body {
     height: 100vh;
     width: 100vw;
@@ -15,7 +25,7 @@ body {
     margin:0;
     padding: 0;
     width: 100%;
-/*    height: 100%;*/
+   /* height: 100%; */
 }
 
 .profile-nav-and-content {
@@ -33,6 +43,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    flex-shrink: 1;
 }
 
 .profile-header {
@@ -94,39 +105,6 @@ body {
     align-self: center;
 }
 
-.overlay {
-    position: absolute;
-    display:flex;
-    flex-direction: column;
-    bottom: 0;
-    left: 0;
-    width: 8rem;
-    height: 7rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(204, 204, 204, 0.8);
-    transition: opacity 0.5s ease;
-    opacity: 0;
-    border: 2px solid transparent;
-}
-
-.overlay p {
-    display: flex;
-    margin:0;
-    padding:0;
-    display: flex;
-    width: 8rem;
-    font-size: 1.1rem;
-    align-items: center;
-    justify-content: center;
-}
-
-.overlay img {
-    margin: 0;
-    padding: 0;
-}
-
 .profile-tiles {
     margin:0;
     padding:0;
@@ -135,11 +113,7 @@ body {
     width: 100%;
     height: 88%;
 }
-.profile-tile-1 {
-    flex-direction: column-reverse;
-    display: flex;
-    order: 4;
-}
+
 .profile-tile {
     display:flex;
     flex-direction: column;
@@ -174,14 +148,13 @@ body {
 
 .profile-tile-content {
     width: 99%;
-    height: 80%;
+    height: 90%;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-/*    flex-grow: 1;*/
+    flex-grow: 1;
     min-height: 13rem;
-/*  align-items: center;*/
 }
 
 .tile-underscore {
@@ -195,6 +168,7 @@ body {
     flex-direction: column;
     justify-content: center;
     height: 100%;
+    flex-grow:1;
 }
 
 .profile-tile-inputs {
@@ -216,6 +190,14 @@ body {
     flex-direction: column;
     margin-bottom: 1rem;
     position: relative;
+}
+
+.profile-tile-inputs:first-child {
+    height: 58%;
+}
+
+.profile-tile-inputs:last-child {
+    height: 42%;
 }
 
 /*
@@ -272,7 +254,7 @@ body {
     align-items: center;
 /*    justify-content: space-around;*/
     flex-direction: column;
-    margin-right: 1rem;
+    margin-right: .5rem;
 }
 
 .profile-user-header {
@@ -303,7 +285,8 @@ body {
 }
 .cv-title {
     padding:0;
-    margin: .5rem;
+    margin:0;
+    margin-bottom: .5rem;
     font-size: 1.3rem;
     color: grey;
 }
@@ -354,8 +337,7 @@ body {
 #change-user-image{
     opacity:0;
     position: absolute;
-    z-index: -1;
-    width: 1rem;
+    /* z-index: -1; */
 }
 
  .docx,
@@ -544,7 +526,7 @@ body {
         width: 35%;
     }
     .side-content {
-        height: 32.5rem;
+        height: 30.5rem;
         flex-direction: column;
         width: 35%;
     }
@@ -552,6 +534,7 @@ body {
         flex-direction: column;
         justify-content: space-around;
         flex-grow: 1;
+        margin-bottom: 1rem;
     }
     .cv-buttons:last-child {margin-bottom: 1rem;}
     .lang-circle {
@@ -620,7 +603,11 @@ body {
         flex-direction: column;
         align-items: flex-end;
     }
+    .profile-tile-inputs:first-child {
+        height: 97%;
+    }
     .profile-tile-inputs:last-child {
+        height: 97%;
         margin-top: .5rem;
     }
     .profile-error {
