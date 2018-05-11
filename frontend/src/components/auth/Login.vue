@@ -26,7 +26,7 @@
                     <p class="p-login">{{ $t("header.login") }}</p>
                 </div>
                 <div class="login-credentials">
-                    <input type="email" class="input input-login-email" v-model="username" @blur="$v.username.$touch()">
+                    <input class="input input-login-email" v-model="username" @blur="$v.username.$touch()">
                     <label class="label label-login-email"> {{ $t("label.user") }}</label>
                     <div class="login-pass-div">
                         <input :type="passwordFieldType" @keyup.enter="onSubmit" class="input input-login-pass" v-model="password" @blur="$v.password.$touch()">
