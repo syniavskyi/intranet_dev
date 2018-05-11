@@ -301,8 +301,7 @@ li:hover p {
     outline: none;
 }
 
-<<<<<<< HEAD
-=======
+
 .slide-enter-active {
     animation: slide-in 400ms ease-out forwards;
   }
@@ -332,7 +331,6 @@ li:hover p {
       opacity: 0;
     }
   }
->>>>>>> 481f5f48d0d99bb0e21f0463aa86a50443de8fcc
 
 /* media for dashboard, nav and others */
 
