@@ -50,6 +50,7 @@ const actions = {
             data: params   
         }).then(res => {
             commit('SET_SAVE_CHANGES_STATE', true)
+            commit('SET_SENIORITY', res.data)
             console.log(res)
         }).catch(error => {
             commit('SET_SAVE_CHANGES_STATE', false)

@@ -15,6 +15,9 @@
                 <transition name="fade-alert">
                     <p class="success-alert" v-if="sendEmailSuccess">{{ $t("message.sendEmailSuccess") }}</p>
                 </transition>
+                <transition name="fade-alert">
+                    <p class="success-alert" v-if="sendEmailError">{{ $t("message.sendEmailError") }}</p>
+                </transition>
                 <!-- <p class="p-modal-txt">na który otrzymasz link resetujący.</p> -->
             </div>
             <button class="button modal-button" :disabled="$v.email.$invalid" type="button" @click="onResetPassword"><span class="span-arrow">{{ $t("button.resetPass") }}</span></button>
@@ -114,6 +117,7 @@
             ...mapGetters({
                 loginError: 'isLoginError',
                 sendEmailSuccess: 'isSendEmailSuccess',
+                sendEmailError: 'isSendEmailError',
                 newPAssword: 'password',
                 languageList: 'languageList'
             })
