@@ -2,8 +2,6 @@ import axios from 'axios'
 import router from '@/router/index.js'
 
 const state = {
-    userRoles: [],
-    departmentList: [],
     emails: [],
     email: '',
     mail: '',
@@ -12,12 +10,6 @@ const state = {
 };
 
 const mutations = {
-    GET_ROLE_LIST(state, data) {
-        state.userRoles = data;
-    },
-    GET_DEP_LIST(state, data) {
-        state.departmentList = data;
-    },
     ADD_EMAILS(state, data) {
         state.emails = data;
     },
@@ -36,45 +28,7 @@ const mutations = {
 };
 
 const actions = {
-    getRoleList({commit}) {
-        axios.get("/api/rolesList").then(res => {
-            const data = res.data,
-                  aData = [];
-
-            for(let key in data) {
-                const role = data[key];
-
-                data[key].roleName = data[key].roleName.slice(data[key].roleName.indexOf("_") + 1, data[key].roleName.length);
-
-                let upper = data[key].roleName.substring(0, 1),
-                    toLower = data[key].roleName.slice(1, data[key].roleName.length).toLowerCase();
-
-                data[key].roleName = upper + toLower;
-                // role.roleName = data[key].roleName;
-                aData.push(role.roleName);
-            }
-            commit('GET_ROLE_LIST', aData);
-        });
-    },
-    getDepartmentList({commit}) {
-        axios.get("/api/depsList").then(res => {
-            const data = res.data,
-                  aData = [];
-
-            for(let key in data) {
-                const dep = data[key];
-
-                //for now
-                if(data[key].depName.includes('Dabrowa')) {
-                    data[key].depName = 'Dąbrowa Górnicza';
-                } else if (data[key].depName.includes('Wroclaw')) {
-                    data[key].depName = 'Wrocław';
-                }
-                aData.push(dep);
-            }
-            commit('GET_DEP_LIST', aData);
-        });
-    },
+    
     checkEmail({commit, state, dispatch}, props) {
         axios.get('/api/emailList').then(res => {
             const data = res.data,
@@ -133,12 +87,7 @@ const actions = {
 };
 
 const getters = {
-    roleList(state) {
-        return state.userRoles;
-    },
-    depList(state) {
-        return state.departmentList;
-    },
+
     emails(state) {
         return state.emails;
     },

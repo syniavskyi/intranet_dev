@@ -53,9 +53,6 @@ import i18n from '../../lang/lang'
         userInfo: {}
       }
     },
-    beforeCreate() {
-      this.$store.dispatch("getUserInfo");
-    },
     computed: {
       getUserList() {
         return this.$store.getters.usersList;

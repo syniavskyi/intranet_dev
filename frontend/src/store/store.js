@@ -9,6 +9,7 @@ import employees from './modules/employees'
 import calendar from './modules/calendar'
 import menu from './modules/menu'
 import availability from './modules/availability'
+import dataloading from './modules/dataloading'
 
 import settings from './modules/settings'
 
@@ -26,6 +27,7 @@ export default new Vuex.Store({
         calendar,
         menu,
         availability,
+        dataloading,
         settings
     }
 });
