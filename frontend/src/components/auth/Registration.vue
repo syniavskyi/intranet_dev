@@ -83,9 +83,10 @@ export default {
     // }
   },
   beforeCreate() {
-    this.$store.dispatch("getRoleList");
-    this.$store.dispatch("getDepartmentList");
     this.$store.commit('DISPLAY_MENU', false);
+    if (this.$store.getters.idDataLoaded === false) {
+            this.$store.dispatch('loadData', localStorage.getItem('token'))
+    }
   },
   methods: {
     checkEmail(value) {

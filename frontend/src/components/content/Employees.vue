@@ -53,6 +53,11 @@ import i18n from '../../lang/lang'
         userInfo: {}
       }
     },
+    beforeCreate() {
+      if (this.$store.getters.idDataLoaded === false) {
+            this.$store.dispatch('loadData', localStorage.getItem('token'))
+      }
+    },
     computed: {
       getUserList() {
         return this.$store.getters.usersList;

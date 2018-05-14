@@ -6,7 +6,8 @@ const state = {
     userList: [],
     username: null,
     userId: null,
-    userData: {}
+    userData: {},
+    isLoaded: false
 };
 
 const mutations = {
@@ -28,9 +29,19 @@ const mutations = {
       SET_USER_DATA(state, data) {
         state.userData = data;
       },
+      SET_DATA_LOADED(state, isLoaded) {
+        state.isLoaded = isLoaded;
+      },
 };
 
 const actions = {
+    loadData({commit, dispatch}, token) {
+        dispatch('getRoleList')
+        dispatch('getDepartmentList')
+        dispatch('getUsersData')
+        dispatch('getUserData', token)
+        commit('SET_DATA_LOADED', true)
+      },
     getRoleList({commit}) {
         axios.get("/api/rolesList").then(res => {
             const data = res.data,
@@ -160,6 +171,9 @@ const getters = {
     },
     userData(state) {
       return state.userData
+    },
+    idDataLoaded(state){
+        return state.isLoaded
     }
 };
 

@@ -61,6 +61,10 @@ export default {
         if (localStorage.getItem('role') === 'leader') {
             this.showBranchSelect = false
         }
+        if (this.$store.getters.idDataLoaded === false) {
+            this.$store.dispatch('loadData', localStorage.getItem('token'))
+        }
+
     },
     created() {
 

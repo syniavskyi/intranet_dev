@@ -230,9 +230,8 @@ export default {
         MaskedInput
     },
     beforeCreate() {
-        if (this.userData === undefined) {
-            const token = localStorage.getItem('token')
-            this.$store.dispatch('getUsername', token)
+      if (this.$store.getters.idDataLoaded === false) {
+            this.$store.dispatch('loadData', localStorage.getItem('token'))
         }
     },
     computed: {
