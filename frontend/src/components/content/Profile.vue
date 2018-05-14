@@ -62,7 +62,7 @@
                                 <!--                                        <div class="overlay">-->
                                 <img class="img-user-class" :src="userData.image" width="100px">
                                 <label for="change-user-image" class="change-user-img profile-header-button">{{ $t("button.changePhoto") }}</label>
-                                <input type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
+                                <input type="file" accept="image/*" ref="photo" @change="handlePhotoUpload" id="change-user-image">
                                 <!--                                        </div>-->
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                                 <div>
                                     <!-- container for single label + input/p -->
                                     <label class="label-profile">{{ $t("label.workExperience") }}</label>
-                                    <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.seniority">
+                                    <input class="inputDisabled inputProfile" :disabld="true" v-model="userData.seniority">
                                 </div>
                             </div>
                         </div>
@@ -139,13 +139,13 @@
                                             </a>
                                     <div class="add-download">
                                         <label class="add" for="add-docx-pl">+</label>
-                                        <input id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload">
+                                        <input accept=".doc,.docx" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload">
                                         <div class="docx">.docx</div>
                                         <a :href="userData.cv" class="download doc-dowload-pl">&#x21e3;</a>
                                     </div>
                                     <div class="add-download">
                                         <label for="add-pdf-pl" class="add pdf-add-pl">+</label>
-                                        <input id="add-pdf-pl" type="file">
+                                        <input  accept=".pdf" id="add-pdf-pl" type="file">
                                         <div class="pdf">.pdf</div>
                                         <a class="download pdf-add-pl">&#x21e3;</a>
                                     </div>
@@ -155,13 +155,13 @@
                                                 <span class="button-circle lang-circle">EN</span></a>
                                     <div class="add-download">
                                         <label class="add" for="add-docx-en">+</label>
-                                        <input id="add-docx-en" type="file">
+                                        <input accept=".doc,.docx" id="add-docx-en" type="file">
                                         <div class="docx">.docx</div>
                                         <a href class="download">&#x21e3;</a>
                                     </div>
                                     <div class="add-download">
                                         <label class="add" for="add-pdf-en">+</label>
-                                        <input id="add-pdf-en" type=file>
+                                        <input accept=".pdf" id="add-pdf-en" type=file>
                                         <div class="pdf">.pdf</div>
                                         <a class="download">&#x21e3;</a>
                                     </div>
@@ -334,4 +334,5 @@ export default {
 .inputDisabled {
     text-align: center;
 }
+
 </style>
