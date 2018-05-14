@@ -44,7 +44,10 @@
             <option v-for="department in getDepartmentList" :value="depId = department.depId">{{ department.depName }}</option>
           </select>
         </div>
-        <button class="button" :disabled="$v.$invalid" @click="submit"><span class="span-arrow">{{ $t("button.register") }}</span></button>
+        <button class="button" :disabled="$v.$invalid" @click="submit">
+          <span class="loading-icon"><img  src="../../assets/images/loading-white.png" v-show="isLoading"></span>
+          <span class="span-arrow" v-show="!isLoading">{{ $t("button.register") }}</span>
+        </button>
       </div>
     </div>
   </div>
@@ -65,7 +68,8 @@ export default {
       roleChosen: "",
       department: [],
       depId: "",
-      closeSuccessDialog: false
+      closeSuccessDialog: false,
+      isLoading: false
     };
   },
   validations: {
@@ -106,6 +110,8 @@ export default {
     //   this.$store.dispatch("generatePassword");
     // },
     submit() {
+      this.isLoading = true;
+      this.$store.dispatch("generatePassword");
       this.$store.dispatch("submitRegistration", {
         name: this.fullName,
         email: this.mail,
@@ -114,7 +120,7 @@ export default {
         role: this.roleChosen,
         openDialog: this.closeSuccessDialog
       });
-      this.$store.dispatch("generatePassword");
+      this.isLoading = false;
     },
     closeDialog() {
       this.closeSuccessDialog = !this.closeSuccessDialog;
