@@ -34,7 +34,8 @@
         "eventTitle": "Event title",
         "eventTime": "Event time",
         "eventDescription": "Event description",
-        "priority": "Priority"
+        "priority": "Priority",
+        "employee": "Employee"
     },
     "header": {
         "login": "Log in to Intranet",
@@ -50,7 +51,8 @@
         "employee": "Personal details",
         "userRegister": "User register",
         "accountCreated": "Account Created!",
-        "addNewEvent": "Add new event"
+        "addNewEvent": "Add new event",
+        "availability": "Availability"
     },
     "message": {
         "loginError": "Password or username are invalid.",

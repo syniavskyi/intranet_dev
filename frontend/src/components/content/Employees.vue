@@ -54,7 +54,9 @@ import i18n from '../../lang/lang'
       }
     },
     beforeCreate() {
-      this.$store.dispatch("getUserInfo");
+      if (this.$store.getters.idDataLoaded === false) {
+            this.$store.dispatch('loadData', localStorage.getItem('token'))
+      }
     },
     computed: {
       getUserList() {

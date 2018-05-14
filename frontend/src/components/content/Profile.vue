@@ -62,7 +62,7 @@
                                 <img class="img-user-class" :src="userData.image" width="150px">
                                 <p class="profile-error profile-error-image">nie zmieniono zdjęcia</p>
                                 <label for="change-user-image" class="change-user-img">{{ $t("button.changePhoto") }}
-                                    <input style="width: 1rem;" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
+                                    <input accept="image/*" style="width: 1rem;" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
                                 </label>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                                 <div>
                                     <!-- container for single label + input/p -->
                                     <label class="label-profile">{{ $t("label.workExperience") }}</label>
-                                    <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.seniority">
+                                    <input class="inputDisabled inputProfile" :disabld="true" v-model="userData.seniority">
                                 </div>
                             </div>
                         </div>
@@ -140,16 +140,18 @@
                                     <div class="add-download">
                                         <p class="profile-error profile-error-upload-top">Nie dodano pliku</p>
                                         <label class="add" for="add-docx-pl">+
-                                            <input id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload">
+                                            <input accept=".doc,.docx" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload">
                                         </label>
+
                                         <div class="docx">.docx</div>
                                         <a :href="userData.cv" class="download doc-download-pl">&#x21e3;</a>
                                     </div>
                                     <div class="add-download">
                                         <p class="profile-error profile-error-upload-bottom">Nie dodano pliku</p>
                                         <label for="add-pdf-pl" class="add">+
-                                            <input id="add-pdf-pl" class="add pdf-add-pl" type="file">
+                                            <input id="add-pdf-pl" accept=".pdf" class="add pdf-add-pl" type="file">
                                         </label>
+
                                         <div class="pdf">.pdf</div>
                                         <a class="download pdf-add-pl">&#x21e3;</a>
                                     </div>
@@ -160,15 +162,16 @@
                                     <div class="add-download">
                                         <p class="profile-error profile-error-upload-top">Nie dodano pliku</p>
                                         <label class="add" for="add-docx-en">+
-                                            <input id="add-docx-en" class="add" type="file">
+                                            <input accept=".doc,.docx" id="add-docx-en" class="add" type="file">
                                         </label>
+
                                         <div class="docx">.docx</div>
                                         <a class="download">&#x21e3;</a>
                                     </div>
                                     <div class="add-download">
                                         <p class="profile-error profile-error-upload-bottom">Nie dodano pliku</p>
                                         <label class="add" for="add-pdf-en">+
-                                            <input id="add-pdf-en" class="add" type=file>
+                                            <input id="add-pdf-en" accept=".pdf" class="add" type=file>
                                         </label>
                                         <div class="pdf">.pdf</div>
                                         <a class="download">&#x21e3;</a>
@@ -219,9 +222,8 @@ export default {
         MaskedInput
     },
     beforeCreate() {
-        if (this.userData === undefined) {
-            const token = localStorage.getItem('token')
-            this.$store.dispatch('getUsername', token)
+      if (this.$store.getters.idDataLoaded === false) {
+            this.$store.dispatch('loadData', localStorage.getItem('token'))
         }
     },
     computed: {
@@ -342,4 +344,5 @@ export default {
 .inputDisabled {
     text-align: center;
 }
+
 </style>
