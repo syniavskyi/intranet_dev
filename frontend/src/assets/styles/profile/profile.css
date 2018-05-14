@@ -65,7 +65,7 @@ body {
 
 .profile-header-menu {
     display: flex;
-    margin: 1rem;
+    margin: 1rem .3rem;
     height: 2rem;
 }
 
@@ -75,6 +75,7 @@ body {
     line-height: 2rem;
     font-size: 1.5rem;
     font-weight: bold;
+    padding: 0 .5rem;
 }
 
 .profile-header-button {
@@ -655,10 +656,10 @@ body {
         height: 100%;
     }
     .profile-nav-and-content {
-        min-height: 45rem;
+        min-height: 41rem;
     }
     .plane-nav {
-        min-height: 45rem;
+        min-height: 41rem;
     }
     .profile-content {
         min-height: 40rem;
