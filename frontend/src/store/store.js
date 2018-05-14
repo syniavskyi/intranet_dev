@@ -8,6 +8,7 @@ import profile from './modules/profile'
 import employees from './modules/employees'
 import calendar from './modules/calendar'
 import menu from './modules/menu'
+import availability from './modules/availability'
 
 import settings from './modules/settings'
 
@@ -24,6 +25,7 @@ export default new Vuex.Store({
         employees,
         calendar,
         menu,
+        availability,
         settings
     }
 });

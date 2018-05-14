@@ -50,7 +50,8 @@
         "employee": "Personal details",
         "userRegister": "User register",
         "accountCreated": "Account Created!",
-        "addNewEvent": "Add new event"
+        "addNewEvent": "Add new event",
+        "availability": "Availability"
     },
     "message": {
         "loginError": "Password or username are invalid.",
