@@ -23,15 +23,7 @@ const mutations = {
   SET_EMAIL_ERROR(state, isError) {
     state.sendEmailError = isError
   },
-  SET_USERNAME(state, username) {
-    state.username = username
-  },
-  SET_USER_ID(state, userId) {
-    state.userId = userId
-  },
-  SET_USER_DATA(state, data) {
-    state.userData = data;
-  },
+  
   SET_PHOTO(state, photoUrl) {
     state.userData.image = photoUrl
   },
@@ -77,13 +69,19 @@ const actions = {
      
       dispatch('setExpirationDate', res.data.expires_in)
       dispatch('setLogoutTimer', res.data.expires_in)
-      dispatch('getUsername', res.data.access_token)
+      dispatch('loadData', res.data.access_token)
 
       router.replace('/dashboard')
     }).catch(error => {
       console.log(error)
       commit('SET_LOGIN_ERROR', true)
     })
+  },
+  loadData({commit, dispatch}, token) {
+    dispatch('getRoleList')
+    dispatch('getDepartmentList')
+    dispatch('getUsersData')
+    dispatch('getUserData', token)
   },
   setLogoutTimer({
     commit,
@@ -114,61 +112,10 @@ const actions = {
     if (now >= expirationDate) {
       return
     }
-    dispatch('getUsername', token)
+    dispatch('loadData', token)
     commit('AUTH_USER', token)
     commit('DISPLAY_MENU', true);
     router.replace('/dashboard');
-  },
-  getUsername({ commit, getters, dispatch }, token) {
-    dispatch('getDepartmentList')
-    var URL = '/api/getUsernameByToken?access_token=' + token
-
-    axios.get(URL).then(res => {
-      var departmentId = res.data.deps[0].depName;
-      for (var i = 0; i < getters.depList.length; i++) {
-        if (departmentId = getters.depList[i].depId) {
-          var departmentName = getters.depList[i].depName
-        }
-      }
-
-      const userdata = {
-        departmentId: departmentId,
-        departmentName: decodeURI(departmentName),
-        username: res.data.username,
-        email: res.data.userContacts[0].email,
-        role: decodeURI(res.data.roles[0].name),
-        birthDate: res.data.userInfo[0].birthDate,
-        firstName: decodeURI(res.data.userInfo[0].firstName),
-        gender: decodeURI(res.data.userInfo[0].gender),
-        lastName: decodeURI(res.data.userInfo[0].lastName),
-        skype: res.data.userContacts[0].skypeId,
-        slack: res.data.userContacts[0].slackId,
-        phone: res.data.userContacts[0].phone,
-        address: decodeURI(res.data.userContacts[0].address),
-        id: res.data.id,
-        image: res.data.userInfo[0].image,
-        branch: decodeURI(res.data.userDetails[0].branch),
-        currentProject: decodeURI(res.data.userDetails[0].currentProject),
-        cv: res.data.userDetails[0].cv,
-        employmentDate: res.data.userDetails[0].employmentDate,
-        position: decodeURI(res.data.userDetails[0].position),
-        section: decodeURI(res.data.userDetails[0].section),
-        seniority: res.data.userDetails[0].seniority,
-        state: decodeURI(res.data.userDetails[0].state)
-      }
-
-      localStorage.setItem('username', userdata.username)
-      localStorage.setItem('role', userdata.role)
-      localStorage.setItem('id', userdata.id)
-
-      commit('SET_USER_ROLE', userdata.role)
-      commit('SET_USER_DATA', userdata)
-      commit('SET_USERNAME', userdata.username)
-      commit('SET_USER_ID', userdata.id)
-      console.log(res)
-    }).catch(error => {
-      console.log(error)
-    })
   },
   sendEmailWithPass({
     commit,
@@ -211,9 +158,6 @@ const getters = {
   },
   isSendEmailError(state) {
     return state.sendEmailError
-  },
-  userData(state) {
-    return state.userData
   }
 }
 

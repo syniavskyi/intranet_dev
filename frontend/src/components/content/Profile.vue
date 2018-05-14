@@ -60,7 +60,7 @@
                             <div class="profile-user-img">
                                 <!--                                        <div class="overlay">-->
                                 <img class="img-user-class" :src="userData.image" width="100px">
-
+                                
                                 <label for="change-user-image" class="change-user-img profile-header-button">{{ $t("button.changePhoto") }}
                                     <input style="width: 1rem;" accept="image/*" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
                                 </label>
@@ -230,9 +230,8 @@ export default {
         MaskedInput
     },
     beforeCreate() {
-        if (this.userData === undefined) {
-            const token = localStorage.getItem('token')
-            this.$store.dispatch('getUsername', token)
+      if (this.$store.getters.idDataLoaded === false) {
+            this.$store.dispatch('loadData', localStorage.getItem('token'))
         }
     },
     computed: {

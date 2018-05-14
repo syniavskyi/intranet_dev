@@ -22,6 +22,7 @@ export default {
       return this.$store.getters.showMenu
     }
   }
+
 }
 </script>
 
