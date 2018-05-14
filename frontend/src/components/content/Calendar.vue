@@ -11,7 +11,7 @@
         <!-- <li v-for="attr in todos"> -->
           <!-- :key='attr.key' -->
           {{ attr.customData.eventName }}, {{ attr.customData.time }}: {{ attr.customData.description }}
-          <button @click="performDialog">Edytuj</button>
+          <button @click="editEvent(attr.customData)">Edytuj</button>
           <!-- <slot v-bind:attr="attr">
             {{ attr.customData.eventName }}, {{ attr.customData.time }}: {{ attr.customData.description }}
           </slot> -->
@@ -146,7 +146,10 @@ export default {
     },
     performDialog() {
       this.dialogEvent = !this.dialogEvent;
-      Object.assign(this.$data, this.resetFormData());
+      // Object.assign(this.$data, this.resetFormData());
+    },
+    editEvent(data) {
+      this.performDialog();
     },
     addNewEvent() {
       var oEvent = {
@@ -158,6 +161,7 @@ export default {
       };
       this.todos.push(oEvent);
       this.performDialog();
+      Object.assign(this.$data, this.resetFormData());
     },
     checkPriority() {
       this.$store.dispatch("setColorPriority", {
