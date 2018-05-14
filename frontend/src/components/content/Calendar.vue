@@ -11,6 +11,7 @@
         <!-- <li v-for="attr in todos"> -->
           <!-- :key='attr.key' -->
           {{ attr.customData.eventName }}, {{ attr.customData.time }}: {{ attr.customData.description }}
+          <button @click="performDialog">Edytuj</button>
           <!-- <slot v-bind:attr="attr">
             {{ attr.customData.eventName }}, {{ attr.customData.time }}: {{ attr.customData.description }}
           </slot> -->
@@ -30,9 +31,9 @@
         </div>
         <div class="modal-email">
           <label class="modal-label">{{ $t("label.eventTitle") }}</label>
-          <input class="input modal-input" v-model="eventName" @blur="$v.eventName.touch()">
+          <input class="input modal-input" v-model="eventName" @blur="$v.eventName.$touch()">
           <label class="modal-label">{{ $t("label.eventTime") }}</label>
-          <input class="modal-input" type="time" v-model="eventTime" @blur="$v.eventTime.touch()">
+          <input class="modal-input" type="time" v-model="eventTime" @blur="$v.eventTime.$touch()">
           <label class="modal-label">{{ $t("label.eventDescription") }}</label>
           <input class="input modal-input" v-model="eventDescription">
           <label class="modal-label">{{ $t("label.priority") }}</label>
@@ -47,7 +48,7 @@
             <option>Impreza integracyjna</option>
           </select>
         </div>
-        <button :disabled="$v.$invalid" class="button modal-button" type="button" @click="addNewEvent"><span class="span-arrow">{{ $t("button.addEvent") }}</span></button>
+        <button class="button modal-button" :disabled="$v.$invalid" type="button" @click="addNewEvent"><span class="span-arrow">{{ $t("button.addEvent") }}</span></button>
       </div>
     </transition>
   <!-- End modal for add event -->
@@ -56,7 +57,7 @@
 
 <script>
 import moment from "moment";
-import { required, minLength, email } from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
 import i18n from "../../lang/lang";
 
 export default {
@@ -69,12 +70,12 @@ export default {
         {
           id: 1,
           description: 'Clean the house.',
-          // date: new Date(2018, 4, 15),
-          dates: {
-            start: new Date('1/1/2018'),
-            monthlyInterval: 2,           // Every other month
-            ordinalWeekdays: { [-1]: 6 }  // ...on the last Friday
-          },
+          date: new Date(2018, 4, 15),
+          // dates: {
+          //   start: new Date('1/1/2018'),
+          //   monthlyInterval: 2,           // Every other month
+          //   ordinalWeekdays: { [-1]: 6 }  // ...on the last Friday
+          // },
           isCompleted: false,
           color: 'red'
         },
@@ -132,11 +133,20 @@ export default {
     }
   },
   methods: {
+    resetFormData() {
+      return {
+        eventDescription: '',
+        eventTime: null,
+        eventName: '',
+        priority: ''
+      }
+    },
     dayClicked(day) {
       this.selectedDay = day;
     },
     performDialog() {
       this.dialogEvent = !this.dialogEvent;
+      Object.assign(this.$data, this.resetFormData());
     },
     addNewEvent() {
       var oEvent = {
@@ -148,7 +158,6 @@ export default {
       };
       this.todos.push(oEvent);
       this.performDialog();
-      // this.dayClicked(this.selectedDay);
     },
     checkPriority() {
       this.$store.dispatch("setColorPriority", {
