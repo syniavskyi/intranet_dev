@@ -89,7 +89,8 @@ const actions = {
 
                 for(let key in data) {
                     const user = data[key];
-
+                    user.id = user.id
+                    user.section  = user.userDetails[0].section
                     user.depName = user.deps[0] ? user.deps[0].depName : "";
                     user.roleName = user.roles[0] ? user.roles[0].name.slice(user.roles[0].name.indexOf("_") + 1, user.roles[0].name.length) : "";
                     // user.email = user.email ? user.email : "";

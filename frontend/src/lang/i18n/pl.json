@@ -34,7 +34,8 @@
         "eventTitle": "Nazwa wydarzenia",
         "eventTime": "Godzina wydarzenia",
         "eventDescription": "Opis wydarzenia",
-        "priority": "Priorytet"
+        "priority": "Priorytet",
+        "employee": "Pracownik"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",

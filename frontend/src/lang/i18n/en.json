@@ -34,7 +34,8 @@
         "eventTitle": "Event title",
         "eventTime": "Event time",
         "eventDescription": "Event description",
-        "priority": "Priority"
+        "priority": "Priority",
+        "employee": "Employee"
     },
     "header": {
         "login": "Log in to Intranet",
