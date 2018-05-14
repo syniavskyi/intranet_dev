@@ -50,7 +50,8 @@
         "employee": "Dane pracownika",
         "userRegister": "Rejestracja użytkownika",
         "accountCreated": "Utworzono Konto!",
-        "addNewEvent": "Dodaj nowe wydarzenie"
+        "addNewEvent": "Dodaj nowe wydarzenie",
+        "availability": "Dyspozycyjność"
     },
     "message": {
         "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",
