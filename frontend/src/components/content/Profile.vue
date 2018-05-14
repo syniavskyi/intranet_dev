@@ -9,6 +9,7 @@
                 </div>
                 <button class="profile-header-button" v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
                 <div v-if="editMode" class="header-button-save-reject">
+                    <p class="profile-error profile-error-data">Nie zapisano danych</p>
                     <button class="border-btn save-btn" @click="onSaveChanges" :disabled="disableSaveBtn">{{ $t("button.saveChanges") }}</button>
                     <button class="border-btn reject-btn" @click="onCancelEdit">{{ $t("button.cancel") }}</button>
                 </div>
@@ -24,7 +25,7 @@
                         <div class="tile-underscore"></div>
                     </div>
                     <div class="profile-tile-content">
-                        <div class="profile-tile-inputs-section">
+                        <div class="profile-tile-inputs-section profile-inputs-sections-1">
                             <div class="profile-tile-inputs">
                                 <div>
                                     <label class="label-profile">{{ $t("label.address") }}</label>
@@ -58,13 +59,11 @@
                         </div>
                         <div class="profile-user-header">
                             <div class="profile-user-img">
-                                <!--                                        <div class="overlay">-->
-                                <img class="img-user-class" :src="userData.image" width="100px">
-                                <label for="change-user-image" class="change-user-img profile-header-button">{{ $t("button.changePhoto") }}
+                                <img class="img-user-class" :src="userData.image" width="150px">
+                                <p class="profile-error profile-error-image">nie zmieniono zdjęcia</p>
+                                <label for="change-user-image" class="change-user-img">{{ $t("button.changePhoto") }}
                                     <input style="width: 1rem;" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
                                 </label>
-                                
-                                <!--                                        </div>-->
                             </div>
                         </div>
                     </div>
@@ -102,7 +101,7 @@
                                 <div>
                                     <!-- container for single label + input/p -->
                                     <label class="label-profile">{{ $t("label.worktime") }}</label>
-                                    <select v-model="userData.state" @change="checkFormFields" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode">
+                                    <select v-model="userData.state" @change="checkFormFields" class="selectProfile" :class="editMode ? 'selectEdit' : 'selectDisabled'" :disabled="!editMode">
                                                 <option value="Full">{{ $t("label.fulltime") }}</option>
                                                 <option value="1/2">1/2</option>
                                                 <option value="1/3">1/3</option>
@@ -121,7 +120,7 @@
                                     <label class="label-profile">{{ $t("label.employmentDate") }}</label>
                                     <masked-input mask="11.11.1111" @input="dateValidation" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.employmentDate" />
                                     <div class="error-wrapper">
-                                        <p class="profile-error profile-error-email" v-if="invalidDate">{{ $t("message.dateValidation") }}</p>
+                                        <p class="profile-error profile-error-date" v-if="invalidDate">{{ $t("message.dateValidation") }}</p>
                                     </div>
                                 </div>
                                 <div>
@@ -139,13 +138,15 @@
                                         <span class="button-circle lang-circle">PL</span>
                                     </a>
                                     <div class="add-download">
+                                        <p class="profile-error profile-error-upload-top">Nie dodano pliku</p>
                                         <label class="add" for="add-docx-pl">+
                                             <input id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload">
                                         </label>
                                         <div class="docx">.docx</div>
-                                        <a :href="userData.cv" class="download doc-dowload-pl">&#x21e3;</a>
+                                        <a :href="userData.cv" class="download doc-download-pl">&#x21e3;</a>
                                     </div>
                                     <div class="add-download">
+                                        <p class="profile-error profile-error-upload-bottom">Nie dodano pliku</p>
                                         <label for="add-pdf-pl" class="add">+
                                             <input id="add-pdf-pl" class="add pdf-add-pl" type="file">
                                         </label>
@@ -157,13 +158,15 @@
                                     <a>
                                         <span class="button-circle lang-circle">EN</span></a>
                                     <div class="add-download">
+                                        <p class="profile-error profile-error-upload-top">Nie dodano pliku</p>
                                         <label class="add" for="add-docx-en">+
                                             <input id="add-docx-en" class="add" type="file">
                                         </label>
                                         <div class="docx">.docx</div>
-                                        <a href class="download">&#x21e3;</a>
+                                        <a class="download">&#x21e3;</a>
                                     </div>
                                     <div class="add-download">
+                                        <p class="profile-error profile-error-upload-bottom">Nie dodano pliku</p>
                                         <label class="add" for="add-pdf-en">+
                                             <input id="add-pdf-en" class="add" type=file>
                                         </label>

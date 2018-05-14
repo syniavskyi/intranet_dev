@@ -119,7 +119,7 @@ input[class*="input-highlight"] {
     margin-top: 2rem;
 }
 
-select {
+.select {
     text-indent: 2rem;
     background: transparent;
     height: 2rem;
@@ -160,7 +160,7 @@ select {
         flex-direction: row;
         justify-content: flex-start;
     }
-    select {
+    .select {
         margin-left: auto;
         margin-top: 1rem;
     }
