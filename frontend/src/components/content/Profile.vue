@@ -1,7 +1,6 @@
 <template>
 <div class="plane-profile">
     <div class="profile-nav-and-content">
-
         <div class="profile-content">
             <div class="profile-header">
                 <div class="profile-header-title-and-menu">
@@ -61,9 +60,12 @@
                             <div class="profile-user-img">
                                 <!--                                        <div class="overlay">-->
                                 <img class="img-user-class" :src="userData.image" width="100px">
-                                <label for="change-user-image" class="change-user-img profile-header-button">{{ $t("button.changePhoto") }}</label>
-                                <input type="file" accept="image/*" ref="photo" @change="handlePhotoUpload" id="change-user-image">
-                                <!--                                        </div>-->
+
+                                <label for="change-user-image" class="change-user-img profile-header-button">{{ $t("button.changePhoto") }}
+                                    <input style="width: 1rem;" accept="image/*" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
+                                </label>
+                                
+                               <!--                                        </div>-->
                             </div>
                         </div>
                     </div>
@@ -135,33 +137,50 @@
                             <div class="cv-buttons">
                                 <div class="button-cv">
                                     <a>
-                                                <span class="button-circle lang-circle">PL</span>
-                                            </a>
+                                        <span class="button-circle lang-circle">PL</span>
+                                    </a>
                                     <div class="add-download">
-                                        <label class="add" for="add-docx-pl">+</label>
-                                        <input accept=".doc,.docx" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload">
+
+                                      
+                                        <label class="add" for="add-docx-pl">+
+                                            <input accept=".doc,.docx" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload">
+                                        </label>
+
                                         <div class="docx">.docx</div>
                                         <a :href="userData.cv" class="download doc-dowload-pl">&#x21e3;</a>
                                     </div>
                                     <div class="add-download">
-                                        <label for="add-pdf-pl" class="add pdf-add-pl">+</label>
-                                        <input  accept=".pdf" id="add-pdf-pl" type="file">
+
+
+                                        <label for="add-pdf-pl" class="add">+
+                                            <input id="add-pdf-pl" accept=".pdf" class="add pdf-add-pl" type="file">
+                                        </label>
+
                                         <div class="pdf">.pdf</div>
                                         <a class="download pdf-add-pl">&#x21e3;</a>
                                     </div>
                                 </div>
                                 <div class="button-cv">
                                     <a>
-                                                <span class="button-circle lang-circle">EN</span></a>
+                                        <span class="button-circle lang-circle">EN</span></a>
                                     <div class="add-download">
-                                        <label class="add" for="add-docx-en">+</label>
-                                        <input accept=".doc,.docx" id="add-docx-en" type="file">
+
+
+                                        <label class="add" for="add-docx-en">+
+                                            <input accept=".doc,.docx" id="add-docx-en" class="add" type="file">
+                                        </label>
+
                                         <div class="docx">.docx</div>
                                         <a href class="download">&#x21e3;</a>
                                     </div>
                                     <div class="add-download">
-                                        <label class="add" for="add-pdf-en">+</label>
-                                        <input accept=".pdf" id="add-pdf-en" type=file>
+
+
+
+                                        <label class="add" for="add-pdf-en">+
+                                            <input id="add-pdf-en" accept=".pdf" class="add" type=file>
+                                        </label>
+
                                         <div class="pdf">.pdf</div>
                                         <a class="download">&#x21e3;</a>
                                     </div>
