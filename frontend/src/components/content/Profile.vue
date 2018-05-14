@@ -70,7 +70,9 @@
                 </div>
                 <div class="profile-tile">
                     <div class="profile-tile-header">
-                        <h2>{{ $t("header.employee") }}</h2>
+                        <div>
+                            <h2>{{ $t("header.employee") }}</h2>
+                        </div>
                         <div class="tile-underscore"></div>
                     </div>
                     <div class="profile-tile-content">
