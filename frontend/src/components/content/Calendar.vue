@@ -11,7 +11,8 @@
         <!-- <li v-for="attr in todos"> -->
           <!-- :key='attr.key' -->
           {{ attr.customData.eventName }}, {{ attr.customData.time }}: {{ attr.customData.description }}
-          <button @click="editEvent(attr.customData)">Edytuj</button>
+          <button @click="editEvent(attr.customData, $t)">Edytuj</button>
+          <button>Usuń</button>
           <!-- <slot v-bind:attr="attr">
             {{ attr.customData.eventName }}, {{ attr.customData.time }}: {{ attr.customData.description }}
           </slot> -->
@@ -37,13 +38,13 @@
           <label class="modal-label">{{ $t("label.eventDescription") }}</label>
           <input class="input modal-input" v-model="eventDescription">
           <label class="modal-label">{{ $t("label.priority") }}</label>
-          <select @change="checkPriority" v-model="priority">
+          <select @change="checkPriority" v-model="priority" @blur="$v.priority.$touch()">
             <option>Wysoki</option>
             <option>Średni</option>
             <option>Niski</option>
           </select>
           <label class="modal-label">Typ wydarzenia</label>
-          <select>
+          <select v-model="eventType" @blur="$v.eventType.$touch()">
             <option>Szkolenie</option>
             <option>Impreza integracyjna</option>
           </select>
@@ -66,6 +67,7 @@ export default {
       selectedValue: null,
       selectedDay: null,
       dialogEvent: false,
+      //get request
       todos: [
         {
           id: 1,
@@ -90,6 +92,7 @@ export default {
       eventDescription: '',
       eventTime: null,
       eventName: '',
+      eventType: '',
       priority: ''
       // attributes: [
       //   {
@@ -110,6 +113,17 @@ export default {
     },
     eventTime: {
       required
+    },
+    priority: {
+      required
+    },
+    eventType: {
+      required
+    }
+  },
+  beforeCreate() {
+    if (this.$store.getters.idDataLoaded === false) {
+      this.$store.dispatch('loadData', localStorage.getItem('token'));
     }
   },
   computed: {
@@ -141,23 +155,37 @@ export default {
         priority: ''
       }
     },
+    editData(data) {
+      return {
+        eventDescription: data.description,
+        eventTime: data.time,
+        eventName: data.eventName,
+        eventType: data.eventType,
+        priority: data.priority
+      }
+    },
     dayClicked(day) {
       this.selectedDay = day;
     },
     performDialog() {
       this.dialogEvent = !this.dialogEvent;
-      // Object.assign(this.$data, this.resetFormData());
     },
     editEvent(data) {
       this.performDialog();
+      Object.assign(this.$data, this.editData(data));
+    },
+    deleteEvent() {
+      // delete request
     },
     addNewEvent() {
       var oEvent = {
         description: this.eventDescription,
         date: new Date(this.selectedValue.getFullYear(), this.selectedValue.getMonth(), this.selectedValue.getDate()),
         color: this.eventColor,
+        priority: this.priority,
         time: this.eventTime,
-        eventName: this.eventName
+        eventName: this.eventName,
+        eventType: this.eventType
       };
       this.todos.push(oEvent);
       this.performDialog();
@@ -184,6 +212,7 @@ export default {
 .selected-day ul li:first-child {
   margin-top: 10px;
 }
+
 .selected-day ul li {
   margin-bottom: 10px;
 }

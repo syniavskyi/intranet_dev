@@ -6,7 +6,8 @@ const state = {
     email: '',
     mail: '',
     emailExists: false,
-    dialog: false
+    dialog: false,
+    dialogFalse: false
 };
 
 const mutations = {
@@ -22,13 +23,15 @@ const mutations = {
     OPEN_DIALOG(state, data) {
         state.dialog = data;
     },
+    OPEN_FAILED_DIALOG(state, data) {
+        state.dialogFalse = data;
+    },
     SET_MAIL(state, data) {
         state.mail = data;
     }
 };
 
 const actions = {
-    
     checkEmail({commit, state, dispatch}, props) {
         axios.get('/api/emailList').then(res => {
             const data = res.data,
@@ -70,7 +73,7 @@ const actions = {
         data.openDialog = true;
         commit('OPEN_DIALOG', data.openDialog);
         data.role = 'ROLE_' + data.role.toUpperCase();
-        console.log(data);
+        // console.log(data);
         axios.post('/api/register', {
             username: data.name,
             password: data.password,
@@ -79,15 +82,15 @@ const actions = {
             roles: [data.role],
             deps: [data.department]
         }).then(function(response) {
-            console.log(response);
+            // console.log(response);
         }).catch(function(error) {
-            console.log(error);
+            // console.log(error);
+            commit('OPEN_FAILED_DIALOG', true);
         })
     },
 };
 
 const getters = {
-
     emails(state) {
         return state.emails;
     },
@@ -102,6 +105,9 @@ const getters = {
     },
     setMail(state) {
         return state.mail;
+    },
+    openFailedDialog(state) {
+        return state.dialogFalse;
     }
 };
 

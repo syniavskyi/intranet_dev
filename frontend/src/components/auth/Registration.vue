@@ -1,5 +1,6 @@
 <template>
   <div class="plane-parent plane-parent-registration">
+    <!-- SUCCESS DIALOG -->
     <transition name="slide-backdrop" v-if="closeSuccessDialog">
       <div class="backdrop" v-if="closeSuccessDialog"></div>
     </transition>
@@ -14,6 +15,23 @@
         </div>
       </div>
     </transition>
+    <!-- END OF SUCCESS DIALOG -->
+    <!-- FAILED DIALOG -->
+    <transition name="slide-backdrop" v-if="openDialogFalse">
+      <div class="backdrop" v-if="openDialogFalse"></div>
+    </transition>
+    <transition name="slide" v-if="openDialogFalse">
+      <div class="modal" v-if="openDialogFalse">
+        <div class="modal-header">
+          <h1 class="modal-title">Niepowodzenie podczas wysyłania wiadomości.</h1>
+          <button class="modal-exit" @click="closeDialog">&#10006;</button>
+        </div>
+        <div class="modal-text">
+          <p>{{ $t("message.newAccountPassword") }}</p>
+        </div>
+      </div>
+    </transition>
+    <!-- END OF FAILED DIALOG -->
     <div class="plane plane-registration">
       <div class="plane-left">
         <img class="img-user" src="../../assets/images/grouper-256.png">
@@ -89,7 +107,7 @@ export default {
   beforeCreate() {
     this.$store.commit('DISPLAY_MENU', false);
     if (this.$store.getters.idDataLoaded === false) {
-            this.$store.dispatch('loadData', localStorage.getItem('token'))
+      this.$store.dispatch('loadData', localStorage.getItem('token'))
     }
   },
   methods: {
@@ -151,6 +169,9 @@ export default {
     },
     setMail() {
       return this.$store.getters.setMail;
+    },
+    openDialogFalse() {
+      return this.$store.getters.openFailedDialog;
     }
   }
 };
