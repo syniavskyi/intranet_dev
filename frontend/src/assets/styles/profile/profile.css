@@ -141,8 +141,35 @@ body {
     width: 100%;
 }
 
+.profile-tile-header-row {
+    display: flex;
+    justify-content: space-between; 
+}
+.profile-change-password {
+    background: transparent;
+    display: flex;
+    border: 0;
+    padding:.1rem;
+    margin-right: 1rem;
+    margin-top: .5rem;
+    width: 4rem;
+    border-radius: 1rem;
+    line-height: 1.2rem;
+    justify-content: center;
+    text-align: center;
+    color: grey;
+    font-family: 'Open Sans';
+    font-size: 1rem;
+}
+
+.profile-change-password:hover {
+    box-shadow: 0 0 15px rgba(255, 151, 71, 0.78);
+    cursor: pointer;
+}
+
 .profile-tile h2 {
     margin:0;
+    margin-right: 0;
     padding: 0.5rem 1rem;
     font-weight: 600;
 }
@@ -611,6 +638,9 @@ body {
     }
     .profile-tile-header {
         height: 3.6rem;
+    }
+    .profile-change-password {
+        width: 7rem;
     }
     .profile-tile-content {
         flex-direction: row;
