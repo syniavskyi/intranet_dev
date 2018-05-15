@@ -59,7 +59,7 @@
                         <div class="profile-user-header">
                             <div class="profile-user-img">
                                 <img class="img-user-class" :src="userData.image" width="150px">
-                                <p class="profile-error profile-error-image" v-if="savePhotoError">{{ $t("message.photoUploadError") }}</p>
+                                <p class="profile-error profile-error-image" v-if="photoUploadError">{{ $t("message.photoUploadError") }}</p>
                                 <label for="change-user-image" class="change-user-img">{{ $t("button.changePhoto") }}
                                     <input accept="image/*" style="width: 1rem;" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
                                 </label>
@@ -139,7 +139,7 @@
                                         <span class="button-circle lang-circle">PL</span>
                                     </a>
                                     <div class="add-download">
-                                        <p class="profile-error profile-error-upload-top">{{ $t("message.fileUploadError") }}</p>
+                                        <p class="profile-error profile-error-upload-top" v-if="fileUploadError">{{ $t("message.fileUploadError") }}</p>
                                         <label class="add" for="add-docx-pl">+
                                             <input accept=".doc,.docx" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload">
                                         </label>

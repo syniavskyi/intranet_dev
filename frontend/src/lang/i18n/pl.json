@@ -72,5 +72,8 @@
             "english": "Angielski",
             "polish": "Polski"
         }
+    },
+    "calendar": {
+        "noProjectAssigned": "Brak przypisanego projektu"
     }
 }

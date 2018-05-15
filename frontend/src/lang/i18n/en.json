@@ -73,5 +73,8 @@
             "english": "English",
             "polish": "Polish"
         }
+    },
+    "calendar": {
+        "noProjectAssigned": "No project assigned"
     }
 }
