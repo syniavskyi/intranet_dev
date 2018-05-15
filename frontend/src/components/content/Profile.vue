@@ -70,8 +70,9 @@
                 </div>
                 <div class="profile-tile">
                     <div class="profile-tile-header">
-                        <div>
+                        <div class="profile-tile-header-row">
                             <h2>{{ $t("header.employee") }}</h2>
+                            <button class="profile-change-password">zmień hasło</button>
                         </div>
                         <div class="tile-underscore"></div>
                     </div>
