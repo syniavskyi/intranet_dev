@@ -63,7 +63,9 @@
         "saveChangesError": "The changes weren't saved.",
         "noChanges": "No changes were made",
         "dateValidation": "Date has incorrect format.",
-        "newAccountPassword": "A new account has been created. An account password was sent to the mail"
+        "newAccountPassword": "A new account has been created. An account password was sent to the mail",
+        "fileUploadError": "File wasn't saved.",
+        "photoUploadError": "Photo wasn't saved."
 
     },
     "select": {

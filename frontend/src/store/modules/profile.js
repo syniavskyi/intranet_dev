@@ -2,13 +2,22 @@ import axios from 'axios'
 import router from '@/router/index.js'
 
 const state = {
-    saveChangesSuccess: true
+    saveChangesSuccess: true,
+    uploadPhotoError: false,
+    uploadFileError: false
 };
 
 const mutations = {
     SET_SAVE_CHANGES_STATE (state, isSuccess) {
         state.saveChangesSuccess = isSuccess
+    },
+    SET_PHOTO_ERROR (state, isError) {
+        state.uploadPhotoError = isError
+    },
+    SET_FILE_ERROR (state, isError) {
+        state.uploadFileError = isError
     }
+
 };
 
 const actions = {
@@ -72,7 +81,9 @@ const actions = {
         }).then(res => {
             console.log(res)
             commit('SET_PHOTO', res.data.fileDownloadUri)
+            commit('SET_PHOTO_ERROR', false)
         }).catch(error => {
+            commit('SET_PHOTO_ERROR', true)
             console.log(error)
         }) 
     },
@@ -87,9 +98,11 @@ const actions = {
             data: formData   
         }).then(res => {
             commit('SET_CV', res.data.fileDownloadUri)
+            commit('SET_FILE_ERROR', false)
             console.log(res)
         }).catch(error => {
             console.log(error)
+            commit('SET_FILE_ERROR', false)
         }) 
     }
 };
@@ -97,6 +110,12 @@ const actions = {
 const getters = {
     isSaveChangesSuccess(state) {
         return state.saveChangesSuccess
+    },
+    isSavePhotoError (state) {
+        return state.isSavePhotoError
+    },
+    isFileUploadError (state) {
+        return state.isFileUploadError
     }
 };
 

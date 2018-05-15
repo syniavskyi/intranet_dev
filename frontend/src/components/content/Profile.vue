@@ -9,13 +9,12 @@
                 </div>
                 <button class="profile-header-button" v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
                 <div v-if="editMode" class="header-button-save-reject">
-                    <p class="profile-error profile-error-data">Nie zapisano danych</p>
+                    <p class="profile-error profile-error-data" v-if="!saveChangesSuccess">{{ $t("message.saveChangesError") }}</p>
                     <button class="border-btn save-btn" @click="onSaveChanges" :disabled="disableSaveBtn">{{ $t("button.saveChanges") }}</button>
                     <button class="border-btn reject-btn" @click="onCancelEdit">{{ $t("button.cancel") }}</button>
                 </div>
             </div>
-            <p class="login-error" v-if="showNoChangesAlert">{{ $t("message.noChanges") }}</p>
-            <p class="login-error" v-show="!saveChangesSuccess">{{ $t("message.saveChangesError") }}</p>
+           
             <h3 class="user-header-name">{{userData.firstName}} {{userData.lastName}}</h3>
             <div class="profile-tiles">
                 <div class="profile-tile">
@@ -60,7 +59,7 @@
                         <div class="profile-user-header">
                             <div class="profile-user-img">
                                 <img class="img-user-class" :src="userData.image" width="150px">
-                                <p class="profile-error profile-error-image">nie zmieniono zdjęcia</p>
+                                <p class="profile-error profile-error-image" v-if="savePhotoError">{{ $t("message.photoUploadError") }}</p>
                                 <label for="change-user-image" class="change-user-img">{{ $t("button.changePhoto") }}
                                     <input accept="image/*" style="width: 1rem;" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
                                 </label>
@@ -140,7 +139,7 @@
                                         <span class="button-circle lang-circle">PL</span>
                                     </a>
                                     <div class="add-download">
-                                        <p class="profile-error profile-error-upload-top">Nie dodano pliku</p>
+                                        <p class="profile-error profile-error-upload-top">{{ $t("message.fileUploadError") }}</p>
                                         <label class="add" for="add-docx-pl">+
                                             <input accept=".doc,.docx" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload">
                                         </label>
@@ -149,7 +148,7 @@
                                         <a :href="userData.cv" class="download doc-download-pl">&#x21e3;</a>
                                     </div>
                                     <div class="add-download">
-                                        <p class="profile-error profile-error-upload-bottom">Nie dodano pliku</p>
+                                        <p class="profile-error profile-error-upload-bottom">{{ $t("message.fileUploadError") }}</p>
                                         <label for="add-pdf-pl" class="add">+
                                             <input id="add-pdf-pl" accept=".pdf" class="add pdf-add-pl" type="file">
                                         </label>
@@ -162,7 +161,7 @@
                                     <a>
                                         <span class="button-circle lang-circle">EN</span></a>
                                     <div class="add-download">
-                                        <p class="profile-error profile-error-upload-top">Nie dodano pliku</p>
+                                        <p class="profile-error profile-error-upload-top">{{ $t("message.fileUploadError") }}</p>
                                         <label class="add" for="add-docx-en">+
                                             <input accept=".doc,.docx" id="add-docx-en" class="add" type="file">
                                         </label>
@@ -171,7 +170,7 @@
                                         <a class="download">&#x21e3;</a>
                                     </div>
                                     <div class="add-download">
-                                        <p class="profile-error profile-error-upload-bottom">Nie dodano pliku</p>
+                                        <p class="profile-error profile-error-upload-bottom">{{ $t("message.fileUploadError") }}</p>
                                         <label class="add" for="add-pdf-en">+
                                             <input id="add-pdf-en" accept=".pdf" class="add" type=file>
                                         </label>
@@ -231,7 +230,9 @@ export default {
     computed: {
         ...mapGetters({
             userData: 'userData',
-            saveChangesSuccess: 'isSaveChangesSuccess'
+            saveChangesSuccess: 'isSaveChangesSuccess',
+            photoUploadError: 'isSavePhoto5Error',
+            fileUploadError: 'isFileUploadError'
         })
     },
     methods: {

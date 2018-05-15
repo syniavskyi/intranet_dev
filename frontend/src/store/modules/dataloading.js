@@ -32,6 +32,7 @@ const mutations = {
       SET_DATA_LOADED(state, isLoaded) {
         state.isLoaded = isLoaded;
       },
+      
 };
 
 const actions = {
