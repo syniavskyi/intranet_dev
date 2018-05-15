@@ -10,6 +10,7 @@ import calendar from './modules/calendar'
 import menu from './modules/menu'
 import availability from './modules/availability'
 import dataloading from './modules/dataloading'
+import starterpage from './modules/starterpage'
 
 import settings from './modules/settings'
 
@@ -28,6 +29,7 @@ export default new Vuex.Store({
         menu,
         availability,
         dataloading,
-        settings
+        settings,
+        starterpage
     }
 });
