@@ -14,6 +14,7 @@ import Calendar from '@/components/content/Calendar'
 import Files from '@/components/content/Files'
 import Informations from '@/components/content/Informations'
 import Availability from '@/components/content/Availability'
+import StarterPage from '@/components/content/StarterPage'
 
 import AuthGuard from './auth-guard'
 import authGuard from './auth-guard';
@@ -74,12 +75,17 @@ export default new Router({
         name: 'Calendar',
         component: Calendar
         // beforeEnter: AuthGuard
-    },,
+    },
     {
         path: '/availability',
         name: 'Availability',
         component: Availability
         // beforeEnter: AuthGuard
+    },
+    {
+        path: '/starterpage',
+        name: 'StarterPage',
+        component: StarterPage
     }
 ]
 })
