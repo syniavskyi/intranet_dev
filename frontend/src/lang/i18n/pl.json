@@ -8,7 +8,8 @@
         "cancel": "Anuluj",
         "changePhoto": "Zmień zdjęcie",
         "register": "Zarejestruj",
-        "addEvent": "Dodaj wydarzenie"
+        "addEvent": "Dodaj wydarzenie",
+        "documentComplete": "Przekazano dokumenty"
      },
     "label": {
         "user": "Użytkownik",
@@ -35,7 +36,8 @@
         "eventTime": "Godzina wydarzenia",
         "eventDescription": "Opis wydarzenia",
         "priority": "Priorytet",
-        "employee": "Pracownik"
+        "employee": "Pracownik",
+        "documentList": "Poniżej znajduje się lista dokumentów które musisz wypełnić i dostarczyć"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",
@@ -46,13 +48,15 @@
         "calendar": "Kalendarz",
         "employees": "Pracownicy",
         "informations": "Informacje",
-        "files": "Pliki",
+        "documents": "Dokumenty",
         "contact": "Dane kontaktowe",
         "employee": "Dane pracownika",
         "userRegister": "Rejestracja użytkownika",
         "accountCreated": "Utworzono Konto!",
         "addNewEvent": "Dodaj nowe wydarzenie",
-        "availability": "Dyspozycyjność"
+        "availability": "Dyspozycyjność",
+        "starterPage": "Strona Startowa",
+        "welcome": "Witaj w BTech!"
     },
     "message": {
         "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",

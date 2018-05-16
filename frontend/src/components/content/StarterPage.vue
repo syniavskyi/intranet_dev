@@ -2,16 +2,16 @@
   <div class="plane-starter-page">
     <div class="starter-page-nav-and-content">
       <div class="starter-page-content">
-        <div class="starter-header"> 
+        <div class="starter-header">
           <div class="starter-header-title-and-menu">
             <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="starter-header-menu">
-            <p class="starter-header-title">Strona Startowa</p>
+            <p class="starter-header-title">{{ $t("header.starterPage") }}</p>
           </div>
         </div>
-        <h3 class="starter-page-user-header">Witaj w BTech!</h3>
+        <h3 class="starter-page-user-header">{{ $t("header.welcome") }}</h3>
         <div class="starter-page-list">
           <div class="starter-page-list-header">
-            <p class="starter-page-list-title">Poniżej znajduje się lista dokumentów które musisz wypełnić i dostarczyć</p>
+            <p class="starter-page-list-title">{{ $t("label.documentList") }}</p>
           </div>
           <div class="starter-page-list-content">
             <ul class="starter-page-ul">
@@ -21,7 +21,7 @@
                   <div class="starter-page-pdf">.pdf</div>
                 </div>
                 <div class="starter-page-list-item-wrapper">
-                  <div class="starter-page-item-text"  :class="list.checked ? 'line-through' : 'none'">
+                  <div class="starter-page-item-text" :class="list.checked ? 'line-through' : 'none'">
                     {{ list.title }}
                   </div>
                 </div>
@@ -29,7 +29,7 @@
               </li>
             </ul>
             <div class="starter-page-list-bottom">
-              <button class="starter-page-docs-btn button" :disabled="setButton">Dokumenty przekazano</button>
+              <button class="starter-page-docs-btn button" :disabled="setButton">{{ $t("button.documentComplete") }}</button>
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@ export default {
           checked: true
         },
         {
-          title: "Informacja dla praacownika",
+          title: "Informacja dla pracownika",
           checked: true
         },
         {
