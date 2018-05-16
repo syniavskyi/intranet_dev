@@ -64,13 +64,13 @@ const actions = {
           });
     },
     editUserProject({commit}, data) { 
-        const URL = '/api/users/' + data.userId + '/userEngag/' + data.projectId + '/edit'
+        const URL = '/api/users/' + data.userId + '/userEngag/' + data.id + '/edit'
         axios.put( URL, {
             startDate: data.startDate,
             endDate: data.endDate,
             engag: data.engag, 
-            projName: data.projName,
-            contractorName: data.contractorName
+            projId: data.projectId,
+            contractorId: data.contractorId
           })
           .then(response => {
             console.log(response);

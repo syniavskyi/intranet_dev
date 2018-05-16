@@ -39,17 +39,17 @@
         <p class="label-profile"> {{ selectedUser.firstName }} {{ selectedUser.lastName }}</p>
         <label class="label-profile">Projekty pracownika</label>
         <select class="selectProfile" v-model="projectToEdit">
-            <option v-for="project in userProjectsList" :key="project.id" :value="project"> {{ project.projName }} </option>
-        </select>
-                <div v-if="projectToEdit.id != null">
+            <option v-for="project in userProjectsList" :key="project.projId" :value="project"> {{ project.projName }} </option>
+        </select><br/>
+            <div v-if="projectToEdit.id != null">
             <label class="label-profile">Obłożenie</label>
-            <input v-model="projectToEdit.engag" /> <span>%</span>
+            <input v-model="projectToEdit.engag" /> <span>%</span><br/>
             <label class="label-profile">Termin rozpoczęcia</label>
-            <input v-model="projectToEdit.startDate" />
+            <input v-model="projectToEdit.startDate" /><br/>
             <label class="label-profile">Termin zakończenia</label>
             <input v-model="projectToEdit.endDate" />
             <v-date-picker v-model="projectToEdit.endDate" mode="single">
-                <input />
+                <input  />
             </v-date-picker>
             <button @click="removeUserProject">Usuń projekt</button>
         </div>
@@ -202,12 +202,12 @@ export default {
         editProjectForUser() {
             const data = {
                 userId: this.selectedUser.id,
-                projectId: this.projectToEdit.id,
-                projName: this.projectToEdit.projName,
+                id: this.projectToEdit.id,
+                projectId: this.projectToEdit.projId,
                 engag: this.projectToEdit.engag,
                 endDate: this.projectToEdit.endDate,
                 startDate: this.projectToEdit.startDate,
-                contractorName: this.projectToEdit.contractorName
+                contractorId: this.projectToEdit.contractorId
             }
             this.$store.dispatch('editUserProject', data)
         },
