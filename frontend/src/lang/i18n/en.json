@@ -8,8 +8,8 @@
         "cancel": "Cancel",
         "changePhoto": "Change photo",
         "register": "Register",
-        "addEvent": "Add Event"
-
+        "addEvent": "Add Event",
+        "documentComplete": "Documents were provided"
     },
     "label": {
         "user": "User",
@@ -35,7 +35,8 @@
         "eventTime": "Event time",
         "eventDescription": "Event description",
         "priority": "Priority",
-        "employee": "Employee"
+        "employee": "Employee",
+        "documentList": "Below is a list of documents that you must fill and deliver"
     },
     "header": {
         "login": "Log in to Intranet",
@@ -46,13 +47,15 @@
         "calendar": "Calendar",
         "employees": "Employees",
         "informations": "Informations",
-        "files": "Files",
+        "documents": "Documents",
         "contact": "Contact details",
         "employee": "Personal details",
         "userRegister": "User register",
         "accountCreated": "Account Created!",
         "addNewEvent": "Add new event",
-        "availability": "Availability"
+        "availability": "Availability",
+        "starterPage": "Starter Page",
+        "welcome": "Welcome in BTech!"
     },
     "message": {
         "loginError": "Password or username are invalid.",
@@ -66,7 +69,6 @@
         "newAccountPassword": "A new account has been created. An account password was sent to the mail",
         "fileUploadError": "File wasn't saved.",
         "photoUploadError": "Photo wasn't saved."
-
     },
     "select": {
         "language": {

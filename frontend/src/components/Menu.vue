@@ -59,7 +59,7 @@
                     <router-link class="nav-router-link" to="/files">
                         <button class="nav-item">
                             <img class="nav-item-img" src="../assets/images/nav/if-files_32_wh.png">
-                            <p>{{ $t("header.files") }}</p>
+                            <p>{{ $t("header.documents") }}</p>
                         </button>
                     </router-link>
                 </li>
