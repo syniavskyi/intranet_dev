@@ -3,7 +3,7 @@
     <h1>Starter Page</h1>
     <h3>Witaj w firmie! Poniżej lista dokumentów do wypełnienia i dostarczenia dla Back Office'u dla nowozatrudnionych pracowników.</h3>
     <ul>
-      <li v-for="list in listOfDoc" :class="list.checked ? 'line-through' : 'none' ">
+      <li v-for="list in listOfDoc" :class="list.checked ? 'line-through' : 'none'">
         <button>Plik</button>{{ list.title }}<input type="checkbox" :checked="list.checked" @change="changeCheckbox(list)">
       </li>
     </ul>
@@ -13,7 +13,6 @@
 
 <script>
 import axios from 'axios'
-import { required } from 'vuelidate/lib/validators'
 import i18n from '../../lang/lang'
 
 export default {
