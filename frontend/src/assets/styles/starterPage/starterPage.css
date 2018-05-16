@@ -157,10 +157,10 @@ body {
     transition: background .3s ease;
     display: none;
     margin: .5rem;
+    color: white;
 }
 .starter-page-pdf {
     background: rgb(255, 114, 114);
-    color: white;
 }
 .starter-page-docx {
     background: rgb(114, 114, 255);
@@ -270,4 +270,3 @@ body {
         margin-left: 3rem;
     }
 }
-    
