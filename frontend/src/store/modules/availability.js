@@ -11,17 +11,24 @@ const mutations = {
 };
 
 const actions = {
-    getUserProjects({commit}, userId) {
+    getUserProjects({commit, getters}, userId) {
         const URL = "/api/users/" + userId + "/userEngag"
          axios.get(URL).then(res => {
              console.log(res)
             const userProjects = res.data
-            
+            const projectsList = getters.projectsList
             for (let i=0; i<userProjects.length; i++) {
-                if (userProjects[i].engag < 60 ) {
-                    userProjects[i].color = '#FFFF99'
-                } else {
+                for (let j=0; j<projectsList.length; j++){
+                    if (userProjects[i].projId === projectsList[j].id) {
+                        userProjects[i].projName = projectsList[j].name
+                    } 
+                }
+            }
+            for (let i=0; i<userProjects.length; i++) {
+                if (userProjects[i].engag > 60) {
                     userProjects[i].color = '#FF3333'
+                } else {
+                    userProjects[i].color = '#FFCC00'
                 }
             }
             commit('SET_USER_PROJECTS', userProjects)
@@ -44,8 +51,8 @@ const actions = {
             startDate: data.startDate,
             endDate: data.endDate,
             engag: data.engag, 
-            projName: data.projName,
-            contractorName: data.contractorName
+            projId: data.projId,
+            contractorId: data.contractorId
           })
           .then(response => {
             console.log(response);

@@ -7,7 +7,7 @@
                 <option v-for="department in departmentList" :key="department.depId" :value="selectedDepartment = department.depId">{{ department.depName }}</option>
             </select>
         </div>
-            <div class="div-select" v-if="selectedDepartment != null">
+        <div class="div-select" v-if="selectedDepartment != null">
             <label class="label" for="role">{{ $t("label.branch") }}</label>
             <select class="selectProfile" v-model="selectedBranch">
                 <option v-for="section in sectionsList" :key="section.id" :value="section.id"> {{ section.name }}</option>
@@ -17,15 +17,15 @@
         </div>
         <div class="div-select" v-if="selectedBranch != null">
             <label class="label" for="role">{{ $t("label.employee") }}</label>
-            <select  class="selectProfile"  v-model="selectedUser" @change="loadUserProjects(selectedUser.id)">
+            <select class="selectProfile" v-model="selectedUser" @change="loadUserProjects(selectedUser.id)">
                 <option v-for="user in filteredUsers" :value="user" :key="user.id">{{ user.firstName }} {{ user.lastName }}</option>
             </select>
         </div>
     </div>
     <!-- <div class="calendar" v-if="selectedUser != null"> -->
-      
-     <div class="calendar"> 
-        <v-calendar :attributes="attributes" mode='single' is-inline></v-calendar>
+
+    <div class="calendar">
+        <v-calendar v-if="selectedUser != null"  :attributes="attributes" mode='single' is-inline></v-calendar>
     </div>
 
     <div>
@@ -35,17 +35,17 @@
 
     <div id="edit-project-dialog" v-if="showEditDialog">
         <h4>Edytuj projekty</h4>
-        <label class="label-profile">Wybrany pracownik</label> 
+        <label class="label-profile">Wybrany pracownik</label>
         <p class="label-profile"> {{ selectedUser.firstName }} {{ selectedUser.lastName }}</p>
         <label class="label-profile">Projekty pracownika</label>
         <select class="selectProfile" v-model="projectToEdit">
             <option v-for="project in userProjectsList" :key="project.id" :value="project"> {{ project.projName }} </option>
         </select>
         <div v-if="projectToEdit.id != null">
-            <label class="label-profile">Obłożenie</label> 
-            <input v-model="projectToEdit.engag"/> <span>%</span>
-            <label class="label-profile" >Termin zakończenia</label> 
-            <input v-model="projectToEdit.endDate"/>
+            <label class="label-profile">Obłożenie</label>
+            <input v-model="projectToEdit.engag" /> <span>%</span>
+            <label class="label-profile">Termin zakończenia</label>
+            <input v-model="projectToEdit.endDate" />
             <button @click="removeUserProject">Usuń projekt</button>
         </div>
         <button>Anuluj</button>
@@ -58,16 +58,16 @@
             <option v-for="user in usersList" :key="user.id" :value="user.id">{{ user.firstName }} {{ user.lastName }}</option>
         </select>
         <label class="label-profile">Contractor</label>
-        <!-- <select class="selectProfile" v-model="newProjectForUser.contractorId">
+        <select class="selectProfile" v-model="newProjectForUser.contractorId">
             <option v-for="contractor in contractorsList" :key="contractor.id" :value="contractor.id"> {{ contractor.name }}</option>
-        </select> -->
+        </select>
         <label class="label-profile">Projekt</label>
         <select class="selectProfile" v-model="newProjectForUser.projectId">
-            <option v-for="project in projectsList" :key="project.id" :value="project.id"> {{ project.name }}</option>
+            <option v-for="project in filteredProjects" :key="project.id" :value="project.id"> {{ project.name }}</option>
         </select>
-        <label class="label-profile" >Obłożenie</label> 
-        <input v-model="newProjectForUser.engag"/> <span>%</span>
-        <label class="label-profile">Termin</label> 
+        <label class="label-profile">Obłożenie</label>
+        <input v-model="newProjectForUser.engag" /> <span>%</span>
+        <label class="label-profile">Termin</label>
         <input v-model="newProjectForUser.startDate" />
         <input v-model="newProjectForUser.endDate" />
         <!-- <v-date-picker is-expanded mode="range">
@@ -80,9 +80,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {
+    mapGetters
+} from 'vuex'
 import i18n from '../../lang/lang'
-import { required, number } from 'vuelidate/lib/validators'
+import {
+    required,
+    number
+} from 'vuelidate/lib/validators'
 
 export default {
     data() {
@@ -95,30 +100,8 @@ export default {
             selectedUser: null,
             showEditDialog: false,
             showAddProjectDialog: false,
-            projectToEdit:{},
-            newProjectForUser: {},
-            projectList: [
-                {
-                    id: 1,
-                    color: 'red',
-                    dates: {
-                         start: new Date(2018, 5, 1),
-                         end: new Date(2018, 5, 31)
-                    },
-                    label: i18n.t('calendar.noProjectAssigned'),
-                    engagement: '80%'
-                }
-            ]
-            // attributes: [
-            //     {
-            //         key: 'low',
-            //         highlight: { backgroundColor:  '#99FF99' },
-            //         dates: {},
-            //         popover: {
-            //             label: i18n.t('calendar.noProjectAssigned')
-            //         }
-            //     }
-            // ]
+            projectToEdit: {},
+            newProjectForUser: {}
         }
     },
     validations: {
@@ -127,7 +110,7 @@ export default {
                 required,
                 number
             }
-        } 
+        }
     },
     computed: {
         ...mapGetters({
@@ -135,29 +118,41 @@ export default {
             usersList: 'usersList',
             userProjectsList: 'userProjectsList',
             sectionsList: 'sectionsList',
-            projectsList: 'projectsList'
+            projectsList: 'projectsList',
+            contractorsList: 'contractorsList'
         }),
         filteredUsers() {
             const usersList = this.usersList
             let filteredUsers = []
 
-            for (let i=0; i<usersList.length; i++){
+            for (let i = 0; i < usersList.length; i++) {
                 if (usersList[i].section === this.selectedBranch.toString() && usersList[i].depName === this.selectedDepartment) {
                     filteredUsers.push(usersList[i])
                 }
             }
             return filteredUsers
         },
+        filteredProjects() {
+            const projectsList = this.projectsList
+            let filteredProjects = []
+
+            for (let i = 0; i < projectsList.length; i++) {
+                if (projectsList[i].contractorId === this.newProjectForUser.contractorId) {
+                    filteredProjects.push(projectsList[i])
+                }
+            }
+            return filteredProjects
+        },
         attributes() {
-            return this.userProjectsList.map(t=>({
-                key: 'userProjectsList.${t.id}',
+            return this.userProjectsList.map(t => ({
+                key: t.id,
                 highlight: {
                     backgroundColor: t.color,
                     borderRadius: '20px'
                 },
                 dates: {
-                    start: t.startDate,
-                    end: t.endDate
+                    start: new Date(t.startDate),
+                    end: new Date(t.endDate)
                 },
                 popover: {
                     label: t.projName
@@ -170,7 +165,7 @@ export default {
         if (this.showMenu === false) {
             this.$store.commit('DISPLAY_MENU', true)
         }
-           
+
         if (localStorage.getItem('role') === 'leader') {
             this.showBranchSelect = false
         }
@@ -179,22 +174,18 @@ export default {
         }
 
     },
-    created() {
-
-    },
     methods: {
-        loadUserProjects( userId ) {
+        loadUserProjects(userId) {
             this.$store.dispatch('getUserProjects', userId)
         },
         addNewProjectForUser() {
             const data = {
                 userId: this.newProjectForUser.userId,
-                projName: this.newProjectForUser.projectId,
+                projId: this.newProjectForUser.projectId,
                 engag: this.newProjectForUser.engag,
                 endDate: this.newProjectForUser.endDate,
                 startDate: this.newProjectForUser.startDate,
-                // contractorName: this.newProjectForUser.contractorName
-                contractorName: 'IBM'
+                contractorId: this.newProjectForUser.contractorId
             }
             this.$store.dispatch('addUserProject', data)
         },

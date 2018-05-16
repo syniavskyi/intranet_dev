@@ -6,6 +6,7 @@ const state = {
   userList: [],
   sectionsList: [],
   projectsList: [],
+  contractorsList: [],
   username: null,
   userId: null,
   userData: {},
@@ -37,6 +38,9 @@ const mutations = {
   SET_SECTIONS_LIST(state, data) {
     state.sectionsList = data;
   },
+  SET_CONTRACTORS_LIST(state, data) {
+    state.contractorsList = data;
+  },
   SET_PROJECTS_LIST(state, data) {
     state.projectsList = data;
   }
@@ -50,6 +54,7 @@ const actions = {
   }, token) {
     dispatch('getRoleList')
     dispatch('getDepartmentList')
+    dispatch('getContractorsList')
     dispatch('getSectionsList')
     dispatch('getProjectsList')
     dispatch('getUsersData')
@@ -110,6 +115,15 @@ const actions = {
   getProjectsList({commit}) {
     axios.get("/api/projectList").then(res => {
         commit('SET_PROJECTS_LIST', res.data)
+        console.log(res)
+
+      }).catch(error => {
+        console.log(error)
+      })  
+  },
+  getContractorsList({commit}) {
+    axios.get("/api/cotractorsList").then(res => {
+        commit('SET_CONTRACTORS_LIST', res.data)
           console.log(res)
       }).catch(error => {
         console.log(error)
@@ -215,6 +229,9 @@ const getters = {
   },
   usersList(state) {
     return state.userList;
+  },
+  contractorsList(state) {
+    return state.contractorsList;
   },
   userData(state) {
     return state.userData
