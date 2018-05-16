@@ -77,12 +77,7 @@ const actions = {
       commit('SET_LOGIN_ERROR', true)
     })
   },
-  loadData({commit, dispatch}, token) {
-    dispatch('getRoleList')
-    dispatch('getDepartmentList')
-    dispatch('getUsersData')
-    dispatch('getUserData', token)
-  },
+
   setLogoutTimer({
     commit,
     dispatch

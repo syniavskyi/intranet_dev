@@ -63,12 +63,17 @@
         "saveChangesError": "Niepowodzenie podczas zapisu danych.",
         "noChanges": "Nie wprowadzono zmian",
         "dateValidation": "Wprowadzona data posiada nieprawidłowy forma",
-        "newAccountPassword": "Utworzono nowe konto. Na maila wysłano hasło do konta."
+        "newAccountPassword": "Utworzono nowe konto. Na maila wysłano hasło do konta.",
+        "fileUploadError": "Niepowodzenie podczas zapisu pliku.",
+        "photoUploadError": "Niepowodzenie podczas zapisu zdjęcia."
     },
     "select": {
         "language": {
             "english": "Angielski",
             "polish": "Polski"
         }
+    },
+    "calendar": {
+        "noProjectAssigned": "Brak przypisanego projektu"
     }
 }
