@@ -5,10 +5,10 @@
     <ul>
       <li v-for="list in listOfDoc" :class="list.checked ? 'line-through' : 'none' ">
         <!-- <button>Plik</button>{{ list }}<input type="checkbox" @change="$v.docCheckbox.$touch()" v-model="docCheckbox"> -->
-        <button>Plik</button>{{ list.title }}<input type="checkbox" :checked="list.checked" @change="test(list)">
+        <button>Plik</button>{{ list.title }}<input type="checkbox" :checked="list.checked" @change="changeCheckbox(list)">
       </li>
     </ul>
-    <button>Dostarczyłem wszystkie dokumenty</button>
+    <button :disabled="buttonDisabled">Dostarczyłem wszystkie dokumenty</button>
   </div>
 </template>
 
@@ -42,6 +42,7 @@ export default {
         // "Dyplomy",
         // "Dokumentacja od lekarza tj. badania okresowe i psychologiczne pod kątem prowadzenia auta"
       ],
+      buttonDisabled: true
       // listOfDoc: [
       //   {
       //     title: "test",
@@ -54,20 +55,25 @@ export default {
       // ]
     }
   },
+  created() {
+    this.checkList();
+  },
   methods: {
-    test(data) {
+    changeCheckbox(data) {
       data.checked = !data.checked;
+      this.checkList();
+    },
+    checkList() {
+      for(var i = 0; i < this.listOfDoc.length; i++) {
+        // this.listOfDoc[i].checked ? this.buttonDisabled = false : return this.buttonDisabled = true;
+        if(this.listOfDoc[i].checked) {
+          this.buttonDisabled = false;
+        } else {
+          return this.buttonDisabled = true;
+        }
+      }
     }
   }
-  // ,
-  // validations: {
-  //   listOfDoc: {
-  //     // required
-  //     checkbox: {
-  //       required
-  //     }
-  //   }
-  // }
 }
 </script>
 
