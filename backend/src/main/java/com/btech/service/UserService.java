@@ -1,16 +1,15 @@
 package com.btech.service;
 
-import com.btech.model.UserContacts;
-import com.btech.model.UserDetail;
-import com.btech.model.UserInfo;
+import com.btech.exceptions.ResourceNotFoundExcptn;
+import com.btech.model.*;
 import com.btech.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.btech.model.User;
 import com.btech.pojo.Email;
 import com.btech.pojo.UserRegistration;
 
@@ -18,6 +17,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -32,15 +32,17 @@ public class UserService {
     private final UserContactsRepository userContactsRepository;
     private final UserInfoRepository userInfoRepository;
     private final UserDetailsRepository userDetailsRepository;
+	private final UserEngagRepository userEngagRepository;
 
-    @Autowired
-    public UserService(UserRepository userRepository, EmailRepository emailRepository, UserContactsRepository userContactsRepository, SMTPMailSender smtp, UserInfoRepository userInfoRepository, UserDetailsRepository userDetailsRepository) {
+	@Autowired
+    public UserService(UserRepository userRepository, EmailRepository emailRepository, UserContactsRepository userContactsRepository, SMTPMailSender smtp, UserInfoRepository userInfoRepository, UserDetailsRepository userDetailsRepository, UserEngagRepository userEngagRepository) {
     	this.userRepository = userRepository;
     	this.emailRepository = emailRepository;
     	this.userContactsRepository = userContactsRepository;
     	this.smtp = smtp;
     	this.userInfoRepository = userInfoRepository;
     	this.userDetailsRepository = userDetailsRepository;
+    	this.userEngagRepository = userEngagRepository;
     }
 
     @Bean
@@ -58,6 +60,23 @@ public class UserService {
 		}		
 		return result.toString();
     }
+
+    public String calculateSHA(String input) {
+		try{
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			byte[] hash = digest.digest(input.getBytes("UTF-8"));
+			StringBuffer hexString = new StringBuffer();
+
+			for (int i = 0; i < hash.length; i++) {
+				String hex = Integer.toHexString(0xff & hash[i]);
+				if(hex.length() == 1) hexString.append('0');
+				hexString.append(hex);
+			}
+			return hexString.toString();
+		} catch(Exception ex){
+			throw new RuntimeException(ex);
+		}
+	}
 
 	public Long calculateSeniority(Long id) throws ParseException {
 		UserDetail ud = userDetailsRepository.findById(id);
@@ -120,7 +139,7 @@ public class UserService {
 		return "User info has been changed !";
 	}
 
-	public String updateDetail(Long id, String branch, String section, String position, String currentProject, String state, String employmentDate) throws ParseException {
+	public Long updateDetail(Long id, String branch, String section, String position, String currentProject, String state, String employmentDate) throws ParseException {
     	UserDetail ud = userDetailsRepository.findById(id);
     	ud.setBranch(branch);
     	ud.setSection(section);
@@ -130,7 +149,7 @@ public class UserService {
     	ud.setEmploymentDate(employmentDate);
     	ud.setSeniority(calculateSeniority(id));
     	userDetailsRepository.save(ud);
-    	return "User detail has been changed !";
+    	return ud.getSeniority();
 	}
 	
 	public String resetPasswordNew(String email, String password) {
@@ -155,6 +174,37 @@ public class UserService {
 
 	public UserDetail getUserDetailById(Long id) {
     	return userDetailsRepository.findById(id);
+	}
+
+	public UserEngag createUserEngag(Long id, UserEngag userEngag) {
+		return userRepository.findById(id).map(user -> {
+			userEngag.setUser(user);
+			return userEngagRepository.save(userEngag);
+		}).orElseThrow(() -> new ResourceNotFoundExcptn("Id " + id + " not found"));
+	}
+
+	public ResponseEntity<?> deleteUserEngag(Long id, Long userEngagId) {
+		if(!userRepository.existsById(id)) {
+			throw new ResourceNotFoundExcptn("Id " + id + " not found");
+		}
+		return userEngagRepository.findById(userEngagId).map(userEngag -> {
+			userEngagRepository.delete(userEngag);
+			return ResponseEntity.ok().build();
+		}).orElseThrow(() -> new ResourceNotFoundExcptn("UserId " + userEngagId + " not found"));
+	}
+
+	public UserEngag updateUserEngag(Long id, Long userEngagId, UserEngag userEngagRequest) {
+		if (!userRepository.existsById(id)) {
+			throw new ResourceNotFoundExcptn("UserId " + id + " not found");
+		}
+		return userEngagRepository.findById(userEngagId).map(userEngag -> {
+			userEngag.setStartDate(userEngagRequest.getStartDate());
+			userEngag.setEndDate(userEngagRequest.getEndDate());
+			userEngag.setEngag(userEngagRequest.getEngag());
+			userEngag.setProjId(userEngagRequest.getProjId());
+			userEngag.setContractorId(userEngagRequest.getContractorId());
+			return userEngagRepository.save(userEngag);
+		}).orElseThrow(() -> new ResourceNotFoundExcptn("UserEngagId " + userEngagId + "not found"));
 	}
 
 }

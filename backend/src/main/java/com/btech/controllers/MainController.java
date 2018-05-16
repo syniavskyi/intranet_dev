@@ -1,8 +1,6 @@
 package com.btech.controllers;
 
-import com.btech.pojo.DepsList;
-import com.btech.pojo.Email;
-import com.btech.pojo.RolesList;
+import com.btech.pojo.*;
 import com.btech.service.RepoService;
 import com.btech.service.UserService;
 
@@ -18,11 +16,7 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -70,6 +64,24 @@ public class MainController {
 	@RequestMapping(value="/api/depsList", method = RequestMethod.GET)
 	public List<DepsList> getDepsList() {
 		return repoService.getAllDeps();
+	}
+
+	@CrossOrigin
+	@RequestMapping(value="/api/sectionList", method = RequestMethod.GET)
+	public List<SectionList> getSectionList() {
+		return repoService.getAllSections();
+	}
+
+	@CrossOrigin
+	@RequestMapping(value="/api/projectList", method = RequestMethod.GET)
+	public List<ProjectList> getProjectList() {
+		return repoService.getAllProjects();
+	}
+
+	@CrossOrigin
+	@RequestMapping(value="/api/cotractorsList", method = RequestMethod.GET)
+	public List<ContractorList> getAllContractors() {
+		return repoService.getAllContractors();
 	}
 	
 	@CrossOrigin

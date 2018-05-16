@@ -3,7 +3,9 @@ package com.btech.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="user")
@@ -51,6 +53,10 @@ public class User {
         this.userDetails = userDetails;
         this.fullName = fullName;
         this.slackName = slackName;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
