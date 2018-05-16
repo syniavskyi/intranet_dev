@@ -4,11 +4,10 @@
     <h3>Witaj w firmie! Poniżej lista dokumentów do wypełnienia i dostarczenia dla Back Office'u dla nowozatrudnionych pracowników.</h3>
     <ul>
       <li v-for="list in listOfDoc" :class="list.checked ? 'line-through' : 'none' ">
-        <!-- <button>Plik</button>{{ list }}<input type="checkbox" @change="$v.docCheckbox.$touch()" v-model="docCheckbox"> -->
         <button>Plik</button>{{ list.title }}<input type="checkbox" :checked="list.checked" @change="changeCheckbox(list)">
       </li>
     </ul>
-    <button :disabled="buttonDisabled">Dostarczyłem wszystkie dokumenty</button>
+    <button :disabled="setButton">Dostarczyłem wszystkie dokumenty</button>
   </div>
 </template>
 
@@ -41,18 +40,7 @@ export default {
         // "Dotychczasowe świadectwa pracy",
         // "Dyplomy",
         // "Dokumentacja od lekarza tj. badania okresowe i psychologiczne pod kątem prowadzenia auta"
-      ],
-      buttonDisabled: true
-      // listOfDoc: [
-      //   {
-      //     title: "test",
-      //     checkbox: false
-      //   },
-      //   {
-      //     title: "test2",
-      //     checkbox: false
-      //   }
-      // ]
+      ]
     }
   },
   created() {
@@ -64,14 +52,14 @@ export default {
       this.checkList();
     },
     checkList() {
-      for(var i = 0; i < this.listOfDoc.length; i++) {
-        // this.listOfDoc[i].checked ? this.buttonDisabled = false : return this.buttonDisabled = true;
-        if(this.listOfDoc[i].checked) {
-          this.buttonDisabled = false;
-        } else {
-          return this.buttonDisabled = true;
-        }
-      }
+      this.$store.dispatch("checkList", {
+        listOfDoc: this.listOfDoc
+      })
+    }
+  },
+  computed: {
+    setButton() {
+      return this.$store.getters.returnCheckList;
     }
   }
 }
