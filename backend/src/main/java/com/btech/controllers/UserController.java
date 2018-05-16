@@ -3,45 +3,42 @@ import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import com.btech.model.UserContacts;
-import com.btech.model.UserInfo;
-import com.btech.model.UserDetail;
+import com.btech.exceptions.ResourceNotFoundExcptn;
+import com.btech.model.*;
 import com.btech.repositories.UserDetailsRepository;
+import com.btech.repositories.UserEngagRepository;
+import com.btech.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.btech.model.User;
 import com.btech.pojo.UserRegistration;
 import com.btech.service.UserService;
+
+import javax.validation.Valid;
 
 @RestController
 public class UserController {
 	
     private final UserService userService;
     private final UserDetailsRepository userDetailsRepository;
+    private final UserEngagRepository userEngagRepository;
+    private final UserRepository userRepository;
     
     @Autowired
-    public UserController(UserService userService, UserDetailsRepository userDetailsRepository) {
+    public UserController(UserService userService, UserDetailsRepository userDetailsRepository, UserEngagRepository userEngagRepository, UserRepository userRepository) {
     	this.userService = userService;
     	this.userDetailsRepository = userDetailsRepository;
+    	this.userEngagRepository = userEngagRepository;
+    	this.userRepository = userRepository;
     }
 
     @CrossOrigin
@@ -113,7 +110,7 @@ public class UserController {
 
     @CrossOrigin
     @RequestMapping(value = "/api/user/edit/detail", method = RequestMethod.POST)
-    public String changeDetail(@RequestParam(value = "id") Long id,
+    public Long changeDetail(@RequestParam(value = "id") Long id,
                                @RequestParam(value = "branch", required = false) String branch,
                                @RequestParam(value = "section", required = false) String section,
                                @RequestParam(value = "position", required = false) String position,
@@ -142,5 +139,25 @@ public class UserController {
         ud.setSeniority(userService.calculateSeniority(id));
         return userService.getUserDetailById(id);
     }
-    
+
+    @GetMapping("/api/users/{id}/userEngag")
+    public List<UserEngag> getUserEngagByPostId(@PathVariable (value = "id") Long id) {
+        return userEngagRepository.findByUserId(id);
+    }
+
+    @PostMapping("/api/users/{id}/userEngag/create")
+    public UserEngag createUserEngag(@PathVariable (value = "id") Long id, @Valid @RequestBody UserEngag userEngag) {
+        return userService.createUserEngag(id, userEngag);
+    }
+
+    @DeleteMapping("/api/users/{id}/userEngag/{userEngagId}/delete")
+    public ResponseEntity<?> deleteUserEngag(@PathVariable (value = "id") Long id, @PathVariable (value = "userEngagId") Long userEngagId) {
+        return userService.deleteUserEngag(id, userEngagId);
+    }
+
+    @PutMapping("/api/users/{id}/userEngag/{userEngagId}/edit")
+    public UserEngag updateUserEngag(@PathVariable (value = "id") Long id, @PathVariable (value = "userEngagId") Long userEngagId, @Valid @RequestBody UserEngag userEngagRequest) {
+        return userService.updateUserEngag(id, userEngagId, userEngagRequest);
+    }
+
 }
