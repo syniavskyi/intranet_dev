@@ -41,11 +41,16 @@
         <select class="selectProfile" v-model="projectToEdit">
             <option v-for="project in userProjectsList" :key="project.id" :value="project"> {{ project.projName }} </option>
         </select>
-        <div v-if="projectToEdit.id != null">
+                <div v-if="projectToEdit.id != null">
             <label class="label-profile">Obłożenie</label>
             <input v-model="projectToEdit.engag" /> <span>%</span>
+            <label class="label-profile">Termin rozpoczęcia</label>
+            <input v-model="projectToEdit.startDate" />
             <label class="label-profile">Termin zakończenia</label>
             <input v-model="projectToEdit.endDate" />
+            <v-date-picker v-model="projectToEdit.endDate" mode="single">
+                <input />
+            </v-date-picker>
             <button @click="removeUserProject">Usuń projekt</button>
         </div>
         <button>Anuluj</button>
@@ -83,6 +88,7 @@
 import {
     mapGetters
 } from 'vuex'
+import moment from "moment";
 import i18n from '../../lang/lang'
 import {
     required,
@@ -101,7 +107,10 @@ export default {
             showEditDialog: false,
             showAddProjectDialog: false,
             projectToEdit: {},
-            newProjectForUser: {}
+            newProjectForUser: {},
+            formats: {
+                input: ['DD.MM.YYYY']
+            }
         }
     },
     validations: {
@@ -150,6 +159,7 @@ export default {
                     backgroundColor: t.color,
                     borderRadius: '20px'
                 },
+                order: t.order,
                 dates: {
                     start: new Date(t.startDate),
                     end: new Date(t.endDate)

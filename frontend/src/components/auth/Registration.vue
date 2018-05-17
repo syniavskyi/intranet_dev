@@ -53,13 +53,13 @@
         <div class="div-select">
           <label class="label" for="role">{{ $t("label.role") }}</label>
           <select class="select">
-            <option v-for="role in getRoleList" :value="roleChosen = role">{{ role }}</option>
+            <option v-for="role in getRoleList" :value="roleChosen = role" :key="role.roleId">{{ role }}</option>
           </select>
         </div>
         <div class="div-select">
           <label class="label" for="role">{{ $t("label.department") }}</label>
           <select class="select">
-            <option v-for="department in getDepartmentList" :value="depId = department.depId">{{ department.depName }}</option>
+            <option v-for="department in getDepartmentList" :value="depId = department.depId" :key="department.depId">{{ department.depName }}</option>
           </select>
         </div>
         <button class="button" :disabled="$v.$invalid" @click="submit">

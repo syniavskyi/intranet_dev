@@ -20,7 +20,6 @@ public class UserEngag {
     @Column(name="end_date")
     private String endDate;
     @NotNull
-    @Lob
     @Column(name="engag")
     private String engag;
     @NotNull

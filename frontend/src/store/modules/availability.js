@@ -27,8 +27,10 @@ const actions = {
             for (let i=0; i<userProjects.length; i++) {
                 if (userProjects[i].engag > 60) {
                     userProjects[i].color = '#FF3333'
+                    userProjects[i].order = 2
                 } else {
                     userProjects[i].color = '#FFCC00'
+                    userProjects[i].order = 1
                 }
             }
             commit('SET_USER_PROJECTS', userProjects)
