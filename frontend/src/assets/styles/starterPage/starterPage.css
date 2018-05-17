@@ -228,9 +228,9 @@ body {
 }
 
 @media (min-width: 30rem) {
-    .plane-nav {
+    /* .plane-nav {
         min-height: 61rem;
-    }
+    } */
  .starter-header-menu {
         display: none;
     }
