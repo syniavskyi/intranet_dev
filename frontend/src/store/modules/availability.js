@@ -25,13 +25,15 @@ const actions = {
                 }
             }
             for (let i=0; i<userProjects.length; i++) {
-                if (userProjects[i].engag > 60) {
+                if (userProjects[i].engag === "100") {
                     userProjects[i].color = '#FF3333'
                     userProjects[i].order = 2
                 } else {
                     userProjects[i].color = '#FFCC00'
                     userProjects[i].order = 1
                 }
+                userProjects[i].startDate = new Date(userProjects[i].startDate)
+                userProjects[i].endDate = new Date(userProjects[i].endDate)
             }
             commit('SET_USER_PROJECTS', userProjects)
         }).catch(error => {
@@ -47,7 +49,15 @@ const actions = {
            console.log(error)
        });
     },
-    addUserProject({commit}, data) {
+    addUserProject({commit}, newProjectData) {
+        const data = {
+            userId: newProjectData.userId,
+            projId: newProjectData.projectId,
+            engag: newProjectData.engag,
+            endDate: newProjectData.dates.end,
+            startDate: newProjectData.dates.start,
+            contractorId: newProjectData.contractorId
+        }
         const URL = '/api/users/' + data.userId + '/userEngag/create'
         axios.post( URL, {
             startDate: data.startDate,
@@ -63,14 +73,15 @@ const actions = {
             console.log(error);
           });
     },
-    editUserProject({commit}, data) { 
-        const URL = '/api/users/' + data.userId + '/userEngag/' + data.id + '/edit'
+    editUserProject({commit}, projectData) { 
+        const URL = '/api/users/' + projectData.userId + '/userEngag/' + projectData.id + '/edit'
+
         axios.put( URL, {
-            startDate: data.startDate,
-            endDate: data.endDate,
-            engag: data.engag, 
-            projId: data.projectId,
-            contractorId: data.contractorId
+            startDate: projectData.startDate,
+            endDate: projectData.endDate,
+            engag: projectData.engag, 
+            projId: projectData.projId,
+            contractorId: projectData.contractorId
           })
           .then(response => {
             console.log(response);
