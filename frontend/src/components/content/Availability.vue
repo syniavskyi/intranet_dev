@@ -25,7 +25,7 @@
     <!-- <div class="calendar" v-if="selectedUser != null"> -->
 
     <div class="calendar">
-        <v-calendar v-if="selectedUser != null"  :attributes="attributes" mode='single' is-inline></v-calendar>
+        <v-calendar :theme-styles="themeStyles" v-if="selectedUser != null" :attributes="attributes" mode='single' is-inline></v-calendar>
     </div>
 
     <div>
@@ -38,48 +38,50 @@
         <label class="label-profile">Wybrany pracownik</label>
         <p class="label-profile"> {{ selectedUser.firstName }} {{ selectedUser.lastName }}</p>
         <label class="label-profile">Projekty pracownika</label>
-        <select class="selectProfile" v-model="projectToEdit">
-            <option v-for="project in userProjectsList" :key="project.id" :value="project"> {{ project.projName }} </option>
-        </select>
-                <div v-if="projectToEdit.id != null">
+        <select @change="onEdit" class="selectProfile" v-model="projectToEdit">
+            <option v-for="project in userProjectsList" :key="project.projId" :value="project"> {{ project.projName }} </option>
+        </select><br/>
+        <div v-if="projectToEdit.id != null">
             <label class="label-profile">Obłożenie</label>
-            <input v-model="projectToEdit.engag" /> <span>%</span>
+            <input type="number" max="100" min="0" @input="validateEditEngag(projectToEdit.engag)" v-model="projectToEdit.engag" /> <span>%</span><br/>
             <label class="label-profile">Termin rozpoczęcia</label>
-            <input v-model="projectToEdit.startDate" />
+            <v-date-picker v-model="projectToEdit.startDate" mode="single">
+                <input  value="projectToEdit.startDate" />
+            </v-date-picker> <br/>
             <label class="label-profile">Termin zakończenia</label>
-            <input v-model="projectToEdit.endDate" />
             <v-date-picker v-model="projectToEdit.endDate" mode="single">
-                <input />
+                <input value="projectToEdit.endDate" />
             </v-date-picker>
             <button @click="removeUserProject">Usuń projekt</button>
         </div>
-        <button>Anuluj</button>
-        <button @click="editProjectForUser">Zapisz</button>
+        <button @click="onCancelEdit">Anuluj</button>
+        <button :disabled="disableSaveEditProject" @click="editProjectForUser">Zapisz</button>
     </div>
     <div id="add-project-dialog" v-if="showAddProjectDialog">
         <h4>Dodaj projekt</h4>
         <label class="label-profile">Pracownik</label>
-        <select class="select" v-model="newProjectForUser.userId">
+        <select @change="loadUserProjects(newProjectForUser.userId)" class="select" v-model="newProjectForUser.userId">
             <option v-for="user in usersList" :key="user.id" :value="user.id">{{ user.firstName }} {{ user.lastName }}</option>
-        </select>
-        <label class="label-profile">Contractor</label>
-        <select class="selectProfile" v-model="newProjectForUser.contractorId">
+        </select><br/>
+        <label class="label-profile">Kontrahent</label>
+        <select @change="validateNewProject" class="selectProfile" v-model="newProjectForUser.contractorId">
             <option v-for="contractor in contractorsList" :key="contractor.id" :value="contractor.id"> {{ contractor.name }}</option>
-        </select>
+        </select><br/>
         <label class="label-profile">Projekt</label>
-        <select class="selectProfile" v-model="newProjectForUser.projectId">
+        <select @change="checkProject" class="selectProfile" v-model="newProjectForUser.projectId">
             <option v-for="project in filteredProjects" :key="project.id" :value="project.id"> {{ project.name }}</option>
-        </select>
-        <label class="label-profile">Obłożenie</label>
-        <input v-model="newProjectForUser.engag" /> <span>%</span>
-        <label class="label-profile">Termin</label>
-        <input v-model="newProjectForUser.startDate" />
-        <input v-model="newProjectForUser.endDate" />
-        <!-- <v-date-picker is-expanded mode="range">
-            <input placeholder="Wybierz termin" v-model="newProjectForUser.dates"/>
-        </v-date-picker> -->
-        <button>Anuluj</button>
-        <button @click="addNewProjectForUser">Dodaj</button>
+        </select><br/>
+        <p v-if="projectExist"> Taki projekt już jest przypisany </p>
+        <div class="project-data">
+            <label class="label-profile">Obłożenie</label>
+            <input v-model="newProjectForUser.engag" @input="validateNewEngag(newProjectForUser.engag)" type="number" min="0" max="100" /><span>%</span><br/>
+            <p v-if="invalidNewEngag">Złe obłożenie</p>
+            <v-date-picker is-expanded mode="range" v-model="newProjectForUser.dates">
+                <input @change="validateNewProject" value="newProjectForUser.dates" />
+            </v-date-picker>
+            <button @click="onCancelCreate">Anuluj</button>
+            <button :disabled="disableSaveNewProject" @click="addNewProjectForUser">Dodaj</button>
+        </div>
     </div>
 </div>
 </template>
@@ -92,7 +94,8 @@ import moment from "moment";
 import i18n from '../../lang/lang'
 import {
     required,
-    number
+    number,
+    between
 } from 'vuelidate/lib/validators'
 
 export default {
@@ -106,19 +109,17 @@ export default {
             selectedUser: null,
             showEditDialog: false,
             showAddProjectDialog: false,
+            invalidNewEngag: false,
+            invalidEditEngag: false,
             projectToEdit: {},
             newProjectForUser: {},
-            formats: {
-                input: ['DD.MM.YYYY']
-            }
-        }
-    },
-    validations: {
-        newProject: {
-            engagement: {
-                required,
-                number
-            }
+            disableSaveNewProject: true,
+            disableSaveEditProject: true,
+            _beforeEditingCache: null,
+            hasDataChanged: false,
+            projectExist: false
+            
+
         }
     },
     computed: {
@@ -169,6 +170,17 @@ export default {
                 },
                 customData: t
             }))
+        },
+        themeStyles() {
+            return {
+                dayCell: {
+                    backgroundColor: '#99FF66',
+
+                },
+                dayCellNotInMonth: {
+                    opacity: 0
+                }
+            }
         }
     },
     beforeCreate() {
@@ -189,35 +201,96 @@ export default {
             this.$store.dispatch('getUserProjects', userId)
         },
         addNewProjectForUser() {
-            const data = {
-                userId: this.newProjectForUser.userId,
-                projId: this.newProjectForUser.projectId,
-                engag: this.newProjectForUser.engag,
-                endDate: this.newProjectForUser.endDate,
-                startDate: this.newProjectForUser.startDate,
-                contractorId: this.newProjectForUser.contractorId
-            }
-            this.$store.dispatch('addUserProject', data)
+            this.$store.dispatch('addUserProject', this.newProjectForUser)
+            this.showAddProjectDialog = false
+        },
+        onEdit() {
+            this._beforeEditingCache = Object.assign({}, this.projectToEdit)
+            this.validateEditProject()
+        },
+        onCancelEdit() {
+            Object.assign(this.projectToEdit, this._beforeEditingCache)
+            this._beforeEditingCache = null
+            this.showEditDialog = false
+            this.projectToEdit = {}
+        },
+        onCancelCreate() {
+            this.showAddProjectDialog = false
+            this.newProjectForUser = {}
         },
         editProjectForUser() {
-            const data = {
-                userId: this.selectedUser.id,
-                projectId: this.projectToEdit.id,
-                projName: this.projectToEdit.projName,
-                engag: this.projectToEdit.engag,
-                endDate: this.projectToEdit.endDate,
-                startDate: this.projectToEdit.startDate,
-                contractorName: this.projectToEdit.contractorName
-            }
-            this.$store.dispatch('editUserProject', data)
+            this.projectToEdit.userId = this.selectedUser.id
+            this.$store.dispatch('editUserProject', this.projectToEdit)
+            this.showEditDialog = false
         },
         removeUserProject() {
             const data = {
                 projectId: this.projectToEdit.id,
                 userId: this.selectedUser.id
-
             }
             this.$store.dispatch('removeUserProject', data)
+        },
+        validateNewEngag(engag) {
+            if (engag < 0) this.newProjectForUser.engag = null;
+            if (engag > 100) this.newProjectForUser.engag = 100;
+            this.validateNewProject()
+        },
+        validateNewProject() {
+            const project = this.newProjectForUser
+            if (project.userId && project.projectId && project.contractorId && project.engag && project.dates) {
+                this.disableSaveNewProject = false
+            } else {
+                this.disableSaveNewProject = true
+            }
+        },
+        validateEditEngag(engag) {
+            if (engag < 0) this.projectToEdit.engag = null;
+            if (engag > 100) this.projectToEdit.engag = 100;
+            this.validateEditProject()
+        },
+        validateEditProject() {
+            const project = this.projectToEdit
+            this.checkIfDataChanged()
+            if (this.hasDataChanged === false || this.projectExist === true) {
+                this.disableSaveEditProject = true
+                return
+            }
+            if (project.engag && project.startDate && project.endDate) {
+                this.disableSaveEditProject = false
+            } else {
+                this.disableSaveEditProject = true
+            }
+        },
+        checkIfDataChanged() {
+            let currentData = Object.assign({}, this.projectToEdit)
+
+            var currDataProps = Object.getOwnPropertyNames(currentData)
+            var beforeDataProps = Object.getOwnPropertyNames(this._beforeEditingCache)
+
+            for (var i = 0; i < beforeDataProps.length; i++) {
+                var propName = beforeDataProps[i];
+                if (currentData[propName] !== this._beforeEditingCache[propName]) {
+                    this.hasDataChanged = true
+                    return
+                } else {
+                    this.hasDataChanged = false
+                }
+            }
+        },
+        checkProject() {
+            const currProjects = this.userProjectsList,
+                 projectId = this.newProjectForUser.projectId
+            for (var i = 0; i < currProjects.length; i++) {
+                if (projectId === currProjects[i].projId) {
+                    this.projectExist = true
+                    this.disableSaveNewProject = true
+                    return
+                } else {
+                    this.projectExist = false
+                    this.validateNewProject()
+                }
+            }
+
         }
 
     }
