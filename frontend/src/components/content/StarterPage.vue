@@ -103,7 +103,7 @@ export default {
           checked: true
         },
         {
-          title: "Dokumentacja od lekarza tj. badania okresowe i psychologiczne pod kątem prowadzenia auta",
+          title: "Dokumentacja od lekarza",
           desc: "Badania okresowe i psychologiczne pod kątem prowadzenia auta",
           checked: false
         }
