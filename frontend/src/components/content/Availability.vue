@@ -154,7 +154,8 @@ export default {
                 key: t.id,
                 highlight: {
                     backgroundColor: t.color,
-                    borderRadius: '20px'
+                    borderRadius: '0px',
+                    height: '100%'
                 },
                 order: t.order,
                 dates: {
@@ -170,7 +171,7 @@ export default {
         themeStyles() {
             return {
                 dayCell: {
-                    backgroundColor: '#99FF66',
+                    backgroundColor: '#CCFF99',
 
                 },
                 dayCellNotInMonth: {
