@@ -75,7 +75,7 @@ import axios from 'axios'
         if (this.showMenu === false) {
             this.$store.commit('DISPLAY_MENU', true)
         }
-        if (this.$store.getters.idDataLoaded === false) {
+        if (this.$store.getters.isDataLoaded === false) {
             this.$store.dispatch('loadData', localStorage.getItem('token'))
         }
     },
