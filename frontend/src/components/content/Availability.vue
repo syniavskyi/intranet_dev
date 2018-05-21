@@ -4,7 +4,7 @@
         <div class="div-select">
             <label class="label" for="role">{{ $t("label.department") }}</label>
             <select class="selectProfile" v-model="selectedDepartment">
-                <option v-for="department in departmentList" :key="department.depId" :value="selectedDepartment = department.depId">{{ department.depName }}</option>
+                <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
             </select>
         </div>
         <div class="div-select" v-if="selectedDepartment != null">
@@ -60,24 +60,23 @@
     <div id="add-project-dialog" v-if="showAddProjectDialog">
         <h4>Dodaj projekt</h4>
         <label class="label-profile">Pracownik</label>
-        <select @change="loadUserProjects(newProjectForUser.userId)" class="select" v-model="newProjectForUser.userId">
+        <select @change="setProjectsToCheck(newProjectForUser.userId)" class="select" v-model="newProjectForUser.userId">
             <option v-for="user in usersList" :key="user.id" :value="user.id">{{ user.firstName }} {{ user.lastName }}</option>
         </select><br/>
         <label class="label-profile">Kontrahent</label>
-        <select @change="validateNewProject" class="selectProfile" v-model="newProjectForUser.contractorId">
+        <select @change="removeSelectedProject" class="selectProfile" v-model="newProjectForUser.contractorId">
             <option v-for="contractor in contractorsList" :key="contractor.id" :value="contractor.id"> {{ contractor.name }}</option>
         </select><br/>
         <label class="label-profile">Projekt</label>
-        <select @change="checkProject" class="selectProfile" v-model="newProjectForUser.projectId">
+        <select @change="validateNewProject" class="selectProfile" v-model="newProjectForUser.projectId">
             <option v-for="project in filteredProjects" :key="project.id" :value="project.id"> {{ project.name }}</option>
         </select><br/>
         <p v-if="projectExist"> Taki projekt już jest przypisany </p>
         <div class="project-data">
             <label class="label-profile">Obłożenie</label>
             <input v-model="newProjectForUser.engag" @input="validateNewEngag(newProjectForUser.engag)" type="number" min="0" max="100" /><span>%</span><br/>
-            <p v-if="invalidNewEngag">Złe obłożenie</p>
             <v-date-picker is-expanded mode="range" v-model="newProjectForUser.dates">
-                <input @change="validateNewProject" value="newProjectForUser.dates" />
+                <input value="newProjectForUser.dates" />
             </v-date-picker>
             <button @click="onCancelCreate">Anuluj</button>
             <button :disabled="disableSaveNewProject" @click="addNewProjectForUser">Dodaj</button>
@@ -109,17 +108,8 @@ export default {
             selectedUser: null,
             showEditDialog: false,
             showAddProjectDialog: false,
-            invalidNewEngag: false,
-            invalidEditEngag: false,
             projectToEdit: {},
-            newProjectForUser: {},
-            disableSaveNewProject: true,
-            disableSaveEditProject: true,
-            _beforeEditingCache: null,
-            hasDataChanged: false,
-            projectExist: false
-            
-
+            newProjectForUser: {}
         }
     },
     computed: {
@@ -129,7 +119,13 @@ export default {
             userProjectsList: 'userProjectsList',
             sectionsList: 'sectionsList',
             projectsList: 'projectsList',
-            contractorsList: 'contractorsList'
+            contractorsList: 'contractorsList',
+            disableSaveNewProject: 'getDisableSaveNewProject',
+            disableSaveEditProject: 'getDisableSaveEditProject',
+            beforeEditingCache: 'getBeforeEditingCache',
+            hasDataChanged: 'getHasDataChanged',
+            projectExist: 'getProjectExist',
+            userProjectsToCheckList: 'userProjectsToCheckList'
         }),
         filteredUsers() {
             const usersList = this.usersList
@@ -162,8 +158,8 @@ export default {
                 },
                 order: t.order,
                 dates: {
-                    start: new Date(t.startDate),
-                    end: new Date(t.endDate)
+                    start: t.startDate,
+                    end: t.endDate
                 },
                 popover: {
                     label: t.projName
@@ -191,7 +187,7 @@ export default {
         if (localStorage.getItem('role') === 'leader') {
             this.showBranchSelect = false
         }
-        if (this.$store.getters.idDataLoaded === false) {
+        if (this.$store.getters.isDataLoaded === false) {
             this.$store.dispatch('loadData', localStorage.getItem('token'))
         }
 
@@ -200,17 +196,23 @@ export default {
         loadUserProjects(userId) {
             this.$store.dispatch('getUserProjects', userId)
         },
+        setProjectsToCheck(userId) {
+             this.$store.dispatch('getUserProjectsToCheck', userId)
+            this.validateNewProject()
+        },
         addNewProjectForUser() {
             this.$store.dispatch('addUserProject', this.newProjectForUser)
             this.showAddProjectDialog = false
+            this.newProjectForUser = {}
         },
         onEdit() {
-            this._beforeEditingCache = Object.assign({}, this.projectToEdit)
+            const beforeEditingCache = Object.assign({}, this.projectToEdit)
+            this.$store.commit('SET_BEFORE_EDIT_CACHE', beforeEditingCache)
             this.validateEditProject()
         },
         onCancelEdit() {
-            Object.assign(this.projectToEdit, this._beforeEditingCache)
-            this._beforeEditingCache = null
+            Object.assign(this.projectToEdit, this.beforeEditingCache)
+            this.$store.commit('SET_BEFORE_EDIT_CACHE', null)
             this.showEditDialog = false
             this.projectToEdit = {}
         },
@@ -229,18 +231,30 @@ export default {
                 userId: this.selectedUser.id
             }
             this.$store.dispatch('removeUserProject', data)
+            this.showEditDialog = false
+            this.projectToEdit = {}
         },
         validateNewEngag(engag) {
             if (engag < 0) this.newProjectForUser.engag = null;
             if (engag > 100) this.newProjectForUser.engag = 100;
             this.validateNewProject()
         },
+        removeSelectedProject(){
+            this.newProjectForUser.projectId = null
+            this.validateNewProject()
+        },
         validateNewProject() {
-            const project = this.newProjectForUser
-            if (project.userId && project.projectId && project.contractorId && project.engag && project.dates) {
-                this.disableSaveNewProject = false
-            } else {
-                this.disableSaveNewProject = true
+           const currProjects = this.userProjectsToCheckList,
+                projectId = this.newProjectForUser.projectId
+            for (var i = 0; i < currProjects.length; i++) {
+                if (projectId === currProjects[i].projId) {
+                    this.$store.commit('SET_PROJECT_EXIST',true)
+                    this.$store.commit('SET_DISABLE_SAVE_NEW',true)
+                    return
+                } else {
+                    this.$store.commit('SET_PROJECT_EXIST',false)
+                    this.$store.dispatch('validateNewProject', this.newProjectForUser)
+                }
             }
         },
         validateEditEngag(engag) {
@@ -249,50 +263,8 @@ export default {
             this.validateEditProject()
         },
         validateEditProject() {
-            const project = this.projectToEdit
-            this.checkIfDataChanged()
-            if (this.hasDataChanged === false || this.projectExist === true) {
-                this.disableSaveEditProject = true
-                return
-            }
-            if (project.engag && project.startDate && project.endDate) {
-                this.disableSaveEditProject = false
-            } else {
-                this.disableSaveEditProject = true
-            }
-        },
-        checkIfDataChanged() {
-            let currentData = Object.assign({}, this.projectToEdit)
-
-            var currDataProps = Object.getOwnPropertyNames(currentData)
-            var beforeDataProps = Object.getOwnPropertyNames(this._beforeEditingCache)
-
-            for (var i = 0; i < beforeDataProps.length; i++) {
-                var propName = beforeDataProps[i];
-                if (currentData[propName] !== this._beforeEditingCache[propName]) {
-                    this.hasDataChanged = true
-                    return
-                } else {
-                    this.hasDataChanged = false
-                }
-            }
-        },
-        checkProject() {
-            const currProjects = this.userProjectsList,
-                 projectId = this.newProjectForUser.projectId
-            for (var i = 0; i < currProjects.length; i++) {
-                if (projectId === currProjects[i].projId) {
-                    this.projectExist = true
-                    this.disableSaveNewProject = true
-                    return
-                } else {
-                    this.projectExist = false
-                    this.validateNewProject()
-                }
-            }
-
+            this.$store.dispatch('validateEditProject', this.projectToEdit)
         }
-
     }
 }
 </script>

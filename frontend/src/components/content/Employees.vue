@@ -54,7 +54,7 @@ import i18n from '../../lang/lang'
       }
     },
     beforeCreate() {
-      if (this.$store.getters.idDataLoaded === false) {
+      if (this.$store.getters.isDataLoaded === false) {
             this.$store.dispatch('loadData', localStorage.getItem('token'))
       }
     },
