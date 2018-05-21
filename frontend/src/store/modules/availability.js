@@ -50,10 +50,10 @@ const actions = {
             }
             for (let i=0; i<userProjects.length; i++) {
                 if (userProjects[i].engag === "100") {
-                    userProjects[i].color = '#FF6666'
+                    userProjects[i].color = '#EDA1A1'
                     userProjects[i].order = 2
                 } else {
-                    userProjects[i].color = '#FFCC33'
+                    userProjects[i].color = '#fde692'
                     userProjects[i].order = 1
                 }
                 userProjects[i].startDate = new Date(userProjects[i].startDate)
