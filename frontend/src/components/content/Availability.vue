@@ -64,7 +64,7 @@
             <option v-for="user in usersList" :key="user.id" :value="user.id">{{ user.firstName }} {{ user.lastName }}</option>
         </select><br/>
         <label class="label-profile">Kontrahent</label>
-        <select @change="validateNewProject" class="selectProfile" v-model="newProjectForUser.contractorId">
+        <select @change="removeSelectedProject" class="selectProfile" v-model="newProjectForUser.contractorId">
             <option v-for="contractor in contractorsList" :key="contractor.id" :value="contractor.id"> {{ contractor.name }}</option>
         </select><br/>
         <label class="label-profile">Projekt</label>
@@ -237,6 +237,10 @@ export default {
         validateNewEngag(engag) {
             if (engag < 0) this.newProjectForUser.engag = null;
             if (engag > 100) this.newProjectForUser.engag = 100;
+            this.validateNewProject()
+        },
+        removeSelectedProject(){
+            this.newProjectForUser.projectId = null
             this.validateNewProject()
         },
         validateNewProject() {
