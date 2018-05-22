@@ -56,7 +56,8 @@
         "addNewEvent": "Dodaj nowe wydarzenie",
         "availability": "Dyspozycyjność",
         "starterPage": "Strona Startowa",
-        "welcome": "Witaj w BTech!"
+        "welcome": "Witaj w BTech!",
+        "delegations": "Delegacje"
     },
     "message": {
         "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",

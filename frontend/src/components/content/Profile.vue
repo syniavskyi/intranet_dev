@@ -224,7 +224,7 @@ export default {
         MaskedInput
     },
     beforeCreate() {
-      if (this.$store.getters.idDataLoaded === false) {
+      if (this.$store.getters.isDataLoaded === false) {
             this.$store.dispatch('loadData', localStorage.getItem('token'))
         }
     },
@@ -304,11 +304,9 @@ export default {
         },
         dateValidation(value) {
             const day = parseInt(value.slice(0, 2)),
-                month = parseInt(value.slice(3, 5)),
-                year = parseInt(value.slice(6, 10)),
-                currYear = (new Date()).getFullYear()
-
-            if (day > 31 || month > 12 || year > currYear) {
+                month = parseInt(value.slice(3, 5))
+                
+            if (day > 31 || month > 12) {
                 this.invalidDate = true
                 this.disableSaveBtn = true
             } else {

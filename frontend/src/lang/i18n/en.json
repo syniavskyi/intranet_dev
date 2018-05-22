@@ -55,7 +55,8 @@
         "addNewEvent": "Add new event",
         "availability": "Availability",
         "starterPage": "Starter Page",
-        "welcome": "Welcome in BTech!"
+        "welcome": "Welcome in BTech!",
+        "delegations": "Delegations"
     },
     "message": {
         "loginError": "Password or username are invalid.",
