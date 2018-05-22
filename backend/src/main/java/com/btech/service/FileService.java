@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.btech.model.File;
+import com.btech.pojo.File;
 import com.btech.repositories.UserInfoRepository;
 
 @Service

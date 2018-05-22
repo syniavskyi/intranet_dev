@@ -17,10 +17,12 @@ public class UserRegistration {
 	private List<UserDetail> userDetails;
 	private String fullName;
 	private String slackName;
+	private boolean startPageVisible;
+	private String group;
 
 	public UserRegistration() {}
 	
-	public UserRegistration(String username, String password, String email, List<Role> roles, List<Dep> deps, List<UserInfo> userInfo, List<UserContacts> userContacts, List<UserDetail> userDetails, String fullName, String slackName) {
+	public UserRegistration(String username, String password, String email, List<Role> roles, List<Dep> deps, List<UserInfo> userInfo, List<UserContacts> userContacts, List<UserDetail> userDetails, String fullName, String slackName, boolean startPageVisible, String group) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -31,6 +33,8 @@ public class UserRegistration {
 		this.userDetails = userDetails;
 		this.fullName = fullName;
 		this.slackName = slackName;
+		this.startPageVisible = startPageVisible;
+		this.group = group;
 	}
 
 	public String getUsername() {
@@ -112,6 +116,20 @@ public class UserRegistration {
 	public void setSlackName(String slackName) {
 		this.slackName = slackName;
 	}
-	
-		
+
+	public boolean isStartPageVisible() {
+		return startPageVisible;
+	}
+
+	public void setStartPageVisible(boolean startPageVisible) {
+		this.startPageVisible = startPageVisible;
+	}
+
+	public String getGroup() {
+		return group;
+	}
+
+	public void setGroup(String position) {
+		this.group = group;
+	}
 }

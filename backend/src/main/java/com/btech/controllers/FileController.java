@@ -8,13 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.btech.model.File;
-import com.btech.repositories.UserInfoRepository;
+import com.btech.pojo.File;
 import com.btech.service.FileService;
-import com.btech.service.FileStorageService;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @RestController
 public class FileController {
