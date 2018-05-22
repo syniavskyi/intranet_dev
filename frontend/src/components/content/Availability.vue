@@ -192,13 +192,17 @@ export default {
     methods: {
         loadUserProjects(userId) {
             this.$store.dispatch('getUserProjects', userId)
+            this.projectToEdit = {}
         },
         setProjectsToCheck(userId) {
-             this.$store.dispatch('getUserProjectsToCheck', userId)
+            this.$store.dispatch('getUserProjectsToCheck', userId)
             this.validateNewProject()
         },
         addNewProjectForUser() {
             this.$store.dispatch('addUserProject', this.newProjectForUser)
+            if (this.newProjectForUser.userId === this.selectedUser.id){
+                this.$store.dispatch('getUserProjects', this.selectedUser.id)
+            }
             this.showAddProjectDialog = false
             this.newProjectForUser = {}
         },

@@ -64,7 +64,7 @@ const actions = {
             console.log(error)
         });
     },
-    getUserProjectsToCheck({commit, getters}, userId){
+     getUserProjectsToCheck({commit, getters}, userId){
         const URL = "/api/users/" + userId + "/userEngag"
          axios.get(URL).then(res => {
              console.log(res)
@@ -86,12 +86,12 @@ const actions = {
         const URL = "/api/users/" + data.userId + "/userEngag/" + data.projectId + "/delete"
         axios.delete(URL).then(res => {
             console.log(res)
-            dispatch ('getUserProjects', data.userId)
-       }).catch(error => {
+            dispatch('getUserProjects', data.userId)
+        }).catch(error => {
            console.log(error)
        });
     },
-    addUserProject({commit}, newProjectData) {
+    addUserProject({commit, dispatch}, newProjectData) {
         const data = {
             userId: newProjectData.userId,
             projId: newProjectData.projectId,
@@ -109,13 +109,13 @@ const actions = {
             contractorId: data.contractorId
           })
           .then(response => {
-            console.log(response);
+            dispatch('getUserProjectsToCheck', newProjectData.userId)
           })
           .catch(error => {
             console.log(error);
           });
     },
-    editUserProject({commit}, projectData) { 
+    editUserProject({commit, dispatch}, projectData) { 
         const URL = '/api/users/' + projectData.userId + '/userEngag/' + projectData.id + '/edit'
 
         axios.put( URL, {
@@ -126,10 +126,11 @@ const actions = {
             contractorId: projectData.contractorId
           })
           .then(response => {
-            console.log(response);
+            dispatch('getUserProjects', projectData.userId)
+            dispatch('getUserProjectsToCheck', projectData.userId)
           })
           .catch(error => {
-            console.log(err);
+            console.log(error);
           });
     },
     validateNewProject({commit}, project){ 
