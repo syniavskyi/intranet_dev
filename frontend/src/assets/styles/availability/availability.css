@@ -1,0 +1,344 @@
+body {
+    height: 100vh;
+    width: 100vw;
+    margin:0;
+    padding:0;
+    /* max-width: 100%; */
+}
+
+.plane-availability {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.availability-nav-and-content {
+    display: flex;
+    flex-direction: row;
+    background: #d8d8d8;
+    min-height: 100%;
+}
+
+.availability-content {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 1;
+}
+
+.availability-header {
+    align-self: center;
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 3%;
+    min-height: 3rem;
+    flex-shrink: 0;
+}
+
+.avaiability-header-title-and-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.availability-header-menu {
+    display: flex;
+    color: #7b7777;
+    margin: 0;
+    line-height: 2rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0 .5rem;
+}
+
+.availability-header-title {
+    color: #7b7777;
+    margin: 0;
+    line-height: 2rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.availability-tiles {
+    display:flex;
+    flex-direction: column;
+    width: 95%;
+    align-self: center;
+}
+.availability-tile {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 0 10px grey;
+    transition: align-items .3s ease;
+    margin: .5rem;
+}
+
+.ava-tile-1 {
+    align-self: center;
+    width: 100%;
+    min-height: 20rem;
+    height: 45%;
+}
+
+.ava-tile-2 {
+    align-self: center;
+    width: 100%;
+    height: 45%;
+    min-height: 15rem;
+}
+
+.availability-tile-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    min-height: 3rem;
+    height: 10%;
+}
+.availability-tile-header h2{
+    padding: .3rem;
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin-left: .5rem;
+}
+.ava-tile-header-title {
+    display: flex;
+    flex-direction: column;
+}
+
+.availability-tile-underscore {
+    width: 5rem;
+    height: .5rem;
+    background: orange;
+}
+
+.availability-tile-content {
+    min-height: 15rem;
+    width: 100%;
+    display: flex;
+    align-self: center;
+    flex-grow: 1;
+    transition: flex-grow 0.5s ease; 
+}
+
+.availability-select-options {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: flex-end;
+    min-width: 20rem; 
+}
+
+.ava-div-select {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    animation: slide-up 0.4s ease;
+    margin-bottom: .7rem;
+    justify-content: space-around;
+}
+
+.ava-select-label {
+    align-self:flex-start;
+    margin-bottom: .2rem;
+    font-size: 1.1rem;
+    color: grey;
+    /* line-height: 1.8rem; */
+}
+
+.ava-select {
+    text-indent: 10%;
+    background: white;
+    line-height: 2rem;
+    width: 15rem;
+    border: 1px solid lightgrey;
+    color: black;
+    border-radius: 3px;
+    appearance: none;
+    -webkit-appearance: none; 
+    font-size: 1rem;
+    -moz-appearance: none;
+    background-image: url("../../images/expand2.png");
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+.ava-div-input {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: .7rem;
+}
+
+.ava-input-label {
+    align-self:flex-start;
+    margin-bottom: .2rem;
+    font-size: 1.1rem;
+    color: grey;
+}
+
+.ava-input-range-perc {
+    font-size: 1rem;
+    height: 1.9rem;
+    border: 1px solid lightgrey;
+    text-align:center;
+    border-radius: 4px;
+}
+.ava-perc-span {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 5rem;
+}
+.ava-input-range {
+    border: 0;
+}
+.ava-input-range input {
+    border: 1px solid lightgrey;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.ava-input-range,
+.ava-input-range input {
+    font-size: 1rem;
+    height: 1.9rem;
+}
+
+.ava-div-buttons {
+    display:flex;
+    justify-content: space-around;
+}
+
+.ava-edit-2 {
+    margin-left: 1rem;
+}
+
+.availability-calendar {
+    margin: .5rem 1rem;
+    animation: slide-up 0.7s ease;
+}
+
+#ava-edit-project-dialog,
+.ava-edit-project-to-edit {
+    animation: slide-up 0.6s ease;
+}
+
+#ava-edit-project-dialog {
+    display:flex;
+    flex-direction: row;
+}
+
+.ava-edit-project-buttons {
+    display: flex;
+}
+
+.ava-button {
+    background: transparent;
+    border: 0;
+    padding: .5rem;
+    border-radius: 1rem;
+    transition: all .3s ease;
+    color: grey;
+}
+
+.ava-button:hover,
+.ava-button:focus {
+    box-shadow: 0 0 10px orange;
+    cursor: pointer;
+    outline: none;
+}
+
+.ava-button-edit {
+    margin: .5rem;
+    animation: slide-up 0.6s ease;
+}
+
+.ava-button-add {
+    height: 2rem;
+    margin: .5rem;
+}
+
+#add-project-dialog {
+    margin-top: 2rem;
+    animation: slide-up 0.6s ease;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.ava-error {
+    position: absolute;
+    font-family: 'Open Sans';
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    line-height: 1rem;
+    top: -1.5rem;
+    right: 0;
+    width: 10rem;
+    font-size: .85rem; 
+    padding: .3rem;
+    border-radius: .3rem;
+    z-index: 100;
+    text-align: center;
+    color: white;
+    background: rgba(255, 114, 114);
+    box-shadow: 0 0 6px rgba(235, 1, 1, 0.55); 
+}
+
+.ava-error::after {
+    content: "";
+    position: absolute;
+    border-width: .5rem;
+    bottom: -1rem;
+    right: .5rem;
+    border-style: solid;
+    border-color: rgb(255, 114, 114) transparent transparent transparent;
+    box-shadow: 0 -5px 5px -5px rgb(255,114,114);
+}
+
+div[class*="ava-add-"] {
+    margin-left: 4rem;
+}
+
+.ava-input-range-wide,
+.ava-input-range-wide input {
+    font-size: 1rem;
+    width: 14rem;
+    min-width: 12rem;
+    height: 1.9rem;
+}
+
+.ava-input-range-wide input {
+    border: 1px solid lightgrey;
+    text-align: center;
+    border-radius: 4px;
+}
+
+@keyframes slide-up {
+    100% {
+        transform: translateY(0rem);
+        opacity: 1;
+    }
+    0% {
+        transform: translateY(4rem);
+        opacity: 0;
+    }
+}
+
+@media (min-width: 40rem) {
+
+ .availability-header-menu {
+        display: none;
+    }
+}
