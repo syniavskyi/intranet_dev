@@ -59,11 +59,6 @@ export default {
     this.checkList();
     this.getDocList();
   },
-  mounted() {
-    this.$nextTick(function() {
-      console.log('test');
-    })
-  },
   methods: {
     changeCheckbox(data) {
       data.checked = !data.checked;
