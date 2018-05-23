@@ -1,7 +1,7 @@
 <template>
   <!-- <div id="app"> -->
   <div class="display-row">
-    <app-menu v-show="showMenu"/>
+    <!-- <app-menu v-show="showMenu"/> -->
     
       <transition name="slide-top" mode="out-in">
          <router-view/>

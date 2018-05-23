@@ -1,4 +1,4 @@
-package com.btech.model;
+package com.btech.pojo;
 
 public class File {
 	

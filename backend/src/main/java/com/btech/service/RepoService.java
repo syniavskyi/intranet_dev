@@ -15,14 +15,21 @@ public class RepoService {
     private final SectionListRepository sectionListRepository;
     private final ProjectListRepository projectListRepository;
     private final ContractorListRepository contractorListRepository;
+    private final DocumentsListRepository documentsListRepository;
 
     @Autowired
-    public RepoService(DepsRepository depsRepository, RolesRepository rolesRepository, SectionListRepository sectionListRepository, ProjectListRepository projectListRepository, ContractorListRepository contractorListRepository) {
+    public RepoService(DepsRepository depsRepository,
+                       RolesRepository rolesRepository,
+                       SectionListRepository sectionListRepository,
+                       ProjectListRepository projectListRepository,
+                       ContractorListRepository contractorListRepository,
+                       DocumentsListRepository documentsListRepository) {
         this.depsRepository = depsRepository;
         this.rolesRepository = rolesRepository;
         this.sectionListRepository = sectionListRepository;
         this.projectListRepository = projectListRepository;
         this.contractorListRepository = contractorListRepository;
+        this.documentsListRepository = documentsListRepository;
     }
 
     public List<DepsList> getAllDeps() {
@@ -40,4 +47,8 @@ public class RepoService {
     public List<ContractorList> getAllContractors() {
         return contractorListRepository.findAll();
     }
+    public List<DocumentsList> getAllDocuments() {
+        return documentsListRepository.findAll();
+    }
+
 }

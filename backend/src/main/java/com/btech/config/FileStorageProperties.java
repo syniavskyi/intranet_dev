@@ -1,4 +1,4 @@
-package com.btech.pojo;
+package com.btech.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
