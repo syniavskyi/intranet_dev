@@ -1,4 +1,4 @@
-<template>
+ <template>
     <div>
         <h1>Delegacje</h1>
         <div>
@@ -47,7 +47,7 @@
                    <tr>
                        <th colspan="3">Wyjazd</th>
                        <th colspan="3">Przyjazd</th>
-                       <th rowspan="2">Środek transportu (km)</th>
+                       <th rowspan="2">Odległość (km)</th>
                        <th rowspan="2">Koszty przejazdu</th>
                    </tr>
                    <tr>
@@ -141,6 +141,7 @@ export default {
         ...mapGetters({
             userData: 'userData',
             departmentList: 'depList',
+            delegationCostList: 'getDelegationCostsList'
         }),
         delegationStartDate() {
             if (this.newDelegation.dates){
@@ -195,13 +196,15 @@ export default {
        } else {
            this.showLicensePlateNo = false
        }
-       this.checkFields()
+       this.$store.dispatch('checkDelegationFields')
     },
     addRow() {
         this.customCosts.push({})
+        // this.$store.dispatch('addDelegationRow')
     },
     removeRow(index) {
         this.customCosts.splice(index, 1)
+        // this.$store.dispatch('removeDelegationRow', index)
     },
     dateValidation(value) {
             const day = parseInt(value.slice(0, 2)),
@@ -213,7 +216,7 @@ export default {
             } else {
                 this.invalidDate = false
             }
-            this.checkFields()
+            this.$store.dispatch('checkDelegationFields')
     },
     hourValidation(value) {
             const hours = parseInt(value.slice(0, 2)),
@@ -225,7 +228,7 @@ export default {
             } else {
                 this.invalidHour = false
             }
-            this.checkFields()
+            this.$store.dispatch('checkDelegationFields')
     },
     save() {
         const costs = this.customCosts.slice(0)

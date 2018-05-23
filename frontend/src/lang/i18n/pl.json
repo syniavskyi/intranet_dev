@@ -9,7 +9,8 @@
         "changePhoto": "Zmień zdjęcie",
         "register": "Zarejestruj",
         "addEvent": "Dodaj wydarzenie",
-        "documentComplete": "Przekazano dokumenty"
+        "documentComplete": "Przekazano dokumenty",
+        "addProject": "Dodaj projekt"
      },
     "label": {
         "user": "Użytkownik",
@@ -57,7 +58,9 @@
         "availability": "Dyspozycyjność",
         "starterPage": "Strona Startowa",
         "welcome": "Witaj w BTech!",
-        "delegations": "Delegacje"
+        "delegations": "Delegacje",
+        "projects": "Projekty",
+        "experience": "Doświadczenie"
     },
     "message": {
         "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",
@@ -80,5 +83,13 @@
     },
     "calendar": {
         "noProjectAssigned": "Brak przypisanego projektu"
+    },
+    "table": {
+        "projectName": "Projekt",
+        "contractor": "Kontrahent",
+        "duration": "Czas trwania",
+        "Industry": "Branża",
+        "Modules": "Moduły",
+        "Descr": "Opis wykonanych czynności"
     }
 }
