@@ -1,6 +1,7 @@
 <template>
   <div class="plane-starter-page">
     <div class="starter-page-nav-and-content">
+      <app-menu></app-menu>
       <div class="starter-page-content">
         <div class="starter-header">
           <div class="starter-header-title-and-menu">
@@ -15,15 +16,16 @@
           </div>
           <div class="starter-page-list-content">
             <ul class="starter-page-ul">
-              <li class="starter-page-item" v-for="list in listOfDoc" :key="list.title">
+              <li class="starter-page-item" v-for="list in getDocs" :key="list.title">
                 <div class="starter-page-list-item-btns">
                   <button class="starter-page-file-btn">&#x21e3;</button>
-                  <div class="starter-page-pdf">.pdf</div>
+                  <div v-if="list.format === 'pdf'" class="starter-page-pdf">.pdf</div>
+                  <div v-else class="starter-page-docx">.docx</div>
                 </div>
                 <div class="starter-page-list-item-wrapper">
                   <div class="starter-page-item-text" :class="list.checked ? 'line-through' : 'none'">
                     {{ list.title }}
-                    <p class="starter-list-item-popover">{{ list.desc }}</p>
+                    <p class="starter-list-item-popover">{{ list.description }}</p>
                   </div>
                 </div>
                 <input class="starter-page-checkbox" :checked="list.checked" @change="changeCheckbox(list)" type="checkbox">
@@ -40,12 +42,16 @@
 </template>
 
 <script>
+import Menu from '../Menu.vue'
 import axios from 'axios'
 import i18n from '../../lang/lang'
 
 export default {
   data() {
     return {
+
+      listOfDoc: []
+
       listOfDoc: [
         {
           title: "Umowa o Pracę",
@@ -110,8 +116,17 @@ export default {
       ]
     }
   },
+  components: {
+    'app-menu': Menu
+  },
   created() {
     this.checkList();
+    this.getDocList();
+  },
+  mounted() {
+    this.$nextTick(function() {
+      console.log('test');
+    })
   },
   methods: {
     changeCheckbox(data) {
@@ -122,11 +137,17 @@ export default {
       this.$store.dispatch("checkList", {
         listOfDoc: this.listOfDoc
       })
+    },
+    getDocList(){
+      this.$store.dispatch("getDocs");
     }
   },
   computed: {
     setButton() {
       return this.$store.getters.returnCheckList;
+    },
+    getDocs(){
+      return this.$store.getters.docLists;
     }
   }
 }
@@ -141,5 +162,4 @@ export default {
   .none {
     text-decoration: none;
   }
-
 </style>
