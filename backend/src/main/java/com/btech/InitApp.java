@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-import com.btech.pojo.FileStorageProperties;
+import com.btech.config.FileStorageProperties;
 
 @EnableConfigurationProperties({FileStorageProperties.class})
 @SpringBootApplication

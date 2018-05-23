@@ -18,7 +18,6 @@ import org.springframework.security.oauth2.provider.token.AuthorizationServerTok
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 public class MainController {
 	
@@ -98,5 +97,10 @@ public class MainController {
 	public List<Email> getEmails() {
 		return userService.getAllEmails();
 	}
-	
+
+	@CrossOrigin
+	@RequestMapping(value="/api/documentsList", method = RequestMethod.GET)
+	public List<DocumentsList> getDocumentsist() {
+		return repoService.getAllDocuments();
+	}
 }

@@ -236,7 +236,7 @@ const getters = {
   userData(state) {
     return state.userData
   },
-  idDataLoaded(state) {
+  isDataLoaded(state) {
     return state.isLoaded
   }
 };

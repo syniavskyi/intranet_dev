@@ -45,7 +45,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.authorities("ROLE_ADMIN", "ROLE_MANAGEMENT", "ROlE_LEAD", "ROLE_OFFICE", "ROLE_BASIC")
 			.scopes("read", "write", "trust")
 			.resourceIds("oauth2-resource")
-			.accessTokenValiditySeconds(6000) //seconds
+			.accessTokenValiditySeconds(6000)
 			.refreshTokenValiditySeconds(36000)
 			.secret("password");
 	}

@@ -31,7 +31,7 @@ public class User {
     private List<UserInfo> userInfo;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UserContacts> userContacts;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UserDetail> userDetails;
     @Column(name="full_name")
     @JsonIgnore
@@ -39,10 +39,16 @@ public class User {
     @Column(name="slack_name")
     @JsonIgnore
     private String slackName;
+    @Column(name="startpage_visible")
+    @JsonIgnore
+    private boolean startPageVisible;
+    @Column(name="users_group")
+    @JsonIgnore
+    private String group;
 
     public User() {}
 
-    public User(String username, String password, String email, List<Role> roles, List<Dep> deps, List<UserInfo> userInfo, List<UserContacts> userContacts, List<UserDetail> userDetails, String fullName, String slackName) {
+    public User(String username, String password, String email, List<Role> roles, List<Dep> deps, List<UserInfo> userInfo, List<UserContacts> userContacts, List<UserDetail> userDetails, String fullName, String slackName,boolean startPageVisible, String group) {
         this.username = username;
         this.password = password;
         this.roles = roles;
@@ -53,6 +59,8 @@ public class User {
         this.userDetails = userDetails;
         this.fullName = fullName;
         this.slackName = slackName;
+        this.startPageVisible = startPageVisible;
+        this.group = group;
     }
 
     public void setId(Long id) {
@@ -143,7 +151,23 @@ public class User {
 		this.slackName = slackName;
 	}
 
-	@Override
+    public boolean isStartPageVisible() {
+        return startPageVisible;
+    }
+
+    public void setStartPageVisible(boolean startPageVisible) {
+        this.startPageVisible = startPageVisible;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String position) {
+        this.group = group;
+    }
+
+    @Override
 	public String toString() {
 		return String.format(
 				"User [id=%s, username=%s, password=%s, email=%s, roles=%s, deps=%s, userInfo=%s, userContacts=%s]", id,
