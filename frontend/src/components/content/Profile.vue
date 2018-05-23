@@ -27,7 +27,7 @@
                         <div class="profile-tile-inputs-section profile-inputs-sections-1">
                             <div class="profile-tile-inputs">
                                 <div>
-                                    <label class="label-profile">{{ $t("label.address") }}</label>
+                                    <label  class="label-profile">{{ $t("label.address") }}</label>
                                     <input class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.address">
                                 </div>
                                 <div>
