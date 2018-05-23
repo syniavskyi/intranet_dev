@@ -165,6 +165,7 @@ body {
 }
 .starter-page-pdf {
     background: rgb(255, 114, 114);
+    padding: .1rem .65rem;
 }
 .starter-page-docx {
     background: rgb(114, 114, 255);
