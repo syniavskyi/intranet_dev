@@ -15,6 +15,8 @@ import Files from '@/components/content/Files'
 import Informations from '@/components/content/Informations'
 import Availability from '@/components/content/Availability'
 import StarterPage from '@/components/content/StarterPage'
+import Delegations from '@/components/content/Delegations'
+
 
 import AuthGuard from './auth-guard'
 import authGuard from './auth-guard';
@@ -86,6 +88,11 @@ export default new Router({
         path: '/starterpage',
         name: 'StarterPage',
         component: StarterPage
+    },
+    {
+        path: '/delegations',
+        name: 'Delegations',
+        component: Delegations
     }
 ]
 })

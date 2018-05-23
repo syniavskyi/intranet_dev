@@ -45,11 +45,11 @@
             <label class="label-profile">Obłożenie</label>
             <input type="number" max="100" min="0" @input="validateEditEngag(projectToEdit.engag)" v-model="projectToEdit.engag" /> <span>%</span><br/>
             <label class="label-profile">Termin rozpoczęcia</label>
-            <v-date-picker v-model="projectToEdit.startDate" mode="single">
+            <v-date-picker @input="validateEditProject"  v-model="projectToEdit.startDate" mode="single">
                 <input  value="projectToEdit.startDate" />
             </v-date-picker> <br/>
             <label class="label-profile">Termin zakończenia</label>
-            <v-date-picker v-model="projectToEdit.endDate" mode="single">
+            <v-date-picker @input="validateEditProject" v-model="projectToEdit.endDate" mode="single">
                 <input value="projectToEdit.endDate" />
             </v-date-picker>
             <button @click="removeUserProject">Usuń projekt</button>
@@ -75,7 +75,7 @@
         <div class="project-data">
             <label class="label-profile">Obłożenie</label>
             <input v-model="newProjectForUser.engag" @input="validateNewEngag(newProjectForUser.engag)" type="number" min="0" max="100" /><span>%</span><br/>
-            <v-date-picker is-expanded mode="range" v-model="newProjectForUser.dates">
+            <v-date-picker @input="validateNewProject" is-expanded mode="range" v-model="newProjectForUser.dates">
                 <input value="newProjectForUser.dates" />
             </v-date-picker>
             <button @click="onCancelCreate">Anuluj</button>
@@ -154,7 +154,8 @@ export default {
                 key: t.id,
                 highlight: {
                     backgroundColor: t.color,
-                    borderRadius: '20px'
+                    borderRadius: '0px',
+                    height: '100%'
                 },
                 order: t.order,
                 dates: {
@@ -162,7 +163,7 @@ export default {
                     end: t.endDate
                 },
                 popover: {
-                    label: t.projName
+                    label: t.projName + ' (' + t.engag + '%)' 
                 },
                 customData: t
             }))
@@ -170,11 +171,7 @@ export default {
         themeStyles() {
             return {
                 dayCell: {
-                    backgroundColor: '#99FF66',
-
-                },
-                dayCellNotInMonth: {
-                    opacity: 0
+                    backgroundColor: '#cff09e',
                 }
             }
         }
@@ -195,13 +192,17 @@ export default {
     methods: {
         loadUserProjects(userId) {
             this.$store.dispatch('getUserProjects', userId)
+            this.projectToEdit = {}
         },
         setProjectsToCheck(userId) {
-             this.$store.dispatch('getUserProjectsToCheck', userId)
+            this.$store.dispatch('getUserProjectsToCheck', userId)
             this.validateNewProject()
         },
         addNewProjectForUser() {
             this.$store.dispatch('addUserProject', this.newProjectForUser)
+            if (this.newProjectForUser.userId === this.selectedUser.id){
+                this.$store.dispatch('getUserProjects', this.selectedUser.id)
+            }
             this.showAddProjectDialog = false
             this.newProjectForUser = {}
         },

@@ -9,7 +9,8 @@
         "changePhoto": "Change photo",
         "register": "Register",
         "addEvent": "Add Event",
-        "documentComplete": "Documents were provided"
+        "documentComplete": "Documents were provided",
+        "addProject": "Add project"
     },
     "label": {
         "user": "User",
@@ -55,7 +56,9 @@
         "addNewEvent": "Add new event",
         "availability": "Availability",
         "starterPage": "Starter Page",
-        "welcome": "Welcome in BTech!"
+        "welcome": "Welcome in BTech!",
+        "delegations": "Delegations",
+        "experience": "Experience"
     },
     "message": {
         "loginError": "Password or username are invalid.",
@@ -78,5 +81,13 @@
     },
     "calendar": {
         "noProjectAssigned": "No project assigned"
+    },
+    "table": {
+        "projectName": "Project",
+        "contractor": "Contractor",
+        "duration": "Duration",
+        "Industry": "Industry",
+        "Modules": "Modules",
+        "Descr": "Description of performed activities"
     }
 }
