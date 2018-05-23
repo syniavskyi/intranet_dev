@@ -14,7 +14,7 @@
                     <button class="border-btn reject-btn" @click="onCancelEdit">{{ $t("button.cancel") }}</button>
                 </div>
             </div>
-           
+
             <h3 class="user-header-name">{{userData.firstName}} {{userData.lastName}}</h3>
             <div class="profile-tiles">
                 <div class="profile-tile">
@@ -183,6 +183,62 @@
                         </div>
                     </div>
                 </div>
+                <div class="profile-tile">
+                    <div class="profile-tile-header">
+                        <div class="profile-tile-header-row">
+                            <h2>{{ $t("header.experience") }}</h2>
+                            <button class="profile-change-password" @click="addRow">{{ $t("button.addProject") }}</button>
+                        </div>
+                        <div class="tile-underscore"></div>
+                    </div>
+                    <div class="profile-tile-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>{{ $t("table.projectName") }}</td>
+                                    <td>{{ $t("table.contractor") }}</td>
+                                    <td>{{ $t("table.duration") }}</td>
+                                    <td>{{ $t("table.Industry") }}</td>
+                                    <td>{{ $t("table.Modules") }}</td>
+                                    <td>{{ $t("table.Descr") }}</td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(exp, index) in experience" :key="index">
+                                    <td><input v-model="experience[index].project"/> </td>
+                                    <td> 
+                                        <select v-model="experience[index].contractor"> 
+                                             <option v-for="contractor in contractorsList" :key="contractor.id" :value="contractor.id"> {{ contractor.name }}</option>
+                                        </select>
+                                    </td>
+                                    <td> 
+                                        <v-date-picker is-expanded mode="range" v-model="experience[index].duration">
+                                                <input value="experience[index].duration" />
+                                        </v-date-picker>
+                                    </td>
+                                    <td> 
+                                        <select v-model="experience[index].industry"> 
+                                             <option v-for="industry in industryList" :key="industry.id" :value="industry.id"> {{ industry.name }}</option>
+                                        </select>
+                                    </td>
+                                    <td> 
+                                        <div id="for" >
+                                            <button @click="removeModule" :name="index" v-for="sapModule in experience[index].modules" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.id }} </button>
+                                        </div>
+                                        <!-- <div id="addButtons"></div> -->
+                                        <select @change="addModule" :id="index"> 
+                                             <option v-for="sapModule in modulesList" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.name }}</option>
+                                        </select>
+                                    </td>
+                                    <td> <textarea v-model="experience[index].descr" /> </td>
+                                    <td> <button @click="removeRow(index)"> X </button><button @click="saveExp(index)"> &#x2714; </button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p v-if="showProjectError">Wprowadzone dane są niekompletne. Uzupełnij wszystkie pola. </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -224,7 +280,7 @@ export default {
         MaskedInput
     },
     beforeCreate() {
-      if (this.$store.getters.idDataLoaded === false) {
+        if (this.$store.getters.isDataLoaded === false) {
             this.$store.dispatch('loadData', localStorage.getItem('token'))
         }
     },
@@ -232,8 +288,14 @@ export default {
         ...mapGetters({
             userData: 'userData',
             saveChangesSuccess: 'isSaveChangesSuccess',
-            photoUploadError: 'isSavePhoto5Error',
-            fileUploadError: 'isFileUploadError'
+            photoUploadError: 'isSavePhotoError',
+            fileUploadError: 'isFileUploadError',
+            contractorsList: 'contractorsList',
+            industryList: "getIndustryList",
+            modulesList: "getModulesList",
+            experience: "getExperienceList",
+            showProjectError:'getShowProjectError',
+            ifModuleExist: 'getModuleExist'
         })
     },
     methods: {
@@ -304,11 +366,9 @@ export default {
         },
         dateValidation(value) {
             const day = parseInt(value.slice(0, 2)),
-                month = parseInt(value.slice(3, 5)),
-                year = parseInt(value.slice(6, 10)),
-                currYear = (new Date()).getFullYear()
+                month = parseInt(value.slice(3, 5))
 
-            if (day > 31 || month > 12 || year > currYear) {
+            if (day > 31 || month > 12) {
                 this.invalidDate = true
                 this.disableSaveBtn = true
             } else {
@@ -321,12 +381,35 @@ export default {
                 this.disableSaveBtn = true
             } else {
                 this.checkIfDataChanged()
-                if (this.hasDataChanged === true ) {
-                this.disableSaveBtn = false
+                if (this.hasDataChanged === true) {
+                    this.disableSaveBtn = false
                 } else {
                     this.disableSaveBtn = true
                 }
             }
+        },
+        addRow() {
+            this.$store.dispatch('addExpRow')
+        },
+        removeRow(index) {
+            this.$store.dispatch('removeExpRow', index)
+        },
+        saveExp(index){
+            this.$store.dispatch('saveExpPosition', index)
+        },
+        addModule(value) {
+           const data = {
+                index: value.target.id,
+                moduleId: value.target.value
+            }
+            this.$store.dispatch('addModule', data)
+        },
+        removeModule(value) {
+            const data = {
+                index: value.target.name,
+                moduleId: value.target.value
+            }
+            this.$store.dispatch('removeModule', data)
         }
     }
 }
@@ -349,4 +432,13 @@ export default {
     text-align: center;
 }
 
+table,
+th,
+td {
+    border: 1px solid black;
+}
+
+td {
+    width: 200px;
+}
 </style>

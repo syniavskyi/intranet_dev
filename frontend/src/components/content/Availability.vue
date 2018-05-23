@@ -135,6 +135,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
@@ -209,7 +210,8 @@ export default {
                 key: t.id,
                 highlight: {
                     backgroundColor: t.color,
-                    borderRadius: '20px'
+                    borderRadius: '0px',
+                    height: '100%'
                 },
                 order: t.order,
                 dates: {
@@ -217,7 +219,7 @@ export default {
                     end: t.endDate
                 },
                 popover: {
-                    label: t.projName
+                    label: t.projName + ' (' + t.engag + '%)' 
                 },
                 customData: t
             }))
@@ -225,11 +227,7 @@ export default {
         themeStyles() {
             return {
                 dayCell: {
-                    backgroundColor: '#99FF66',
-
-                },
-                dayCellNotInMonth: {
-                    opacity: 0
+                    backgroundColor: '#cff09e',
                 }
             }
         }
@@ -250,13 +248,17 @@ export default {
     methods: {
         loadUserProjects(userId) {
             this.$store.dispatch('getUserProjects', userId)
+            this.projectToEdit = {}
         },
         setProjectsToCheck(userId) {
-             this.$store.dispatch('getUserProjectsToCheck', userId)
+            this.$store.dispatch('getUserProjectsToCheck', userId)
             this.validateNewProject()
         },
         addNewProjectForUser() {
             this.$store.dispatch('addUserProject', this.newProjectForUser)
+            if (this.newProjectForUser.userId === this.selectedUser.id){
+                this.$store.dispatch('getUserProjects', this.selectedUser.id)
+            }
             this.showAddProjectDialog = false
             this.newProjectForUser = {}
         },

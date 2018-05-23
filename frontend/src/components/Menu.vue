@@ -71,6 +71,14 @@
                         </button>
                     </router-link>
                 </li>
+                                <li>
+                    <router-link class="nav-router-link" to="/delegations">
+                        <button class="nav-item">
+                             <img class="nav-item-img" src="../assets/images/nav/if-files_32_wh.png">
+                             <p>{{ $t("header.delegations") }}</p>
+                        </button>
+                    </router-link>
+                </li>
             </ul>
         </nav>
     </div>

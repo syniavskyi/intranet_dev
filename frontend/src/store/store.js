@@ -11,6 +11,7 @@ import menu from './modules/menu'
 import availability from './modules/availability'
 import dataloading from './modules/dataloading'
 import starterpage from './modules/starterpage'
+import delegations from './modules/delegations'
 
 import settings from './modules/settings'
 
@@ -30,6 +31,7 @@ export default new Vuex.Store({
         availability,
         dataloading,
         settings,
-        starterpage
+        starterpage,
+        delegations
     }
 });

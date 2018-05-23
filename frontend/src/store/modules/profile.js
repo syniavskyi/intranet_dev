@@ -1,10 +1,39 @@
 import axios from 'axios'
 import router from '@/router/index.js'
+import i18n from '../../lang/lang'
 
 const state = {
     saveChangesSuccess: true,
     uploadPhotoError: false,
-    uploadFileError: false
+    uploadFileError: false,
+    showProjectError: false,
+    ifModuleExist: null,
+    industryList: [
+        {id: 'FI', name: 'Bankowość i finanse' },
+        {id: 'ADV', name: 'Branża reklamowa' },
+        {id: 'CTG', name: 'Chałupnictwo'},
+        {id: 'CON', name: 'Przemysł budowlany'}
+    ],
+    modulesList: [
+        {id: 'FI', name: 'Finanse' },
+        {id: 'SD', name: 'Sprzedaż i dystrybucja' },
+        {id: 'MM', name: 'Zarządzanie materiałami'}
+    ],
+    experienceList:[
+    {
+        project: 'Nazwa projektu', 
+        contractor: '2',
+        industry: 'FI',
+        modules: [
+            { id: 'SD' }
+        ],
+        duration: {
+            start: 'Wed May 02 2018 00:00:00 GMT+0200 (Środkowoeuropejski czas letni)',
+            end: 'Thu May 17 2018 00:00:00 GMT+0200 (Środkowoeuropejski czas letni)'
+        },
+        descr: 'Opis wykonanych czynności'
+    }
+    ]
 };
 
 const mutations = {
@@ -16,6 +45,15 @@ const mutations = {
     },
     SET_FILE_ERROR (state, isError) {
         state.uploadFileError = isError
+    },
+    SET_EXP_LIST(state, list) {
+        state.expList = list
+    },
+    SET_PROJECT_ERROR(state, isError){
+        state.showProjectError = isError
+    },
+    SET_MODULE_EXIST(state, ifExist){
+        state.ifModuleExist = ifExist
     }
 
 };
@@ -104,7 +142,68 @@ const actions = {
             console.log(error)
             commit('SET_FILE_ERROR', false)
         }) 
+    },
+    addExpRow({commit, getters}) {
+        const expList = getters.getExperienceList
+        expList.push({
+            project: null,
+            descr: null,
+            contractor: null,
+            industry: null,
+            modules: []
+        })
+        commit('SET_EXP_LIST', expList)
+    },
+    removeExpRow({commit, getters}, index){
+        const expList = getters.getExperienceList
+        expList.splice(index, 1)
+        commit('SET_EXP_LIST', expList)
+    },
+    saveExpPosition({dispatch, getters,commit}, index) {
+        const experience = Object.assign({}, getters.getExperienceList[index])
+        experience.userId = localStorage.getItem('id')
+        dispatch('checkExpPosition', experience)
+    },
+    checkExpPosition({commit}, experience){
+        for (let key in experience) {
+         if (!experience[key]) {
+            commit('SET_PROJECT_ERROR', true)
+            return
+         } else {
+            commit('SET_PROJECT_ERROR', false)
+         }
+        }
+    },
+    addModule({commit, getters}, data){
+        const expList = getters.getExperienceList,
+        modules = expList[data.index].modules
+                
+       for (let i=0; i< modules.length; i++){
+            if (modules[i].id === data.moduleId) {
+                commit('SET_MODULE_EXIST', true)
+                return
+            } else {
+                commit('SET_MODULE_EXIST', false)
+            }
+        }
+        if (getters.getModuleExist === false) {
+            expList[data.index].modules.push({
+                id: data.moduleId 
+            })
+            commit('SET_EXP_LIST', expList)
+        }
+    },
+    removeModule({commit, getters}, data) {
+        const expList = getters.getExperienceList,
+        modules = expList[data.index].modules
+        for (let i=0; i< modules.length; i++){
+            if (modules[i].id === data.moduleId) {
+                modules.splice(i, 1)
+            }
+        }
+        commit('SET_EXP_LIST', expList)
     }
+
 };
 
 const getters = {
@@ -116,6 +215,21 @@ const getters = {
     },
     isFileUploadError (state) {
         return state.isFileUploadError
+    },
+    getIndustryList(state){
+        return state.industryList
+    },
+    getModulesList(state){
+        return state.modulesList
+    },
+    getExperienceList(state) {
+        return state.experienceList
+    },
+    getShowProjectError(state) {
+        return state.showProjectError
+    },
+    getModuleExist(state) {
+        return state.ifModuleExist
     }
 };
 

@@ -15,7 +15,7 @@ import java.nio.file.StandardCopyOption;
 
 import com.btech.exceptions.FileStorageException;
 import com.btech.exceptions.FileNotFoundException;
-import com.btech.pojo.FileStorageProperties;
+import com.btech.config.FileStorageProperties;
 
 @Service
 public class FileStorageService {
