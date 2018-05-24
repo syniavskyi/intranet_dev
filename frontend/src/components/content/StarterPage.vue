@@ -16,7 +16,7 @@
           </div>
           <div class="starter-page-list-content">
             <ul class="starter-page-ul">
-              <li class="starter-page-item" v-for="list in getDocs" :key="list.title">
+              <li class="starter-page-item" v-for="list in getFullListOfDoc" :key="list.title">
                 <div class="starter-page-list-item-btns">
                   <button class="starter-page-file-btn">&#x21e3;</button>
                   <div v-if="list.format === 'pdf'" class="starter-page-pdf">.pdf</div>
@@ -32,7 +32,7 @@
               </li>
             </ul>
             <div class="starter-page-list-bottom">
-              <button class="starter-page-docs-btn button" :disabled="setButton">{{ $t("button.documentComplete") }}</button>
+              <button class="starter-page-docs-btn button" :disabled="setButton" @click="submitDocuments">{{ $t("button.documentComplete") }}</button>
             </div>
           </div>
         </div>
@@ -55,22 +55,63 @@ export default {
   components: {
     'app-menu': Menu
   },
+  beforeCreate() {
+    this.$store.commit('DISPLAY_MENU', false);
+    if (this.$store.getters.idDataLoaded === false) {
+      this.$store.dispatch('loadData', localStorage.getItem('token'))
+    }
+  },
   created() {
-    // this.checkList(data);
+    this.getId();
     this.getDocList();
+    this.getDocStatus();
+    this.setStatusToDoc();
   },
   methods: {
     changeCheckbox(data) {
-      data.status = !data.status;
-      this.checkList(data);
+      if(data.status === undefined) {
+        data["status"] = true;
+      } else {
+        data.status = !data.status;
+      }
+      this.checkList(this.listOfDoc);
+      this.$store.dispatch("saveDocs", {
+        data
+      });
     },
     checkList(data) {
       this.$store.dispatch("checkList", {
         listOfDoc: data
       })
     },
+    getId() {
+      this.$store.dispatch("getUserId");
+    },
     getDocList(){
       this.$store.dispatch("getDocs");
+    },
+    getDocStatus(){
+      this.$store.dispatch("getDocsStatus");
+    },
+    setStatusToDoc() {
+      var docs = this.getDocs;
+      const status = this.getDocsListStatus;
+
+      if (docs.length > 0 && status.length > 0) {
+        for(let i = 0; i < docs.length; i++){
+          for(let j = 0; j < status.length; j++) {
+            if(docs[i].id == status[j].docId) {
+              docs[i]["status"] = status[j].status;
+            }
+          }
+        }
+        this.listOfDoc = docs;
+        this.checkList(this.listOfDoc);
+        return this.listOfDoc;
+      }
+    },
+    submitDocuments() {
+      this.$store.dispatch("sentDocuments");
     }
   },
   computed: {
@@ -79,6 +120,12 @@ export default {
     },
     getDocs(){
       return this.$store.getters.docLists;
+    },
+    getDocsListStatus() {
+      return this.$store.getters.docStatusList;
+    },
+    getFullListOfDoc() {
+      return this.setStatusToDoc();
     }
   }
 }
@@ -89,7 +136,6 @@ export default {
     text-decoration: line-through;
     color: grey;
   }
-
   .none {
     text-decoration: none;
   }

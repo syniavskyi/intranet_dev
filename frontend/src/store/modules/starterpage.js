@@ -3,7 +3,9 @@ import router from '@/router/index.js'
 
 const state = {
   buttonState: false,
-  docList: []
+  docList: [],
+  docStatus: [],
+  userId: ''
 }
 
 const mutations = {
@@ -12,6 +14,12 @@ const mutations = {
   },
   GET_DOC_LIST(state, data) {
     state.docList = data;
+  },
+  GET_DOC_STATUS(state, data) {
+    state.docStatus = data;
+  },
+  GET_USER_ID(state, data) {
+    state.userId = data;
   }
 }
 
@@ -44,6 +52,59 @@ const actions = {
       }
       commit('GET_DOC_LIST', aData);
     });
+  },
+  // getUserId({commit}) {
+  //   var URL = '/api/getIdByToken?access_token=' + localStorage.getItem('token');
+
+  //   axios.get(URL).then(res => {
+  //     const data = res.data;
+
+  //     commit('GET_USER_ID', data);
+  //   })
+  // },
+  getDocsStatus({
+    commit,
+    state
+  }) {
+    var URL = '/api/users/' + state.userId + '/userStarterPage';
+    axios.get(URL).then(res => {
+      const data = res.data,
+        aData = [];
+
+        for(let key in data) {
+          const docStatus = data[key];
+
+          aData.push(docStatus);
+        }
+        commit('GET_DOC_STATUS', aData);
+    })
+  },
+  saveDocs({commit, state}, data) {
+    var URL = '/api/users/' + state.userId + '/userStarterPage/create';
+    axios.post(URL, {
+      userGroup: "WRK",
+      docId: data.data.id,
+      status: data.data.status
+    }).then(function(response){
+      console.log(response);
+    }).catch(function(error) {
+      console.log(error);
+    });
+  },
+  sentDocuments({commit}){
+    let formData = new FormData();
+
+    formData.append('id', 1);
+    axios({
+      method: 'post',
+      url: 'http://10.0.2.5:8080/api/users/userStarterPage/disableStarterPage',
+      headers: { "Content-type": "multipart/form-data" },
+      data: formData
+  }).then(res => {
+      console.log(res)
+  }).catch(error => {
+      console.log(error)
+  })
   }
 }
 
@@ -53,6 +114,9 @@ const getters = {
   },
   docLists(state) {
     return state.docList;
+  },
+  docStatusList(state) {
+    return state.docStatus;
   }
 }
 

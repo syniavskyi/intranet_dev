@@ -23,7 +23,6 @@ const mutations = {
   SET_EMAIL_ERROR(state, isError) {
     state.sendEmailError = isError
   },
-  
   SET_PHOTO(state, photoUrl) {
     state.userData.image = photoUrl
   },
@@ -32,8 +31,10 @@ const mutations = {
   },
   SET_SENIORITY (state, seniority) {
     state.userData.seniority = seniority
-}
- 
+  },
+  GET_USER_ID(state, data) {
+    state.userId = data;
+  }
 }
 
 const actions = {
@@ -66,7 +67,7 @@ const actions = {
       commit('DISPLAY_MENU', true)
 
       localStorage.setItem('token', res.data.access_token)
-     
+      dispatch('getUserId');
       dispatch('setExpirationDate', res.data.expires_in)
       dispatch('setLogoutTimer', res.data.expires_in)
       dispatch('loadData', res.data.access_token)
@@ -77,7 +78,28 @@ const actions = {
       commit('SET_LOGIN_ERROR', true)
     })
   },
+  getUserId({commit, dispatch}) {
+    var URL = '/api/getIdByToken?access_token=' + localStorage.getItem('token');
 
+    axios.get(URL).then(res => {
+      const data = res.data;
+
+      commit('GET_USER_ID', data);
+      dispatch('showStarterPage');
+    })
+  },
+  showStarterPage({commit, state}) {
+    var URL = '/api/users/' + state.userId + '/showStarterPage';
+
+    axios.get(URL).then(res => {
+      const data = res.data;
+
+      // console.log(data);
+      if(data) {
+        router.replace('/starterpage')
+      }
+    })
+  },
   setLogoutTimer({
     commit,
     dispatch
