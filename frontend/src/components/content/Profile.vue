@@ -1,6 +1,7 @@
 <template>
 <div class="plane-profile">
     <div class="profile-nav-and-content">
+        <app-menu></app-menu>
         <div class="profile-content">
             <div class="profile-header">
                 <div class="profile-header-title-and-menu">
@@ -254,6 +255,7 @@ import {
 import {
     mapGetters
 } from 'vuex'
+import Menu from '../Menu.vue'
 export default {
     data() {
         return {
@@ -277,7 +279,8 @@ export default {
         }
     },
     components: {
-        MaskedInput
+        MaskedInput,
+        'app-menu': Menu
     },
     beforeCreate() {
         if (this.$store.getters.isDataLoaded === false) {
