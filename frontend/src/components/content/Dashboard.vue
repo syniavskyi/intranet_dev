@@ -2,6 +2,7 @@
        <div class="plane-dashboard-parent">
             <div class="plane-dashboard">
                 <div class="plane-dashboard-nav-and-content">
+                    <app-menu></app-menu>
                     <div class="dashboard-content">
                         <div class="dashboard-header">
                             <div class="dashboard-header-title-and-menu">
@@ -59,12 +60,16 @@
    import router from '@/router/index.js'
 import { mapGetters } from 'vuex';
 import axios from 'axios'
+import Menu from '../Menu.vue'
 
 	export default {
     data() {
       return {
  
       }
+    },
+    components: {
+        'app-menu': Menu
     },
     computed: {
         ...mapGetters([
