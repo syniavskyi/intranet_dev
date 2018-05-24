@@ -1,6 +1,7 @@
 <template>
 <div class="plane-availability">
     <div class="availability-nav-and-content">
+        <app-menu></app-menu>
         <div class="availability-content">
             <div class="availability-header">
                 <div class="avaiability-header-title-and-menu">
@@ -152,6 +153,7 @@ import {
     number,
     between
 } from 'vuelidate/lib/validators'
+import Menu from '../Menu.vue'
 
 export default {
     data() {
@@ -167,6 +169,9 @@ export default {
             projectToEdit: {},
             newProjectForUser: {}
         }
+    },
+    components: {
+        'app-menu': Menu
     },
     computed: {
         ...mapGetters({
