@@ -28,7 +28,7 @@
                     <p class="starter-list-item-popover">{{ list.description }}</p>
                   </div>
                 </div>
-                <input class="starter-page-checkbox" :checked="list.checked" @change="changeCheckbox(list)" type="checkbox">
+                <input class="starter-page-checkbox" :checked="list.status" @change="changeCheckbox(list)" type="checkbox">
               </li>
             </ul>
             <div class="starter-page-list-bottom">
@@ -56,17 +56,17 @@ export default {
     'app-menu': Menu
   },
   created() {
-    this.checkList();
+    // this.checkList(data);
     this.getDocList();
   },
   methods: {
     changeCheckbox(data) {
-      data.checked = !data.checked;
-      this.checkList();
+      data.status = !data.status;
+      this.checkList(data);
     },
-    checkList() {
+    checkList(data) {
       this.$store.dispatch("checkList", {
-        listOfDoc: this.listOfDoc
+        listOfDoc: data
       })
     },
     getDocList(){
