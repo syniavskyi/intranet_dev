@@ -437,24 +437,48 @@ export default {
 
 table {
     width: 95%;
+    border-spacing: 0;
 }
 thead {
     width: 6rem;
+    background-color: rgb(236, 236, 236);
+}
+thead td:first-child {
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+}
+thead td:last-child {
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .5rem;
 }
 thead,
 tbody {
-    border: 1px solid rgb(230, 230, 230);
+    /* border: 1px solid rgb(230, 230, 230); */
     border-collapse: collapse;
-    border-radius: 2px;
+    /* border-radius: 2px; */
+}
+
+tbody tr:nth-of-type(even) {
+    background-color: rgb(236, 236, 236);
+    border-radius: 1rem;
+}
+
+tr:nth-of-type(even) td:first-child {
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+}
+tr:nth-of-type(even) td:last-child {
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .5rem;
 }
 
 thead td,
 tbody td {
-    border-bottom: 1px solid rgb(230, 230, 230);
+    /* border-bottom: 1px solid rgb(230, 230, 230); */
     text-align: center;
 }
 tbody td {
-    border-right: 1px solid rgb(230, 230, 230);
+    /* border-right: 1px solid rgb(230, 230, 230); */
 }
 thead td:last-child,
 tbody td:last-child {
@@ -468,7 +492,18 @@ tbody td {
 
 tbody,
 tbody td {
-    animation: slide-up 0.5s ease;
+    animation: slide-down 0.5s ease;
+}
+
+@keyframes slide-down {
+    100% {
+        transform: translateY(0rem);
+        opacity: 1;
+    }
+    0% {
+        transform: translateY(-8rem);
+        opacity: 0;
+    }
 }
 
 td textarea {
@@ -477,6 +512,7 @@ td textarea {
 }
 
 @media  (max-width: 40rem) {
+    
     table {
         position: relative;
         width: 19.5rem;
@@ -510,8 +546,11 @@ td textarea {
     tbody tr {
         display:inline-block;
     }
-    /* .profile-table-td-module {
+    thead td:nth-child(5) {
+        height:4rem;
+    }
+    .profile-table-td-module {
         height: 4rem;
-    } */
+    }
 }
 </style>
