@@ -22,7 +22,7 @@ const actions = {
     var bState = false;
 
     for (var i = 0; i < data.listOfDoc.length; i++) {
-      if (data.listOfDoc[i].checked) {
+      if (data.listOfDoc[i].status) {
         bState = false;
       } else {
         return commit('CHECK_LIST', true)
