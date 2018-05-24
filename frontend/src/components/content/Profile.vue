@@ -193,51 +193,57 @@
                         <div class="tile-underscore"></div>
                     </div>
                     <div class="profile-tile-content">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <td>{{ $t("table.projectName") }}</td>
-                                    <td>{{ $t("table.contractor") }}</td>
-                                    <td>{{ $t("table.duration") }}</td>
-                                    <td>{{ $t("table.Industry") }}</td>
-                                    <td>{{ $t("table.Modules") }}</td>
-                                    <td>{{ $t("table.Descr") }}</td>
-                                    <td></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(exp, index) in experience" :key="index">
-                                    <td><input v-model="experience[index].project"/> </td>
-                                    <td> 
-                                        <select v-model="experience[index].contractor"> 
-                                             <option v-for="contractor in contractorsList" :key="contractor.id" :value="contractor.id"> {{ contractor.name }}</option>
-                                        </select>
-                                    </td>
-                                    <td> 
-                                        <v-date-picker is-expanded mode="range" v-model="experience[index].duration">
-                                                <input value="experience[index].duration" />
-                                        </v-date-picker>
-                                    </td>
-                                    <td> 
-                                        <select v-model="experience[index].industry"> 
-                                             <option v-for="industry in industryList" :key="industry.id" :value="industry.id"> {{ industry.name }}</option>
-                                        </select>
-                                    </td>
-                                    <td> 
-                                        <div id="for" >
-                                            <button @click="removeModule" :name="index" v-for="sapModule in experience[index].modules" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.id }} </button>
-                                        </div>
-                                        <!-- <div id="addButtons"></div> -->
-                                        <select @change="addModule" :id="index"> 
-                                             <option v-for="sapModule in modulesList" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.name }}</option>
-                                        </select>
-                                    </td>
-                                    <td> <textarea v-model="experience[index].descr" /> </td>
-                                    <td> <button @click="removeRow(index)"> X </button><button @click="saveExp(index)"> &#x2714; </button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p v-if="showProjectError">Wprowadzone dane są niekompletne. Uzupełnij wszystkie pola. </p>
+                        <div class="profile-table-wrapper"> 
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td>{{ $t("table.projectName") }}</td>
+                                        <td>{{ $t("table.contractor") }}</td>
+                                        <td>{{ $t("table.duration") }}</td>
+                                        <td>{{ $t("table.Industry") }}</td>
+                                        <td>{{ $t("table.Modules") }}</td>
+                                        <td>{{ $t("table.Descr") }}</td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(exp, index) in experience" :key="index">
+                                        <td><input class="profile-table-input" v-model="experience[index].project"/> </td>
+                                        <td> 
+                                            <select class="profile-table-select profile-table-select-contractor" v-model="experience[index].contractor"> 
+                                                <option v-for="contractor in contractorsList" :key="contractor.id" :value="contractor.id"> {{ contractor.name }}</option>
+                                            </select>
+                                        </td>
+                                        <td> 
+                                            <v-date-picker popoverDirection="top" class="profile-table-date-picker" is-expanded mode="range" v-model="experience[index].duration">
+                                                    <input value="experience[index].duration" />
+                                            </v-date-picker>
+                                        </td>
+                                        <td> 
+                                            <select class="profile-table-select profile-table-select-industry" v-model="experience[index].industry"> 
+                                                <option v-for="industry in industryList" :key="industry.id" :value="industry.id"> {{ industry.name }}</option>
+                                            </select>
+                                        </td>
+                                        <td class="profile-table-td-module"> 
+                                            <div id="for" >
+                                                <button class="profile-table-module-button" @click="removeModule" :name="index" v-for="sapModule in experience[index].modules" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.id }} </button>
+                                            </div>
+                                            <!-- <div id="addButtons"></div> -->
+                                            <select class="profile-table-select profile-table-select-modules" @change="addModule" :id="index"> 
+                                                <option v-for="sapModule in modulesList" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.name }}</option>
+                                            </select>
+                                        </td>
+                                        <td> <textarea class="profile-table-textarea" v-model="experience[index].descr" /> </td>
+                                        <td> 
+                                            <button class="profile-table-delete-btn" @click="removeRow(index)">X</button>
+                                            <button class="profile-table-save-btn" @click="saveExp(index)">&#x2714;</button>
+                                            <p class="profile-error" v-if="showProjectError">Wprowadzone dane są niekompletne. Uzupełnij wszystkie pola. </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -419,29 +425,93 @@ export default {
 </script>
 
 <style>
-#profile {
-    width: 75%;
-}
-
 .input {
-    text-align: center;
+    text-align: center;   
 }
-
 .inputEdit {
     text-align: center;
 }
-
 .inputDisabled {
     text-align: center;
 }
 
-table,
-th,
-td {
-    border: 1px solid black;
+table {
+    width: 95%;
+}
+thead {
+    width: 6rem;
+}
+thead,
+tbody {
+    border: 1px solid rgb(230, 230, 230);
+    border-collapse: collapse;
+    border-radius: 2px;
 }
 
-td {
-    width: 200px;
+thead td,
+tbody td {
+    border-bottom: 1px solid rgb(230, 230, 230);
+    text-align: center;
+}
+tbody td {
+    border-right: 1px solid rgb(230, 230, 230);
+}
+thead td:last-child,
+tbody td:last-child {
+    border-bottom: 0;
+}
+
+tbody td {
+    width: 12rem;
+    max-width: 12rem;
+}
+
+tbody,
+tbody td {
+    animation: slide-up 0.5s ease;
+}
+
+td textarea {
+    max-height: 100%;
+    max-width: 11rem;
+}
+
+@media  (max-width: 40rem) {
+    table {
+        position: relative;
+        width: 19.5rem;
+        max-width: 19.5rem;
+    }
+
+    th, tr,td {
+        display: block;
+    }
+    thead {
+        display: block;
+        float:left;
+    }
+    thead tr {
+        display: block;
+    }
+    thead td {
+        height: 3rem;
+        text-align: center;
+        line-height: 1rem; 
+    }
+    tbody {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        max-width: 15rem;
+    }
+    tbody td {
+        height: 3rem;
+    }
+    tbody tr {
+        display:inline-block;
+    }
+    /* .profile-table-td-module {
+        height: 4rem;
+    } */
 }
 </style>
