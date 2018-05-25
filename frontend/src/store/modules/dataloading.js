@@ -43,7 +43,16 @@ const mutations = {
   },
   SET_PROJECTS_LIST(state, data) {
     state.projectsList = data;
-  }
+  },
+  SET_PHOTO(state, photoUrl) {
+    state.userData.image = photoUrl
+  },
+  SET_CV(state, cvUrl){
+    state.userData.cv = cvUrl
+  },
+  SET_SENIORITY (state, seniority) {
+    state.userData.seniority = seniority
+  },
 
 };
 

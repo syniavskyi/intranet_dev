@@ -92,6 +92,13 @@ const actions = {
        });
     },
     addUserProject({commit, dispatch}, newProjectData) {
+        if (newProjectData.dates === undefined) {
+            const dates = {
+                end: null,
+                start: null
+            }
+            newProjectData.push(dates)
+        }
         const data = {
             userId: newProjectData.userId,
             projId: newProjectData.projectId,
@@ -136,10 +143,11 @@ const actions = {
     validateNewProject({commit}, project){ 
         const projExist = getters.getProjectExist
         if (projExist === true) {
-            commit('SET_DISABLE_SAVE_EDIT', true) 
+            commit('SET_DISABLE_SAVE_NEW', true) 
             return
         }
-        if (project.userId && project.projectId && project.contractorId && project.engag && project.dates) {
+        if (project.userId && project.projectId  && project.engag ) {
+            // && project.contractorId && project.engag && project.dates
                 commit('SET_DISABLE_SAVE_NEW', false) 
             } else {
                 commit('SET_DISABLE_SAVE_NEW', true) 

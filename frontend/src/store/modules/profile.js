@@ -113,7 +113,7 @@ const actions = {
         formData.append('id', data.id)
         axios({
             method: 'post',
-            url: 'http://10.0.2.60:8080/api/files/uploadImage',
+            url: '/api/files/uploadImage',
             headers: { "Content-type": "multipart/form-data" },
             data: formData   
         }).then(res => {
@@ -131,7 +131,7 @@ const actions = {
         formData.append('id', data.id)
         axios({
             method: 'post',
-            url: 'http://10.0.2.60:8080/api/files/uploadFile',
+            url: '/api/files/uploadFile',
             headers: { "Content-type": "multipart/form-data" },
             data: formData   
         }).then(res => {
