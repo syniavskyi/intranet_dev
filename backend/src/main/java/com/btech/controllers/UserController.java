@@ -1,16 +1,13 @@
 package com.btech.controllers;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
-import java.text.ParseException;
 import java.util.*;
 
 import com.btech.model.*;
-import com.btech.repositories.UserDetailsRepository;
-import com.btech.repositories.UserEngagRepository;
 import com.btech.repositories.UserRepository;
 import com.btech.service.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.btech.pojo.UserRegistration;
 
-import javax.validation.Valid;
 
 @RestController
 public class UserController {
@@ -77,16 +73,31 @@ public class UserController {
     	return userService.resetPasswordNew(email, password);	
     }
 
-    @GetMapping("/api/users/{id}/showStartPage")
+    @CrossOrigin
+    @GetMapping("/api/users/{id}/showStarterPage")
     public boolean checkStartPageVisible(@PathVariable(value="id") Long id) {
         User user = userRepository.findOne(id);
         return user.isStartPageVisible();
     }
-
+    @CrossOrigin
     @GetMapping("/api/users/{id}/showUserPosition")
     public String showUserPosition(@PathVariable(value="id") Long id) {
         User user = userRepository.findOne(id);
         return user.getGroup();
     }
 
+    @RequestMapping(value = "/api/users/userStarterPage/disableStarterPage", method = RequestMethod.POST)
+    public String disableStarterPage(@RequestParam("id") Long id) {
+        User u =  userRepository.findOne(id);
+        u.setStartPageVisible(false);
+        userRepository.save(u);
+        return "Starter page for user id " + id + " has been disabled !";
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "api/getIdByToken", method = RequestMethod.GET)
+    @ResponseBody
+    public Long currentIdByToken(Principal principal) {
+        return userService.getUserByUsername(principal.getName()).getId();
+    }
 }

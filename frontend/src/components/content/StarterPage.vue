@@ -23,7 +23,7 @@
                   <div v-else class="starter-page-docx">.docx</div>
                 </div>
                 <div class="starter-page-list-item-wrapper">
-                  <div class="starter-page-item-text" :class="list.checked ? 'line-through' : 'none'">
+                  <div class="starter-page-item-text" :class="list.status ? 'line-through' : 'none'">
                     {{ list.title }}
                     <p class="starter-list-item-popover">{{ list.description }}</p>
                   </div>

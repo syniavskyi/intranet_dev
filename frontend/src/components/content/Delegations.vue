@@ -57,6 +57,7 @@
                        <th>Miejscowość</th>
                        <th>Data</th>
                        <th>Godzina</th>
+                       <td></td>
                    </tr>
                </thead>
                <tbody>
@@ -73,6 +74,7 @@
                         <td> <masked-input mask="11:11" v-model="defaultCostsData.firstArrivalHour" @input="hourValidation"/> </td>
                         <td> <input type="number" min="0" v-model="defaultCostsData.firstDistance"/> </td>
                         <td> <input type="number" min="0" v-model="defaultCostsData.firstCost"/> </td>
+                        <td></td>
                    </tr>
                     <tr>
                        <td> {{ newDelegation.destination}} </td>
@@ -87,12 +89,9 @@
                         <td> <masked-input mask="11:11" @input="hourValidation" v-model="defaultCostsData.secondArrivalHour"/> </td>
                         <td> <input type="number" min="0" v-model="defaultCostsData.secondDistance"/> </td>
                         <td> <input type="number" min="0" v-model="defaultCostsData.secondCost"/> </td>
+                        <td></td>
                    </tr>
-               </tbody>
-            </table>
-            <table class="table addedDelegationCostsTable" id="addedDelegationCostsTable">
-               <tbody>
-                   <tr v-for="(cost, index) in customCosts" :key="index">
+                    <tr v-for="(cost, index) in customCosts" :key="index">
                     <td> <input v-model="customCosts[index].leavePlace"/></td>
                         <td> <masked-input @input="dateValidation" mask="11.11.1111" v-model="customCosts[index].leaveDate"/> </td>
                         <td> <masked-input @input="hourValidation" mask="11:11" v-model="customCosts[index].leaveHour"/> </td>
@@ -109,6 +108,62 @@
             <p v-if="invalidDate"> Wprowadzona data ma nieprawidłwy format. </p>
             <button  @click="save"> Zapisz </button>
             <!-- :disabled="disableSaveBtn" -->
+        </div>
+
+        <div>
+            <h1>Koszty</h1>
+            <button @click="addCostRow"> + </button>
+            <table>
+            <thead>
+                <tr>
+                    <td>Data dokumentu</td>
+                    <td>Firma</td>
+                    <td>Numer dokumentu</td>
+                    <td>Zwrot?</td>
+                    <td>Waluta</td>
+                    <td>Nolegi</td>
+                    <td>Przejazdy</td>
+                    <td>Inne</td>
+                    <td>Kwota w PLN</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(cost, index) in costTableData" :key="index">
+                    <td> <masked-input @input="dateValidation" mask="11.11.1111" v-model="costTableData[index].docDate"/> </td>
+                    <td><input v-model="costTableData[index].company"/></td>
+                    <td><input v-model="costTableData[index].docNo"/></td>
+                    <td><input type="checkbox"  @change="updateTotalCosts" v-model="costTableData[index].payback"/></td>
+                    <td><select v-model="costTableData[index].currency" @change="updateTotalCosts">
+                            <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
+                        </select>
+                    </td>
+                    <!-- acc -accomodation, trv - travel - oth - others -->
+                    <td><input type="radio"  @change="updateTotalCosts" value="ACC" v-model="costTableData[index].costType"/></td>
+                    <td><input type="radio"   @change="updateTotalCosts" value="TRV" v-model="costTableData[index].costType"/></td>
+                    <td><input type="radio"  @change="updateTotalCosts" value="OTH" v-model="costTableData[index].costType"/></td>
+                    <td><input type="number" @change="updateTotalCosts" min="0" v-model="costTableData[index].amount"/></td>
+                    <td> <button @click="removeCostRow(index)"> X </button></td>
+                </tr>
+                <tr>
+                    <td colspan="2"> </td>
+                    <td> Razem PLN </td>
+                    <td><p>{{ totalCosts.payback }}</p></td>
+                    <td>---</td>
+                    <td><p>{{ totalCosts.accomodation }}</p> </td>
+                    <td><p>{{ totalCosts.travel }}</p> </td>
+                    <td> <p>{{ totalCosts.others }}</p> </td>
+                    <td><strong><p>{{ totalCosts.amount }}</p> </strong> </td>
+                    <td></td>
+                </tr>
+            </tbody>
+            </table>
+            <!-- <table> 
+                <tr>
+                    <td colspan="2"> </td>
+                    <td> Razem PLN </td>
+                </tr>
+            </table> -->
         </div>
     </div>
 </template>
@@ -141,7 +196,10 @@ export default {
         ...mapGetters({
             userData: 'userData',
             departmentList: 'depList',
-            delegationCostList: 'getDelegationCostsList'
+            delegationCostList: 'getDelegationCostsList',
+            currencyList: 'getCurrencyList',
+            costTableData: 'getCostTableData',
+            totalCosts: 'getTotalCosts'
         }),
         delegationStartDate() {
             if (this.newDelegation.dates){
@@ -202,9 +260,15 @@ export default {
         this.customCosts.push({})
         // this.$store.dispatch('addDelegationRow')
     },
+    addCostRow() {
+        this.$store.dispatch('addCostRow')
+    },
     removeRow(index) {
         this.customCosts.splice(index, 1)
         // this.$store.dispatch('removeDelegationRow', index)
+    },
+    removeCostRow(index) {
+    this.$store.dispatch('removeCostRow', index)
     },
     dateValidation(value) {
             const day = parseInt(value.slice(0, 2)),
@@ -230,6 +294,9 @@ export default {
             }
             this.$store.dispatch('checkDelegationFields')
     },
+    updateTotalCosts() {
+        this.$store.dispatch('updateTotalCosts')
+    },
     save() {
         const costs = this.customCosts.slice(0)
         const firstDefaultCost = {
@@ -254,8 +321,6 @@ export default {
         }
         costs.push(firstDefaultCost)
         costs.push(secondDefaultCost)
-
-
     }
     }
 }

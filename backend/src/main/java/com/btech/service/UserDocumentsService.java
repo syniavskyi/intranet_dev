@@ -35,7 +35,7 @@ public class UserDocumentsService {
             ud.setLang(lang);
             ud.setLink(fileDownloadUri);
             return userDocumentsRepository.save(ud);
-        }).orElseThrow(() -> new CustomResourceNotFoundException("Id " + id + " not found"));
+        }).orElseThrow(() -> new CustomResourceNotFoundException("User " + id + " not found"));
     }
 
     public ResponseEntity<?> deleteUserDocument(Long id, Long userDocumentId) {

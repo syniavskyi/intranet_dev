@@ -23,7 +23,8 @@ public class DocumentsList {
     @Column(name="doc_format")
     private String format;
 
-    public DocumentsList(String doc_id, String title, String description, String language, String link, String format) {
+    public DocumentsList(long id, String doc_id, String title, String description, String language, String link, String format) {
+        this.id = id;
         this.doc_id = doc_id;
         this.title = title;
         this.description = description;
@@ -33,6 +34,14 @@ public class DocumentsList {
     }
 
     public DocumentsList() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDoc_id() {
         return doc_id;
