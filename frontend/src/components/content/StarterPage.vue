@@ -97,7 +97,6 @@ export default {
       var docs = this.getDocs;
       const status = this.getDocsListStatus;
 
-      if (docs.length > 0 && status.length > 0) {
         for(let i = 0; i < docs.length; i++){
           for(let j = 0; j < status.length; j++) {
             if(docs[i].id == status[j].docId) {
@@ -105,12 +104,8 @@ export default {
             }
           }
         }
-        // this.listOfDoc = docs;
         this.checkList(docs);
         return this.listOfDoc = docs;
-      } else {
-        return this.listOfDoc = docs;
-      }
     },
     submitDocuments() {
       this.$store.dispatch("sentDocuments");
