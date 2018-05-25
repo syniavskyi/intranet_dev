@@ -511,12 +511,15 @@ td textarea {
     max-width: 11rem;
 }
 
-@media  (max-width: 40rem) {
+@media  (max-width: 82rem) {
     
     table {
+        display:flex;
         position: relative;
-        width: 19.5rem;
-        max-width: 19.5rem;
+        /* width: 19.5rem; */
+        /* max-width: 19.5rem; */
+        width: 90%;
+        overflow-x:hidden;
     }
 
     th, tr,td {
@@ -535,10 +538,10 @@ td textarea {
         line-height: 1rem; 
     }
     tbody {
-        display: block;
+        display: flex;
         overflow-x: auto;
         white-space: nowrap;
-        max-width: 15rem;
+        /* max-width: 15rem; */
     }
     tbody td {
         height: 3rem;
