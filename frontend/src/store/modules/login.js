@@ -6,8 +6,7 @@ const state = {
   sendEmailSuccess: false,
   sendEmailError: false,
   username: null,
-  userId: null,
-  userData: {}
+  userId: null
 }
 
 const mutations = {
@@ -22,15 +21,6 @@ const mutations = {
   },
   SET_EMAIL_ERROR(state, isError) {
     state.sendEmailError = isError
-  },
-  SET_PHOTO(state, photoUrl) {
-    state.userData.image = photoUrl
-  },
-  SET_CV(state, cvUrl){
-    state.userData.cv = cvUrl
-  },
-  SET_SENIORITY (state, seniority) {
-    state.userData.seniority = seniority
   },
   GET_USER_ID(state, data) {
     state.userId = data;

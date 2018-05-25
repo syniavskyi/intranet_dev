@@ -167,7 +167,14 @@ export default {
             showEditDialog: false,
             showAddProjectDialog: false,
             projectToEdit: {},
-            newProjectForUser: {}
+            newProjectForUser: {
+                userId: null,
+                projectId: null,
+                contractorId: null,
+                engag: null,
+                endDate: null,
+                startDate: null
+            }
         }
     },
     components: {
@@ -256,13 +263,18 @@ export default {
             this.projectToEdit = {}
         },
         setProjectsToCheck(userId) {
-            this.$store.dispatch('getUserProjectsToCheck', userId)
-            this.validateNewProject()
+            // this.newProjectForUser.contractorId = null
+            this.removeSelectedProject()     
+            this.$store.dispatch('getUserProjectsToCheck', userId)   
+                
+            // this.validateNewProject()
         },
         addNewProjectForUser() {
             this.$store.dispatch('addUserProject', this.newProjectForUser)
-            if (this.newProjectForUser.userId === this.selectedUser.id){
+            if (this.selectedUser) {
+                if (this.newProjectForUser.userId === this.selectedUser.id){
                 this.$store.dispatch('getUserProjects', this.selectedUser.id)
+            }
             }
             this.showAddProjectDialog = false
             this.newProjectForUser = {}
@@ -303,20 +315,26 @@ export default {
         },
         removeSelectedProject(){
             this.newProjectForUser.projectId = null
+            this.newProjectForUser.engag = null
             this.validateNewProject()
         },
         validateNewProject() {
            const currProjects = this.userProjectsToCheckList,
                 projectId = this.newProjectForUser.projectId
-            for (var i = 0; i < currProjects.length; i++) {
-                if (projectId === currProjects[i].projId) {
-                    this.$store.commit('SET_PROJECT_EXIST',true)
-                    this.$store.commit('SET_DISABLE_SAVE_NEW',true)
-                    return
-                } else {
-                    this.$store.commit('SET_PROJECT_EXIST',false)
-                    this.$store.dispatch('validateNewProject', this.newProjectForUser)
+             if (currProjects.length != 0) {
+                for (var i = 0; i < currProjects.length; i++) {
+                    if (projectId === currProjects[i].projId) {
+                        this.$store.commit('SET_PROJECT_EXIST',true)
+                        this.$store.commit('SET_DISABLE_SAVE_NEW',true)
+                        return
+                    } else {
+                        this.$store.commit('SET_PROJECT_EXIST',false)
+                        this.$store.dispatch('validateNewProject', this.newProjectForUser)
+                    }
                 }
+            }else {
+                this.$store.commit('SET_PROJECT_EXIST',false)
+                this.$store.dispatch('validateNewProject', this.newProjectForUser)
             }
         },
         validateEditEngag(engag) {
