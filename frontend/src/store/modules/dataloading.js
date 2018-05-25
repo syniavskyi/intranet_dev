@@ -219,14 +219,14 @@ const actions = {
 
       console.log(res)
     }).catch(error => {
-      commit('CLEAR_AUTH_DATA');
-      localStorage.removeItem('expirationDate')
-      localStorage.removeItem('username')
-      localStorage.removeItem('role')
-      localStorage.removeItem('token')
-      commit('DISPLAY_MENU', false);
-      router.replace('/');
-      console.log(error)
+      // commit('CLEAR_AUTH_DATA');
+      // localStorage.removeItem('expirationDate')
+      // localStorage.removeItem('username')
+      // localStorage.removeItem('role')
+      // localStorage.removeItem('token')
+      // commit('DISPLAY_MENU', false);
+      // router.replace('/');
+      // console.log(error)
     })
   },
 };
