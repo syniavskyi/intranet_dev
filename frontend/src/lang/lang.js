@@ -7,7 +7,11 @@ import pl from './i18n/pl.json'
 Vue.use(VueI18n)
 
 var userLang = navigator.language || navigator.userLanguage; 
-const locale = userLang.slice(0, 2)
+var locale = userLang.slice(0, 2)
+
+if (locale !== 'pl' || locale !== 'en') {
+    locale = 'en'
+}
 
 const messages = {
     pl: pl,
