@@ -18,7 +18,7 @@
             <ul class="starter-page-ul">
               <li class="starter-page-item" v-for="list in getFullListOfDoc" :key="list.title">
                 <div class="starter-page-list-item-btns">
-                  <button class="starter-page-file-btn">&#x21e3;</button>
+                  <button class="starter-page-file-btn" v-model="list.link">&#x21e3;</button>
                   <div v-if="list.format === 'pdf'" class="starter-page-pdf">.pdf</div>
                   <div v-else class="starter-page-docx">.docx</div>
                 </div>
@@ -105,9 +105,11 @@ export default {
             }
           }
         }
-        this.listOfDoc = docs;
-        this.checkList(this.listOfDoc);
-        return this.listOfDoc;
+        // this.listOfDoc = docs;
+        this.checkList(docs);
+        return this.listOfDoc = docs;
+      } else {
+        return this.listOfDoc = docs;
       }
     },
     submitDocuments() {
