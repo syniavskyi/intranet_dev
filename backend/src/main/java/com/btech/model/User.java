@@ -43,7 +43,6 @@ public class User {
     @JsonIgnore
     private boolean startPageVisible;
     @Column(name="users_group")
-    @JsonIgnore
     private String group;
 
     public User() {}

@@ -14,7 +14,7 @@ public class CorsConfig {
 	//Fixes "Response for preflight has invalid HTTP status code 401" error.
 	
      @Bean
-     public FilterRegistrationBean myCorsFilter() {
+     public FilterRegistrationBean CustomCrossOriginResourceSharingFilter() {
           UrlBasedCorsConfigurationSource ubccs = new UrlBasedCorsConfigurationSource();
           CorsConfiguration config = new CorsConfiguration();
           config.setAllowCredentials(true);
