@@ -89,7 +89,7 @@ const actions = {
     formData.append('id', 1);
     axios({
       method: 'post',
-      url: 'http://10.0.2.5:8080/api/users/userStarterPage/disableStarterPage',
+      url: 'https://btech-intranet.herokuapp.com/api/users/userStarterPage/disableStarterPage',
       headers: { "Content-type": "multipart/form-data" },
       data: formData
   }).then(res => {
