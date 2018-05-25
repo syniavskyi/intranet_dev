@@ -32,6 +32,7 @@ require('./assets/styles/dashboard/dashboard.css');
 require('./assets/styles/starterPage/starterPage.css');
 require('./assets/styles/availability/availability.css');
 require('./assets/styles/employees/employees.css');
+require('./assets/styles/files/files.css');
 
 Vue.config.productionTip = false
 
