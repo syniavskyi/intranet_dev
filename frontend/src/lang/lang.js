@@ -9,7 +9,7 @@ Vue.use(VueI18n)
 var userLang = navigator.language || navigator.userLanguage; 
 var locale = userLang.slice(0, 2)
 
-if (locale !== 'pl' || locale !== 'en') {
+if (locale !== 'pl' && locale !== 'en') {
     locale = 'en'
 }
 
