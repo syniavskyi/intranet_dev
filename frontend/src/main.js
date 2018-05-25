@@ -31,6 +31,7 @@ require('./assets/styles/registration/registration.css');
 require('./assets/styles/dashboard/dashboard.css');
 require('./assets/styles/starterPage/starterPage.css');
 require('./assets/styles/availability/availability.css');
+require('./assets/styles/employees/employees.css');
 
 Vue.config.productionTip = false
 
