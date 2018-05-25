@@ -53,15 +53,6 @@ const actions = {
       commit('GET_DOC_LIST', aData);
     });
   },
-  // getUserId({commit}) {
-  //   var URL = '/api/getIdByToken?access_token=' + localStorage.getItem('token');
-
-  //   axios.get(URL).then(res => {
-  //     const data = res.data;
-
-  //     commit('GET_USER_ID', data);
-  //   })
-  // },
   getDocsStatus({
     commit,
     state
@@ -79,7 +70,7 @@ const actions = {
         commit('GET_DOC_STATUS', aData);
     })
   },
-  saveDocs({commit, state}, data) {
+  saveDocs({commit, state, dispatch}, data) {
     var URL = '/api/users/' + state.userId + '/userStarterPage/create';
     axios.post(URL, {
       userGroup: "WRK",
@@ -87,6 +78,7 @@ const actions = {
       status: data.data.status
     }).then(function(response){
       console.log(response);
+      dispatch("getDocsStatus");
     }).catch(function(error) {
       console.log(error);
     });
