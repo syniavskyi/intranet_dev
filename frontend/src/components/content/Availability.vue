@@ -86,13 +86,13 @@
                 <div class="availability-tile ava-tile-2">
                     <div class="availability-tile-header">
                         <div class="ava-tile-header-title">
-                            <h2>Zarządzaj Projektami</h2>
+                            <h2>Dodaj Projekt</h2>
                             <div class="availability-tile-underscore"></div>
                         </div>
-                        <button class="ava-button ava-button-add" @click="showAddProjectDialog = true"> Dodaj projekt </button>
+                        <!-- <button class="ava-button ava-button-add" @click="showAddProjectDialog = true"> Dodaj projekt </button> -->
                     </div>
                     <div class="availability-tile-content">
-                        <div id="add-project-dialog" v-if="showAddProjectDialog">
+                        <div id="add-project-dialog">
                             <div class="ava-add-1"> 
                                 <div class="ava-div-select">
                                     <label class="ava-select-label">Pracownik</label>
@@ -123,7 +123,7 @@
                             <div class="ava-add-3">
                                 <div class="ava-div-input">
                                     <label class="ava-input-label">Okres</label>
-                                    <v-date-picker class="ava-input-range-wide" popoverDirection="top" is-expanded mode="range" v-model="newProjectForUser.dates">
+                                    <v-date-picker class="ava-input-range-wide" @input="validateNewProject" popoverDirection="top" is-expanded mode="range" v-model="newProjectForUser.dates">
                                         <input class="ava-input-range-wide" value="newProjectForUser.dates" />
                                     </v-date-picker>
                                 </div>
@@ -165,15 +165,12 @@ export default {
             showBranchSelect: true,
             selectedUser: null,
             showEditDialog: false,
-            showAddProjectDialog: false,
             projectToEdit: {},
             newProjectForUser: {
                 userId: null,
                 projectId: null,
                 contractorId: null,
-                engag: null,
-                endDate: null,
-                startDate: null
+                engag: null
             }
         }
     },
@@ -194,6 +191,7 @@ export default {
             hasDataChanged: 'getHasDataChanged',
             projectExist: 'getProjectExist',
             userProjectsToCheckList: 'userProjectsToCheckList'
+
         }),
         filteredUsers() {
             const usersList = this.usersList
@@ -259,24 +257,16 @@ export default {
     },
     methods: {
         loadUserProjects(userId) {
+            this.$store.commit('SET_USER_ID', userId)
             this.$store.dispatch('getUserProjects', userId)
             this.projectToEdit = {}
         },
         setProjectsToCheck(userId) {
-            // this.newProjectForUser.contractorId = null
-            this.removeSelectedProject()     
+            this.removeNewProjectData(userId)     
             this.$store.dispatch('getUserProjectsToCheck', userId)   
-                
-            // this.validateNewProject()
         },
         addNewProjectForUser() {
             this.$store.dispatch('addUserProject', this.newProjectForUser)
-            if (this.selectedUser) {
-                if (this.newProjectForUser.userId === this.selectedUser.id){
-                this.$store.dispatch('getUserProjects', this.selectedUser.id)
-            }
-            }
-            this.showAddProjectDialog = false
             this.newProjectForUser = {}
         },
         onEdit() {
@@ -291,8 +281,9 @@ export default {
             this.projectToEdit = {}
         },
         onCancelCreate() {
-            this.showAddProjectDialog = false
             this.newProjectForUser = {}
+            this.$store.commit('SET_PROJECT_EXIST',false)
+            this.$store.commit('SET_DISABLE_SAVE_NEW',true)
         },
         editProjectForUser() {
             this.projectToEdit.userId = this.selectedUser.id
@@ -305,7 +296,11 @@ export default {
                 userId: this.selectedUser.id
             }
             this.$store.dispatch('removeUserProject', data)
-            this.showEditDialog = false
+            if (this.newProjectForUser) {
+                if (this.newProjectForUser.userId === this.selectedUser.id){
+                    this.$store.dispatch('getUserProjectsToCheck', this.newProjectForUser.userId)  
+                }
+            }
             this.projectToEdit = {}
         },
         validateNewEngag(engag) {
@@ -313,10 +308,28 @@ export default {
             if (engag > 100) this.newProjectForUser.engag = 100;
             this.validateNewProject()
         },
+        removeNewProjectData(userId){
+            this.newProjectForUser = {
+                userId: userId,
+                projectId: null,
+                contractorId: null,
+                engag: null
+            }
+            this.$store.commit('SET_PROJECT_EXIST',false)
+            this.$store.commit('SET_DISABLE_SAVE_NEW',true)
+        },
         removeSelectedProject(){
-            this.newProjectForUser.projectId = null
-            this.newProjectForUser.engag = null
-            this.validateNewProject()
+            const userId = this.newProjectForUser.userId,
+                  contractorId = this.newProjectForUser.contractorId
+            
+            this.newProjectForUser = {
+                userId: userId,
+                projectId: null,
+                contractorId: contractorId,
+                engag: null
+            }
+            this.$store.commit('SET_PROJECT_EXIST',false)
+            this.$store.commit('SET_DISABLE_SAVE_NEW',true)
         },
         validateNewProject() {
            const currProjects = this.userProjectsToCheckList,

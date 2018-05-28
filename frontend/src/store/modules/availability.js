@@ -7,7 +7,8 @@ const state = {
     beforeEditingCache: null,
     hasDataChanged: false,
     projectExist: false,
-    userProjectsToCheck:[]
+    userProjectsToCheck:[],
+    userId: null
 };
 
 const mutations = {
@@ -31,16 +32,45 @@ const mutations = {
     },
     SET_USER_PROJECTS_TO_CHECK(state, userProjects) {
         state.userProjectsToCheck = userProjects
+    },
+    SET_USER_ID(state, userId) {
+        state.userId = userId
     }
 };
 
 const actions = {
-    getUserProjects({commit, getters}, userId) {
+    getUserProjects({commit, dispatch, getters}, userId) {
         const URL = "/api/users/" + userId + "/userEngag"
          axios.get(URL).then(res => {
              console.log(res)
             const userProjects = res.data
-            const projectsList = getters.projectsList
+            dispatch('setUserProjects', userProjects)
+            // const projectsList = getters.projectsList
+            // for (let i=0; i<userProjects.length; i++) {
+            //     for (let j=0; j<projectsList.length; j++){
+            //         if (userProjects[i].projId === projectsList[j].id) {
+            //             userProjects[i].projName = projectsList[j].name
+            //         } 
+            //     }
+            // }
+            // for (let i=0; i<userProjects.length; i++) {
+            //     if (userProjects[i].engag === "100") {
+            //         userProjects[i].color = '#EDA1A1'
+            //         userProjects[i].order = 2
+            //     } else {
+            //         userProjects[i].color = '#fde692'
+            //         userProjects[i].order = 1
+            //     }
+            //     userProjects[i].startDate = new Date(userProjects[i].startDate)
+            //     userProjects[i].endDate = new Date(userProjects[i].endDate)
+            // }
+            // commit('SET_USER_PROJECTS', userProjects)
+        }).catch(error => {
+            console.log(error)
+        });
+    },
+    setUserProjects({commit, getters}, userProjects){
+        const projectsList = getters.projectsList
             for (let i=0; i<userProjects.length; i++) {
                 for (let j=0; j<projectsList.length; j++){
                     if (userProjects[i].projId === projectsList[j].id) {
@@ -60,9 +90,6 @@ const actions = {
                 userProjects[i].endDate = new Date(userProjects[i].endDate)
             }
             commit('SET_USER_PROJECTS', userProjects)
-        }).catch(error => {
-            console.log(error)
-        });
     },
      getUserProjectsToCheck({commit, getters}, userId){
         const URL = "/api/users/" + userId + "/userEngag"
@@ -91,7 +118,7 @@ const actions = {
            console.log(error)
        });
     },
-    addUserProject({commit, dispatch}, newProjectData) {
+    addUserProject({commit, getters, dispatch}, newProjectData) {
         if (newProjectData.dates === undefined) {
             const dates = {
                 end: null,
@@ -116,7 +143,12 @@ const actions = {
             contractorId: data.contractorId
           })
           .then(response => {
+            const selectedUser = getters.getSelectedUserId
+            if (selectedUser === data.userId) {
+                dispatch('setUserProjects', response.data)
+            }
             dispatch('getUserProjectsToCheck', newProjectData.userId)
+            commit('SET_DISABLE_SAVE_NEW', true)
           })
           .catch(error => {
             console.log(error);
@@ -141,13 +173,7 @@ const actions = {
           });
     },
     validateNewProject({commit}, project){ 
-        const projExist = getters.getProjectExist
-        if (projExist === true) {
-            commit('SET_DISABLE_SAVE_NEW', true) 
-            return
-        }
-        if (project.userId && project.projectId  && project.engag ) {
-            // && project.contractorId && project.engag && project.dates
+        if (project.userId && project.projectId  && project.engag && project.contractorId && project.dates.start && project.dates.end) {
                 commit('SET_DISABLE_SAVE_NEW', false) 
             } else {
                 commit('SET_DISABLE_SAVE_NEW', true) 
@@ -207,6 +233,9 @@ const getters = {
     userProjectsToCheckList (state) {
         return state.userProjectsToCheck
     },
+    getSelectedUserId(state){
+        return state.userId
+    }
 
 
 };
