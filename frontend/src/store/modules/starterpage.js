@@ -83,17 +83,18 @@ const actions = {
       console.log(error);
     });
   },
-  sentDocuments({commit}){
+  sentDocuments({commit, state}){
     let formData = new FormData();
 
-    formData.append('id', 1);
+    formData.append('id', state.userId);
     axios({
       method: 'post',
-      url: 'https://btech-intranet.herokuapp.com/api/users/userStarterPage/disableStarterPage',
+      url: 'http://10.0.2.6:8080/api/users/userStarterPage/disableStarterPage',
       headers: { "Content-type": "multipart/form-data" },
       data: formData
   }).then(res => {
       console.log(res)
+      router.replace('/dashboard')
   }).catch(error => {
       console.log(error)
   })
