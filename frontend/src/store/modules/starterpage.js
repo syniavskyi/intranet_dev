@@ -89,7 +89,7 @@ const actions = {
     formData.append('id', state.userId);
     axios({
       method: 'post',
-      url: 'http://10.0.2.6:8080/api/users/userStarterPage/disableStarterPage',
+      url: 'api/users/userStarterPage/disableStarterPage',
       headers: { "Content-type": "multipart/form-data" },
       data: formData
   }).then(res => {
