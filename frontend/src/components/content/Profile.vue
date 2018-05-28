@@ -150,7 +150,7 @@
                                         <a :href="userData.cv" class="download doc-download-pl">&#x21e3;</a>
                                     </div>
                                     <div class="add-download">
-                                        <p class="profile-error profile-error-upload-bottom">{{ $t("message.fileUploadError") }}</p>
+                                        <p v-show="false" class="profile-error profile-error-upload-bottom">{{ $t("message.fileUploadError") }}</p>
                                         <label for="add-pdf-pl" class="add">+
                                             <input id="add-pdf-pl" accept=".pdf" class="add pdf-add-pl" type="file">
                                         </label>
@@ -163,7 +163,7 @@
                                     <a>
                                         <span class="button-circle lang-circle">EN</span></a>
                                     <div class="add-download">
-                                        <p class="profile-error profile-error-upload-top">{{ $t("message.fileUploadError") }}</p>
+                                        <p v-show="false" class="profile-error profile-error-upload-top">{{ $t("message.fileUploadError") }}</p>
                                         <label class="add" for="add-docx-en">+
                                             <input accept=".doc,.docx" id="add-docx-en" class="add" type="file">
                                         </label>
@@ -172,7 +172,7 @@
                                         <a class="download">&#x21e3;</a>
                                     </div>
                                     <div class="add-download">
-                                        <p class="profile-error profile-error-upload-bottom">{{ $t("message.fileUploadError") }}</p>
+                                        <p v-show="false" class="profile-error profile-error-upload-bottom">{{ $t("message.fileUploadError") }}</p>
                                         <label class="add" for="add-pdf-en">+
                                             <input id="add-pdf-en" accept=".pdf" class="add" type=file>
                                         </label>
@@ -215,9 +215,17 @@
                                             </select>
                                         </td>
                                         <td> 
-                                            <v-date-picker popoverDirection="top" class="profile-table-date-picker" is-expanded mode="range" v-model="experience[index].duration">
-                                                    <input value="experience[index].duration" />
+                                            <p>Rozpoczęcie</p>
+                                            <v-date-picker popoverDirection="top" class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].startDate">
+                                                    <input value="experience[index].startDate" />
                                             </v-date-picker>
+                                            <p>Zakończenie</p>
+
+                                            <v-date-picker popoverDirection="top" :id="index" class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].endDate">
+                                                <input value="experience[index].endDate" />
+                                            </v-date-picker>
+                                            <input type="checkbox" @change="disableEndDateInput" id="checkbox" :name="index" v-model="experience[index].isCurrent"/>
+                                            <label for="checkbox">Obecnie</label>
                                         </td>
                                         <td> 
                                             <select class="profile-table-select profile-table-select-industry" v-model="experience[index].industry"> 
@@ -273,7 +281,8 @@ export default {
             showNoChangesAlert: false,
             invalidPhone: false,
             invalidDate: false,
-            disableSaveBtn: true
+            disableSaveBtn: true,
+            showEndInput: true
         }
     },
     validations: {
@@ -419,6 +428,12 @@ export default {
                 moduleId: value.target.value
             }
             this.$store.dispatch('removeModule', data)
+        },
+        disableEndDateInput(value) {
+            const isCurrent = value.target.checked,
+                index = value.target.name
+            document.getElementById(index).setAttribute("v-show", !isCurrent)
+            
         }
     }
 }

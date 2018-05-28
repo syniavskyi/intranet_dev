@@ -7,7 +7,12 @@ const state = {
     beforeEditingCache: null,
     hasDataChanged: false,
     projectExist: false,
-    userProjectsToCheck:[]
+    userProjectsToCheck:[],
+    userId: null,
+    userIdForNewProj: null,
+    editError: false,
+    addingError: false,
+    removeError: false
 };
 
 const mutations = {
@@ -31,16 +36,39 @@ const mutations = {
     },
     SET_USER_PROJECTS_TO_CHECK(state, userProjects) {
         state.userProjectsToCheck = userProjects
-    }
+    },
+    SET_USER_ID(state, userId) {
+        state.userId = userId
+    },
+    SET_USER_ID_FOR_NEW_PROJ(state, userId) {
+        state.userIdForNewProj = userId
+    },
+    SET_EDIT_ERROR(state, isError) {
+        state.editError = isError
+    },
+    SET_ADDING_ERROR(state, isError) {
+        state.addingError = isError
+    },
+    SET_REMOVE_ERROR(state, isError) {
+        state.removeError = isError
+    },
 };
 
 const actions = {
-    getUserProjects({commit, getters}, userId) {
+    getUserProjects({commit, dispatch, getters}, userId) {
+    //get user projects for calendar and editing projects 
         const URL = "/api/users/" + userId + "/userEngag"
          axios.get(URL).then(res => {
              console.log(res)
             const userProjects = res.data
-            const projectsList = getters.projectsList
+            dispatch('setUserProjects', userProjects)
+        }).catch(error => {
+            console.log(error)
+        });
+    },
+    setUserProjects({commit, getters}, userProjects){
+    // set projects data with props for calendar 
+        const projectsList = getters.projectsList
             for (let i=0; i<userProjects.length; i++) {
                 for (let j=0; j<projectsList.length; j++){
                     if (userProjects[i].projId === projectsList[j].id) {
@@ -60,11 +88,9 @@ const actions = {
                 userProjects[i].endDate = new Date(userProjects[i].endDate)
             }
             commit('SET_USER_PROJECTS', userProjects)
-        }).catch(error => {
-            console.log(error)
-        });
     },
      getUserProjectsToCheck({commit, getters}, userId){
+        //  load user projects to validate adding new project
         const URL = "/api/users/" + userId + "/userEngag"
          axios.get(URL).then(res => {
              console.log(res)
@@ -82,16 +108,23 @@ const actions = {
             console.log(error)
         });
     },
-    removeUserProject({commit, dispatch}, data) {
+    removeUserProject({commit, getters, dispatch}, data) {
         const URL = "/api/users/" + data.userId + "/userEngag/" + data.projectId + "/delete"
         axios.delete(URL).then(res => {
             console.log(res)
             dispatch('getUserProjects', data.userId)
+            // if the same user is selected in edit and add project, then load again projects
+            // to validate adding new project 
+            if (getters.getUserIdForNewProj === data.userId) {
+                dispatch('getUserProjectsToCheck', getters.getUserIdForNewProj)
+            }
+            commit('SET_REMOVE_ERROR', false)
         }).catch(error => {
+            commit('SET_REMOVE_ERROR', true)
            console.log(error)
        });
     },
-    addUserProject({commit, dispatch}, newProjectData) {
+    addUserProject({commit, getters, dispatch}, newProjectData) {
         if (newProjectData.dates === undefined) {
             const dates = {
                 end: null,
@@ -116,10 +149,19 @@ const actions = {
             contractorId: data.contractorId
           })
           .then(response => {
+            // if the same user is selected in add and edit project, then 
+            // set again user's project in calendar and edit part
+            if (getters.getSelectedUserId === data.userId) {
+                dispatch('setUserProjects', response.data)
+            }
             dispatch('getUserProjectsToCheck', newProjectData.userId)
+            commit('SET_ADDING_ERROR', false)
+            commit('SET_DISABLE_SAVE_NEW', true)
+            commit('SET_ADDING_ERROR', false)
           })
           .catch(error => {
             console.log(error);
+            commit('SET_ADDING_ERROR', true)
           });
     },
     editUserProject({commit, dispatch}, projectData) { 
@@ -133,21 +175,19 @@ const actions = {
             contractorId: projectData.contractorId
           })
           .then(response => {
+            commit('SET_EDIT_ERROR', false)
             dispatch('getUserProjects', projectData.userId)
-            dispatch('getUserProjectsToCheck', projectData.userId)
+            if (getters.getUserIdForNewProj === projectData.userId) {
+                dispatch('getUserProjectsToCheck', projectData.userId)
+            }
           })
           .catch(error => {
             console.log(error);
+            commit('SET_EDIT_ERROR', true)
           });
     },
     validateNewProject({commit}, project){ 
-        const projExist = getters.getProjectExist
-        if (projExist === true) {
-            commit('SET_DISABLE_SAVE_NEW', true) 
-            return
-        }
-        if (project.userId && project.projectId  && project.engag ) {
-            // && project.contractorId && project.engag && project.dates
+        if (project.userId && project.projectId  && project.engag && project.contractorId && project.dates.start && project.dates.end) {
                 commit('SET_DISABLE_SAVE_NEW', false) 
             } else {
                 commit('SET_DISABLE_SAVE_NEW', true) 
@@ -207,6 +247,21 @@ const getters = {
     userProjectsToCheckList (state) {
         return state.userProjectsToCheck
     },
+    getSelectedUserId(state){
+        return state.userId
+    },
+    getUserIdForNewProj(state){
+        return state.userIdForNewProj
+    },
+    getRemoveError(state){
+        return state.removeError
+    },
+    getEditError(state){
+        return state.editError
+    },
+    getAddingError(state){
+        return state.addingError
+    }
 
 
 };

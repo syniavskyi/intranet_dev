@@ -1,19 +1,27 @@
 const state = {
-    delegationCostsList: {},
+    delegationCostsList: [],
+    // customCosts: [],
     currencyList: [
         {id: 'PLN'},
         {id: 'EUR'},
         {id: 'CHF'},
         {id: 'USD'}
     ],
+    exchangeRates: [
+        {id: 'PLN', rate: '1,00'},
+        {id: 'EUR', rate: '4,12'},
+        {id: 'CHF', rate: '3,12'},
+        {id: 'USD', rate: '3,22'}
+    ],
     costTableData: [{
         docDate: null,
         company: null,
         docNo: null,
-        payback: null,
-        currency: null,
+        payback: false,
+        currency: 'PLN',
         costType: null,
-        amount: null
+        amount: 0,
+        totalAmount: 0
     }],
     totalCosts: {
         payback: 0,
@@ -34,6 +42,7 @@ const mutations = {
     SET_TOTAL_COST_DATA(state, list){
         state.totalCosts = list
     }
+
 };
 
 const actions = {
@@ -65,10 +74,11 @@ const actions = {
             docDate: null,
             company: null,
             docNo: null,
-            payback: null,
-            currency: null,
+            payback: false,
+            currency: 'PLN',
             costType: null,
-            amount: 0
+            amount: 0,
+            totalAmount: 0
         })
         commit('SET_COST_TABLE_DATA', costTableData)
     },
@@ -88,20 +98,34 @@ const actions = {
                 amount: 0
             }
         for(let i=0; i<costTableData.length; i++) {
-            let amount = parseInt(costTableData[i].amount),
-                type = costTableData[i].costType
+            let type = costTableData[i].costType,
+                amount = parseFloat(costTableData[i].amount),
+                curr = costTableData[i].currency,
+                exchangeRates = getters.getExchangeRates,
+                rate = null,
+                totalAmount = null;
+            
+            for (let i=0; i<exchangeRates.length; i++){
+                if (exchangeRates[i].id === curr) {
+                    rate = parseFloat(exchangeRates[i].rate)
+                }
+            } 
+
+            costTableData[i].totalAmount = amount * rate
+
             if(type === 'ACC') {
-                totalCosts.accomodation = totalCosts.accomodation + amount
+                totalCosts.accomodation = totalCosts.accomodation + costTableData[i].totalAmount
             } else if (type === 'TRV'){
-                totalCosts.travel = totalCosts.travel + amount
+                totalCosts.travel = totalCosts.travel + costTableData[i].totalAmount
             } else if  (type === 'OTH'){
-                totalCosts.others = totalCosts.others + amount
+                totalCosts.others = totalCosts.others + costTableData[i].totalAmount
             }
             if(costTableData[i].payback === true ) {
-                totalCosts.payback = totalCosts.payback + amount
+                totalCosts.payback = totalCosts.payback + costTableData[i].totalAmount
             }
-            totalCosts.amount = totalCosts.amount + amount
+            totalCosts.amount = totalCosts.amount + costTableData[i].totalAmount
         }
+        commit('SET_COST_TABLE_DATA', costTableData)
         commit('SET_TOTAL_COST_DATA', totalCosts)
     }
 };
@@ -118,6 +142,13 @@ const getters = {
     },
     getTotalCosts(state) {
         return state.totalCosts
+    },
+    getExchangeRates(state) {
+        return state.exchangeRates
+    },
+    
+    getDelegationCostsList(state) {
+        return state.delegationCostsList
     }
 };
 
