@@ -5,12 +5,15 @@
         "resetPass": "Zresetuj hasło",
         "editData": "Edytuj dane",
         "saveChanges": "Zapisz zmiany",
+        "save": "Zapisz",
         "cancel": "Anuluj",
         "changePhoto": "Zmień zdjęcie",
         "register": "Zarejestruj",
         "addEvent": "Dodaj wydarzenie",
         "documentComplete": "Przekazano dokumenty",
-        "addProject": "Dodaj projekt"
+        "addProject": "Dodaj projekt",
+        "editProjects": "Edytuj projekty",
+        "removeProject": "Usuń projekt"
      },
     "label": {
         "user": "Użytkownik",
@@ -46,7 +49,14 @@
         "to": "Do",
         "target": "W celu",
         "transport": "Transport",
-        "registrationNo": "Numer rejestracyjny"
+        "registrationNo": "Numer rejestracyjny",
+        "emplProjects": "Projekty pracownika",
+        "engag": "Obłożenie",
+        "startDate": "Data rozpoczęcia",
+        "endDate": "Data zakończenia",
+        "dates": "Okres",
+        "contractor": "Kontrahent",
+        "oneProject": "Projekt"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",
@@ -70,7 +80,10 @@
         "projects": "Projekty",
         "experience": "Doświadczenie",
         "travelExp": "Rachunek kosztów podróży",
-        "costs": "Koszty"
+        "costs": "Koszty",
+        "selectEmployee": "Wybierz Pracownika",
+        "addProject": "Dodaj projekt"
+        
     },
     "message": {
         "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",
@@ -84,7 +97,11 @@
         "hourValidation": "Wprowadzona godzina posiada nieprawidłowy format",
         "newAccountPassword": "Utworzono nowe konto. Na maila wysłano hasło do konta.",
         "fileUploadError": "Niepowodzenie podczas zapisu pliku.",
-        "photoUploadError": "Niepowodzenie podczas zapisu zdjęcia."
+        "photoUploadError": "Niepowodzenie podczas zapisu zdjęcia.",
+        "addProjectError": "Niepowodzenie podczas dodawania projektu",
+        "editProjectError": "Niepowodzenie podczas edycji projektu",
+        "removeProjectError": "Niepowodzenie podczas usuwania projektu",
+        "projectExistError": " Taki projekt już jest przypisany "
     },
     "select": {
         "language": {
