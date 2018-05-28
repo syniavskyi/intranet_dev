@@ -79,6 +79,14 @@ body {
     align-self: center;
 }
 
+.starter-page-lists {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 88%;
+    align-self:center;
+}
+
 .starter-page-list{
     margin:0;
     padding:0;
@@ -89,6 +97,7 @@ body {
     align-self: center;
     background: white;
     box-shadow: 0 0 10px grey;
+    margin-bottom: 1rem;
 }
 .starter-page-list-header {
     border-bottom: 1px solid rgba(128, 128, 128, 0.28);
