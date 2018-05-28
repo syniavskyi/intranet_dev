@@ -207,9 +207,11 @@
             </div>
         </div>
     </div>
+    </div>
 </template>
 
 <script>
+// import Menu from '../Menu.vue'
 import MaskedInput from 'vue-masked-input'
 import moment from "moment"
 import { mapGetters } from 'vuex'
@@ -228,20 +230,21 @@ export default {
             invalidDate: false,
             invalidHour: false,
             showLicensePlateNo: false,
-            selectedDepartment: null,
-            customCosts: [],
             defaultCostsData: {},
             disableSaveBtn: true
         }
     },
+    // components: {
+    //     'app-menu': Menu
+    // },
     computed: {
         ...mapGetters({
             userData: 'userData',
             departmentList: 'depList',
-            delegationCostList: 'getDelegationCostsList',
             currencyList: 'getCurrencyList',
             costTableData: 'getCostTableData',
-            totalCosts: 'getTotalCosts'
+            totalCosts: 'getTotalCosts',
+            customCosts: 'getDelegationCostsList'
         }),
         delegationStartDate() {
             if (this.newDelegation.dates){
@@ -300,15 +303,13 @@ export default {
        this.$store.dispatch('checkDelegationFields')
     },
     addRow() {
-        this.customCosts.push({})
-        // this.$store.dispatch('addDelegationRow')
+        this.$store.dispatch('addDelegationRow')
     },
     addCostRow() {
         this.$store.dispatch('addCostRow')
     },
     removeRow(index) {
-        this.customCosts.splice(index, 1)
-        // this.$store.dispatch('removeDelegationRow', index)
+        this.$store.dispatch('removeDelegationRow', index)
     },
     removeCostRow(index) {
     this.$store.dispatch('removeCostRow', index)
@@ -341,7 +342,11 @@ export default {
         this.$store.dispatch('updateTotalCosts')
     },
     save() {
-        const costs = this.customCosts.slice(0)
+        // const costs = this.customCosts.slice(0)
+        const costs = []
+        for (let i=0; i< this.customCosts.length; i++)  {
+            costs[i] = Object.assign({}, this.customCosts[i])
+        }
         const firstDefaultCost = {
            leavePlace:  this.defaultCostsData.firstLeavePlace,
            leaveDate: this.newDelegation.dates.start,

@@ -226,7 +226,7 @@ const actions = {
       // localStorage.removeItem('token')
       // commit('DISPLAY_MENU', false);
       // router.replace('/');
-      // console.log(error)
+      console.log(error)
     })
   },
 };

@@ -10,7 +10,9 @@
         "register": "Register",
         "addEvent": "Add Event",
         "documentComplete": "Documents were provided",
-        "addProject": "Add project"
+        "addProject": "Add project",
+        "editProjects": "Edit projects",
+        "removeProject": "Remove project"
     },
     "label": {
         "user": "User",
@@ -37,7 +39,23 @@
         "eventDescription": "Event description",
         "priority": "Priority",
         "employee": "Employee",
-        "documentList": "Below is a list of documents that you must fill and deliver"
+        "documentList": "Below is a list of documents that you must fill and deliver",
+        "appliesTo": "Applies to",
+        "number": "Number",
+        "day": "On",
+        "forTime": "For:",
+        "to": "To",
+        "target": "In order to",
+        "transport": "Transport",
+        "registrationNo": "Registration number",
+        "emplProjects": "Employee projects",
+        "engag": "Engagement",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "contractor": "Contractor",
+        "oneProject": "Project",
+        "dates": "Dates"
+
     },
     "header": {
         "login": "Log in to Intranet",
@@ -58,26 +76,40 @@
         "starterPage": "Starter Page",
         "welcome": "Welcome in BTech!",
         "delegations": "Delegations",
-        "experience": "Experience"
+        "experience": "Experience",
+        "travelExp": "Travel expences",
+        "costs": "Costs",
+        "selectEmployee": "Select employee" ,
+        "addProject": "Add project"     
     },
     "message": {
         "loginError": "Password or username are invalid.",
         "sendEmailSuccess": "New password was sent at your email address.",
-        "sendEmailError": "Email wasn't send,check entered email address.",
+        "sendEmailError": "Email has not been send,check entered email address.",
         "emailValidation": "Email address is empty or is in incorrect format.",
         "phoneValidation": "Phone number has incorrect format.",
         "saveChangesError": "The changes weren't saved.",
         "noChanges": "No changes were made",
         "dateValidation": "Date has incorrect format.",
+        "hourValidation": "Time has incorrect format.",
         "newAccountPassword": "A new account has been created. An account password was sent to the mail",
-        "fileUploadError": "File wasn't saved.",
-        "photoUploadError": "Photo wasn't saved."
+        "fileUploadError": "File has not been saved.",
+        "photoUploadError": "Photo has not been saved.",
+        "addProjectError": "Project has not been added",
+        "editProjectError": "Project has not been edited",
+        "removeProjectError": "Project has not been removed",
+        "projectExistError": "This project is already assigned to this user"
     },
     "select": {
         "language": {
             "english": "English",
             "polish": "Polish"
-        }
+        },
+        "car": {
+            "private": "Private car",
+            "company": "Company car"
+        },
+        "others": "Inne"
     },
     "calendar": {
         "noProjectAssigned": "No project assigned"
@@ -88,6 +120,25 @@
         "duration": "Duration",
         "Industry": "Industry",
         "Modules": "Modules",
-        "Descr": "Description of performed activities"
+        "Descr": "Description of performed activities",
+        "delegations": {
+            "leave": "Leave",
+            "arrival": "Arrival",
+            "distance": "Distance (km)",
+            "cost": "Cost",
+            "place": "Place",
+            "date": "Date",
+            "time": "Time",
+            "docDate": "Date of document",
+            "company": "Company",
+            "docNo": "Number of document",
+            "return": "Return",
+            "currency": "Currency",
+            "accomodation": "Accomodation",
+            "travel": "Travel",
+            "others": "Others",
+            "amountPLN": "Amount in PLN",
+            "totalAmount": "Total PLN"
+        }
     }
 }
