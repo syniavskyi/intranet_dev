@@ -1,0 +1,35 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    margin:0;
+    padding:0;
+    /* max-width: 100%; */
+}
+
+.plane-delegations {
+    margin:0;
+    padding:0;
+    width: 100%;
+    /* height: 100%; */
+    height: min-content;
+    display: flex;
+}
+
+.delegations-nav-and-content {
+    display: flex;
+    flex-direction: row;
+    background: #d8d8d8;
+    min-height: 100%;
+}
+
+.delegations-content {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+/*    min-height: 60rem;*/
+    min-height: min-content;
+}

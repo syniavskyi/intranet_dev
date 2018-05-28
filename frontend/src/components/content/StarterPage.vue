@@ -10,32 +10,60 @@
           </div>
         </div>
         <h3 class="starter-page-user-header">{{ $t("header.welcome") }}</h3>
-        <div class="starter-page-list">
-          <div class="starter-page-list-header">
-            <p class="starter-page-list-title">{{ $t("label.documentList") }}</p>
-          </div>
-          <div class="starter-page-list-content">
-            <ul class="starter-page-ul">
-              <li class="starter-page-item" v-for="list in getFullListOfDoc" :key="list.title">
-                <div class="starter-page-list-item-btns">
-                  <a class="starter-page-file-btn" :href="list.link">&#x21e3;</a>
-                  <div v-if="list.format === 'pdf'" class="starter-page-pdf">.pdf</div>
-                  <div v-else class="starter-page-docx">.docx</div>
+          <div class="starter-page-lists">
+            <div class="starter-page-list">
+              <div class="starter-page-list-header">
+                <p class="starter-page-list-title">{{ $t("label.documentList") }}</p>
+              </div>
+              <div class="starter-page-list-content">
+                <ul class="starter-page-ul">
+                  <li class="starter-page-item" v-for="list in getFullListOfDoc" :key="list.title">
+                    <div class="starter-page-list-item-btns">
+                      <a class="starter-page-file-btn" :href="list.link">&#x21e3;</a>
+                      <div v-if="list.format === 'pdf'" class="starter-page-pdf">.pdf</div>
+                      <div v-else class="starter-page-docx">.docx</div>
+                    </div>
+                    <div class="starter-page-list-item-wrapper">
+                      <div class="starter-page-item-text" :class="list.status ? 'line-through' : 'none'">
+                        {{ list.title }}
+                        <p class="starter-list-item-popover">{{ list.description }}</p>
+                      </div>
+                    </div>
+                    <input class="starter-page-checkbox" :checked="list.status" @change="changeCheckbox(list)" type="checkbox">
+                  </li>
+                </ul>
+                <div class="starter-page-list-bottom">
+                  <button class="starter-page-docs-btn button" :disabled="setButton" @click="submitDocuments">{{ $t("button.documentComplete") }}</button>
                 </div>
-                <div class="starter-page-list-item-wrapper">
-                  <div class="starter-page-item-text" :class="list.status ? 'line-through' : 'none'">
-                    {{ list.title }}
-                    <p class="starter-list-item-popover">{{ list.description }}</p>
-                  </div>
+              </div>
+            </div>
+            <div class="starter-page-list">
+              <div class="starter-page-list-header">
+                <p class="starter-page-list-title">{{ $t("label.documentList") }}</p>
+              </div>
+              <div class="starter-page-list-content">
+                <ul class="starter-page-ul">
+                  <li class="starter-page-item" v-for="list in getFullListOfDoc" :key="list.title">
+                    <div class="starter-page-list-item-btns">
+                      <a class="starter-page-file-btn" :href="list.link">&#x21e3;</a>
+                      <div v-if="list.format === 'pdf'" class="starter-page-pdf">.pdf</div>
+                      <div v-else class="starter-page-docx">.docx</div>
+                    </div>
+                    <div class="starter-page-list-item-wrapper">
+                      <div class="starter-page-item-text" :class="list.status ? 'line-through' : 'none'">
+                        {{ list.title }}
+                        <p class="starter-list-item-popover">{{ list.description }}</p>
+                      </div>
+                    </div>
+                    <input class="starter-page-checkbox" :checked="list.status" @change="changeCheckbox(list)" type="checkbox">
+                  </li>
+                </ul>
+                <div class="starter-page-list-bottom">
+                  <button class="starter-page-docs-btn button" :disabled="setButton" @click="submitDocuments">{{ $t("button.documentComplete") }}</button>
                 </div>
-                <input class="starter-page-checkbox" :checked="list.status" @change="changeCheckbox(list)" type="checkbox">
-              </li>
-            </ul>
-            <div class="starter-page-list-bottom">
-              <button class="starter-page-docs-btn button" :disabled="setButton" @click="submitDocuments">{{ $t("button.documentComplete") }}</button>
+              </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
   </div>
