@@ -87,6 +87,8 @@ const actions = {
       // console.log(data);
       if(data) {
         router.replace('/starterpage')
+      } else {
+        router.replace('/dashboard')
       }
     })
   },
