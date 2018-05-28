@@ -5,179 +5,203 @@
             <div class="delegations-content">
                 <div class="delegations-header">
                    <div class="delegations-header-title-and-menu">
-            <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="delegations-header-menu">
-            <p class="delegations-header-title">Dokumenty</p>
-          </div>
+                        <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="delegations-header-menu">
+                        <p class="delegations-header-title">Delegacje</p>
+                    </div>
                 </div>
                 <div class="delegations-tiles">
-                    
-                    <div>
-                        <label>Dotyczy: </label>
-                        <p> {{userData.firstName}} {{userData.lastName}} </p>
+                    <div class="delegations-tile delegations-inputs">
+                        <div class="delegations-tile-header">
+                            <div class="delegations-tile-title">{{userData.firstName}} {{userData.lastName}}
+                            </div>
+                            <div class="delegations-tile-underscore"></div>
+                        </div>
+                        <div class="delegations-tile-content delegations-tile-content-1">
+                            <div class="delegations-inputs-section">
+                                <div class="delegations-div-input">
+                                    <label class="delegations-label">Numer: </label>
+                                    <input class="delegations-input" v-model="newDelegation.number" @input="checkFields"/>
+                                </div>
+                                <div class="delegations-div-input">
+                                    <label class="delegations-label">Dnia: </label>
+                                    <!-- <masked-input mask="11.11.1111" @input="dateValidation" v-model="newDelegation.createDate" /> -->
+                                    <v-date-picker class="delegations-input-date" @input="checkFields"  v-model="newDelegation.createDate">
+                                        <input value="newDelegation.createDate" />
+                                    </v-date-picker>
+                                </div>
+                                <div class="delegations-div-input">
+                                    <label class="delegations-label">Na czas: </label>
+                                    <v-date-picker class="delegations-input-date" @input="checkFields" is-expanded mode="range" v-model="newDelegation.dates">
+                                        <input value="newDelegation.dates" />
+                                    </v-date-picker>
+                                </div>
+                            </div>
+                            <div class="delegations-inputs-section">
+                                <div class="delegations-div-input">
+                                    <label class="delegations-label">Do: </label>
+                                    <input class="delegations-input" v-model="newDelegation.destination" @input="checkFields"/>
+                                </div>
+                                <div class="delegations-div-input">
+                                    <label class="delegations-label">W celu: </label>
+                                    <input class="delegations-input" v-model="newDelegation.purpose" @input="checkFields"/>
+                                </div>
+                                <div class="delegations-div-input">
+                                    <label class="delegations-label">Transport: </label>
+                                    <select class="delegations-select" v-model="newDelegation.transport" @change="checkSelectVal">
+                                        <option value="LOT">LOT</option>
+                                        <option value="PKP">PKP</option>
+                                        <option value="companyCar">samochód służbowy</option>
+                                        <option value="privateCar">samochód prywatny</option>
+                                        <option value="other">Inne</option>
+                                    </select>
+                                </div>
+                                <div class="delegations-div-input" v-if="showLicensePlateNo">
+                                    <label class="delegations-label">Numer rejestracyjny: </label>
+                                    <input class="delegations-input" v-model="newDelegation.licensePlateNo" @input="checkFields"/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <label>Numer: </label>
-                        <input v-model="newDelegation.number" @input="checkFields"/>
-                    </div>
-                    <div>
-                        <label>Dnia: </label>
-                        <!-- <masked-input mask="11.11.1111" @input="dateValidation" v-model="newDelegation.createDate" /> -->
-                        <v-date-picker @input="checkFields"  v-model="newDelegation.createDate">
-                            <input value="newDelegation.createDate" />
-                        </v-date-picker>
-                    </div>
-                    <div>
-                        <label>Na czas: </label>
-                        <v-date-picker @input="checkFields" is-expanded mode="range" v-model="newDelegation.dates">
-                            <input value="newDelegation.dates" />
-                        </v-date-picker>
-                    </div>
-                    <div>
-                        <label>Do: </label>
-                        <input v-model="newDelegation.destination" @input="checkFields"/>
-                    </div>
-                    <div>
-                        <label>W celu: </label>
-                        <input v-model="newDelegation.purpose" @input="checkFields"/>
-                    </div>
-                    <div>
-                        <label>Transport: </label>
-                        <select v-model="newDelegation.transport" @change="checkSelectVal">
-                            <option value="LOT">LOT</option>
-                            <option value="PKP">PKP</option>
-                            <option value="companyCar">samochód służbowy</option>
-                            <option value="privateCar">samochód prywatny</option>
-                            <option value="other">Inne</option>
-                        </select>
-                    </div>
-                    <div v-if="showLicensePlateNo">
-                        <label>Numer rejestracyjny: </label><input v-model="newDelegation.licensePlateNo" @input="checkFields"/>
-                    </div>
-                    <div>
-                        <h3>Rachunek kosztów podróży</h3> 
-                        <button @click="addRow"> + </button>
-                        <table class="table" id="delegationCostsTable">
-                        <thead>
-                            <tr>
-                                <th colspan="3">Wyjazd</th>
-                                <th colspan="3">Przyjazd</th>
-                                <th rowspan="2">Odległość (km)</th>
-                                <th rowspan="2">Koszty przejazdu</th>
-                            </tr>
-                            <tr>
-                                <th>Miejscowość</th>
-                                <th>Data</th>
-                                <th>Godzina</th>
-                                <th>Miejscowość</th>
-                                <th>Data</th>
-                                <th>Godzina</th>
-                                <td></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
+                    <div class="delegations-tile">
+                        <div class="delegations-tile-header">
+                            <div class="delegations-tile-title">
+                                Rachunek kosztów podróży
+                            </div>
+                            <div class="delegations-tile-underscore"></div>
+                        </div>
+                        
+                        <div class="delegations-tile-content"> 
+                            <button @click="addRow"> + </button>
+                            <table class="table delegations-table-1" id="delegationCostsTable">
+                            <thead >
+                                <tr>
+                                    <th colspan="3">Wyjazd</th>
+                                    <th colspan="3">Przyjazd</th>
+                                    <th rowspan="2">Odległość (km)</th>
+                                    <th rowspan="2">Koszty przejazdu</th>
+                                </tr>
+                                <tr>
+                                    <th>Miejscowość</th>
+                                    <th>Data</th>
+                                    <th>Godzina</th>
+                                    <th>Miejscowość</th>
+                                    <th>Data</th>
+                                    <th>Godzina</th>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
                                         <select v-model="defaultCostsData.firstLeavePlace">
                                             <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
                                         </select>
-                                </td>
-                                    <td> {{ delegationStartDate}} </td>
-                                    <td> <masked-input mask="11:11" v-model="defaultCostsData.firstLeaveHour" @input="hourValidation"/> </td>
-                                    <td> {{ newDelegation.destination}} </td>
-                                    <td> {{ delegationStartDate }} </td>
-                                    <td> <masked-input mask="11:11" v-model="defaultCostsData.firstArrivalHour" @input="hourValidation"/> </td>
-                                    <td> <input type="number" min="0" v-model="defaultCostsData.firstDistance"/> </td>
-                                    <td> <input type="number" min="0" v-model="defaultCostsData.firstCost"/> </td>
-                                    <td></td>
-                            </tr>
-                                <tr>
-                                <td> {{ newDelegation.destination}} </td>
-                                    <td> {{ delegationEndDate }} </td>
-                                    <td> <masked-input mask="11:11" @input="hourValidation" v-model="defaultCostsData.secondLeaveHour"/> </td>
-                                    <td> 
-                                        <select v-model="defaultCostsData.secondArrivalPlace">
-                                            <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
-                                        </select> 
                                     </td>
-                                    <td> {{ delegationEndDate }} </td>
-                                    <td> <masked-input mask="11:11" @input="hourValidation" v-model="defaultCostsData.secondArrivalHour"/> </td>
-                                    <td> <input type="number" min="0" v-model="defaultCostsData.secondDistance"/> </td>
-                                    <td> <input type="number" min="0" v-model="defaultCostsData.secondCost"/> </td>
-                                    <td></td>
-                            </tr>
-                                <tr v-for="(cost, index) in customCosts" :key="index">
-                                <td> <input v-model="customCosts[index].leavePlace"/></td>
-                                    <td> <masked-input @input="dateValidation" mask="11.11.1111" v-model="customCosts[index].leaveDate"/> </td>
-                                    <td> <masked-input @input="hourValidation" mask="11:11" v-model="customCosts[index].leaveHour"/> </td>
-                                    <td> <input  v-model="customCosts[index].arrivalPlace"/> </td>
-                                    <td>  <masked-input v-model="customCosts[index].arrivalDate" @input="dateValidation"  mask="11.11.1111" /></td>
-                                    <td> <masked-input mask="11:11" @input="hourValidation" v-model="customCosts[index].arrivalHour" /> </td>
-                                    <td> <input type="number" min="0" v-model="customCosts[index].distance" /> </td>
-                                    <td> <input type="number" min="0" v-model="customCosts[index].cost" /> </td>
-                                    <td> <button @click="removeRow(index)"> X </button></td>
-                            </tr>
-                        </tbody>
-                        </table>
-                        <p v-if="invalidHour"> Wprowadzona godzina ma nieprawidłwy format. </p>
-                        <p v-if="invalidDate"> Wprowadzona data ma nieprawidłwy format. </p>
-                        <button  @click="save"> Zapisz </button>
-                        <!-- :disabled="disableSaveBtn" -->
+                                        <td> {{ delegationStartDate}} </td>
+                                        <td> <masked-input mask="11:11" v-model="defaultCostsData.firstLeaveHour" @input="hourValidation"/> </td>
+                                        <td> {{ newDelegation.destination}} </td>
+                                        <td> {{ delegationStartDate }} </td>
+                                        <td> <masked-input mask="11:11" v-model="defaultCostsData.firstArrivalHour" @input="hourValidation"/> </td>
+                                        <td> <input type="number" min="0" v-model="defaultCostsData.firstDistance"/> </td>
+                                        <td> <input type="number" min="0" v-model="defaultCostsData.firstCost"/> </td>
+                                        <td></td>
+                                </tr>
+                                    <tr>
+                                    <td> {{ newDelegation.destination}} </td>
+                                        <td> {{ delegationEndDate }} </td>
+                                        <td> <masked-input mask="11:11" @input="hourValidation" v-model="defaultCostsData.secondLeaveHour"/> </td>
+                                        <td> 
+                                            <select v-model="defaultCostsData.secondArrivalPlace">
+                                                <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
+                                            </select> 
+                                        </td>
+                                        <td> {{ delegationEndDate }} </td>
+                                        <td> <masked-input mask="11:11" @input="hourValidation" v-model="defaultCostsData.secondArrivalHour"/> </td>
+                                        <td> <input type="number" min="0" v-model="defaultCostsData.secondDistance"/> </td>
+                                        <td> <input type="number" min="0" v-model="defaultCostsData.secondCost"/> </td>
+                                        <td></td>
+                                </tr>
+                                    <tr v-for="(cost, index) in customCosts" :key="index">
+                                    <td> <input v-model="customCosts[index].leavePlace"/></td>
+                                        <td> <masked-input @input="dateValidation" mask="11.11.1111" v-model="customCosts[index].leaveDate"/> </td>
+                                        <td> <masked-input @input="hourValidation" mask="11:11" v-model="customCosts[index].leaveHour"/> </td>
+                                        <td> <input  v-model="customCosts[index].arrivalPlace"/> </td>
+                                        <td>  <masked-input v-model="customCosts[index].arrivalDate" @input="dateValidation"  mask="11.11.1111" /></td>
+                                        <td> <masked-input mask="11:11" @input="hourValidation" v-model="customCosts[index].arrivalHour" /> </td>
+                                        <td> <input type="number" min="0" v-model="customCosts[index].distance" /> </td>
+                                        <td> <input type="number" min="0" v-model="customCosts[index].cost" /> </td>
+                                        <td> <button @click="removeRow(index)"> X </button></td>
+                                </tr>
+                            </tbody>
+                            </table>
+                            <p v-if="invalidHour"> Wprowadzona godzina ma nieprawidłwy format. </p>
+                            <p v-if="invalidDate"> Wprowadzona data ma nieprawidłwy format. </p>
+                            <button  @click="save"> Zapisz </button>
+                            <!-- :disabled="disableSaveBtn" -->
+                        </div>
                     </div>
-
-                    <div>
-                        <h1>Koszty</h1>
-                        <button @click="addCostRow"> + </button>
-                        <table>
-                        <thead>
-                            <tr>
-                                <td>Data dokumentu</td>
-                                <td>Firma</td>
-                                <td>Numer dokumentu</td>
-                                <td>Zwrot?</td>
-                                <td>Waluta</td>
-                                <td>Nolegi</td>
-                                <td>Przejazdy</td>
-                                <td>Inne</td>
-                                <td>Kwota w PLN</td>
-                                <td></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(cost, index) in costTableData" :key="index">
-                                <td> <masked-input @input="dateValidation" mask="11.11.1111" v-model="costTableData[index].docDate"/> </td>
-                                <td><input v-model="costTableData[index].company"/></td>
-                                <td><input v-model="costTableData[index].docNo"/></td>
-                                <td><input type="checkbox"  @change="updateTotalCosts" v-model="costTableData[index].payback"/></td>
-                                <td><select v-model="costTableData[index].currency" @change="updateTotalCosts">
-                                        <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
-                                    </select>
-                                </td>
-                                <!-- acc -accomodation, trv - travel - oth - others -->
-                                <td><input type="radio"  @change="updateTotalCosts" value="ACC" v-model="costTableData[index].costType"/></td>
-                                <td><input type="radio"   @change="updateTotalCosts" value="TRV" v-model="costTableData[index].costType"/></td>
-                                <td><input type="radio"  @change="updateTotalCosts" value="OTH" v-model="costTableData[index].costType"/></td>
-                                <td><input type="number" @change="updateTotalCosts" min="0" v-model="costTableData[index].amount"/></td>
-                                <td> <button @click="removeCostRow(index)"> X </button></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"> </td>
-                                <td> Razem PLN </td>
-                                <td><p>{{ totalCosts.payback }}</p></td>
-                                <td>---</td>
-                                <td><p>{{ totalCosts.accomodation }}</p> </td>
-                                <td><p>{{ totalCosts.travel }}</p> </td>
-                                <td> <p>{{ totalCosts.others }}</p> </td>
-                                <td><strong><p>{{ totalCosts.amount }}</p> </strong> </td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                        </table>
-                        <!-- <table> 
-                            <tr>
-                                <td colspan="2"> </td>
-                                <td> Razem PLN </td>
-                            </tr>
-                        </table> -->
+                    <div class="delegations-tile">
+                        <div class="delegations-tile-header">
+                            <div class="delegations-tile-title">
+                                Koszty
+                            </div>
+                            <div class="delegations-tile-underscore"></div>
+                        </div>
+                        <div class="delegations-tile-content">
+                            
+                            <button @click="addCostRow"> + </button>
+                            <table>
+                            <thead>
+                                <tr>
+                                    <td>Data dokumentu</td>
+                                    <td>Firma</td>
+                                    <td>Numer dokumentu</td>
+                                    <td>Zwrot?</td>
+                                    <td>Waluta</td>
+                                    <td>Nolegi</td>
+                                    <td>Przejazdy</td>
+                                    <td>Inne</td>
+                                    <td>Kwota w PLN</td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(cost, index) in costTableData" :key="index">
+                                    <td> <masked-input @input="dateValidation" mask="11.11.1111" v-model="costTableData[index].docDate"/> </td>
+                                    <td><input v-model="costTableData[index].company"/></td>
+                                    <td><input v-model="costTableData[index].docNo"/></td>
+                                    <td><input type="checkbox"  @change="updateTotalCosts" v-model="costTableData[index].payback"/></td>
+                                    <td><select v-model="costTableData[index].currency" @change="updateTotalCosts">
+                                            <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
+                                        </select>
+                                    </td>
+                                    <!-- acc -accomodation, trv - travel - oth - others -->
+                                    <td><input type="radio"  @change="updateTotalCosts" value="ACC" v-model="costTableData[index].costType"/></td>
+                                    <td><input type="radio"   @change="updateTotalCosts" value="TRV" v-model="costTableData[index].costType"/></td>
+                                    <td><input type="radio"  @change="updateTotalCosts" value="OTH" v-model="costTableData[index].costType"/></td>
+                                    <td><input type="number" @change="updateTotalCosts" min="0" v-model="costTableData[index].amount"/></td>
+                                    <td> <button @click="removeCostRow(index)"> X </button></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"> </td>
+                                    <td> Razem PLN </td>
+                                    <td><p>{{ totalCosts.payback }}</p></td>
+                                    <td>---</td>
+                                    <td><p>{{ totalCosts.accomodation }}</p> </td>
+                                    <td><p>{{ totalCosts.travel }}</p> </td>
+                                    <td> <p>{{ totalCosts.others }}</p> </td>
+                                    <td><strong><p>{{ totalCosts.amount }}</p> </strong> </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                            </table>
+                            <!-- <table> 
+                                <tr>
+                                    <td colspan="2"> </td>
+                                    <td> Razem PLN </td>
+                                </tr>
+                            </table> -->
+                        </div>
                     </div>
                 </div>
             </div>
