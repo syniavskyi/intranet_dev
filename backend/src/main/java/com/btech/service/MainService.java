@@ -16,6 +16,8 @@ import java.util.Locale;
 @Service
 public class MainService {
 
+    private final SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss.SSS'Z'");
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -63,5 +65,15 @@ public class MainService {
         System.out.println(input);
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss", Locale.US);
         return formatter.format(date);
+    }
+
+    public  boolean checkDate(String input) {
+        try {
+            format.parse(input);
+            return true;
+        }
+        catch(ParseException e){
+            return false;
+        }
     }
 }

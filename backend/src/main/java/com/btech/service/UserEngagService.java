@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserEngagService {
 
@@ -20,11 +22,12 @@ public class UserEngagService {
         this.userRepository = userRepository;
     }
 
-    public UserEngag createUserEngag(Long id, UserEngag userEngag) {
-        return userRepository.findById(id).map(user -> {
+    public List<UserEngag> createUserEngag(Long id, UserEngag userEngag) {
+        userRepository.findById(id).map(user -> {
             userEngag.setUser(user);
             return userEngagRepository.save(userEngag);
         }).orElseThrow(() -> new CustomResourceNotFoundException("Id " + id + " not found"));
+        return  userEngagRepository.findByUserId(id);
     }
 
     public ResponseEntity<?> deleteUserEngag(Long id, Long userEngagId) {

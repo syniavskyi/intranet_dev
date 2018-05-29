@@ -79,6 +79,7 @@ public class UserController {
         User user = userRepository.findOne(id);
         return user.isStartPageVisible();
     }
+
     @CrossOrigin
     @GetMapping("/api/users/{id}/showUserPosition")
     public String showUserPosition(@PathVariable(value="id") Long id) {

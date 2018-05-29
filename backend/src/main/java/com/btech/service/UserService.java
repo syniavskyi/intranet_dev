@@ -3,6 +3,9 @@ package com.btech.service;
 import com.btech.model.*;
 import com.btech.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.btech.pojo.Email;
@@ -18,6 +21,11 @@ public class UserService {
     private final UserRepository userRepository;
     private final EmailRepository emailRepository;
 	private final MainService mainService;
+
+	@Bean
+	public PasswordEncoder getPasswordEncoder(){
+		return new BCryptPasswordEncoder();
+	}
 
 	@Autowired
     public UserService(UserRepository userRepository, EmailRepository emailRepository, SMTPMailSender smtp, MainService mainService) {
