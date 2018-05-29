@@ -34,12 +34,13 @@ require('./assets/styles/availability/availability.css');
 require('./assets/styles/employees/employees.css');
 require('./assets/styles/files/files.css');
 require('./assets/styles/delegations/delegations.css');
+require('./assets/styles/calendar/calendar.css');
 
 Vue.config.productionTip = false
 
 
-axios.defaults.baseURL = 'http://10.0.2.6:8080/';
-// axios.defaults.baseURL = 'https://btech-intranet.herokuapp.com/';
+// axios.defaults.baseURL = 'http://10.0.2.6:8080/';
+axios.defaults.baseURL = 'https://btech-intranet.herokuapp.com/';
 // axios.defaults.baseURL = 'http://10.0.2.5:8080/';
 // axios.defaults.baseURL = 'http://192.168.8.107:8080';
 
