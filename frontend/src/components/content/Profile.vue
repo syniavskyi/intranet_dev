@@ -215,13 +215,13 @@
                                             </select>
                                         </td>
                                         <td> 
-                                            <p>Rozpoczęcie</p>
-                                            <v-date-picker popoverDirection="top" class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].startDate">
+                                            <p class="table-p">Rozpoczęcie</p>
+                                            <v-date-picker class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].startDate">
                                                     <input value="experience[index].startDate" />
                                             </v-date-picker>
-                                            <p>Zakończenie</p>
+                                            <p class="table-p">Zakończenie</p>
 
-                                            <v-date-picker popoverDirection="top" :id="index" class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].endDate">
+                                            <v-date-picker :id="index" class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].endDate">
                                                 <input value="experience[index].endDate" />
                                             </v-date-picker>
                                             <input type="checkbox" @change="disableEndDateInput" id="checkbox" :name="index" v-model="experience[index].isCurrent"/>
@@ -492,6 +492,12 @@ tbody td {
     /* border-bottom: 1px solid rgb(230, 230, 230); */
     text-align: center;
 }
+
+.table-p {
+    padding: 0;
+    margin: 0;
+}
+
 tbody td {
     /* border-right: 1px solid rgb(230, 230, 230); */
 }
@@ -551,11 +557,13 @@ td textarea {
         height: 3rem;
         text-align: center;
         line-height: 1rem; 
+        vertical-align: middle;
     }
     tbody {
         display: flex;
         overflow-x: auto;
         white-space: nowrap;
+        min-width: 18rem;
         /* max-width: 15rem; */
     }
     tbody td {
@@ -563,6 +571,12 @@ td textarea {
     }
     tbody tr {
         display:inline-block;
+    }
+    thead td:nth-child(3) {
+        height: 9rem;
+    }
+    tbody td:nth-child(3) {
+        height: 9rem;
     }
     thead td:nth-child(5) {
         height:4rem;
