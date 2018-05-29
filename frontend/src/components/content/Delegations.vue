@@ -207,7 +207,7 @@
             </div>
         </div>
     </div>
-    </div>
+    <!-- </div> -->
 </template>
 
 <script>
@@ -376,7 +376,7 @@ export default {
 
 <style>
 table, th, td {
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 td {
