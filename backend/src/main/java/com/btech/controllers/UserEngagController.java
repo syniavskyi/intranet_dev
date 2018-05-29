@@ -28,7 +28,7 @@ public class UserEngagController {
     }
 
     @PostMapping("/api/users/{id}/userEngag/create")
-    public UserEngag createUserEngag(@PathVariable (value = "id") Long id, @Valid @RequestBody UserEngag userEngag) {
+    public List<UserEngag> createUserEngag(@PathVariable (value = "id") Long id, @Valid @RequestBody UserEngag userEngag) {
         return userEngagService.createUserEngag(id, userEngag);
     }
 
