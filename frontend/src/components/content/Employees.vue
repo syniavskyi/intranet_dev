@@ -9,49 +9,38 @@
             <p class="employees-header-title">Lista Pracowników</p>
           </div>
         </div>
-        <div class="employees-list">
-          <!-- <div id="container"> -->
-            <div class="employees-column">
-              <p class="employees-column-title">{{ $t("label.fullName") }}</p>
-              <ul class="employees-column-item">
-                <li class="employees-list-item" v-for="userInfo in getUserList">
-                  {{ userInfo.firstName }} {{ userInfo.lastName }}
-                </li>
-              </ul>
+        <div class="employees-table">
+          <div class="emp-thead">
+                <div class="emp-thead-item">{{ $t("label.fullName") }}</div>
+                <div class="emp-thead-item">{{ $t("label.position") }}</div>
+                <div class="emp-thead-item">{{ $t("label.department") }}</div>
+                <div class="emp-thead-item">{{ $t("label.phone") }}</div>
+                <div class="emp-thead-item">{{ $t("label.email") }}</div>
+          </div>
+          <div class="emp-tbody">
+            <div class="emp-tbody-row" v-for="userInfo in getUserList">
+              <div class="emp-tbody-item">
+                <div class="emp-tbody-item-title"> {{ $t("label.fullName") }} </div>
+                <div class="emp-tbody-item-txt"> {{ userInfo.firstName }} {{ userInfo.lastName }} </div>
+              </div>
+              <div class="emp-tbody-item">
+                <div class="emp-tbody-item-title"> {{ $t("label.position") }} </div>
+                <div class="emp-tbody-item-txt"> {{ userInfo.roleName }} </div>
+              </div>
+              <div class="emp-tbody-item">
+                <div class="emp-tbody-item-title">{{ $t("label.department") }} </div>
+                <div class="emp-tbody-item-txt"> {{ userInfo.depName }} </div>
+              </div>
+              <div class="emp-tbody-item">
+                <div class="emp-tbody-item-title">{{ $t("label.phone") }} </div>
+                <div class="emp-tbody-item-txt"> {{ userInfo.phone }} </div>
+              </div>
+              <div class="emp-tbody-item">
+                <div class="emp-tbody-item-title">{{ $t("label.email") }} </div>
+                <div class="emp-tbody-item-txt"> {{ userInfo.email }} </div>
+              </div>
             </div>
-            <div class="employees-column">
-              <p class="employees-column-title">{{ $t("label.position") }}</p>
-              <ul class="employees-column-item">
-                <li class="employees-list-item" v-for="userInfo in getUserList">
-                  {{ userInfo.roleName }}
-                </li>
-              </ul>
-            </div>
-            <div class="employees-column">
-              <p class="employees-column-title">{{ $t("label.department") }}</p>
-              <ul class="employees-column-item">
-                <li class="employees-list-item" v-for="userInfo in getUserList">
-                  {{ userInfo.depName }}
-                </li>
-              </ul>
-            </div>
-            <div class="employees-column">
-              <p class="employees-column-title">{{ $t("label.phone") }}</p>
-              <ul class="employees-column-item">
-                <li class="employees-list-item" v-for="userInfo in getUserList">
-                  {{ userInfo.phone }}
-                </li>
-              </ul>
-            </div>
-            <div class="employees-column">
-              <p class="employees-column-title">{{ $t("label.email") }}</p>
-              <ul class="employees-column-item">
-                <li class="employees-list-item" v-for="userInfo in getUserList"><a :href="'mailto:' + userInfo.email">
-                  {{ userInfo.email }}
-                </a></li>
-              </ul>
-            </div>
-          <!-- </div> -->
+          </div>
         </div>
       </div> 
     </div>

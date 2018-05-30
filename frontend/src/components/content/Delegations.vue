@@ -241,8 +241,12 @@
             </div>
         </div>
     </div>
+
 </div>
 <!-- </div> -->
+
+    <!-- </div> -->
+
 </template>
 
 <script>
@@ -463,6 +467,7 @@ td {
     border: 1px solid black;
 }
 
+#delegationCostsTabletd,
 td {
     width: 200px;
 }
