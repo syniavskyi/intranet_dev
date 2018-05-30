@@ -105,6 +105,7 @@ const actions = {
                 rate = null,
                 totalAmount = null;
             
+            //to prevent amount became NaN 
             if (amount === ""){
                 amount = 0
             } else {

@@ -20,18 +20,18 @@
                         <div class="delegations-inputs-section">
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.number") }}: </label>
-                                <input class="delegations-input" v-model="newDelegation.number" @input="checkFields" />
+                                <input class="delegations-input" v-model="newDelegation.number" @input="checkNewDelegation" />
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.day") }}: </label>
                                 <!-- <masked-input mask="11.11.1111" @input="dateValidation" v-model="newDelegation.createDate" /> -->
-                                <v-date-picker class="delegations-input-date" @input="checkFields" v-model="newDelegation.createDate">
+                                <v-date-picker class="delegations-input-date" @input="checkNewDelegation" v-model="newDelegation.createDate">
                                     <input value="newDelegation.createDate" />
                                 </v-date-picker>
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.forTime") }}: </label>
-                                <v-date-picker class="delegations-input-date" @input="checkFields" is-expanded mode="range" v-model="newDelegation.dates">
+                                <v-date-picker class="delegations-input-date" @input="checkNewDelegation" is-expanded mode="range" v-model="newDelegation.dates">
                                     <input value="newDelegation.dates" />
                                 </v-date-picker>
                             </div>
@@ -39,11 +39,11 @@
                         <div class="delegations-inputs-section">
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.to") }}: </label>
-                                <input class="delegations-input" v-model="newDelegation.destination" @input="checkFields" />
+                                <input class="delegations-input" v-model="newDelegation.destination" @input="checkNewDelegation" />
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.target") }}: </label>
-                                <input class="delegations-input" v-model="newDelegation.purpose" @input="checkFields" />
+                                <input class="delegations-input" v-model="newDelegation.purpose" @input="checkNewDelegation" />
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.transport") }}: </label>
@@ -57,7 +57,7 @@
                             </div>
                             <div class="delegations-div-input" v-if="showLicensePlateNo">
                                 <label class="delegations-label">{{ $t("label.registrationNo") }} </label>
-                                <input class="delegations-input" v-model="newDelegation.licensePlateNo" @input="checkFields" />
+                                <input class="delegations-input" v-model="newDelegation.licensePlateNo" @input="checkNewDelegation" />
                             </div>
                         </div>
                     </div>
@@ -93,57 +93,57 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <select @change="checkFields" v-model="defaultCostsData.firstLeavePlace">
+                                        <select @change="checkDelegationTable" v-model="defaultCostsData.firstLeavePlace">
                                             <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
                                         </select>
                                     </td>
                                     <td> {{ delegationStartDate}} </td>
                                     <td>
-                                        <masked-input mask="11:11" v-model="defaultCostsData.firstLeaveHour" @input="hourValidation" /> </td>
+                                        <masked-input mask="11:11" v-model="defaultCostsData.firstLeaveHour" @change="hourValidation" /> </td>
                                     <td> {{ newDelegation.destination}} </td>
                                     <td> {{ delegationStartDate }} </td>
                                     <td>
-                                        <masked-input mask="11:11" v-model="defaultCostsData.firstArrivalHour" @input="hourValidation" /> </td>
-                                    <td> <input type="number" @input="checkFields" min="0" v-model="defaultCostsData.firstDistance" /> </td>
-                                    <td> <input type="number" @input="checkFields" min="0" v-model="defaultCostsData.firstCost" /> </td>
+                                        <masked-input mask="11:11" v-model="defaultCostsData.firstArrivalHour" @change="hourValidation" /> </td>
+                                    <td> <input type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.firstDistance" /> </td>
+                                    <td> <input type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.firstCost" /> </td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td> {{ newDelegation.destination}} </td>
                                     <td> {{ delegationEndDate }} </td>
                                     <td>
-                                        <masked-input mask="11:11" @input="hourValidation" v-model="defaultCostsData.secondLeaveHour" /> </td>
+                                        <masked-input mask="11:11" @change="hourValidation" v-model="defaultCostsData.secondLeaveHour" /> </td>
                                     <td>
-                                        <select @change="checkFields" v-model="defaultCostsData.secondArrivalPlace">
+                                        <select @change="checkDelegationTable" v-model="defaultCostsData.secondArrivalPlace">
                                                 <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
                                             </select>
                                     </td>
                                     <td> {{ delegationEndDate }} </td>
                                     <td>
-                                        <masked-input mask="11:11" @input="hourValidation" v-model="defaultCostsData.secondArrivalHour" /> </td>
-                                    <td> <input @input="checkFields" type="number" min="0" v-model="defaultCostsData.secondDistance" /> </td>
-                                    <td> <input @input="checkFields" type="number" min="0" v-model="defaultCostsData.secondCost" /> </td>
+                                        <masked-input mask="11:11" @change="hourValidation" v-model="defaultCostsData.secondArrivalHour" /> </td>
+                                    <td> <input @input="checkDelegationTable" type="number" min="0" v-model="defaultCostsData.secondDistance" /> </td>
+                                    <td> <input @input="checkDelegationTable" type="number" min="0" v-model="defaultCostsData.secondCost" /> </td>
                                     <td></td>
                                 </tr>
                                 <tr v-for="(cost, index) in customCosts" :key="index">
-                                    <td> <input @input="checkFields" v-model="customCosts[index].leavePlace" /></td>
+                                    <td> <input @input="checkDelegationTable" v-model="customCosts[index].leavePlace" /></td>
                                     <td>
-                                        <v-date-picker @input="checkFields" mode="single" v-model="customCosts[index].leaveDate">
+                                        <v-date-picker @input="checkDelegationTable" mode="single" v-model="customCosts[index].leaveDate">
                                             <input value="customCosts[index].leaveDate" />
                                         </v-date-picker>
                                     </td>
                                     <td>
-                                        <masked-input @input="hourValidation" mask="11:11" v-model="customCosts[index].leaveHour" /> </td>
-                                    <td> <input @input="checkFields" v-model="customCosts[index].arrivalPlace" /> </td>
+                                        <masked-input @change="hourValidation" mask="11:11" v-model="customCosts[index].leaveHour" /> </td>
+                                    <td> <input @input="checkDelegationTable" v-model="customCosts[index].arrivalPlace" /> </td>
                                     <td>
-                                        <v-date-picker @input="checkFields" mode="single" v-model="customCosts[index].arrivalDate">
+                                        <v-date-picker @input="checkDelegationTable" mode="single" v-model="customCosts[index].arrivalDate">
                                             <input value="customCosts[index].arrivalDate" />
                                         </v-date-picker>
                                     </td>
                                     <td>
-                                        <masked-input mask="11:11" @input="hourValidation" v-model="customCosts[index].arrivalHour" /> </td>
-                                    <td> <input @input="checkFields" type="number" min="0" v-model="customCosts[index].distance" /> </td>
-                                    <td> <input @input="checkFields" type="number" min="0" v-model="customCosts[index].cost" /> </td>
+                                        <masked-input mask="11:11" @change="hourValidation" v-model="customCosts[index].arrivalHour" /> </td>
+                                    <td> <input @input="checkDelegationTable" type="number" min="0" v-model="customCosts[index].distance" /> </td>
+                                    <td> <input @input="checkDelegationTable" type="number" min="0" v-model="customCosts[index].cost" /> </td>
                                     <td> <button @click="removeRow(index)"> X </button></td>
                                 </tr>
                             </tbody>
@@ -181,12 +181,12 @@
                             <tbody>
                                 <tr v-for="(cost, index) in costTableData" :key="index">
                                     <td>
-                                        <v-date-picker mode="single" v-model="costTableData[index].docDate">
+                                        <v-date-picker mode="single" @input="checkCostTable" v-model="costTableData[index].docDate">
                                             <input value="costTableData[index].docDate" />
                                         </v-date-picker>
                                     </td>
-                                    <td><input @input="checkFields" v-model="costTableData[index].company" /></td>
-                                    <td><input @input="checkFields" v-model="costTableData[index].docNo" /></td>
+                                    <td><input @input="checkCostTable" v-model="costTableData[index].company" /></td>
+                                    <td><input @input="checkCostTable" v-model="costTableData[index].docNo" /></td>
                                     <td><input type="checkbox" @change="updateTotalCosts" v-model="costTableData[index].payback" /></td>
                                     <td><select v-model="costTableData[index].currency" @change="updateTotalCosts">
                                             <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
@@ -268,14 +268,18 @@ export default {
                 createDate: null,
                 destination: null,
                 purpose: null,
-                transport: null
+                transport: null,
+                licensePlateNo: null
             },
             invalidDate: false,
             invalidHour: false,
             showLicensePlateNo: false,
             defaultCostsData: {},
-            disableSaveBtn: true,
-            fullExpences: []
+            // disableSaveBtn: true,
+            fullExpences: [],
+            newDelegationValidated: false,
+            delegationTableValidated: false,
+            costTableValidated: false
         }
     },
     // components: {
@@ -290,6 +294,13 @@ export default {
             totalCosts: 'getTotalCosts',
             customCosts: 'getDelegationCostsList'
         }),
+        disableSaveBtn() {
+            if (this.newDelegationValidated && this.delegationTableValidated && this.costTableValidated) {
+                return false
+            } else {
+                return true
+            }
+        },
         delegationStartDate() {
             if (this.newDelegation.dates) {
                 return moment(this.newDelegation.dates.start).format("DD.MM.YYYY")
@@ -315,61 +326,53 @@ export default {
         }
     },
     methods: {
-        checkFields() {
-            this.prepareCostData()
-            const data = this.newDelegation,
-                expences = this.fullExpences,
-                costs = this.costTableData,
-                props = Object.getOwnPropertyNames(expences[0])
+        checkNewDelegation() {
+            const data = this.newDelegation
             for (let key in data) {
-                if (key === "licensePlateNo"){
-                    this.disableSaveBtn = false
+                if (key === "licensePlateNo" && !this.showLicensePlateNo) {
+                       this.newDelegationValidated = true
                 } else {
                     if (!data[key]) {
-                        this.disableSaveBtn = true
+                        this.newDelegationValidated = false
                         return
                     } else {
-                        this.disableSaveBtn = false
+                        this.newDelegationValidated = true
                     }
                 }
             }
 
-            // expences.forEach(function(arrayItem) {
-            //     for (let key1 in arrayItem) {
-            //         if (!arrayItem[key1]) {
-            //            this.disableSaveBtn = true
-            //            return
-            //         } else {
-            //             this.disableSaveBtn = false
-            //         }
-            //     }
-            // }.bind(this))
-            if (this.disableSaveBtn === false) {
-                expences.every(function(arrayItem) {
-                    for (let key1 in arrayItem) {
-                            if (!arrayItem[key1]) {
-                                this.disableSaveBtn = true
-                                return 
-                            } else {
-                                this.disableSaveBtn = false
-                            }
+        },
+        checkDelegationTable() {
+            this.prepareCostData()
+            const expences = this.fullExpences
+            for (let i = 0; i < expences.length; i++) {
+                let arrayItem = expences[i]
+                for (let key in arrayItem) {
+                    if (!arrayItem[key] || arrayItem[key] === "__:__" || arrayItem[key] === "") {
+                        this.delegationTableValidated = false
+                        return
+                    } else {
+                        this.delegationTableValidated = true
+                    }
+                }
+            }
+        },
+        checkCostTable() {
+            const costs = this.costTableData
+
+            for (let i = 0; i < costs.length; i++) {
+                let arrayItem = costs[i]
+                for (let key in arrayItem) {
+                    if (key === "payback") {
+                        this.costTableValidated = true
+                    } else {
+                        if (!arrayItem[key] || arrayItem[key] === "") {
+                            this.costTableValidated = false
+                            return
+                        } else {
+                            this.costTableValidated = true
                         }
-                }.bind(this))
-                if (this.disableSaveBtn === false){
-                    costs.every((arrayItem) => {
-                        for (let key2 in arrayItem) {
-                            if (key2 === "payback") {
-                                this.disableSaveBtn = false
-                            } else {
-                                if (!arrayItem[key2]) {
-                                    this.disableSaveBtn = true
-                                    return 
-                                } else {
-                                    this.disableSaveBtn = false
-                                }
-                            }
-                        }
-                    })
+                    }
                 }
             }
         },
@@ -380,41 +383,41 @@ export default {
             } else {
                 this.showLicensePlateNo = false
             }
-            this.$store.dispatch('checkDelegationFields')
+            this.checkNewDelegation()
         },
         addRow() {
             this.$store.dispatch('addDelegationRow')
-            this.disableSaveBtn = true
-            // this.checkFields()
+            this.delegationTableValidated = false
         },
         addCostRow() {
             this.$store.dispatch('addCostRow')
-            this.disableSaveBtn = true
+            this.costTableValidated = false
         },
         removeRow(index) {
             this.$store.dispatch('removeDelegationRow', index)
-            this.checkFields()
+            this.checkDelegationTable()
         },
         removeCostRow(index) {
             this.$store.dispatch('removeCostRow', index)
-            this.checkFields()
+            this.checkCostTable()
         },
         hourValidation(value) {
             const hours = parseInt(value.slice(0, 2)),
                 minutes = parseInt(value.slice(3, 5))
 
-            if (hours > 24 || minutes > 60) {
+            if (hours > 24 || minutes > 60 || value == "__:__") {
                 this.invalidHour = true
-                this.disableSaveBtn = true
+                this.delegationTableValidated = false
             } else {
+                this.delegationTableValidated = true
                 this.invalidHour = false
+                this.checkDelegationTable()
             }
-            this.$store.dispatch('checkDelegationFields')
-            this.checkFields()
+
         },
         updateTotalCosts() {
             this.$store.dispatch('updateTotalCosts')
-            this.checkFields()
+            this.checkCostTable()
         },
         prepareCostData() {
             // const costs = this.customCosts.slice(0)
