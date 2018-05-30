@@ -3,9 +3,9 @@
   <div class="display-row">
     <!-- <app-menu v-show="showMenu"/> -->
     
-      <transition name="slide-top" mode="out-in">
+      <!-- <transition name="slide-top" mode="out-in"> -->
          <router-view/>
-      </transition>
+      <!-- </transition> -->
   </div>
   <!-- </div> -->
 </template>
