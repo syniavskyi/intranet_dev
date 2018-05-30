@@ -194,13 +194,13 @@
                                     </td>
                                     <!-- acc -accomodation, trv - travel - oth - others -->
                                     <td><input type="radio" @change="updateTotalCosts" value="ACC" v-model="costTableData[index].costType" />
-                                        <input type="number" min="0" v-show="costTableData[index].costType === 'ACC'" @change="updateTotalCosts" v-model="costTableData[index].amount" />
+                                        <input type="number" min="0" v-show="costTableData[index].costType === 'ACC'" @input="updateTotalCosts" v-model="costTableData[index].amount" />
                                     </td>
                                     <td><input type="radio" @change="updateTotalCosts" value="TRV" v-model="costTableData[index].costType" />
-                                        <input type="number" min="0" v-show="costTableData[index].costType === 'TRV'" @change="updateTotalCosts" v-model="costTableData[index].amount" />
+                                        <input type="number" min="0" v-show="costTableData[index].costType === 'TRV'" @input="updateTotalCosts" v-model="costTableData[index].amount" />
                                     </td>
                                     <td><input type="radio" @change="updateTotalCosts" value="OTH" v-model="costTableData[index].costType" />
-                                        <input type="number" min="0" v-show="costTableData[index].costType === 'OTH'" @change="updateTotalCosts" v-model="costTableData[index].amount" />
+                                        <input type="number" min="0" v-show="costTableData[index].costType === 'OTH'" @input="updateTotalCosts" v-model="costTableData[index].amount" />
                                     </td>
                                     <td>
                                         <p>{{costTableData[index].totalAmount}} </p>
