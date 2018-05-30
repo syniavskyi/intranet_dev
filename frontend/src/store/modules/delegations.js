@@ -59,7 +59,7 @@ const actions = {
             arrivalDate: null,
             arrivalHour:null,
             distance: null,
-            cost: null
+            cost: 0
         })
         commit('SET_DELEG_COST_LIST', delegationCostsList)
     },
@@ -99,12 +99,19 @@ const actions = {
             }
         for(let i=0; i<costTableData.length; i++) {
             let type = costTableData[i].costType,
-                amount = parseFloat(costTableData[i].amount),
+                amount = costTableData[i].amount,
                 curr = costTableData[i].currency,
                 exchangeRates = getters.getExchangeRates,
                 rate = null,
                 totalAmount = null;
             
+            //to prevent amount became NaN 
+            if (amount === ""){
+                amount = 0
+            } else {
+                amount = parseFloat(amount)
+            }
+
             for (let i=0; i<exchangeRates.length; i++){
                 if (exchangeRates[i].id === curr) {
                     rate = parseFloat(exchangeRates[i].rate)
