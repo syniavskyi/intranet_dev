@@ -62,7 +62,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="delegations-tile">
+                 <div class="delegations-tile">
                     <div class="delegations-tile-header">
                         <div class="delegations-tile-title">
                             {{ $t("header.travelExp") }}
@@ -71,88 +71,196 @@
                     </div>
 
                     <div class="delegations-tile-content">
-                        <button @click="addRow"> + </button>
-                        <table class="table delegations-table-1" id="delegationCostsTable">
-                            <thead>
-                                <tr>
-                                    <th colspan="3">{{ $t("table.delegations.leave") }}</th>
-                                    <th colspan="3">{{ $t("table.delegations.arrival") }}</th>
-                                    <th rowspan="2">{{ $t("table.delegations.distance") }}</th>
-                                    <th rowspan="2">{{ $t("table.delegations.cost") }}</th>
-                                </tr>
-                                <tr>
-                                    <th>{{ $t("table.delegations.place") }}</th>
-                                    <th>{{ $t("table.delegations.date") }}</th>
-                                    <th>{{ $t("table.delegations.time") }}</th>
-                                    <th>{{ $t("table.delegations.place") }}</th>
-                                    <th>{{ $t("table.delegations.date") }}</th>
-                                    <th>{{ $t("table.delegations.time") }}</th>
-                                    <td></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <select @change="checkDelegationTable" v-model="defaultCostsData.firstLeavePlace">
+                                    <div class="delegations-table-1">
+                                        <div class="del-thead-1">
+                                            <div class="del-table-row">
+                                                <div class="del-thead-title">{{ $t("table.delegations.leave") }}</div>
+                                                <div class="del-table-items">
+                                                    <div class="del-table-item">{{ $t("table.delegations.place") }}</div>
+                                                    <div class="del-table-item">{{ $t("table.delegations.date") }}</div>
+                                                    <div class="del-table-item">{{ $t("table.delegations.time") }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="del-table-row">
+                                                <div class="del-thead-title">{{ $t("table.delegations.arrival") }}</div>
+                                                <div class="del-table-items">
+                                                    <div class="del-table-item">{{ $t("table.delegations.place") }}</div>
+                                                    <div class="del-table-item">{{ $t("table.delegations.date") }}</div>
+                                                    <div class="del-table-item">{{ $t("table.delegations.time") }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="del-thead-col">{{ $t("table.delegations.distance") }}</div>
+                                            <div class="del-thead-col">{{ $t("table.delegations.cost") }}</div>
+                                            <div class="del-table-btns">przyciski</div>
+                                        </div>
+                                        <!-- first default row -->
+                                        <div class="del-tbody-1">
+                                            <div class="del-table-row">
+                                                <div class="del-tbody-title">{{ $t("table.delegations.leave") }}</div>
+                                                <div class="del-table-items">
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
+                                                        <div class="del-tbody-item"> <select @change="checkDelegationTable" v-model="defaultCostsData.firstLeavePlace">
                                             <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
-                                        </select>
-                                    </td>
-                                    <td> {{ delegationStartDate}} </td>
-                                    <td>
-                                        <masked-input mask="11:11" v-model="defaultCostsData.firstLeaveHour" @change="hourValidation" /> </td>
-                                    <td> {{ newDelegation.destination}} </td>
-                                    <td> {{ delegationStartDate }} </td>
-                                    <td>
-                                        <masked-input mask="11:11" v-model="defaultCostsData.firstArrivalHour" @change="hourValidation" /> </td>
-                                    <td> <input type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.firstDistance" /> </td>
-                                    <td> <input type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.firstCost" /> </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td> {{ newDelegation.destination}} </td>
-                                    <td> {{ delegationEndDate }} </td>
-                                    <td>
-                                        <masked-input mask="11:11" @change="hourValidation" v-model="defaultCostsData.secondLeaveHour" /> </td>
-                                    <td>
-                                        <select @change="checkDelegationTable" v-model="defaultCostsData.secondArrivalPlace">
+                                        </select></div>
+                                                    </div>
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.date") }}</div>
+                                                        <div class="del-tbody-item">{{ delegationStartDate}} </div>
+                                                    </div>
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>    
+                                                        <div class="del-tbody-item"> <masked-input mask="11:11" v-model="defaultCostsData.firstLeaveHour" @change="hourValidation" /> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="del-table-row">
+                                                <div class="del-tbody-title">{{ $t("table.delegations.arrival") }}</div>
+                                                <div class="del-table-items">
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
+                                                        <div class="del-tbody-item">{{ newDelegation.destination}}</div>
+                                                    </div>
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.date") }}</div>
+                                                        <div class="del-tbody-item">{{ delegationStartDate }}</div>
+                                                    </div>
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
+                                                        <div class="del-tbody-item"><masked-input mask="11:11" v-model="defaultCostsData.firstArrivalHour" @change="hourValidation" /></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="del-tbody-cols">
+                                                <div class="del-tbody-title">{{ $t("table.delegations.distance") }}</div>
+                                                <div class="del-tbody-col"> <input type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.firstDistance" /> </div>
+                                            </div>
+                                             <div class="del-tbody-cols">
+                                                <div class="del-tbody-title">{{ $t("table.delegations.cost") }}</div>
+                                                <div class="del-tbody-col"><input type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.firstCost" /></div>
+                                            </div>
+                                             <div class="del-tbody-cols">
+                                                <div class="del-tbody-title">przyciski</div>
+                                                <div class="del-tbody-col"></div>
+                                            </div>
+                                        </div>
+                                        <!-- second default row  -->
+                                       
+                                        <div class="del-tbody-1">
+                                            <div class="del-table-row">
+                                                <div class="del-tbody-title">{{ $t("table.delegations.leave") }}</div>
+                                                <div class="del-table-items">
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
+                                                        <div class="del-tbody-item"> {{ newDelegation.destination}}</div>
+                                                    </div>
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.date") }}</div>
+                                                        <div class="del-tbody-item">{{ delegationEndDate}} </div>
+                                                    </div>
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>    
+                                                        <div class="del-tbody-item"> <masked-input mask="11:11" v-model="defaultCostsData.secondLeaveHour" @change="hourValidation" /> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="del-table-row">
+                                                <div class="del-tbody-title">{{ $t("table.delegations.arrival") }}</div>
+                                                <div class="del-table-items">
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
+                                                        <div class="del-tbody-item"> <select @change="checkDelegationTable" v-model="defaultCostsData.secondArrivalPlace">
                                                 <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
-                                            </select>
-                                    </td>
-                                    <td> {{ delegationEndDate }} </td>
-                                    <td>
-                                        <masked-input mask="11:11" @change="hourValidation" v-model="defaultCostsData.secondArrivalHour" /> </td>
-                                    <td> <input @input="checkDelegationTable" type="number" min="0" v-model="defaultCostsData.secondDistance" /> </td>
-                                    <td> <input @input="checkDelegationTable" type="number" min="0" v-model="defaultCostsData.secondCost" /> </td>
-                                    <td></td>
-                                </tr>
-                                <tr v-for="(cost, index) in customCosts" :key="index">
-                                    <td> <input @input="checkDelegationTable" v-model="customCosts[index].leavePlace" /></td>
-                                    <td>
-                                        <v-date-picker @input="checkDelegationTable" mode="single" v-model="customCosts[index].leaveDate">
+                                            </select></div>
+                                                    </div>
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.date") }}</div>
+                                                        <div class="del-tbody-item">{{ delegationEndDate }}</div>
+                                                    </div>
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
+                                                        <div class="del-tbody-item"><masked-input mask="11:11" v-model="defaultCostsData.secondArrivalHour" @change="hourValidation" /></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="del-tbody-cols">
+                                                <div class="del-tbody-title">{{ $t("table.delegations.distance") }}</div>
+                                                <div class="del-tbody-col"> <input type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.secondDistance" /> </div>
+                                            </div>
+                                             <div class="del-tbody-cols">
+                                                <div class="del-tbody-title">{{ $t("table.delegations.cost") }}</div>
+                                                <div class="del-tbody-col"><input type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.secondCost" /></div>
+                                            </div>
+                                             <div class="del-tbody-cols">
+                                                <div class="del-tbody-title">przyciski</div>
+                                                <div class="del-tbody-col"></div>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- rows that are added -->
+                                         <div class="del-tbody-1"  v-for="(cost, index) in customCosts" :key="index">
+                                            <div class="del-table-row">
+                                                <div class="del-tbody-title">{{ $t("table.delegations.leave") }}</div>
+                                                <div class="del-table-items">
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
+                                                        <div class="del-tbody-item"> <input @input="checkDelegationTable" v-model="customCosts[index].leavePlace" /></div>
+                                                    </div>
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.date") }}</div>
+                                                        <div class="del-tbody-item"> <v-date-picker @input="checkDelegationTable" mode="single" v-model="customCosts[index].leaveDate">
                                             <input value="customCosts[index].leaveDate" />
-                                        </v-date-picker>
-                                    </td>
-                                    <td>
-                                        <masked-input @change="hourValidation" mask="11:11" v-model="customCosts[index].leaveHour" /> </td>
-                                    <td> <input @input="checkDelegationTable" v-model="customCosts[index].arrivalPlace" /> </td>
-                                    <td>
-                                        <v-date-picker @input="checkDelegationTable" mode="single" v-model="customCosts[index].arrivalDate">
+                                        </v-date-picker></div>
+                                                    </div>
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>    
+                                                        <div class="del-tbody-item"> <masked-input mask="11:11" v-model="customCosts[index].leaveHour" @change="hourValidation" /> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="del-table-row">
+                                                <div class="del-tbody-title">{{ $t("table.delegations.arrival") }}</div>
+                                                <div class="del-table-items">
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
+                                                        <div class="del-tbody-item"> <input @input="checkDelegationTable" v-model="customCosts[index].arrivalPlace" /></div>
+                                                    </div>
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.date") }}</div>
+                                                        <div class="del-tbody-item"><v-date-picker @input="checkDelegationTable" mode="single" v-model="customCosts[index].arrivalDate">
                                             <input value="customCosts[index].arrivalDate" />
-                                        </v-date-picker>
-                                    </td>
-                                    <td>
-                                        <masked-input mask="11:11" @change="hourValidation" v-model="customCosts[index].arrivalHour" /> </td>
-                                    <td> <input @input="checkDelegationTable" type="number" min="0" v-model="customCosts[index].distance" /> </td>
-                                    <td> <input @input="checkDelegationTable" type="number" min="0" v-model="customCosts[index].cost" /> </td>
-                                    <td> <button @click="removeRow(index)"> X </button></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        </v-date-picker></div>
+                                                    </div>
+                                                    <div class="del-tbody-wrap">
+                                                        <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
+                                                        <div class="del-tbody-item"><masked-input mask="11:11" v-model="customCosts[index].arrivalHour" @change="hourValidation" /></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="del-tbody-cols">
+                                                <div class="del-tbody-title">{{ $t("table.delegations.distance") }}</div>
+                                                <div class="del-tbody-col"> <input type="number" @input="checkDelegationTable" min="0" v-model="customCosts[index].distance" /> </div>
+                                            </div>
+                                             <div class="del-tbody-cols">
+                                                <div class="del-tbody-title">{{ $t("table.delegations.cost") }}</div>
+                                                <div class="del-tbody-col"><input type="number" @input="checkDelegationTable" min="0" v-model="customCosts[index].cost" /></div>
+                                            </div>
+                                             <div class="del-tbody-cols">
+                                                <div class="del-tbody-title">przyciski</div>
+                                                <div class="del-tbody-col"><button @click="removeRow(index)"> X </button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                <button @click="addRow"> + </button>
+                        <!--  -->
                         <p v-if="invalidHour"> {{ $t("message.hourValidation") }} </p>
                         <p v-if="invalidDate"> {{ $t("message.dateValidation") }} </p>
+                 </div>
+  
+                        
 
-                    </div>
-                </div>
                 <div class="delegations-tile">
                     <div class="delegations-tile-header">
                         <div class="delegations-tile-title">
@@ -238,7 +346,8 @@
                             </table> -->
                     </div>
                 </div>
-            </div>
+
+                          </div>
         </div>
     </div>
 
