@@ -28,7 +28,7 @@
                         <div class="profile-tile-inputs-section profile-inputs-sections-1">
                             <div class="profile-tile-inputs">
                                 <div>
-                                    <label  class="label-profile">{{ $t("label.address") }}</label>
+                                    <label class="label-profile">{{ $t("label.address") }}</label>
                                     <input class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.address">
                                 </div>
                                 <div>
@@ -193,65 +193,81 @@
                         <div class="tile-underscore"></div>
                     </div>
                     <div class="profile-tile-content">
-                        <div class="profile-table-wrapper"> 
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <td>{{ $t("table.projectName") }}</td>
-                                        <td>{{ $t("table.contractor") }}</td>
-                                        <td>{{ $t("table.duration") }}</td>
-                                        <td>{{ $t("table.Industry") }}</td>
-                                        <td>{{ $t("table.Modules") }}</td>
-                                        <td>{{ $t("table.Descr") }}</td>
-                                        <td></td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(exp, index) in experience" :key="index">
-                                        <td><input class="profile-table-input" v-model="experience[index].project"/> </td>
-                                        <td> 
-                                            <select class="profile-table-select profile-table-select-contractor" v-model="experience[index].contractor"> 
+                        <div class="profile-table-wrapper">
+                            <div class="employees-table">
+                                <div class="emp-thead">
+                                    <!-- class="emp-thead-item" -->
+                                    <div class="emp-thead-item">{{ $t("table.projectName") }}</div> 
+                                    <div class="emp-thead-item">{{ $t("table.contractor") }}</div>
+                                    <div class="emp-thead-item">{{ $t("table.duration") }}</div>
+                                    <div class="emp-thead-item">{{ $t("table.Industry") }}</div>
+                                    <div class="emp-thead-item"> {{ $t("table.Modules") }}</div>
+                                    <div class="emp-thead-item">{{ $t("table.Descr") }}</div>
+                                    <div class="emp-thead-item">Przyciski</div>
+                                </div>
+                                <div class="emp-tbody">
+                                  <div class="emp-tbody-row"  v-for="(exp, index) in experience" :key="index">
+                                        <!-- class="emp-tbody-item" -->
+                                        <div>
+                                         <div class="emp-tbody-item-title">{{ $t("table.projectName") }} </div>
+                                            <!-- class="emp-tbody-item-txt" -->
+                                            <div> <input class="profile-table-input" v-model="experience[index].project" /> </div>
+                                        </div>
+                                        <div class="emp-tbody-row">
+                                            <div class="emp-tbody-item-title"> {{ $t("table.contractor") }}</div>
+                                            <div> <select class="profile-table-select profile-table-select-contractor" v-model="experience[index].contractor"> 
                                                 <option v-for="contractor in contractorsList" :key="contractor.id" :value="contractor.id"> {{ contractor.name }}</option>
-                                            </select>
-                                        </td>
-                                        <td> 
-                                            <p class="table-p">Rozpoczęcie</p>
-                                            <v-date-picker class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].startDate">
+                                            </select> </div>
+                                        </div>
+                                        <div class="emp-tbody-row">
+                                            <div class="emp-tbody-item-title">{{ $t("table.duration") }} </div>
+                                            <div>
+                                                <p class="table-p">Rozpoczęcie</p>
+                                                <v-date-picker class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].startDate">
                                                     <input value="experience[index].startDate" />
-                                            </v-date-picker>
-                                            <p class="table-p">Zakończenie</p>
+                                                </v-date-picker>
+                                                <p class="table-p">Zakończenie</p>
 
-                                            <v-date-picker :id="index" class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].endDate">
-                                                <input value="experience[index].endDate" />
-                                            </v-date-picker>
-                                            <input type="checkbox" @change="disableEndDateInput" id="checkbox" :name="index" v-model="experience[index].isCurrent"/>
-                                            <label for="checkbox">Obecnie</label>
-                                        </td>
-                                        <td> 
-                                            <select class="profile-table-select profile-table-select-industry" v-model="experience[index].industry"> 
+                                                <v-date-picker :id="index" class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].endDate">
+                                                    <input value="experience[index].endDate" />
+                                                </v-date-picker>
+                                                <input type="checkbox" @change="disableEndDateInput" id="checkbox" :name="index" v-model="experience[index].isCurrent" />
+                                                <label for="checkbox">Obecnie</label> </div>
+                                        </div>
+                                        <div class="emp-tbody-row">
+                                            <div class="emp-tbody-item-title">{{ $t("table.Industry") }} </div>
+                                            <div> <select class="profile-table-select profile-table-select-industry" v-model="experience[index].industry"> 
                                                 <option v-for="industry in industryList" :key="industry.id" :value="industry.id"> {{ industry.name }}</option>
-                                            </select>
-                                        </td>
-                                        <td class="profile-table-td-module"> 
-                                            <div id="for" >
-                                                <button class="profile-table-module-button" @click="removeModule" :name="index" v-for="sapModule in experience[index].modules" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.id }} </button>
-                                            </div>
-                                            <!-- <div id="addButtons"></div> -->
-                                            <select class="profile-table-select profile-table-select-modules" @change="addModule" :id="index"> 
+                                            </select> </div>
+                                        </div>
+                                        <div class="emp-tbody-row">
+                                            <div class="emp-tbody-item-title"> {{ $t("table.Modules") }}</div>
+                                            <div class="emp-tbody-item-txt profile-table-td-module">
+                                                <div id="for">
+                                                    <button class="profile-table-module-button" @click="removeModule" :name="index" v-for="sapModule in experience[index].modules" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.id }} </button>
+                                                </div>
+                                                <!-- <div id="addButtons"></div> -->
+                                                <select class="profile-table-select profile-table-select-modules" @change="addModule" :id="index"> 
                                                 <option v-for="sapModule in modulesList" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.name }}</option>
-                                            </select>
-                                        </td>
-                                        <td> <textarea class="profile-table-textarea" v-model="experience[index].descr" /> </td>
-                                        <td> 
-                                            <button class="profile-table-delete-btn" @click="removeRow(index)">X</button>
-                                            <button class="profile-table-save-btn" @click="saveExp(index)">&#x2714;</button>
-                                            <p class="profile-error" v-if="showProjectError">Wprowadzone dane są niekompletne. Uzupełnij wszystkie pola. </p>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                            </select></div>
+
+                                        </div>
+                                        <div class="emp-tbody-row">
+                                            <div class="emp-tbody-item-title">{{ $t("table.projectName") }} </div>
+                                            <div> <textarea class="profile-table-textarea" v-model="experience[index].descr" /> </div>
+                                        </div>
+                                        <div class="emp-tbody-row">
+                                            <div class="emp-tbody-item-title">{{ $t("table.projectName") }} </div>
+                                            <div> <button class="profile-table-delete-btn" @click="removeRow(index)">X</button>
+                                                <button class="profile-table-save-btn" @click="saveExp(index)">&#x2714;</button>
+                                                <p class="profile-error" v-if="showProjectError">Wprowadzone dane są niekompletne. Uzupełnij wszystkie pola. </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -312,7 +328,7 @@ export default {
             industryList: "getIndustryList",
             modulesList: "getModulesList",
             experience: "getExperienceList",
-            showProjectError:'getShowProjectError',
+            showProjectError: 'getShowProjectError',
             ifModuleExist: 'getModuleExist'
         })
     },
@@ -412,11 +428,11 @@ export default {
         removeRow(index) {
             this.$store.dispatch('removeExpRow', index)
         },
-        saveExp(index){
+        saveExp(index) {
             this.$store.dispatch('saveExpPosition', index)
         },
         addModule(value) {
-           const data = {
+            const data = {
                 index: value.target.id,
                 moduleId: value.target.value
             }
@@ -431,9 +447,15 @@ export default {
         },
         disableEndDateInput(value) {
             const isCurrent = value.target.checked,
-                index = value.target.name
-            document.getElementById(index).setAttribute("v-show", !isCurrent)
-            
+                index = value.target.name,
+                input = document.getElementById(index)
+
+            if (isCurrent){
+                input.setAttribute("style", "opacity: 0")
+                
+            } else {
+                input.setAttribute("style", "opacity: 1")
+            }
         }
     }
 }
@@ -441,11 +463,13 @@ export default {
 
 <style>
 .input {
-    text-align: center;   
+    text-align: center;
 }
+
 .inputEdit {
     text-align: center;
 }
+
 .inputDisabled {
     text-align: center;
 }
@@ -454,18 +478,22 @@ table {
     width: 95%;
     border-spacing: 0;
 }
+
 thead {
     width: 6rem;
     background-color: rgb(236, 236, 236);
 }
+
 thead td:first-child {
     border-top-left-radius: .5rem;
     border-bottom-left-radius: .5rem;
 }
+
 thead td:last-child {
     border-top-right-radius: .5rem;
     border-bottom-right-radius: .5rem;
 }
+
 thead,
 tbody {
     /* border: 1px solid rgb(230, 230, 230); */
@@ -482,6 +510,7 @@ tr:nth-of-type(even) td:first-child {
     border-top-left-radius: .5rem;
     border-bottom-left-radius: .5rem;
 }
+
 tr:nth-of-type(even) td:last-child {
     border-top-right-radius: .5rem;
     border-bottom-right-radius: .5rem;
@@ -501,6 +530,7 @@ tbody td {
 tbody td {
     /* border-right: 1px solid rgb(230, 230, 230); */
 }
+
 thead td:last-child,
 tbody td:last-child {
     border-bottom: 0;
@@ -532,23 +562,23 @@ td textarea {
     max-width: 11rem;
 }
 
-@media  (max-width: 82rem) {
-    
+@media (max-width: 82rem) {
     table {
-        display:flex;
+        display: flex;
         position: relative;
         /* width: 19.5rem; */
         /* max-width: 19.5rem; */
         width: 90%;
-        overflow-x:hidden;
+        overflow-x: hidden;
     }
-
-    th, tr,td {
+    th,
+    tr,
+    td {
         display: block;
     }
     thead {
         display: block;
-        float:left;
+        float: left;
     }
     thead tr {
         display: block;
@@ -556,7 +586,7 @@ td textarea {
     thead td {
         height: 3rem;
         text-align: center;
-        line-height: 1rem; 
+        line-height: 1rem;
         vertical-align: middle;
     }
     tbody {
@@ -570,7 +600,7 @@ td textarea {
         height: 3rem;
     }
     tbody tr {
-        display:inline-block;
+        display: inline-block;
     }
     thead td:nth-child(3) {
         height: 9rem;
@@ -579,7 +609,7 @@ td textarea {
         height: 9rem;
     }
     thead td:nth-child(5) {
-        height:4rem;
+        height: 4rem;
     }
     .profile-table-td-module {
         height: 4rem;
