@@ -122,6 +122,9 @@
                                     <!-- container for single label + input/p -->
                                     <label class="label-profile">{{ $t("label.employmentDate") }}</label>
                                     <masked-input mask="11.11.1111" @input="dateValidation" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.employmentDate" />
+                                    <!-- <v-date-picker :max-date="new Date()" v-if="projectEditMode" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" is-expanded mode="single" v-model="userData.employmentDate">
+                                                    <input value="userData.employmentDate" />
+                                                </v-date-picker> -->
                                     <div class="error-wrapper">
                                         <p class="profile-error profile-error-date" v-if="invalidDate">{{ $t("message.dateValidation") }}</p>
                                     </div>
@@ -194,8 +197,10 @@
                         </div>
                         <div class="tile-underscore"></div>
                     </div>
-                    <div class="profile-tile-content">
+                    <!-- remove style after adding appropriate classes, it is only for testing purposes  -->
+                    <div class="profile-tile-content" style="height: 500px">
                         <p class="profile-error" name="error" v-if="showProjectError">Wprowadzone dane w projekcie {{ errorProjectNo }} są niekompletne. Uzupełnij wszystkie pola. </p>
+                         <p class="profile-error" name="error" v-if="invalidDates">W projekcie {{invalidDatePos}} data rozpoczęcia nie może być późniejsza niż data zakończenia </p>
                         <div class="profile-table-wrapper">
                             <div class="employees-table">
                                 <div class="emp-thead">
@@ -232,16 +237,20 @@
                                             <div class="emp-tbody-item-title">{{ $t("table.duration") }} </div>
                                             <div>
                                                 <p class="table-p">Rozpoczęcie</p>
-                                                <v-date-picker :disabled="!projectEditMode" class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].startDate">
-                                                    <input :disabled="!projectEditMode" value="experience[index].startDate" />
+                                                <p v-if="!projectEditMode"> {{ formatDate(experience[index].startDate) }} </p>
+                                                <v-date-picker :max-date="new Date()" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].startDate">
+                                                    <input  value="experience[index].startDate" />
                                                 </v-date-picker>
                                                 <p class="table-p">Zakończenie</p>
-
-                                                <v-date-picker  :id="index" class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].endDate">
-                                                    <input :disabled="!projectEditMode" value="experience[index].endDate" />
+                                                <div name="endDateDiv" :id="index">
+                                                <p v-if="!projectEditMode"> {{ formatDate(experience[index].endDate) }} </p>
+                                                <v-date-picker :max-date="new Date()" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].endDate">
+                                                    <input value="experience[index].endDate" />
                                                 </v-date-picker>
-                                                <input  editable="projectEditMode" type="checkbox" @change="disableEndDateInput" id="checkbox" :name="index" v-model="experience[index].isCurrent" />
-                                                <label for="checkbox">Obecnie</label> </div>
+                                                </div>
+                                                <input  :disabled="!projectEditMode" type="checkbox" @change="disableEndDateInput" id="checkbox" :name="index" v-model="experience[index].isCurrent" />
+                                                <label for="checkbox">Obecnie</label>
+                                            </div>
                                         </div>
                                         <div class="emp-tbody-row">
                                             <div class="emp-tbody-item-title">{{ $t("table.Industry") }} </div>
@@ -285,6 +294,7 @@
 </template>
 
 <script>
+import moment from "moment"
 import MaskedInput from 'vue-masked-input'
 import {
     required,
@@ -308,6 +318,8 @@ export default {
             disableSaveBtn: true,
             showEndInput: true,
             projectEditMode: false,
+            invalidDates:false,
+            invalidDatePos: null
             
         }
     },
@@ -478,6 +490,30 @@ export default {
             this.projectEditMode = true
             const beforeEditingCache = this.experience
            this.$store.commit('SET_BEFORE_EDITING_PROJECTS', beforeEditingCache)
+        },
+        formatDate(date) {
+            if (date !== null && date !== undefined) {
+                return moment(date).format('DD.MM.YYYY')
+            } else {
+                return "-"
+            }
+        },
+        validateDates(index) {
+            const startDate = this.experience[index].startDate,
+                  endDate = this.experience[index].endDate,
+                  isCurrent = this.experience[index].isCurrent 
+
+            if (endDate && startDate && isCurrent === false) {
+                const formatStartDate = moment(startDate).format('YYYY-MM-DD'),
+                    formatEndDate = moment(endDate).format('YYYY-MM-DD')
+            if (formatStartDate > formatEndDate) {
+                this.invalidDates = true
+                this.invalidDatePos = index + 1 
+            } else {
+                this.invalidDates = false
+                this.invalidDatePos = null
+            }
+            }
         }
     }
 }
