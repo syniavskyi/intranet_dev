@@ -43,6 +43,7 @@
         "documentList": "Below is a list of documents that you must fill and deliver",
         "appliesTo": "Applies to",
         "number": "Number",
+        "delegationNo": "Delegation number",
         "day": "On",
         "forTime": "For:",
         "to": "To",

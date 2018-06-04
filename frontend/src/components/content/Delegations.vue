@@ -19,7 +19,7 @@
                     <div class="delegations-tile-content delegations-tile-content-1">
                         <div class="delegations-inputs-section">
                             <div class="delegations-div-input">
-                                <label class="delegations-label">{{ $t("label.number") }}: </label>
+                                <label class="delegations-label">{{ $t("label.delegationNo") }}: </label>
                                 <input class="delegations-input" v-model="newDelegation.number" @input="checkNewDelegation" />
                             </div>
                             <div class="delegations-div-input">
