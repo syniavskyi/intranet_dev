@@ -13,7 +13,8 @@
         "documentComplete": "Przekazano dokumenty",
         "addProject": "Dodaj projekt",
         "editProjects": "Edytuj projekty",
-        "removeProject": "Usuń projekt"
+        "removeProject": "Usuń projekt",
+        "finishEdit": "Zakończ edycję"
      },
     "label": {
         "user": "Użytkownik",
