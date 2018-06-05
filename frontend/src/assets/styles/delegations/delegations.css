@@ -19,7 +19,6 @@ body {
     display: flex;
     flex-direction: row;
     background: #d8d8d8;
-    width: 100%;
     /* min-height: 100%; */
     width:100%;
     height: auto;
@@ -207,8 +206,7 @@ body {
     height: 100%;
 }
 
-.del-thead-1,
-.del-thead-2 {
+.del-thead-1 {
     color: grey;
     background: #e5e5e5;
     display: none;
