@@ -13,7 +13,8 @@
         "documentComplete": "Documents were provided",
         "addProject": "Add project",
         "editProjects": "Edit projects",
-        "removeProject": "Remove project"
+        "removeProject": "Remove project",
+        "finishEdit": "Finish editing"
     },
     "label": {
         "user": "User",
