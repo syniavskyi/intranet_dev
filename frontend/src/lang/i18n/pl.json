@@ -58,7 +58,10 @@
         "endDate": "Data zakończenia",
         "dates": "Okres",
         "contractor": "Kontrahent",
-        "oneProject": "Projekt"
+        "oneProject": "Projekt",
+        "hoursInDelegation": "Liczba godzin w delegacji",
+        "dailyAllowance": "Dzienna dieta służbowa",
+        "totalAllowance": "Łączna dieta za delegację"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",

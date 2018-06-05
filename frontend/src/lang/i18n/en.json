@@ -57,7 +57,10 @@
         "endDate": "End date",
         "contractor": "Contractor",
         "oneProject": "Project",
-        "dates": "Dates"
+        "dates": "Dates",
+        "hoursInDelegation": "Hours in delegation",
+        "dailyAllowance": "Daily allowance",
+        "totalAllowance": "Allowance for delegation"
 
     },
     "header": {

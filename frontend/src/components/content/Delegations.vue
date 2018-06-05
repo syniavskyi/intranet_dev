@@ -31,9 +31,21 @@
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.forTime") }}: </label>
-                                <v-date-picker class="delegations-input-date" @input="checkNewDelegation" is-expanded mode="range" v-model="newDelegation.dates">
+                                <v-date-picker class="delegations-input-date" @input="countAllowance" is-expanded mode="range" v-model="newDelegation.dates">
                                     <input value="newDelegation.dates" />
                                 </v-date-picker>
+                            </div>
+                            <div class="delegations-div-input">
+                                <label class="delegations-label">{{ $t("label.hoursInDelegation") }}: </label>
+                                <p class="delegations-input">{{ newDelegation.hours }}</p>
+                            </div>
+                            <div class="delegations-div-input">
+                                <label class="delegations-label">{{ $t("label.dailyAllowance") }}: </label>
+                                <p class="delegations-input">{{dailyAllowance}} zł </p>
+                            </div>
+                            <div class="delegations-div-input">
+                                <label class="delegations-label">{{ $t("label.totalAllowance") }}: </label>
+                                <p class="delegations-input">{{newDelegation.totalAllowance}} zł </p>
                             </div>
                         </div>
                         <div class="delegations-inputs-section">
@@ -111,7 +123,7 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
                                             <div class="del-tbody-item">
-                                                <masked-input mask="11:11" v-model="defaultCostsData.firstLeaveHour" @change="hourValidation" /> </div>
+                                                <input type="time" v-model="defaultCostsData.firstLeaveHour" @change="countAllowance" /> </div>
                                         </div>
                                     </div>
                                 </div>
@@ -129,7 +141,7 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
                                             <div class="del-tbody-item">
-                                                <masked-input mask="11:11" v-model="defaultCostsData.firstArrivalHour" @change="hourValidation" />
+                                                <input type="time" v-model="defaultCostsData.firstArrivalHour" @change="countAllowance" />
                                             </div>
                                         </div>
                                     </div>
@@ -164,7 +176,7 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
                                             <div class="del-tbody-item">
-                                                <masked-input mask="11:11" v-model="defaultCostsData.secondLeaveHour" @change="hourValidation" /> </div>
+                                                <input type="time" v-model="defaultCostsData.secondLeaveHour" @change="countAllowance" /> </div>
                                         </div>
                                     </div>
                                 </div>
@@ -184,7 +196,7 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
                                             <div class="del-tbody-item">
-                                                <masked-input mask="11:11" v-model="defaultCostsData.secondArrivalHour" @change="hourValidation" />
+                                                <input type="time" v-model="defaultCostsData.secondArrivalHour" @change="countAllowance" />
                                             </div>
                                         </div>
                                     </div>
@@ -224,7 +236,7 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
                                             <div class="del-tbody-item">
-                                                <masked-input mask="11:11" v-model="customCosts[index].leaveHour" @change="hourValidation" /> </div>
+                                                <input type="time" v-model="customCosts[index].leaveHour" @change="checkDelegationTable" /> </div>
                                         </div>
                                     </div>
                                 </div>
@@ -246,7 +258,7 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
                                             <div class="del-tbody-item">
-                                                <masked-input mask="11:11" v-model="customCosts[index].arrivalHour" @change="hourValidation" />
+                                                <input type="time" v-model="customCosts[index].arrivalHour" @change="checkDelegationTable" />
                                             </div>
                                         </div>
                                     </div>
@@ -315,7 +327,7 @@
                                     </div>
                                     <div class="del-tbody2-item">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.docNo") }}</div>
-                                        <div class="del-tbody2-item-txt"><input v-model="costTableData[index].docNo"/> </div>
+                                        <div class="del-tbody2-item-txt"><input v-model="costTableData[index].docNo" /> </div>
                                         <div class="del-tfoot2">{{ $t("table.delegations.amountPLN") }}</div>
                                     </div>
                                     <div class="del-tbody2-item">
@@ -424,9 +436,12 @@ export default {
                 destination: null,
                 purpose: null,
                 transport: null,
-                licensePlateNo: null
+                licensePlateNo: null,
+                hours: 0,
+                totalAllowance: 0
             },
             invalidDate: false,
+            dailyAllowance: 30.00,
             invalidHour: false,
             showLicensePlateNo: false,
             defaultCostsData: {},
@@ -554,18 +569,6 @@ export default {
             this.$store.dispatch('removeCostRow', index)
             this.checkCostTable()
         },
-        hourValidation(value) {
-            const hours = parseInt(value.slice(0, 2)),
-                minutes = parseInt(value.slice(3, 5))
-            if (hours > 24 || minutes > 60 || value == "__:__") {
-                this.invalidHour = true
-                this.delegationTableValidated = false
-            } else {
-                this.delegationTableValidated = true
-                this.invalidHour = false
-                this.checkDelegationTable()
-            }
-        },
         updateTotalCosts() {
             this.$store.dispatch('updateTotalCosts')
             this.checkCostTable()
@@ -600,10 +603,50 @@ export default {
             costs.push(secondDefaultCost)
             this.fullExpences = costs
         },
-        save() {
+        save() {},
+        countAllowance() {
+            const startDate = this.newDelegation.dates.start,
+                endDate = this.newDelegation.dates.end,
+                startHour = this.defaultCostsData.firstLeaveHour,
+                endHour = this.defaultCostsData.secondArrivalHour,
+                dailyAll = this.dailyAllowance
+            
+            let allowance,
+                totalDays,
+                remainder
+
+            startDate.setHours(startHour.slice(0, 2), startHour.slice(3, 5), 0, 0)
+
+            endDate.setHours(endHour.slice(0, 2), endHour.slice(3, 5), 0, 0)
+
+            const totalHours = Math.ceil(Math.abs(endDate - startDate) / 36e5)
+
+            this.newDelegation.hours = totalHours
+
+            if (totalHours <= 8) {
+                allowance = 0
+            } else {
+                if (totalHours <= 12) {
+                    allowance = dailyAll * 0.5
+                } else {
+                        totalDays = Math.ceil(totalHours / 24)
+                        remainder = totalHours % 24
+                    if (remainder === 0) {
+                        allowance = totalDays * dailyAll
+                    } else if (remainder <= 8) {
+                        allowance = (totalDays + 0.5) * dailyAll
+                    } else {
+                        allowance = (totalDays + 1) * dailyAll
+                    }
+                }
+            }
+            this.newDelegation.totalAllowance = allowance
         }
+
+        
     }
 }
+
 </script>
 
 <style>
