@@ -195,7 +195,13 @@ body {
     flex-shrink:1;
 }
 
+@media (min-width: 44rem) {
+    .documents-content {
+        width: 80%;
+    }
+}
 @media (min-width: 30rem) {
+    
     .documents-header-menu {
      display: none;
     }
