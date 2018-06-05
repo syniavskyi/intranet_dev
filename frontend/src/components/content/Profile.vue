@@ -585,9 +585,9 @@ tbody td {
     margin: 0;
 }
 
-tbody td {
-    /* border-right: 1px solid rgb(230, 230, 230); */
-}
+/* tbody td { 
+    border-right: 1px solid rgb(230, 230, 230); 
+} */
 
 thead td:last-child,
 tbody td:last-child {
