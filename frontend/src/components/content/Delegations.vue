@@ -629,7 +629,7 @@ export default {
                 if (totalHours <= 12) {
                     allowance = dailyAll * 0.5
                 } else {
-                        totalDays = Math.ceil(totalHours / 24)
+                        totalDays = Math.floor(totalHours / 24)
                         remainder = totalHours % 24
                     if (remainder === 0) {
                         allowance = totalDays * dailyAll
