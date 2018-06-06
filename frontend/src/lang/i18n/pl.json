@@ -147,6 +147,7 @@
             "others": "Inne",
             "amountPLN": "Kwota w PLN",
             "totalAmount": "Razem PLN"
-        }
+        },
+        "addModule": "Wybierz moduł z listy"  
     }
 }
