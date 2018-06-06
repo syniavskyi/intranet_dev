@@ -616,12 +616,9 @@ export default {
                 remainder
 
             startDate.setHours(startHour.slice(0, 2), startHour.slice(3, 5), 0, 0)
-
             endDate.setHours(endHour.slice(0, 2), endHour.slice(3, 5), 0, 0)
 
             const totalHours = Math.ceil(Math.abs(endDate - startDate) / 36e5)
-
-            this.newDelegation.hours = totalHours
 
             if (totalHours <= 8) {
                 allowance = 0
@@ -640,12 +637,16 @@ export default {
                     }
                 }
             }
+            this.newDelegation.hours = totalHours
             this.newDelegation.totalAllowance = allowance
+
+            this.checkNewDelegation()
+        }
         }
 
         
     }
-}
+
 
 </script>
 
