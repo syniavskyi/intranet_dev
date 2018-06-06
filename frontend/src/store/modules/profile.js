@@ -228,9 +228,15 @@ const actions = {
   }, experience) {
     for (let key in experience) {
       if (!experience[key]) {
-        commit('SET_PROJECT_ERROR', true)
-        commit('SET_ERROR_PROJECT_NO', experience.index + 1 )
-        return
+        if (key === "endDate" && experience.isCurrent === true ) {
+          commit('SET_PROJECT_ERROR', false)
+        } else if (key === "index") {
+          commit('SET_PROJECT_ERROR', false)
+        }else {
+          commit('SET_PROJECT_ERROR', true)
+          commit('SET_ERROR_PROJECT_NO', experience.index + 1 )
+          return
+        }
       } else {
         commit('SET_PROJECT_ERROR', false)
       }

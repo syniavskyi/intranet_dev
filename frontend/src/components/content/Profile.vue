@@ -315,7 +315,7 @@ import {
     email
 } from 'vuelidate/lib/validators'
 import {
-    mapGetters
+    mapGetters, mapActions
 } from 'vuex'
 import Menu from '../Menu.vue'
 export default {
@@ -334,7 +334,7 @@ export default {
             projectEditMode: false,
             invalidDates: false,
             invalidDatePos: null,
-            beforeEditingProjects: null
+            _beforeEditingProjects: null
 
         }
     },
@@ -371,6 +371,9 @@ export default {
         })
     },
     methods: {
+        ...mapActions({
+            addRow: 'addExpRow'
+        }),
         onEdit() {
             this.showNoChangesAlert = false
             this.editMode = !this.editMode
@@ -449,15 +452,12 @@ export default {
                 this.disableSaveBtn = (this.hasDataChanged === true) ? false : true
             }
         },
-        addRow() {
-            this.$store.dispatch('addExpRow')
-        },
         removeRow(index) {
             this.$store.dispatch('removeExpRow', index)
         },
         saveExp(index) {
             this.$store.dispatch('saveExpPosition', index)
-            this.beforeEditingProjects = JSON.parse(JSON.stringify(this.experience))
+            this._beforeEditingProjects = JSON.parse(JSON.stringify(this.experience))
         },
         addModule(value) {
             const data = {
@@ -487,12 +487,12 @@ export default {
         },
         finishEditing() {
             this.$store.commit('SET_PROJECT_ERROR', false)
-            this.$store.commit('SET_EXP_LIST', this.beforeEditingProjects)
+            this.$store.commit('SET_EXP_LIST', this._beforeEditingProjects)
             this.projectEditMode = false
         },
         editProjects() {
             this.projectEditMode = true
-            this.beforeEditingProjects = JSON.parse(JSON.stringify(this.experience))
+            this._beforeEditingProjects = JSON.parse(JSON.stringify(this.experience))
         },
         formatDate(date) {
             if (date !== null && date !== undefined) {
