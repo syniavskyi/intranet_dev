@@ -202,13 +202,13 @@
                     <!-- remove style after adding appropriate classes, it is only for testing purposes  -->
                     <div class="profile-tile-content">
                         <p class="profile-error" name="error" v-if="showProjectError">Wprowadzone dane w projekcie {{ errorProjectNo }} są niekompletne. Uzupełnij wszystkie pola. </p>
-                         <p class="profile-error" name="error" v-if="invalidDates">W projekcie {{invalidDatePos}} data rozpoczęcia nie może być późniejsza niż data zakończenia </p>
+                        <p class="profile-error" name="error" v-if="invalidDates">W projekcie {{invalidDatePos}} data rozpoczęcia nie może być późniejsza niż data zakończenia </p>
                         <div class="profile-table-wrapper">
                             <div class="profile-table">
                                 <div class="prof-thead">
                                     <!-- class="prof-thead-item" -->
-                                    <div class="prof-thead-item">Np.</div> 
-                                    <div class="prof-thead-item">{{ $t("table.projectName") }}</div> 
+                                    <div class="prof-thead-item">Np.</div>
+                                    <div class="prof-thead-item">{{ $t("table.projectName") }}</div>
                                     <div class="prof-thead-item">{{ $t("table.contractor") }}</div>
                                     <div class="prof-thead-item">{{ $t("table.duration") }}</div>
                                     <div class="prof-thead-item">{{ $t("table.Industry") }}</div>
@@ -217,28 +217,28 @@
                                     <div class="prof-thead-item">---</div>
                                 </div>
                                 <div class="prof-tbody">
-                                  <div class="prof-tbody-row"  v-for="(exp, index) in experience" :key="index">
+                                    <div class="prof-tbody-row" v-for="(exp, index) in experience" :key="index">
                                         <!-- class="prof-tbody-item" -->
-                                         <div class="prof-tbody-item">
+                                        <div class="prof-tbody-item">
                                             <div class="prof-tbody-item-title">Np.</div>
                                             <!-- class="prof-tbody-item-txt" -->
-                                            <div class="prof-tbody-item-txt"> 
-                                                <p class="table-p">{{index + 1}}</p> 
+                                            <div class="prof-tbody-item-txt">
+                                                <p class="table-p">{{index + 1}}</p>
                                             </div>
                                         </div>
                                         <div class="prof-tbody-item">
                                             <div class="prof-tbody-item-title">{{ $t("table.projectName") }} </div>
                                             <!-- class="prof-tbody-item-txt" -->
-                                            <div class="prof-tbody-item-txt"> 
-                                                <input :disabled="!projectEditMode" class="profile-table-input" v-model="experience[index].project" /> 
+                                            <div class="prof-tbody-item-txt">
+                                                <input :disabled="!projectEditMode" class="profile-table-input" v-model="experience[index].project" />
                                             </div>
                                         </div>
                                         <div class="prof-tbody-item">
                                             <div class="prof-tbody-item-title"> {{ $t("table.contractor") }}</div>
-                                            <div class="prof-tbody-item-txt"> 
+                                            <div class="prof-tbody-item-txt">
                                                 <select :disabled="!projectEditMode" class="profile-table-select profile-table-select-contractor" v-model="experience[index].contractor"> 
                                                     <option v-for="contractor in contractorsList" :key="contractor.id" :value="contractor.id"> {{ contractor.name }}</option>
-                                                </select> 
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="prof-tbody-item">
@@ -247,25 +247,25 @@
                                                 <p class="table-p">Rozpoczęcie</p>
                                                 <p class="table-p" v-if="!projectEditMode"> {{ formatDate(experience[index].startDate) }} </p>
                                                 <v-date-picker :max-date="new Date()" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].startDate">
-                                                    <input  value="experience[index].startDate" />
+                                                    <input value="experience[index].startDate" />
                                                 </v-date-picker>
                                                 <p class="table-p">Zakończenie</p>
                                                 <div name="endDateDiv" :id="index">
-                                                <p class="table-p" v-if="!projectEditMode"> {{ formatDate(experience[index].endDate) }} </p>
-                                                <v-date-picker :max-date="new Date()" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].endDate">
-                                                    <input value="experience[index].endDate" />
-                                                </v-date-picker>
+                                                    <p class="table-p" v-if="!projectEditMode"> {{ formatDate(experience[index].endDate) }} </p>
+                                                    <v-date-picker :max-date="new Date()" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].endDate">
+                                                        <input value="experience[index].endDate" />
+                                                    </v-date-picker>
                                                 </div>
-                                                <input  :disabled="!projectEditMode" type="checkbox" @change="disableEndDateInput" id="checkbox" :name="index" v-model="experience[index].isCurrent" />
+                                                <input :disabled="!projectEditMode" type="checkbox" @change="disableEndDateInput" id="checkbox" :name="index" v-model="experience[index].isCurrent" />
                                                 <label for="checkbox">Obecnie</label>
                                             </div>
                                         </div>
                                         <div class="prof-tbody-item">
                                             <div class="prof-tbody-item-title">{{ $t("table.Industry") }} </div>
-                                            <div class="prof-tbody-item-txt"> 
+                                            <div class="prof-tbody-item-txt">
                                                 <select :disabled="!projectEditMode" class="profile-table-select profile-table-select-industry" v-model="experience[index].industry"> 
                                                     <option v-for="industry in industryList" :key="industry.id" :value="industry.id"> {{ industry.name }}</option>
-                                                </select> 
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="prof-tbody-item">
@@ -284,13 +284,13 @@
                                         </div>
                                         <div class="prof-tbody-item">
                                             <div class="prof-tbody-item-title">{{ $t("table.projectName") }} </div>
-                                            <div class="prof-tbody-item-txt"> 
-                                                <textarea :disabled="!projectEditMode" class="profile-table-textarea" v-model="experience[index].descr" /> 
+                                            <div class="prof-tbody-item-txt">
+                                                <textarea :disabled="!projectEditMode" class="profile-table-textarea" v-model="experience[index].descr" />
                                             </div>
                                         </div>
                                         <div class="prof-tbody-item">
                                             <div class="prof-tbody-item-title">{{ $t("table.projectName") }} </div>
-                                            <div class="prof-tbody-item-txt"> 
+                                            <div class="prof-tbody-item-txt">
                                                 <button v-if="projectEditMode" class="profile-table-delete-btn" @click="removeRow(index)">X</button>
                                                 <button v-if="projectEditMode" class="profile-table-save-btn" @click="saveExp(index)">&#x2714;</button>
                                             </div>
@@ -299,7 +299,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -333,10 +332,10 @@ export default {
             disableSaveBtn: true,
             showEndInput: true,
             projectEditMode: false,
-            invalidDates:false,
+            invalidDates: false,
             invalidDatePos: null,
-            beforeEditingProjects :null
-            
+            beforeEditingProjects: null
+
         }
     },
     validations: {
@@ -369,7 +368,7 @@ export default {
             showProjectError: 'getShowProjectError',
             ifModuleExist: 'getModuleExist',
             errorProjectNo: 'getErrorProjectNo'
-       })
+        })
     },
     methods: {
         onEdit() {
@@ -431,13 +430,13 @@ export default {
         phoneValidation(value) {
             const regex = new RegExp("^(?=.*[0-9])[- +()0-9]+$")
             this.invalidPhone = (regex.test(value.target.value)) ? false : true
-             this.checkFormFields()
+            this.checkFormFields()
         },
         dateValidation(value) {
             const day = parseInt(value.slice(0, 2)),
                 month = parseInt(value.slice(3, 5))
 
-            this.invalidDate = (day > 31 || month > 12)? true : false
+            this.invalidDate = (day > 31 || month > 12) ? true : false
             this.disableSaveBtn = (day > 31 || month > 12) ? true : false
 
             this.checkFormFields()
@@ -447,7 +446,7 @@ export default {
                 this.disableSaveBtn = true
             } else {
                 this.checkIfDataChanged()
-                 this.disableSaveBtn = (this.hasDataChanged === true) ? false : true
+                this.disableSaveBtn = (this.hasDataChanged === true) ? false : true
             }
         },
         addRow() {
@@ -455,9 +454,10 @@ export default {
         },
         removeRow(index) {
             this.$store.dispatch('removeExpRow', index)
-         },
+        },
         saveExp(index) {
             this.$store.dispatch('saveExpPosition', index)
+            this.beforeEditingProjects = JSON.parse(JSON.stringify(this.experience))
         },
         addModule(value) {
             const data = {
@@ -478,7 +478,7 @@ export default {
                 index = value.target.name,
                 input = document.getElementById(index)
 
-            if (isCurrent){
+            if (isCurrent) {
                 input.setAttribute("style", "opacity: 0")
                 this.experience[index].endDate = null
             } else {
@@ -492,8 +492,8 @@ export default {
         },
         editProjects() {
             this.projectEditMode = true
-            this.beforeEditingProjects = this.experience.slice()
-         },
+            this.beforeEditingProjects = JSON.parse(JSON.stringify(this.experience))
+        },
         formatDate(date) {
             if (date !== null && date !== undefined) {
                 return moment(date).format('DD.MM.YYYY')
@@ -503,14 +503,14 @@ export default {
         },
         validateDates(index) {
             const startDate = this.experience[index].startDate,
-                  endDate = this.experience[index].endDate,
-                  isCurrent = this.experience[index].isCurrent 
+                endDate = this.experience[index].endDate,
+                isCurrent = this.experience[index].isCurrent
 
             if (endDate && startDate && isCurrent === false) {
                 const formatStartDate = moment(startDate).format('YYYY-MM-DD'),
                     formatEndDate = moment(endDate).format('YYYY-MM-DD')
 
-                this.invalidDates =  (formatStartDate > formatEndDate) ? true : false
+                this.invalidDates = (formatStartDate > formatEndDate) ? true : false
                 this.invalidDatePos = (formatStartDate > formatEndDate) ? index + 1 : null
             }
         }
@@ -546,5 +546,4 @@ export default {
         opacity: 0;
     }
 }
-
 </style>
