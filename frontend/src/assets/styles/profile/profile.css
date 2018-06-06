@@ -137,12 +137,18 @@ body {
     height: 10%;
     width: 100%;
 }
+.profile-table-buttons {
+    display: flex;
+    flex-direction: column;
+}
 
 .profile-tile-header-row {
     display: flex;
     justify-content: space-between; 
 }
-.profile-change-password {
+.profile-change-password,
+.profile-edit-experience,
+.profile-edit-experience-e {
     background: transparent;
     display: flex;
     border: 0;
@@ -157,9 +163,25 @@ body {
     color: grey;
     font-family: 'Open Sans';
     font-size: 1rem;
+    transition: all .2s ease;
 }
 
-.profile-change-password:hover {
+.profile-edit-experience {
+    white-space:nowrap;
+    width: 7.6rem;
+    line-height: 1rem;
+    height: 2.2rem;
+}
+.profile-edit-experience-e {
+    white-space:nowrap;
+    width: 8rem;
+    line-height: 1rem;
+    height: 1.1rem;
+}
+
+.profile-change-password:hover,
+.profile-edit-experience:hover,
+.profile-edit-experience-e:hover {
     box-shadow: 0 0 15px rgba(255, 151, 71, 0.78);
     cursor: pointer;
 }
@@ -167,7 +189,7 @@ body {
 .profile-tile h2 {
     margin:0;
     margin-right: 0;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem .5rem;
     font-weight: 600;
 }
 
@@ -784,6 +806,12 @@ body {
     .prof-thead {
         display:flex;
     }
+    .profile-table-buttons {
+        flex-direction: row;
+    }
+    .profile-edit-experience-e {
+        height: 2rem;
+    }
     .prof-thead-item {
         text-align: center;
         justify-content: center;
@@ -953,6 +981,9 @@ body {
     }
     .profile-nav-and-content {
         min-height: 41rem;
+    }
+    .profile-tile h2 {
+        padding: 0.5rem 1rem;
     }
     .plane-nav {
         min-height: 41rem;
