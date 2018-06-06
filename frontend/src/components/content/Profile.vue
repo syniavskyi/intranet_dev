@@ -190,10 +190,12 @@
                 <div class="profile-tile">
                     <div class="profile-tile-header">
                         <div class="profile-tile-header-row">
-                            <h2>{{ $t("header.experience") }}</h2>
-                            <button class="profile-change-password" @click="editProjects" v-if="!projectEditMode">{{ $t("button.editProjects") }}</button>
-                            <button class="profile-change-password" v-if="projectEditMode" @click="addRow">{{ $t("button.addProject") }}</button>
-                            <button class="profile-change-password" v-if="projectEditMode" @click="finishEditing">{{ $t("button.finishEdit") }}</button>
+                            <h2 class="profile-tile-title">{{ $t("header.experience") }}</h2>
+                            <div class="profile-table-buttons">
+                                <button class="profile-edit-experience" @click="editProjects" v-if="!projectEditMode">{{ $t("button.editProjects") }}</button>
+                                <button class="profile-edit-experience-e" v-if="projectEditMode" @click="addRow">{{ $t("button.addProject") }}</button>
+                                <button class="profile-edit-experience-e" v-if="projectEditMode" @click="finishEditing">{{ $t("button.finishEdit") }}</button>
+                            </div>
                         </div>
                         <div class="tile-underscore"></div>
                     </div>
@@ -243,13 +245,13 @@
                                             <div class="prof-tbody-item-title">{{ $t("table.duration") }} </div>
                                             <div class="prof-tbody-item-txt">
                                                 <p class="table-p">Rozpoczęcie</p>
-                                                <p v-if="!projectEditMode"> {{ formatDate(experience[index].startDate) }} </p>
+                                                <p class="table-p" v-if="!projectEditMode"> {{ formatDate(experience[index].startDate) }} </p>
                                                 <v-date-picker :max-date="new Date()" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].startDate">
                                                     <input  value="experience[index].startDate" />
                                                 </v-date-picker>
                                                 <p class="table-p">Zakończenie</p>
                                                 <div name="endDateDiv" :id="index">
-                                                <p v-if="!projectEditMode"> {{ formatDate(experience[index].endDate) }} </p>
+                                                <p class="table-p" v-if="!projectEditMode"> {{ formatDate(experience[index].endDate) }} </p>
                                                 <v-date-picker :max-date="new Date()" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="experience[index].endDate">
                                                     <input value="experience[index].endDate" />
                                                 </v-date-picker>
@@ -544,76 +546,9 @@ export default {
     text-align: center;
 }
 
-table {
-    width: 95%;
-    border-spacing: 0;
-}
-
-thead {
-    width: 6rem;
-    background-color: rgb(236, 236, 236);
-}
-
-thead td:first-child {
-    border-top-left-radius: .5rem;
-    border-bottom-left-radius: .5rem;
-}
-
-thead td:last-child {
-    border-top-right-radius: .5rem;
-    border-bottom-right-radius: .5rem;
-}
-
-thead,
-tbody {
-    /* border: 1px solid rgb(230, 230, 230); */
-    border-collapse: collapse;
-    /* border-radius: 2px; */
-}
-
-tbody tr:nth-of-type(even) {
-    background-color: rgb(236, 236, 236);
-    border-radius: 1rem;
-}
-
-tr:nth-of-type(even) td:first-child {
-    border-top-left-radius: .5rem;
-    border-bottom-left-radius: .5rem;
-}
-
-tr:nth-of-type(even) td:last-child {
-    border-top-right-radius: .5rem;
-    border-bottom-right-radius: .5rem;
-}
-
-thead td,
-tbody td {
-    /* border-bottom: 1px solid rgb(230, 230, 230); */
-    text-align: center;
-}
-
 .table-p {
     padding: 0;
     margin: 0;
-}
-
-tbody td {
-    /* border-right: 1px solid rgb(230, 230, 230); */
-}
-
-thead td:last-child,
-tbody td:last-child {
-    border-bottom: 0;
-}
-
-tbody td {
-    width: 12rem;
-    max-width: 12rem;
-}
-
-tbody,
-tbody td {
-    animation: slide-down 0.5s ease;
 }
 
 @keyframes slide-down {
@@ -627,62 +562,4 @@ tbody td {
     }
 }
 
-td textarea {
-    max-height: 100%;
-    max-width: 11rem;
-}
-
-@media (max-width: 82rem) {
-    table {
-        display: flex;
-        position: relative;
-        /* width: 19.5rem; */
-        /* max-width: 19.5rem; */
-        width: 90%;
-        overflow-x: hidden;
-    }
-    th,
-    tr,
-    td {
-        display: block;
-    }
-    thead {
-        display: block;
-        float: left;
-    }
-    thead tr {
-        display: block;
-    }
-    thead td {
-        height: 3rem;
-        text-align: center;
-        line-height: 1rem;
-        vertical-align: middle;
-    }
-    tbody {
-        display: flex;
-        overflow-x: auto;
-        white-space: nowrap;
-        min-width: 18rem;
-        /* max-width: 15rem; */
-    }
-    tbody td {
-        height: 3rem;
-    }
-    tbody tr {
-        display: inline-block;
-    }
-    thead td:nth-child(3) {
-        height: 9rem;
-    }
-    tbody td:nth-child(3) {
-        height: 9rem;
-    }
-    thead td:nth-child(5) {
-        height: 4rem;
-    }
-    .profile-table-td-module {
-        height: 4rem;
-    }
-}
 </style>
