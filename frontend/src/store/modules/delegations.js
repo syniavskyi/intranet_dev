@@ -59,7 +59,7 @@ const actions = {
             arrivalDate: null,
             arrivalHour:null,
             distance: null,
-            cost: 0
+            cost: null
         })
         commit('SET_DELEG_COST_LIST', delegationCostsList)
     },
