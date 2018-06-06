@@ -66,7 +66,7 @@ const mutations = {
     state.uploadFileError = isError
   },
   SET_EXP_LIST(state, list) {
-    state.expList = list
+    state.experienceList = list
   },
   SET_PROJECT_ERROR(state, isError) {
     state.showProjectError = isError

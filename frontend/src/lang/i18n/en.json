@@ -145,6 +145,7 @@
             "others": "Others",
             "amountPLN": "Amount in PLN",
             "totalAmount": "Total PLN"
-        }
+        },
+        "addModule": "Select module"   
     }
 }

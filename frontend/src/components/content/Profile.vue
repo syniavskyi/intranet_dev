@@ -276,6 +276,7 @@
                                                 </div>
                                                 <!-- <div id="addButtons"></div> -->
                                                 <select v-if="projectEditMode" class="profile-table-select profile-table-select-modules" @change="addModule" :id="index"> 
+                                                <option disabled selected value>{{ $t("table.addModule") }}:</option>
                                                 <option v-for="sapModule in modulesList" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.name }}</option>
                                             </select>
                                             </div>
@@ -333,7 +334,8 @@ export default {
             showEndInput: true,
             projectEditMode: false,
             invalidDates:false,
-            invalidDatePos: null
+            invalidDatePos: null,
+            beforeEditingProjects :null
             
         }
     },
@@ -366,9 +368,8 @@ export default {
             experience: "getExperienceList",
             showProjectError: 'getShowProjectError',
             ifModuleExist: 'getModuleExist',
-            errorProjectNo: 'getErrorProjectNo',
-            beforeEditingProjects: 'getBeforeEditingProjects'
-        })
+            errorProjectNo: 'getErrorProjectNo'
+       })
     },
     methods: {
         onEdit() {
@@ -429,23 +430,16 @@ export default {
         },
         phoneValidation(value) {
             const regex = new RegExp("^(?=.*[0-9])[- +()0-9]+$")
-            if (regex.test(value.target.value)) {
-                this.invalidPhone = false
-            } else {
-                this.invalidPhone = true
-            }
-            this.checkFormFields()
+            this.invalidPhone = (regex.test(value.target.value)) ? false : true
+             this.checkFormFields()
         },
         dateValidation(value) {
             const day = parseInt(value.slice(0, 2)),
                 month = parseInt(value.slice(3, 5))
 
-            if (day > 31 || month > 12) {
-                this.invalidDate = true
-                this.disableSaveBtn = true
-            } else {
-                this.invalidDate = false
-            }
+            this.invalidDate = (day > 31 || month > 12)? true : false
+            this.disableSaveBtn = (day > 31 || month > 12) ? true : false
+
             this.checkFormFields()
         },
         checkFormFields() {
@@ -453,11 +447,7 @@ export default {
                 this.disableSaveBtn = true
             } else {
                 this.checkIfDataChanged()
-                if (this.hasDataChanged === true) {
-                    this.disableSaveBtn = false
-                } else {
-                    this.disableSaveBtn = true
-                }
+                 this.disableSaveBtn = (this.hasDataChanged === true) ? false : true
             }
         },
         addRow() {
@@ -502,9 +492,8 @@ export default {
         },
         editProjects() {
             this.projectEditMode = true
-            const beforeEditingCache = this.experience
-           this.$store.commit('SET_BEFORE_EDITING_PROJECTS', beforeEditingCache)
-        },
+            this.beforeEditingProjects = this.experience.slice()
+         },
         formatDate(date) {
             if (date !== null && date !== undefined) {
                 return moment(date).format('DD.MM.YYYY')
@@ -520,13 +509,9 @@ export default {
             if (endDate && startDate && isCurrent === false) {
                 const formatStartDate = moment(startDate).format('YYYY-MM-DD'),
                     formatEndDate = moment(endDate).format('YYYY-MM-DD')
-            if (formatStartDate > formatEndDate) {
-                this.invalidDates = true
-                this.invalidDatePos = index + 1 
-            } else {
-                this.invalidDates = false
-                this.invalidDatePos = null
-            }
+
+                this.invalidDates =  (formatStartDate > formatEndDate) ? true : false
+                this.invalidDatePos = (formatStartDate > formatEndDate) ? index + 1 : null
             }
         }
     }
