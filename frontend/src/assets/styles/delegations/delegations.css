@@ -307,7 +307,8 @@ body {
     height: 100%;
 }
 
-.del-thead-1 {
+.del-thead-1,
+.del-thead-2 {
     color: grey;
     background: #e5e5e5;
     display: none;
