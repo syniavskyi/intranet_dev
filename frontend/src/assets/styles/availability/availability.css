@@ -211,17 +211,19 @@ body {
 }
 .ava-input-range {
     border: 0;
+    height: 2.1rem;
 }
 .ava-input-range input {
     border: 1px solid lightgrey;
     text-align: center;
     border-radius: 4px;
+    height: 1.9rem;
 }
 
 .ava-input-range,
 .ava-input-range input {
     font-size: 1rem;
-    height: 1.9rem;
+    /* height: 1.9rem; */
 }
 
 .ava-div-buttons {

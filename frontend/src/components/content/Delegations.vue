@@ -35,6 +35,8 @@
                                     <input value="newDelegation.dates" />
                                 </v-date-picker>
                             </div>
+                        </div>
+                        <div class="delegations-inputs-section">
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.hoursInDelegation") }}: </label>
                                 <p class="delegations-input">{{ newDelegation.hours }}</p>
@@ -112,9 +114,11 @@
                                     <div class="del-table-items">
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
-                                            <div class="del-tbody-item"> <select @change="checkDelegationTable" v-model="defaultCostsData.firstLeavePlace">
-                                            <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
-                                        </select></div>
+                                            <div class="del-tbody-item"> 
+                                                <select class="delegations-tselect" @change="checkDelegationTable" v-model="defaultCostsData.firstLeavePlace">
+                                                    <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.date") }}</div>
@@ -123,7 +127,7 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
                                             <div class="del-tbody-item">
-                                                <input type="time" v-model="defaultCostsData.firstLeaveHour" @change="countAllowance" /> </div>
+                                                <input class="delegations-tinput-time" type="time" v-model="defaultCostsData.firstLeaveHour" @change="countAllowance" /> </div>
                                         </div>
                                     </div>
                                 </div>
@@ -141,18 +145,18 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
                                             <div class="del-tbody-item">
-                                                <input type="time" v-model="defaultCostsData.firstArrivalHour" @change="countAllowance" />
+                                                <input class="delegations-tinput-time" type="time" v-model="defaultCostsData.firstArrivalHour" @change="countAllowance" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="del-tbody-cols">
                                     <div class="del-tbody-title">{{ $t("table.delegations.distance") }}</div>
-                                    <div class="del-tbody-col"> <input type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.firstDistance" /> </div>
+                                    <div class="del-tbody-col"> <input class="delegations-tinput" type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.firstDistance" /> </div>
                                 </div>
                                 <div class="del-tbody-cols">
                                     <div class="del-tbody-title">{{ $t("table.delegations.cost") }}</div>
-                                    <div class="del-tbody-col"><input type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.firstCost" /></div>
+                                    <div class="del-tbody-col"><input class="delegations-tinput" type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.firstCost" /></div>
                                 </div>
                                 <div class="del-tbody-cols">
                                     <div class="del-tbody-title">przyciski</div>
@@ -176,7 +180,7 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
                                             <div class="del-tbody-item">
-                                                <input type="time" v-model="defaultCostsData.secondLeaveHour" @change="countAllowance" /> </div>
+                                                <input class="delegations-tinput-time" type="time" v-model="defaultCostsData.secondLeaveHour" @change="countAllowance" /> </div>
                                         </div>
                                     </div>
                                 </div>
@@ -185,9 +189,11 @@
                                     <div class="del-table-items">
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
-                                            <div class="del-tbody-item"> <select @change="checkDelegationTable" v-model="defaultCostsData.secondArrivalPlace">
-                                                <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
-                                            </select></div>
+                                            <div class="del-tbody-item"> 
+                                                <select class="delegations-tselect" @change="checkDelegationTable" v-model="defaultCostsData.secondArrivalPlace">
+                                                    <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.date") }}</div>
@@ -196,18 +202,22 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
                                             <div class="del-tbody-item">
-                                                <input type="time" v-model="defaultCostsData.secondArrivalHour" @change="countAllowance" />
+                                                <input class="delegations-tinput-time" type="time" v-model="defaultCostsData.secondArrivalHour" @change="countAllowance" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="del-tbody-cols">
                                     <div class="del-tbody-title">{{ $t("table.delegations.distance") }}</div>
-                                    <div class="del-tbody-col"> <input type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.secondDistance" /> </div>
+                                    <div class="del-tbody-col"> 
+                                        <input class="delegations-tinput" type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.secondDistance" /> 
+                                    </div>
                                 </div>
                                 <div class="del-tbody-cols">
                                     <div class="del-tbody-title">{{ $t("table.delegations.cost") }}</div>
-                                    <div class="del-tbody-col"><input type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.secondCost" /></div>
+                                    <div class="del-tbody-col">
+                                        <input class="delegations-tinput" type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.secondCost" />
+                                    </div>
                                 </div>
                                 <div class="del-tbody-cols">
                                     <div class="del-tbody-title">przyciski</div>
@@ -223,12 +233,14 @@
                                     <div class="del-table-items">
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
-                                            <div class="del-tbody-item"> <input @input="checkDelegationTable" v-model="customCosts[index].leavePlace" /></div>
+                                            <div class="del-tbody-item">
+                                                <input class="delegations-tinput-w" @input="checkDelegationTable" v-model="customCosts[index].leavePlace" />
+                                            </div>
                                         </div>
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.date") }}</div>
                                             <div class="del-tbody-item">
-                                                <v-date-picker @input="checkDelegationTable" mode="single" v-model="customCosts[index].leaveDate">
+                                                <v-date-picker class="delegations-tinput-date" @input="checkDelegationTable" mode="single" v-model="customCosts[index].leaveDate">
                                                     <input value="customCosts[index].leaveDate" />
                                                 </v-date-picker>
                                             </div>
@@ -236,7 +248,7 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
                                             <div class="del-tbody-item">
-                                                <input type="time" v-model="customCosts[index].leaveHour" @change="checkDelegationTable" /> </div>
+                                                <input class="delegations-tinput-time" type="time" v-model="customCosts[index].leaveHour" @change="checkDelegationTable" /> </div>
                                         </div>
                                     </div>
                                 </div>
@@ -245,12 +257,14 @@
                                     <div class="del-table-items">
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
-                                            <div class="del-tbody-item"> <input @input="checkDelegationTable" v-model="customCosts[index].arrivalPlace" /></div>
+                                            <div class="del-tbody-item"> 
+                                                <input class="delegations-tinput-w" @input="checkDelegationTable" v-model="customCosts[index].arrivalPlace"/>  
+                                            </div>
                                         </div>
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.date") }}</div>
                                             <div class="del-tbody-item">
-                                                <v-date-picker @input="checkDelegationTable" mode="single" v-model="customCosts[index].arrivalDate">
+                                                <v-date-picker class="delegations-tinput-date" @input="checkDelegationTable" mode="single" v-model="customCosts[index].arrivalDate">
                                                     <input value="customCosts[index].arrivalDate" />
                                                 </v-date-picker>
                                             </div>
@@ -258,18 +272,22 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
                                             <div class="del-tbody-item">
-                                                <input type="time" v-model="customCosts[index].arrivalHour" @change="checkDelegationTable" />
+                                                <input class="delegations-tinput-time" type="time" v-model="customCosts[index].arrivalHour" @change="checkDelegationTable" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="del-tbody-cols">
                                     <div class="del-tbody-title">{{ $t("table.delegations.distance") }}</div>
-                                    <div class="del-tbody-col"> <input type="number" @input="checkDelegationTable" min="0" v-model="customCosts[index].distance" /> </div>
+                                    <div class="del-tbody-col"> 
+                                        <input class="delegations-tinput" type="number" @input="checkDelegationTable" min="0" v-model="customCosts[index].distance" /> 
+                                    </div>
                                 </div>
                                 <div class="del-tbody-cols">
                                     <div class="del-tbody-title">{{ $t("table.delegations.cost") }}</div>
-                                    <div class="del-tbody-col"><input type="number" @input="checkDelegationTable" min="0" v-model="customCosts[index].cost" /></div>
+                                    <div class="del-tbody-col">
+                                        <input class="delegations-tinput" type="number" @input="checkDelegationTable" min="0" v-model="customCosts[index].cost" />
+                                    </div>
                                 </div>
                                 <div class="del-tbody-cols">
                                     <div class="del-tbody-title">przyciski</div>
@@ -314,7 +332,7 @@
                                     <div class="del-tbody2-item">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.docDate") }}</div>
                                         <div class="del-tbody2-item-txt">
-                                            <v-date-picker mode="single" @input="checkCostTable" v-model="costTableData[index].docDate">
+                                            <v-date-picker class="delegations-tinput-date" mode="single" @input="checkCostTable" v-model="costTableData[index].docDate">
                                                 <input value="costTableData[index].docDate" />
                                             </v-date-picker>
                                         </div>
@@ -322,44 +340,55 @@
                                     </div>
                                     <div class="del-tbody2-item">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.company") }}</div>
-                                        <div class="del-tbody2-item-txt"><input @input="checkCostTable" v-model="costTableData[index].company" /></div>
+                                        <div class="del-tbody2-item-txt">
+                                            <input class="delegations-tinput" @input="checkCostTable" v-model="costTableData[index].company" />
+                                        </div>
                                         <div class="del-tfoot2"></div>
                                     </div>
                                     <div class="del-tbody2-item">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.docNo") }}</div>
-                                        <div class="del-tbody2-item-txt"><input v-model="costTableData[index].docNo" /> </div>
+                                        <div class="del-tbody2-item-txt">
+                                            <input class="delegations-tinput" v-model="costTableData[index].docNo" /> 
+                                        </div>
                                         <div class="del-tfoot2">{{ $t("table.delegations.amountPLN") }}</div>
                                     </div>
                                     <div class="del-tbody2-item">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.return") }}?</div>
-                                        <div class="del-tbody2-item-txt"><input type="checkbox" @change="updateTotalCosts" v-model="costTableData[index].payback" /></div>
+                                        <div class="del-tbody2-item-txt">
+                                            <input type="checkbox" @change="updateTotalCosts" v-model="costTableData[index].payback" />
+                                        </div>
                                         <div class="del-tfoot2">{{ totalCosts.payback }}</div>
                                     </div>
                                     <div class="del-tbody2-item">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.currency") }}</div>
-                                        <div class="del-tbody2-item-txt"><select v-model="costTableData[index].currency" @change="updateTotalCosts">
-                                            <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
-                                        </select></div>
+                                        <div class="del-tbody2-item-txt">
+                                            <select class="delegations-tselect-s" v-model="costTableData[index].currency" @change="updateTotalCosts">
+                                                <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
+                                            </select>
+                                        </div>
                                         <div class="del-tfoot2">---</div>
                                     </div>
                                     <!-- acc -accomodation, trv - travel - oth - others -->
                                     <div class="del-tbody2-item">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.accomodation") }}</div>
-                                        <div class="del-tbody2-item-txt"><input type="radio" @change="updateTotalCosts" value="ACC" v-model="costTableData[index].costType" />
-                                            <input type="number" min="0" v-show="costTableData[index].costType === 'ACC'" @input="updateTotalCosts" v-model="costTableData[index].amount" /></div>
+                                        <div class="del-tbody2-item-txt">
+                                            <input class="delegations-tradio" type="radio" @change="updateTotalCosts" value="ACC" v-model="costTableData[index].costType" />
+                                            <input class="delegations-tinput" type="number" min="0" v-show="costTableData[index].costType === 'ACC'" @input="updateTotalCosts" v-model="costTableData[index].amount" /></div>
                                         <div class="del-tfoot2">{{ totalCosts.accomodation }}</div>
                                     </div>
                                     <div class="del-tbody2-item">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.travel") }}</div>
-                                        <div class="del-tbody2-item-txt"><input type="radio" @change="updateTotalCosts" value="TRV" v-model="costTableData[index].costType" />
-                                            <input type="number" min="0" v-show="costTableData[index].costType === 'TRV'" @input="updateTotalCosts" v-model="costTableData[index].amount" /></div>
+                                        <div class="del-tbody2-item-txt">
+                                            <input class="delegations-tradio" type="radio" @change="updateTotalCosts" value="TRV" v-model="costTableData[index].costType" />
+                                            <input class="delegations-tinput" type="number" min="0" v-show="costTableData[index].costType === 'TRV'" @input="updateTotalCosts" v-model="costTableData[index].amount" /></div>
                                         <div class="del-tfoot2">{{ totalCosts.travel }}</div>
                                     </div>
                                     <div class="del-tbody2-item">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.others") }}</div>
 
-                                        <div class="del-tbody2-item-txt"><input type="radio" @change="updateTotalCosts" value="OTH" v-model="costTableData[index].costType" />
-                                            <input type="number" min="0" v-show="costTableData[index].costType === 'OTH'" @input="updateTotalCosts" v-model="costTableData[index].amount" /></div>
+                                        <div class="del-tbody2-item-txt">
+                                            <input class="delegations-tradio" type="radio" @change="updateTotalCosts" value="OTH" v-model="costTableData[index].costType" />
+                                            <input class="delegations-tinput" type="number" min="0" v-show="costTableData[index].costType === 'OTH'" @input="updateTotalCosts" v-model="costTableData[index].amount" /></div>
                                         <div class="del-tfoot2">{{ totalCosts.others }}</div>
                                     </div>
                                     <div class="del-tbody2-item">
