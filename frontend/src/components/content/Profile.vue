@@ -2,6 +2,7 @@
 <div class="plane-profile">
     <div class="profile-nav-and-content">
         <app-menu></app-menu>
+        <leave-page-dialog v-if="showLeavePageDialog" @action-selected="leavePage" @close="showLeavePageDialog = false"></leave-page-dialog>
         <div class="profile-content">
             <div class="profile-header">
                 <div class="profile-header-title-and-menu">
@@ -318,6 +319,7 @@ import {
     mapGetters, mapActions
 } from 'vuex'
 import Menu from '../Menu.vue'
+import LeavePageDialog from '../dialogs/LeavePageDialog'
 export default {
     data() {
         return {
@@ -334,8 +336,8 @@ export default {
             projectEditMode: false,
             invalidDates: false,
             invalidDatePos: null,
-            _beforeEditingProjects: null
-
+            _beforeEditingProjects: null,
+            showLeavePageDialog: false
         }
     },
     validations: {
@@ -348,7 +350,8 @@ export default {
     },
     components: {
         MaskedInput,
-        'app-menu': Menu
+        'app-menu': Menu,
+        'leave-page-dialog': LeavePageDialog
     },
     beforeCreate() {
         if (this.$store.getters.isDataLoaded === false) {
@@ -367,7 +370,7 @@ export default {
             experience: "getExperienceList",
             showProjectError: 'getShowProjectError',
             ifModuleExist: 'getModuleExist',
-            errorProjectNo: 'getErrorProjectNo'
+            errorProjectNo: 'getErrorProjectNo'            
         })
     },
     methods: {
@@ -512,6 +515,14 @@ export default {
 
                 this.invalidDates = (formatStartDate > formatEndDate) ? true : false
                 this.invalidDatePos = (formatStartDate > formatEndDate) ? index + 1 : null
+            }
+        },
+        leavePage() {
+            if (this._beforeEditingProjects){
+                this.$store.commit('SET_EXP_LIST', this._beforeEditingProjects)
+            } 
+            if (this._beforeEditingCache) {
+                Object.assign(this.userData, this._beforeEditingCache)
             }
         }
     }
