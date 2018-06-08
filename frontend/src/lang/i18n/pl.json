@@ -93,7 +93,8 @@
         "selectEmployee": "Wybierz Pracownika",
         "addProject": "Dodaj projekt",
         "accomodationCosts": "Koszty noclegu",
-        "otherCosts": "Pozostałe koszty"
+        "otherCosts": "Pozostałe koszty",
+        "travelCosts": "Koszty podróży"
         
     },
     "message": {

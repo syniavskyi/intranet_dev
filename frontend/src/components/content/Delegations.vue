@@ -90,8 +90,6 @@
                                         <div class="del-table-item">{{ $t("table.delegations.time") }}</div>
                                     </div>
                                 </div>
-                                <div class="del-thead-col">{{ $t("table.delegations.distance") }}</div>
-                                <div class="del-thead-col">{{ $t("table.delegations.cost") }}</div>
                                 <div class="del-table-btns">przyciski</div>
                             </div>
                             <!-- first default row -->
@@ -137,14 +135,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="del-tbody-cols">
-                                    <div class="del-tbody-title">{{ $t("table.delegations.distance") }}</div>
-                                    <div class="del-tbody-col"> <input class="delegations-tinput" type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.firstDistance" /> </div>
-                                </div>
-                                <div class="del-tbody-cols">
-                                    <div class="del-tbody-title">{{ $t("table.delegations.cost") }}</div>
-                                    <div class="del-tbody-col"><input class="delegations-tinput" type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.firstCost" /></div>
-                                </div>
+
                                 <div class="del-tbody-cols">
                                     <div class="del-tbody-title">przyciski</div>
                                     <div class="del-tbody-col"></div>
@@ -194,18 +185,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="del-tbody-cols">
-                                    <div class="del-tbody-title">{{ $t("table.delegations.distance") }}</div>
-                                    <div class="del-tbody-col"> 
-                                        <input class="delegations-tinput" type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.secondDistance" /> 
-                                    </div>
-                                </div>
-                                <div class="del-tbody-cols">
-                                    <div class="del-tbody-title">{{ $t("table.delegations.cost") }}</div>
-                                    <div class="del-tbody-col">
-                                        <input class="delegations-tinput" type="number" @input="checkDelegationTable" min="0" v-model="defaultCostsData.secondCost" />
-                                    </div>
-                                </div>
+
                                 <div class="del-tbody-cols">
                                     <div class="del-tbody-title">przyciski</div>
                                     <div class="del-tbody-col"></div>
@@ -265,18 +245,6 @@
                                     </div>
                                 </div>
                                 <div class="del-tbody-cols">
-                                    <div class="del-tbody-title">{{ $t("table.delegations.distance") }}</div>
-                                    <div class="del-tbody-col"> 
-                                        <input class="delegations-tinput" type="number" @input="checkDelegationTable" min="0" v-model="customCosts[index].distance" /> 
-                                    </div>
-                                </div>
-                                <div class="del-tbody-cols">
-                                    <div class="del-tbody-title">{{ $t("table.delegations.cost") }}</div>
-                                    <div class="del-tbody-col">
-                                        <input class="delegations-tinput" type="number" @input="checkDelegationTable" min="0" v-model="customCosts[index].cost" />
-                                    </div>
-                                </div>
-                                <div class="del-tbody-cols">
                                     <div class="del-tbody-title">przyciski</div>
                                     <div class="del-tbody-col"><button @click="removeRow(index)"> X </button></div>
                                 </div>
@@ -289,10 +257,11 @@
                     <p v-if="invalidDate"> {{ $t("message.dateValidation") }} </p>
                 </div>
 
-
+                <travel-costs-table></travel-costs-table>
                 <accomodation-costs-table></accomodation-costs-table>
                 <other-costs-table></other-costs-table>
-                    <button :disabled="disableSaveBtn" @click="save"> {{ $t("button.save") }} </button>
+                
+                <button :disabled="disableSaveBtn" @click="save"> {{ $t("button.save") }} </button>
              
             </div>
 
@@ -319,11 +288,8 @@ import {
 import Menu from '../Menu.vue'
 import AccomodationCosts from '../tables/AccomodationCosts'
 import OtherCosts from '../tables/OtherCosts'
+import TravelCosts from '../tables/TravelCosts'
 export default {
-    //defaultCostData are two first lines in travel expences table. 
-    // customCosts are lines that can be added by user
-    //costTableData is table for Costs
-    // full expences are default costs connected with custom costs for saving and validation 
     data() {
         return {
             newDelegation: {
@@ -379,7 +345,8 @@ export default {
         MaskedInput,
         'app-menu': Menu,
         'accomodation-costs-table': AccomodationCosts,
-        'other-costs-table': OtherCosts
+        'other-costs-table': OtherCosts,
+        'travel-costs-table': TravelCosts
     },
     beforeCreate() {
         if (this.$store.getters.isDataLoaded === false) {
@@ -417,11 +384,7 @@ export default {
        
         checkSelectVal() {
             const transport = this.newDelegation.transport
-            if (transport === "companyCar" || transport === "privateCar") {
-                this.showLicensePlateNo = true
-            } else {
-                this.showLicensePlateNo = false
-            }
+            this.showLicensePlateNo = (transport === "companyCar" || transport === "privateCar") ? true : false
             this.checkNewDelegation()
         },
         addRow() {
@@ -433,10 +396,7 @@ export default {
             this.$store.dispatch('removeDelegationRow', index)
             this.checkDelegationTable()
         },
-        
-        
         prepareCostData() {
-            // const costs = this.customCosts.slice(0)
             const costs = []
             for (let i = 0; i < this.customCosts.length; i++) {
                 costs[i] = Object.assign({}, this.customCosts[i])
@@ -447,9 +407,7 @@ export default {
                 leaveHour: this.defaultCostsData.firstLeaveHour,
                 arrivalPlace: this.newDelegation.destination,
                 arrivalDate: this.newDelegation.dates.start,
-                arrivalHour: this.defaultCostsData.firstArrivalHour,
-                distance: this.defaultCostsData.firstDistance,
-                cost: this.defaultCostsData.firstCost
+                arrivalHour: this.defaultCostsData.firstArrivalHour
             }
             const secondDefaultCost = {
                 leavePlace: this.newDelegation.destination,
@@ -457,9 +415,7 @@ export default {
                 leaveHour: this.defaultCostsData.secondLeaveHour,
                 arrivalPlace: this.defaultCostsData.secondArrivalPlace,
                 arrivalDate: this.newDelegation.dates.end,
-                arrivalHour: this.defaultCostsData.secondArrivalHour,
-                distance: this.defaultCostsData.secondDistance,
-                cost: this.defaultCostsData.secondCost
+                arrivalHour: this.defaultCostsData.secondArrivalHour
             }
             costs.push(firstDefaultCost)
             costs.push(secondDefaultCost)

@@ -14,6 +14,7 @@ import starterpage from './modules/starterpage'
 import delegations from './modules/delegations'
 import accomodationCosts from './modules/tables/accomodationCosts'
 import otherCosts from './modules/tables/otherCosts'
+import travelCosts from './modules/tables/travelCosts'
 
 import settings from './modules/settings'
 
@@ -36,6 +37,7 @@ export default new Vuex.Store({
         starterpage,
         delegations,
         accomodationCosts,
-        otherCosts
+        otherCosts,
+        travelCosts
     }
 });

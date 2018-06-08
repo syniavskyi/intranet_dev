@@ -92,7 +92,8 @@
         "costs": "Costs",
         "selectEmployee": "Select employee" ,
         "addProject": "Add project",
-        "otherCosts": "Other costs"     
+        "otherCosts": "Other costs",
+        "travelCosts": "Travel costs"     
     },
     "message": {
         "loginError": "Password or username are invalid.",
