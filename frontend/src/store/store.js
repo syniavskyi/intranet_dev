@@ -12,6 +12,9 @@ import availability from './modules/availability'
 import dataloading from './modules/dataloading'
 import starterpage from './modules/starterpage'
 import delegations from './modules/delegations'
+import accomodationCosts from './modules/tables/accomodationCosts'
+import otherCosts from './modules/tables/otherCosts'
+import travelCosts from './modules/tables/travelCosts'
 
 import settings from './modules/settings'
 
@@ -32,6 +35,9 @@ export default new Vuex.Store({
         dataloading,
         settings,
         starterpage,
-        delegations
+        delegations,
+        accomodationCosts,
+        otherCosts,
+        travelCosts
     }
 });

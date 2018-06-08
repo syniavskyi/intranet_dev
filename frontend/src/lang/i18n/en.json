@@ -60,7 +60,12 @@
         "dates": "Dates",
         "hoursInDelegation": "Hours in delegation",
         "dailyAllowance": "Daily allowance",
-        "totalAllowance": "Allowance for delegation"
+        "totalAllowance": "Allowance for delegation",
+        "engineCapacity": "Engine capacity",
+        "capacityLess": "Less than 900 cm",
+        "capacityMore": "More than 900 cm",
+        "conveyance": "Conveyance",
+        "accomodationCosts": "Accomodation costs"
 
     },
     "header": {
@@ -86,7 +91,9 @@
         "travelExp": "Travel expences",
         "costs": "Costs",
         "selectEmployee": "Select employee" ,
-        "addProject": "Add project"     
+        "addProject": "Add project",
+        "otherCosts": "Other costs",
+        "travelCosts": "Travel costs"     
     },
     "message": {
         "loginError": "Password or username are invalid.",
@@ -115,7 +122,9 @@
             "private": "Private car",
             "company": "Company car"
         },
-        "others": "Inne"
+        "others": "Others",
+        "motocycle": "Motocycle",
+        "moped": "Moped"
     },
     "calendar": {
         "noProjectAssigned": "No project assigned"
@@ -142,6 +151,7 @@
             "currency": "Currency",
             "accomodation": "Accomodation",
             "travel": "Travel",
+            "amount": "Amount",
             "others": "Others",
             "amountPLN": "Amount in PLN",
             "totalAmount": "Total PLN"
