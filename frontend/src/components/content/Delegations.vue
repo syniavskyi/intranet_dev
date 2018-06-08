@@ -59,20 +59,7 @@
                                 <label class="delegations-label">{{ $t("label.target") }}: </label>
                                 <input class="delegations-input" v-model="newDelegation.purpose" @input="checkNewDelegation" />
                             </div>
-                            <div class="delegations-div-input">
-                                <label class="delegations-label">{{ $t("label.transport") }}: </label>
-                                <select class="delegations-select" v-model="newDelegation.transport" @change="checkSelectVal">
-                                        <option value="LOT">LOT</option>
-                                        <option value="PKP">PKP</option>
-                                        <option value="companyCar">{{ $t("select.car.company") }}</option>
-                                        <option value="privateCar">{{ $t("select.car.private") }}</option>
-                                        <option value="other">{{ $t("select.others") }}</option>
-                                    </select>
-                            </div>
-                            <div class="delegations-div-input" v-if="showLicensePlateNo">
-                                <label class="delegations-label">{{ $t("label.registrationNo") }} </label>
-                                <input class="delegations-input" v-model="newDelegation.licensePlateNo" @input="checkNewDelegation" />
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -303,132 +290,10 @@
                 </div>
 
 
-
-                <div class="delegations-tile">
-                    <div class="delegations-tile-header">
-                        <div class="delegations-tile-title">
-                            {{ $t("header.costs") }}
-                        </div>
-                        <div class="delegations-tile-underscore"></div>
-                    </div>
-                    <div class="delegations-tile-content">
-
-                        <button @click="addCostRow"> + </button>
-                        <div class="delegations-table-wrapper">
-                            <div class="delegations-table-2">
-                                <div class="del-thead-2">
-                                    <div class="del-thead-item">{{ $t("table.delegations.docDate") }}</div>
-                                    <div class="del-thead-item">{{ $t("table.delegations.company") }}</div>
-                                    <div class="del-thead-item">{{ $t("table.delegations.docNo") }}</div>
-                                    <div class="del-thead-item">{{ $t("table.delegations.return") }}?</div>
-                                    <div class="del-thead-item">{{ $t("table.delegations.currency") }}</div>
-                                    <div class="del-thead-item">{{ $t("table.delegations.accomodation") }}</div>
-                                    <div class="del-thead-item">{{ $t("table.delegations.travel") }}</div>
-                                    <div class="del-thead-item">{{ $t("table.delegations.others") }}</div>
-                                    <div class="del-thead-item">{{ $t("table.delegations.amountPLN") }}</div>
-                                    <div class="del-thead-item">przyciski</div>
-                                </div>
-                                <div class="del-tbody-2" v-for="(cost, index) in costTableData" :key="index">
-                                    <div class="del-tbody2-item">
-                                        <div class="del-tbody2-item-title">{{ $t("table.delegations.docDate") }}</div>
-                                        <div class="del-tbody2-item-txt">
-                                            <v-date-picker class="delegations-tinput-date" mode="single" @input="checkCostTable" v-model="costTableData[index].docDate">
-                                                <input value="costTableData[index].docDate" />
-                                            </v-date-picker>
-                                        </div>
-                                        <div class="del-tfoot2"></div>
-                                    </div>
-                                    <div class="del-tbody2-item">
-                                        <div class="del-tbody2-item-title">{{ $t("table.delegations.company") }}</div>
-                                        <div class="del-tbody2-item-txt">
-                                            <input class="delegations-tinput" @input="checkCostTable" v-model="costTableData[index].company" />
-                                        </div>
-                                        <div class="del-tfoot2"></div>
-                                    </div>
-                                    <div class="del-tbody2-item">
-                                        <div class="del-tbody2-item-title">{{ $t("table.delegations.docNo") }}</div>
-                                        <div class="del-tbody2-item-txt">
-                                            <input class="delegations-tinput" v-model="costTableData[index].docNo" /> 
-                                        </div>
-                                        <div class="del-tfoot2">{{ $t("table.delegations.amountPLN") }}</div>
-                                    </div>
-                                    <div class="del-tbody2-item">
-                                        <div class="del-tbody2-item-title">{{ $t("table.delegations.return") }}?</div>
-                                        <div class="del-tbody2-item-txt">
-                                            <input type="checkbox" @change="updateTotalCosts" v-model="costTableData[index].payback" />
-                                        </div>
-                                        <div class="del-tfoot2">{{ totalCosts.payback }}</div>
-                                    </div>
-                                    <div class="del-tbody2-item">
-                                        <div class="del-tbody2-item-title">{{ $t("table.delegations.currency") }}</div>
-                                        <div class="del-tbody2-item-txt">
-                                            <select class="delegations-tselect-s" v-model="costTableData[index].currency" @change="updateTotalCosts">
-                                                <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
-                                            </select>
-                                        </div>
-                                        <div class="del-tfoot2">---</div>
-                                    </div>
-                                    <!-- acc -accomodation, trv - travel - oth - others -->
-                                    <div class="del-tbody2-item">
-                                        <div class="del-tbody2-item-title">{{ $t("table.delegations.accomodation") }}</div>
-                                        <div class="del-tbody2-item-txt">
-                                            <input class="delegations-tradio" type="radio" @change="updateTotalCosts" value="ACC" v-model="costTableData[index].costType" />
-                                            <input class="delegations-tinput" type="number" min="0" v-show="costTableData[index].costType === 'ACC'" @input="updateTotalCosts" v-model="costTableData[index].amount" /></div>
-                                        <div class="del-tfoot2">{{ totalCosts.accomodation }}</div>
-                                    </div>
-                                    <div class="del-tbody2-item">
-                                        <div class="del-tbody2-item-title">{{ $t("table.delegations.travel") }}</div>
-                                        <div class="del-tbody2-item-txt">
-                                            <input class="delegations-tradio" type="radio" @change="updateTotalCosts" value="TRV" v-model="costTableData[index].costType" />
-                                            <input class="delegations-tinput" type="number" min="0" v-show="costTableData[index].costType === 'TRV'" @input="updateTotalCosts" v-model="costTableData[index].amount" /></div>
-                                        <div class="del-tfoot2">{{ totalCosts.travel }}</div>
-                                    </div>
-                                    <div class="del-tbody2-item">
-                                        <div class="del-tbody2-item-title">{{ $t("table.delegations.others") }}</div>
-
-                                        <div class="del-tbody2-item-txt">
-                                            <input class="delegations-tradio" type="radio" @change="updateTotalCosts" value="OTH" v-model="costTableData[index].costType" />
-                                            <input class="delegations-tinput" type="number" min="0" v-show="costTableData[index].costType === 'OTH'" @input="updateTotalCosts" v-model="costTableData[index].amount" /></div>
-                                        <div class="del-tfoot2">{{ totalCosts.others }}</div>
-                                    </div>
-                                    <div class="del-tbody2-item">
-                                        <div class="del-tbody2-item-title">{{ $t("table.delegations.amountPLN") }}</div>
-                                        <div class="del-tbody2-item-txt">{{costTableData[index].totalAmount}}</div>
-                                        <div class="del-tfoot2">
-                                            <p>{{ totalCosts.amount }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="del-tbody2-item">
-                                        <div class="del-tbody2-item-title">Noclegi</div>
-                                        <div class="del-tbody2-item-txt"><button @click="removeCostRow(index)"> X </button></div>
-                                        <div class="del-tfoot2"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="delegations-table-2 del-table-footer">
-                                <div class="del-tbody-2">
-                                    <div class="del-tbody2-item-w"></div>
-                                    <div class="del-tbody2-item">{{ $t("table.delegations.amountPLN") }}</div>
-                                    <div class="del-tbody2-item">{{ totalCosts.payback }}</div>
-                                    <div class="del-tbody2-item">---</div>
-                                    <div class="del-tbody2-item">{{ totalCosts.accomodation }}</div>
-                                    <div class="del-tbody2-item">{{ totalCosts.travel }}</div>
-                                    <div class="del-tbody2-item">{{ totalCosts.others }}</div>
-                                    <div class="del-tbody2-item">{{ totalCosts.amount }}</div>
-                                    <div class="del-tbody2-item"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <accomodation-costs-table></accomodation-costs-table>
+                <other-costs-table></other-costs-table>
                     <button :disabled="disableSaveBtn" @click="save"> {{ $t("button.save") }} </button>
-                    <!--  -->
-                    <!-- <table> 
-                                <tr>
-                                    <td colspan="2"> </td>
-                                    <td> Razem PLN </td>
-                                </tr>
-                            </table> -->
-                </div>
+             
             </div>
 
 
@@ -452,6 +317,8 @@ import {
     required
 } from 'vuelidate/lib/validators'
 import Menu from '../Menu.vue'
+import AccomodationCosts from '../tables/AccomodationCosts'
+import OtherCosts from '../tables/OtherCosts'
 export default {
     //defaultCostData are two first lines in travel expences table. 
     // customCosts are lines that can be added by user
@@ -464,8 +331,6 @@ export default {
                 createDate: null,
                 destination: null,
                 purpose: null,
-                transport: null,
-                licensePlateNo: null,
                 hours: 0,
                 totalAllowance: 0
             },
@@ -477,24 +342,19 @@ export default {
             // disableSaveBtn: true,
             fullExpences: [],
             newDelegationValidated: false,
-            delegationTableValidated: false,
-            costTableValidated: false
+            delegationTableValidated: false
+            
         }
     },
-    // components: {
-    //     'app-menu': Menu
-    // },
     computed: {
         ...mapGetters({
             userData: 'userData',
             departmentList: 'depList',
-            currencyList: 'getCurrencyList',
-            costTableData: 'getCostTableData',
-            totalCosts: 'getTotalCosts',
-            customCosts: 'getDelegationCostsList'
+            customCosts: 'getDelegationCostsList',
+            accCostValidated: 'getAccCostValidated'
         }),
         disableSaveBtn() {
-            if (this.newDelegationValidated && this.delegationTableValidated && this.costTableValidated) {
+            if (this.newDelegationValidated && this.delegationTableValidated && this.accCostValidated) {
                 return false
             } else {
                 return true
@@ -517,7 +377,9 @@ export default {
     },
     components: {
         MaskedInput,
-        'app-menu': Menu
+        'app-menu': Menu,
+        'accomodation-costs-table': AccomodationCosts,
+        'other-costs-table': OtherCosts
     },
     beforeCreate() {
         if (this.$store.getters.isDataLoaded === false) {
@@ -528,16 +390,13 @@ export default {
         checkNewDelegation() {
             const data = this.newDelegation
             for (let key in data) {
-                if (key === "licensePlateNo" && !this.showLicensePlateNo) {
-                    this.newDelegationValidated = true
-                } else {
-                    if (!data[key]) {
+                if (!data[key]) {
                         this.newDelegationValidated = false
                         return
                     } else {
                         this.newDelegationValidated = true
-                    }
-                }
+                 }
+                
             }
         },
         checkDelegationTable() {
@@ -555,24 +414,7 @@ export default {
                 }
             }
         },
-        checkCostTable() {
-            const costs = this.costTableData
-            for (let i = 0; i < costs.length; i++) {
-                let arrayItem = costs[i]
-                for (let key in arrayItem) {
-                    if (key === "payback") {
-                        this.costTableValidated = true
-                    } else {
-                        if (!arrayItem[key] || arrayItem[key] === "") {
-                            this.costTableValidated = false
-                            return
-                        } else {
-                            this.costTableValidated = true
-                        }
-                    }
-                }
-            }
-        },
+       
         checkSelectVal() {
             const transport = this.newDelegation.transport
             if (transport === "companyCar" || transport === "privateCar") {
@@ -586,22 +428,13 @@ export default {
             this.$store.dispatch('addDelegationRow')
             this.delegationTableValidated = false
         },
-        addCostRow() {
-            this.$store.dispatch('addCostRow')
-            this.costTableValidated = false
-        },
+        
         removeRow(index) {
             this.$store.dispatch('removeDelegationRow', index)
             this.checkDelegationTable()
         },
-        removeCostRow(index) {
-            this.$store.dispatch('removeCostRow', index)
-            this.checkCostTable()
-        },
-        updateTotalCosts() {
-            this.$store.dispatch('updateTotalCosts')
-            this.checkCostTable()
-        },
+        
+        
         prepareCostData() {
             // const costs = this.customCosts.slice(0)
             const costs = []
@@ -674,7 +507,7 @@ export default {
         }
 
         
-    }
+ }   
 
 
 </script>

@@ -61,7 +61,11 @@
         "oneProject": "Projekt",
         "hoursInDelegation": "Liczba godzin w delegacji",
         "dailyAllowance": "Dzienna dieta służbowa",
-        "totalAllowance": "Łączna dieta za delegację"
+        "totalAllowance": "Łączna dieta za delegację",
+        "engineCapacity": "Pojemność silnika",
+        "capacityLess": "Mniej niż 900 cm",
+        "capacityMore": "Więcej niż 900 cm",
+        "conveyance": "Środek transportu"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",
@@ -87,7 +91,9 @@
         "travelExp": "Rachunek kosztów podróży",
         "costs": "Koszty",
         "selectEmployee": "Wybierz Pracownika",
-        "addProject": "Dodaj projekt"
+        "addProject": "Dodaj projekt",
+        "accomodationCosts": "Koszty noclegu",
+        "otherCosts": "Pozostałe koszty"
         
     },
     "message": {
@@ -117,7 +123,9 @@
             "private": "Samochód prywatny",
             "company": "Samochód firmowy"
         },
-        "others": "Inne"
+        "others": "Inne",
+        "motocycle": "Motocykl",
+        "moped": "Motorower"
     },
     "calendar": {
         "noProjectAssigned": "Brak przypisanego projektu"
@@ -145,6 +153,7 @@
             "accomodation": "Noclegi",
             "travel": "Przejazdy",
             "others": "Inne",
+            "amount": "Kwota",
             "amountPLN": "Kwota w PLN",
             "totalAmount": "Razem PLN"
         },
