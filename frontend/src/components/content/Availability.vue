@@ -7,6 +7,11 @@
                 <div class="avaiability-header-title-and-menu">
                     <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="availability-header-menu">
                     <p class="availability-header-title">{{ $t("header.availability") }}</p>
+                    <p v-if="saveSuccess">Pomyślnie zapisano dane.</p>
+                    <p v-if="editError">{{ $t("message.editProjectError") }}</p>
+                    <p v-if="removeError">{{ $t("message.removeProjectError") }}</p>
+                     <p v-if="addingError">{{ $t("message.addProjectError") }}</p>
+                    <p v-if="removeSuccess">Pomyślnie usunięto projekt.</p>
                 </div>
             </div>
             <div class="availability-tiles">
@@ -59,7 +64,7 @@
                                 <div class="ava-div-buttons">
                                     <button class="ava-button" @click="onCancelEdit">{{ $t("button.cancel") }}</button>
                                     <button class="ava-button" :disabled="disableSaveEditProject" @click="editProjectForUser">{{ $t("button.save") }}</button>
-                                     <p v-if="editError">{{ $t("message.editProjectError") }}</p>
+                                     
                                 </div>
                             </div>
                             <div class="ava-edit-2 ava-edit-project-to-edit" v-if="projectToEdit.id != null">
@@ -81,7 +86,7 @@
                                 </div>
                                 <div class="ava-div-buttons">
                                     <button class="ava-button" @click="removeUserProject">{{ $t("button.removeProject") }}</button>
-                                     <p v-if="removeError">{{ $t("message.removeProjectError") }}</p>
+                                     
                                 </div>
                             </div>
                         </div>
@@ -90,7 +95,7 @@
                 <div class="availability-tile ava-tile-2">
                     <div class="availability-tile-header">
                         <div class="ava-tile-header-title">
-                            <h2>{{ $t("header.addProject") }}t</h2>
+                            <h2>{{ $t("header.addProject") }}</h2>
                             <div class="availability-tile-underscore"></div>
                         </div>
                         <!-- <button class="ava-button ava-button-add" @click="showAddProjectDialog = true"> Dodaj projekt </button> -->
@@ -134,7 +139,7 @@
                                 <div class="ava-div-buttons">
                                     <button class="ava-button" @click="onCancelCreate">{{ $t("button.cancel") }}</button>
                                     <button class="ava-button" :disabled="disableSaveNewProject" @click="addNewProjectForUser">{{ $t("button.addProject") }}</button>
-                                    <p v-if="addingError">{{ $t("message.addProjectError") }}</p>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -198,7 +203,9 @@ export default {
             userProjectsToCheckList: 'userProjectsToCheckList',
             addingError: "getAddingError",
             removeError: "getRemoveError",
-            editError: "getEditError"
+            editError: "getEditError",
+            saveSuccess:"getSaveDataSucccess",
+            removeSuccess: "getRemoveSuccess"
 
         }),
         filteredUsers() {
