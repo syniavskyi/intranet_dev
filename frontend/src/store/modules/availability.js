@@ -12,6 +12,8 @@ const state = {
     userIdForNewProj: null,
     editError: false,
     addingError: false,
+    saveDataSuccess: false,
+    removeSuccess: false,
     removeError: false
 };
 
@@ -52,6 +54,12 @@ const mutations = {
     SET_REMOVE_ERROR(state, isError) {
         state.removeError = isError
     },
+    SET_SAVE_DATA_SUCCESS(state, isSuccess) {
+        state.saveDataSuccess = isSuccess
+    },
+    SET_REMOVE_SUCCESS(state, isSuccess) {
+        state.removeSuccess = isSuccess
+    }
 };
 
 const actions = {
@@ -118,9 +126,13 @@ const actions = {
             if (getters.getUserIdForNewProj === data.userId) {
                 dispatch('getUserProjectsToCheck', getters.getUserIdForNewProj)
             }
+            dispatch('hideAllMesssages')
             commit('SET_REMOVE_ERROR', false)
+            commit('SET_REMOVE_SUCCESS', true)
         }).catch(error => {
+            dispatch('hideAllMesssages')
             commit('SET_REMOVE_ERROR', true)
+            commit('SET_REMOVE_SUCCESS', false)
            console.log(error)
        });
     },
@@ -155,13 +167,16 @@ const actions = {
                 dispatch('setUserProjects', response.data)
             }
             dispatch('getUserProjectsToCheck', newProjectData.userId)
+            dispatch('hideAllMesssages')
             commit('SET_ADDING_ERROR', false)
+            commit('SET_SAVE_DATA_SUCCESS', true)
             commit('SET_DISABLE_SAVE_NEW', true)
-            commit('SET_ADDING_ERROR', false)
           })
           .catch(error => {
             console.log(error);
+            dispatch('hideAllMesssages')
             commit('SET_ADDING_ERROR', true)
+            commit('SET_SAVE_DATA_SUCCESS', false)
           });
     },
     editUserProject({commit, dispatch}, projectData) { 
@@ -175,7 +190,9 @@ const actions = {
             contractorId: projectData.contractorId
           })
           .then(response => {
+            dispatch('hideAllMesssages')
             commit('SET_EDIT_ERROR', false)
+            commit('SET_SAVE_DATA_SUCCESS', true)
             dispatch('getUserProjects', projectData.userId)
             if (getters.getUserIdForNewProj === projectData.userId) {
                 dispatch('getUserProjectsToCheck', projectData.userId)
@@ -183,7 +200,9 @@ const actions = {
           })
           .catch(error => {
             console.log(error);
+            dispatch('hideAllMesssages')
             commit('SET_EDIT_ERROR', true)
+            commit('SET_SAVE_DATA_SUCCESS', false)
           });
     },
     validateNewProject({commit}, project){ 
@@ -222,6 +241,13 @@ const actions = {
             }
         }
     },
+    hideAllMesssages({commit}){
+        commit('SET_EDIT_ERROR', false)
+        commit('SET_ADDING_ERROR', false)
+        commit('SET_REMOVE_ERROR', false)
+        commit('SET_SAVE_DATA_SUCCESS', false)
+        commit('SET_REMOVE_SUCCESS', false)
+    }
 
 };
 
@@ -261,6 +287,12 @@ const getters = {
     },
     getAddingError(state){
         return state.addingError
+    },
+    getSaveDataSucccess(state){
+        return state.saveDataSuccess
+    },
+    getRemoveSuccess(state){
+        return state.removeSuccess
     }
 
 
