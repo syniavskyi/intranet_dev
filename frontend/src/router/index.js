@@ -94,6 +94,7 @@ export default new Router({
         name: 'Delegations',
         component: Delegations
     }
-]
+],
+linkExactActiveClass: 'active-router-link'
 })
 

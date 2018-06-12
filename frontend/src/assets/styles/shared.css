@@ -185,7 +185,8 @@ li:hover p {
 } */
 
 .nav-item:hover,
-.nav-item:focus {
+.nav-item:focus,
+.active-router-link {
     cursor: pointer;
     background: #FFB05C;
     box-shadow: 0 16px 15px -14px gray;
