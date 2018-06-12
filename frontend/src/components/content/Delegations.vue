@@ -140,6 +140,14 @@
                                     <div class="del-tbody-title">przyciski</div>
                                     <div class="del-tbody-col"></div>
                                 </div>
+                                <div class="del-tbody-cols">
+                                    <div class="del-tbody-title">przyciski</div>
+                                    <div class="del-tbody-col"></div>
+                                </div>
+                                <div class="del-tbody-cols">
+                                    <div class="del-tbody-title">przyciski</div>
+                                    <div class="del-tbody-col"></div>
+                                </div>
                             </div>
                             <!-- second default row  -->
 
@@ -186,6 +194,14 @@
                                     </div>
                                 </div>
 
+                                <div class="del-tbody-cols">
+                                    <div class="del-tbody-title">przyciski</div>
+                                    <div class="del-tbody-col"></div>
+                                </div>
+                                <div class="del-tbody-cols">
+                                    <div class="del-tbody-title">przyciski</div>
+                                    <div class="del-tbody-col"></div>
+                                </div>
                                 <div class="del-tbody-cols">
                                     <div class="del-tbody-title">przyciski</div>
                                     <div class="del-tbody-col"></div>
@@ -243,6 +259,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="del-tbody-cols">
+                                    <div class="del-tbody-title">przyciski</div>
+                                    <div class="del-tbody-col"><button @click="removeRow(index)"> X </button></div>
+                                </div>
+                                <div class="del-tbody-cols">
+                                    <div class="del-tbody-title">przyciski</div>
+                                    <div class="del-tbody-col"><button @click="removeRow(index)"> X </button></div>
                                 </div>
                                 <div class="del-tbody-cols">
                                     <div class="del-tbody-title">przyciski</div>
