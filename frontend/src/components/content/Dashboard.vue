@@ -1,5 +1,5 @@
 <template>
-       <div class="plane-dashboard-parent">
+       <!-- <div class="plane-dashboard-parent"> -->
             <div class="plane-dashboard">
                 <div class="plane-dashboard-nav-and-content">
                     <app-menu></app-menu>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        <!-- </div> -->
 </template>
 
 
