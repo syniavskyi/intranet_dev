@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,500,600,700');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
-@import url('https://fonts.googleapis.com/css?family=Quicksand');
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
 
 /* Planes for Login and Registration  */
 
@@ -41,7 +41,7 @@
 
 .nav-title {
     width: 100%;
-    font-family: 'Raleway';
+    font-family: 'Roboto';
     margin: 0;
     padding: .5rem 0;
     font-size: 2rem;
@@ -57,28 +57,30 @@
     z-index: 1;
     top: .5rem;
     left: .7rem;
-    background: url(../images/nav/power-20.png) no-repeat center;
-    border: 2px solid transparent;
+    background: url(../images/nav3/power-20.png) no-repeat center;
     width: 2.2rem;
     height: 2.2rem;
+    border: 0;
     border-radius: 50%;
     transition: all .3s ease;
 }
 
 .logout-button:hover {
     cursor:pointer;
-    border: 2px solid rgba(255, 255, 255, 0.57);
-    box-shadow: 0 0 10px white;
+    box-shadow: 0 0 10px rgb(168, 168, 168);
 }
 
 .logout-button:hover > .logout-text {
     display: flex;
-    text-shadow: 0 0 5px white;
+    text-shadow: 0 0 5px rgb(168, 168, 168);
 }
 
 .logout-text {
     font-size: 1rem;
-    color:white;
+    color:rgb(168, 168, 168);
+    animation: slide-up;
+    animation-duration: .4s;
+    font-family: 'Roboto';
     position: absolute;
     top: 2.5rem;
     left: -.5rem;
@@ -95,7 +97,8 @@
     min-width: 12rem;
     min-height: 45rem;
     height: 100%;
-    background: url("../images/banner4.png");
+    /* background: url("../images/banner4.png"); */
+    background: white;
     box-shadow: 0 0 5px 3px grey;
 }
 
@@ -136,57 +139,63 @@ li p {
     transition: margin .35s ease;
 }
 li:hover p {
-    margin-left: 1rem;
+    margin-left: 1.7rem;
 }
 
 .nav-router-link {
     width: 100%;
     height: 100%;
-    margin: .3rem;
+    margin: .3rem 1.2rem;
     text-decoration: none;
 }
 
 .nav-item {
-    font-family:'Quicksand';
+    font-family:'Roboto';
     font-size: 1.3rem;
     display: flex;
     align-items: center;
     width: 100%;
     border:0;
-    color: white;
-/*    box-shadow: inset 0 -7px 9px -7px rgba(0,0,0,0.4);*/
+   /* box-shadow: 0 -7px 9px -7px rgba(0,0,0,0.4); */
     background: transparent;
     text-decoration: none;
     padding: 0;
-    border-radius: .5rem;
-    align-self: center;
+    border-radius: .31rem;
 }
 
 .nav-item-img {
     display: flex;
-    margin-left: 0.5rem;
+    margin-left: 1.5rem;
 }
 
 .nav-item p {
-    color: white;
-    margin: 0;
     display: flex;
+    /* color: rgb(15, 15, 15); */
+    color: #616161;
+    margin: 0;
     padding: 1rem 0;
-    justify-content: center;
+    margin-left: 1rem;
+    justify-content: flex-start;
     width: 100%;
 }
 
-.nav-item:focus {
-    /* border-left: 5px solid orange; */
+/* .nav-item:focus {
     outline: none;
-/*    background: rgba(41, 59, 109, 0.62);*/
-/*    background: rgb(255, 128, 0);*/
     background: rgba(227, 227, 227, 0.48);
+} */
+
+.nav-item:hover,
+.nav-item:focus {
+    cursor: pointer;
+    background: #FFB05C;
+    box-shadow: 0 16px 15px -14px gray;
+    outline: none;
+    color: white;
 }
 
-.nav-item:hover {
-    cursor: pointer;
-    background: rgba(253, 147, 64, 0.33);
+.nav-item:hover p,
+.nav-item:focus p {
+    color: white;
 }
 /* Planes for side navigation menu */
 
