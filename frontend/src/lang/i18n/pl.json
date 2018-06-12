@@ -63,8 +63,8 @@
         "dailyAllowance": "Dzienna dieta służbowa",
         "totalAllowance": "Łączna dieta za delegację",
         "engineCapacity": "Pojemność silnika",
-        "capacityLess": "Mniej niż 900 cm",
-        "capacityMore": "Więcej niż 900 cm",
+        "capacityLess": "≤ 900 cm",
+        "capacityMore": "> 900 cm",
         "conveyance": "Środek transportu"
     },
     "header": {
@@ -156,7 +156,13 @@
             "others": "Inne",
             "amount": "Kwota",
             "amountPLN": "Kwota w PLN",
-            "totalAmount": "Razem PLN"
+            "totalAmount": "Razem PLN",
+            "transport": "Środek transportu",
+            "kilometers": "liczba km",
+            "enginecapacity": "Pojemność silnika",
+            "flatRate": "Ryczałt",
+            "noFlatRate": "Kilometrówka",
+            "paymentType": "Typ zwrotu"
         },
         "addModule": "Wybierz moduł z listy"  
     }
