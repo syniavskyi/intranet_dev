@@ -11,7 +11,7 @@ const state = {
         licensePlateNo: null,
         flatRate: null,
         engineCapacity: null,
-        kilometers: null
+        kilometers: 0
     }],
     transportList: [
         {id: "companyCar", name: "Auto służbowe"},
@@ -23,6 +23,12 @@ const state = {
         {id: "motocycle", name: "Motocykl prywatny"},
         {id: "moped", name: "Motorower prywatny"}
     ],
+    ratesForTransport: [{
+        carLess:  0.5214,
+        carMore : 0.8358,
+        motocycle : 0.2302,
+        moped : 0.1382,
+    }],
     costTravelValidated: false
 };
 
@@ -62,38 +68,59 @@ const actions = {
     },
     countTravelCosts({getters, commit}) {
         const costTravelData = getters.getTravelCostData,
-        totalCosts = getters.getTotalCosts
-            totalCosts.travel = 0
-            totalCosts.trvPayback = 0
+            totalCosts = getters.getTotalCosts,
+            transportRates = getters.getRatesForTransport[0]
+            
+        totalCosts.travel = 0
+        totalCosts.trvPayback = 0
 
         for(let i=0; i<costTravelData.length; i++) {
             let amount = costTravelData[i].amount,
                 curr = costTravelData[i].currency,
                 exchangeRates = getters.getExchangeRates,
                 rate = null,
-                totalAmount = null;
-            
+                totalAmount = null,
+                transport = costTravelData[i].transport,
+                 km = costTravelData[i].kilometers
+
            amount = (amount === "") ? 0 : parseFloat(amount)
+           km = (km === "") ? 0 : parseFloat(km)
 
-            for (let i=0; i<exchangeRates.length; i++){
-                if (exchangeRates[i].id === curr) {
-                    rate = parseFloat(exchangeRates[i].rate)
-                }
-            } 
+                    if (transport === "companyCar") {
+                        costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.carMore).toFixed(2)
+                    } else if (transport === "privateCar") {
+                        if (costTravelData[i].engineCapacity === true ){
+                            costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.carMore).toFixed(2)
+                        } else {
+                            costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.carLess).toFixed(2)
+                        }
+                    } else if (transport === "motocycle") {
+                        costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.motocycle).toFixed(2)
+                    } else if (transport === "moped") {
+                        costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.moped).toFixed(2)
+                    } else {
 
-            costTravelData[i].totalAmount = amount * rate
+                        for (let i=0; i<exchangeRates.length; i++){
+                            if (exchangeRates[i].id === curr) {
+                                rate = parseFloat(exchangeRates[i].rate)
+                            }
+                        } 
+
+                        costTravelData[i].totalAmount = amount * rate
             
-            
+                    }
+
            if(costTravelData[i].payback === true ) {
-                totalCosts.trvPayback = totalCosts.trvPayback + costTravelData[i].totalAmount
+                totalCosts.trvPayback = totalCosts.trvPayback + parseFloat(costTravelData[i].totalAmount)
             }
-            totalCosts.travel = totalCosts.travel + costTravelData[i].totalAmount
+            totalCosts.travel = totalCosts.travel + parseFloat(costTravelData[i].totalAmount)
         }
         commit('SET_COST_TRAVEL_DATA', costTravelData)
         commit('SET_TOTAL_COST_DATA', totalCosts)
     
     },
-    checkTravelFields({getters, commit}) {
+    checkTravelFields({getters, commit,dispatch}) {
+        dispatch('countTravelCosts')
         const costs = getters.getTravelCostData
             for (let i = 0; i < costs.length; i++) {
                 let arrayItem = costs[i]
@@ -122,6 +149,9 @@ const getters = {
     },
     getTransportList(state){
         return state.transportList
+    },
+    getRatesForTransport(state) {
+        return state.ratesForTransport
     }
 };
 
