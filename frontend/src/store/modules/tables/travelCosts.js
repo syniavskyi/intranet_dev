@@ -6,8 +6,23 @@ const state = {
         payback: false,
         currency: 'PLN',
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        transport: null,
+        licensePlateNo: null,
+        flatRate: null,
+        engineCapacity: null,
+        kilometers: null
     }],
+    transportList: [
+        {id: "companyCar", name: "Auto służbowe"},
+        {id: "privateCar", name: "Auto prywatne"},
+        {id: "PKP", name: "PKP"},
+        {id: "PKS", name: "PKS"},
+        {id: "ship", name: "Statek/prom"},
+        {id: "plane", name: "Samolot"},
+        {id: "motocycle", name: "Motocykl prywatny"},
+        {id: "moped", name: "Motorower prywatny"}
+    ],
     costTravelValidated: false
 };
 
@@ -30,7 +45,12 @@ const actions = {
             payback: false,
             currency: 'PLN',
             amount: 0,
-            totalAmount: 0
+            totalAmount: 0,
+            transport: null,
+            licensePlateNo: null,
+            flatRate: null,
+            engineCapacity: null,
+            kilometers: null
         })
         commit('SET_COST_TRAVEL_DATA', costTravelData)
     },
@@ -99,6 +119,9 @@ const getters = {
     },
     getTravelCostValidated(state) {
         return state.costTrvValidated
+    },
+    getTransportList(state){
+        return state.transportList
     }
 };
 

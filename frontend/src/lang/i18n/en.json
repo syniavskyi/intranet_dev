@@ -62,8 +62,8 @@
         "dailyAllowance": "Daily allowance",
         "totalAllowance": "Allowance for delegation",
         "engineCapacity": "Engine capacity",
-        "capacityLess": "Less than 900 cm",
-        "capacityMore": "More than 900 cm",
+        "capacityLess": "≤ 900 cm",
+        "capacityMore": "> 900 cm",
         "conveyance": "Conveyance",
         "accomodationCosts": "Accomodation costs"
 
@@ -154,7 +154,13 @@
             "amount": "Amount",
             "others": "Others",
             "amountPLN": "Amount in PLN",
-            "totalAmount": "Total PLN"
+            "totalAmount": "Total PLN",
+            "transport": "Transport",
+            "kilometers": "Kilometers",
+            "enginecapacity": "Engine capacity",
+            "flatRate": "Flat rate",
+            "noFlatRate": "Kilometers",
+            "paymentType": "Return type"
         },
         "addModule": "Select module"   
     }
