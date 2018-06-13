@@ -20,13 +20,11 @@
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">
-                  <div class="document-div">
-                    <div class="document-items">
-                      <a class="doc-download-button">&#8675;</a>
-                      <div class="doc-file"></div>
-                      <a class="doc-download-button"></a>
-                    </div>
-                    <div class="document-items"></div>
+                  <div class="documents-div">
+                    <a class="doc-file-div">
+                      <div class="doc-file-img doc-file-doc"></div>
+                      <div class="doc-file-desc">Wniosek urlopowy w DOC do uzupełnienia i podpisania</div>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -36,6 +34,16 @@
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">
+                  <div class="documents-div">
+                      <a class="doc-file-div">
+                      <div class="doc-file-img doc-file-xls"></div>
+                      <div class="doc-file-desc">Lista obecności w XLS do wydrukowania i podpisania</div>
+                    </a>
+                    <a class="doc-file-div">
+                      <div class="doc-file-img  doc-file-pdf"></div>
+                      <div class="doc-file-desc">List obecności w PDF do wydrukowania i podpisania</div>
+                     </a>
+                  </div>
                 </div>
               </div>
               <div class="documents-tile documents-tile-1-3">
