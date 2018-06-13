@@ -325,7 +325,7 @@ export default {
                 totalAllowance: 0
             },
             invalidDate: false,
-            dailyAllowance: 30.00,
+            dailyAllowance: 23.00,
             invalidHour: false,
             showLicensePlateNo: false,
             defaultCostsData: {},
