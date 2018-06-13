@@ -126,11 +126,11 @@ const actions = {
             if (getters.getUserIdForNewProj === data.userId) {
                 dispatch('getUserProjectsToCheck', getters.getUserIdForNewProj)
             }
-            dispatch('hideAllMesssages')
+            dispatch('hideAllMessages')
             commit('SET_REMOVE_ERROR', false)
             commit('SET_REMOVE_SUCCESS', true)
         }).catch(error => {
-            dispatch('hideAllMesssages')
+            dispatch('hideAllMessages')
             commit('SET_REMOVE_ERROR', true)
             commit('SET_REMOVE_SUCCESS', false)
            console.log(error)
@@ -167,14 +167,14 @@ const actions = {
                 dispatch('setUserProjects', response.data)
             }
             dispatch('getUserProjectsToCheck', newProjectData.userId)
-            dispatch('hideAllMesssages')
+            dispatch('hideAllMessages')
             commit('SET_ADDING_ERROR', false)
             commit('SET_SAVE_DATA_SUCCESS', true)
             commit('SET_DISABLE_SAVE_NEW', true)
           })
           .catch(error => {
             console.log(error);
-            dispatch('hideAllMesssages')
+            dispatch('hideAllMessages')
             commit('SET_ADDING_ERROR', true)
             commit('SET_SAVE_DATA_SUCCESS', false)
           });
@@ -190,7 +190,7 @@ const actions = {
             contractorId: projectData.contractorId
           })
           .then(response => {
-            dispatch('hideAllMesssages')
+            dispatch('hideAllMessages')
             commit('SET_EDIT_ERROR', false)
             commit('SET_SAVE_DATA_SUCCESS', true)
             dispatch('getUserProjects', projectData.userId)
@@ -200,7 +200,7 @@ const actions = {
           })
           .catch(error => {
             console.log(error);
-            dispatch('hideAllMesssages')
+            dispatch('hideAllMessages')
             commit('SET_EDIT_ERROR', true)
             commit('SET_SAVE_DATA_SUCCESS', false)
           });
@@ -241,7 +241,7 @@ const actions = {
             }
         }
     },
-    hideAllMesssages({commit}){
+    hideAllMessages({commit}){
         commit('SET_EDIT_ERROR', false)
         commit('SET_ADDING_ERROR', false)
         commit('SET_REMOVE_ERROR', false)
