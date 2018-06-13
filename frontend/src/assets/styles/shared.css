@@ -139,13 +139,14 @@ li p {
     transition: margin .35s ease;
 }
 li:hover p {
-    margin-left: 1.7rem;
+    margin-left: 13%;
 }
 
 .nav-router-link {
     width: 100%;
     height: 100%;
-    margin: .3rem 1.2rem;
+    /* margin: .3rem 1.2rem; */
+    margin: 2% 10%;
     text-decoration: none;
 }
 
@@ -165,7 +166,8 @@ li:hover p {
 
 .nav-item-img {
     display: flex;
-    margin-left: 1.5rem;
+    /* margin-left: 1.5rem; */
+    margin-left: 5%;
 }
 
 .nav-item p {
@@ -184,13 +186,22 @@ li:hover p {
     background: rgba(227, 227, 227, 0.48);
 } */
 
-.nav-item:hover,
-.nav-item:focus,
+
 .active-router-link {
     cursor: pointer;
     background: #FFB05C;
     box-shadow: 0 16px 15px -14px gray;
     outline: none;
+    border-radius: .3rem;
+}
+.nav-item:hover,
+.nav-item:focus {
+    cursor: pointer;
+    background: lightgrey;
+}
+
+
+.active-router-link p {
     color: white;
 }
 
