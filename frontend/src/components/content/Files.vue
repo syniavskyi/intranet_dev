@@ -16,7 +16,23 @@
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3">
                 <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">Dokumenty ważne</p>
+                  <p class="documents-tile-header-title">Wniosek Urlopowy</p>
+                  <div class="documents-tile-underscore"></div>
+                </div>
+                <div class="documents-tile-content">
+                  <div class="document-div">
+                    <div class="document-items">
+                      <a class="doc-download-button">&#8675;</a>
+                      <div class="doc-file"></div>
+                      <a class="doc-download-button"></a>
+                    </div>
+                    <div class="document-items"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="documents-tile documents-tile-1-3">
+                <div class="documents-tile-header">
+                  <p class="documents-tile-header-title">Lista obecności</p>
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">
@@ -25,14 +41,6 @@
               <div class="documents-tile documents-tile-1-3">
                 <div class="documents-tile-header">
                   <p class="documents-tile-header-title">Wzory CV</p>
-                  <div class="documents-tile-underscore"></div>
-                </div>
-                <div class="documents-tile-content">
-                </div>
-              </div>
-              <div class="documents-tile documents-tile-1-3">
-                <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">Dokumenty ważne</p>
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">

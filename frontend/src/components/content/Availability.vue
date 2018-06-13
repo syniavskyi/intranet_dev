@@ -7,11 +7,11 @@
                 <div class="avaiability-header-title-and-menu">
                     <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="availability-header-menu">
                     <p class="availability-header-title">{{ $t("header.availability") }}</p>
-                    <p class="ava-error-header" v-if="saveSuccess">Pomyślnie zapisano dane.<p v-if="saveSuccess" class="ava-error-header-x">X</p> </p>
+                    <p class="ava-error-header" v-if="saveSuccess">Pomyślnie zapisano dane</p>
                     <p v-if="editError">{{ $t("message.editProjectError") }}</p>
                     <p v-if="removeError">{{ $t("message.removeProjectError") }}</p>
                     <p v-if="addingError">{{ $t("message.addProjectError") }}</p>
-                    <p class="ava-error-header" v-if="removeSuccess">Pomyślnie usunięto projekt. <p v-if="saveSuccess" class="ava-error-header-x">X</p></p>
+                    <p class="ava-error-header" v-if="removeSuccess">Pomyślnie usunięto projekt</p>
                 </div>
             </div>
             <div class="availability-tiles">
