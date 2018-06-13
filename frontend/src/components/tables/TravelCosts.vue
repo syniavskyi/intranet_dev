@@ -58,11 +58,11 @@
                         <div class="del-tbody2-item-cost-xw">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.transport") }}</div>
                             <div class="del-tbody2-item-txt">
-                                <select class="delegations-tselect" :id="index" v-model="cost.transport" @change="checkTransportType">
+                                <select class="delegations-tselect" :id="index" v-model="cost.transport" @change="setFieldsValues(cost)">
                                     <option v-for="transport in transportList" :key="transport.id" :value="transport.id">{{ transport.name }}</option>
                                 </select>
                                 <p class="table-p">{{ $t("label.registrationNo") }}</p>
-                                <input class="delegations-tinput" :disabled="!showCarData" @change="checkTravelFields" v-model="cost.licencePlateNo" />
+                                <input :disabled="hideLicencePlateNo(cost)" :class="[{ 'delegations-tinput-disabled': hideLicencePlateNo(cost) },  'delegations-tinput']"  @change="checkTravelFields" v-model="cost.licencePlateNo" />
                             </div>
                             <div class="del-tfoot2"></div>
                         </div>
@@ -70,14 +70,14 @@
                         <div class="del-tbody2-item-cost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.paymentType") }}</div>
                             <div class="del-tbody2-item-txt">
-                                <select  :disabled="!showCarData" :id="index" class="delegations-tselect-s-disabled" v-model="cost.flatRate" @change="checkReturnType">
+                                <select  :id="index" :disabled="disableReturnType(cost)" :class="[{ 'delegations-tselect-s-disabled': disableReturnType(cost) },  'delegations-tselect-s']"  v-model="cost.flatRate" @change="valuesForReturnType(cost)">
                                     <option disabled selected value></option>
                                     <option key="true" :value="true">{{ $t("table.delegations.flatRate") }}</option>
                                     <option key="false" :value="false">{{ $t("table.delegations.noFlatRate") }}</option>
                                 </select>
                             <!-- </div>
                             <div class="del-tbody2-item-txt"> -->
-                                <select class="delegations-tselect-s" :disabled="!showEngineCapacity" v-model="cost.engineCapacity" @change="checkTravelFields">
+                                <select :disabled="disableEngineCapacity(cost)" :class="[{ 'delegations-tselect-s-disabled': disableEngineCapacity(cost) },  'delegations-tselect-s']"  v-model="cost.engineCapacity" @change="checkTravelFields">
                                     <option disabled selected value></option>
                                     <!-- true is for more than 900 cm, false for less -->
                                     <option key="false" :value="false">{{ $t("label.capacityLess") }}<sup>3</sup></option>
@@ -89,14 +89,15 @@
                         <div class="del-tbody2-item-cost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.kilometers") }}?</div>
                             <div class="del-tbody2-item-txt">
-                                <input class="delegations-tinput-s-disabled" :disabled="hideKilometers" type="number" @change="checkTravelFields" v-model="cost.kilometers" />
+                                <!-- class="delegations-tinput-s-disabled" :disabled="hideKilometers" -->
+                                <input  :disabled="disableKilometers(cost)" :class="[{ 'delegations-tinput-s-disabled': disableKilometers(cost) },  'delegations-tinput-s']" type="number" @change="checkTravelFields" v-model="cost.kilometers" />
                             </div>
                             <div class="del-tfoot2"></div>
                         </div>
                         <div class="del-tbody2-item-cost-s">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.currency") }}</div>
                             <div class="del-tbody2-item-txt">
-                                <select :disabled="hideAmount" class="delegations-tselect-s" v-model="travelCosts[index].currency" @change="updateTravelCosts">
+                                 <select :disabled="disableCostAmount(cost)" :class="[{ 'delegations-tselect-s-disabled': disableCostAmount(cost) },  'delegations-tselect-s']" v-model="travelCosts[index].currency" @change="updateTravelCosts">
                                     <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
                                 </select>
                             </div>
@@ -106,7 +107,7 @@
                         <div class="del-tbody2-item-cost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }}</div>
                             <div class="del-tbody2-item-txt">
-                                <input :disabled="hideAmount" class="delegations-tinput-s" type="number" min="0" @input="updateTravelCosts" v-model="cost.amount" />
+                                <input :disabled="disableCostAmount(cost)" :class="[{ 'delegations-tinput-s-disabled': disableCostAmount(cost) },  'delegations-tinput-s']" type="number" min="0" @input="updateTravelCosts" v-model="cost.amount" />
                             </div>
                             <div class="del-tfoot2"></div>
                         </div>
@@ -131,13 +132,13 @@
                         <div class="del-tbody2-item-wfoot-cost"></div>
                         <div class="del-tbody2-item-cost">{{ $t("table.delegations.amountPLN") }}</div>
                         <div class="del-tbody2-item-cost-s">{{ totalCosts.trvPayback }}</div>
-                        <div class="del-tbody2-item-cost-xw"></div>
-                        <div class="del-tbody2-item-cost"></div>
-                        <div class="del-tbody2-item-cost"></div>
+                        <div class="del-tbody2-item-cost-xw">---</div>
+                        <div class="del-tbody2-item-cost">---</div>
+                        <div class="del-tbody2-item-cost">---</div>
                         <div class="del-tbody2-item-cost-s">---</div>
-                        <div class="del-tbody2-item-cost"></div>
+                        <div class="del-tbody2-item-cost">---</div>
                         <div class="del-tbody2-item-cost">{{totalCosts.travel }}</div>
-                        <div class="del-tbody2-item-cost"></div>
+                        <div class="del-tbody2-item-cost">---</div>
                     </div>
                 </div>
             </div>
@@ -182,45 +183,50 @@ export default {
             this.$store.dispatch('countTravelCosts')
             this.checkTravelFields()
         },
-        checkTransportType(value) {
-            const type = value.target.value,
-                index = value.target.id
-            this.showCarData = (type === "companyCar" || type === "privateCar") ? true : false
-            this.hideAmount = (type === "companyCar" || type === "privateCar") ? true : false
-            this.setFieldsVisibility(this.travelCosts[index].flatRate, index)
-        },
-        checkReturnType(value) {
-            const type = value.target.value,
-                index = value.target.id
-            this.setFieldsVisibility(type, index)
-
-        },
-
-        setFieldsVisibility(type, index) {
+        setFieldsValues(cost) {
             // type false  = not flat rate (kilometrówka), type  true = flat rate (ryczałt)
-            const cost = this.travelCosts[index]
-
-            if (type !== null) {
-                if (cost.transport === "privateCar") {
-                    this.showEngineCapacity = true
-                    cost.engineCapacity = null
-                } else if (cost.transport === "companyCar") {
-                    cost.engineCapacity = true
-                    this.showEngineCapacity = false
-                }
-
-        
-                if (type === "false" || type === false) {
-                    this.hideKilometers = false
-                     this.updateTravelCosts()
-                } else {
-                    this.hideKilometers = true
-                    cost.engineCapacity = null
-                    cost.currency = null
-                    cost.amount = 0
-                    this.showEngineCapacity = false
-                }
+            cost.flatRate = null
+            cost.kilometers = 0
+            cost.engineCapacity = (cost.transport === "companyCar") ? true : null
+            cost.amount = 0
+            cost.currency = null
+            
+            this.checkTravelFields()
+        },
+        valuesForReturnType(cost) {
+            if (cost.flatRate == true) {
+                cost.engineCapacity = 0
+                cost.kilometers = 0
+                cost.amount = 0
+                cost.currency = null
+            } else {
+                cost.engineCapacity = (cost.transport === "companyCar") ? true : null
             }
+            this.checkTravelFields()
+        },
+        disableReturnType(cost){
+            const type = cost.transport
+            return (type === "companyCar" || type === "privateCar" ||type === "motocycle" || type === "moped") ? false : true
+        },
+        disableCostAmount(cost) {
+            const type = cost.transport
+            return (type === "companyCar" || type === "privateCar" ||type === "motocycle" || type === "moped") ? true : false
+        },
+        disableEngineCapacity(cost){
+            const type = cost.transport
+            return (type === "privateCar" && cost.flatRate == false) ? false : true
+        },
+        disableKilometers(cost){
+            const type = cost.flatRate
+            if (type === "companyCar" || type === "privateCar" ||type === "motocycle" || type === "moped") {
+            return (type == false) ? false : true
+            } else {
+                return false
+            }
+        },
+        hideLicencePlateNo(cost){
+            const type = cost.transport
+            return (type === "companyCar" || type === "privateCar" ||type === "motocycle" || type === "moped") ? false : true
         }
 
     }
