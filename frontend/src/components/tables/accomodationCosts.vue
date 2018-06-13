@@ -122,10 +122,11 @@ export default {
         },
         removeCostRow(index) {
             this.$store.dispatch('removeAccCostRow', index)
+            this.$store.dispatch('countAccomodationCosts')
             this.checkAccomodationFields()
         },
         updateAccCosts() {
-             this.$store.dispatch('countAccomodationCosts')
+            this.$store.dispatch('countAccomodationCosts')
             this.checkAccomodationFields()
         }
 
