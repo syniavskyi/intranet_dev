@@ -310,7 +310,7 @@ import {
     required
 } from 'vuelidate/lib/validators'
 import Menu from '../Menu.vue'
-import AccomodationCosts from '../tables/AccomodationCosts'
+import AccomodationCosts from '../tables/accomodationCosts'
 import OtherCosts from '../tables/OtherCosts'
 import TravelCosts from '../tables/TravelCosts'
 export default {
