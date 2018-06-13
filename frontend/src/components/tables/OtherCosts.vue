@@ -122,6 +122,7 @@ export default {
         },
         removeCostRow(index) {
             this.$store.dispatch('removeOtherCostRow', index)
+            this.$store.dispatch('countOtherCosts')
             this.checkOtherCostsFields()
         },
         updateOtherCosts() {
