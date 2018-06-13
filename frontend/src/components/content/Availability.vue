@@ -12,6 +12,7 @@
                     <p v-if="removeError">{{ $t("message.removeProjectError") }}</p>
                     <p v-if="addingError">{{ $t("message.addProjectError") }}</p>
                     <p class="ava-error-header" v-if="removeSuccess">Pomyślnie usunięto projekt</p>
+                    <button v-show="saveSuccess || editError|| removeError || addingError || removeSuccess" class="ava-button" @click="closeAlert">X</button>
                 </div>
             </div>
             <div class="availability-tiles">
@@ -372,6 +373,9 @@ export default {
         },
         validateEditProject() {
             this.$store.dispatch('validateEditProject', this.projectToEdit)
+        },
+        closeAlert(){
+            this.$store.dispatch('hideAllMessages')
         }
     }
 }
