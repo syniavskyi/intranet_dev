@@ -38,7 +38,6 @@ const actions = {
         const accCostData = getters.getAccomodationCostData
         accCostData.splice(index, 1)
         commit('SET_COST_ACCOMODATION_DATA', accCostData)
-        dispatch('updateTotalCosts')
     },
     countAccomodationCosts({getters, commit}) {
         const accCostData = getters.getAccomodationCostData,
