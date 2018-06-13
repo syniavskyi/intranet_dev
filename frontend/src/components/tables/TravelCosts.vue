@@ -70,7 +70,7 @@
                         <div class="del-tbody2-item-cost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.paymentType") }}</div>
                             <div class="del-tbody2-item-txt">
-                                <select :disabled="!showCarData" :id="index" class="delegations-tselect-s" v-model="cost.flatRate" @change="checkReturnType">
+                                <select  :disabled="!showCarData" :id="index" class="delegations-tselect-s-disabled" v-model="cost.flatRate" @change="checkReturnType">
                                     <option disabled selected value></option>
                                     <option key="true" :value="true">{{ $t("table.delegations.flatRate") }}</option>
                                     <option key="false" :value="false">{{ $t("table.delegations.noFlatRate") }}</option>
@@ -89,7 +89,7 @@
                         <div class="del-tbody2-item-cost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.kilometers") }}?</div>
                             <div class="del-tbody2-item-txt">
-                                <input class="delegations-tinput-s" :disabled="hideKilometers" type="number" @change="checkTravelFields" v-model="cost.kilometers" />
+                                <input class="delegations-tinput-s-disabled" :disabled="hideKilometers" type="number" @change="checkTravelFields" v-model="cost.kilometers" />
                             </div>
                             <div class="del-tfoot2"></div>
                         </div>
