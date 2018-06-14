@@ -326,6 +326,12 @@ ul {
     }
 }
 
+@media(min-width: 44rem) {
+    .dashboard-content {
+        width: 80%;
+    }
+}
+
 @media (min-width: 51rem) {
     .dashboard-header-menu {
         display: none;

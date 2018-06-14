@@ -964,13 +964,11 @@ body {
     .profile-header-menu {
         display: none;
     }
-}
-
-@media (min-width: 44.3rem) {
     .profile-content {
         width: 80%;
     }
 }
+
 @media (min-width: 77rem) {
     .plane-profile {
         margin:0;

@@ -622,6 +622,12 @@ body {
     border-bottom-right-radius: 4px;
 }
 
+@media (min-width: 44rem) {
+    .delegations-content {
+        width: 80%;
+    }
+}
+
 
 @media (min-width:64rem) {
     .del-table-footer {
