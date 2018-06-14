@@ -230,7 +230,6 @@ body {
     align-items:center;
     transition: box-shadow .3s ease;
     border-radius: .3rem;
-    overflow-x: hidden;
 }
 .doc-file-div:hover {
     cursor: pointer;
@@ -266,20 +265,20 @@ body {
 }
 
 @keyframes slide-left {
-    from { transform: translateX(220%); }
-    to { transform: translateX(0%); }
+    from { transform: translateX(220%);}
+    to { transform: translateX(0%);}
 }
 @keyframes out-left {
-    from { transform: translateX(-220%); }
-    to { transform: translateX(0%); }
+    from { transform: translateX(-220%);}
+    to { transform: translateX(0%);}
 }
 
 @keyframes slide-right {
-    0% { opacity:0; 
-           transform: translateX(-20%); }
-    40% {opacity: 0}
+    0% { opacity:0;}
+    40% { opacity: 0;
+        transform: translateX(-20%);}
     100% { opacity: 1;
-        transform: translateX(0%); }
+        transform: translateX(0%);}
 }
 
 @media (min-width: 44rem) {
