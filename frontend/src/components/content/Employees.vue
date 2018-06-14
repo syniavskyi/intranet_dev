@@ -75,15 +75,5 @@ import Menu from '../Menu.vue'
 </script>
 
 <style>
-#container {
-  display: flex;
-}
 
-p {
-  padding: 5px 15px;
-}
-
-ul {
-  padding: 5px 15px;
-}
 </style>

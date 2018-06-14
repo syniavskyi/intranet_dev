@@ -7,12 +7,12 @@
                 <div class="avaiability-header-title-and-menu">
                     <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="availability-header-menu">
                     <p class="availability-header-title">{{ $t("header.availability") }}</p>
-                    <p class="ava-error-header" v-if="saveSuccess">Pomyślnie zapisano dane</p>
-                    <p v-if="editError">{{ $t("message.editProjectError") }}</p>
-                    <p v-if="removeError">{{ $t("message.removeProjectError") }}</p>
-                    <p v-if="addingError">{{ $t("message.addProjectError") }}</p>
-                    <p class="ava-error-header" v-if="removeSuccess">Pomyślnie usunięto projekt</p>
-                    <button v-show="saveSuccess || editError|| removeError || addingError || removeSuccess" class="ava-button" @click="closeAlert">X</button>
+                    <p @click="closeAlert" class="ava-error-header" v-if="saveSuccess">Pomyślnie zapisano dane</p>
+                    <p @click="closeAlert" v-if="editError">{{ $t("message.editProjectError") }}</p>
+                    <p @click="closeAlert" v-if="removeError">{{ $t("message.removeProjectError") }}</p>
+                    <p @click="closeAlert" v-if="addingError">{{ $t("message.addProjectError") }}</p>
+                    <p @click="closeAlert" class="ava-error-header" v-if="removeSuccess">Pomyślnie usunięto projekt</p>
+                    <!-- <button v-show="saveSuccess || editError|| removeError || addingError || removeSuccess" class="ava-button" @click="closeAlert">X</button> -->
                 </div>
             </div>
             <div class="availability-tiles">

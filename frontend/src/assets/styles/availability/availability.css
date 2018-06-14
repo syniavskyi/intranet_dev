@@ -32,7 +32,7 @@ body {
 }
 
 .availability-header {
-    position: relative;
+    /* position: relative; */
     align-self: center;
     width: 95%;
     display: flex;
@@ -69,18 +69,25 @@ body {
 
 .ava-error-header {
     display: flex;
-    position: absolute;
+    position: fixed;
     background: orange;
-    height: 1.2rem;
+    font-size: 1rem;
+    min-height: 1.2rem;
     padding: .3rem;
     border-radius: .5rem;
     animation: display-grow; 
     color: white;
-    top: 0;
-    right: 0;
+    top: 100px;
+    right: 10px;
     overflow: hidden;
     animation-duration: 0.6s;
     animation: pulse 1.5s infinite;
+    transition: background 0.5s ease;
+    z-index: 100;
+}
+.ava-error-header:hover {
+    cursor: pointer;
+    background: rgb(255, 185, 54);
 }
 .ava-error-header-x {
     display: flex;
@@ -146,6 +153,7 @@ body {
 .availability-tile-header {
     display: flex;
     width: 100%;
+    background: transparent;
     justify-content: space-between;
     min-height: 3rem;
     height: 10%;
@@ -384,7 +392,7 @@ body {
       box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
     }
     70% {
-        -moz-box-shadow: 0 0 0 15px rgba(204,169,44, 0.2);
+        -moz-box-shadow: 0 0 0 15px rgba(204,169,44, 0);
         box-shadow: 0 0 0 15px rgba(204,169,44, 0);
     }
     100% {
@@ -423,9 +431,11 @@ body {
     }
 }
 
-@media (min-width: 40rem) {
-
- .availability-header-menu {
+@media (min-width: 44rem) {
+    .availability-content {
+        width: 80%;
+    }
+    .availability-header-menu {
         display: none;
     }
 }
