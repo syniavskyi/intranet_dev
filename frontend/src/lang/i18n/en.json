@@ -65,7 +65,10 @@
         "capacityLess": "≤ 900 cm",
         "capacityMore": "> 900 cm",
         "conveyance": "Conveyance",
-        "accomodationCosts": "Accomodation costs"
+        "accomodationCosts": "Accomodation costs",
+        "totalDelegationAmount": "Total delegation amount",
+        "advanceAmount": "Advance amount",
+        "totalReturnAmount": "Total amount of return"
 
     },
     "header": {

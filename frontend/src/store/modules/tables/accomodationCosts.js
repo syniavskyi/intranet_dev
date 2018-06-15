@@ -33,11 +33,14 @@ const actions = {
             totalAmount: 0
         })
         commit('SET_COST_ACCOMODATION_DATA', accCostData)
+        commit('SET_ACC_COSTS_VALIDATED', false)
     },
     removeAccCostRow({commit, getters, dispatch}, index) {
         const accCostData = getters.getAccomodationCostData
         accCostData.splice(index, 1)
         commit('SET_COST_ACCOMODATION_DATA', accCostData)
+        dispatch('countAccomodationCosts')
+        dispatch('checkAccomodationFields')
     },
     countAccomodationCosts({getters, commit}) {
         const accCostData = getters.getAccomodationCostData,

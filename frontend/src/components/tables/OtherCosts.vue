@@ -113,23 +113,12 @@ export default {
         })
     },
     methods: {
-        ...mapActions([
-            'checkOtherCostsFields'
-        ]),
-        addCostRow() {
-            this.$store.dispatch('addOtherCostRow')
-            this.$store.commit('SET_OTHER_COSTS_VALIDATED', false)
-        },
-        removeCostRow(index) {
-            this.$store.dispatch('removeOtherCostRow', index)
-            this.$store.dispatch('countOtherCosts')
-            this.checkOtherCostsFields()
-        },
-        updateOtherCosts() {
-             this.$store.dispatch('countOtherCosts')
-            this.checkOtherCostsFields()
-        }
-
+        ...mapActions({
+            checkOtherCostsFields: 'checkOtherCostsFields',
+            addCostRow: 'addOtherCostRow',
+            removeCostRow: 'removeOtherCostRow',
+            updateOtherCosts: 'countOtherCosts'
+        })
     }
 }
 </script>

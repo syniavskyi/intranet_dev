@@ -65,7 +65,10 @@
         "engineCapacity": "Pojemność silnika",
         "capacityLess": "≤ 900 cm",
         "capacityMore": "> 900 cm",
-        "conveyance": "Środek transportu"
+        "conveyance": "Środek transportu",
+        "totalDelegationAmount": "Łączna wartość delegacji",
+        "advanceAmount": "Wartość zaliczki",
+        "totalReturnAmount": "Łączna wartość do zwrotu"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",

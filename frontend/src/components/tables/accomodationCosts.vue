@@ -110,27 +110,16 @@ export default {
             currencyList: 'getCurrencyList',
             accomodationCosts: 'getAccomodationCostData',
             totalCosts: 'getTotalCosts'
+           
         })
     },
     methods: {
-        ...mapActions([
-            'checkAccomodationFields'
-        ]),
-        addCostRow() {
-            this.$store.dispatch('addAccCostRow')
-            this.$store.commit('SET_ACC_COSTS_VALIDATED', false)
-        },
-        removeCostRow(index) {
-            this.$store.dispatch('removeAccCostRow', index)
-            this.$store.dispatch('countAccomodationCosts')
-            this.checkAccomodationFields()
-        },
-        updateAccCosts() {
-            this.$store.dispatch('countAccomodationCosts')
-            this.checkAccomodationFields()
-        }
-
-
+        ...mapActions({
+            checkAccomodationFields: 'checkAccomodationFields',
+            addCostRow: 'addAccCostRow',
+            removeCostRow: 'removeAccCostRow',
+             updateAccCosts: 'countAccomodationCosts'
+        })
     }
 }
 </script>

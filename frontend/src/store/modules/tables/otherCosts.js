@@ -33,14 +33,16 @@ const actions = {
             totalAmount: 0
         })
         commit('SET_OTHER_COST_DATA', otherCostData)
+        commit('SET_OTHER_COSTS_VALIDATED', false)
     },
     removeOtherCostRow({commit, getters, dispatch}, index) {
         const otherCostData = getters.getOtherCostData
         otherCostData.splice(index, 1)
         commit('SET_OTHER_COST_DATA', otherCostData)
-        dispatch('updateTotalCosts')
+        dispatch('countOtherCosts')
+        dispatch('checkOtherCostsFields')        
     },
-    countOtherCosts({getters, commit}) {
+    countOtherCosts({getters, commit, dispatch}) {
         const otherCostData = getters.getOtherCostData,
              totalCosts = getters.getTotalCosts
         totalCosts.othPayback = 0
@@ -71,6 +73,7 @@ const actions = {
         }
         commit('SET_OTHER_COST_DATA', otherCostData)
         commit('SET_TOTAL_COST_DATA', totalCosts)
+        dispatch('checkOtherCostsFields')
     
     },
     checkOtherCostsFields({getters, commit}) {
