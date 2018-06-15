@@ -85,6 +85,7 @@ const actions = {
       kilometers: null
     })
     commit('SET_COST_TRAVEL_DATA', costTravelData)
+    commit('SET_TRV_COSTS_VALIDATED', false)
   },
   removeTravelCostRow({
     commit,
@@ -98,7 +99,8 @@ const actions = {
   },
   countTravelCosts({
     getters,
-    commit
+    commit,
+    dispatch
   }) {
     const costTravelData = getters.getTravelCostData,
       totalCosts = getters.getTotalCosts,
@@ -150,14 +152,13 @@ const actions = {
     }
     commit('SET_COST_TRAVEL_DATA', costTravelData)
     commit('SET_TOTAL_COST_DATA', totalCosts)
-
+    dispatch('checkTravelFields')
   },
   checkTravelFields({
     getters,
     commit,
     dispatch
   }) {
-    dispatch('countTravelCosts')
     const costs = getters.getTravelCostData
     for (let i = 0; i < costs.length; i++) {
       let arrayItem = costs[i]

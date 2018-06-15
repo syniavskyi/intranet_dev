@@ -77,7 +77,7 @@
                                 </select>
                             <!-- </div>
                             <div class="del-tbody2-item-txt"> -->
-                                <select :disabled="disableEngineCapacity(cost)" :class="[{ 'delegations-tselect-s-disabled': disableEngineCapacity(cost) },  'delegations-tselect-s']"  v-model="cost.engineCapacity" @change="checkTravelFields">
+                                <select :disabled="disableEngineCapacity(cost)" :class="[{ 'delegations-tselect-s-disabled': disableEngineCapacity(cost) },  'delegations-tselect-s']"  v-model="cost.engineCapacity" @change="updateTravelCosts">
                                     <option disabled selected value></option>
                                     <!-- true is for more than 900 cm, false for less -->
                                     <option key="false" :value="false">{{ $t("label.capacityLess") }}<sup>3</sup></option>
@@ -90,7 +90,7 @@
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.kilometers") }}?</div>
                             <div class="del-tbody2-item-txt">
                                 <!-- class="delegations-tinput-s-disabled" :disabled="hideKilometers" -->
-                                <input  :disabled="disableKilometers(cost)" :class="[{ 'delegations-tinput-s-disabled': disableKilometers(cost) },  'delegations-tinput-s']" type="number" @change="checkTravelFields" v-model="cost.kilometers" />
+                                <input  :disabled="disableKilometers(cost)" :class="[{ 'delegations-tinput-s-disabled': disableKilometers(cost) },  'delegations-tinput-s']" type="number" @change="updateTravelCosts" v-model="cost.kilometers" />
                             </div>
                             <div class="del-tfoot2"></div>
                         </div>
@@ -168,21 +168,12 @@ export default {
         })
     },
     methods: {
-        ...mapActions([
-            'checkTravelFields'
-        ]),
-        addCostRow() {
-            this.$store.dispatch('addTravelCostRow')
-            this.$store.commit('SET_TRV_COSTS_VALIDATED', false)
-        },
-        removeCostRow(index) {
-            this.$store.dispatch('removeTravelCostRow', index)
-            this.checkTravelFields()
-        },
-        updateTravelCosts() {
-            this.$store.dispatch('countTravelCosts')
-            this.checkTravelFields()
-        },
+         ...mapActions({
+            checkTravelFields: 'checkTravelFields',
+            addCostRow: 'addTravelCostRow',
+            removeCostRow:'removeTravelCostRow',
+            updateTravelCosts: 'countTravelCosts'
+        }),
         setFieldsValues(cost) {
             // type false  = not flat rate (kilometrówka), type  true = flat rate (ryczałt)
             cost.flatRate = null
