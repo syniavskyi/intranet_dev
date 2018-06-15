@@ -2,7 +2,7 @@
 <div class="plane-profile">
     <div class="profile-nav-and-content">
         <app-menu></app-menu>
-        <leave-page-dialog v-if="showLeavePageDialog" @action-selected="leavePage" @close="showLeavePageDialog = false"></leave-page-dialog>
+        <!-- <leave-page-dialog v-if="showLeavePageDialog" @action-selected="leavePage" @close="showLeavePageDialog = false"></leave-page-dialog> -->
         <div class="profile-content">
             <div class="profile-header">
                 <div class="profile-header-title-and-menu">
@@ -374,10 +374,10 @@ export default {
             errorProjectNo: 'getErrorProjectNo'            
         })
     },
-    beforeRouteLeave (to, from , next) {
+    // beforeRouteLeave (to, from , next) {
         // this.showLeavePageDialog = true
-        this.routeToGo = to.name
-    },
+    //     this.routeToGo = to.name
+    // },
     methods: {
         ...mapActions({
             addRow: 'addExpRow'
@@ -521,16 +521,16 @@ export default {
                 this.invalidDates = (formatStartDate > formatEndDate) ? true : false
                 this.invalidDatePos = (formatStartDate > formatEndDate) ? index + 1 : null
             }
-        },
-        leavePage() {
-            if (this._beforeEditingProjects){
-                this.$store.commit('SET_EXP_LIST', this._beforeEditingProjects)
-            } 
-            if (this._beforeEditingCache) {
-                Object.assign(this.userData, this._beforeEditingCache)
-            }
-            this.$router.push({name: this.routeToGo})
         }
+        // leavePage() {
+        //     if (this._beforeEditingProjects){
+        //         this.$store.commit('SET_EXP_LIST', this._beforeEditingProjects)
+        //     } 
+        //     if (this._beforeEditingCache) {
+        //         Object.assign(this.userData, this._beforeEditingCache)
+        //     }
+        //     this.$router.push({name: this.routeToGo})
+        // }
     }
 }
 </script>
