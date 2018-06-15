@@ -94,7 +94,8 @@
         "addProject": "Dodaj projekt",
         "accomodationCosts": "Koszty noclegu",
         "otherCosts": "Pozostałe koszty",
-        "travelCosts": "Koszty podróży"
+        "travelCosts": "Koszty podróży",
+        "advance": "Zaliczka"
         
     },
     "message": {
@@ -162,7 +163,10 @@
             "enginecapacity": "Pojemność silnika",
             "flatRate": "Ryczałt",
             "noFlatRate": "Kilometrówka",
-            "paymentType": "Typ zwrotu"
+            "paymentType": "Typ zwrotu",
+            "advanceDate": "Data zaliczki",
+            "advanceCurrency": "Waluta zaliczki",
+            "advanceAmount": "Kwota zaliczki"
         },
         "addModule": "Wybierz moduł z listy"  
     }

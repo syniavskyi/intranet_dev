@@ -20,7 +20,8 @@ const state = {
         accomodation: 0,
         travel: 0,
         others: 0,
-        amount: 0
+        amount: 0,
+        advance: 0
     }
 };
 

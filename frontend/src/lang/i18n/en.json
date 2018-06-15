@@ -93,7 +93,8 @@
         "selectEmployee": "Select employee" ,
         "addProject": "Add project",
         "otherCosts": "Other costs",
-        "travelCosts": "Travel costs"     
+        "travelCosts": "Travel costs",
+        "advance": "Advance"
     },
     "message": {
         "loginError": "Password or username are invalid.",
@@ -160,7 +161,10 @@
             "enginecapacity": "Engine capacity",
             "flatRate": "Flat rate",
             "noFlatRate": "Kilometers",
-            "paymentType": "Return type"
+            "paymentType": "Return type",
+            "advanceDate": "Advance Date",
+            "advanceCurrency": "Advance currency",
+            "advanceAmount": "Advance amount"
         },
         "addModule": "Select module"   
     }

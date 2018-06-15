@@ -337,7 +337,8 @@ export default {
             invalidDates: false,
             invalidDatePos: null,
             _beforeEditingProjects: null,
-            showLeavePageDialog: false
+            showLeavePageDialog: false,
+            routeToGo: null
         }
     },
     validations: {
@@ -372,6 +373,10 @@ export default {
             ifModuleExist: 'getModuleExist',
             errorProjectNo: 'getErrorProjectNo'            
         })
+    },
+    beforeRouteLeave (to, from , next) {
+        // this.showLeavePageDialog = true
+        this.routeToGo = to.name
     },
     methods: {
         ...mapActions({
@@ -524,6 +529,7 @@ export default {
             if (this._beforeEditingCache) {
                 Object.assign(this.userData, this._beforeEditingCache)
             }
+            this.$router.push({name: this.routeToGo})
         }
     }
 }
