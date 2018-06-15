@@ -63,6 +63,7 @@
                         </div>
                     </div>
                 </div>
+                <advance-table></advance-table>
                 <div class="delegations-tile">
                     <div class="delegations-tile-header">
                         <div class="delegations-tile-title">
@@ -303,6 +304,7 @@
 // import Menu from '../Menu.vue'
 import MaskedInput from 'vue-masked-input'
 import moment from "moment"
+
 import {
     mapGetters
 } from 'vuex'
@@ -313,6 +315,7 @@ import Menu from '../Menu.vue'
 import AccomodationCosts from '../tables/accomodationCosts'
 import OtherCosts from '../tables/OtherCosts'
 import TravelCosts from '../tables/TravelCosts'
+import AdvanceTable from '../tables/AdvanceTable'
 export default {
     data() {
         return {
@@ -370,7 +373,8 @@ export default {
         'app-menu': Menu,
         'accomodation-costs-table': AccomodationCosts,
         'other-costs-table': OtherCosts,
-        'travel-costs-table': TravelCosts
+        'travel-costs-table': TravelCosts,
+        'advance-table': AdvanceTable
     },
     beforeCreate() {
         if (this.$store.getters.isDataLoaded === false) {
