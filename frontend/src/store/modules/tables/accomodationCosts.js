@@ -70,6 +70,7 @@ const actions = {
         }
         commit('SET_COST_ACCOMODATION_DATA', accCostData)
         commit('SET_TOTAL_COST_DATA', totalCosts)
+        dispatch('checkAccomodationFields')
     
     },
     checkAccomodationFields({getters, commit}) {
