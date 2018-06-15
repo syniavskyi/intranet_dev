@@ -41,6 +41,7 @@ const state = {
   },
   newDelegation: {
     number: null,
+    userId: null,
     createDate: null,
     destination: null,
     purpose: null,

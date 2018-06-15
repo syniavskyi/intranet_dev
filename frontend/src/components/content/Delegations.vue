@@ -12,7 +12,11 @@
             <div class="delegations-tiles">
                 <div class="delegations-tile delegations-inputs">
                     <div class="delegations-tile-header">
-                        <div class="delegations-tile-title">{{userData.firstName}} {{userData.lastName}}
+                        <div class="delegations-tile-title"> 
+                            <p  v-show="showUsername">{{userData.firstName}} {{userData.lastName}}</p>
+                            <select v-if="!showUsername" class="ava-select" v-model="newDelegation.userId" @change="setUsername">
+                                <option v-for="user in usersList" :key="user.id" :value="user.id">{{ user.firstName }} {{ user.lastName }}</option>
+                            </select> 
                         </div>
                         <div class="delegations-tile-underscore"></div>
                     </div>
@@ -20,11 +24,10 @@
                         <div class="delegations-inputs-section">
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.delegationNo") }}: </label>
-                                <input class="delegations-input" v-model="newDelegation.number" @input="checkNewDelegation" />
+                                <p> {{ setDelegationNo() }} </p>
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.day") }}: </label>
-                                <!-- <masked-input mask="11.11.1111" @input="dateValidation" v-model="newDelegation.createDate" /> -->
                                 <v-date-picker class="delegations-input-date" @input="checkNewDelegation" v-model="newDelegation.createDate">
                                     <input value="newDelegation.createDate" />
                                 </v-date-picker>
@@ -49,11 +52,11 @@
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.dailyAllowance") }}: </label>
-                                <p class="delegations-input">{{dailyAllowance}} zł </p>
+                                <p class="delegations-input">{{dailyAllowance}} PLN </p>
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.totalAllowance") }}: </label>
-                                <p class="delegations-input">{{newDelegation.totalAllowance}} zł </p>
+                                <p class="delegations-input">{{newDelegation.totalAllowance}} {{newDelegation.currency}} </p>
                             </div>
                         </div>
                         <div class="delegations-inputs-section">
@@ -67,15 +70,15 @@
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.totalDelegationAmount") }}: </label>
-                                <p> {{ newDelegation.totalDelegationAmount}}</p>
+                                <p> {{ newDelegation.totalDelegationAmount}}  {{newDelegation.currency}}</p>
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.advanceAmount") }}: </label>
-                                <p> {{ totalCosts.advance}}</p>
+                                <p> {{ totalCosts.advance}}  {{newDelegation.currency}}</p>
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.totalReturnAmount") }}: </label>
-                                <p> {{ newDelegation.totalReturnAmount}} </p>
+                                <p> {{ newDelegation.totalReturnAmount}}  {{newDelegation.currency}}</p>
                             </div>
                         </div>
                     </div>
@@ -85,22 +88,14 @@
                 <travel-costs-table></travel-costs-table>
                 <accomodation-costs-table></accomodation-costs-table>
                 <other-costs-table></other-costs-table>
-
-                <!-- <button :disabled="disableSaveBtn" @click="save"> {{ $t("button.save") }} </button> -->
-
             </div>
-
-
         </div>
     </div>
-
 </div>
-<!-- </div> -->
-
-<!-- </div> -->
 </template>
 
 <script>
+import moment from "moment"
 import {
     mapGetters,
     mapActions
@@ -114,6 +109,8 @@ import DelegationTable from '../tables/DelegationTable'
 export default {
     data() {
         return {
+            showUsername: true,
+            delegationUsername: null
         }
     },
     components: {
@@ -129,6 +126,15 @@ export default {
             this.$store.dispatch('loadData', localStorage.getItem('token'))
         }
     },
+    created(){
+const role = localStorage.getItem('role')
+        if (role === 'ROLE_ADMIN') {
+            this.showUsername = false
+        } else {
+            this.newDelegation.userId = localStorage.getItem('id')
+            this.delegationUsername = localStorage.getItem('name')
+        }
+    },
     computed: {
         ...mapGetters({
             userData: 'userData',
@@ -138,22 +144,42 @@ export default {
             newDelegation: 'getNewDelegation',
             newDelegationValidated: 'getNewDelegationValidated',
             delegationTableValidated: 'getDelegationTableValidated',
-            dailyAllowance: 'getDailyAllowance'
+            dailyAllowance: 'getDailyAllowance',
+            usersList: 'usersList'
         }),
         disableSaveBtn() {
-            if (this.newDelegationValidated && this.delegationTableValidated && this.accCostValidated) {
-                return false
-            } else {
-                return true
-            }
+            return (this.newDelegationValidated && this.delegationTableValidated && this.accCostValidated) ? false : true
         }
     },
-
     methods: {
         ...mapActions({
             checkNewDelegation: 'checkNewDelegation',
             countAllowance: 'countAllowance'
-        })
+        }),
+        setDelegationNo(){
+            if (this.newDelegation.dates && this.delegationUsername) {
+            const date = this.newDelegation.dates.start,
+                year = moment(date).format('YYYY'),
+                month = moment(date).format('MM'),
+                username = this.delegationUsername
+            
+            return username + '/' + year + '/' + month
+            } else {
+                return null
+            }
+        },
+        setUsername(){
+            const users = this.usersList,
+                    selectedId = this.newDelegation.userId
+            for (let i=0; i <users.length; i ++) {
+                let user = users[i]
+                if (selectedId == user.id) {
+                    this.delegationUsername = (user.username).toUpperCase()
+                    return
+                }
+            }
+            
+        }
     }
 }
 </script>
