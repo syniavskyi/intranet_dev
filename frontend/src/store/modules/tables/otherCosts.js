@@ -47,6 +47,7 @@ const actions = {
              totalCosts = getters.getTotalCosts
         totalCosts.othPayback = 0
         totalCosts.others = 0
+        totalCosts.totalPayback = 0
         for(let i=0; i<otherCostData.length; i++) {
             let amount = otherCostData[i].amount,
                 curr = otherCostData[i].currency,
@@ -70,6 +71,7 @@ const actions = {
                 totalCosts.othPayback = totalCosts.othPayback + otherCostData[i].totalAmount
             }
             totalCosts.others = totalCosts.others + otherCostData[i].totalAmount
+            totalCosts.totalPayback = totalCosts.trvPayback + totalCosts.accPayback + totalCosts.othPayback
         }
         commit('SET_OTHER_COST_DATA', otherCostData)
         commit('SET_TOTAL_COST_DATA', totalCosts)

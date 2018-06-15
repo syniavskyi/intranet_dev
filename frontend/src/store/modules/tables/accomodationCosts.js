@@ -47,6 +47,7 @@ const actions = {
         totalCosts = getters.getTotalCosts
             totalCosts.accomodation = 0
             totalCosts.accPayback = 0
+            totalCosts.totalPayback = 0
 
         for(let i=0; i<accCostData.length; i++) {
             let amount = accCostData[i].amount,
@@ -70,6 +71,7 @@ const actions = {
                 totalCosts.accPayback = totalCosts.accPayback + accCostData[i].totalAmount
             }
             totalCosts.accomodation = totalCosts.accomodation + accCostData[i].totalAmount
+            totalCosts.totalPayback = totalCosts.trvPayback + totalCosts.accPayback + totalCosts.othPayback
         }
         commit('SET_COST_ACCOMODATION_DATA', accCostData)
         commit('SET_TOTAL_COST_DATA', totalCosts)

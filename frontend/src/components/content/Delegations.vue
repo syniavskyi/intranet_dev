@@ -70,7 +70,7 @@
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.totalDelegationAmount") }}: </label>
-                                <p> {{ newDelegation.totalDelegationAmount}}  {{newDelegation.currency}}</p>
+                                <p> {{ totalCosts.amount}}  {{newDelegation.currency}}</p>
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.advanceAmount") }}: </label>
@@ -78,7 +78,7 @@
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.totalReturnAmount") }}: </label>
-                                <p> {{ newDelegation.totalReturnAmount}}  {{newDelegation.currency}}</p>
+                                <p> {{ totalCosts.totalPayback}}  {{newDelegation.currency}}</p>
                             </div>
                         </div>
                     </div>

@@ -108,6 +108,7 @@ const actions = {
 
     totalCosts.travel = 0
     totalCosts.trvPayback = 0
+    totalCosts.totalPayback = 0
 
     for (let i = 0; i < costTravelData.length; i++) {
       let amount = costTravelData[i].amount,
@@ -147,7 +148,8 @@ const actions = {
 
       if (costTravelData[i].payback === true) {
         totalCosts.trvPayback = totalCosts.trvPayback + parseFloat(costTravelData[i].totalAmount)
-      }
+      } 
+      totalCosts.totalPayback = totalCosts.trvPayback + totalCosts.accPayback + totalCosts.othPayback
       totalCosts.travel = totalCosts.travel + parseFloat(costTravelData[i].totalAmount)
     }
     commit('SET_COST_TRAVEL_DATA', costTravelData)

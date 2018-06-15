@@ -33,6 +33,8 @@ const state = {
   totalCosts: {
     accPayback: 0,
     othPayback: 0,
+    trvPayback: 0,
+    totalPayback: 0,
     accomodation: 0,
     travel: 0,
     others: 0,
