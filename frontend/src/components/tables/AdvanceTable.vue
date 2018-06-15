@@ -1,12 +1,17 @@
 <template>
 <div class="delegations-tile">
-    <div class="delegations-tile-header">
-        <div class="delegations-tile-title">
-            {{ $t("header.advance") }}
+    <input id="delegations-row-1" class="documents-tiles-row-header-input" type="checkbox">
+    <label class="delegations-tiles-row-header" for="delegations-row-1">
+        <div class="delegations-tile-header">
+            <div class="delegations-tile-title">
+                {{ $t("header.advance") }}
+            </div>
+            <div class="delegations-tile-underscore"></div>
         </div>
-        <div class="delegations-tile-underscore"></div>
-    </div>
-    <div class="delegations-tile-content">
+    </label>
+    <div class="delegations-tile-wrap">    
+        
+        <div class="delegations-tile-content">
 
         <button @click="addAdvanceRow"> + </button>
         <div class="delegations-table-wrapper">
@@ -28,7 +33,7 @@
                         </div>
                         <div class="del-tfoot2"></div>
                     </div>
-                    <div class="del-tbody2-item-scost">
+                    <div class="del-tbody2-item-cost">
                         <div class="del-tbody2-item-title">{{ $t("table.delegations.currency") }}</div>
                         <div class="del-tbody2-item-txt">
                             <select class="delegations-tselect-s" v-model="advance.currency" @change="updateAdvance">
@@ -50,7 +55,7 @@
                         </div>
                     </div>
                     <div class="del-tfoot2">{{totalCosts.advance }}</div>
-                    <div class="del-tbody2-item-scost">
+                    <div class="del-tbody2-item-cost">
                         <div class="del-tbody2-item-txt"><button @click="removeAdvanceRow(index)"> X </button></div>
                         <div class="del-tfoot2"></div>
                     </div>
@@ -66,6 +71,7 @@
                 <div class="del-tbody2-item-cost-s"></div>
             </div>
         </div>
+    </div>
     </div>
 </div>
 </template>
