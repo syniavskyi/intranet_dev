@@ -1,11 +1,16 @@
 <template>
     <div class="delegations-tile">
-        <div class="delegations-tile-header">
+        <input id="delegations-row-3" class="documents-tiles-row-header-input" type="checkbox">
+        <label class="delegations-tiles-row-header" for="delegations-row-3">
+            <div class="delegations-tile-header">
             <div class="delegations-tile-title">
                 {{ $t("header.travelCosts") }}
             </div>
             <div class="delegations-tile-underscore"></div>
         </div>
+        </label>
+        <div class="delegations-tile-wrap">
+        
         <div class="delegations-tile-content">
 
             <button @click="addCostRow"> + </button>
@@ -142,6 +147,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 </template>

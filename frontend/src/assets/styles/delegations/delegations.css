@@ -720,3 +720,37 @@ body {
         width: 10%;
     }
 }
+
+.delegations-tiles-row-header {
+    line-height: 1.5rem;
+    color: black;
+    font-weight: bold;
+    transition: background .5s ease;
+}
+
+.delegations-tiles-row-header:hover {
+    background: #d9d9d9;
+    border-radius: 4px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    cursor: pointer;
+}
+
+#delegations-row-1:checked ~ .delegations-tile-wrap,
+#delegations-row-2:checked ~ .delegations-tile-wrap,
+#delegations-row-3:checked ~ .delegations-tile-wrap,
+#delegations-row-4:checked ~ .delegations-tile-wrap,
+#delegations-row-5:checked ~ .delegations-tile-wrap {
+   max-height: 20rem;
+}
+
+
+.delegations-tile-wrap {
+    display: flex;
+    width:  100%;
+    flex-direction: column; 
+    max-height: 0rem;
+    align-self: center;
+    transition: max-height .6s ease;
+    overflow: hidden;
+}

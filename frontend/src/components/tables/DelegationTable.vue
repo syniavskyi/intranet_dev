@@ -1,11 +1,16 @@
 <template>
     <div class="delegations-tile">
-                    <div class="delegations-tile-header">
-                        <div class="delegations-tile-title">
-                            {{ $t("header.travelExp") }}
-                        </div>
+        <input id="delegations-row-2" class="documents-tiles-row-header-input" type="checkbox">
+        <label class="delegations-tiles-row-header" for="delegations-row-2">
+            <div class="delegations-tile-header">
+                    <div class="delegations-tile-title">
+                        {{ $t("header.travelExp") }}
+                    </div>
                         <div class="delegations-tile-underscore"></div>
                     </div>
+        </label>
+        <div class="delegations-tile-wrap">
+                    
 
                     <div class="delegations-tile-content">
                         <div class="delegations-table-1">
@@ -213,7 +218,9 @@
                     </div>
                     <button @click="addRow"> + </button>
                     <!--  -->
-                </div>
+        </div>
+    </div>
+            
 </template>
 <script>
 import moment from "moment"
