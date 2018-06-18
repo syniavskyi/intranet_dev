@@ -20,7 +20,7 @@
                     <div class="del-thead-item-cost">{{ $t("table.delegations.advanceDate") }}</div>
                     <div class="del-thead-item-cost">{{ $t("table.delegations.advanceCurrency") }}</div>
                     <div class="del-thead-item-cost">{{ $t("table.delegations.advanceAmount") }}</div>
-                    <div class="del-thead-item-cost">{{ $t("table.delegations.totalAmount") }}</div>
+                    <div class="del-thead-item-cost"> {{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                     <div class="del-thead-item-cost">przyciski</div>
                 </div>
                 <div class="del-tbody-2" v-for="(advance, index) in advanceData" :key="index">
@@ -36,7 +36,7 @@
                     <div class="del-tbody2-item-cost">
                         <div class="del-tbody2-item-title">{{ $t("table.delegations.currency") }}</div>
                         <div class="del-tbody2-item-txt">
-                            <select class="delegations-tselect-s" v-model="advance.currency" @change="updateAdvance">
+                            <select class="delegations-tselect-s" v-model="advance.currency" @change="getAdvanceRate(index)">
                                 <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
                              </select>
                         </div>
@@ -49,12 +49,12 @@
                     </div>
                     <div class="del-tfoot2"></div>
                     <div class="del-tbody2-item-cost">
-                        <div class="del-tbody2-item-title">{{ $t("table.delegations.totalAmount") }}</div>
+                        <div class="del-tbody2-item-title"> {{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                         <div class="del-tbody2-item-txt">
-                            {{advance.totalAmount}}
+                            {{advance.totalAmountCurr}}
                         </div>
                     </div>
-                    <div class="del-tfoot2">{{totalCosts.advance }}</div>
+                    <div class="del-tfoot2">{{totalCostsInCurr.advance }}</div>
                     <div class="del-tbody2-item-cost">
                         <div class="del-tbody2-item-txt"><button @click="removeAdvanceRow(index)"> X </button></div>
                         <div class="del-tfoot2"></div>
@@ -66,8 +66,8 @@
         <div class="delegations-table-2 del-table-footer">
             <div class="del-tbody-2">
                 <div class="del-tbody2-item-wfoot-cost"></div>
-                <div class="del-tbody2-item-cost">{{ $t("table.delegations.amountPLN") }}</div>
-                <div class="del-tbody2-item-cost-s">{{totalCosts.advance }}</div>
+                <div class="del-tbody2-item-cost">{{ $t("table.delegations.amount") }}  {{newDelegation.currency}}</div>
+                <div class="del-tbody2-item-cost-s">{{totalCostsInCurr.advance }}</div>
                 <div class="del-tbody2-item-cost-s"></div>
             </div>
         </div>
@@ -91,14 +91,17 @@ export default {
         ...mapGetters({
             currencyList: 'getCurrencyList',
             advanceData: 'getAdvanceData',
-            totalCosts: 'getTotalCosts'
+            totalCosts: 'getTotalCosts',
+            totalCostsInCurr: "getTotalCostsInCurr",
+            newDelegation: 'getNewDelegation'
         })
     },
     methods: {
         ...mapActions([
             'checkAdvanceFields',
             'updateAdvance',
-            'removeAdvanceRow'
+            'removeAdvanceRow',
+            'getAdvanceRate'
         ]),
         addAdvanceRow() {
             this.$store.dispatch('addAdvanceRow')

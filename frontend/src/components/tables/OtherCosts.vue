@@ -23,7 +23,7 @@
                                     <div class="del-thead-item-scost">{{ $t("table.delegations.return") }}?</div>
                                     <div class="del-thead-item-scost">{{ $t("table.delegations.currency") }}</div>
                                     <div class="del-thead-item-scost">{{ $t("table.delegations.amount") }}</div>
-                                    <div class="del-thead-item-scost">{{ $t("table.delegations.amountPLN") }}</div>
+                                    <div class="del-thead-item-scost">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                                     <div class="del-thead-item-scost">przyciski</div>
                                 </div>
                                 <div class="del-tbody-2" v-for="(cost, index) in otherCosts" :key="index">
@@ -48,7 +48,7 @@
                                         <div class="del-tbody2-item-txt">
                                             <input class="delegations-tinput" v-model="cost.docNo" /> 
                                         </div>
-                                        <div class="del-tfoot2">{{ $t("table.delegations.amountPLN") }}</div>
+                                        <div class="del-tfoot2">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                                     </div>
                                     <div class="del-tbody2-item-scost">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.return") }}?</div>
@@ -75,7 +75,7 @@
                                     </div>
                                     
                                     <div class="del-tbody2-item-scost">
-                                        <div class="del-tbody2-item-title">{{ $t("table.delegations.amountPLN") }}</div>
+                                        <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                                         <div class="del-tbody2-item-txt">{{cost.totalAmount}}</div>
                                         <div class="del-tfoot2">
                                             <p>{{totalCosts.others }}</p>
@@ -90,7 +90,7 @@
                             <div class="delegations-table-2 del-table-footer">
                                 <div class="del-tbody-2">
                                     <div class="del-tbody2-item-wfoot-scost"></div>
-                                    <div class="del-tbody2-item-scost">{{ $t("table.delegations.amountPLN") }}</div>
+                                    <div class="del-tbody2-item-scost">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                                     <div class="del-tbody2-item-scost">{{ totalCosts.othPayback }}</div>
                                     <div class="del-tbody2-item-scost">---</div>
                                     <div class="del-tbody2-item-scost"></div>
@@ -123,7 +123,8 @@ export default {
             checkOtherCostsFields: 'checkOtherCostsFields',
             addCostRow: 'addOtherCostRow',
             removeCostRow: 'removeOtherCostRow',
-            updateOtherCosts: 'countOtherCosts'
+            updateOtherCosts: 'countOtherCosts',
+            newDelegation: 'getNewDelegation'
         })
     }
 }

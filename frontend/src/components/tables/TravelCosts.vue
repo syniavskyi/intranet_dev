@@ -26,7 +26,7 @@
                         <div class="del-thead-item-cost">{{ $t("table.delegations.kilometers") }}</div>
                         <div class="del-thead-item-cost-s">{{ $t("table.delegations.currency") }}</div>
                         <div class="del-thead-item-cost">{{ $t("table.delegations.amount") }}</div>
-                        <div class="del-thead-item-cost">{{ $t("table.delegations.amountPLN") }}</div>
+                        <div class="del-thead-item-cost">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                         <div class="del-thead-item-cost">przyciski</div>
                     </div>
                     <div class="del-tbody-2" v-for="(cost, index) in travelCosts" :key="index">
@@ -51,7 +51,7 @@
                             <div class="del-tbody2-item-txt">
                                 <input class="delegations-tinput" @input="checkTravelFields" v-model="cost.docNo" />
                             </div>
-                            <div class="del-tfoot2">{{ $t("table.delegations.amountPLN") }}</div>
+                            <div class="del-tfoot2">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                         </div>
                         <div class="del-tbody2-item-cost-s">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.return") }}?</div>
@@ -118,7 +118,7 @@
                         </div>
 
                         <div class="del-tbody2-item-cost">
-                            <div class="del-tbody2-item-title">{{ $t("table.delegations.amountPLN") }}</div>
+                            <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                             <div class="del-tbody2-item-txt">{{cost.totalAmount}}</div>
                             <div class="del-tfoot2">
                                 <p>{{totalCosts.travel }}</p>
@@ -135,7 +135,7 @@
                 <div class="delegations-table-2 del-table-footer">
                     <div class="del-tbody-2">
                         <div class="del-tbody2-item-wfoot-cost"></div>
-                        <div class="del-tbody2-item-cost">{{ $t("table.delegations.amountPLN") }}</div>
+                        <div class="del-tbody2-item-cost">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                         <div class="del-tbody2-item-cost-s">{{ totalCosts.trvPayback }}</div>
                         <div class="del-tbody2-item-cost-xw">---</div>
                         <div class="del-tbody2-item-cost">---</div>
@@ -170,7 +170,8 @@ export default {
             currencyList: 'getCurrencyList',
             travelCosts: 'getTravelCostData',
             totalCosts: 'getTotalCosts',
-            transportList: "getTransportList"
+            transportList: "getTransportList",
+            newDelegation: "getNewDelegation"
         })
     },
     methods: {

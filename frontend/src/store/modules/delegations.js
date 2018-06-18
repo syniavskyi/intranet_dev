@@ -30,7 +30,20 @@ const state = {
       rate: '3,22'
     }
   ],
+  //total costs in pln
   totalCosts: {
+    accPayback: 0,
+    othPayback: 0,
+    trvPayback: 0,
+    totalPayback: 0,
+    accomodation: 0,
+    travel: 0,
+    others: 0,
+    amount: 0,
+    advance: 0
+  },
+  //totalcosts in currency of delegation
+  totalCostsInCurr: {
     accPayback: 0,
     othPayback: 0,
     trvPayback: 0,
@@ -84,6 +97,9 @@ const mutations = {
   },
   SET_NEW_DELEGATION(state, delegation) {
     state.newDelegation = delegation
+  },  
+  SET_TOTAL_COST_CURR_DATA(state, list) {
+    state.totalCostsInCurr = list
   }
 };
 
@@ -263,8 +279,10 @@ const getters = {
   },
   getDailyAllowance(state) {
     return state.dailyAllowance
+  },
+  getTotalCostsInCurr(state){
+    return state.totalCostsInCurr
   }
-
 };
 
 export default {

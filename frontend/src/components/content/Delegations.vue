@@ -70,20 +70,19 @@
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.totalDelegationAmount") }}: </label>
-                                <p> {{ totalCosts.amount}}  {{newDelegation.currency}}</p>
+                                <p> {{ totalCostsInCurr.amount}}  {{newDelegation.currency}}</p>
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.advanceAmount") }}: </label>
-                                <p> {{ totalCosts.advance}}  {{newDelegation.currency}}</p>
+                                <p> {{ totalCostsInCurr.advance}}  {{newDelegation.currency}}</p>
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.totalReturnAmount") }}: </label>
-                                <p> {{ totalCosts.totalPayback}}  {{newDelegation.currency}}</p>
+                                <p> {{ totalCostsInCurr.totalPayback}}  {{newDelegation.currency}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                
                 <delegation-table></delegation-table>
                 <advance-table></advance-table>
                 <travel-costs-table></travel-costs-table>
@@ -146,7 +145,8 @@ const role = localStorage.getItem('role')
             newDelegationValidated: 'getNewDelegationValidated',
             delegationTableValidated: 'getDelegationTableValidated',
             dailyAllowance: 'getDailyAllowance',
-            usersList: 'usersList'
+            usersList: 'usersList',
+            totalCostsInCurr: 'getTotalCostsInCurr'
         }),
         disableSaveBtn() {
             return (this.newDelegationValidated && this.delegationTableValidated && this.accCostValidated) ? false : true
