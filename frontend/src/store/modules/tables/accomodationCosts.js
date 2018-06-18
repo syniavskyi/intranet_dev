@@ -6,7 +6,8 @@ const state = {
         payback: false,
         currency: 'PLN',
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        flatRate: false
     }],
     costAccValidated: false
 };
@@ -30,7 +31,8 @@ const actions = {
             payback: false,
             currency: 'PLN',
             amount: 0,
-            totalAmount: 0
+            totalAmount: 0,
+            flatRate: false
         })
         commit('SET_COST_ACCOMODATION_DATA', accCostData)
         commit('SET_ACC_COSTS_VALIDATED', false)
