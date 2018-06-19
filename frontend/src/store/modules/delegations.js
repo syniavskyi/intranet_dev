@@ -49,6 +49,7 @@ const state = {
     trvPayback: 0,
     totalPayback: 0,
     accomodation: 0,
+    flatRateForAcc: 0,
     travel: 0,
     others: 0,
     amount: 0,

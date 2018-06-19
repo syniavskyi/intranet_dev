@@ -1,20 +1,17 @@
-import axios from 'axios'
+import { createRateDate }  from '../../../utils'
 import moment from 'moment'
+import axios from 'axios'
 
 const state = {
   advanceData: [{
     date: null,
     currency: null,
-    amount: 0,
-    // totalAmountInPln
+    amount: 0, // totalAmountInPln
     totalAmount: 0,
     currencyRate: 1,
-
-    rateDate: null,
-    //total  amount in delegation curr and rate for it
+    rateDate: null, //total  amount in delegation curr and rate for it
     totalAmountCurr: 0,
     delegationCurrRate: 1
-
     }],
   advanceTableValidated: false
 };
@@ -36,7 +33,6 @@ const actions = {
   }, index) {
     const advanceData = getters.getAdvanceData
     advanceData.splice(index, 1)
-    commit('SET_ADVANCE_DATA', advanceData)
     dispatch('updateAdvance')
     dispatch('checkAdvanceFields')
   },
@@ -52,7 +48,6 @@ const actions = {
       totalAmountCurr: 0,
       delegationCurrRate: 1
     })
-    commit('SET_ADVANCE_DATA', advanceData)
     commit('SET_ADVANCE_VALIDATED', false)
   },
   checkAdvanceFields({
@@ -94,10 +89,6 @@ const actions = {
           totalCosts.advance = totalCosts.advance + parseFloat(advanceData[i].totalAmount)
           totalCostsInCurr.advance = parseFloat(totalCostsInCurr.advance) + parseFloat(advanceData[i].totalAmountCurr)
         }
-
-        commit('SET_ADVANCE_DATA', advanceData)
-        commit('SET_TOTAL_COST_DATA', totalCosts)
-        commit('SET_TOTAL_COST_CURR_DATA', totalCostsInCurr)
         dispatch('checkAdvanceFields')
   },
   getAdvanceRate({commit, dispatch, getters}, index) {
@@ -110,15 +101,11 @@ const actions = {
     if (data[index].date && data[index].currency && data[index].currency !== "PLN") { 
       const date = moment(rateDate).format('YYYY-MM-DD')
       const URL = 'http://api.nbp.pl/api/exchangerates/tables/a/' + date +'/'
-      // + (data[index].currency).toLowerCase() + '/'
       axios.get(URL).then(res => {
         let currRates = res.data[0].rates
-        
         data[index].currencyRate = currRates.find(o => o.code === data[index].currency).mid
         data[index].delegationCurrRate = currRates.find(o => o.code === newDelegationCurr).mid
-        commit('SET_ADVANCE_DATA', data)
         dispatch('updateAdvance')
-        console.log(res)
       }).catch(error => {
         alert(error)
         console.log(error)
@@ -126,7 +113,6 @@ const actions = {
     } else if (data[index].date && data[index].currency == "PLN"){
       data[index].currencyRate = 1 
       data[index].delegationCurrRate = 1
-      commit('SET_ADVANCE_DATA', data)
       dispatch('updateAdvance')
     } 
   },
@@ -144,32 +130,7 @@ const getters = {
   }
 };
 
-const createRateDate = function(rateDate) {
-  let day = parseFloat(moment(rateDate).format('D')),
-    month = parseFloat(moment(rateDate).format('M')),
-    dayOfWeek = parseFloat(moment(rateDate).weekday())
-      
-  if (dayOfWeek === 6) {
-    if (day !== 1 ) {
-      day = day - 1 
-      rateDate.setDate(day)
-    } else {
-      rateDate = new Date(rateDate.getFullYear(), rateDate.getMonth() - 1, 0)
-    }
-  } else if (dayOfWeek === 0) {
-    if (day !== 1 ) {
-      day = day - 2 
-      rateDate.setDate(day)
-    } else {
-      rateDate = new Date(rateDate.getFullYear(), rateDate.getMonth() - 1, 0)
-      day = moment(rateDate).format('D')
-      day = day - 1 
-      rateDate.setDate(day)
-    }
-  }
 
-  return rateDate
-}
 
 
 export default {

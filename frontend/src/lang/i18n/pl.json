@@ -169,7 +169,8 @@
             "paymentType": "Typ zwrotu",
             "advanceDate": "Data zaliczki",
             "advanceCurrency": "Waluta zaliczki",
-            "advanceAmount": "Kwota zaliczki"
+            "advanceAmount": "Kwota zaliczki",
+            "days": "Liczba dni"
         },
         "addModule": "Wybierz moduł z listy"  
     }

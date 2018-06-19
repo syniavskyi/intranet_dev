@@ -167,7 +167,8 @@
             "paymentType": "Return type",
             "advanceDate": "Advance Date",
             "advanceCurrency": "Advance currency",
-            "advanceAmount": "Advance amount"
+            "advanceAmount": "Advance amount",
+            "days": "Number of days"
         },
         "addModule": "Select module"   
     }
