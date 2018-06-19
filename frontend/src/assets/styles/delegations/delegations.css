@@ -137,8 +137,109 @@ body {
 .delegations-div-input {
     display: flex;
     flex-direction: column;
-    margin-bottom:.5rem;
+    margin-bottom:1rem;
 }
+/* COOOL INPUTS AND SELECT !!! */
+.delegations-div-cool {
+    display: flex;
+    width: 12rem;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.delegations-input-cool {
+    height: 2rem;
+    border: 0;
+    border-bottom:1px solid #757575;
+    width: 100%;
+    text-indent: .2rem;
+}
+
+.delegations-select-cool {
+    display: flex;
+    width: 100%;
+    height: 2rem;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    background-image: url("../../images/expand2.png");
+    background-repeat: no-repeat;
+    background-position: right;
+    flex-shrink: 0;
+    appearance: none;
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    text-indent: .2rem;
+}
+
+.delegations-div-bar { position:relative; display:flex; width:100%; }
+    
+.delegations-div-bar:before, .delegations-div-bar:after 	{
+      content:'';
+      height:2px; 
+      width:0;
+      bottom:0; 
+      position:absolute;
+      background:rgb(255, 145, 0); 
+      transition:0.5s ease all; 
+      -moz-transition:0.5s ease all; 
+      -webkit-transition:0.5s ease all;
+    }
+    .delegations-div-bar:before {
+      left:50%;
+    }
+    .delegations-div-bar:after {
+      right:50%; 
+    }
+    
+    /* active state */
+    .delegations-input-cool:focus ~ span:before, .delegations-input-cool:focus ~ span:after {
+      width:50%;
+    }
+
+.delegations-label-cool {
+    color:#999; 
+    font-size:1.2rem;
+    font-kerning: 1rem;
+    position:absolute;
+    pointer-events:none;
+    background-color: white;
+    left:0.2rem;
+    top:0.5rem;
+    transition:0.3s ease all; 
+}
+
+.delegations-label-cool-select {
+    color:#999; 
+    font-size:1.2rem;
+    font-kerning: 1rem;
+    position:absolute;
+    pointer-events:none;
+    background-color: white;
+    left:0.2rem;
+    top:0.35rem;
+    transition:0.3s ease all; 
+}
+
+.delegations-input-cool:focus ~ label,
+.delegations-select-cool:focus ~ label,
+.delegations-input-cool:valid ~ label,
+.delegations-select-cool:valid ~ label {
+    top: -.6rem;
+    font-size: 1rem;
+    color: rgb(255, 145, 0);
+}
+
+.delegations-input-cool:focus,
+.delegations-select-cool:focus {
+    outline: none;
+}
+
+.delegations-select-cool {
+
+}
+
+/* COOOL INPUTS AND SELECT !!! */
 
 .delegations-table-1 {
     display: block;

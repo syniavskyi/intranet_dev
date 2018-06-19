@@ -216,13 +216,13 @@ body {
 }
 
 .doc-file-doc {
-    background-image: url(../../images/files/file-word-48.png);
+    background-image: url(../../images/files/doc-48.png);
 }
 .doc-file-pdf {
-    background-image: url(../../images/files/file-pdf-48.png); 
+    background-image: url(../../images/files/pdf-48.png); 
 }
 .doc-file-xls {
-    background-image: url(../../images/files/file-excel-48.png);
+    background-image: url(../../images/files/xls-48.png);
 }
 
 .doc-file-div {
