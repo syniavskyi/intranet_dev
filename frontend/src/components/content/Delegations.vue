@@ -38,11 +38,11 @@
                                     <input value="newDelegation.dates" />
                                 </v-date-picker>
                             </div>
-                            <div class="delegations-div-input">
-                                <label class="delegations-label">{{ $t("table.delegations.currency") }}: </label>
-                                <select v-model="newDelegation.currency" @change="checkNewDelegation">
+                            <div class="delegations-div-cool">
+                                <select required class="delegations-select-cool" v-model="newDelegation.currency" @change="checkNewDelegation">
                                     <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
                                 </select>
+                                <label class="delegations-label-cool-select">{{ $t("table.delegations.currency") }} </label>
                             </div>
                         </div>
                         <div class="delegations-inputs-section">
@@ -60,13 +60,15 @@
                             </div>
                         </div>
                         <div class="delegations-inputs-section">
-                            <div class="delegations-div-input">
-                                <label class="delegations-label">{{ $t("label.to") }}: </label>
-                                <input class="delegations-input" v-model="newDelegation.destination" @input="checkNewDelegation" />
+                            <div class="delegations-div-cool">
+                                <input required class="delegations-input-cool" v-model="newDelegation.destination" @input="checkNewDelegation" />
+                                <span class="delegations-div-bar"></span>
+                                <label class="delegations-label-cool">{{ $t("label.to") }} </label>
                             </div>
-                            <div class="delegations-div-input">
-                                <label class="delegations-label">{{ $t("label.target") }}: </label>
-                                <input class="delegations-input" v-model="newDelegation.purpose" @input="checkNewDelegation" />
+                            <div class="delegations-div-cool">
+                                <input required class="delegations-input-cool" v-model="newDelegation.purpose" @input="checkNewDelegation" />
+                                <span class="delegations-div-bar"></span>
+                                <label class="delegations-label-cool">{{ $t("label.target") }} </label>
                             </div>
                             <div class="delegations-div-input">
                                 <label class="delegations-label">{{ $t("label.totalDelegationAmount") }}: </label>

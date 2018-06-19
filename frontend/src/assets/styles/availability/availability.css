@@ -229,8 +229,8 @@ body {
     border-radius: 3px;
     appearance: none;
     -webkit-appearance: none; 
-    font-size: 1rem;
     -moz-appearance: none;
+    font-size: 1rem;
     background-image: url("../../images/expand2.png");
     background-repeat: no-repeat;
     background-position: right;
