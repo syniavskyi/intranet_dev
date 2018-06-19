@@ -174,28 +174,27 @@ body {
 
 .delegations-div-bar { position:relative; display:flex; width:100%; }
     
-.delegations-div-bar:before, .delegations-div-bar:after 	{
-      content:'';
-      height:2px; 
-      width:0;
-      bottom:0; 
-      position:absolute;
-      background:rgb(255, 145, 0); 
-      transition:0.5s ease all; 
-      -moz-transition:0.5s ease all; 
-      -webkit-transition:0.5s ease all;
-    }
-    .delegations-div-bar:before {
-      left:50%;
-    }
-    .delegations-div-bar:after {
-      right:50%; 
-    }
-    
-    /* active state */
-    .delegations-input-cool:focus ~ span:before, .delegations-input-cool:focus ~ span:after {
-      width:50%;
-    }
+.delegations-div-bar:before, .delegations-div-bar:after {
+    content:'';
+    height:2px; 
+    width:0;
+    bottom:0; 
+    position:absolute;
+    background:rgb(255, 145, 0); 
+    transition:0.5s ease all; 
+    -moz-transition:0.5s ease all; 
+    -webkit-transition:0.5s ease all;
+}
+.delegations-div-bar:before {
+    left:50%;
+}
+.delegations-div-bar:after {
+    right:50%; 
+} 
+/* active state */
+.delegations-input-cool:focus ~ span:before, .delegations-input-cool:focus ~ span:after {
+    width:50%;
+}
 
 .delegations-label-cool {
     color:#999; 
@@ -233,10 +232,6 @@ body {
 .delegations-input-cool:focus,
 .delegations-select-cool:focus {
     outline: none;
-}
-
-.delegations-select-cool {
-
 }
 
 /* COOOL INPUTS AND SELECT !!! */
