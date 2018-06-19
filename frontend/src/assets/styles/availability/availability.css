@@ -201,16 +201,26 @@ body {
     min-width: 15rem; 
 }
 
-.ava-div-select {
+.ava-div-select,
+.ava-div-select-cool,
+.ava-div-input-cool {
     display: flex;
     position: relative;
     flex-direction: column;
     align-items: center;
     animation: slide-up 0.4s ease;
-    margin-bottom: .7rem;
+    margin-bottom: 1.5rem;
     justify-content: space-around;
 }
 
+.ava-div-select-cool,
+.ava-div-input-cool {
+    width: 15rem;
+}
+.ava-select-cool:focus,
+.ava-input-range-perc:focus {
+    outline: none;
+}
 .ava-select-label {
     align-self:flex-start;
     margin-bottom: .2rem;
@@ -218,12 +228,35 @@ body {
     color: grey;
     /* line-height: 1.8rem; */
 }
+.ava-select-label-cool,
+.ava-input-label-cool {
+    color:#999; 
+    font-size:1.2rem;
+    font-kerning: 1rem;
+    position:absolute;
+    pointer-events:none;
+    background-color: white;
+    left:0.3rem;
+    top:0.35rem;
+    transition:0.3s ease all;
+    padding: 0 .2rem; 
+}
 
-.ava-select {
-    text-indent: 10%;
+.ava-select-cool:focus ~ label,
+.ava-input-range-perc:focus ~ label,
+.ava-input-range-wide ~ label,
+.ava-input-range ~ label,
+.ava-select-cool:valid ~ label,
+.ava-input-range-perc:valid ~ label {
+    top: -.65rem;
+    font-size: 1rem;
+    color: rgb(255, 145, 0);
+}
+
+.ava-select,
+.ava-select-cool {
     background: white;
     line-height: 2rem;
-    width: 15rem;
     border: 1px solid lightgrey;
     color: black;
     border-radius: 3px;
@@ -235,6 +268,15 @@ body {
     background-repeat: no-repeat;
     background-position: right;
     flex-shrink: 0;
+}
+
+.ava-select {
+    width: 15rem;
+    text-indent: 10%;
+}
+.ava-select-cool {
+    width: 100%;
+    text-indent: .45rem;
 }
 
 .ava-div-input {
@@ -251,22 +293,46 @@ body {
     color: grey;
 }
 
-.ava-input-range-perc {
+.ava-input-range-perc,
+.ava-input-range {
     font-size: 1rem;
     height: 1.9rem;
-    border: 1px solid lightgrey;
+    border:0;
+    border-bottom: 1px solid lightgrey;
     text-align:center;
-    border-radius: 4px;
+    width: 100%;
 }
+
+.ava-div-bar:before, 
+.ava-div-bar:after {
+    content:'';
+    height:2px; 
+    width:0;
+    bottom:0; 
+    position:absolute;
+    background:rgb(255, 145, 0); 
+    transition:0.5s ease all; 
+    -moz-transition:0.5s ease all; 
+    -webkit-transition:0.5s ease all;
+}
+.ava-div-bar:before {
+    left:50%;
+}
+.ava-div-bar:after {
+    right:50%; 
+} 
+/* active state */
+.ava-input-range-perc:focus ~ span:before, .ava-input-range-perc:focus ~ span:after {
+    width:50%;
+}
+
+
 .ava-perc-span {
     position: absolute;
     bottom: 0.5rem;
-    right: 5rem;
+    right: 6.3rem;
 }
-.ava-input-range {
-    border: 0;
-    height: 2.1rem;
-}
+
 .ava-input-range input {
     border: 1px solid lightgrey;
     text-align: center;
@@ -321,7 +387,7 @@ body {
     outline: none;
 }
 
-.ava-button-edit {
+.ava-button-edit{
     margin: .5rem;
     animation: slide-up 0.6s ease;
 }
@@ -375,7 +441,8 @@ body {
 .ava-input-range-wide,
 .ava-input-range-wide input {
     font-size: 1rem;
-    width: 14rem;
+    /* width: 14rem; */
+    width: 100%;
     min-width: 12rem;
     height: 1.9rem;
 }
