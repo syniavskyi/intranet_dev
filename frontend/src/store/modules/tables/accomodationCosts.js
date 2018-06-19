@@ -7,7 +7,8 @@ const state = {
         currency: 'PLN',
         amount: 0,
         totalAmount: 0,
-        flatRate: false
+        flatRate: false,
+        flatRateDays: null
     }],
     costAccValidated: false
 };
@@ -32,7 +33,8 @@ const actions = {
             currency: 'PLN',
             amount: 0,
             totalAmount: 0,
-            flatRate: false
+            flatRate: false,
+            flatRateDays: null
         })
         commit('SET_COST_ACCOMODATION_DATA', accCostData)
         commit('SET_ACC_COSTS_VALIDATED', false)
@@ -97,6 +99,15 @@ const actions = {
                     }
                 }
             }
+    },
+    countAccFlatRate({commit,dispatch,getters}, index) {
+        const costs = getters.getAccomodationCostData,
+              dailyAll = getters.getDailyAllowance,
+              delegationCurr = getters.getNewDelegation.currency
+        
+        costs[index].currency = delegationCurr
+        costs[index].amount = 1.5 * costs[index].flatRateDays * dailyAll 
+        costs[index].totalAmount = 1.5 * costs[index].flatRateDays * dailyAll 
     }
 };
 

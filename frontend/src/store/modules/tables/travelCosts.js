@@ -1,3 +1,7 @@
+import { createRateDate }  from '../../../utils'
+import moment from 'moment'
+import axios from 'axios'
+
 const state = {
   costTravelData: [{
     docDate: null,
@@ -11,7 +15,11 @@ const state = {
     licensePlateNo: null,
     flatRate: null,
     engineCapacity: null,
-    kilometers: 0
+    kilometers: 0,
+    currencyRate: 1,
+    rateDate: null, //total  amount in delegation curr and rate for it
+    totalAmountCurr: 0,
+    delegationCurrRate: 1
   }],
   transportList: [{
       id: "companyCar",
@@ -82,7 +90,11 @@ const actions = {
       licensePlateNo: null,
       flatRate: null,
       engineCapacity: null,
-      kilometers: null
+      kilometers: null,
+      currencyRate: 1,
+      rateDate: null, 
+      totalAmountCurr: 0,
+      delegationCurrRate: 1
     })
     commit('SET_COST_TRAVEL_DATA', costTravelData)
     commit('SET_TRV_COSTS_VALIDATED', false)
@@ -104,19 +116,15 @@ const actions = {
   }) {
     const costTravelData = getters.getTravelCostData,
       totalCosts = getters.getTotalCosts,
-      transportRates = getters.getRatesForTransport[0]
+      transportRates = getters.getRatesForTransport[0],
+      delegationRate = getters.getNewDelegation.currency,
+      totalCostsInCurr = getters.getTotalCostsInCurr
 
-    totalCosts.travel = 0
-    totalCosts.trvPayback = 0
-    totalCosts.totalPayback = 0
-
+    totalCosts.travel = totalCosts.trvPayback =  totalCosts.totalPayback = totalCostsInCurr.travel = totalCostsInCurr.trvPayback = totalCostsInCurr.totalPayback = 0
     for (let i = 0; i < costTravelData.length; i++) {
       let amount = costTravelData[i].amount,
         flatRateAmount = null,
-        curr = costTravelData[i].currency,
-        exchangeRates = getters.getExchangeRates,
-        rate = null,
-        totalAmount = null,
+        rate = parseFloat(costTravelData[i].currencyRate).toFixed(2),
         transport = costTravelData[i].transport,
         km = costTravelData[i].kilometers
 
@@ -124,36 +132,35 @@ const actions = {
       km = (km === "") ? 0 : parseFloat(km)
 
       if (transport === "companyCar") {
-        costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.carMore).toFixed(2)
+        costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.carMore * rate).toFixed(2)
       } else if (transport === "privateCar") {
         if (costTravelData[i].engineCapacity === true) {
-          costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.carMore).toFixed(2)
+          costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.carMore * rate).toFixed(2)
         } else if (costTravelData[i].engineCapacity === false) {
-          costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.carLess).toFixed(2)
+          costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.carLess * rate).toFixed(2)
         } else {
             costTravelData[i].totalAmount = costTravelData[i].amount = 0
         }
       } else if (transport === "motocycle") {
-        costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.motocycle).toFixed(2)
+        costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.motocycle * rate).toFixed(2)
       } else if (transport === "moped") {
-        costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.moped).toFixed(2)
+        costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.moped * rate).toFixed(2)
       } else {
-        for (let i = 0; i < exchangeRates.length; i++) {
-          if (exchangeRates[i].id === curr) {
-            rate = parseFloat(exchangeRates[i].rate)
-          }
-        }
-        costTravelData[i].totalAmount = amount * rate
+        costTravelData[i].totalAmount = (amount * rate).toFixed(2)
       }
 
+      costTravelData[i].totalAmountCurr = parseFloat(costTravelData[i].totalAmount / costTravelData[i].delegationCurrRate).toFixed(2)
+
       if (costTravelData[i].payback === true) {
-        totalCosts.trvPayback = totalCosts.trvPayback + parseFloat(costTravelData[i].totalAmount)
+        totalCosts.trvPayback = totalCosts.trvPayback + parseFloat(costTravelData[i].totalAmount).toFixed(2)
+        totalCostsInCurr.trvPayback = totalCostsInCurr.trvPayback + parseFloat(costTravelData[i].totalAmountCurr)
       } 
       totalCosts.totalPayback = totalCosts.trvPayback + totalCosts.accPayback + totalCosts.othPayback
-      totalCosts.travel = totalCosts.travel + parseFloat(costTravelData[i].totalAmount)
+      totalCostsInCurr.totalPayback = totalCostsInCurr.trvPayback + totalCostsInCurr.accPayback + totalCostsInCurr.othPayback
+      
+      totalCosts.travel = totalCosts.travel + parseFloat(costTravelData[i].totalAmount).toFixed(2)
+      totalCostsInCurr.travel = totalCostsInCurr.travel + parseFloat(costTravelData[i].totalAmountCurr)
     }
-    commit('SET_COST_TRAVEL_DATA', costTravelData)
-    commit('SET_TOTAL_COST_DATA', totalCosts)
     dispatch('checkTravelFields')
   },
   checkTravelFields({
@@ -177,7 +184,32 @@ const actions = {
         }
       }
     }
-  }
+  },
+  getTravelRate({commit, dispatch, getters}, index) {
+    let data = getters.getTravelCostData,
+     rateDate = data[index].docDate,
+     newDelegationCurr = getters.getNewDelegation.currency
+          
+    rateDate = createRateDate(rateDate)
+    data[index].rateDate = rateDate
+    if (data[index].rateDate && data[index].currency && data[index].currency !== "PLN") { 
+      const date = moment(rateDate).format('YYYY-MM-DD')
+      const URL = 'http://api.nbp.pl/api/exchangerates/tables/a/' + date +'/'
+       axios.get(URL).then(res => {
+        let currRates = res.data[0].rates
+        data[index].currencyRate = currRates.find(o => o.code === data[index].currency).mid
+        data[index].delegationCurrRate = currRates.find(o => o.code === newDelegationCurr).mid
+       dispatch('countTravelCosts')
+      }).catch(error => {
+        alert(error)
+        console.log(error)
+      })  
+    } else if (data[index].rateDate && data[index].currency == "PLN"){
+      data[index].currencyRate = 1 
+      data[index].delegationCurrRate = 1
+      dispatch('countTravelCosts')
+    } 
+  },
 };
 
 const getters = {

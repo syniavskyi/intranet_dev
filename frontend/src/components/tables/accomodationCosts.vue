@@ -32,6 +32,8 @@
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.flatRate") }}?</div>
                                         <div class="del-tbody2-item-txt">
                                             <input type="checkbox" @change="checkAccomodationFields" v-model="cost.flatRate" />
+                                            <label v-show="hideAccFields(cost)">{{ $t("table.delegations.days") }}</label>
+                                            <input v-show="hideAccFields(cost)" v-model="cost.flatRateDays" @input="countAccFlatRate(index)"/>
                                         </div>
                                         <div class="del-tfoot2"></div>
                                     </div>
@@ -134,7 +136,9 @@ export default {
             checkAccomodationFields: 'checkAccomodationFields',
             addCostRow: 'addAccCostRow',
             removeCostRow: 'removeAccCostRow',
-             updateAccCosts: 'countAccomodationCosts'
+            updateAccCosts: 'countAccomodationCosts',
+            countAccFlatRate: 'countAccFlatRate'
+
         }),
         hideAccFields(cost) {
             const type = cost.flatRate

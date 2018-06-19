@@ -27,7 +27,7 @@
                     <div class="del-tbody2-item-cost">
                         <div class="del-tbody2-item-title">{{ $t("table.delegations.advanceDate") }}</div>
                         <div class="del-tbody2-item-txt">
-                            <v-date-picker class="delegations-tinput-date" mode="single" @input="checkAdvanceFields" v-model="advance.date">
+                            <v-date-picker class="delegations-tinput-date" mode="single" @input="getAdvanceRate(index)" v-model="advance.date">
                                 <input value="otherCosts[index].docDate" />
                             </v-date-picker>
                         </div>

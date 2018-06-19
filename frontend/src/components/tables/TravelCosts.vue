@@ -33,7 +33,7 @@
                         <div class="del-tbody2-item-cost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.docDate") }}</div>
                             <div class="del-tbody2-item-txt">
-                                <v-date-picker class="delegations-tinput-date" mode="single" @input="checkTravelFields" v-model="cost.docDate">
+                                <v-date-picker class="delegations-tinput-date" mode="single" @change="getTravelRate(index)" v-model="cost.docDate">
                                     <input value="otherCosts[index].docDate" />
                                 </v-date-picker>
                             </div>
@@ -58,7 +58,7 @@
                             <div class="del-tbody2-item-txt">
                                 <input type="checkbox" @change="updateTravelCosts" v-model="cost.payback" />
                             </div>
-                            <div class="del-tfoot2-s">{{ totalCosts.trvPayback }}</div>
+                            <div class="del-tfoot2-s">{{ totalCostsInCurr.trvPayback }}</div>
                         </div>
                         <div class="del-tbody2-item-cost-xw">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.transport") }}</div>
@@ -102,7 +102,7 @@
                         <div class="del-tbody2-item-cost-s">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.currency") }}</div>
                             <div class="del-tbody2-item-txt">
-                                 <select :disabled="disableCostAmount(cost)" :class="[{ 'delegations-tselect-s-disabled': disableCostAmount(cost) },  'delegations-tselect-s']" v-model="travelCosts[index].currency" @change="updateTravelCosts">
+                                 <select :disabled="disableCostAmount(cost)" :class="[{ 'delegations-tselect-s-disabled': disableCostAmount(cost) },  'delegations-tselect-s']" v-model="travelCosts[index].currency" @change="getTravelRate(index)">
                                     <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
                                 </select>
                             </div>
@@ -119,9 +119,9 @@
 
                         <div class="del-tbody2-item-cost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
-                            <div class="del-tbody2-item-txt">{{cost.totalAmount}}</div>
+                            <div class="del-tbody2-item-txt">{{cost.totalAmountCurr}}</div>
                             <div class="del-tfoot2">
-                                <p>{{totalCosts.travel }}</p>
+                                <p>{{totalCostsInCurr.travel }}</p>
                             </div>
                         </div>
                         <div class="del-tbody2-item-cost">
@@ -136,13 +136,13 @@
                     <div class="del-tbody-2">
                         <div class="del-tbody2-item-wfoot-cost"></div>
                         <div class="del-tbody2-item-cost">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
-                        <div class="del-tbody2-item-cost-s">{{ totalCosts.trvPayback }}</div>
+                        <div class="del-tbody2-item-cost-s">{{ totalCostsInCurr.trvPayback }}</div>
                         <div class="del-tbody2-item-cost-xw">---</div>
                         <div class="del-tbody2-item-cost">---</div>
                         <div class="del-tbody2-item-cost">---</div>
                         <div class="del-tbody2-item-cost-s">---</div>
                         <div class="del-tbody2-item-cost">---</div>
-                        <div class="del-tbody2-item-cost">{{totalCosts.travel }}</div>
+                        <div class="del-tbody2-item-cost">{{totalCostsInCurr.travel }}</div>
                         <div class="del-tbody2-item-cost">---</div>
                     </div>
                 </div>
@@ -170,6 +170,7 @@ export default {
             currencyList: 'getCurrencyList',
             travelCosts: 'getTravelCostData',
             totalCosts: 'getTotalCosts',
+            totalCostsInCurr: 'getTotalCostsInCurr',
             transportList: "getTransportList",
             newDelegation: "getNewDelegation"
         })
@@ -179,7 +180,8 @@ export default {
             checkTravelFields: 'checkTravelFields',
             addCostRow: 'addTravelCostRow',
             removeCostRow:'removeTravelCostRow',
-            updateTravelCosts: 'countTravelCosts'
+            updateTravelCosts: 'countTravelCosts',
+            getTravelRate: 'getTravelRate'
         }),
         setFieldsValues(cost) {
             // type false  = not flat rate (kilometrówka), type  true = flat rate (ryczałt)
