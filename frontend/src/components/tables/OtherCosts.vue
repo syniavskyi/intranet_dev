@@ -30,7 +30,7 @@
                                     <div class="del-tbody2-item-scost">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.docDate") }}</div>
                                         <div class="del-tbody2-item-txt">
-                                            <v-date-picker class="delegations-tinput-date" mode="single" @input="checkOtherCostsFields" v-model="cost.docDate">
+                                            <v-date-picker class="delegations-tinput-date" mode="single" @change="getOtherCostRate(index)" v-model="cost.docDate">
                                                 <input value="otherCosts[index].docDate" />
                                             </v-date-picker>
                                         </div>
@@ -60,7 +60,7 @@
                                     <div class="del-tbody2-item-scost">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.currency") }}</div>
                                         <div class="del-tbody2-item-txt">
-                                            <select class="delegations-tselect-s" v-model="otherCosts[index].currency" @change="updateOtherCosts">
+                                            <select class="delegations-tselect-s" v-model="otherCosts[index].currency" @change="getOtherCostRate(index)">
                                                 <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
                                             </select>
                                         </div>
@@ -70,7 +70,7 @@
                                     <div class="del-tbody2-item-scost">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }}</div>
                                         <div class="del-tbody2-item-txt">
-                                             <input class="delegations-tinput" type="number" min="0" @input="updateOtherCosts" v-model="cost.amount" /></div>
+                                             <input class="delegations-tinput" type="number" min="0" @change="getOtherCostRate(index)" v-model="cost.amount" /></div>
                                         <div class="del-tfoot2"></div>
                                     </div>
                                     
@@ -124,7 +124,8 @@ export default {
             addCostRow: 'addOtherCostRow',
             removeCostRow: 'removeOtherCostRow',
             updateOtherCosts: 'countOtherCosts',
-            newDelegation: 'getNewDelegation'
+            newDelegation: 'getNewDelegation',
+            getOtherCostRate: 'getOtherCostRate'
         })
     }
 }

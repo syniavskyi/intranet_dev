@@ -121,6 +121,7 @@ const actions = {
       totalCostsInCurr = getters.getTotalCostsInCurr
 
     totalCosts.travel = totalCosts.trvPayback =  totalCosts.totalPayback = totalCostsInCurr.travel = totalCostsInCurr.trvPayback = totalCostsInCurr.totalPayback = 0
+    
     for (let i = 0; i < costTravelData.length; i++) {
       let amount = costTravelData[i].amount,
         flatRateAmount = null,
