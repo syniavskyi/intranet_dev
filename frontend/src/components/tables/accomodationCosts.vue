@@ -65,7 +65,7 @@
                                         <div class="del-tbody2-item-txt">
                                             <input :disabled="hideAccFields(cost)" type="checkbox" @change="updateAccCosts" v-model="cost.payback" />
                                         </div>
-                                        <div class="del-tfoot2">{{ totalCosts.accPayback }}</div>
+                                        <div class="del-tfoot2">{{ totalCostsInCurr.accPayback }}</div>
                                     </div>
                                     <div class="del-tbody2-item-scost">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.currency") }}</div>
@@ -86,9 +86,9 @@
                                     
                                     <div class="del-tbody2-item-scost">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
-                                        <div class="del-tbody2-item-txt">{{cost.totalAmount}}</div>
+                                        <div class="del-tbody2-item-txt">{{cost.totalAmountInCurr}}</div>
                                         <div class="del-tfoot2">
-                                            <p>{{totalCosts.accomodation }}</p>
+                                            <p>{{totalCostsInCurr.accomodation }}</p>
                                         </div>
                                     </div>
                                     <div class="del-tbody2-item-scost">
@@ -101,10 +101,10 @@
                                 <div class="del-tbody-2">
                                     <div class="del-tbody2-item-wfoot-scost"></div>
                                     <div class="del-tbody2-item-scost">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
-                                    <div class="del-tbody2-item-scost">{{ totalCosts.accPayback }}</div>
+                                    <div class="del-tbody2-item-scost">{{ totalCostsInCurr.accPayback }}</div>
                                     <div class="del-tbody2-item-scost">---</div>
                                     <div class="del-tbody2-item-scost"></div>
-                                    <div class="del-tbody2-item-scost">{{totalCosts.accomodation }}</div>
+                                    <div class="del-tbody2-item-scost">{{totalCostsInCurr.accomodation }}</div>
                                     <div class="del-tbody2-item-scost"></div>
                                 </div>
                             </div>
@@ -127,7 +127,8 @@ export default {
             currencyList: 'getCurrencyList',
             accomodationCosts: 'getAccomodationCostData',
             totalCosts: 'getTotalCosts',
-            newDelegation: 'getNewDelegation'
+            newDelegation: 'getNewDelegation',
+            totalCostsInCurr: 'getTotalCostsInCurr'
            
         })
     },
