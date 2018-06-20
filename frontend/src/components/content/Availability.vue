@@ -23,7 +23,7 @@
                             <h2 class="ava-selected-user-h2" v-else-if="selectedUser !== null">{{ selectedUser.firstName }} {{ selectedUser.lastName }}</h2>
                             <div class="availability-tile-underscore"></div>
                         </div>
-                        <button class="ava-button ava-button-edit" v-if="selectedUser != null" @click="showEditDialog = true">{{ $t("button.editProjects") }}</button>
+                        <button class="ava-button ava-button-edit" v-if="selectedUser != null" @click="showEditDialog = false">{{ $t("button.addProject") }}</button>
                         <button class="ava-button ava-button-edit" v-if="selectedUser != null" @click="showEditDialog = true">{{ $t("button.editProjects") }}</button>
                     </div>
                     <div class="availability-tile-content">
@@ -103,7 +103,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="add-project-dialog">
+                        <div id="add-project-dialog" v-if="!showEditDialog">
                             <div class="ava-add-1"> 
                                 <div class="ava-div-select-cool">
                                     <select required class="ava-select-cool" @change="setProjectsToCheck(newProjectForUser.userId)" v-model="newProjectForUser.userId">
