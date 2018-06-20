@@ -220,7 +220,6 @@ body {
     align-items: flex-end;
     color:#999; 
     font-size:1.2rem;
-    font-kerning: 1rem;
     position:absolute;
     pointer-events:none;
     background-color: white;
@@ -249,7 +248,7 @@ body {
 .delegations-input-date ~ label,
 .delegations-select-cool:valid ~ label,
 .del-p-cool ~ label {
-    top: -.6rem;
+    top: -.65rem;
     font-size: 1rem;
     color: rgb(255, 145, 0);
     padding: 0 .2rem;

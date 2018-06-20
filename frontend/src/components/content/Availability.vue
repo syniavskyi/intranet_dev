@@ -124,6 +124,7 @@
                                         <option v-for="project in filteredProjects" :key="project.id" :value="project.id"> {{ project.name }}</option>
                                     </select>
                                     <label class="ava-select-label-cool">{{ $t("label.project") }}</label>
+                                    <!-- <img class="ava-error-img" src="../../assets/images/alert-circle.png"> -->
                                     <p class="ava-error" v-if="projectExist">{{ $t("message.projectExistError") }}</p>
                                 </div>
                                 <div class="ava-div-input-cool">
