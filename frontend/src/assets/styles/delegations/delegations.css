@@ -142,18 +142,35 @@ body {
 /* COOOL INPUTS AND SELECT !!! */
 .delegations-div-cool {
     display: flex;
-    width: 12rem;
+    width: 14rem;
     flex-direction: column;
     margin-bottom: 1rem;
+    position: relative;
+    margin-top: 0.5rem;
+}
+
+.delegations-div-cool-head {
+    margin-top: 0.6rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    width: 15rem;
+    flex-direction: column;
     position: relative;
 }
 
 .delegations-input-cool {
     height: 2rem;
+    font-size: 1rem;
     border: 0;
     border-bottom:1px solid #757575;
     width: 100%;
-    text-indent: .2rem;
+    text-indent: 0.5rem;
+    /* padding: 0 0.5rem; */
+    /* transition: background-color 0.3s ease; */
+}
+
+.delegations-input-cool:hover {
+    /* border-bottom: 2px solid #757575; */
 }
 
 .delegations-select-cool {
@@ -169,7 +186,8 @@ body {
     appearance: none;
     -webkit-appearance: none; 
     -moz-appearance: none;
-    text-indent: .2rem;
+    text-indent: .5rem;
+    font-size: 1rem;
 }
 
 .delegations-div-bar { position:relative; display:flex; width:100%; }
@@ -196,37 +214,45 @@ body {
     width:50%;
 }
 
-.delegations-label-cool {
+.delegations-label-cool,
+.delegations-label-cool-select {
+    display: flex;
+    align-items: flex-end;
     color:#999; 
     font-size:1.2rem;
     font-kerning: 1rem;
     position:absolute;
     pointer-events:none;
     background-color: white;
-    left:0.2rem;
-    top:0.5rem;
     transition:0.3s ease all; 
+    font-weight: 400;
+}
+.delegations-label-cool {
+    left:0.3rem;
+    top: 0.5rem;
 }
 
 .delegations-label-cool-select {
-    color:#999; 
-    font-size:1.2rem;
-    font-kerning: 1rem;
-    position:absolute;
-    pointer-events:none;
-    background-color: white;
-    left:0.2rem;
+    left:0.35rem;
     top:0.35rem;
-    transition:0.3s ease all; 
+}
+
+.del-p-cool {
+    display: flex;
+    justify-content: center;
+    font-size: 1rem;
 }
 
 .delegations-input-cool:focus ~ label,
 .delegations-select-cool:focus ~ label,
 .delegations-input-cool:valid ~ label,
-.delegations-select-cool:valid ~ label {
+.delegations-input-date ~ label,
+.delegations-select-cool:valid ~ label,
+.del-p-cool ~ label {
     top: -.6rem;
     font-size: 1rem;
     color: rgb(255, 145, 0);
+    padding: 0 .2rem;
 }
 
 .delegations-input-cool:focus,
@@ -290,6 +316,7 @@ body {
     border: 1px solid rgb(207, 207, 207);
     border-radius: 4px;
     background: transparent;
+    font-size: 1rem;
 }
 .delegations-tselect,
 .delegations-tselect-s {
