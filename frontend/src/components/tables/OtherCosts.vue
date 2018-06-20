@@ -12,7 +12,7 @@
             <div class="delegations-tile-wrap">
                    
                     <div class="delegations-tile-content">
-
+                        <p>20.06.2018</p>
                         <button @click="addCostRow"> + </button>
                         <div class="delegations-table-wrapper">
                             <div class="delegations-table-2">
@@ -55,7 +55,7 @@
                                         <div class="del-tbody2-item-txt">
                                             <input type="checkbox" @change="updateOtherCosts" v-model="cost.payback" />
                                         </div>
-                                        <div class="del-tfoot2">{{ totalCosts.othPayback }}</div>
+                                        <div class="del-tfoot2">{{ totalCostsInCurr.othPayback }}</div>
                                     </div>
                                     <div class="del-tbody2-item-scost">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.currency") }}</div>
@@ -76,9 +76,9 @@
                                     
                                     <div class="del-tbody2-item-scost">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
-                                        <div class="del-tbody2-item-txt">{{cost.totalAmount}}</div>
+                                        <div class="del-tbody2-item-txt">{{cost.totalAmountCurr}}</div>
                                         <div class="del-tfoot2">
-                                            <p>{{totalCosts.others }}</p>
+                                            <p>{{totalCostsInCurr.others }}</p>
                                         </div>
                                     </div>
                                     <div class="del-tbody2-item-scost">
@@ -91,10 +91,10 @@
                                 <div class="del-tbody-2">
                                     <div class="del-tbody2-item-wfoot-scost"></div>
                                     <div class="del-tbody2-item-scost">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
-                                    <div class="del-tbody2-item-scost">{{ totalCosts.othPayback }}</div>
+                                    <div class="del-tbody2-item-scost">{{ totalCostsInCurr.othPayback }}</div>
                                     <div class="del-tbody2-item-scost">---</div>
                                     <div class="del-tbody2-item-scost"></div>
-                                    <div class="del-tbody2-item-scost">{{totalCosts.others }}</div>
+                                    <div class="del-tbody2-item-scost">{{totalCostsInCurr.others }}</div>
                                     <div class="del-tbody2-item-scost"></div>
                                 </div>
                             </div>
@@ -115,7 +115,9 @@ export default {
         ...mapGetters({
             currencyList: 'getCurrencyList',
             otherCosts: 'getOtherCostData',
-            totalCosts: 'getTotalCosts'
+            totalCosts: 'getTotalCosts',
+            totalCostsInCurr: 'getTotalCostsInCurr',
+            newDelegation: 'getNewDelegation',
         })
     },
     methods: {
@@ -124,7 +126,6 @@ export default {
             addCostRow: 'addOtherCostRow',
             removeCostRow: 'removeOtherCostRow',
             updateOtherCosts: 'countOtherCosts',
-            newDelegation: 'getNewDelegation',
             getOtherCostRate: 'getOtherCostRate'
         })
     }

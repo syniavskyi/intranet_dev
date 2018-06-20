@@ -117,7 +117,6 @@ const actions = {
     const costTravelData = getters.getTravelCostData,
       totalCosts = getters.getTotalCosts,
       transportRates = getters.getRatesForTransport[0],
-      delegationRate = getters.getNewDelegation.currency,
       totalCostsInCurr = getters.getTotalCostsInCurr
 
     totalCosts.travel = totalCosts.trvPayback =  totalCosts.totalPayback = totalCostsInCurr.travel = totalCostsInCurr.trvPayback = totalCostsInCurr.totalPayback = 0
@@ -133,33 +132,33 @@ const actions = {
       km = (km === "") ? 0 : parseFloat(km)
 
       if (transport === "companyCar") {
-        costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.carMore * rate).toFixed(2)
+        costTravelData[i].totalAmount = costTravelData[i].amount = km * transportRates.carMore * rate
       } else if (transport === "privateCar") {
         if (costTravelData[i].engineCapacity === true) {
-          costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.carMore * rate).toFixed(2)
+          costTravelData[i].totalAmount = costTravelData[i].amount = km * transportRates.carMore * rate
         } else if (costTravelData[i].engineCapacity === false) {
-          costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.carLess * rate).toFixed(2)
+          costTravelData[i].totalAmount = costTravelData[i].amount = km * transportRates.carLess * rate
         } else {
             costTravelData[i].totalAmount = costTravelData[i].amount = 0
         }
       } else if (transport === "motocycle") {
-        costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.motocycle * rate).toFixed(2)
+        costTravelData[i].totalAmount = costTravelData[i].amount = km * transportRates.motocycle * rate
       } else if (transport === "moped") {
-        costTravelData[i].totalAmount = costTravelData[i].amount = (km * transportRates.moped * rate).toFixed(2)
+        costTravelData[i].totalAmount = costTravelData[i].amount = km * transportRates.moped * rate
       } else {
-        costTravelData[i].totalAmount = (amount * rate).toFixed(2)
+        costTravelData[i].totalAmount = amount * rate
       }
 
-      costTravelData[i].totalAmountCurr = parseFloat(costTravelData[i].totalAmount / costTravelData[i].delegationCurrRate).toFixed(2)
+      costTravelData[i].totalAmountCurr = (costTravelData[i].totalAmount / costTravelData[i].delegationCurrRate).toFixed(2)
 
       if (costTravelData[i].payback === true) {
-        totalCosts.trvPayback = totalCosts.trvPayback + parseFloat(costTravelData[i].totalAmount).toFixed(2)
+        totalCosts.trvPayback = totalCosts.trvPayback + costTravelData[i].totalAmount
         totalCostsInCurr.trvPayback = totalCostsInCurr.trvPayback + parseFloat(costTravelData[i].totalAmountCurr)
       } 
       totalCosts.totalPayback = totalCosts.trvPayback + totalCosts.accPayback + totalCosts.othPayback
       totalCostsInCurr.totalPayback = totalCostsInCurr.trvPayback + totalCostsInCurr.accPayback + totalCostsInCurr.othPayback
       
-      totalCosts.travel = totalCosts.travel + parseFloat(costTravelData[i].totalAmount).toFixed(2)
+      totalCosts.travel = totalCosts.travel + costTravelData[i].totalAmount
       totalCostsInCurr.travel = totalCostsInCurr.travel + parseFloat(costTravelData[i].totalAmountCurr)
     }
     dispatch('checkTravelFields')

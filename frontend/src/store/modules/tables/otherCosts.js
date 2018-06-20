@@ -55,7 +55,6 @@ const actions = {
     countOtherCosts({getters, commit, dispatch}) {
         const otherCostData = getters.getOtherCostData,
              totalCosts = getters.getTotalCosts,
-             delegationRate = getters.getNewDelegation.currency,
              totalCostsInCurr = getters.getTotalCostsInCurr
 
         totalCosts.othPayback = totalCosts.others = totalCosts.totalPayback = 0
@@ -63,20 +62,20 @@ const actions = {
 
         for(let i=0; i<otherCostData.length; i++) {
             let amount = otherCostData[i].amount,
-                // rate = parseFloat(otherCostData[i].currencyRate).toFixed(2)
                 rate = otherCostData[i].currencyRate
-           amount = (amount === "") ? 0 : parseFloat(amount)
+           
+                amount = (amount === "") ? 0 : parseFloat(amount)
 
-            otherCostData[i].totalAmount = parseFloat(amount * rate)
+            otherCostData[i].totalAmount = amount * rate
             otherCostData[i].totalAmountCurr = parseFloat(otherCostData[i].totalAmount / otherCostData[i].delegationCurrRate).toFixed(2)
 
             
            if(otherCostData[i].payback === true ) {
-                totalCosts.othPayback = totalCosts.othPayback + parseFloat(otherCostData[i].totalAmount).toFixed(2)
-                totalCostsInCurr.othPayback = totalCostsInCurr.othPayback + parseFloat(otherCostData[i].totalAmountCurr).toFixed(2)
+                totalCosts.othPayback = totalCosts.othPayback + otherCostData[i].totalAmount
+                totalCostsInCurr.othPayback = totalCostsInCurr.othPayback + parseFloat(otherCostData[i].totalAmountCurr)
             }
             totalCosts.others = totalCosts.others + otherCostData[i].totalAmount
-            totalCostsInCurr.others = parseFloat(totalCostsInCurr.others) + parseFloat(otherCostData[i].totalAmountCurr).toFixed(2)
+            totalCostsInCurr.others = totalCostsInCurr.others + parseFloat(otherCostData[i].totalAmountCurr)
             
             totalCosts.totalPayback = totalCosts.trvPayback + totalCosts.accPayback + totalCosts.othPayback
             totalCostsInCurr.totalPayback = totalCostsInCurr.trvPayback + totalCostsInCurr.accPayback + totalCostsInCurr.othPayback
@@ -124,7 +123,7 @@ const actions = {
         data[index].currencyRate = data[index].delegationCurrRate = 1 
         dispatch('countOtherCosts')
       } 
-    },
+    }
 };
 
 const getters = {

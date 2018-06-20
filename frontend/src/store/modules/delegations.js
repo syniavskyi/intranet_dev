@@ -71,7 +71,7 @@ const state = {
   delegationTableValidated: false,
   defaultCostsData: {},
   fullExpences: [],
-  dailyAllowance: 23.00
+  dailyAllowance: 30.00
 };
 
 const mutations = {
