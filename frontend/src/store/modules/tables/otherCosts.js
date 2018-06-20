@@ -72,11 +72,11 @@ const actions = {
 
             
            if(otherCostData[i].payback === true ) {
-                totalCosts.othPayback = totalCosts.othPayback + otherCostData[i].totalAmount
-                totalCostsInCurr.othPayback = totalCostsInCurr.othPayback + parseFloat(totalCostsInCurr[i].totalAmountCurr)
+                totalCosts.othPayback = totalCosts.othPayback + parseFloat(otherCostData[i].totalAmount).toFixed(2)
+                totalCostsInCurr.othPayback = totalCostsInCurr.othPayback + parseFloat(otherCostData[i].totalAmountCurr).toFixed(2)
             }
             totalCosts.others = totalCosts.others + otherCostData[i].totalAmount
-            totalCostsInCurr.others = parseFloat(totalCostsInCurr.others) + parseFloat(otherCostData[i].totalAmountCurr)
+            totalCostsInCurr.others = parseFloat(totalCostsInCurr.others) + parseFloat(otherCostData[i].totalAmountCurr).toFixed(2)
             
             totalCosts.totalPayback = totalCosts.trvPayback + totalCosts.accPayback + totalCosts.othPayback
             totalCostsInCurr.totalPayback = totalCostsInCurr.trvPayback + totalCostsInCurr.accPayback + totalCostsInCurr.othPayback
