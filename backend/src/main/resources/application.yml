@@ -1,8 +1,8 @@
 amazonProperties:
-  endpointUrl: https://s3.us-east-2.amazonaws.com
-  accessKey: AKIAJU6RLWMDURWFDCGQ
-  secretKey: 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
-  bucketName: btech-intranet-file-bucket
-  documentsFolder: btech-intranet-file-bucket/documents
-  imagesFolder: btech-intranet-file-bucket/images
-  cvFolder: btech-intranet-file-bucket/cv
+  endpointUrl: 
+  accessKey: 
+  secretKey: 
+  bucketName: 
+  documentsFolder: 
+  imagesFolder: 
+  cvFolder: 
