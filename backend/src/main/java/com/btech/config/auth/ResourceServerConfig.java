@@ -1,4 +1,4 @@
-package com.btech.config;
+package com.btech.config.auth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

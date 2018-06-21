@@ -1,6 +1,7 @@
 package com.btech.service;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,6 @@ import java.util.Locale;
 public class MainService {
 
     private final SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss.SSS'Z'");
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
 
     public String calculateMD5(String password) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
