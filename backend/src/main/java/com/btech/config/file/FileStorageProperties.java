@@ -1,4 +1,4 @@
-package com.btech.config;
+package com.btech.config.file;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

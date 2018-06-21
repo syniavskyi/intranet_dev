@@ -1,4 +1,4 @@
-package com.btech.config;
+package com.btech.config.auth;
 
 import com.btech.InitApp;
 import org.springframework.boot.builder.SpringApplicationBuilder;
