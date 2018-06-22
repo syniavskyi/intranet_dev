@@ -107,7 +107,6 @@ import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
 window.html2canvas = html2canvas
 
-import {generatePdf} from '../../pdfGenerator.js'
 
 import {
     mapGetters,
