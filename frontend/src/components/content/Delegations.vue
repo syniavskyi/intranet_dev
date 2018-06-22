@@ -1,8 +1,8 @@
 <template>
-<div class="plane-delegations">
+<div class="plane-delegations" refs="delegationContent" id="delegation-content">
     <div class="delegations-nav-and-content">
         <app-menu></app-menu>
-        <div class="delegations-content">
+        <div class="delegations-content" >
             <div class="delegations-header">
                 <div class="delegations-header-title-and-menu">
                     <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="delegations-header-menu">
@@ -22,6 +22,7 @@
                             </div>
                         </div>
                         <div class="delegations-tile-underscore"></div>
+                        <button @click="generatePdf">GENERUJ PDF</button>
                     </div>
                     <div class="delegations-tile-content delegations-tile-content-1">
                         <div class="delegations-inputs-section">
@@ -93,6 +94,7 @@
                 <travel-costs-table></travel-costs-table>
                 <accomodation-costs-table></accomodation-costs-table>
                 <other-costs-table></other-costs-table>
+ 
             </div>
         </div>
     </div>
@@ -101,6 +103,12 @@
 
 <script>
 import moment from "moment"
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
+window.html2canvas = html2canvas
+
+import {generatePdf} from '../../pdfGenerator.js'
+
 import {
     mapGetters,
     mapActions
@@ -151,7 +159,8 @@ const role = localStorage.getItem('role')
             delegationTableValidated: 'getDelegationTableValidated',
             dailyAllowance: 'getDailyAllowance',
             usersList: 'usersList',
-            totalCostsInCurr: 'getTotalCostsInCurr'
+            totalCostsInCurr: 'getTotalCostsInCurr',
+            advanceData: 'getAdvanceData'
         }),
         disableSaveBtn() {
             return (this.newDelegationValidated && this.delegationTableValidated && this.accCostValidated) ? false : true
@@ -184,8 +193,37 @@ const role = localStorage.getItem('role')
                     return
                 }
             }
-            
-        }
+        },
+
+         generatePdf() {
+             const source = document.body.getElementsByClassName('delegations-content')[0]          
+           html2canvas(source).then(canvas => {
+                 let pdf = new jsPDF('p', 'pt', 'letter');
+
+            for (let i = 0; i < source.clientHeight/980; i++) {
+                let srcImg  = canvas
+
+                window.onePageCanvas = document.createElement("canvas")
+                onePageCanvas.setAttribute('width', 900)
+                onePageCanvas.setAttribute('height', 980)
+                let ctx = onePageCanvas.getContext('2d')
+                
+                ctx.drawImage(srcImg, 0, 980*i,900,980,0,0,900,980)
+
+                let canvasDataURL = onePageCanvas.toDataURL("image/png", 1),
+                    width         = onePageCanvas.width,
+                    height        = onePageCanvas.clientHeight
+                
+                if (i > 0) {
+                    pdf.addPage(612, 791); //8.5" x 11" in pts (in*72)
+                }
+
+                pdf.setPage(i+1); //! now we declare that we're working on that page
+                pdf.addImage(canvasDataURL, 'PNG', 20, 40, (width*.62), (height*.62)); //! now we add content to that page!
+            }
+            pdf.save('Test.pdf'); //! after the for loop is finished running, we save the pdf.
+            })
+        } 
     }
 }
 </script>
