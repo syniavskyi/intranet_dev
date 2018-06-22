@@ -18,11 +18,12 @@
                                 <select required v-if="!showUsername" class="delegations-select-cool" v-model="newDelegation.userId" @change="setUsername">
                                     <option v-for="user in usersList" :key="user.id" :value="user.id">{{ user.firstName }} {{ user.lastName }}</option>
                                 </select> 
-                                <label class="delegations-label-cool-select">Wybierz pracownika</label>
+                                <label v-if="!showUsername" class="delegations-label-cool-select">Wybierz pracownika</label>
                             </div>
+                            <button class="del-generate-pdf" @click="generatePdf">GENERUJ PDF</button>
                         </div>
                         <div class="delegations-tile-underscore"></div>
-                        <button @click="generatePdf">GENERUJ PDF</button>
+                        
                     </div>
                     <div class="delegations-tile-content delegations-tile-content-1">
                         <div class="delegations-inputs-section">
@@ -51,6 +52,11 @@
                         </div>
                         <div class="delegations-inputs-section">
                             <div class="delegations-div-cool">
+                                <input required class="delegations-input-cool" v-model="newDelegation.destination" @input="checkNewDelegation" />
+                                <span class="delegations-div-bar"></span>
+                                <label class="delegations-label-cool">{{ $t("label.to") }} </label>
+                            </div>
+                            <div class="delegations-div-cool">
                                 <p class="del-p-cool">{{ newDelegation.hours }}</p>
                                 <label class="delegations-label-cool">{{ $t("label.hoursInDelegation") }} </label>
                             </div>
@@ -64,11 +70,7 @@
                             </div>
                         </div>
                         <div class="delegations-inputs-section">
-                            <div class="delegations-div-cool">
-                                <input required class="delegations-input-cool" v-model="newDelegation.destination" @input="checkNewDelegation" />
-                                <span class="delegations-div-bar"></span>
-                                <label class="delegations-label-cool">{{ $t("label.to") }} </label>
-                            </div>
+                            
                             <div class="delegations-div-cool">
                                 <input required class="delegations-input-cool" v-model="newDelegation.purpose" @input="checkNewDelegation" />
                                 <span class="delegations-div-bar"></span>
