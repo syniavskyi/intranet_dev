@@ -278,6 +278,14 @@
     text-indent: .45rem;
 }
 
+@keyframes shake {
+    0% { -webkit-transform: translate(3px); }
+    20% { -webkit-transform: translate(-3px); }
+	40% { -webkit-transform: translate(5px); }
+	60% { -webkit-transform: translate(-5px); }
+	80% { -webkit-transform: translate(3px); }
+	100% { -webkit-transform: translate(0px); }
+}
 .ava-select {
     width: 15rem;
     text-indent: 10%;
@@ -422,7 +430,7 @@
     font-family: 'Roboto';
     margin: 0;
     line-height: 1rem;
-    bottom: -1.1rem;
+    bottom: -1rem;
     left: -1.15rem;
     width: 100%;
     font-size: .85rem; 
@@ -435,6 +443,7 @@
     position: absolute;
     top: .3rem;
     right: 1.6rem;
+    animation: shake .5s;
 }
 
 /* .ava-error::after {

@@ -120,11 +120,11 @@
                             </div>
                             <div class="ava-add-2">
                                 <div class="ava-div-input-cool">
-                                    <select required id="ava-select-add-project" class="ava-select-cool" @change="validateNewProject" v-model="newProjectForUser.projectId">
+                                    <select required id="ava-select-add-project" :class="projectExist ? 'ava-select-cool-err': 'ava-select-cool'" @change="validateNewProject" v-model="newProjectForUser.projectId">
                                         <option v-for="project in filteredProjects" :key="project.id" :value="project.id"> {{ project.name }}</option>
                                     </select>
                                     <label class="ava-select-label-cool">{{ $t("label.project") }}</label>
-                                    <!-- <img class="ava-error-img" src="../../assets/images/alert-circle.png"> -->
+                                    <img v-if="projectExist" class="ava-error-img" src="../../assets/images/alert-circle.png">
                                     <p class="ava-error" v-if="projectExist">{{ $t("message.projectExistError") }}</p>
                                 </div>
                                 <div class="ava-div-input-cool">
