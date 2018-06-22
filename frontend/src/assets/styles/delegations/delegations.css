@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
 
-body {
+/* body {
     width: 100vw;
     height: 100vh;
     margin:0;
     padding:0;
-    font-family: 'Roboto';
+    font-family: 'Roboto'; */
     /* max-width: 100%; */
-}
+/* } */
 
 .plane-delegations {
     margin:0;
@@ -150,7 +150,7 @@ body {
 }
 
 .delegations-div-cool-head {
-    margin-top: 0.6rem;
+    margin-top: 0.7rem;
     margin-bottom: 0.5rem;
     display: flex;
     width: 15rem;
