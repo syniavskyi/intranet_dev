@@ -138,6 +138,10 @@
     width:100%;
 }
 
+.ava-edit-2 {
+    margin-top: 2rem;
+}
+
 .ava-tile-1 {
     /* width: 50%; */
     min-height: 20rem;
@@ -301,7 +305,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    margin-bottom: .7rem;
+    margin-bottom: 1.5rem;
 }
 
 .ava-input-label {
@@ -316,9 +320,11 @@
     font-size: 1rem;
     height: 1.9rem;
     border:0;
-    border-bottom: 1px solid lightgrey;
     text-align:center;
     width: 100%;
+}
+.ava-input-range-perc {
+    border-bottom: 1px solid lightgrey;
 }
 
 .ava-div-bar:before, 
@@ -362,6 +368,7 @@
 .ava-input-range input {
     font-size: 1rem;
     /* height: 1.9rem; */
+    width: 100%;
 }
 
 .ava-div-buttons {
@@ -513,7 +520,7 @@
         width: 50%;
     }
     .ava-edit-2 {
-        margin-left: 1rem;
+        width: 100%;
     }
 }
 
@@ -529,6 +536,10 @@
 @media (min-width: 74.7rem) {
     #ava-edit-project-dialog {
         flex-direction: row;
+    }
+    .ava-edit-2 {
+        margin-top: 0;
+        margin-left: 1rem;
     }
 }
 
