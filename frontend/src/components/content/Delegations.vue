@@ -1,8 +1,8 @@
 <template>
-<div class="plane-delegations">
+<div class="plane-delegations" refs="delegationContent" id="delegation-content">
     <div class="delegations-nav-and-content">
         <app-menu></app-menu>
-        <div class="delegations-content">
+        <div class="delegations-content" >
             <div class="delegations-header">
                 <div class="delegations-header-title-and-menu">
                     <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="delegations-header-menu">
@@ -22,6 +22,7 @@
                             </div>
                         </div>
                         <div class="delegations-tile-underscore"></div>
+                        <button @click="generatePdf">GENERUJ PDF</button>
                     </div>
                     <div class="delegations-tile-content delegations-tile-content-1">
                         <div class="delegations-inputs-section">
@@ -101,6 +102,11 @@
 
 <script>
 import moment from "moment"
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
+
+import {generatePdf} from '../../pdfGenerator.js'
+
 import {
     mapGetters,
     mapActions
@@ -115,7 +121,8 @@ export default {
     data() {
         return {
             showUsername: true,
-            delegationUsername: null
+            delegationUsername: null,
+            imagePieces: []
         }
     },
     components: {
@@ -151,7 +158,8 @@ const role = localStorage.getItem('role')
             delegationTableValidated: 'getDelegationTableValidated',
             dailyAllowance: 'getDailyAllowance',
             usersList: 'usersList',
-            totalCostsInCurr: 'getTotalCostsInCurr'
+            totalCostsInCurr: 'getTotalCostsInCurr',
+            advanceData: 'getAdvanceData'
         }),
         disableSaveBtn() {
             return (this.newDelegationValidated && this.delegationTableValidated && this.accCostValidated) ? false : true
@@ -184,8 +192,71 @@ const role = localStorage.getItem('role')
                     return
                 }
             }
+        },
+        generatePdf() {
+             var source = document.body.getElementsByClassName('delegations-content')[0]
+              source.style.width= "1000px"
+            html2canvas(source).then(canvas => {
+                const img = canvas.toDataURL("image/png"),
+                     doc = new jsPDF('p','pt','a4')
+                doc.addImage(img, 'JPEG', 10, 10)
+                doc.save('test.pdf');
+            });
+        },
+                
+        // generatePdf() {
+        //      var form = document.body.getElementsByClassName('delegations-content')[0],
+        //      cache_width = form.offsetWidth,
+        //      a4 = [595.28, 990.89],
+        //      canvasImage,
+        //     winHeight = a4[1],
+        //     formHeight = form.offsetHeight,
+        //     formWidth  = form.offsetWidth,
+        //     imagePieces = this.imagePieces
+              
             
-        }
+        //    // form.offsetWidth = (a4[0] * 1.33333) - 80
+
+        //     html2canvas(form, {
+        //          imageTimeout: 2000,
+        //          removeContainer: true
+        //     }).then(canvas => {
+        //         canvasImage = new Image();
+        //         canvasImage.src= canvas.toDataURL("image/png");
+        //         canvasImage.onload = this.splitImage(canvasImage, formHeight, formWidth, winHeight);
+        //     });
+
+
+            
+        // },
+        // splitImage(canvasImage, formHeight, formWidth, winHeight){
+        //     var totalImgs = Math.round(formHeight/winHeight);
+        //     for(var i = 0; i < totalImgs; i++) {
+        //         var canvas = document.createElement('canvas'),
+        //             ctx = canvas.getContext('2d');
+        //         canvas.width = formWidth;
+        //         canvas.height = winHeight;
+        //         ctx.drawImage(canvasImage, 0, i * winHeight, formWidth, winHeight, 0, 0, canvas.width, canvas.height);
+
+        //         this.imagePieces.push(canvas.toDataURL("image/png"));
+        //         this.generate()
+        //     }
+        // },
+        // generate() {
+        //     let totalPieces = this.imagePieces.length - 1
+        //     const doc = new jsPDF({
+        //                 unit: 'px',
+        //                  format: 'a4'
+        //               });
+        //     this.imagePieces.forEach(function(img){
+        //         doc.addImage(img, 'JPEG', 20, 40);
+        //         if(totalPieces)
+        //             doc.addPage();
+        //         totalPieces--;
+        //     });
+        //         // doc.addImage(img, 'JPEG', -5, 0)
+        //         doc.save('test.pdf');
+        // }
     }
 }
 </script>
