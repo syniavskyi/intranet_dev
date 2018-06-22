@@ -94,6 +94,7 @@
                 <travel-costs-table></travel-costs-table>
                 <accomodation-costs-table></accomodation-costs-table>
                 <other-costs-table></other-costs-table>
+ 
             </div>
         </div>
     </div>
@@ -104,6 +105,7 @@
 import moment from "moment"
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
+window.html2canvas = html2canvas
 
 import {generatePdf} from '../../pdfGenerator.js'
 
@@ -121,8 +123,7 @@ export default {
     data() {
         return {
             showUsername: true,
-            delegationUsername: null,
-            imagePieces: []
+            delegationUsername: null
         }
     },
     components: {
@@ -193,70 +194,36 @@ const role = localStorage.getItem('role')
                 }
             }
         },
-        generatePdf() {
-             var source = document.body.getElementsByClassName('delegations-content')[0]
-              source.style.width= "1000px"
-            html2canvas(source).then(canvas => {
-                const img = canvas.toDataURL("image/png"),
-                     doc = new jsPDF('p','pt','a4')
-                doc.addImage(img, 'JPEG', 10, 10)
-                doc.save('test.pdf');
-            });
-        },
+
+         generatePdf() {
+             const source = document.body.getElementsByClassName('delegations-content')[0]          
+           html2canvas(source).then(canvas => {
+                 let pdf = new jsPDF('p', 'pt', 'letter');
+
+            for (let i = 0; i < source.clientHeight/980; i++) {
+                let srcImg  = canvas
+
+                window.onePageCanvas = document.createElement("canvas")
+                onePageCanvas.setAttribute('width', 900)
+                onePageCanvas.setAttribute('height', 980)
+                let ctx = onePageCanvas.getContext('2d')
                 
-        // generatePdf() {
-        //      var form = document.body.getElementsByClassName('delegations-content')[0],
-        //      cache_width = form.offsetWidth,
-        //      a4 = [595.28, 990.89],
-        //      canvasImage,
-        //     winHeight = a4[1],
-        //     formHeight = form.offsetHeight,
-        //     formWidth  = form.offsetWidth,
-        //     imagePieces = this.imagePieces
-              
-            
-        //    // form.offsetWidth = (a4[0] * 1.33333) - 80
+                ctx.drawImage(srcImg, 0, 980*i,900,980,0,0,900,980)
 
-        //     html2canvas(form, {
-        //          imageTimeout: 2000,
-        //          removeContainer: true
-        //     }).then(canvas => {
-        //         canvasImage = new Image();
-        //         canvasImage.src= canvas.toDataURL("image/png");
-        //         canvasImage.onload = this.splitImage(canvasImage, formHeight, formWidth, winHeight);
-        //     });
+                let canvasDataURL = onePageCanvas.toDataURL("image/png", 1),
+                    width         = onePageCanvas.width,
+                    height        = onePageCanvas.clientHeight
+                
+                if (i > 0) {
+                    pdf.addPage(612, 791); //8.5" x 11" in pts (in*72)
+                }
 
-
-            
-        // },
-        // splitImage(canvasImage, formHeight, formWidth, winHeight){
-        //     var totalImgs = Math.round(formHeight/winHeight);
-        //     for(var i = 0; i < totalImgs; i++) {
-        //         var canvas = document.createElement('canvas'),
-        //             ctx = canvas.getContext('2d');
-        //         canvas.width = formWidth;
-        //         canvas.height = winHeight;
-        //         ctx.drawImage(canvasImage, 0, i * winHeight, formWidth, winHeight, 0, 0, canvas.width, canvas.height);
-
-        //         this.imagePieces.push(canvas.toDataURL("image/png"));
-        //         this.generate()
-        //     }
-        // },
-        // generate() {
-        //     let totalPieces = this.imagePieces.length - 1
-        //     const doc = new jsPDF({
-        //                 unit: 'px',
-        //                  format: 'a4'
-        //               });
-        //     this.imagePieces.forEach(function(img){
-        //         doc.addImage(img, 'JPEG', 20, 40);
-        //         if(totalPieces)
-        //             doc.addPage();
-        //         totalPieces--;
-        //     });
-        //         // doc.addImage(img, 'JPEG', -5, 0)
-        //         doc.save('test.pdf');
-        // }
+                pdf.setPage(i+1); //! now we declare that we're working on that page
+                pdf.addImage(canvasDataURL, 'PNG', 20, 40, (width*.62), (height*.62)); //! now we add content to that page!
+            }
+            pdf.save('Test.pdf'); //! after the for loop is finished running, we save the pdf.
+            })
+        } 
     }
 }
 </script>
