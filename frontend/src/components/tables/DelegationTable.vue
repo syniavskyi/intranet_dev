@@ -5,6 +5,7 @@
             <div class="delegations-tile-header">
                     <div class="delegations-tile-title">
                         {{ $t("header.travelExp") }}
+                        <button class="del-add-row" @click="addRow"> dodaj wiersz </button>
                     </div>
                         <div class="delegations-tile-underscore"></div>
                     </div>
@@ -81,14 +82,14 @@
                                     <div class="del-tbody-title">przyciski</div>
                                     <div class="del-tbody-col"></div>
                                 </div>
-                                <div class="del-tbody-cols">
+                                <!-- <div class="del-tbody-cols">
                                     <div class="del-tbody-title">przyciski</div>
                                     <div class="del-tbody-col"></div>
                                 </div>
                                 <div class="del-tbody-cols">
                                     <div class="del-tbody-title">przyciski</div>
                                     <div class="del-tbody-col"></div>
-                                </div>
+                                </div> -->
                             </div>
                             <!-- second default row  -->
 
@@ -139,14 +140,14 @@
                                     <div class="del-tbody-title">przyciski</div>
                                     <div class="del-tbody-col"></div>
                                 </div>
-                                <div class="del-tbody-cols">
+                                <!-- <div class="del-tbody-cols">
                                     <div class="del-tbody-title">przyciski</div>
                                     <div class="del-tbody-col"></div>
                                 </div>
                                 <div class="del-tbody-cols">
                                     <div class="del-tbody-title">przyciski</div>
                                     <div class="del-tbody-col"></div>
-                                </div>
+                                </div> -->
                             </div>
 
 
@@ -205,18 +206,18 @@
                                     <div class="del-tbody-title">przyciski</div>
                                     <div class="del-tbody-col"><button @click="removeRow(index)"> X </button></div>
                                 </div>
-                                <div class="del-tbody-cols">
+                                <!-- <div class="del-tbody-cols">
                                     <div class="del-tbody-title">przyciski</div>
                                     <div class="del-tbody-col"><button @click="removeRow(index)"> X </button></div>
                                 </div>
                                 <div class="del-tbody-cols">
                                     <div class="del-tbody-title">przyciski</div>
                                     <div class="del-tbody-col"><button @click="removeRow(index)"> X </button></div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
-                    <button @click="addRow"> + </button>
+                    
                     <!--  -->
         </div>
     </div>
