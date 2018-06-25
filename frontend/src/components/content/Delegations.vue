@@ -201,7 +201,7 @@ const role = localStorage.getItem('role')
            html2canvas(source).then(canvas => {
                  let pdf = new jsPDF('p', 'pt', 'letter');
 
-            for (let i = 0; i < source.clientHeight/980; i++) {
+            for (let i = 0; i < Math.round(source.clientHeight/980); i++) {
                 let srcImg  = canvas
 
                 window.onePageCanvas = document.createElement("canvas")
