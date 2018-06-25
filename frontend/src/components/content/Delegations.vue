@@ -124,7 +124,8 @@ export default {
     data() {
         return {
             showUsername: true,
-            delegationUsername: null
+            delegationUsername: null,
+            generatingPdfMode: false
         }
     },
     components: {
@@ -199,9 +200,15 @@ const role = localStorage.getItem('role')
         },
 
          generatePdf() {
+           this.generatingPdfMode = true
+           
            const source = document.body.getElementsByClassName('delegations-content')[0]
+           let pdf = new jsPDF('p', 'pt', 'letter'),
+                 width = pdf.internal.pageSize.getWidth(),
+                 height = pdf.internal.pageSize.getHeight()
+
            html2canvas(source).then(canvas => {
-                 let pdf = new jsPDF('p', 'pt', 'letter');
+                 
 
             for (let i = 0; i < Math.round(source.clientHeight/980); i++) {
                 let srcImg  = canvas
@@ -212,6 +219,7 @@ const role = localStorage.getItem('role')
                 let ctx = onePageCanvas.getContext('2d')
                 
                 ctx.drawImage(srcImg, 0, 980*i,900,980,0,0,900,980)
+                // cxt.drawImage(img,sx,sy,swidth,sheight,x,y,width,height)
 
                 let canvasDataURL = onePageCanvas.toDataURL("image/png", 1),
                     width         = onePageCanvas.width,
@@ -226,6 +234,7 @@ const role = localStorage.getItem('role')
             }
             pdf.save(this.newDelegation.number + '.pdf'); //! after the for loop is finished running, we save the pdf.
             })
+            
         } 
     }
 }
