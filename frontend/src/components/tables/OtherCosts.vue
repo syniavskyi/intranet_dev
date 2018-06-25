@@ -5,6 +5,7 @@
                  <div class="delegations-tile-header">
                         <div class="delegations-tile-title">
                             {{ $t("header.otherCosts") }}
+                            <button class="del-add-row" @click="addCostRow"> dodaj wiersz </button>
                         </div>
                         <div class="delegations-tile-underscore"></div>
                     </div>
@@ -13,7 +14,7 @@
                    
                     <div class="delegations-tile-content">
                         <p>20.06.2018</p>
-                        <button @click="addCostRow"> + </button>
+                        
                         <div class="delegations-table-wrapper">
                             <div class="delegations-table-2">
                                 <div class="del-thead-2">
