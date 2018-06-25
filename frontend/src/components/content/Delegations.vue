@@ -177,9 +177,11 @@ const role = localStorage.getItem('role')
             const date = this.newDelegation.dates.start,
                 year = moment(date).format('YYYY'),
                 month = moment(date).format('MM'),
-                username = this.delegationUsername
+                username = this.delegationUsername,
+                number = username + '/' + year + '/' + month
             
-            return username + '/' + year + '/' + month
+            this.newDelegation.number = number
+            return number
             } else {
                 return null
             }
@@ -197,11 +199,11 @@ const role = localStorage.getItem('role')
         },
 
          generatePdf() {
-             const source = document.body.getElementsByClassName('delegations-content')[0]          
+           const source = document.body.getElementsByClassName('delegations-content')[0]
            html2canvas(source).then(canvas => {
                  let pdf = new jsPDF('p', 'pt', 'letter');
 
-            for (let i = 0; i < source.clientHeight/980; i++) {
+            for (let i = 0; i < Math.round(source.clientHeight/980); i++) {
                 let srcImg  = canvas
 
                 window.onePageCanvas = document.createElement("canvas")
@@ -222,7 +224,7 @@ const role = localStorage.getItem('role')
                 pdf.setPage(i+1); //! now we declare that we're working on that page
                 pdf.addImage(canvasDataURL, 'PNG', 20, 40, (width*.62), (height*.62)); //! now we add content to that page!
             }
-            pdf.save('Test.pdf'); //! after the for loop is finished running, we save the pdf.
+            pdf.save(this.newDelegation.number + '.pdf'); //! after the for loop is finished running, we save the pdf.
             })
         } 
     }
