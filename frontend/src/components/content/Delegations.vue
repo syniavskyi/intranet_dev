@@ -2,7 +2,7 @@
 <div class="plane-delegations" refs="delegationContent" id="delegation-content">
     <div class="delegations-nav-and-content">
         <app-menu></app-menu>
-        <div class="delegations-content" >
+        <div name="testname" class="delegations-content" >
             <div class="delegations-header">
                 <div class="delegations-header-title-and-menu">
                     <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="delegations-header-menu">
@@ -198,44 +198,72 @@ const role = localStorage.getItem('role')
                 }
             }
         },
-
-         generatePdf() {
-           this.generatingPdfMode = true
+        //  generatePdf() {
+        //    this.generatingPdfMode = true
            
-           const source = document.body.getElementsByClassName('delegations-content')[0]
-           let pdf = new jsPDF('p', 'pt', 'letter'),
-                 width = pdf.internal.pageSize.getWidth(),
-                 height = pdf.internal.pageSize.getHeight()
+        //    const source = document.body.getElementsByClassName('delegations-content')[0]
+        //    let pdf = new jsPDF('p', 'pt', 'letter'),
+        //          width = pdf.internal.pageSize.getWidth(),
+        //          height = pdf.internal.pageSize.getHeight()
+        
+        //    html2canvas(source).then(canvas => {
+        //     for (let i = 0; i < Math.round(source.clientHeight/980); i++) {
+        //         let srcImg  = canvas
 
-           html2canvas(source).then(canvas => {
-                 
-
-            for (let i = 0; i < Math.round(source.clientHeight/980); i++) {
-                let srcImg  = canvas
-
-                window.onePageCanvas = document.createElement("canvas")
-                onePageCanvas.setAttribute('width', 900)
-                onePageCanvas.setAttribute('height', 980)
-                let ctx = onePageCanvas.getContext('2d')
+        //         window.onePageCanvas = document.createElement("canvas")
+        //         onePageCanvas.setAttribute('width', 900)
+        //         onePageCanvas.setAttribute('height', 980)
+        //         let ctx = onePageCanvas.getContext('2d')
                 
-                ctx.drawImage(srcImg, 0, 980*i,900,980,0,0,900,980)
-                // cxt.drawImage(img,sx,sy,swidth,sheight,x,y,width,height)
+        //         ctx.drawImage(srcImg, 0, 980*i,900,980,0,0,900,980)
+        //         // cxt.drawImage(img,sx,sy,swidth,sheight,x,y,width,height)
 
-                let canvasDataURL = onePageCanvas.toDataURL("image/png", 1),
-                    width         = onePageCanvas.width,
-                    height        = onePageCanvas.clientHeight
+        //         let canvasDataURL = onePageCanvas.toDataURL("image/png", 1),
+        //             width         = onePageCanvas.width,
+        //             height        = onePageCanvas.clientHeight
                 
-                if (i > 0) {
-                    pdf.addPage(612, 791); //8.5" x 11" in pts (in*72)
-                }
+               
+        //         if (i > 0) {
+        //             pdf.addPage(612, 791); //8.5" x 11" in pts (in*72)
+        //         }
 
-                pdf.setPage(i+1); //! now we declare that we're working on that page
-                pdf.addImage(canvasDataURL, 'PNG', 20, 40, (width*.62), (height*.62)); //! now we add content to that page!
-            }
-            pdf.save(this.newDelegation.number + '.pdf'); //! after the for loop is finished running, we save the pdf.
-            })
+        //         pdf.setPage(i+1); //! now we declare that we're working on that page
+        //         pdf.addImage(canvas, 'PNG', 20, 40, (width*.62), (height*.62)); //! now we add content to that page!
+        //     }
+        //     pdf.save(this.newDelegation.number + '.pdf'); //! after the for loop is finished running, we save the pdf.
+        //     })
             
-        } 
+        // } 
+        generatePdf() {
+            const source = document.body.getElementsByClassName('delegations-content')[0]
+
+            html2canvas(source).then(canvas => {
+                    let contentWidth = canvas.width,
+                    contentHeight = canvas.height,
+                    pageHeight = contentWidth / 595.28 * 841.89,
+                    leftHeight = contentHeight,
+                    position = 0,
+                    imgWidth = 595.28,
+                    imgHeight = 595.28/contentWidth * contentHeight,
+                    pageData = canvas.toDataURL('image/jpeg', 1.0),
+                    pdf = new jsPDF('', 'pt', 'a4')
+
+                    if (leftHeight < pageHeight) {
+                        pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                    } else {
+                        while(leftHeight > 0) {
+                            pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                            leftHeight -= pageHeight;
+                            position -= 841.89;
+                            if(leftHeight > 0) {
+                                pdf.addPage();
+                            }
+                        }
+                    }
+
+                    pdf.save(this.newDelegation.number + '.pdf');
+            })
+        }
     }
 }
 </script>
