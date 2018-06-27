@@ -225,6 +225,11 @@ const actions = {
       newDelegation.totalAllowance = allowance
       dispatch('checkNewDelegation')
     }
+
+  },
+  toggleTile({}, element) {
+    element.el.style.display = (element.style.display === "flex") ? "none" : "flex"
+
     },
     countAllCosts({getters, commit, dispatch}){
       const accCosts = getters.getAccomodationCostData,

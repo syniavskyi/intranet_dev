@@ -281,7 +281,6 @@ const role = localStorage.getItem('role')
             this.loop(cSelect, "delegations-dselect-cool")
             this.loop(cSelectHeader, "delegations-div-cool-dhead")
             this.loop(cDate, "delegations-dinput-date")
-            cGeneratePDF.style.display = "none"
         },
 
         loop(cClasses, sClassName) {
