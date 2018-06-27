@@ -139,7 +139,8 @@ export default {
             addCostRow: 'addAccCostRow',
             removeCostRow: 'removeAccCostRow',
             countAccFlatRate: 'countAccFlatRate',
-            getAccCostRate: 'getAccCostRate'
+            getAccCostRate: 'getAccCostRate',
+            updateAccCosts: 'countAccomodationCosts'
 
         }),
         hideAccFields(cost) {

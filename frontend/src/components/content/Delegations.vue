@@ -44,7 +44,7 @@
                                 <label class="delegations-label-cool-select">{{ $t("label.forTime") }} </label>
                             </div>
                             <div class="delegations-div-cool">
-                                <select required class="delegations-select-cool" v-model="newDelegation.currency" @change="checkNewDelegation">
+                                <select required class="delegations-select-cool" v-model="newDelegation.currency" @change="countAllCosts">
                                     <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
                                 </select>
                                 <label class="delegations-label-cool-select">{{ $t("table.delegations.currency") }} </label>
@@ -171,7 +171,8 @@ const role = localStorage.getItem('role')
     methods: {
         ...mapActions({
             checkNewDelegation: 'checkNewDelegation',
-            countAllowance: 'countAllowance'
+            countAllowance: 'countAllowance',
+            countAllCosts: 'countAllCosts'
         }),
         setDelegationNo(){
             if (this.newDelegation.dates && this.delegationUsername) {
@@ -254,12 +255,10 @@ const role = localStorage.getItem('role')
                     } else {
                         while(leftHeight > 0) {
                             pdf.addImage(pageData, 'JPEG', 30, position, imgWidth, imgHeight)
-//test
                             leftHeight -= pageHeight;
                             position -= 841.89;
                             if(leftHeight > 0) {
                                 pdf.addPage();
-                                // doc.text(570,830, '................................')
                             }
                         }
                     }
