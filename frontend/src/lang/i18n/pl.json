@@ -68,7 +68,8 @@
         "conveyance": "Środek transportu",
         "totalDelegationAmount": "Łączna wartość delegacji",
         "advanceAmount": "Wartość zaliczki",
-        "totalReturnAmount": "Łączna wartość do zwrotu"
+        "totalReturnAmount": "Łączna wartość do zwrotu",
+        "allowanceDeduction": "Potrącenie diety"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",

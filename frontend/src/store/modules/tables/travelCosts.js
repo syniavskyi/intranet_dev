@@ -114,52 +114,54 @@ const actions = {
     commit,
     dispatch
   }) {
-    const costTravelData = getters.getTravelCostData,
+    const data = getters.getTravelCostData,
       totalCosts = getters.getTotalCosts,
       transportRates = getters.getRatesForTransport[0],
-      totalCostsInCurr = getters.getTotalCostsInCurr
+      totalCostsInCurr = getters.getTotalCostsInCurr,
+      allDeduction = getters.getNewDelegation.allowanceDeduction
 
-    totalCosts.travel = totalCosts.trvPayback =  totalCosts.totalPayback = totalCostsInCurr.travel = totalCostsInCurr.trvPayback = totalCostsInCurr.totalPayback = 0
+      totalCostsInCurr.amount = totalCosts.travel = totalCosts.trvPayback =  totalCosts.totalPayback = totalCostsInCurr.travel = totalCostsInCurr.trvPayback = totalCostsInCurr.totalPayback = 0
     
-    for (let i = 0; i < costTravelData.length; i++) {
-      let amount = costTravelData[i].amount,
-        flatRateAmount = null,
-        rate = parseFloat(costTravelData[i].currencyRate).toFixed(2),
-        transport = costTravelData[i].transport,
-        km = costTravelData[i].kilometers
+    for (let i = 0; i < data.length; i++) {
+      let rate = parseFloat(data[i].currencyRate).toFixed(2),
+          transport = data[i].transport,
+          km = data[i].kilometers,
+          totalAmount = data[i].totalAmount, //total amount in each row counted in delegation currency
+          amount = data[i].amount //amount given in selected in each row currency
 
       amount = (amount === "") ? 0 : parseFloat(amount)
       km = (km === "") ? 0 : parseFloat(km)
 
       if (transport === "companyCar") {
-        costTravelData[i].totalAmount = costTravelData[i].amount = km * transportRates.carMore * rate
+        totalAmount = amount = km * transportRates.carMore * rate
       } else if (transport === "privateCar") {
-        if (costTravelData[i].engineCapacity === true) {
-          costTravelData[i].totalAmount = costTravelData[i].amount = km * transportRates.carMore * rate
-        } else if (costTravelData[i].engineCapacity === false) {
-          costTravelData[i].totalAmount = costTravelData[i].amount = km * transportRates.carLess * rate
+        if (data[i].engineCapacity === true) {
+          totalAmount = amount = km * transportRates.carMore * rate
+        } else if (data[i].engineCapacity === false) {
+          totalAmount = amount = km * transportRates.carLess * rate
         } else {
-            costTravelData[i].totalAmount = costTravelData[i].amount = 0
+          totalAmount = amount = 0
         }
       } else if (transport === "motocycle") {
-        costTravelData[i].totalAmount = costTravelData[i].amount = km * transportRates.motocycle * rate
+        totalAmount = amount = km * transportRates.motocycle * rate
       } else if (transport === "moped") {
-        costTravelData[i].totalAmount = costTravelData[i].amount = km * transportRates.moped * rate
+        totalAmount = amount = km * transportRates.moped * rate
       } else {
-        costTravelData[i].totalAmount = amount * rate
+        totalAmount = amount * rate
       }
 
-      costTravelData[i].totalAmountCurr = (costTravelData[i].totalAmount / costTravelData[i].delegationCurrRate).toFixed(2)
+      data[i].totalAmountCurr = (totalAmount / data[i].delegationCurrRate).toFixed(2)
 
-      if (costTravelData[i].payback === true) {
-        totalCosts.trvPayback = totalCosts.trvPayback + costTravelData[i].totalAmount
-        totalCostsInCurr.trvPayback = totalCostsInCurr.trvPayback + parseFloat(costTravelData[i].totalAmountCurr)
+      if (data[i].payback === true) {
+        totalCosts.trvPayback = totalCosts.trvPayback + totalAmount
+        totalCostsInCurr.trvPayback = totalCostsInCurr.trvPayback + parseFloat(data[i].totalAmountCurr)
       } 
       totalCosts.totalPayback = totalCosts.trvPayback + totalCosts.accPayback + totalCosts.othPayback
       totalCostsInCurr.totalPayback = totalCostsInCurr.trvPayback + totalCostsInCurr.accPayback + totalCostsInCurr.othPayback
       
-      totalCosts.travel = totalCosts.travel + costTravelData[i].totalAmount
-      totalCostsInCurr.travel = totalCostsInCurr.travel + parseFloat(costTravelData[i].totalAmountCurr)
+      totalCosts.travel = totalCosts.travel + totalAmount
+      totalCostsInCurr.travel = totalCostsInCurr.travel + parseFloat(data[i].totalAmountCurr)
+      totalCostsInCurr.amount =  totalCostsInCurr.travel + totalCostsInCurr.accomodation + totalCostsInCurr.others - allDeduction
     }
     dispatch('checkTravelFields')
   },
@@ -186,27 +188,29 @@ const actions = {
     }
   },
   getTravelRate({commit, dispatch, getters}, index) {
-    let data = getters.getTravelCostData,
-     rateDate = data[index].docDate,
-     newDelegationCurr = getters.getNewDelegation.currency
-          
+    const data = getters.getTravelCostData,
+          newDelegationCurr = getters.getNewDelegation.currency
+      let row = data[index],
+          rateDate = row.docDate
+
     rateDate = createRateDate(rateDate)
-    data[index].rateDate = rateDate
-    if (data[index].rateDate && data[index].currency && data[index].currency !== "PLN") { 
+    row.rateDate = rateDate
+
+    if (row.rateDate && row.currency && row.currency !== "PLN") { 
       const date = moment(rateDate).format('YYYY-MM-DD')
       const URL = 'http://api.nbp.pl/api/exchangerates/tables/a/' + date +'/'
        axios.get(URL).then(res => {
         let currRates = res.data[0].rates
-        data[index].currencyRate = currRates.find(o => o.code === data[index].currency).mid
-        data[index].delegationCurrRate = currRates.find(o => o.code === newDelegationCurr).mid
+        row.currencyRate = currRates.find(o => o.code === row.currency).mid
+        row.delegationCurrRate  = (newDelegationCurr !== 'PLN') ? currRates.find(o => o.code === newDelegationCurr).mid : 1.00
        dispatch('countTravelCosts')
       }).catch(error => {
         alert(error)
         console.log(error)
       })  
-    } else if (data[index].rateDate && data[index].currency == "PLN"){
-      data[index].currencyRate = 1 
-      data[index].delegationCurrRate = 1
+    } else if (row.rateDate && row.currency == "PLN"){
+      row.currencyRate = 1 
+      row.delegationCurrRate = 1
       dispatch('countTravelCosts')
     } 
   },
