@@ -1,4 +1,4 @@
-package com.btech.config;
+package com.btech.config.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,6 +29,16 @@ public class CustomUserDetails implements UserDetails {
 			auths.add(new SimpleGrantedAuthority(role.getName()));
 		}		
 		this.authorities = auths;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 
 	@Override

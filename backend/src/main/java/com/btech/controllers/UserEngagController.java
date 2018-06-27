@@ -24,7 +24,8 @@ public class UserEngagController {
 
     @GetMapping("/api/users/{id}/userEngag")
     public List<UserEngag> getUserEngagByPostId(@PathVariable(value = "id") Long id) {
-        return  userEngagRepository.findByUserId(id);
+        List<UserEngag> ue = userEngagRepository.findByUserId(id);
+        return ue;
     }
 
     @PostMapping("/api/users/{id}/userEngag/create")
@@ -40,5 +41,17 @@ public class UserEngagController {
     @PutMapping("/api/users/{id}/userEngag/{userEngagId}/edit")
     public UserEngag updateUserEngag(@PathVariable (value = "id") Long id, @PathVariable (value = "userEngagId") Long userEngagId, @Valid @RequestBody UserEngag userEngagRequest) {
         return userEngagService.updateUserEngag(id, userEngagId, userEngagRequest);
+    }
+
+    @GetMapping("/api/users/{id}/userEngag/test")
+    public Object[] blablalbal(@PathVariable(value = "id") Long id) {
+        List<UserEngag> ue = userEngagRepository.findByUserId(id);
+        for (int i = 0; i < ue.size(); i++) {
+            UserEngag uee = ue.get(i);
+            uee.setEngag("958");
+            ue.add(i, uee);
+            i++;
+        }
+        return ue.toArray();
     }
 }

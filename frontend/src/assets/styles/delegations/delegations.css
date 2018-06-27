@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
 
-body {
+/* body {
     width: 100vw;
     height: 100vh;
     margin:0;
     padding:0;
-    font-family: 'Roboto';
+    font-family: 'Roboto'; */
     /* max-width: 100%; */
-}
+/* } */
 
 .plane-delegations {
     margin:0;
@@ -104,6 +104,24 @@ body {
     padding-left: .5rem;
     font-weight: bold;
     min-height: 3rem;
+    justify-content: space-between;
+}
+
+.del-generate-pdf {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border-radius: 1rem;
+    border:0;
+    color: rgb(116, 116, 116);
+    margin-right: 1rem;
+    height: 1.8rem;
+    transition: box-shadow 0.3s ease;
+}
+
+.del-generate-pdf:hover {
+    cursor: pointer;
+    box-shadow: 0 0 20px orange;
 }
 
 .delegations-tile-underscore {
@@ -126,7 +144,7 @@ body {
 }
 
 .delegations-inputs-section {
-    align-self:flex-start;
+    align-self:center;
     display:flex;
     flex-direction: column;
 }
@@ -150,7 +168,7 @@ body {
 }
 
 .delegations-div-cool-head {
-    margin-top: 0.6rem;
+    margin-top: 0.7rem;
     margin-bottom: 0.5rem;
     display: flex;
     width: 15rem;
@@ -158,37 +176,56 @@ body {
     position: relative;
 }
 
-.delegations-input-cool {
+.delegations-input-cool,
+.delegations-dinput-cool {
+    text-align: center;
     height: 2rem;
     font-size: 1rem;
-    border: 0;
-    border-bottom:1px solid #757575;
+    background :transparent;
+    border:0;
     width: 100%;
     text-indent: 0.5rem;
-    /* padding: 0 0.5rem; */
-    /* transition: background-color 0.3s ease; */
 }
 
-.delegations-input-cool:hover {
-    /* border-bottom: 2px solid #757575; */
+.delegations-input-cool {
+    border-bottom: 1px solid #757575;
 }
 
-.delegations-select-cool {
+.delegations-select-cool,
+.delegations-dselect-cool {
     display: flex;
     width: 100%;
     height: 2rem;
-    border: 1px solid lightgrey;
     border-radius: 3px;
-    background-image: url("../../images/expand2.png");
-    background-repeat: no-repeat;
-    background-position: right;
     flex-shrink: 0;
+    border:0;
+    font-family: 'Roboto';
     appearance: none;
     -webkit-appearance: none; 
     -moz-appearance: none;
-    text-indent: .5rem;
     font-size: 1rem;
+    background: transparent;
 }
+
+.delegations-div-cool-dhead {
+    width: 18rem;
+}
+.delegations-div-cool-dhead > .delegations-dselect-cool {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.delegations-select-cool {
+    text-indent: .5rem;
+    background-image: url("../../images/expand2.png");
+    background-repeat: no-repeat;
+    background-position: right;
+    border: 1px solid lightgrey;
+}
+.delegations-dselect-cool {
+    text-indent: 5.5rem;
+}
+
+
 
 .delegations-div-bar { position:relative; display:flex; width:100%; }
     
@@ -239,14 +276,21 @@ body {
 .del-p-cool {
     display: flex;
     justify-content: center;
+    align-items: center;
     font-size: 1rem;
+    padding:0;
+    margin:0;
+    height: 2.5rem;
 }
 
 .delegations-input-cool:focus ~ label,
 .delegations-select-cool:focus ~ label,
 .delegations-input-cool:valid ~ label,
+.delegations-dinput-cool ~ label,
 .delegations-input-date ~ label,
+.delegations-dinput-date ~ label,
 .delegations-select-cool:valid ~ label,
+.delegations-dselect-cool ~ label,
 .del-p-cool ~ label {
     top: -.65rem;
     font-size: 1rem;
@@ -254,18 +298,17 @@ body {
     padding: 0 .2rem;
 }
 
+.delegations-div-cool-dhead > .delegations-dselect-cool ~ label {
+    display:none;
+}
+
 .delegations-input-cool:focus,
-.delegations-select-cool:focus {
+.delegations-select-cool:focus,
+.delegations-dinput-cool:focus {
     outline: none;
 }
 
 /* COOOL INPUTS AND SELECT !!! */
-
-.delegations-table-1 {
-    display: block;
-    border-collapse: collapse;
-    border: 0;
-}
 
 .delegations-input {
     padding-bottom:.1rem;
@@ -303,23 +346,38 @@ body {
     width: 14rem;
 }
 
-.delegations-input-date {
+.delegations-input-date,
+.delegations-dinput-date {
     width: 14rem;
     text-align: center;
     border: 0;
+    display:flex;
+    align-items:center;
 }
-.delegations-input-date input {
+.delegations-input-date input,
+.delegations-dinput-date input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 14rem;
     text-align: center;
     height: 1.8rem;
-    border: 1px solid rgb(207, 207, 207);
+    border:0;
     border-radius: 4px;
     background: transparent;
     font-size: 1rem;
 }
+
+.delegations-input-date input {
+    border: 1px solid rgb(207, 207, 207);
+}
+
+
 .delegations-tselect,
 .delegations-tselect-s {
-    text-indent: 2%;
+    display: flex;
+    align-items:center;
+    text-indent: .5rem;
     font-family: inherit;
     font-size: 1rem;
     background: white;
@@ -336,7 +394,9 @@ body {
 }
 .delegations-tselect-disabled,
 .delegations-tselect-s-disabled {
-    text-indent: 2%;
+    /* text-indent: 2%; */
+    display: flex;
+    align-items:center;
     font-family: inherit;
     font-size: 1rem;
     background: white;
@@ -462,8 +522,10 @@ body {
 .delegations-table-1 {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 100%;
+    width: 95%;
+    margin: .5rem 0;
+    border-radius: 4px;
+    box-shadow: 0 0 10px grey;
 }
 
 .del-thead-1,
@@ -472,7 +534,7 @@ body {
     background: #e5e5e5;
     display: none;
     width:100%;
-    border-radius: 4px;
+    border-radius: 2px;
 }
 .del-tbody-1 {
     display: flex;
@@ -598,15 +660,36 @@ body {
 
 .delegations-table-wrapper {
     display: flex;
+    align-items: center;
     flex-direction: row;
-    width: 100%;
+    width: 95%;
     height: 100%;
-    min-height: 10rem;
+    /* min-height: 10rem; */
+    box-shadow: 0 0 10px grey;
+    margin: 1rem 0 ;
 }
+
+.del-add-row {
+    background: transparent;
+    margin-right: 1rem;
+    border: 0;
+    font-family: 'Roboto';
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    transition: box-shadow 0.3s ease;
+    height: 1.5rem;
+}
+
+.del-add-row:hover {
+    box-shadow: 0 0 10px orange;
+    cursor: pointer;
+}
+
 .delegations-table-2 {
     display: flex;
     flex-direction: column;
-    width: 99.5%;
+    width: 100%;
+    
 }
 
 .del-thead-item,
@@ -614,7 +697,8 @@ body {
 .del-thead-item-cost,
 .del-thead-item-cost-w,
 .del-thead-item-cost-xw,
-.del-thead-item-scost {
+.del-thead-item-scost,
+.del-thead-item-adv {
     display:flex;
     margin:0;
     padding:0;
@@ -623,6 +707,9 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+.del-thead-item-adv {
+    width: 20%;
 }
 .del-thead-item {
     width: 10%;
@@ -642,6 +729,7 @@ body {
 }
 
 .del-tbody2-item,
+.del-tbody2-item-adv,
 .del-tbody2-item-cost,
 .del-tbody2-item-cost-w,
 .del-tbody2-item-cost-xw,
@@ -656,7 +744,9 @@ body {
     text-align: center;
     min-height: 3rem;
 }
-
+.del-tbody2-item-adv {
+    width: 20%;
+}
 .del-tbody2-item-w {
     display: flex;
     width: 20%;
@@ -665,6 +755,9 @@ body {
 .del-tbody2-item-wfoot-cost {
     display: flex;
     width: 21.09%;
+}
+.del-tbody2-item-wfoot-adv {
+    width: 40%;
 }
 .del-tbody2-item-wfoot-scost {
     display:flex;
@@ -836,7 +929,7 @@ body {
         width: 100%;
     }
     .del-table-row {
-        width: 35%;
+        width: 45%;
     }
     .del-tbody-cols {
         width: 10%;
@@ -865,7 +958,6 @@ body {
 #delegations-row-5:checked ~ .delegations-tile-wrap {
    max-height: 20rem;
 }
-
 
 .delegations-tile-wrap {
     display: flex;

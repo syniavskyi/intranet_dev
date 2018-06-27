@@ -35,7 +35,11 @@ require('./assets/styles/employees/employees.css');
 require('./assets/styles/files/files.css');
 require('./assets/styles/delegations/delegations.css');
 require('./assets/styles/calendar/calendar.css');
+
 require('./assets/styles/news/news.css');
+
+require('./assets/styles/pdf/pdf.css');
+
 
 Vue.config.productionTip = false
 

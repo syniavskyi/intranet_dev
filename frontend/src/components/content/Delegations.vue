@@ -1,8 +1,8 @@
 <template>
-<div class="plane-delegations">
+<div class="plane-delegations" refs="delegationContent" id="delegation-content">
     <div class="delegations-nav-and-content">
         <app-menu></app-menu>
-        <div class="delegations-content">
+        <div name="testname" class="delegations-content" >
             <div class="delegations-header">
                 <div class="delegations-header-title-and-menu">
                     <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="delegations-header-menu">
@@ -18,10 +18,12 @@
                                 <select required v-if="!showUsername" class="delegations-select-cool" v-model="newDelegation.userId" @change="setUsername">
                                     <option v-for="user in usersList" :key="user.id" :value="user.id">{{ user.firstName }} {{ user.lastName }}</option>
                                 </select> 
-                                <label class="delegations-label-cool-select">Wybierz pracownika</label>
+                                <label v-if="!showUsername" class="delegations-label-cool-select">Wybierz pracownika</label>
                             </div>
+                            <button class="del-generate-pdf" @click="generatePdf">GENERUJ PDF</button>
                         </div>
                         <div class="delegations-tile-underscore"></div>
+                        
                     </div>
                     <div class="delegations-tile-content delegations-tile-content-1">
                         <div class="delegations-inputs-section">
@@ -50,6 +52,11 @@
                         </div>
                         <div class="delegations-inputs-section">
                             <div class="delegations-div-cool">
+                                <input required class="delegations-input-cool" v-model="newDelegation.destination" @input="checkNewDelegation" />
+                                <span class="delegations-div-bar"></span>
+                                <label class="delegations-label-cool">{{ $t("label.to") }} </label>
+                            </div>
+                            <div class="delegations-div-cool">
                                 <p class="del-p-cool">{{ newDelegation.hours }}</p>
                                 <label class="delegations-label-cool">{{ $t("label.hoursInDelegation") }} </label>
                             </div>
@@ -63,11 +70,7 @@
                             </div>
                         </div>
                         <div class="delegations-inputs-section">
-                            <div class="delegations-div-cool">
-                                <input required class="delegations-input-cool" v-model="newDelegation.destination" @input="checkNewDelegation" />
-                                <span class="delegations-div-bar"></span>
-                                <label class="delegations-label-cool">{{ $t("label.to") }} </label>
-                            </div>
+                            
                             <div class="delegations-div-cool">
                                 <input required class="delegations-input-cool" v-model="newDelegation.purpose" @input="checkNewDelegation" />
                                 <span class="delegations-div-bar"></span>
@@ -93,6 +96,7 @@
                 <travel-costs-table></travel-costs-table>
                 <accomodation-costs-table></accomodation-costs-table>
                 <other-costs-table></other-costs-table>
+ 
             </div>
         </div>
     </div>
@@ -101,6 +105,11 @@
 
 <script>
 import moment from "moment"
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
+window.html2canvas = html2canvas
+
+
 import {
     mapGetters,
     mapActions
@@ -115,7 +124,8 @@ export default {
     data() {
         return {
             showUsername: true,
-            delegationUsername: null
+            delegationUsername: null,
+            generatingPdfMode: false
         }
     },
     components: {
@@ -151,7 +161,8 @@ const role = localStorage.getItem('role')
             delegationTableValidated: 'getDelegationTableValidated',
             dailyAllowance: 'getDailyAllowance',
             usersList: 'usersList',
-            totalCostsInCurr: 'getTotalCostsInCurr'
+            totalCostsInCurr: 'getTotalCostsInCurr',
+            advanceData: 'getAdvanceData'
         }),
         disableSaveBtn() {
             return (this.newDelegationValidated && this.delegationTableValidated && this.accCostValidated) ? false : true
@@ -167,9 +178,11 @@ const role = localStorage.getItem('role')
             const date = this.newDelegation.dates.start,
                 year = moment(date).format('YYYY'),
                 month = moment(date).format('MM'),
-                username = this.delegationUsername
+                username = this.delegationUsername,
+                number = username + '/' + year + '/' + month
             
-            return username + '/' + year + '/' + month
+            this.newDelegation.number = number
+            return number
             } else {
                 return null
             }
@@ -184,7 +197,95 @@ const role = localStorage.getItem('role')
                     return
                 }
             }
+        },
+        //  generatePdf() {
+        //    this.generatingPdfMode = true
+           
+        //    const source = document.body.getElementsByClassName('delegations-content')[0]
+        //    let pdf = new jsPDF('p', 'pt', 'letter'),
+        //          width = pdf.internal.pageSize.getWidth(),
+        //          height = pdf.internal.pageSize.getHeight()
+        
+        //    html2canvas(source).then(canvas => {
+        //     for (let i = 0; i < Math.round(source.clientHeight/980); i++) {
+        //         let srcImg  = canvas
+
+        //         window.onePageCanvas = document.createElement("canvas")
+        //         onePageCanvas.setAttribute('width', 900)
+        //         onePageCanvas.setAttribute('height', 980)
+        //         let ctx = onePageCanvas.getContext('2d')
+                
+        //         ctx.drawImage(srcImg, 0, 980*i,900,980,0,0,900,980)
+        //         // cxt.drawImage(img,sx,sy,swidth,sheight,x,y,width,height)
+
+        //         let canvasDataURL = onePageCanvas.toDataURL("image/png", 1),
+        //             width         = onePageCanvas.width,
+        //             height        = onePageCanvas.clientHeight
+                
+               
+        //         if (i > 0) {
+        //             pdf.addPage(612, 791); //8.5" x 11" in pts (in*72)
+        //         }
+
+        //         pdf.setPage(i+1); //! now we declare that we're working on that page
+        //         pdf.addImage(canvas, 'PNG', 20, 40, (width*.62), (height*.62)); //! now we add content to that page!
+        //     }
+        //     pdf.save(this.newDelegation.number + '.pdf'); //! after the for loop is finished running, we save the pdf.
+        //     })
             
+        // } 
+        generatePdf() {
+            this.generatingPdfMode = true
+            this.loopClasses();
+            const source = document.body.getElementsByClassName('delegations-content')[0]
+
+            html2canvas(source).then(canvas => {
+                    let contentWidth = canvas.width,
+                    contentHeight = canvas.height,
+                    pageHeight = contentWidth / 595.28 * 841.89,
+                    leftHeight = contentHeight,
+                    position = 0,
+                    imgWidth = 595.28,
+                    imgHeight = 595.28/contentWidth * contentHeight,
+                    pageData = canvas.toDataURL('image/jpeg', 1.0),
+                    pdf = new jsPDF('', 'pt', 'a4')
+
+                    if (leftHeight < pageHeight) {
+                        pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                    } else {
+                        while(leftHeight > 0) {
+                            pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                            leftHeight -= pageHeight;
+                            position -= 841.89;
+                            if(leftHeight > 0) {
+                                pdf.addPage();
+                            }
+                        }
+                    }
+
+                    pdf.save(this.newDelegation.number + '.pdf');
+            })
+        },
+
+        loopClasses() {
+            let cSelect = document.getElementsByClassName("delegations-select-cool")
+            let cInput = document.getElementsByClassName("delegations-input-cool")
+            let cSelectHeader = document.getElementsByClassName("delegations-div-cool-head")
+            let cDate = document.getElementsByClassName("delegations-input-date")
+            let cGeneratePDF = document.getElementsByClassName("del-generate-pdf")
+
+            this.loop(cInput, "delegations-dinput-cool")
+            this.loop(cSelect, "delegations-dselect-cool")
+            this.loop(cSelectHeader, "delegations-div-cool-dhead")
+            this.loop(cDate, "delegations-dinput-date")
+            cGeneratePDF.style.display = "none"
+        },
+
+        loop(cClasses, sClassName) {
+            let i = cClasses.length
+            while (i--) {
+                cClasses[i].className = sClassName
+            }
         }
     }
 }
