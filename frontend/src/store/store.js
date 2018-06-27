@@ -16,6 +16,7 @@ import accomodationCosts from './modules/tables/accomodationCosts'
 import otherCosts from './modules/tables/otherCosts'
 import travelCosts from './modules/tables/travelCosts'
 import advanceTable from './modules/tables/advanceTable'
+import news from './modules/news'
 
 import settings from './modules/settings'
 
@@ -40,6 +41,7 @@ export default new Vuex.Store({
         accomodationCosts,
         otherCosts,
         travelCosts,
-        advanceTable
+        advanceTable,
+        news
     }
 });

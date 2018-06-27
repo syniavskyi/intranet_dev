@@ -173,5 +173,14 @@
             "days": "Liczba dni"
         },
         "addModule": "Wybierz moduł z listy"  
+    },
+    "news": {
+        "monday": "Poniedziałek",
+        "tuesday": "Wtorek",
+        "wednesday": "Środa",
+        "thursday": "Czwartek",
+        "friday": "Piątek",
+        "saturday": "Sobota",
+        "sunday": "Niedziela"
     }
 }
