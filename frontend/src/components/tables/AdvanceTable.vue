@@ -46,7 +46,7 @@
                     <div class="del-tbody2-item-adv">
                         <div class="del-tbody2-item-title">{{ $t("table.delegations.advanceAmount") }}</div>
                         <div class="del-tbody2-item-txt">
-                            <input class="delegations-tinput" type="number" min="0" @input="updateAdvance" v-model="advance.amount" /></div>
+                            <input class="delegations-tinput" type="number" min="0" @input="getAdvanceRate(index)" v-model="advance.amount" /></div>
                     </div>
                     <div class="del-tfoot2"></div>
                     <div class="del-tbody2-item-adv">

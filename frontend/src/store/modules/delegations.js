@@ -63,7 +63,7 @@ const state = {
     purpose: null,
     hours: 0,
     totalAllowance: 0,
-    currency: null,
+    currency: 'PLN',
     totalReturnAmount: 0,
     totalDelegationAmount: 0
   },

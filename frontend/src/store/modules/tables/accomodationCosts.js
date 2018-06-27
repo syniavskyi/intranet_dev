@@ -16,7 +16,7 @@ const state = {
         totalAmount: 0,
         currencyRate: 1,
         rateDate: null, //total  amount in delegation curr and rate for it
-        totalAmountCurr: 0,
+        totalAmountInCurr: 0,
         delegationCurrRate: 1
     }],
     costAccValidated: false
@@ -72,14 +72,14 @@ const actions = {
            amount = (amount === "") ? 0 : parseFloat(amount)
 
            accCostData[i].totalAmount = amount * rate
-           accCostData[i].totalAmountCurr = parseFloat(accCostData[i].totalAmount / accCostData[i].delegationCurrRate).toFixed(2)
+           accCostData[i].totalAmountInCurr = parseFloat(accCostData[i].totalAmount / accCostData[i].delegationCurrRate).toFixed(2)
             
             if(accCostData[i].payback === true ) {
                 totalCosts.accPayback = totalCosts.accPayback + accCostData[i].totalAmount
-                totalCostsInCurr.accPayback = totalCostsInCurr.accPayback + parseFloat(accCostData[i].totalAmountCurr)
+                totalCostsInCurr.accPayback = totalCostsInCurr.accPayback + parseFloat(accCostData[i].totalAmountInCurr)
             }
             totalCosts.accomodation = totalCosts.accomodation + accCostData[i].totalAmount
-            totalCostsInCurr.accomodation = totalCostsInCurr.accomodation + parseFloat(accCostData[i].totalAmountCurr)
+            totalCostsInCurr.accomodation = totalCostsInCurr.accomodation + parseFloat(accCostData[i].totalAmountInCurr)
 
             totalCosts.totalPayback = totalCosts.trvPayback + totalCosts.accPayback + totalCosts.othPayback
             totalCostsInCurr.totalPayback = totalCostsInCurr.trvPayback + totalCostsInCurr.accPayback + totalCostsInCurr.othPayback
@@ -108,32 +108,36 @@ const actions = {
     countAccFlatRate({commit,dispatch,getters}, index) {
         const costs = getters.getAccomodationCostData,
               dailyAll = getters.getDailyAllowance,
-              delegationCurr = getters.getNewDelegation.currency
+              delegationCurr = getters.getNewDelegation.currency,
+              cost =  costs[index]
         
-        costs[index].currency = delegationCurr
-        costs[index].amount = 1.5 * costs[index].flatRateDays * dailyAll 
-        costs[index].totalAmount = 1.5 * costs[index].flatRateDays * dailyAll 
+              cost.currency = delegationCurr
+              cost.amount = 1.5 * cost.flatRateDays * dailyAll 
+              cost.totalAmount = 1.5 * cost.flatRateDays * dailyAll 
     },
     getAccCostRate({commit, dispatch, getters}, index) {
-        let data = getters.getOtherCostData,
-         rateDate = data[index].docDate,
-         newDelegationCurr = getters.getNewDelegation.currency
+        const data = getters.getAccomodationCostData,
+              newDelegationCurr = getters.getNewDelegation.currency
               
+        let row = data[index],
+            rateDate = row.docDate
+        
         rateDate = createRateDate(rateDate)
-        data[index].rateDate = rateDate
-        if (data[index].docDate && data[index].currency && data[index].currency !== "PLN") { 
+        row.rateDate = rateDate
+
+        if (row.docDate && row.currency && row.currency !== "PLN") { 
           const date = moment(rateDate).format('YYYY-MM-DD')
           const URL = 'http://api.nbp.pl/api/exchangerates/tables/a/' + date +'/'
           axios.get(URL).then(res => {
             let currRates = res.data[0].rates
-            data[index].currencyRate = currRates.find(o => o.code === data[index].currency).mid
-            data[index].delegationCurrRate = currRates.find(o => o.code === newDelegationCurr).mid
+            row.currencyRate = currRates.find(o => o.code === row.currency).mid
+            row.delegationCurrRate = (newDelegationCurr !== 'PLN') ? currRates.find(o => o.code === newDelegationCurr).mid : 1.00
             dispatch('countAccomodationCosts')
           }).catch(error => {
             alert(error)
           })  
-        } else if (data[index].docDate && data[index].currency == "PLN"){
-          data[index].currencyRate = data[index].delegationCurrRate = 1 
+        } else if (row.docDate && row.currency == "PLN"){
+            row.currencyRate = row.delegationCurrRate = 1 
           dispatch('countAccomodationCosts')
         } 
       }

@@ -102,25 +102,27 @@ const actions = {
             }
     },
     getOtherCostRate({commit, dispatch, getters}, index) {
-      let data = getters.getOtherCostData,
-       rateDate = data[index].docDate,
-       newDelegationCurr = getters.getNewDelegation.currency
-            
+      const data = getters.getOtherCostData,
+            newDelegationCurr = getters.getNewDelegation.currency
+        let row = data[index],
+            rateDate = row.docDate
+       
       rateDate = createRateDate(rateDate)
-      data[index].rateDate = rateDate
-      if (data[index].docDate && data[index].currency && data[index].currency !== "PLN") { 
-        const date = moment(rateDate).format('YYYY-MM-DD')
-        const URL = 'http://api.nbp.pl/api/exchangerates/tables/a/' + date +'/'
+      row.rateDate = rateDate
+
+      if (row.docDate && row.currency && row.currency !== "PLN") { 
+        const date = moment(rateDate).format('YYYY-MM-DD'),
+              URL = 'http://api.nbp.pl/api/exchangerates/tables/a/' + date +'/'
         axios.get(URL).then(res => {
           let currRates = res.data[0].rates
-          data[index].currencyRate = currRates.find(o => o.code === data[index].currency).mid
-          data[index].delegationCurrRate = currRates.find(o => o.code === newDelegationCurr).mid
-          dispatch('countOtherCosts')
+          row.currencyRate = currRates.find(o => o.code === row.currency).mid
+          row.delegationCurrRate = (newDelegationCurr !== 'PLN') ? currRates.find(o => o.code === newDelegationCurr).mid : 1.00 
+            dispatch('countOtherCosts')
         }).catch(error => {
           alert(error)
         })  
-      } else if (data[index].docDate && data[index].currency == "PLN"){
-        data[index].currencyRate = data[index].delegationCurrRate = 1 
+      } else if (row.docDate && row.currency == "PLN"){
+        row.currencyRate = row.delegationCurrRate = 1 
         dispatch('countOtherCosts')
       } 
     }
