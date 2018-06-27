@@ -117,9 +117,10 @@ const actions = {
     const data = getters.getTravelCostData,
       totalCosts = getters.getTotalCosts,
       transportRates = getters.getRatesForTransport[0],
-      totalCostsInCurr = getters.getTotalCostsInCurr
+      totalCostsInCurr = getters.getTotalCostsInCurr,
+      allDeduction = getters.getNewDelegation.allowanceDeduction
 
-    totalCosts.travel = totalCosts.trvPayback =  totalCosts.totalPayback = totalCostsInCurr.travel = totalCostsInCurr.trvPayback = totalCostsInCurr.totalPayback = 0
+      totalCostsInCurr.amount = totalCosts.travel = totalCosts.trvPayback =  totalCosts.totalPayback = totalCostsInCurr.travel = totalCostsInCurr.trvPayback = totalCostsInCurr.totalPayback = 0
     
     for (let i = 0; i < data.length; i++) {
       let rate = parseFloat(data[i].currencyRate).toFixed(2),
@@ -160,6 +161,7 @@ const actions = {
       
       totalCosts.travel = totalCosts.travel + totalAmount
       totalCostsInCurr.travel = totalCostsInCurr.travel + parseFloat(data[i].totalAmountCurr)
+      totalCostsInCurr.amount =  totalCostsInCurr.travel + totalCostsInCurr.accomodation + totalCostsInCurr.others - allDeduction
     }
     dispatch('checkTravelFields')
   },

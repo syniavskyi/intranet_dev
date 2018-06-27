@@ -68,6 +68,10 @@
                                 <p class="del-p-cool">{{newDelegation.totalAllowance}} {{newDelegation.currency}} </p>
                                 <label class="delegations-label-cool">{{ $t("label.totalAllowance") }}: </label>
                             </div>
+                            <div class="delegations-div-cool">
+                                <input required class="delegations-input-cool" v-model="newDelegation.allowanceDeduction" @input="checkNewDelegation" /><p>{{newDelegation.currency}} </p>
+                                <label class="delegations-label-cool">{{ $t("label.totalAllowance") }}: </label>
+                            </div>
                         </div>
                         <div class="delegations-inputs-section">
                             

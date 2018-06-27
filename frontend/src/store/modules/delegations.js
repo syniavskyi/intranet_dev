@@ -48,7 +48,8 @@ const state = {
     totalAllowance: 0,
     currency: 'PLN',
     totalReturnAmount: 0,
-    totalDelegationAmount: 0
+    totalDelegationAmount: 0,
+    allowanceDeduction: 0
   },
   newDelegationValidated: false,
   delegationTableValidated: false,

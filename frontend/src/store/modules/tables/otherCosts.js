@@ -55,10 +55,11 @@ const actions = {
     countOtherCosts({getters, commit, dispatch}) {
         const otherCostData = getters.getOtherCostData,
              totalCosts = getters.getTotalCosts,
-             totalCostsInCurr = getters.getTotalCostsInCurr
+             totalCostsInCurr = getters.getTotalCostsInCurr,
+             allDeduction = getters.getNewDelegation.allowanceDeduction
 
         totalCosts.othPayback = totalCosts.others = totalCosts.totalPayback = 0
-        totalCostsInCurr.othPayback = totalCostsInCurr.others = totalCostsInCurr.totalPayback = 0
+        totalCostsInCurr.amount = totalCostsInCurr.othPayback = totalCostsInCurr.others = totalCostsInCurr.totalPayback = 0
 
         for(let i=0; i<otherCostData.length; i++) {
             let amount = otherCostData[i].amount,
@@ -79,6 +80,7 @@ const actions = {
             
             totalCosts.totalPayback = totalCosts.trvPayback + totalCosts.accPayback + totalCosts.othPayback
             totalCostsInCurr.totalPayback = totalCostsInCurr.trvPayback + totalCostsInCurr.accPayback + totalCostsInCurr.othPayback
+            totalCostsInCurr.amount =  totalCostsInCurr.travel + totalCostsInCurr.accomodation + totalCostsInCurr.others - allDeduction
         }
         dispatch('checkOtherCostsFields')
     
