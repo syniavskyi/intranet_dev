@@ -235,32 +235,34 @@ const role = localStorage.getItem('role')
             
         // } 
         generatePdf() {
+            this.generatingPdfMode = true
+
             const source = document.body.getElementsByClassName('delegations-content')[0]
 
             html2canvas(source).then(canvas => {
                     let contentWidth = canvas.width,
                     contentHeight = canvas.height,
-                    pageHeight = contentWidth / 595.28 * 841.89,
+                    pageHeight = contentWidth / 540 * 841.89,
                     leftHeight = contentHeight,
                     position = 0,
-                    imgWidth = 595.28,
-                    imgHeight = 595.28/contentWidth * contentHeight,
+                    imgWidth = 540,
+                    imgHeight = 540/contentWidth * contentHeight,
                     pageData = canvas.toDataURL('image/jpeg', 1.0),
                     pdf = new jsPDF('', 'pt', 'a4')
-
                     if (leftHeight < pageHeight) {
-                        pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                        pdf.addImage(pageData, 'JPEG', 30, 30, imgWidth, imgHeight );
                     } else {
                         while(leftHeight > 0) {
-                            pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                            pdf.addImage(pageData, 'JPEG', 30, position, imgWidth, imgHeight)
+
                             leftHeight -= pageHeight;
                             position -= 841.89;
                             if(leftHeight > 0) {
                                 pdf.addPage();
+                                // doc.text(570,830, '................................')
                             }
                         }
                     }
-
                     pdf.save(this.newDelegation.number + '.pdf');
             })
         }
