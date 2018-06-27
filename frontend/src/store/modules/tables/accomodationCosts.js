@@ -122,14 +122,14 @@ const actions = {
               newDelegationCurr = getters.getNewDelegation.currency
               
         let row = data[index],
-            rateDate = row.docDate
-        
-        rateDate = createRateDate(rateDate)
+            rateDate = createRateDate(row.docDate)
+            
         row.rateDate = rateDate
 
         if (row.docDate && row.currency && row.currency !== "PLN") { 
           const date = moment(rateDate).format('YYYY-MM-DD')
           const URL = 'http://api.nbp.pl/api/exchangerates/tables/a/' + date +'/'
+          
           axios.get(URL).then(res => {
             let currRates = res.data[0].rates
             row.currencyRate = currRates.find(o => o.code === row.currency).mid
@@ -138,6 +138,7 @@ const actions = {
           }).catch(error => {
             alert(error)
           })  
+
         } else if (row.docDate && row.currency == "PLN"){
             row.currencyRate = row.delegationCurrRate = 1 
           dispatch('countAccomodationCosts')

@@ -107,9 +107,8 @@ const actions = {
       const data = getters.getOtherCostData,
             newDelegationCurr = getters.getNewDelegation.currency
         let row = data[index],
-            rateDate = row.docDate
-       
-      rateDate = createRateDate(rateDate)
+            rateDate = createRateDate(row.docDate)
+
       row.rateDate = rateDate
 
       if (row.docDate && row.currency && row.currency !== "PLN") { 
@@ -131,12 +130,8 @@ const actions = {
 };
 
 const getters = {
-    getOtherCostData(state) {
-        return state.otherCostData
-    },
-    getOtherCostValidated(state) {
-        return state.costOtherValidated
-    }
+    getOtherCostData: state=> { return state.otherCostData },
+    getOtherCostValidated: state => { return state.costOtherValidated }
 };
 
 export default {
