@@ -254,7 +254,7 @@ const role = localStorage.getItem('role')
                     } else {
                         while(leftHeight > 0) {
                             pdf.addImage(pageData, 'JPEG', 30, position, imgWidth, imgHeight)
-
+//test
                             leftHeight -= pageHeight;
                             position -= 841.89;
                             if(leftHeight > 0) {
