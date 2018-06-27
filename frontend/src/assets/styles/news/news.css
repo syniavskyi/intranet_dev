@@ -1,0 +1,110 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.content-body {
+    width: 95%;
+    height: 100%;
+    padding: 15px;
+}
+.api {
+    display: flex;
+    flex-direction: row;
+}
+
+.content-event {
+    width: 65%;
+    margin: 10px;
+    padding:5px;
+    background-color: white;
+    min-height: 50%;
+    box-shadow: 0 0 10px grey;
+    border-radius: 4px;
+}
+
+.content-weather {
+    width: 30%;
+    height: 50%;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px grey;
+    margin: 10px;
+    display: inline-block;
+    padding: 5px;
+    border-radius: 4px;
+    background-color: white;
+}
+.intro {
+    flex-direction: row;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 1.3rem;
+}
+ .town {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.icon{
+    padding-left: 10px;
+    padding-right: 15px;
+}
+
+.temp p {
+    padding: 0px;
+    margin: 0;
+}
+.temp {
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+    padding: 0 30px 0 30px;
+    flex-direction: row;
+    align-items: center;
+}
+.description {
+    display: flex;
+    justify-content: center;  
+    font-size: 1.2rem;
+}
+.additional {
+    display: flex;
+    padding: 25px;
+    flex-direction: column;
+    font-size: 1.1rem;
+}
+
+.weatherDesc {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    align-items: center;
+}
+
+.weatherDesc p {
+    padding: 0;
+    margin: 0;
+}
+.iconWeather {
+    padding-right: 10px;
+}
+
+.date {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+.date p {
+    padding: 0;
+    margin: 0;
+}
+.content-news{
+    padding: 15px;
+    margin: 10px;
+    width: 95%;
+    background-color: white;
+    box-shadow: 0 0 10px grey;
+    border-radius: 4px;
+}

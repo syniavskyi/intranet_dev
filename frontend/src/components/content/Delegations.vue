@@ -236,7 +236,7 @@ const role = localStorage.getItem('role')
         // } 
         generatePdf() {
             this.generatingPdfMode = true
-
+            this.loopClasses()
             const source = document.body.getElementsByClassName('delegations-content')[0]
 
             html2canvas(source).then(canvas => {
@@ -265,6 +265,27 @@ const role = localStorage.getItem('role')
                     }
                     pdf.save(this.newDelegation.number + '.pdf');
             })
+        },
+
+        loopClasses() {
+            let cSelect = document.getElementsByClassName("delegations-select-cool")
+            let cInput = document.getElementsByClassName("delegations-input-cool")
+            let cSelectHeader = document.getElementsByClassName("delegations-div-cool-head")
+            let cDate = document.getElementsByClassName("delegations-input-date")
+            let cGeneratePDF = document.getElementsByClassName("del-generate-pdf")
+
+            this.loop(cInput, "delegations-dinput-cool")
+            this.loop(cSelect, "delegations-dselect-cool")
+            this.loop(cSelectHeader, "delegations-div-cool-dhead")
+            this.loop(cDate, "delegations-dinput-date")
+            cGeneratePDF.style.display = "none"
+        },
+
+        loop(cClasses, sClassName) {
+            let i = cClasses.length
+            while (i--) {
+                cClasses[i].className = sClassName
+            }
         }
     }
 }
