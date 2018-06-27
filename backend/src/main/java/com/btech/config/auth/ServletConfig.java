@@ -15,7 +15,7 @@ public class ServletConfig extends SpringBootServletInitializer {
 		return application.sources(InitApp.class);
 	}
 
-	@Bean
+/*	@Bean
 	public EmbeddedServletContainerCustomizer containerCustomizer() {
 		return (container -> {
 			container.setContextPath("");
@@ -30,5 +30,5 @@ public class ServletConfig extends SpringBootServletInitializer {
 		final ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(dispatcherServlet);
 		servletRegistrationBean.setEnabled(false);
 		return servletRegistrationBean;
-	}
+	}*/
 }
