@@ -1,16 +1,16 @@
 <template>
         <div class="delegations-tile">
-        <input id="delegations-row-4" class="documents-tiles-row-header-input" type="checkbox">
-        <label class="delegations-tiles-row-header" for="delegations-row-4">
-            <div class="delegations-tile-header">
+        <!-- <input id="delegations-row-4" class="documents-tiles-row-header-input" type="checkbox">
+        <label class="delegations-tiles-row-header" for="delegations-row-4"> -->
+            <div @click="toggleTile" class="delegations-tile-header">
                         <div class="delegations-tile-title">
                             {{ $t("header.accomodationCosts") }}
-                            <button class="del-add-row" @click="addCostRow"> dodaj wiersz </button>
+                            <button class="del-add-row" @click.prevent="toggleTile" @click="addCostRow"> dodaj wiersz </button>
                         </div>
                         <div class="delegations-tile-underscore"></div>
                     </div>
-        </label>
-            <div class="delegations-tile-wrap">
+        <!-- </label>
+            <div class="delegations-tile-wrap"> -->
                     
                     <div class="delegations-tile-content">
 
@@ -111,7 +111,7 @@
                             </div>
                         </div>
                 
-            </div>
+            <!-- </div> -->
             </div>
         </div>
 </template>
@@ -145,6 +145,13 @@ export default {
         hideAccFields(cost) {
             const type = cost.flatRate
                 return (type == false) ? false : true
+        },
+        toggleTile() {
+            let el = this.$el.lastChild,
+                style = window.getComputedStyle(el)
+            
+           const name = {el, style}
+           this.$store.dispatch('toggleTile', name)
         }
     }
 }

@@ -1,16 +1,16 @@
 <template>
 <div class="delegations-tile">
-    <input id="delegations-row-1" class="documents-tiles-row-header-input" type="checkbox">
-    <label class="delegations-tiles-row-header" for="delegations-row-1">
-        <div class="delegations-tile-header">
+    <!-- <input id="delegations-row-1" class="documents-tiles-row-header-input" type="checkbox">
+    <label class="delegations-tiles-row-header" for="delegations-row-1"> -->
+        <div @click="toggleTile" class="delegations-tile-header">
             <div class="delegations-tile-title">
                 {{ $t("header.advance") }}
-                <button class="del-add-row" @click="addAdvanceRow"> dodaj wiersz </button>
+                <button class="del-add-row" @click.prevent="toggleTile" @click="addAdvanceRow"> dodaj wiersz </button>
             </div>
             <div class="delegations-tile-underscore"></div>
         </div>
-    </label>
-    <div class="delegations-tile-wrap">    
+    <!-- </label> -->
+    <!-- <div class="delegations-tile-wrap">     -->
         
         <div class="delegations-tile-content">
 
@@ -74,7 +74,7 @@
         </div>
         
     </div>
-    </div>
+    <!-- </div> -->
 </div>
 </template>
 
@@ -108,6 +108,14 @@ export default {
         addAdvanceRow() {
             this.$store.dispatch('addAdvanceRow')
             this.$store.commit('SET_ADVANCE_VALIDATED', false)
+        },
+
+        toggleTile() {
+            let el = this.$el.lastChild,
+                style = window.getComputedStyle(el)
+            
+           const name = {el, style}
+           this.$store.dispatch('toggleTile', name)
         }
     }
 }

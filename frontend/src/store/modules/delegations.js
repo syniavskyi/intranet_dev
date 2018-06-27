@@ -244,6 +244,9 @@ const actions = {
       commit('SET_NEW_DELEGATION', newDelegation)
       dispatch('checkNewDelegation')
     }
+  },
+  toggleTile({}, element) {
+    element.el.style.display = (element.style.display === "flex") ? "none" : "flex"
   }
 };
 
