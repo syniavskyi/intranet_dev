@@ -70,7 +70,7 @@
                             </div>
                             <div class="delegations-div-cool">
                                 <input required class="delegations-input-cool" v-model="newDelegation.allowanceDeduction" @input="checkNewDelegation" /><p>{{newDelegation.currency}} </p>
-                                <label class="delegations-label-cool">{{ $t("label.totalAllowance") }}: </label>
+                                <label class="delegations-label-cool">{{ $t("label.allowanceDeduction") }}: </label>
                             </div>
                         </div>
                         <div class="delegations-inputs-section">
@@ -185,7 +185,7 @@ const role = localStorage.getItem('role')
                 month = moment(date).format('MM'),
                 username = this.delegationUsername,
                 number = username + '/' + year + '/' + month
-            
+            // number = '${username}/${year}/${month}'
             this.newDelegation.number = number
             return number
             } else {

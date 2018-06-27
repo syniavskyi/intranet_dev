@@ -433,13 +433,12 @@ export default {
             this.disableSaveBtn = true
         },
         checkIfDataChanged() {
-            let currentData = Object.assign({}, this.userData)
+            let currentData = Object.assign({}, this.userData),
+                currDataProps = Object.getOwnPropertyNames(currentData),
+                beforeDataProps = Object.getOwnPropertyNames(this._beforeEditingCache)
 
-            var currDataProps = Object.getOwnPropertyNames(currentData)
-            var beforeDataProps = Object.getOwnPropertyNames(this._beforeEditingCache)
-
-            for (var i = 0; i < beforeDataProps.length; i++) {
-                var propName = beforeDataProps[i];
+            for (let i = 0; i < beforeDataProps.length; i++) {
+                let propName = beforeDataProps[i];
                 if (currentData[propName] !== this._beforeEditingCache[propName]) {
                     this.hasDataChanged = true
                     return
@@ -530,11 +529,7 @@ export default {
             this._beforeEditingProjects = JSON.parse(JSON.stringify(this.experience))
         },
         formatDate(date) {
-            if (date !== null && date !== undefined) {
-                return moment(date).format('DD.MM.YYYY')
-            } else {
-                return "-"
-            }
+            return (date !== null && date !== undefined) ? moment(date).format('DD.MM.YYYY') : "-"
         },
         validateDates(index) {
             const startDate = this.experience[index].startDate,

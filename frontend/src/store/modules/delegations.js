@@ -1,17 +1,10 @@
 const state = {
   delegationCostsList: [],
-  currencyList: [{
-      id: 'PLN'
-    },
-    {
-      id: 'EUR'
-    },
-    {
-      id: 'CHF'
-    },
-    {
-      id: 'USD'
-    }
+  currencyList: [
+    {id: 'PLN'},
+    { id: 'EUR' },
+    { id: 'CHF' },
+    { id: 'USD' }
   ],
   //total costs in pln
   totalCosts: {
