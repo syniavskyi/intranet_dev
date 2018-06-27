@@ -143,7 +143,7 @@ export default {
             updateAccCosts: 'countAccomodationCosts'
 
         }),
-        hideAccFields: cost => { return (cost.flatRate == false) ? false : true } 
+        hideAccFields: cost => { return (cost.flatRate == false) ? false : true }, 
 
         toggleTile() {
             let el = this.$el.lastChild,
