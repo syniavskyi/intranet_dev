@@ -68,7 +68,8 @@
         "accomodationCosts": "Accomodation costs",
         "totalDelegationAmount": "Total delegation amount",
         "advanceAmount": "Advance amount",
-        "totalReturnAmount": "Total amount of return"
+        "totalReturnAmount": "Total amount of return",
+        "allowanceDeduction": "Allowance deduction"
 
     },
     "header": {

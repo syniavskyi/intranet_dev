@@ -13,23 +13,6 @@ const state = {
       id: 'USD'
     }
   ],
-  exchangeRates: [{
-      id: 'PLN',
-      rate: '1,00'
-    },
-    {
-      id: 'EUR',
-      rate: '4,12'
-    },
-    {
-      id: 'CHF',
-      rate: '3,12'
-    },
-    {
-      id: 'USD',
-      rate: '3,22'
-    }
-  ],
   //total costs in pln
   totalCosts: {
     accPayback: 0,
@@ -63,9 +46,10 @@ const state = {
     purpose: null,
     hours: 0,
     totalAllowance: 0,
-    currency: null,
+    currency: 'PLN',
     totalReturnAmount: 0,
-    totalDelegationAmount: 0
+    totalDelegationAmount: 0,
+    allowanceDeduction: 0
   },
   newDelegationValidated: false,
   delegationTableValidated: false,
@@ -212,9 +196,7 @@ const actions = {
       startHour = defaultCostsData.firstLeaveHour,
       endHour = defaultCostsData.secondArrivalHour
 
-    let allowance,
-      totalDays,
-      remainder
+    let allowance, totalDays, remainder
 
     if (startHour && endHour) {
       startDate.setHours(startHour.slice(0, 2), startHour.slice(3, 5), 0, 0)
@@ -241,13 +223,26 @@ const actions = {
       }
       newDelegation.hours = totalHours
       newDelegation.totalAllowance = allowance
-      commit('SET_NEW_DELEGATION', newDelegation)
       dispatch('checkNewDelegation')
     }
+
   },
   toggleTile({}, element) {
     element.el.style.display = (element.style.display === "flex") ? "none" : "flex"
-  }
+
+    },
+    countAllCosts({getters, commit, dispatch}){
+      const accCosts = getters.getAccomodationCostData,
+            otherCosts = getters.getOtherCostData,
+            trvCosts = getters.getTravelCostData,
+            advanceData = getters.getAdvanceData
+ 
+      for (let i =0; i<accCosts.length; i++) {dispatch('getAccCostRate', i)}
+      for (let i =0; i<otherCosts.length; i++) {dispatch('getOtherCostRate', i)}
+      for (let i =0; i<trvCosts.length; i++) {dispatch('getTravelRate', i)}
+      for (let i =0; i<advanceData.length; i++) {dispatch('getAdvanceRate', i)}
+    }
+  
 };
 
 const getters = {
@@ -262,9 +257,6 @@ const getters = {
   },
   getTotalCosts(state) {
     return state.totalCosts
-  },
-  getExchangeRates(state) {
-    return state.exchangeRates
   },
   getDelegationCostsList(state) {
     return state.delegationCostsList

@@ -92,27 +92,30 @@ const actions = {
         dispatch('checkAdvanceFields')
   },
   getAdvanceRate({commit, dispatch, getters}, index) {
-    let data = getters.getAdvanceData,
-     rateDate = data[index].date,
+    const data = getters.getAdvanceData,
      newDelegationCurr = getters.getNewDelegation.currency
+
+     let row = data[index],
+     rateDate = row.date
           
     rateDate = createRateDate(rateDate)
-    data[index].rateDate = rateDate
-    if (data[index].date && data[index].currency && data[index].currency !== "PLN") { 
+    row.rateDate = rateDate
+    
+    if (row.date && row.currency && row.currency !== "PLN") { 
       const date = moment(rateDate).format('YYYY-MM-DD')
       const URL = 'http://api.nbp.pl/api/exchangerates/tables/a/' + date +'/'
       axios.get(URL).then(res => {
         let currRates = res.data[0].rates
-        data[index].currencyRate = currRates.find(o => o.code === data[index].currency).mid
-        data[index].delegationCurrRate = currRates.find(o => o.code === newDelegationCurr).mid
+        row.currencyRate = currRates.find(o => o.code === row.currency).mid
+        row.delegationCurrRate  = (newDelegationCurr !== 'PLN') ? currRates.find(o => o.code === newDelegationCurr).mid : 1.00
         dispatch('updateAdvance')
       }).catch(error => {
         alert(error)
         console.log(error)
       })  
-    } else if (data[index].date && data[index].currency == "PLN"){
-      data[index].currencyRate = 1 
-      data[index].delegationCurrRate = 1
+    } else if (row.date && row.currency == "PLN"){
+      row.currencyRate = 1 
+      row.delegationCurrRate = 1
       dispatch('updateAdvance')
     } 
   },
