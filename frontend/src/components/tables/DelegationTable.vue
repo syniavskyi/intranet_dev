@@ -1,19 +1,13 @@
 <template>
     <div class="delegations-tile">
-        <input id="delegations-row-2" class="documents-tiles-row-header-input" type="checkbox">
-        <label class="delegations-tiles-row-header" for="delegations-row-2">
-            <div class="delegations-tile-header">
-                    <div class="delegations-tile-title">
-                        {{ $t("header.travelExp") }}
-                        <button class="del-add-row" @click="addRow"> dodaj wiersz </button>
-                    </div>
-                        <div class="delegations-tile-underscore"></div>
-                    </div>
-        </label>
-        <div class="delegations-tile-wrap">
-                    
-
-                    <div class="delegations-tile-content">
+        <div @click="toggleTile" id="del-tile-head-1" class="delegations-tile-header">
+            <div class="delegations-tile-title">
+                {{ $t("header.travelExp") }}
+                <button class="del-add-row" @click.prevent="toggleTile" @click="addRow" > dodaj wiersz </button>
+            </div>
+            <div class="delegations-tile-underscore"></div>
+            </div>
+                <div id="del-tile-content-1" class="delegations-tile-content">
                         <div class="delegations-table-1">
                             <div class="del-thead-1">
                                 <div class="del-table-row">
@@ -219,7 +213,7 @@
                     </div>
                     
                     <!--  -->
-        </div>
+        <!-- </div> -->
     </div>
             
 </template>
@@ -260,7 +254,15 @@ export default {
             removeRow: 'removeDelegationRow',
             checkDelegationTable: 'checkDelegationTable',
             countAllowance: 'countAllowance'
-        })
+        }),
+
+        toggleTile() {
+            let el = this.$el.lastChild,
+                style = window.getComputedStyle(el)
+            
+           const name = {el, style}
+           this.$store.dispatch('toggleTile', name)
+        }
     }
 }
 </script>

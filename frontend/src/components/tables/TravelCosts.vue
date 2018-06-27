@@ -1,16 +1,16 @@
 <template>
 <div class="delegations-tile" refs="travelCosts">
-    <input id="delegations-row-3" class="documents-tiles-row-header-input" type="checkbox">
-    <label class="delegations-tiles-row-header" for="delegations-row-3">
-            <div class="delegations-tile-header">
+    <!-- <input id="delegations-row-3" class="documents-tiles-row-header-input" type="checkbox">
+    <label class="delegations-tiles-row-header" for="delegations-row-3"> -->
+            <div @click="toggleTile" class="delegations-tile-header">
             <div class="delegations-tile-title">
                 {{ $t("header.travelCosts") }}
-                <button class="del-add-row" @click="addCostRow"> dodaj wiersz </button>
+                <button class="del-add-row" @click.prevent="toggleTile" @click="addCostRow"> dodaj wiersz </button>
             </div>
             <div class="delegations-tile-underscore"></div>
         </div>
-        </label>
-    <div class="delegations-tile-wrap">
+        <!-- </label>
+    <div class="delegations-tile-wrap"> -->
 
         <div class="delegations-tile-content">
             
@@ -147,7 +147,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        <!-- </div> -->
     </div>
 </div>
 </template>
@@ -227,6 +227,14 @@ export default {
         hideLicencePlateNo(cost) {
             const type = cost.transport
             return (type === "companyCar" || type === "privateCar" || type === "motocycle" || type === "moped") ? false : true
+        },
+
+        toggleTile() {
+            let el = this.$el.lastChild,
+                style = window.getComputedStyle(el)
+            
+           const name = {el, style}
+           this.$store.dispatch('toggleTile', name)
         }
 
     }
