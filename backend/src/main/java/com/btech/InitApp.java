@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import com.btech.config.file.FileStorageProperties;
 
 @EnableConfigurationProperties({FileStorageProperties.class})
-@SpringBootApplication(exclude = { DispatcherServletAutoConfiguration.class })
+@SpringBootApplication
 public class InitApp {
 
 	public static void main(String[] args) {
