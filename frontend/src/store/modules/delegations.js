@@ -44,6 +44,14 @@ const state = {
     totalDelegationAmount: 0,
     allowanceDeduction: 0
   },
+  defaultCostData: {
+    firstLeavePlace: null,
+    firstLeaveHour: null,
+    firstArrivalHour:null,
+    secondLeaveHour: null,
+    secondArrivalHour: null,
+    secondArrivalPlace: null
+  },
   newDelegationValidated: false,
   delegationTableValidated: false,
   defaultCostsData: {},
