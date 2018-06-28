@@ -91,7 +91,8 @@
                                 <label class="delegations-label-cool">{{ $t("label.advanceAmount") }}: </label>
                             </div>
                             <div class="delegations-div-cool">
-                                <p class="del-p-cool"> {{ totalCostsInCurr.totalPayback}}  {{newDelegation.currency}}</p>
+                                <input required class="delegations-input-cool" v-model="totalCostsInCurr.totalPayback"/> <p>{{newDelegation.currency}}</p>
+                                <span class="delegations-div-bar"></span>
                                 <label class="delegations-label-cool">{{ $t("label.totalReturnAmount") }}: </label>
                             </div>
                         </div>

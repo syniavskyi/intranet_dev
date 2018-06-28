@@ -155,7 +155,7 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
                                             <div class="del-tbody-item">
-                                                <vue-google-autocomplete types="geocode" required class="delegations-tinput-w"  placeholder="Search" :id="index + 'leave'" onfocus="value = ''" @input="customCosts[index].leavePlace = value"></vue-google-autocomplete>
+                                                <vue-google-autocomplete types="geocode" required class="delegations-input-cool"  placeholder="Search" :id="index + 'leave'" onfocus="value = ''" @input="customCosts[index].leavePlace = value"></vue-google-autocomplete>
                                                 <!-- <input class="delegations-tinput-w" @input="checkDelegationTable" v-model="customCosts[index].leavePlace" /> -->
                                             </div>
                                         </div>
@@ -180,7 +180,7 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
                                             <div class="del-tbody-item">
-                                                <vue-google-autocomplete types="geocode" required class="delegations-tinput-w"  placeholder="Search" :id="index +'arrival'" onfocus="value = ''" @input="customCosts[index].arrivalPlace = value"></vue-google-autocomplete>
+                                                <vue-google-autocomplete types="geocode" required class="delegations-input-cool"  placeholder="Search" :id="index +'arrival'" onfocus="value = ''" @input="customCosts[index].arrivalPlace = value"></vue-google-autocomplete>
                                                 <!-- <input class="delegations-tinput-w" @input="checkDelegationTable" v-model="customCosts[index].arrivalPlace" /> -->
                                             </div>
                                         </div>
