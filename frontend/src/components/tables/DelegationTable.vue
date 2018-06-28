@@ -36,9 +36,10 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
                                             <div class="del-tbody-item">
-                                                <select class="delegations-tselect" @change="checkDelegationTable" v-model="defaultCostsData.firstLeavePlace">
+                                                  <vue-google-autocomplete types="geocode" required class="delegations-input-cool"  placeholder="Search" id="firstLeavePlace" onfocus="value = ''" v-model="defaultCostsData.firstLeavePlace"></vue-google-autocomplete>
+                                                <!-- <select class="delegations-tselect" @change="checkDelegationTable" v-model="defaultCostsData.firstLeavePlace">
                                                     <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
-                                                </select>
+                                                </select> -->
                                             </div>
                                         </div>
                                         <div class="del-tbody-wrap">
@@ -112,9 +113,10 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
                                             <div class="del-tbody-item">
-                                                <select class="delegations-tselect" @change="checkDelegationTable" v-model="defaultCostsData.secondArrivalPlace">
+                                                <vue-google-autocomplete types="geocode" required class="delegations-input-cool"  placeholder="Search" id="secondArrivalPlace" onfocus="value = ''" @input="defaultCostsData.secondArrivalPlace = value"></vue-google-autocomplete>
+                                                <!-- <select class="delegations-tselect" @change="checkDelegationTable" v-model="defaultCostsData.secondArrivalPlace">
                                                     <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
-                                                </select>
+                                                </select> -->
                                             </div>
                                         </div>
                                         <div class="del-tbody-wrap">
@@ -153,7 +155,8 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
                                             <div class="del-tbody-item">
-                                                <input class="delegations-tinput-w" @input="checkDelegationTable" v-model="customCosts[index].leavePlace" />
+                                                <vue-google-autocomplete types="geocode" required class="delegations-tinput-w"  placeholder="Search" :id="index + 'leave'" onfocus="value = ''" @input="customCosts[index].leavePlace = value"></vue-google-autocomplete>
+                                                <!-- <input class="delegations-tinput-w" @input="checkDelegationTable" v-model="customCosts[index].leavePlace" /> -->
                                             </div>
                                         </div>
                                         <div class="del-tbody-wrap">
@@ -177,7 +180,8 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
                                             <div class="del-tbody-item">
-                                                <input class="delegations-tinput-w" @input="checkDelegationTable" v-model="customCosts[index].arrivalPlace" />
+                                                <vue-google-autocomplete types="geocode" required class="delegations-tinput-w"  placeholder="Search" :id="index +'arrival'" onfocus="value = ''" @input="customCosts[index].arrivalPlace = value"></vue-google-autocomplete>
+                                                <!-- <input class="delegations-tinput-w" @input="checkDelegationTable" v-model="customCosts[index].arrivalPlace" /> -->
                                             </div>
                                         </div>
                                         <div class="del-tbody-wrap">
@@ -218,6 +222,7 @@
             
 </template>
 <script>
+import VueGoogleAutocomplete from 'vue-google-autocomplete'
 import moment from "moment"
 import {
     mapGetters,
@@ -248,6 +253,7 @@ export default {
             }
         }
     },
+    components: {VueGoogleAutocomplete },
     methods: {
         ...mapActions({
             addRow: 'addDelegationRow',
