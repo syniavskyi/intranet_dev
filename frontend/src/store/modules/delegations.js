@@ -242,6 +242,12 @@ const actions = {
       for (let i =0; i<otherCosts.length; i++) {dispatch('getOtherCostRate', i)}
       for (let i =0; i<trvCosts.length; i++) {dispatch('getTravelRate', i)}
       for (let i =0; i<advanceData.length; i++) {dispatch('getAdvanceRate', i)}
+    },
+    countTotalCost({getters}){
+      const  totalCostsInCurr = getters.getTotalCostsInCurr
+
+      totalCostsInCurr.amount =  0
+      totalCostsInCurr.amount =  totalCostsInCurr.travel + totalCostsInCurr.accomodation + totalCostsInCurr.others - allDeduction
     }
   
 };

@@ -157,7 +157,7 @@ const actions = {
         totalCostsInCurr.trvPayback = totalCostsInCurr.trvPayback + parseFloat(data[i].totalAmountCurr)
       } 
       totalCosts.totalPayback = totalCosts.trvPayback + totalCosts.accPayback + totalCosts.othPayback
-      totalCostsInCurr.totalPayback = totalCostsInCurr.trvPayback + totalCostsInCurr.accPayback + totalCostsInCurr.othPayback
+      totalCostsInCurr.totalPayback = totalCostsInCurr.trvPayback + totalCostsInCurr.accPayback + totalCostsInCurr.othPayback - totalCostsInCurr.advance
       
       totalCosts.travel = totalCosts.travel + totalAmount
       totalCostsInCurr.travel = totalCostsInCurr.travel + parseFloat(data[i].totalAmountCurr)
