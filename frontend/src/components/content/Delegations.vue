@@ -53,7 +53,7 @@
                         <div class="delegations-inputs-section">
                             <div class="delegations-div-cool">
                                 <!-- <input required class="delegations-input-cool" v-model="newDelegation.destination" @input="checkNewDelegation" /> -->
-                                <input required class="delegations-input-cool" ref="autocomplete"  onfocus="value = ''" v-model="newDelegation.destination" @input="checkNewDelegation" />
+                                <input required class="delegations-input-cool" ref="autocomplete" placeholder=""  onfocus="value = ''" v-model="newDelegation.destination" @input="checkNewDelegation" />
                                 <!-- <input required ref="autocomplete" placeholder="Search"  class="delegations-input-cool" onfocus="value = ''" v-model="newDelegation.destination" @input="checkNewDelegation" /> -->
                                 <span class="delegations-div-bar"></span>
                                 <label class="delegations-label-cool">{{ $t("label.to") }} </label>
