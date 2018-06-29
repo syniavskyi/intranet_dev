@@ -19,12 +19,10 @@
                 <div class="availability-tile ava-tile-1">
                     <div class="availability-tile-header">
                         <div class="ava-tile-header-title">
-                            <h2 v-if="selectedUser === null" >{{ $t("header.selectEmployee") }}</h2>
+                            <h2 v-if="selectedUser === null">{{ $t("header.selectEmployee") }}</h2>
                             <h2 class="ava-selected-user-h2" v-else-if="selectedUser !== null">{{ selectedUser.firstName }} {{ selectedUser.lastName }}</h2>
                             <div class="availability-tile-underscore"></div>
                         </div>
-                        <button class="ava-button ava-button-edit" v-if="selectedUser != null" @click="showEditDialog = false">{{ $t("button.addProject") }}</button>
-                        <button class="ava-button ava-button-edit" v-if="selectedUser != null" @click="showEditDialog = true">{{ $t("button.editProjects") }}</button>
                     </div>
                     <div class="availability-tile-content">
                         <div class="ava-select-and-calendar">
@@ -48,17 +46,39 @@
                                     </select>
                                     <label class="ava-select-label-cool">{{ $t("label.employee") }}</label>
                                 </div>
-                                
+                                <div class="ava-div-select-cool" v-if="selectedUser != null">
+                                    <select required class="ava-select-cool" v-model="selectedType">
+                                        <option  key="p" value="p">projekt</option>
+                                        <option  key="l" value="l">urlop</option>
+                                        <option  key="o" value="o">inne</option>
+                                        <option  key="r" value="r">praca zdalna</option>
+                                        <!-- <option v-for="branch in branchList" :key="branch.branchId" :value="selectedBranch = branch.branchId">{{ branch.branchName }}</option> -->
+                                    </select>
+                                    <label class="ava-select-label-cool">Rodzaj wpisu</label>
+                                </div>
+                                <div class="ava-div-select-cool" v-if="selectedUser != null">
+                                    <select required class="ava-select-cool" v-model="selectedStatus">
+                                        <option  key="c" value="c">potwierdzony</option>
+                                        <option  key="p" value="p">planowany</option>
+                                        <!-- <option v-for="branch in branchList" :key="branch.branchId" :value="selectedBranch = branch.branchId">{{ branch.branchName }}</option> -->
+                                    </select>
+                                    <label class="ava-select-label-cool">Status</label>
+                                </div>
+                                <button class="ava-button ava-button-edit" v-if="selectedUser != null" @click="showContent=true">Wyświetl</button>
                             </div>
+
                             <!-- <div class="calendar" v-if="selectedUser != null"> -->
                             <div class="ava-calendar">
                                 <v-calendar class="availability-calendar" :theme-styles="themeStyles" v-if="selectedUser != null" :attributes="attributes" mode='single' is-inline></v-calendar>
                             </div>
+
                         </div>
-                        
+
                     </div>
                 </div>
-                <div class="availability-tile ava-tile-2">
+
+                <!-- for adding new project -->
+                <div class="availability-tile ava-tile-2" v-if="selectedType === 'p' && showContent == true">
                     <div class="availability-tile-header">
                         <div class="ava-tile-header-title">
                             <h2>{{ $t("header.addProject") }}</h2>
@@ -67,50 +87,8 @@
                         <!-- <button class="ava-button ava-button-add" @click="showAddProjectDialog = true"> Dodaj projekt </button> -->
                     </div>
                     <div class="availability-tile-content">
-                        <div id="ava-edit-project-dialog" v-if="showEditDialog">
-                            <div class="ava-edit-1">
-                                <div class="ava-div-select-cool">
-                                    <select required @change="onEdit" class="ava-select-cool" v-model="projectToEdit">
-                                        <option v-for="project in userProjectsList" :key="project.projId" :value="project"> {{ project.projName }} </option>
-                                    </select>
-                                    <label class="ava-select-label-cool">{{ $t("label.emplProjects") }}</label>
-                                </div>
-                                <div class="ava-div-buttons">
-                                    <button class="ava-button" @click="onCancelEdit">{{ $t("button.cancel") }}</button>
-                                    <button class="ava-button" :disabled="disableSaveEditProject" @click="editProjectForUser">{{ $t("button.save") }}</button>
-                                </div>
-                            </div>
-                            <div class="ava-edit-2 ava-edit-project-to-edit" v-if="projectToEdit.id != null">
-                                <div class="ava-div-input"> 
-                                    <input required class="ava-input-range-perc" type="number" max="100" min="0" @input="validateEditEngag(projectToEdit.engag)" v-model="projectToEdit.engag"/><span class="ava-perc-span">%</span>
-                                    <span class="ava-div-bar"></span>
-                                    <label class="ava-input-label-cool">{{ $t("label.engag") }}</label>
-                                </div>
-                                <div class="ava-div-input">
-                                    <v-date-picker required @input="validateEditProject" class="ava-input-range" v-model="projectToEdit.startDate" mode="single">
-                                        <input value="projectToEdit.startDate" />
-                                    </v-date-picker>
-                                    <label class="ava-input-label-cool">{{ $t("label.startDate") }}</label>
-                                </div>
-                                <div class="ava-div-input">
-                                    <v-date-picker required @input="validateEditProject" class="ava-input-range" v-model="projectToEdit.endDate" mode="single">
-                                        <input  value="projectToEdit.endDate" />
-                                    </v-date-picker>
-                                    <label class="ava-input-label-cool">{{ $t("label.endDate") }}</label>
-                                </div>
-                                <div class="ava-div-buttons">
-                                    <button class="ava-button" @click="removeUserProject">{{ $t("button.removeProject") }}</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="add-project-dialog" v-if="!showEditDialog">
-                            <div class="ava-add-1"> 
-                                <div class="ava-div-select-cool">
-                                    <select required class="ava-select-cool" @change="setProjectsToCheck(newProjectForUser.userId)" v-model="newProjectForUser.userId">
-                                        <option v-for="user in usersList" :key="user.id" :value="user.id">{{ user.firstName }} {{ user.lastName }}</option>
-                                    </select>
-                                    <label class="ava-select-label-cool">{{ $t("label.employee") }}</label>
-                                </div>
+                        <div id="add-project-dialog">
+                            <div class="ava-add-1">
                                 <div class="ava-div-select-cool">
                                     <select required class="ava-select-cool" @change="removeSelectedProject" v-model="newProjectForUser.contractorId">
                                         <option v-for="contractor in contractorsList" :key="contractor.id" :value="contractor.id"> {{ contractor.name }}</option>
@@ -120,18 +98,17 @@
                             </div>
                             <div class="ava-add-2">
                                 <div class="ava-div-input-cool">
-                                    <select required id="ava-select-add-project" :class="projectExist ? 'ava-select-cool-err': 'ava-select-cool'" @change="validateNewProject" v-model="newProjectForUser.projectId">
+                                    <select required class="ava-select-cool" @change="validateNewProject" v-model="newProjectForUser.projectId">
                                         <option v-for="project in filteredProjects" :key="project.id" :value="project.id"> {{ project.name }}</option>
                                     </select>
                                     <label class="ava-select-label-cool">{{ $t("label.project") }}</label>
-                                    <img v-if="projectExist" class="ava-error-img" src="../../assets/images/alert-circle.png">
-                                    <p class="ava-error" v-if="projectExist">{{ $t("message.projectExistError") }}</p>
                                 </div>
                                 <div class="ava-div-input-cool">
                                     <input required class="ava-input-range-perc" v-model="newProjectForUser.engag" @input="validateNewEngag(newProjectForUser.engag)" type="number" min="0" max="100" /><span class="ava-perc-span">%</span>
                                     <span class="ava-div-bar"></span>
                                     <label class="ava-input-label-cool">{{ $t("label.engag") }}</label>
                                 </div>
+
                             </div>
                             <div class="ava-add-3">
                                 <div class="ava-div-select-cool">
@@ -140,24 +117,68 @@
                                     </v-date-picker>
                                     <label class="ava-input-label-cool">{{ $t("label.dates") }}</label>
                                 </div>
+                                <div class="ava-div-input-cool">
+                                    <textarea required maxlength="50" @change="validateNewProject" v-model="newProjectForUser.notes" />
+                                    <label class="ava-select-label-cool">Uwagi</label>
+                                </div>
                                 <div class="ava-div-buttons">
                                     <button class="ava-button" @click="onCancelCreate">{{ $t("button.cancel") }}</button>
-                                    <button class="ava-button" :disabled="disableSaveNewProject" @click="addNewProjectForUser">{{ $t("button.addProject") }}</button>
+                                    <button class="ava-button ava-button-edit" :disabled="disableSaveNewProject" @click="addNewProjectForUser">{{ $t("button.addProject") }}</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="availability-tile ava-tile-2" v-if="selectedType !== 'p' && showContent == true">
+                    <div class="availability-tile-header">
+                        <div class="ava-tile-header-title">
+                            <h2>Dodaj wpis</h2>
+                            <div class="availability-tile-underscore"></div>
+                        </div>
+                        <!-- <button class="ava-button ava-button-add" @click="showAddProjectDialog = true"> Dodaj projekt </button> -->
+                    </div>
+                    <div class="availability-tile-content">
+                        <div id="add-project-dialog">
+                            <div class="ava-add-1">
+                                <div class="ava-div-select-cool">
+                                    <v-date-picker required class="ava-input-range-wide" popoverDirection="top" is-expanded mode="range">
+                                        <input class="ava-input-range-wide" />
+                                    </v-date-picker>
+                                    <label class="ava-input-label-cool">{{ $t("label.dates") }}</label>
+                                </div>
+                            </div>
+                            <div class="ava-add-2">
+                                <div class="ava-div-input-cool" v-if="selectedType == 'o'">
+                                    <textarea required maxlength="50" />
+                                    <label class="ava-select-label-cool">Uwagi</label>
+                                </div>
+
+                                <div class="ava-div-buttons">
+                                    <button class="ava-button" >{{ $t("button.cancel") }}</button>
+                                    <button class="ava-button ava-button-edit" >Dodaj wpis</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
 
+            <!-- for adding other entry -->
+
+            <app-availability-projects-table v-if="selectedType === 'p' && showContent == true"></app-availability-projects-table>
+            <app-leaves-table v-if="selectedType !== 'p' && showContent == true"></app-leaves-table>
         </div>
+
     </div>
+
 </div>
 </template>
 
 <script>
 import {
-    mapGetters
+    mapGetters,
+    mapActions
 } from 'vuex'
 import moment from "moment";
 import i18n from '../../lang/lang'
@@ -167,28 +188,26 @@ import {
     between
 } from 'vuelidate/lib/validators'
 import Menu from '../Menu.vue'
+import AvailabilityProjectsTable from '../tables/AvailabilityProjectsTable'
+import LeavesTable from '../tables/LeavesTable'
 
 export default {
     data() {
         return {
             showUsersCalendar: false,
-            department: [],
             selectedDepartment: null,
             selectedBranch: null,
             showBranchSelect: true,
             selectedUser: null,
-            showEditDialog: false,
-            projectToEdit: {},
-            newProjectForUser: {
-                userId: null,
-                projectId: null,
-                contractorId: null,
-                engag: null
-            }
+            showContent: false,
+            selectedType: null,
+            selectedStatus: null
         }
     },
     components: {
-        'app-menu': Menu
+        'app-menu': Menu,
+        'app-availability-projects-table': AvailabilityProjectsTable,
+        'app-leaves-table': LeavesTable
     },
     computed: {
         ...mapGetters({
@@ -202,14 +221,13 @@ export default {
             disableSaveEditProject: 'getDisableSaveEditProject',
             beforeEditingCache: 'getBeforeEditingCache',
             hasDataChanged: 'getHasDataChanged',
-            projectExist: 'getProjectExist',
-            userProjectsToCheckList: 'userProjectsToCheckList',
             addingError: "getAddingError",
             removeError: "getRemoveError",
             editError: "getEditError",
-            saveSuccess:"getSaveDataSucccess",
-            removeSuccess: "getRemoveSuccess"
-
+            saveSuccess: "getSaveDataSucccess",
+            removeSuccess: "getRemoveSuccess",
+            newProjectForUser: 'getNewProjectForUser',
+            projectToEdit: 'getProjectToEdit'
         }),
         filteredUsers() {
             const usersList = this.usersList
@@ -247,7 +265,7 @@ export default {
                     end: t.endDate
                 },
                 popover: {
-                    label: t.projName + ' (' + t.engag + '%)' 
+                    label: t.projName + ' (' + t.engag + '%)'
                 },
                 customData: t
             }))
@@ -264,50 +282,43 @@ export default {
         if (this.showMenu === false) {
             this.$store.commit('DISPLAY_MENU', true)
         }
+        this.showBranchSelect = (localStorage.getItem('role') === 'leader') ? false : true
 
-        if (localStorage.getItem('role') === 'leader') {
-            this.showBranchSelect = false
-        }
         if (this.$store.getters.isDataLoaded === false) {
             this.$store.dispatch('loadData', localStorage.getItem('token'))
         }
 
     },
     methods: {
+        ...mapActions({
+            validateNewProject: 'validateNewProject',
+            validateEditProject: 'validateEditProject',
+            closeAlert: 'hideAllMessages',
+            addNewProjectForUser: 'addUserProject',
+            validateNewEngag: 'validateNewEngag',
+            validateEditEngag: 'validateEditEngag'
+        }),
         loadUserProjects(userId) {
             this.$store.commit('SET_USER_ID', userId)
             this.$store.dispatch('getUserProjects', userId)
-            this.projectToEdit = {}
-        },
-        setProjectsToCheck(userId) {
-            this.$store.commit('SET_USER_ID_FOR_NEW_PROJ', userId)
-            this.removeNewProjectData(userId)     
-            this.$store.dispatch('getUserProjectsToCheck', userId)   
-        },
-        addNewProjectForUser() {
-            this.$store.dispatch('addUserProject', this.newProjectForUser)
-            this.newProjectForUser = {}
         },
         onEdit() {
             const beforeEditingCache = Object.assign({}, this.projectToEdit)
             this.$store.commit('SET_BEFORE_EDIT_CACHE', beforeEditingCache)
-            this.validateEditProject()
         },
         onCancelEdit() {
             Object.assign(this.projectToEdit, this.beforeEditingCache)
             this.$store.commit('SET_BEFORE_EDIT_CACHE', null)
-            this.projectToEdit = {}
+            this.$store.commit('SET_PROJECT_TO_EDIT', {})
             this.$store.commit('SET_DISABLE_SAVE_EDIT', true)
         },
         onCancelCreate() {
-            this.newProjectForUser = {}
-            this.$store.commit('SET_PROJECT_EXIST',false)
-            this.$store.commit('SET_DISABLE_SAVE_NEW',true)
+            this.$store.commit('SET_DISABLE_SAVE_NEW', true)
+            this.$store.commit('SET_NEW_PROJECT_FOR USER', {})
         },
         editProjectForUser() {
             this.projectToEdit.userId = this.selectedUser.id
             this.$store.dispatch('editUserProject', this.projectToEdit)
-            this.projectToEdit = {}
         },
         removeUserProject() {
             const data = {
@@ -315,69 +326,32 @@ export default {
                 userId: this.selectedUser.id
             }
             this.$store.dispatch('removeUserProject', data)
+        },
 
-            // if (this.newProjectForUser.userId === this.selectedUser.id){
-            //         this.$store.dispatch('getUserProjectsToCheck', this.newProjectForUser.userId)  
-            //     }
-            this.projectToEdit = {}
-        },
-        validateNewEngag(engag) {
-            if (engag < 0) this.newProjectForUser.engag = null;
-            if (engag > 100) this.newProjectForUser.engag = 100;
-            this.validateNewProject()
-        },
-        removeNewProjectData(userId){
-            this.newProjectForUser = {
+        removeNewProjectData(userId) {
+            const newProjectForUser = {
                 userId: userId,
                 projectId: null,
                 contractorId: null,
-                engag: null
+                engag: null,
+                notes: null,
+                statusId: null
             }
-            this.$store.commit('SET_PROJECT_EXIST',false)
-            this.$store.commit('SET_DISABLE_SAVE_NEW',true)
+            this.$store.dispatch('SET_NEW_PROJECT_FOR_USER', newProjectForUser)
         },
-        removeSelectedProject(){
+        removeSelectedProject() {
             const userId = this.newProjectForUser.userId,
-                  contractorId = this.newProjectForUser.contractorId
-            
-            this.newProjectForUser = {
-                userId: userId,
-                projectId: null,
-                contractorId: contractorId,
-                engag: null
-            }
-            this.$store.commit('SET_PROJECT_EXIST',false)
-            this.$store.commit('SET_DISABLE_SAVE_NEW',true)
-        },
-        validateNewProject() {
-           const currProjects = this.userProjectsToCheckList,
-                projectId = this.newProjectForUser.projectId
-             if (currProjects.length != 0) {
-                for (var i = 0; i < currProjects.length; i++) {
-                    if (projectId === currProjects[i].projId) {
-                        this.$store.commit('SET_PROJECT_EXIST',true)
-                        this.$store.commit('SET_DISABLE_SAVE_NEW',true)
-                        return
-                    } else {
-                        this.$store.commit('SET_PROJECT_EXIST',false)
-                        this.$store.dispatch('validateNewProject', this.newProjectForUser)
-                    }
+                contractorId = this.newProjectForUser.contractorId,
+                newProjectForUser = {
+                    userId: userId,
+                    projectId: null,
+                    contractorId: contractorId,
+                    engag: null,
+                    notes: null,
+                    statusId: null
                 }
-            }else {
-                this.$store.commit('SET_PROJECT_EXIST',false)
-                this.$store.dispatch('validateNewProject', this.newProjectForUser)
-            }
-        },
-        validateEditEngag(engag) {
-            if (engag < 0) this.projectToEdit.engag = null;
-            if (engag > 100) this.projectToEdit.engag = 100;
-            this.validateEditProject()
-        },
-        validateEditProject() {
-            this.$store.dispatch('validateEditProject', this.projectToEdit)
-        },
-        closeAlert(){
-            this.$store.dispatch('hideAllMessages')
+
+            this.$store.dispatch('SET_NEW_PROJECT_FOR_USER', newProjectForUser)
         }
     }
 }
