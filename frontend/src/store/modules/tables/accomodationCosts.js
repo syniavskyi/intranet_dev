@@ -83,7 +83,7 @@ const actions = {
             totalCostsInCurr.accomodation = totalCostsInCurr.accomodation + parseFloat(accCostData[i].totalAmountInCurr)
 
             totalCosts.totalPayback = totalCosts.trvPayback + totalCosts.accPayback + totalCosts.othPayback
-            totalCostsInCurr.totalPayback = totalCostsInCurr.trvPayback + totalCostsInCurr.accPayback + totalCostsInCurr.othPayback
+            totalCostsInCurr.totalPayback = totalCostsInCurr.trvPayback + totalCostsInCurr.accPayback + totalCostsInCurr.othPayback - totalCostsInCurr.advance
             totalCostsInCurr.amount =  totalCostsInCurr.travel + totalCostsInCurr.accomodation + totalCostsInCurr.others - allDeduction
         }
         dispatch('checkAccomodationFields')

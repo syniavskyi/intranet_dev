@@ -13,8 +13,7 @@
             <div class="delegations-tile-wrap"> -->
                    
                     <div class="delegations-tile-content">
-                        <p>20.06.2018</p>
-                        
+                       
                         <div class="delegations-table-wrapper">
                             <div class="delegations-table-2">
                                 <div class="del-thead-2">
