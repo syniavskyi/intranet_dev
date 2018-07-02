@@ -4,6 +4,8 @@ const state = {
     userProjects: [],
     userProjects1: [],
     userProjects2: [],
+    
+    userProjects3: [],
     disableSaveNewProject: true,
     disableSaveEditProject: true,
     beforeEditingCache: null,
