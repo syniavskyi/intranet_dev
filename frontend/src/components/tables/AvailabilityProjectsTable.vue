@@ -1,5 +1,5 @@
 <template>
-    <div class="availability-tile" style="width:100%">
+    <div class="availability-tile" >
         <div class="availability-tile-header">
             <div class="ava-tile-header-title">
                             <!-- <h2>{{ $t("header.addProject") }}</h2> -->
