@@ -505,6 +505,8 @@
     display: flex;
     flex-direction: column;
     width: 95%;
+    box-shadow: 0 0 10px rgb(170, 170, 170);
+    border-radius: 4px;
 }
 
 .ava-proj-thead,
@@ -541,8 +543,10 @@
     /* width: 100%; */
 }
 
-.ava-thproj-item {
+.ava-thproj-item,
+.ava-ths-item {
     color: #e5e5e5;
+    font-weight: bold;
 }
 
 .ava-tbproj-ititle,
