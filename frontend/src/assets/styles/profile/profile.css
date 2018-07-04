@@ -93,7 +93,7 @@
     box-shadow: 1px 0px 30px rgba(255, 151, 71, 0.78);
 }
 
-.user-header-name {
+.prof-user-header-name {
     padding:0;
     margin: 0;
     width: 93%;
@@ -112,24 +112,54 @@
     height: 88%;
 }
 
-.profile-tile {
+.profile-tiles-row {
+    display:flex;
+    width: 95%;
+    align-self: center;
+    justify-content: space-between;
+}
+
+.profile-tile,
+.profile-tile-1-3,
+.profile-tile-1-2 {
     display:flex;
     flex-direction: column;
-    width: 100%;
     align-self: center;
     box-shadow: 0 0 10px grey;
     background: white;
     flex-grow: 0;
     margin: 0.5rem 0;
 }
-
+.profile-tile-1-2:nth-of-type(1) {
+    width: 56.5%;
+    min-height: 20rem
+}
+.profile-tile-1-2:nth-of-type(2) {
+    width: 42%;
+    min-height: 20rem;
+}
+.profile-tile-1-3-emp {
+    align-self: center;
+    flex-direction: column;
+}
+.profile-tile-1-3 {
+    width: 35%;
+    min-width: 18.75rem
+}
+.profile-tile-1-3-emp {
+    width: 27%
+}
+.profile-tile {
+    width: 100%;
+}
+/* 
 .profile-tile:nth-child(1) {
     min-height: 37rem;
 }
 
 .profile-tile:nth-child(2) {
     min-height:63rem;
-}
+} */
 
 .profile-tile-header {
     margin:0;
@@ -186,11 +216,14 @@
     cursor: pointer;
 }
 
-.profile-tile h2 {
+.profile-tile h2,
+.prof-tile-h2 {
     margin:0;
-    margin-right: 0;
     padding: 0.5rem .5rem;
-    font-weight: 600;
+    font-weight: 500;
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: 1.5;
 }
 
 .profile-tile-content {
@@ -231,14 +264,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 1;
+    /* flex: 1; */
     justify-content: space-around;
 }
 
-.profile-tile-inputs:last-child > div:last-child {
+/* .profile-tile-inputs:last-child > div:last-child {
     margin-bottom: 0;
     position: relative;
-}
+} */
 
 .profile-tile-inputs > div {
     display: flex;
@@ -246,16 +279,18 @@
     flex-direction: column;
     margin-bottom: 1rem;
     position: relative;
+}
+.prof-input {
     width: 18.5rem;
 }
-
-.profile-tile-inputs:first-child {
-    /* height: 58%; */
-    margin-top: .5rem;
+.prof-input-s {
+    width: 14rem;
 }
-
-.profile-tile-inputs:last-child {
-    /* height: 42%; */
+.prof-comm-img {
+    position: absolute;
+    top: -.8rem;
+    left: -1.5rem;
+    transition: 0.5s all ease;
 }
 
 .profile-error {
@@ -334,18 +369,6 @@
     transform: rotate(180deg);
 }
 
-.side-content {
-    height: 40%;
-    width: 80%;
-    display: flex;
-    align-items: center;
-/*    justify-content: space-around;*/
-    flex-direction: column;
-    margin-right: .5rem;
-}
-.profile-inputs-sections-1 {
-    order: 1;
-}
 .profile-user-header {
     order: 0;
     width: 80%;
@@ -399,10 +422,11 @@
 }
 
 .cv-buttons {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-   
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: center;
+   align-self: center;
 }
 .cv-title {
     padding:0;
@@ -564,6 +588,10 @@
     padding: 0 .2rem;
 }
 
+.inputEdit ~ .prof-comm-img {
+    top: .5rem;
+}
+
 
 .inputEdit {
     position: relative;
@@ -645,7 +673,7 @@
     text-indent: 40%;
     background: transparent;
     height: 2rem;
-    width: 18.4rem;
+    width: 14rem;
     border: 1px solid lightgrey;
     color: black;
     border-radius: 3px;
@@ -876,6 +904,161 @@
 .prof-tbody-item:first-child .prof-tbody-item-txt {
     border-top: 1px solid #ccc;
 }
+
+@media (min-width: 30rem) {
+    .profile-nav-and-content {
+        min-height: 71.7rem;
+        height: auto;
+    }
+    .plane-profile
+    .profile-header {
+        height: 7%;
+        min-height: 3rem;
+    }
+    .profile-tile-inputs-section {
+        margin-top: 1rem;
+        width: 100%;   
+    }
+    .profile-tile {
+        width: 95%;
+        border-radius: 5px;
+        flex-grow: 1;
+    }
+    .profile-tile-1-3,
+    .profile-tile-1-2 {
+        border-radius: 4px;
+    }
+    .profile-tile-inputs > div {
+        margin-bottom: 1.5rem;
+    }
+    .profile-tile-header {
+        min-height: 3.4rem;
+    }
+    .profile-change-password {
+        width: 7rem;
+    }
+    .profile-tile-content {
+        flex-direction: row;
+    }
+    .profile-user-header {
+        order: 1;
+        margin-bottom: none;
+        width: 35%;
+    }
+
+    .cv-buttons {
+        flex-direction: column;
+        justify-content: space-around;
+        flex-grow: 1;
+        margin-bottom: 1.5rem;
+    }
+    .lang-circle {
+        bottom: -1rem;
+        left: -1rem;
+    }
+}
+
+@media (min-width:0rem) and (max-width: 44rem) {
+    .plane-nav {
+        display: none;
+    }
+}
+@media (min-width: 44rem) {
+    .profile-header-menu {
+        display: none;
+    }
+    .profile-content {
+        width: 80%;
+    }
+}
+
+@media (min-width: 77rem) {
+    .profile-tile-1-3 {
+        display: flex;
+
+    }
+    .plane-profile {
+        margin:0;
+        padding: 0;
+        width: 100%;
+        /* height: 100%; */
+        height: min-content;
+    }
+    .profile-nav-and-content {
+        min-height: 41rem;
+    }
+    .profile-tile h2,
+    .prof-tile-h2 {
+        padding: 0.5rem 1rem;
+    }
+
+    .profile-content {
+        min-height: 40rem;
+        height: 100%;
+        /* width: 85%; */
+    }
+    .profile-tile:nth-child(1) {
+        height: 37%;
+        min-height: 17rem;
+    }
+    .profile-tile:nth-child(2) {
+        height: 50%;
+        min-height:20rem;
+    }
+
+    .cv-buttons {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+         height: 100%;
+    }
+    .profile-error-image {
+        bottom: -.11rem;
+        min-width: 7rem;
+        right: -7rem;
+        font-size:.7rem;
+    }
+    
+    .profile-error-image::after {
+        bottom: 1rem;
+        right: 7.6rem;
+        transform: rotate(90deg);
+    }
+    .profile-tile-content {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+    }
+    .profile-tile {
+        flex-direction: column;
+        flex-grow: 1;
+    }
+    .profile-tile-inputs-section {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+    .profile-tile-inputs {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .profile-tile-inputs:nth-of-type(1) {
+        width: 55%;
+    }
+    .profile-tile-inputs:nth-of-type(2) {
+        width: 45%;
+        align-items: flex-start;
+    }
+
+    .profile-error-email,
+    .profile-error-phone {
+        top: -1.5rem;
+    }
+}
+
+/* PROFILE Table */
+
 @media (min-width: 85rem) {
     .prof-thead {
         display:flex;
@@ -959,175 +1142,5 @@
     }
     .prof-tbody-row:nth-of-type(even) {
         background: rgb(231, 231, 231);
-    }
-}
-/* PROFILE TABLE */
-
-@media (min-width: 30rem) {
-    .profile-nav-and-content {
-        min-height: 71.7rem;
-        height: auto;
-    }
-    .plane-nav {
-        min-height: 71.7rem;
-        height: auto;
-    }
-    .plane-profile
-    .profile-header {
-        height: 7%;
-        min-height: 3rem;
-    }
-    .profile-tile-inputs-section {
-        width: 70%;    
-    }
-    .profile-tile {
-        width: 95%;
-        border-radius: 5px;
-        flex-grow: 1;
-    }
-     .profile-tile:nth-child(1) {
-        height: 40%;
-        min-height: 28rem;
-    }
-    .profile-tile:nth-child(2) {
-        height: 45%;
-        min-height:33rem;
-    }
-    .profile-tile-inputs > div {
-        margin-left: 1rem;
-        margin-bottom: 1.5rem;
-    }
-    .profile-tile-header {
-        min-height: 3.4rem;
-    }
-    .profile-change-password {
-        width: 7rem;
-    }
-    .profile-tile-content {
-        flex-direction: row;
-    }
-    .profile-user-header {
-        order: 1;
-        margin-bottom: none;
-        width: 35%;
-    }
-    .side-content {
-        height: 30.5rem;
-        flex-direction: column;
-        width: 35%;
-    }
-    .cv-buttons {
-        flex-direction: column;
-        justify-content: space-around;
-        flex-grow: 1;
-        margin-bottom: 1rem;
-    }
-    .cv-buttons:last-child {margin-bottom: 1rem;}
-    .lang-circle {
-        bottom: -1rem;
-        left: -1rem;
-    }
-}
-
-@media (min-width:0rem) and (max-width: 44rem) {
-    .plane-nav {
-        display: none;
-    }
-}
-@media (min-width: 44rem) {
-    .profile-header-menu {
-        display: none;
-    }
-    .profile-content {
-        width: 80%;
-    }
-}
-
-@media (min-width: 77rem) {
-    .plane-profile {
-        margin:0;
-        padding: 0;
-        width: 100%;
-        /* height: 100%; */
-        height: min-content;
-    }
-    .profile-nav-and-content {
-        min-height: 41rem;
-    }
-    .profile-tile h2 {
-        padding: 0.5rem 1rem;
-    }
-    .plane-nav {
-        min-height: 41rem;
-        height: auto;
-    }
-    .profile-content {
-        min-height: 40rem;
-        height: 100%;
-        /* width: 85%; */
-    }
-    .profile-tile:nth-child(1) {
-        height: 37%;
-        min-height: 17rem;
-    }
-    .profile-tile:nth-child(2) {
-        height: 50%;
-        min-height:20rem;
-    }
-    .side-content {
-        margin-top: 0;
-        width: 55%;
-        flex-direction: column;
-        align-items: center;
-        height: 100%;
-    }
-    .cv-buttons {
-        width: 100%;
-        flex-direction: row;
-        justify-content: space-around;
-         height: 100%;
-    }
-    .profile-error-image {
-        bottom: -.11rem;
-        min-width: 7rem;
-        right: -7rem;
-        font-size:.7rem;
-    }
-    
-    .profile-error-image::after {
-        bottom: 1rem;
-        right: 7.6rem;
-        transform: rotate(90deg);
-    }
-    .profile-tile-content {
-        display: flex;
-        justify-content: center;
-        flex-direction: row;
-    }
-    .profile-tile {
-        flex-direction: column;
-        flex-grow: 1;
-    }
-    .profile-tile-inputs-section {
-        width: 80%;
-        display: flex;
-        flex-direction: row;
-    }
-    .profile-tile-inputs {
-        width: 30%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-    }
-    .profile-tile-inputs:first-child {
-        /* height: 97%; */
-    }
-    .profile-tile-inputs:last-child {
-        /* height: 97%; */
-        margin-top: .5rem;
-    }
-    .profile-error-email,
-    .profile-error-phone {
-        top: -1.5rem;
     }
 }
