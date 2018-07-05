@@ -19,6 +19,7 @@
 
             <h3 class="prof-user-header-name">{{userData.firstName}} {{userData.lastName}}</h3>
             <div class="profile-tiles">
+            <div class="profile-tiles-row-wrap">
                 <div class="profile-tiles-row">
                     <div class="profile-tile-1-3">
                         <div class="profile-tile-header">
@@ -68,7 +69,7 @@
                         </div>
                         <div class="profile-tile-content">
                             <div class="profile-tile-inputs">
-                                <div class="prof-input">
+                                <div class="prof-input-m">
                                     <!-- <input class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.skype"> -->
                                     <input required v-if="editMode" class="inputProfile inputEdit" @input="checkFormFields" v-model="userData.skype">
                                     <input v-if="!editMode" disabled class="inputProfile inputDisabled" v-model="userData.skype">
@@ -76,7 +77,7 @@
                                     <label class="label-profile">{{ $t("label.skype") }}</label>
                                     <img class="prof-comm-img" src="../../assets/images/comm/grey/skype.png"/>
                                 </div>
-                                <div class="prof-input">
+                                <div class="prof-input-m">
                                     <!-- <input class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.slack"> -->
                                     <input required v-if="editMode" class="inputProfile inputEdit" @input="checkFormFields" v-model="userData.slack">
                                     <input disabled v-if="!editMode" class="inputProfile inputDisabled" v-model="userData.slack">
@@ -117,25 +118,25 @@
                         <div class="profile-tile-content">
                             <div class="profile-tile-inputs-section">
                                 <div class="profile-tile-inputs">
-                                    <div class="prof-input">
-                                        
+                                    <div class="prof-input-s">
                                         <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.branch"> -->
                                         <input disabled class="inputDisabled inputProfile" v-model="userData.branch">
                                         <label class="label-profile">{{ $t("label.department") }}</label>
                                     </div>
-                                    <div class="prof-input">
+                                    <div class="prof-input-s">
                                         <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.section"> -->
                                         <input disabled class="inputProfile inputDisabled" v-model="userData.section">
                                         <label class="label-profile">{{ $t("label.branch") }}</label>
                                     </div>
-                                    <div class="prof-input">
+                                    <div class="prof-input-s">
                                         <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.position"> -->
                                         <input disabled class="inputProfile inputDisabled" v-model="userData.position">
                                         <label class="label-profile">{{ $t("label.position") }}</label>
                                     </div>
-                                    <div class="prof-input">
+                                    <div class="prof-input-s">
                                         <input v-if="editMode" required class="inputProfile inputEdit" @input="checkFormFields" v-model="userData.currentProject">
                                         <input v-if="!editMode" class="inputDisabled inputProfile" v-model="userData.currentProject">
+                                        <span class="prof-div-bar"></span>
                                         <label class="label-profile">{{ $t("label.project") }}</label>
                                     </div>
                                 </div>
@@ -163,6 +164,7 @@
                                         <!-- <v-date-picker :max-date="new Date()" v-if="projectEditMode" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" is-expanded mode="single" v-model="userData.employmentDate">
                                                 <input value="userData.employmentDate" />
                                             </v-date-picker> -->
+                                        <span class="prof-div-bar"></span>
                                         <p v-if="!editMode" class="inputDisabled">{{userData.employmentDate}}</p>
                                         <label class="label-profile">{{ $t("label.employmentDate") }}</label>
                                         <div class="error-wrapper">
@@ -171,7 +173,7 @@
                                     </div>
                                     <div class="prof-input-s">
                                         <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.seniority"> -->
-                                        <input required v-if="editMode" class="inputDisabled inputProfile" v-model="userData.seniority">
+                                        <input required v-if="editMode" :disabled="true" class="inputDisabled inputProfile" v-model="userData.seniority">
                                         <p v-if="!editMode" class="inputDisabled">{{userData.seniority}}</p>
                                         <label class="label-profile">{{ $t("label.workExperience") }}</label>
                                     </div>
@@ -233,6 +235,7 @@
                                 </div>
                         </div>
                     </div>
+                </div>
                 </div>
                 <div class="profile-tile">
                     <div class="profile-tile-header">
@@ -330,13 +333,13 @@
 
                                         </div>
                                         <div class="prof-tbody-item">
-                                            <div class="prof-tbody-item-title">{{ $t("table.projectName") }} </div>
+                                            <div class="prof-tbody-item-title">{{ $t("table.Descr") }} </div>
                                             <div class="prof-tbody-item-txt">
                                                 <textarea :disabled="!projectEditMode" class="profile-table-textarea" v-model="experience[index].descr" />
                                             </div>
                                         </div>
                                         <div class="prof-tbody-item">
-                                            <div class="prof-tbody-item-title">{{ $t("table.projectName") }} </div>
+                                            <div class="prof-tbody-item-title"> --- </div>
                                             <div class="prof-tbody-item-txt">
                                                 <button v-if="projectEditMode" class="profile-table-delete-btn" @click="removeRow(index)">X</button>
                                                 <button v-if="projectEditMode" class="profile-table-save-btn" @click="saveExp(index)">&#x2714;</button>
