@@ -361,6 +361,7 @@ li:hover p {
     .plane-nav {
         width: 20%;
         display: flex;
+        min-width: 15.7rem;
     }
 
     .plane-nav-and-content {
