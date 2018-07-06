@@ -42,9 +42,10 @@
                                         <input v-if="!editMode" disabled type="text" class="inputDisabled inputProfile " v-model="userData.email">
                                         <span class="prof-div-bar"></span>
                                         <label class="label-profile">{{ $t("label.email") }}</label>
-                                        <div class="error-wrapper">
+                                        <!-- <div class="error-wrapper">
                                             <p class="profile-error profile-error-email" v-if="$v.userData.email.$invalid">{{ $t("message.emailValidation") }}</p>
-                                        </div>
+                                        </div> -->
+                                        <p class="prof-error" v-if="$v.userData.email.$invalid">{{ $t("message.emailValidation") }}</p>
                                     </div>
                                     <div class="prof-input">
                                         <!-- <input class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.phone" @input="phoneValidation"> -->
@@ -52,9 +53,10 @@
                                         <input v-if="!editMode" disabled class="inputDisabled inputProfile" v-model="userData.phone">
                                         <span class="prof-div-bar"></span>
                                         <label class="label-profile">{{ $t("label.phone") }}</label>
-                                        <div class="error-wrapper">
+                                        <!-- <div class="error-wrapper">
                                             <p class="profile-error profile-error-phone" v-if="invalidPhone">{{ $t("message.phoneValidation") }}</p>
-                                        </div>
+                                        </div> -->
+                                        <p class="prof-error" v-if="invalidPhone">{{ $t("message.phoneValidation") }}</p>
                                     </div>
                                 </div>
                                 
@@ -135,7 +137,7 @@
                                     </div>
                                     <div class="prof-input-s">
                                         <input v-if="editMode" required class="inputProfile inputEdit" @input="checkFormFields" v-model="userData.currentProject">
-                                        <input v-if="!editMode" class="inputDisabled inputProfile" v-model="userData.currentProject">
+                                        <input disabled v-if="!editMode" class="inputDisabled inputProfile" v-model="userData.currentProject">
                                         <span class="prof-div-bar"></span>
                                         <label class="label-profile">{{ $t("label.project") }}</label>
                                     </div>
@@ -143,7 +145,7 @@
                                 <div class="profile-tile-inputs">
                                     <div class="prof-input-s">
                                         <!-- <select v-model="userData.state" @change="checkFormFields" class="selectProfile" :class="editMode ? 'selectEdit' : 'selectDisabled'" :disabled="!editMode"> -->
-                                        <select v-if="editMode" v-model="userData.state" @change="checkFormFields" class="selectProfile selectEdit" >
+                                        <select required v-if="editMode" v-model="userData.state" @change="checkFormFields" class="selectProfile selectEdit" >
                                             <option value="Full">{{ $t("label.fulltime") }}</option>
                                             <option value="1/2">1/2</option>
                                             <option value="1/3">1/3</option>
@@ -155,7 +157,8 @@
                                             <option value="3/5">3/5</option>
                                             <option value="4/5">4/5</option>
                                         </select>
-                                        <p v-if="!editMode" class="inputDisabled">{{ userData.state }}</p>
+                                        <!-- <p v-if="!editMode" class="inputDisabled">{{ userData.state }}</p> -->
+                                        <select disabled v-if="!editMode" v-model="userData.state" @change="checkFormFields" class="selectProfile selectDisabled"></select>
                                         <label class="label-profile">{{ $t("label.worktime") }}</label>
                                     </div>
                                     <div class="prof-input-s">
@@ -164,17 +167,21 @@
                                         <!-- <v-date-picker :max-date="new Date()" v-if="projectEditMode" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" is-expanded mode="single" v-model="userData.employmentDate">
                                                 <input value="userData.employmentDate" />
                                             </v-date-picker> -->
+                                        
+                                        <!-- <p v-if="!editMode" class="inputDisabled">{{userData.employmentDate}}</p> -->
+                                        <input disabled v-if="!editMode" class="inputProfile inputDisabled" v-model="userData.employmentDate">
                                         <span class="prof-div-bar"></span>
-                                        <p v-if="!editMode" class="inputDisabled">{{userData.employmentDate}}</p>
                                         <label class="label-profile">{{ $t("label.employmentDate") }}</label>
-                                        <div class="error-wrapper">
+                                        <!-- <div class="error-wrapper">
                                             <p class="profile-error profile-error-date" v-if="invalidDate">{{ $t("message.dateValidation") }}</p>
-                                        </div>
+                                        </div> -->
+                                        <p class="prof-error" v-if="invalidDate">{{ $t("message.dateValidation") }}</p>
                                     </div>
                                     <div class="prof-input-s">
                                         <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.seniority"> -->
                                         <input required v-if="editMode" :disabled="true" class="inputDisabled inputProfile" v-model="userData.seniority">
-                                        <p v-if="!editMode" class="inputDisabled">{{userData.seniority}}</p>
+                                        <!-- <p v-if="!editMode" class="inputDisabled">{{userData.seniority}}</p> -->
+                                        <input disabled class="inputProfile inputDisabled" v-if="!editMode">
                                         <label class="label-profile">{{ $t("label.workExperience") }}</label>
                                     </div>
                                 </div>
