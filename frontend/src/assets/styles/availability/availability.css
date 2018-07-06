@@ -286,6 +286,7 @@
 .ava-select-cool-err {
     background: white;
     line-height: 2rem;
+    height: 2.2rem;
     color: black;
     border-radius: 3px;
     appearance: none;
