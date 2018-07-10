@@ -22,7 +22,10 @@ const state = {
         today: null,
         dayDesc: null,
         isDay: null,
-    }
+    },
+    news: null,
+    newsJson: {},
+    articles: []
 }
 
 const mutations = {
@@ -34,7 +37,16 @@ const mutations = {
     },
     ADD_TODAY(state, data) {
         state.todayDate = data
-    } 
+    },
+    ADD_NEWS(state, data) {
+        state.news = data
+    },
+    ADD_JSON_NEWS(state, data) {
+        state.newsJson = data
+    },
+    ADD_ARTICLES(state, data) {
+        state.articles = data
+    }
 }
 
 const actions = {
@@ -98,7 +110,7 @@ const actions = {
           const year = todayDate.today.getFullYear(),
            today2 = todayDate.today.getDay(),
            hour = todayDate.today.getHours()
-          todayDate.dayDesc = "";
+          todayDate.dayDesc = ""
           switch(today2) {
               case 0: todayDate.dayDesc = i18n.t("news.sunday"); break
               case 1: todayDate.dayDesc = i18n.t("news.monday"); break
@@ -114,8 +126,94 @@ const actions = {
           } else {
               todayDate.isDay = false
           }
-          commit('ADD_TODAY', todayDate);
+          commit('ADD_TODAY', todayDate)
+      },
+
+      getNews({commit, state, dispatch}) {
+        axios.get('https://fakty.interia.pl/ciekawostki/feed')
+        .then(res => {
+          console.log(res)
+          const news = res.data
+          commit('ADD_NEWS', news)
+          dispatch("xmlToJson")
+        })
+        .catch(function(error) {
+          console.log(error)
+        });
+    },
+     xmlToJson({commit, state, dispatch}) {
+        let xmlTxt = state.news
+        const convert = require('xml-to-json-promise')
+         convert.xmlDataToJSON(xmlTxt).then(json => {
+             xmlTxt = json.rss.channel[0].item
+             console.log(xmlTxt)
+             commit('ADD_JSON_NEWS', xmlTxt)
+             dispatch("getArticles")
+         })
+      },
+      getArticles({commit, state}) {
+          let allArticles = state.newsJson,
+          articles = []
+          for(let i = 0; i < (allArticles.length); i++) {
+            let article = document.createRange().createContextualFragment(allArticles[i].description[0]),
+            a,  p, link,
+            titleAlt = allArticles[i].title[0],
+            title = document.createTextNode(allArticles[i].title[0]),
+            param = document.createElement('p'),
+            ahref = document.createElement('a'),
+            ahrefImg = document.createElement('a'),
+            div = document.createElement('div'),
+            img = document.createElement('img'),
+            headDiv = document.createElement('div'),
+            contentDiv = document.createElement('div'),
+            head = document.createElement('h1')
+            head.appendChild(title)
+            ahref.appendChild(head)
+            link = allArticles[i].link[0]
+            ahref.href = link
+
+            headDiv.appendChild(ahref)
+            headDiv.id = "artTitle"
+            // head = div.appendChild(head)
+            // head.id = [i]
+            if(article.childNodes[0].childNodes[0].nodeType == 1) {
+                a = article.childNodes[0].childNodes[0]
+                p = article.childNodes[0].childNodes[1]
+                param.appendChild(p)
+            } else {
+                img.src = "../../assets/images/news.png"
+                // img.src = "http://localhost:8080/assets/images/news.png"
+                img.alt = titleAlt
+                ahrefImg.appendChild(img)
+                ahrefImg.href = link
+                p = article.childNodes[0].childNodes[0]
+                param.appendChild(p)
+                // ahref.appendChild(param)
+                // link = allArticles[i].link[0]
+                // ahref.href = link
+            }
+            div.appendChild(headDiv)
+            contentDiv.id = "artContent"
+            if(a) {
+            contentDiv.appendChild(a)
+            contentDiv.appendChild(param)
+            div.appendChild(contentDiv)
+            }
+            contentDiv.appendChild(ahrefImg)
+            contentDiv.appendChild(param)
+            div.appendChild(contentDiv)
+            div.id = "artAll"
+            
+            let art = div
+            document.getElementById('articles').appendChild(art)
+
+            // let randomColor =  "#"+((1<<24)*Math.random()|0).toString(16)
+            // document.getElementById([i]).style.color = randomColor;
+          }
+
+          commit('ADD_ARTICLES', articles)
       }
+    
 }
 
 const getters = {
@@ -127,6 +225,15 @@ const getters = {
      },
      today: state => {
         return state.todayDate
+     },
+     articlesRaw: state => {
+         return state.news
+     },
+     articlesJson: state => {
+         return state.newsJson
+     },
+     articles: state => {
+         return state.articles
      }
 }
 
