@@ -18,7 +18,7 @@
                 <div class="emp-thead-item">{{ $t("label.email") }}</div>
           </div>
           <div class="emp-tbody">
-            <div class="emp-tbody-row" v-for="userInfo in getUserList">
+            <div class="emp-tbody-row" v-for="userInfo in getUserList" :key="userInfo.key">
               <div class="emp-tbody-item">
                 <div class="emp-tbody-item-title"> {{ $t("label.fullName") }} </div>
                 <div class="emp-tbody-item-txt"> {{ userInfo.firstName }} {{ userInfo.lastName }} </div>

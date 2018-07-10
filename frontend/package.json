@@ -33,7 +33,8 @@
         "vue-masked-input": "^0.5.2",
         "vue-router": "^3.0.1",
         "vuelidate": "^0.6.2",
-        "vuex": "^3.0.1"
+        "vuex": "^3.0.1",
+        "xml-to-json-promise": "0.0.3"
     },
     "devDependencies": {
         "autoprefixer": "^7.1.2",
