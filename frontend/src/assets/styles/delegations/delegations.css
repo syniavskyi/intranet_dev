@@ -97,7 +97,8 @@
     height: 10%;
     width: 100%; 
     transition: background 0.3s ease;
-    z-index:1 ;
+    height: 3.4rem;
+    z-index: 0;
 }
 
 .delegations-tile:not(:first-of-type) .delegations-tile-header:hover {
@@ -145,17 +146,12 @@
     flex-direction: column;
     align-items:center;
     justify-content: space-around;
-    /* transition: height 0.5s ease; */
-    overflow: hidden
-    /* animation: tileGrow 1s; */
+    transition: all .5s ease;
 }
 
-@keyframes tileGrow {
-    0% {opacity:0;}
-    1% {opacity:0;
-        max-height:0;}
-    100% {opacity:1;
-        max-height: 100% }
+.delegations-tile:not(:first-of-type) .delegations-tile-content {
+    overflow: hidden;
+    height: 0px;
 }
 
 .delegations-tile-content-1 {
@@ -554,7 +550,13 @@
     display: none;
     width:100%;
     border-radius: 2px;
+    align-items: center;
 }
+
+.del-thead-1 {
+    min-height: 4rem;
+}
+
 .del-tbody-1 {
     display: flex;
     flex-direction: column;
@@ -685,7 +687,7 @@
     height: 100%;
     /* min-height: 10rem; */
     box-shadow: 0 0 10px grey;
-    margin: 1rem 0 ;
+    margin: .5rem 0 ;
 }
 
 .del-add-row {
@@ -697,7 +699,7 @@
     border-radius: 0.5rem;
     transition: box-shadow 0.3s ease;
     height: 1.5rem;
-    z-index: 100;
+    z-index: 1000;
 }
 
 .del-add-row:hover {
@@ -709,7 +711,11 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    
+    /* margin: 0.5rem 0; */
+}
+
+.del-table-2 {
+    min-height: 6rem;
 }
 
 .del-thead-item,
@@ -762,11 +768,17 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    min-height: 3rem;
+    
 }
 .del-tbody2-item-adv {
     width: 20%;
+    min-height: 2rem;
 }
+
+.del-tbody2-item-cost {
+    min-height: 5rem;
+}
+
 .del-tbody2-item-w {
     display: flex;
     width: 20%;
@@ -844,6 +856,7 @@
 
 .del-table-footer {
     display: none; 
+    min-height: 3rem;
 }
 
 .del-tbody2-item:first-child .del-tbody2-item-title,
@@ -870,11 +883,11 @@
     }
     .del-thead-2 {
         display: flex;
-        height: 3rem;
+        min-height: 3rem;
     }
     .del-tbody-2 {
         flex-direction: row;
-        min-height: 0;
+        min-height: 3rem;
     }
     .del-tbody-2:nth-of-type(1) {
         background: #ccc;

@@ -2,10 +2,10 @@
 <div class="delegations-tile">
     <!-- <input id="delegations-row-1" class="documents-tiles-row-header-input" type="checkbox">
     <label class="delegations-tiles-row-header" for="delegations-row-1"> -->
-        <div @click="toggleTile" class="delegations-tile-header">
-            <div class="delegations-tile-title">
+        <div  class="delegations-tile-header">
+            <div @click.self="toggleTile" class="delegations-tile-title">
                 {{ $t("header.advance") }}
-                <button class="del-add-row" @click.prevent="toggleTile" @click="addAdvanceRow"> dodaj wiersz </button>
+                <button class="del-add-row" @click="addAdvanceRow"> dodaj wiersz </button>
             </div>
             <div class="delegations-tile-underscore"></div>
         </div>
@@ -16,7 +16,7 @@
 
         
         <div class="delegations-table-wrapper">
-            <div class="delegations-table-2">
+            <div class="delegations-table-2 del-table-2">
                 <div class="del-thead-2">
                     <div class="del-thead-item-adv">{{ $t("table.delegations.advanceDate") }}</div>
                     <div class="del-thead-item-adv">{{ $t("table.delegations.advanceCurrency") }}</div>
@@ -112,9 +112,10 @@ export default {
 
         toggleTile() {
             let el = this.$el.lastChild,
+                elChild = el.firstChild,
                 style = window.getComputedStyle(el)
             
-           const name = {el, style}
+           const name = {el, elChild, style}
            this.$store.dispatch('toggleTile', name)
         }
     }
