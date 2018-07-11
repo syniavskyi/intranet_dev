@@ -50,18 +50,14 @@ const mutations = {
 }
 
 const actions = {
+    // take location
     geoLoc({commit, state, dispatch}) {
         const geo = navigator.geolocation
         if(geo) {
           geo.getCurrentPosition(function(location) {
-            const geoLocat = {
-                lat: 0,
-                len: 0
-            }
+            const geoLocat = {}
             geoLocat.lat = (location.coords.latitude.toFixed(2))
             geoLocat.len = (location.coords.longitude.toFixed(2))
-            console.log('szerokość ' + geoLocat.lat)
-            console.log('długość ' + geoLocat.len)
             commit('SET_LOCATION', geoLocat)
             if(geoLocat) {
                 dispatch("getWeatherData")
@@ -69,8 +65,9 @@ const actions = {
           })   
         }
         else {
-          console.log("nie")
-          // jak nie, to wrocław
+        // if not, set Wroclaw
+            geoLocat.lat = 51.14
+            geoLocat.len = 16.94
         }
       },
     getWeatherData({commit, state}) {
@@ -99,7 +96,9 @@ const actions = {
          commit('ADD_WEATHER_DATA', weather)
          })
       },
+
       getToday({commit, state}){
+          //day of the week
           const todayDate= {}
           todayDate.today = new Date()
           const today3 = todayDate.today.getDate()
@@ -130,6 +129,7 @@ const actions = {
       },
 
       getNews({commit, state, dispatch}) {
+          // get news from RSS -> XML
         axios.get('https://fakty.interia.pl/ciekawostki/feed')
         .then(res => {
           console.log(res)
@@ -142,6 +142,7 @@ const actions = {
         });
     },
      xmlToJson({commit, state, dispatch}) {
+         // parse XML to JSON
         let xmlTxt = state.news
         const convert = require('xml-to-json-promise')
          convert.xmlDataToJSON(xmlTxt).then(json => {
@@ -152,6 +153,7 @@ const actions = {
          })
       },
       getArticles({commit, state}) {
+          // make html object
           let allArticles = state.newsJson,
           articles = []
           for(let i = 0; i < (allArticles.length); i++) {
@@ -173,44 +175,36 @@ const actions = {
             ahref.href = link
 
             headDiv.appendChild(ahref)
-            headDiv.id = "artTitle"
-            // head = div.appendChild(head)
-            // head.id = [i]
+            headDiv.className = "artTitle"
             if(article.childNodes[0].childNodes[0].nodeType == 1) {
-                a = article.childNodes[0].childNodes[0]
-                p = article.childNodes[0].childNodes[1]
-                param.appendChild(p)
+                a = article.childNodes[0].childNodes[0];
+                p = article.childNodes[0].childNodes[1];
+                param.appendChild(p);
             } else {
-                img.src = "../../assets/images/news.png"
-                // img.src = "http://localhost:8080/assets/images/news.png"
-                img.alt = titleAlt
-                ahrefImg.appendChild(img)
-                ahrefImg.href = link
-                p = article.childNodes[0].childNodes[0]
-                param.appendChild(p)
-                // ahref.appendChild(param)
-                // link = allArticles[i].link[0]
-                // ahref.href = link
+                img.id = "img"+[i]
+                ahrefImg.className = "articleImg"
+                ahrefImg.appendChild(img);
+                ahrefImg.href = link;
+                p = article.childNodes[0].childNodes[0];
+                param.appendChild(p);
             }
             div.appendChild(headDiv)
-            contentDiv.id = "artContent"
+            contentDiv.className = "artContent"
             if(a) {
             contentDiv.appendChild(a)
             contentDiv.appendChild(param)
             div.appendChild(contentDiv)
-            }
+            } else {
             contentDiv.appendChild(ahrefImg)
             contentDiv.appendChild(param)
             div.appendChild(contentDiv)
-            div.id = "artAll"
+            }
+            div.className = "artAll"
             
             let art = div
             document.getElementById('articles').appendChild(art)
-
-            // let randomColor =  "#"+((1<<24)*Math.random()|0).toString(16)
-            // document.getElementById([i]).style.color = randomColor;
+            articles.push(art)
           }
-
           commit('ADD_ARTICLES', articles)
       }
     

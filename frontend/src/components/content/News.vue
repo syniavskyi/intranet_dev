@@ -30,7 +30,7 @@
                   <!-- <img src="../../assets/images/weather/temps.png" height="46px" class="iconTemp"/> -->
                   <p> {{ weatherData.celcius }} <sup>o</sup>C </p> 
                 </div>
-              </div>
+              </div> 
               <!-- <div class="description">
                     <p> {{weatherData.description}} </p> 
               </div> -->
@@ -54,10 +54,6 @@
             </div>
           </div>
           <div class="content-news">
-            <!-- <div id="artContent"><a href="http://fakty.interia.pl/ciekawostki/news-belgia-8-latek-zdal-mature-i-idzie-na-studia,nId,2601099"><img src="../../assets/images/weather/news.png" alt="Belgia: 8-latek zdał maturę i idzie na studia"></a><p>W Belgii ośmiolatek ukończył szkołę średnią i zdał maturę - informuje w sobotę portal BBC News. Po dwumiesięcznych wakacjach chłopiec planuje rozpocząć naukę na uniwersytecie. Zdaniem rodziców jego iloraz inteligencji wynosi 145.</p></div> -->
-            <!-- <button @click="getNews">get news from RSS</button>
-            <button @click="xmlToJson">parse XML to JSON</button>
-            <button @click="getArticles">get articles</button> -->
             <div id="articles">
             </div>
           </div>
@@ -75,26 +71,28 @@ import { mapActions } from "vuex"
 import i18n from "../../lang/lang"
 export default {
   beforeCreate() {
-    // this.$store.dispatch("geoLoc");
+    this.$store.dispatch("geoLoc");
+    this.$store.dispatch("getNews")
   },
   created() {
     this.getToday()
-    this.getNews()
+    // this.getNews()
   },
+ 
   components: {
     "app-menu": Menu
   },
   computed: {
-    ...mapGetters(["geoLocation2", "weatherData", "today", "articlesRaw", "articlesJson", "articles"])
+    ...mapGetters(["geoLocation2", "weatherData", "today", "articlesRaw", "articlesJson", "articles"]),
   },
   methods: {
     ...mapActions(["geoLoc", "getWeatherData", "getToday", "getNews", "xmlToJson", "getArticles"]),
+    }
   }
-}
 </script>
 
 
-<style scope>
+<style scoped>
 .weatherDay {
   background-image: url("../../assets/images/weather/day.png")
 }
