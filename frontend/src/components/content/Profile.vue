@@ -17,203 +17,232 @@
                 </div>
             </div>
 
-            <h3 class="user-header-name">{{userData.firstName}} {{userData.lastName}}</h3>
+            <h3 class="prof-user-header-name">{{userData.firstName}} {{userData.lastName}}</h3>
             <div class="profile-tiles">
-                <div class="profile-tile">
-                    <!-- container for section -->
-                    <div class="profile-tile-header">
-                        <h2>{{ $t("header.contact") }}</h2>
-                        <div class="tile-underscore"></div>
+            <div class="profile-tiles-row-wrap">
+                <div class="profile-tiles-row">
+                    <div class="profile-tile-1-3">
+                        <div class="profile-tile-header">
+                            <h2 class="prof-tile-h2">{{ $t("header.contact") }}</h2>
+                            <div class="tile-underscore"></div>
+                        </div>
+                        <div class="profile-tile-content">
+                            <!-- <div class="profile-tile-inputs-section profile-inputs-sections-1"> -->
+                                <div class="profile-tile-inputs">
+                                    <div class="prof-input">
+                                        <!-- <input required v-if="editMode" class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.address"> -->
+                                        <input required v-if="editMode" @input="checkFormFields" class="inputProfile inputEdit" v-model="userData.address">
+                                        <input v-if="!editMode" disabled class="inputProfile inputDisabled" v-model="userData.address">
+                                        <span class="prof-div-bar"></span>
+                                        <label class="label-profile">{{ $t("label.address") }}</label>
+                                    </div>
+                                    <div class="prof-input">
+                                        <!-- <input required class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()"> -->
+                                        <input required v-if="editMode" class="inputEdit inputProfile" @input="checkFormFields"  v-model="userData.email" @blur="$v.userData.email.$touch()">
+                                        <input v-if="!editMode" disabled type="text" class="inputDisabled inputProfile " v-model="userData.email">
+                                        <span class="prof-div-bar"></span>
+                                        <label class="label-profile">{{ $t("label.email") }}</label>
+                                        <!-- <div class="error-wrapper">
+                                            <p class="profile-error profile-error-email" v-if="$v.userData.email.$invalid">{{ $t("message.emailValidation") }}</p>
+                                        </div> -->
+                                        <p class="prof-error" v-if="$v.userData.email.$invalid">{{ $t("message.emailValidation") }}</p>
+                                    </div>
+                                    <div class="prof-input">
+                                        <!-- <input class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.phone" @input="phoneValidation"> -->
+                                        <input required v-if="editMode" class="inputEdit inputProfile" v-model="userData.phone" @input="phoneValidation">
+                                        <input v-if="!editMode" disabled class="inputDisabled inputProfile" v-model="userData.phone">
+                                        <span class="prof-div-bar"></span>
+                                        <label class="label-profile">{{ $t("label.phone") }}</label>
+                                        <!-- <div class="error-wrapper">
+                                            <p class="profile-error profile-error-phone" v-if="invalidPhone">{{ $t("message.phoneValidation") }}</p>
+                                        </div> -->
+                                        <p class="prof-error" v-if="invalidPhone">{{ $t("message.phoneValidation") }}</p>
+                                    </div>
+                                </div>
+                                
+                            <!-- </div> -->
+                            
+                        </div>
                     </div>
-                    <div class="profile-tile-content">
-                        <div class="profile-tile-inputs-section profile-inputs-sections-1">
+                    <div class="profile-tile-1-3">
+                        <div class="profile-tile-header">
+                            <h2 class="prof-tile-h2">Komunikatory</h2>
+                            <div class="tile-underscore"></div>
+                        </div>
+                        <div class="profile-tile-content">
                             <div class="profile-tile-inputs">
-                                <div>
-                                    <!-- <input required v-if="editMode" class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.address"> -->
-                                    <input required v-if="editMode" @input="checkFormFields" class="inputProfile inputEdit" v-model="userData.address">
-                                    <input v-if="!editMode" disabled class="inputProfile inputDisabled" v-model="userData.address">
-                                    <span class="prof-div-bar"></span>
-                                    <label class="label-profile">{{ $t("label.address") }}</label>
-                                </div>
-                                <div>
-                                    <!-- <input required class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()"> -->
-                                    <input required v-if="editMode" class="inputEdit inputProfile" @input="checkFormFields"  v-model="userData.email" @blur="$v.userData.email.$touch()">
-                                    <input v-if="!editMode" disabled type="text" class="inputDisabled inputProfile " v-model="userData.email">
-                                    <span class="prof-div-bar"></span>
-                                    <label class="label-profile">{{ $t("label.email") }}</label>
-                                    <div class="error-wrapper">
-                                        <p class="profile-error profile-error-email" v-if="$v.userData.email.$invalid">{{ $t("message.emailValidation") }}</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <!-- <input class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.phone" @input="phoneValidation"> -->
-                                    <input required v-if="editMode" class="inputEdit inputProfile" v-model="userData.phone" @input="phoneValidation">
-                                    <input v-if="!editMode" disabled class="inputDisabled inputProfile" v-model="userData.phone">
-                                    <span class="prof-div-bar"></span>
-                                    <label class="label-profile">{{ $t("label.phone") }}</label>
-                                    <div class="error-wrapper">
-                                        <p class="profile-error profile-error-phone" v-if="invalidPhone">{{ $t("message.phoneValidation") }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="profile-tile-inputs">
-                                <div>
+                                <div class="prof-input-m">
                                     <!-- <input class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.skype"> -->
                                     <input required v-if="editMode" class="inputProfile inputEdit" @input="checkFormFields" v-model="userData.skype">
                                     <input v-if="!editMode" disabled class="inputProfile inputDisabled" v-model="userData.skype">
                                     <span class="prof-div-bar"></span>
                                     <label class="label-profile">{{ $t("label.skype") }}</label>
+                                    <img class="prof-comm-img" src="../../assets/images/comm/grey/skype.png"/>
                                 </div>
-                                <div>
+                                <div class="prof-input-m">
                                     <!-- <input class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.slack"> -->
                                     <input required v-if="editMode" class="inputProfile inputEdit" @input="checkFormFields" v-model="userData.slack">
                                     <input disabled v-if="!editMode" class="inputProfile inputDisabled" v-model="userData.slack">
                                     <span class="prof-div-bar"></span>
                                     <label class="label-profile">{{ $t("label.slack") }}</label>
+                                    <img class="prof-comm-img" src="../../assets/images/comm/grey/slack.png"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="profile-user-header">
-                            <div class="profile-user-img">
-                                <img class="img-user-class" :src="userData.image" width="150px">
-                                <p class="profile-error profile-error-image" v-if="photoUploadError">{{ $t("message.photoUploadError") }}</p>
-                                <label for="change-user-image" class="change-user-img">{{ $t("button.changePhoto") }}
-                                    <input accept="image/*" style="width: 1rem;" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
-                                </label>
+                    </div>
+                    <div class="profile-tile-1-3-emp">
+                        <div class="profile-tile-header">
+                            
+                            <!-- <div class="tile-underscore"></div> -->
+                        </div>
+                        <div class="profile-tile-content">
+                            <div class="profile-user-header">
+                                <div class="profile-user-img">
+                                    <img class="img-user-class" :src="userData.image" width="150px">
+                                    <p class="profile-error profile-error-image" v-if="photoUploadError">{{ $t("message.photoUploadError") }}</p>
+                                    <label for="change-user-image" class="change-user-img">{{ $t("button.changePhoto") }}
+                                        <input accept="image/*" style="width: 1rem;" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="profile-tile">
-                    <div class="profile-tile-header">
-                        <div class="profile-tile-header-row">
-                            <h2>{{ $t("header.employee") }}</h2>
-                            <button class="profile-change-password">zmień hasło</button>
-                        </div>
-                        <div class="tile-underscore"></div>
-                    </div>
-                    <div class="profile-tile-content">
-                        <div class="profile-tile-inputs-section">
-                            <div class="profile-tile-inputs">
-                                <div>
-                                    <!-- container for single label + input/p -->
-                                    
-                                    <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.branch"> -->
-                                    <input disabled class="inputDisabled inputProfile" v-model="userData.branch">
-                                    <label class="label-profile">{{ $t("label.department") }}</label>
-                                </div>
-                                <div>
-                                    <!-- container for single label + input/p -->
-                                    <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.section"> -->
-                                    <input disabled class="inputProfile inputDisabled" v-model="userData.section">
-                                    <label class="label-profile">{{ $t("label.branch") }}</label>
-                                </div>
-                                <div>
-                                    <!-- container for single label + input/p -->
-                                    <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.position"> -->
-                                    <input disabled class="inputProfile inputDisabled" v-model="userData.position">
-                                    <label class="label-profile">{{ $t("label.position") }}</label>
-                                </div>
-                                <div>
-                                    <!-- container for single label + input/p -->
-                                    <input v-if="editMode" required class="inputProfile inputEdit" @input="checkFormFields" v-model="userData.currentProject">
-                                    <input v-if="!editMode" class="inputDisabled inputProfile" v-model="userData.currentProject">
-                                    <label class="label-profile">{{ $t("label.project") }}</label>
-                                </div>
+                <div class="profile-tiles-row">
+                    <div class="profile-tile-1-2">
+                        <div class="profile-tile-header">
+                            <div class="profile-tile-header-row">
+                                <h2 class="prof-tile-h2">{{ $t("header.employee") }}</h2>
+                                <button class="profile-change-password">zmień hasło</button>
                             </div>
-                            <div class="profile-tile-inputs">
-                                <div>
-                                    <!-- container for single label + input/p -->
-                                    <!-- <select v-model="userData.state" @change="checkFormFields" class="selectProfile" :class="editMode ? 'selectEdit' : 'selectDisabled'" :disabled="!editMode"> -->
-                                    <select v-if="editMode" v-model="userData.state" @change="checkFormFields" class="selectProfile selectEdit" >
-                                        <option value="Full">{{ $t("label.fulltime") }}</option>
-                                        <option value="1/2">1/2</option>
-                                        <option value="1/3">1/3</option>
-                                        <option value="2/3">2/3</option>
-                                        <option value="1/4">1/4</option>
-                                        <option value="3/4">3/4</option>
-                                        <option value="1/5">1/5</option>
-                                        <option value="2/5">2/5</option>
-                                        <option value="3/5">3/5</option>
-                                        <option value="4/5">4/5</option>
-                                    </select>
-                                    <p v-if="!editMode" class="inputDisabled">{{ userData.state }}</p>
-                                    <label class="label-profile">{{ $t("label.worktime") }}</label>
-                                    <!-- <input  value="Pełny" class="inputDisabled inputProfile" :disabled="true" v-model="userData.worktime"> -->
-                                </div>
-                                <div>
-                                    <!-- container for single label + input/p -->
-                                    
-                                    <!-- <masked-input mask="11.11.1111" @input="dateValidation" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.employmentDate" /> -->
-                                    <masked-input required v-if="editMode" mask="11.11.1111" @input="dateValidation" class="inputProfile inputEdit" v-model="userData.employmentDate" />
-                                    <!-- <v-date-picker :max-date="new Date()" v-if="projectEditMode" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" is-expanded mode="single" v-model="userData.employmentDate">
-                                            <input value="userData.employmentDate" />
-                                        </v-date-picker> -->
-                                    <p v-if="!editMode" class="inputDisabled">{{userData.employmentDate}}</p>
-                                    <label class="label-profile">{{ $t("label.employmentDate") }}</label>
-                                    <div class="error-wrapper">
-                                        <p class="profile-error profile-error-date" v-if="invalidDate">{{ $t("message.dateValidation") }}</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <!-- container for single label + input/p -->
-                                    <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.seniority"> -->
-                                    <input required v-if="editMode" class="inputDisabled inputProfile" v-model="userData.seniority">
-                                    <p v-if="!editMode" class="inputDisabled">{{userData.seniority}}</p>
-                                    <label class="label-profile">{{ $t("label.workExperience") }}</label>
-                                </div>
-                            </div>
+                            <div class="tile-underscore"></div>
                         </div>
-                        <div class="side-content">
-                            <p class="cv-title">{{ $t("label.cv") }}</p>
-                            <div class="cv-buttons">
-                                <div class="button-cv">
-                                    <a>
-                                        <span class="button-circle lang-circle">PL</span>
-                                    </a>
-                                    <div class="add-download">
-                                        <p class="profile-error profile-error-upload-top" v-if="fileUploadError">{{ $t("message.fileUploadError") }}</p>
-                                        <label class="add" for="add-docx-pl">+
-                                            <input accept=".doc,.docx" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload">
-                                        </label>
-
-                                        <div class="docx">.docx</div>
-                                        <a :href="userData.cv" class="download doc-download-pl">&#x21e3;</a>
+                        <div class="profile-tile-content">
+                            <div class="profile-tile-inputs-section">
+                                <div class="profile-tile-inputs">
+                                    <div class="prof-input-s">
+                                        <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.branch"> -->
+                                        <input disabled class="inputDisabled inputProfile" v-model="userData.branch">
+                                        <label class="label-profile">{{ $t("label.department") }}</label>
                                     </div>
-                                    <div class="add-download">
-                                        <p v-show="false" class="profile-error profile-error-upload-bottom">{{ $t("message.fileUploadError") }}</p>
-                                        <label for="add-pdf-pl" class="add">+
-                                            <input id="add-pdf-pl" accept=".pdf" class="add pdf-add-pl" type="file">
-                                        </label>
-
-                                        <div class="pdf">.pdf</div>
-                                        <a class="download pdf-add-pl">&#x21e3;</a>
+                                    <div class="prof-input-s">
+                                        <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.section"> -->
+                                        <input disabled class="inputProfile inputDisabled" v-model="userData.section">
+                                        <label class="label-profile">{{ $t("label.branch") }}</label>
+                                    </div>
+                                    <div class="prof-input-s">
+                                        <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.position"> -->
+                                        <input disabled class="inputProfile inputDisabled" v-model="userData.position">
+                                        <label class="label-profile">{{ $t("label.position") }}</label>
+                                    </div>
+                                    <div class="prof-input-s">
+                                        <input v-if="editMode" required class="inputProfile inputEdit" @input="checkFormFields" v-model="userData.currentProject">
+                                        <input disabled v-if="!editMode" class="inputDisabled inputProfile" v-model="userData.currentProject">
+                                        <span class="prof-div-bar"></span>
+                                        <label class="label-profile">{{ $t("label.project") }}</label>
                                     </div>
                                 </div>
-                                <div class="button-cv">
-                                    <a>
-                                        <span class="button-circle lang-circle">EN</span></a>
-                                    <div class="add-download">
-                                        <p v-show="false" class="profile-error profile-error-upload-top">{{ $t("message.fileUploadError") }}</p>
-                                        <label class="add" for="add-docx-en">+
-                                            <input accept=".doc,.docx" id="add-docx-en" class="add" type="file">
-                                        </label>
-
-                                        <div class="docx">.docx</div>
-                                        <a class="download">&#x21e3;</a>
+                                <div class="profile-tile-inputs">
+                                    <div class="prof-input-s">
+                                        <!-- <select v-model="userData.state" @change="checkFormFields" class="selectProfile" :class="editMode ? 'selectEdit' : 'selectDisabled'" :disabled="!editMode"> -->
+                                        <select required v-if="editMode" v-model="userData.state" @change="checkFormFields" class="selectProfile selectEdit" >
+                                            <option value="Full">{{ $t("label.fulltime") }}</option>
+                                            <option value="1/2">1/2</option>
+                                            <option value="1/3">1/3</option>
+                                            <option value="2/3">2/3</option>
+                                            <option value="1/4">1/4</option>
+                                            <option value="3/4">3/4</option>
+                                            <option value="1/5">1/5</option>
+                                            <option value="2/5">2/5</option>
+                                            <option value="3/5">3/5</option>
+                                            <option value="4/5">4/5</option>
+                                        </select>
+                                        <!-- <p v-if="!editMode" class="inputDisabled">{{ userData.state }}</p> -->
+                                        <select disabled v-if="!editMode" v-model="userData.state" @change="checkFormFields" class="selectProfile selectDisabled"></select>
+                                        <label class="label-profile">{{ $t("label.worktime") }}</label>
                                     </div>
-                                    <div class="add-download">
-                                        <p v-show="false" class="profile-error profile-error-upload-bottom">{{ $t("message.fileUploadError") }}</p>
-                                        <label class="add" for="add-pdf-en">+
-                                            <input id="add-pdf-en" accept=".pdf" class="add" type=file>
-                                        </label>
-                                        <div class="pdf">.pdf</div>
-                                        <a class="download">&#x21e3;</a>
+                                    <div class="prof-input-s">
+                                        <!-- <masked-input mask="11.11.1111" @input="dateValidation" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.employmentDate" /> -->
+                                        <masked-input required v-if="editMode" mask="11.11.1111" @input="dateValidation" class="inputProfile inputEdit" v-model="userData.employmentDate" />
+                                        <!-- <v-date-picker :max-date="new Date()" v-if="projectEditMode" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" is-expanded mode="single" v-model="userData.employmentDate">
+                                                <input value="userData.employmentDate" />
+                                            </v-date-picker> -->
+                                        
+                                        <!-- <p v-if="!editMode" class="inputDisabled">{{userData.employmentDate}}</p> -->
+                                        <input disabled v-if="!editMode" class="inputProfile inputDisabled" v-model="userData.employmentDate">
+                                        <span class="prof-div-bar"></span>
+                                        <label class="label-profile">{{ $t("label.employmentDate") }}</label>
+                                        <!-- <div class="error-wrapper">
+                                            <p class="profile-error profile-error-date" v-if="invalidDate">{{ $t("message.dateValidation") }}</p>
+                                        </div> -->
+                                        <p class="prof-error" v-if="invalidDate">{{ $t("message.dateValidation") }}</p>
+                                    </div>
+                                    <div class="prof-input-s">
+                                        <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.seniority"> -->
+                                        <input required v-if="editMode" :disabled="true" class="inputDisabled inputProfile" v-model="userData.seniority">
+                                        <!-- <p v-if="!editMode" class="inputDisabled">{{userData.seniority}}</p> -->
+                                        <input disabled class="inputProfile inputDisabled" v-if="!editMode">
+                                        <label class="label-profile">{{ $t("label.workExperience") }}</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="profile-tile-1-2">
+                        <div class="profile-tile-header">
+                            <div class="profile-tile-header-row">
+                                <h2 class="prof-tile-h2">{{ $t("label.cv") }}</h2>
+                            </div>
+                            <div class="tile-underscore"></div>
+                        </div>
+                        <div class="profile-tile-content">
+                                <div class="cv-buttons">
+                                    <div class="button-cv">
+                                        <a>
+                                            <span class="button-circle lang-circle">PL</span>
+                                        </a>
+                                        <div class="add-download">
+                                            <p class="profile-error profile-error-upload-top" v-if="fileUploadError">{{ $t("message.fileUploadError") }}</p>
+                                            <label class="add" for="add-docx-pl">+
+                                                <input accept=".doc,.docx" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload">
+                                            </label>
+                                            <div class="docx">.docx</div>
+                                            <a :href="userData.cv" class="download doc-download-pl">&#x21e3;</a>
+                                        </div>
+                                        <div class="add-download">
+                                            <p v-show="false" class="profile-error profile-error-upload-bottom">{{ $t("message.fileUploadError") }}</p>
+                                            <label for="add-pdf-pl" class="add">+
+                                                <input id="add-pdf-pl" accept=".pdf" class="add pdf-add-pl" type="file">
+                                            </label>
+                                            <div class="pdf">.pdf</div>
+                                            <a class="download pdf-add-pl">&#x21e3;</a>
+                                        </div>
+                                    </div>
+                                    <div class="button-cv">
+                                        <a>
+                                            <span class="button-circle lang-circle">EN</span>
+                                        </a>
+                                        <div class="add-download">
+                                            <p v-show="false" class="profile-error profile-error-upload-top">{{ $t("message.fileUploadError") }}</p>
+                                            <label class="add" for="add-docx-en">+
+                                                <input accept=".doc,.docx" id="add-docx-en" class="add" type="file">
+                                            </label>
+                                                <div class="docx">.docx</div>
+                                                <a class="download">&#x21e3;</a>
+                                        </div>
+                                        <div class="add-download">
+                                            <p v-show="false" class="profile-error profile-error-upload-bottom">{{ $t("message.fileUploadError") }}</p>
+                                            <label class="add" for="add-pdf-en">+
+                                                <input id="add-pdf-en" accept=".pdf" class="add" type=file>
+                                            </label>
+                                            <div class="pdf">.pdf</div>
+                                            <a class="download">&#x21e3;</a>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
                 <div class="profile-tile">
                     <div class="profile-tile-header">
@@ -311,13 +340,13 @@
 
                                         </div>
                                         <div class="prof-tbody-item">
-                                            <div class="prof-tbody-item-title">{{ $t("table.projectName") }} </div>
+                                            <div class="prof-tbody-item-title">{{ $t("table.Descr") }} </div>
                                             <div class="prof-tbody-item-txt">
                                                 <textarea :disabled="!projectEditMode" class="profile-table-textarea" v-model="experience[index].descr" />
                                             </div>
                                         </div>
                                         <div class="prof-tbody-item">
-                                            <div class="prof-tbody-item-title">{{ $t("table.projectName") }} </div>
+                                            <div class="prof-tbody-item-title"> --- </div>
                                             <div class="prof-tbody-item-txt">
                                                 <button v-if="projectEditMode" class="profile-table-delete-btn" @click="removeRow(index)">X</button>
                                                 <button v-if="projectEditMode" class="profile-table-save-btn" @click="saveExp(index)">&#x2714;</button>

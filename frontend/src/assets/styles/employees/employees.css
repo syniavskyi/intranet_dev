@@ -126,6 +126,7 @@
     align-items: center;
     width: 73%;
     border-bottom: 1px solid #ccc;
+    text-align: center;
 }
 
 .emp-tbody-item:first-child .emp-tbody-item-txt {
