@@ -2,10 +2,10 @@
         <div class="delegations-tile">
         <!-- <input id="delegations-row-4" class="documents-tiles-row-header-input" type="checkbox">
         <label class="delegations-tiles-row-header" for="delegations-row-4"> -->
-            <div @click="toggleTile" class="delegations-tile-header">
-                        <div class="delegations-tile-title">
+            <div class="delegations-tile-header">
+                        <div @click.self="toggleTile" class="delegations-tile-title">
                             {{ $t("header.accomodationCosts") }}
-                            <button class="del-add-row" @click.prevent="toggleTile" @click="addCostRow"> dodaj wiersz </button>
+                            <button class="del-add-row" @click="addCostRow"> dodaj wiersz </button>
                         </div>
                         <div class="delegations-tile-underscore"></div>
                     </div>
@@ -147,9 +147,10 @@ export default {
 
         toggleTile() {
             let el = this.$el.lastChild,
+                elChild = el.firstChild,
                 style = window.getComputedStyle(el)
             
-           const name = {el, style}
+           const name = {el, elChild, style}
            this.$store.dispatch('toggleTile', name)
         }
     }

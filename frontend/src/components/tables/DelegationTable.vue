@@ -1,10 +1,11 @@
 <template>
     <div class="delegations-tile">
-        <div @click="toggleTile" id="del-tile-head-1" class="delegations-tile-header">
-            <div class="delegations-tile-title">
+        <div  id="del-tile-head-1" class="delegations-tile-header">
+            <div @click.self="toggleTile" class="delegations-tile-title">
                 {{ $t("header.travelExp") }}
-                <button class="del-add-row" @click.prevent="toggleTile" @click="addRow" > dodaj wiersz </button>
+                <button class="del-add-row" @click="addRow" > dodaj wiersz </button>
             </div>
+            
             <div class="delegations-tile-underscore"></div>
             </div>
                 <div id="del-tile-content-1" class="delegations-tile-content">
@@ -264,10 +265,39 @@ export default {
 
         toggleTile() {
             let el = this.$el.lastChild,
+                elChild = el.firstChild,
                 style = window.getComputedStyle(el)
-            
-           const name = {el, style}
-           this.$store.dispatch('toggleTile', name)
+                 
+            const name = {el, elChild, style}
+            this.$store.dispatch('toggleTile', name)
+            // let height = Array.prototype.reduce.call(elChild.childNodes, function(p, c) { return p + (c.scrollHeight || 0);}, 0),
+            //     heightPlus = height + 16 + "px"
+            //     height = height + "px" 
+            // if (el.style.height === "auto") {
+            //     el.style.minHeight = heightPlus
+            //     el.style.height = heightPlus;
+            // }
+            // if (!el.style.height || el.style.height == "0px") {
+            //     elChild.height = height
+            //     el.style.minHeight = heightPlus
+            //     el.style.height = heightPlus
+            //     el.addEventListener("transitionend", function (e) {
+            //         if (e.propertyName === "height") {
+            //             this.style.height = "auto"
+            //             this.firstChild.style.minHeight = "auto"
+            //             }
+            //         el.removeEventListener("transitionend", arguments.callee)
+            //         })
+            // } else {
+            //     el.style.minHeight = "0px";
+            //     el.style.height = "0px";
+            //     elChild.height = "0px";
+            // }
+        },
+
+        removeRow() {
+            this.$el.lastChild.style.minHeight = "auto"
+            this.$store.dispatch('removeDelegationRow')
         }
     }
 }

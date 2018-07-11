@@ -229,19 +229,54 @@ const actions = {
 
   },
   toggleTile({}, element) {
-    element.el.style.display = (element.style.display === "flex") ? "none" : "flex"
 
-    },
-    countAllCosts({getters, commit, dispatch}){
-      const accCosts = getters.getAccomodationCostData,
-            otherCosts = getters.getOtherCostData,
-            trvCosts = getters.getTravelCostData,
-            advanceData = getters.getAdvanceData
+    let height;
+    if (element.elChild.className === "delegations-table-wrapper") {
+      let tableHeight = Array.prototype.reduce.call(element.elChild.firstElementChild.childNodes, function(p, c) {
+        return p + (c.offsetHeight || 0); 
+      }, 0),
+      footerHeight = Array.prototype.reduce.call(element.elChild.lastElementChild.childNodes, function(p, c) {
+        return p + (c.offsetHeight || 0)
+      }, 0)
+      height = (footerHeight + tableHeight)
+    } else {
+      height = Array.prototype.reduce.call(element.elChild.childNodes, 
+        function(p, c) { 
+          return p + (c.offsetHeight || 0);
+        }, 0)
+    }
+    height = height + 16 + "px"
+    if (!element.el.style.height || element.el.style.height == "0px") {
+        
+        element.el.style.minHeight = height
+        element.el.style.height = height
+        element.elChild.height = height
+        element.el.addEventListener("transitionend", function (e) {
+          if (e.propertyName === "height") {
+            this.style.height = "auto"
+            this.firstChild.style.minHeight = "auto"
+            element.el.style.overflow = "visible";
+          }
+          this.removeEventListener("transitionend", arguments.callee)
+        })
+        
+    } else {
+        element.el.style.minHeight = "0px";
+        element.el.style.height = "0px";
+        element.elChild.height = "0px";
+        element.el.style.overflow = "hidden";
+    }
+  },
+  countAllCosts({getters, commit, dispatch}){
+    const accCosts = getters.getAccomodationCostData,
+          otherCosts = getters.getOtherCostData,
+          trvCosts = getters.getTravelCostData,
+          advanceData = getters.getAdvanceData
  
-      for (let i =0; i<accCosts.length; i++) {dispatch('getAccCostRate', i)}
-      for (let i =0; i<otherCosts.length; i++) {dispatch('getOtherCostRate', i)}
-      for (let i =0; i<trvCosts.length; i++) {dispatch('getTravelRate', i)}
-      for (let i =0; i<advanceData.length; i++) {dispatch('getAdvanceRate', i)}
+    for (let i =0; i<accCosts.length; i++) {dispatch('getAccCostRate', i)}
+    for (let i =0; i<otherCosts.length; i++) {dispatch('getOtherCostRate', i)}
+    for (let i =0; i<trvCosts.length; i++) {dispatch('getTravelRate', i)}
+    for (let i =0; i<advanceData.length; i++) {dispatch('getAdvanceRate', i)}
     },
     countTotalCost({getters}){
       const  totalCostsInCurr = getters.getTotalCostsInCurr
