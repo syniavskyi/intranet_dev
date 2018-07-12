@@ -229,7 +229,6 @@ const actions = {
 
   },
   toggleTile({}, element) {
-
     let height;
     if (element.elChild.className === "delegations-table-wrapper") {
       let tableHeight = Array.prototype.reduce.call(element.elChild.firstElementChild.childNodes, function(p, c) {
@@ -247,26 +246,38 @@ const actions = {
     }
     height = height + 16 + "px"
     if (!element.el.style.height || element.el.style.height == "0px") {
-        
-        element.el.style.minHeight = height
         element.el.style.height = height
-        element.elChild.height = height
-        element.el.addEventListener("transitionend", function (e) {
-          if (e.propertyName === "height") {
-            this.style.height = "auto"
-            this.firstChild.style.minHeight = "auto"
-            element.el.style.overflow = "visible";
-          }
-          this.removeEventListener("transitionend", arguments.callee)
-        })
-        
+        // element.el.addEventListener("transitionend", (e) => {
+        //   if (e.propertyName === "height")
+        //   element.el.style.overflow = "visible"  
+        // })
+        // element.el.style.overflow = "visible"
     } else {
-        element.el.style.minHeight = "0px";
-        element.el.style.height = "0px";
-        element.elChild.height = "0px";
-        element.el.style.overflow = "hidden";
+        element.el.style.height = "0px"
+        element.el.style.overflow = "hidden"
     }
   },
+
+  calcHeight({}, element) {
+    let height;
+    if (element.elChild.className === "delegations-table-wrapper") {
+      let tableHeight = Array.prototype.reduce.call(element.elChild.firstElementChild.childNodes, function(p, c) {
+        return p + (c.offsetHeight || 0); 
+      }, 0),
+      footerHeight = Array.prototype.reduce.call(element.elChild.lastElementChild.childNodes, function(p, c) {
+        return p + (c.offsetHeight || 0)
+      }, 0)
+      height = (footerHeight + tableHeight)
+    } else {
+      height = Array.prototype.reduce.call(element.elChild.childNodes, 
+        function(p, c) { 
+          return p + (c.offsetHeight || 0);
+        }, 0)
+    }
+    height = height + 16 + "px"
+    return height;
+  },
+
   countAllCosts({getters, commit, dispatch}){
     const accCosts = getters.getAccomodationCostData,
           otherCosts = getters.getOtherCostData,

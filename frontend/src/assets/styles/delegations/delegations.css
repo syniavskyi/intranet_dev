@@ -103,6 +103,7 @@
 
 .delegations-tile:not(:first-of-type) .delegations-tile-header:hover {
     background: lightgray;
+    cursor: pointer;
 }
 
 .delegations-tile-title {
@@ -140,7 +141,7 @@
 
 .delegations-tile-content {
     display:flex;
-    height: 90%;
+    /* height: 90%; */
     /* max-height: 0; */
     width: 100%;
     flex-direction: column;
@@ -888,6 +889,9 @@
     .del-tbody-2 {
         flex-direction: row;
         min-height: 3rem;
+    }
+    .del-tbody-2-travel {
+        min-height: 6rem;
     }
     .del-tbody-2:nth-of-type(1) {
         background: #ccc;

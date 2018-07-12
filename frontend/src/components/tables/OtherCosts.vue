@@ -120,6 +120,11 @@ export default {
             newDelegation: 'getNewDelegation',
         })
     },
+    updated() {
+        this.$nextTick(this.calcHeight(this.$el.lastChild, this.$el.lastChild.firstChild).then(height => {
+                    this.$el.lastChild.style.height = height
+                }))  
+    },
     methods: {
         ...mapActions({
             checkOtherCostsFields: 'checkOtherCostsFields',
@@ -131,12 +136,28 @@ export default {
 
         toggleTile() {
             let el = this.$el.lastChild,
-                elChild = el.firstChild,
-                style = window.getComputedStyle(el)
-            
-           const name = {el, elChild, style}
+                elChild = el.firstChild
+           const name = {el, elChild}
            this.$store.dispatch('toggleTile', name)
+        },
+
+        calcHeight(el, elChild) {
+            const name = {el, elChild}
+            let height = this.$store.dispatch('calcHeight', name)
+            return height
+        },
+
+        addCostRow() {
+            let el = this.$el.lastChild.style.height
+            !el || el ? el = "auto" : ""
+            this.$store.dispatch('addOtherCostRow')    
+        },
+
+        removeCostRow() {
+            this.$el.lastChild.style.height = "auto"
+            this.$store.dispatch('removeOtherCostRow')
         }
+
     }
 }
 </script>

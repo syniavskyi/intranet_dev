@@ -254,6 +254,11 @@ export default {
             }
         }
     },
+    updated() {
+        this.$nextTick(this.calcHeight(this.$el.lastChild, this.$el.lastChild.firstChild).then(height => {
+                    this.$el.lastChild.style.height = height
+                }))  
+    },
     components: {VueGoogleAutocomplete },
     methods: {
         ...mapActions({
@@ -265,38 +270,25 @@ export default {
 
         toggleTile() {
             let el = this.$el.lastChild,
-                elChild = el.firstChild,
-                style = window.getComputedStyle(el)
-                 
-            const name = {el, elChild, style}
+                elChild = el.firstChild
+            const name = {el, elChild}
             this.$store.dispatch('toggleTile', name)
-            // let height = Array.prototype.reduce.call(elChild.childNodes, function(p, c) { return p + (c.scrollHeight || 0);}, 0),
-            //     heightPlus = height + 16 + "px"
-            //     height = height + "px" 
-            // if (el.style.height === "auto") {
-            //     el.style.minHeight = heightPlus
-            //     el.style.height = heightPlus;
-            // }
-            // if (!el.style.height || el.style.height == "0px") {
-            //     elChild.height = height
-            //     el.style.minHeight = heightPlus
-            //     el.style.height = heightPlus
-            //     el.addEventListener("transitionend", function (e) {
-            //         if (e.propertyName === "height") {
-            //             this.style.height = "auto"
-            //             this.firstChild.style.minHeight = "auto"
-            //             }
-            //         el.removeEventListener("transitionend", arguments.callee)
-            //         })
-            // } else {
-            //     el.style.minHeight = "0px";
-            //     el.style.height = "0px";
-            //     elChild.height = "0px";
-            // }
+        },
+
+        calcHeight(el, elChild) {
+            const name = {el, elChild}
+            let height = this.$store.dispatch('calcHeight', name)
+            return height
+        },
+
+        addRow() {
+            let el = this.$el.lastChild.style.height
+            !el || el ? el = "auto" : ""
+            this.$store.dispatch('addDelegationRow')    
         },
 
         removeRow() {
-            this.$el.lastChild.style.minHeight = "auto"
+            this.$el.lastChild.style.height = "auto"
             this.$store.dispatch('removeDelegationRow')
         }
     }
