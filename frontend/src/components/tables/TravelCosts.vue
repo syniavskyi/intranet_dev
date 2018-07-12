@@ -29,7 +29,7 @@
                         <div class="del-thead-item-cost">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                         <div class="del-thead-item-cost">przyciski</div>
                     </div>
-                    <div class="del-tbody-2" v-for="(cost, index) in travelCosts" :key="index">
+                    <div class="del-tbody-2 del-tbody-2-travel" v-for="(cost, index) in travelCosts" :key="index">
                         <div class="del-tbody2-item-cost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.docDate") }}</div>
                             <div class="del-tbody2-item-txt">
@@ -133,7 +133,7 @@
                     </div>
                 </div>
                 <div class="delegations-table-2 del-table-footer">
-                    <div class="del-tbody-2">
+                    <div class="del-tbody-2 del-tbody-2-travel">
                         <div class="del-tbody2-item-wfoot-cost"></div>
                         <div class="del-tbody2-item-cost">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                         <div class="del-tbody2-item-cost-s">{{ totalCostsInCurr.trvPayback }}</div>
@@ -174,6 +174,11 @@ export default {
             transportList: "getTransportList",
             newDelegation: "getNewDelegation"
         })
+    },
+    updated() {
+        this.$nextTick(this.calcHeight(this.$el.lastChild, this.$el.lastChild.firstChild).then(height => {
+                    this.$el.lastChild.style.height = height
+                }))  
     },
     methods: {
         ...mapActions({
@@ -231,11 +236,27 @@ export default {
 
         toggleTile() {
             let el = this.$el.lastChild,
-                elChild = el.firstChild,
-                style = window.getComputedStyle(el)
+                elChild = el.firstChild
             
-           const name = {el, elChild, style}
+           const name = {el, elChild}
            this.$store.dispatch('toggleTile', name)
+        },
+
+        calcHeight(el, elChild) {
+            const name = {el, elChild}
+            let height = this.$store.dispatch('calcHeight', name)
+            return height
+        },
+
+        addCostRow() {
+            let el = this.$el.lastChild.style.height
+            !el || el ? el = "auto" : ""
+            this.$store.dispatch('addTravelCostRow')    
+        },
+
+        removeCostRow() {
+            this.$el.lastChild.style.height = "auto"
+            this.$store.dispatch('removeTravelCostRow')
         }
 
     }
