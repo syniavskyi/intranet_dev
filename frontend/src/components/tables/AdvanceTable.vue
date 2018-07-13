@@ -47,16 +47,19 @@
                         <div class="del-tbody2-item-title">{{ $t("table.delegations.advanceAmount") }}</div>
                         <div class="del-tbody2-item-txt">
                             <input class="delegations-tinput" type="number" min="0" @input="getAdvanceRate(index)" v-model="advance.amount" /></div>
+                        <div class="del-tfoot2"></div>
                     </div>
-                    <div class="del-tfoot2"></div>
+                    
                     <div class="del-tbody2-item-adv">
                         <div class="del-tbody2-item-title"> {{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                         <div class="del-tbody2-item-txt">
                             {{advance.totalAmountCurr}}
                         </div>
+                         <div class="del-tfoot2">{{totalCostsInCurr.advance }}</div>
                     </div>
-                    <div class="del-tfoot2">{{totalCostsInCurr.advance }}</div>
+                    
                     <div class="del-tbody2-item-adv">
+                        <div class="del-tbody2-item-title"></div>
                         <div class="del-tbody2-item-txt"><button @click="removeAdvanceRow(index)"> X </button></div>
                         <div class="del-tfoot2"></div>
                     </div>
