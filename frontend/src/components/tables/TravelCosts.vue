@@ -125,6 +125,7 @@
                             </div>
                         </div>
                         <div class="del-tbody2-item-cost">
+                            <div class="del-tbody2-item-title"></div>
                             <div class="del-tbody2-item-txt">
                                 <button @click="removeCostRow(index)"> X </button>
                             </div>

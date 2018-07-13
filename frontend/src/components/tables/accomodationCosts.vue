@@ -93,6 +93,7 @@
                                         </div>
                                     </div>
                                     <div class="del-tbody2-item-scost">
+                                        <div class="del-tbody2-item-title"></div>
                                         <div class="del-tbody2-item-txt"><button @click="removeCostRow(index)"> X </button></div>
                                         <div class="del-tfoot2"></div>
                                     </div>
