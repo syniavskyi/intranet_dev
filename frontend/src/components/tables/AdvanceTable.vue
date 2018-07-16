@@ -106,6 +106,12 @@ export default {
                     this.$el.lastChild.style.height = height
                 }))  
     },
+    mounted() {
+        this.$nextTick(function() {
+            window.addEventListener('resize', this.getWindowWidth);
+            this.getWindowWidth()
+        })
+    },
     methods: {
         ...mapActions([
             'checkAdvanceFields',
@@ -136,8 +142,18 @@ export default {
         removeAdvanceRow() {
             this.$el.lastChild.style.height = "auto"
             this.$store.dispatch('removeAdvanceRow')
-        }
+        },
 
+        getWindowWidth() {
+            // this.windowWidth = document.documentElement.clientWidth
+            let el = this.$el
+            const name = {el}
+            this.$store.dispatch('checkWidthAndToggle', name)
+        }
+    },
+
+    beforeDestroy() {
+        window.removeEventListener('resize', this.getWindowWidth)
     }
 }
 </script>

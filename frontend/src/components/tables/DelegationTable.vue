@@ -259,6 +259,12 @@ export default {
                     this.$el.lastChild.style.height = height
                 }))  
     },
+    mounted() {
+        this.$nextTick(function() {
+            window.addEventListener('resize', this.getWindowWidth);
+            this.getWindowWidth()
+        })
+    },
     components: {VueGoogleAutocomplete },
     methods: {
         ...mapActions({
@@ -290,7 +296,18 @@ export default {
         removeRow() {
             this.$el.lastChild.style.height = "auto"
             this.$store.dispatch('removeDelegationRow')
+        },
+
+        getWindowWidth() {
+            this.windowWidth = document.documentElement.clientWidth
+            let el = this.$el
+            const name = {el}
+            this.$store.dispatch('checkWidthAndToggle', name)
         }
+    },
+
+    beforeDestroy() {
+        window.removeEventListener('resize', this.getWindowWidth)
     }
 }
 </script>
