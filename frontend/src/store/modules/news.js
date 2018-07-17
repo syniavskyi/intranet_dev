@@ -52,23 +52,19 @@ const mutations = {
 const actions = {
     // take location
     geoLoc({commit, state, dispatch}) {
+        let geoLocat = {}
+        //set Wrocław to default localisation
+        geoLocat.lat = 51.14
+        geoLocat.len = 16.94
         const geo = navigator.geolocation
         if(geo) {
           geo.getCurrentPosition(function(location) {
-            const geoLocat = {}
             geoLocat.lat = (location.coords.latitude.toFixed(2))
             geoLocat.len = (location.coords.longitude.toFixed(2))
-            commit('SET_LOCATION', geoLocat)
-            if(geoLocat) {
-                dispatch("getWeatherData")
-            }
           })   
         }
-        else {
-        // if not, set Wroclaw
-            geoLocat.lat = 51.14
-            geoLocat.len = 16.94
-        }
+        commit('SET_LOCATION', geoLocat)
+        dispatch("getWeatherData")
       },
     getWeatherData({commit, state}) {
         const URL2 = 'http://api.openweathermap.org/data/2.5/weather?lat='+state.geoLoca.lat+'&lon='+state.geoLoca.len+'&appid=fd3f4877eb8823c22505c4b89a434e2b&units=metric'
