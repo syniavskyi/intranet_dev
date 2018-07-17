@@ -251,10 +251,12 @@ const actions = {
         //   if (e.propertyName === "height")
         //   element.el.style.overflow = "visible"  
         // })
-        // element.el.style.overflow = "visible"
+        element.el.style.overflow = "visible"
+        element.el.style.opacity = "1"
     } else {
         element.el.style.height = "0px"
         element.el.style.overflow = "hidden"
+        element.el.style.opacity = "0";
     }
   },
 
@@ -281,21 +283,21 @@ const actions = {
   checkWidthAndToggle({}, element) {
     const x = window.matchMedia("(max-width: 64rem)"),
           z = window.matchMedia("(min-width: 64.1rem)")
-          let el = element.el.lastChild
-          if (x.matches || z.matches) {
-            if (element.el.lastChild.style.height) {
-                if (element.el.lastChild.style.height != "0px") {
-                    let elChild = element.el.lastChild.firstChild
-                    const name = {el, elChild}
-                    this.dispatch("calcHeight", name).then(height => {
-                      height = height
-                      if (element.el.lastChild.style.height != height) {
-                        this.dispatch("toggleTile", name);
-                      }
-                    })
+    let el = element.el.lastChild
+      if (x.matches || z.matches) {
+        if (element.el.lastChild.style.height) {
+          if (element.el.lastChild.style.height != "0px") {
+            let elChild = element.el.lastChild.firstChild
+            const name = {el, elChild}
+            this.dispatch("calcHeight", name).then(height => {
+              height = height
+              if (element.el.lastChild.style.height != height) {
+                  this.dispatch("toggleTile", name);
                 }
-            }
+            })
+          }
         }
+      }
   },
 
   countAllCosts({getters, commit, dispatch}){

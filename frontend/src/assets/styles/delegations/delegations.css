@@ -141,8 +141,6 @@
 
 .delegations-tile-content {
     display:flex;
-    /* height: 90%; */
-    /* max-height: 0; */
     width: 100%;
     flex-direction: column;
     align-items:center;
@@ -153,6 +151,8 @@
 .delegations-tile:not(:first-of-type) .delegations-tile-content {
     overflow: hidden;
     height: 0px;
+    animation-duration: 0.5s;
+    opacity: 0;
 }
 
 .delegations-tile-content-1 {
@@ -174,13 +174,21 @@
     margin-bottom:1rem;
 }
 /* COOOL INPUTS AND SELECT !!! */
-.delegations-div-cool {
+.delegations-div-cool,
+.delegations-div-cool-curr {
     display: flex;
-    width: 14rem;
+    /* width: 14rem; */
     flex-direction: column;
     margin-bottom: 1rem;
     position: relative;
     margin-top: 0.5rem;
+}
+
+.delegations-div-cool {
+    width: 14rem;
+}
+.delegations-div-cool-curr {
+    width: 12.5rem;
 }
 
 .delegations-div-cool-head {
@@ -201,6 +209,15 @@
     border:0;
     width: 100%;
     text-indent: 0.5rem;
+    position: relative;
+}
+
+.del-inp-curr {
+    position: absolute;
+    right: -2rem;
+    top: -.7rem;
+    font-size: 1.1rem;
+    /* border-bottom: 1px solid #333; */
 }
 
 .delegations-input-cool {
@@ -241,8 +258,6 @@
     text-indent: 5.5rem;
 }
 
-
-
 .delegations-div-bar { position:relative; display:flex; width:100%; }
     
 .delegations-div-bar:before, .delegations-div-bar:after {
@@ -268,11 +283,11 @@
 }
 
 .delegations-label-cool,
+.delegations-label-cool-s,
 .delegations-label-cool-select {
     display: flex;
     align-items: flex-end;
     color:#999; 
-    font-size:1.2rem;
     position:absolute;
     pointer-events:none;
     background-color: white;
@@ -282,11 +297,19 @@
 .delegations-label-cool {
     left:0.3rem;
     top: 0.5rem;
+    font-size:1.2rem;
+}
+
+.delegations-label-cool-s {
+    left:0.3rem;
+    top: 0.5rem;
+    font-size: 1rem;
 }
 
 .delegations-label-cool-select {
     left:0.35rem;
     top:0.35rem;
+    font-size: 1.2rem;
 }
 
 .del-p-cool {
@@ -296,7 +319,7 @@
     font-size: 1rem;
     padding:0;
     margin:0;
-    height: 2.5rem;
+    height: 2rem;
 }
 
 .delegations-input-cool:focus ~ label,
