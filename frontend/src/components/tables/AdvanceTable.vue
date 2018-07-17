@@ -104,6 +104,7 @@ export default {
     updated() {
         this.$nextTick(this.calcHeight(this.$el.lastChild, this.$el.lastChild.firstChild).then(height => {
                     this.$el.lastChild.style.height = height
+                    this.$el.lastChild.style.opacity = "1"
                 }))  
     },
     mounted() {
