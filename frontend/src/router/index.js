@@ -15,8 +15,8 @@ import Files from '@/components/content/Files'
 import Informations from '@/components/content/Informations'
 import Availability from '@/components/content/Availability'
 import StarterPage from '@/components/content/StarterPage'
+import CV from '@/components/content/CV'
 import Delegations from '@/components/content/Delegations'
-
 
 import AuthGuard from './auth-guard'
 import authGuard from './auth-guard';
@@ -93,6 +93,11 @@ export default new Router({
         path: '/delegations',
         name: 'Delegations',
         component: Delegations
+    },
+    {
+        path: '/cv',
+        name: 'CV',
+        component: CV
     }
 ],
 linkExactActiveClass: 'active-router-link'
