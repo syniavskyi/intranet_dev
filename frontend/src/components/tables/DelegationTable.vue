@@ -37,10 +37,13 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
                                             <div class="del-tbody-item">
-                                                  <vue-google-autocomplete types="geocode" required class="delegations-input-cool" placeholder="" id="firstLeavePlace" onfocus="value = ''" v-model="defaultCostsData.firstLeavePlace"></vue-google-autocomplete>
+                                                <div class="del-tbody-item-wrap">
+                                                    <vue-google-autocomplete types="geocode" required class="delegations-input-cool" placeholder="" id="firstLeavePlace" onfocus="value = ''" v-model="defaultCostsData.firstLeavePlace"></vue-google-autocomplete>
+                                                    <span class="delegations-div-bar"></span>
                                                 <!-- <select class="delegations-tselect" @change="checkDelegationTable" v-model="defaultCostsData.firstLeavePlace">
                                                     <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
                                                 </select> -->
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="del-tbody-wrap">
@@ -50,7 +53,8 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
                                             <div class="del-tbody-item">
-                                                <input class="delegations-tinput-time" type="time" v-model="defaultCostsData.firstLeaveHour" @change="countAllowance" /> </div>
+                                                <input class="delegations-tinput-time" type="time" v-model="defaultCostsData.firstLeaveHour" @change="countAllowance" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -114,10 +118,13 @@
                                         <div class="del-tbody-wrap">
                                             <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
                                             <div class="del-tbody-item">
-                                                <vue-google-autocomplete types="geocode" required class="delegations-input-cool" placeholder=""  id="secondArrivalPlace" onfocus="value = ''" @input="defaultCostsData.secondArrivalPlace = value"></vue-google-autocomplete>
+                                                <div class="del-tbody-item-wrap">
+                                                    <vue-google-autocomplete types="geocode" required class="delegations-input-cool" placeholder=""  id="secondArrivalPlace" onfocus="value = ''" @input="defaultCostsData.secondArrivalPlace = value"></vue-google-autocomplete>
+                                                    <span class="delegations-div-bar"></span>
                                                 <!-- <select class="delegations-tselect" @change="checkDelegationTable" v-model="defaultCostsData.secondArrivalPlace">
                                                     <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
                                                 </select> -->
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="del-tbody-wrap">

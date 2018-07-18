@@ -42,14 +42,20 @@
                         <div class="del-tbody2-item-cost-w">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.company") }}</div>
                             <div class="del-tbody2-item-txt">
-                                <input class="delegations-tinput" @input="checkTravelFields" v-model="cost.company" />
+                                <div class="del-tbody-item-wrap">
+                                    <input class="delegations-tinput" @input="checkTravelFields" v-model="cost.company" />
+                                    <span class="delegations-div-bar"></span>
+                                </div>
                             </div>
                             <div class="del-tfoot2"></div>
                         </div>
                         <div class="del-tbody2-item-cost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.docNo") }}</div>
                             <div class="del-tbody2-item-txt">
-                                <input class="delegations-tinput" @input="checkTravelFields" v-model="cost.docNo" />
+                                <div class="del-tbody-item-wrap">
+                                    <input class="delegations-tinput" @input="checkTravelFields" v-model="cost.docNo" />
+                                    <span class="delegations-div-bar"></span>
+                                </div>
                             </div>
                             <div class="del-tfoot2">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                         </div>
@@ -95,7 +101,10 @@
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.kilometers") }}?</div>
                             <div class="del-tbody2-item-txt">
                                 <!-- class="delegations-tinput-s-disabled" :disabled="hideKilometers" -->
-                                <input :disabled="disableKilometers(cost)" :class="[{ 'delegations-tinput-s-disabled': disableKilometers(cost) },  'delegations-tinput-s']" type="number" @change="updateTravelCosts" v-model="cost.kilometers" />
+                                <div class="del-tbody-item-wrap">
+                                    <input :disabled="disableKilometers(cost)" :class="[{ 'delegations-tinput-s-disabled': disableKilometers(cost) },  'delegations-tinput-s']" type="number" @change="updateTravelCosts" v-model="cost.kilometers" />
+                                    <span class="delegations-div-bar"></span>
+                                </div>
                             </div>
                             <div class="del-tfoot2"></div>
                         </div>
@@ -112,7 +121,10 @@
                         <div class="del-tbody2-item-cost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }}</div>
                             <div class="del-tbody2-item-txt">
-                                <input :disabled="disableCostAmount(cost)" :class="[{ 'delegations-tinput-s-disabled': disableCostAmount(cost) },  'delegations-tinput-s']" type="number" min="0" @input="updateTravelCosts" v-model="cost.amount" />
+                                <div class="del-tbody-item-wrap">
+                                    <input :disabled="disableCostAmount(cost)" :class="[{ 'delegations-tinput-s-disabled': disableCostAmount(cost) },  'delegations-tinput-s']" type="number" min="0" @input="updateTravelCosts" v-model="cost.amount" />
+                                    <span class="delegations-div-bar"></span>
+                                </div>
                             </div>
                             <div class="del-tfoot2"></div>
                         </div>
