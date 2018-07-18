@@ -29,8 +29,6 @@
                         <div class="delegations-inputs-section">
                             <div class="delegations-div-unders">
                                 <div class="del-underscore">1</div>
-                                <!-- <p class="del-div-p" style="display:none;">Zaliczki</p>
-                                <div class="del-underscore" style="display:none;"></div> -->
                             </div>
                             <div class="delegations-div-cool">
                                 <input required class="delegations-input-cool" ref="autocomplete" placeholder=""  onfocus="value = ''" v-model="newDelegation.destination" @input="checkNewDelegation" />
