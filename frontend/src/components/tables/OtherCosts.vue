@@ -59,7 +59,10 @@
                                     <div class="del-tbody2-item-scost">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.return") }}?</div>
                                         <div class="del-tbody2-item-txt">
-                                            <input type="checkbox" @change="updateOtherCosts" v-model="cost.payback" />
+                                            <label class="checkbox-wrap">
+                                                <input type="checkbox" @change="updateOtherCosts" v-model="cost.payback" />
+                                                <div class="checkbox-in"></div>
+                                            </label>
                                         </div>
                                         <div class="del-tfoot2">{{ totalCostsInCurr.othPayback }}</div>
                                     </div>
