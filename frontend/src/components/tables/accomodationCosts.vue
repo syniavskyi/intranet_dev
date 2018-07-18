@@ -50,14 +50,20 @@
                                     <div class="del-tbody2-item-scost">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.company") }}</div>
                                         <div class="del-tbody2-item-txt">
-                                            <input :disabled="hideAccFields(cost)" :class="[{ 'delegations-tinput-disabled': hideAccFields(cost) },  'delegations-tinput']" @input="checkAccomodationFields" v-model="cost.company" />
+                                            <div class="del-tbody-item-wrap">
+                                                <input :disabled="hideAccFields(cost)" :class="[{ 'delegations-tinput-disabled': hideAccFields(cost) },  'delegations-tinput']" @input="checkAccomodationFields" v-model="cost.company" />
+                                                <span class="delegations-div-bar"></span>
+                                            </div>
                                         </div>
                                         <div class="del-tfoot2"></div>
                                     </div>
                                     <div class="del-tbody2-item-scost">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.docNo") }}</div>
                                         <div class="del-tbody2-item-txt">
-                                            <input :disabled="hideAccFields(cost)" :class="[{ 'delegations-tinput-disabled': hideAccFields(cost) },  'delegations-tinput']" @input="checkAccomodationFields" v-model="cost.docNo" /> 
+                                            <div class="del-tbody-item-wrap">
+                                                <input :disabled="hideAccFields(cost)" :class="[{ 'delegations-tinput-disabled': hideAccFields(cost) },  'delegations-tinput']" @input="checkAccomodationFields" v-model="cost.docNo" /> 
+                                                <span class="delegations-div-bar"></span>
+                                            </div>
                                         </div>
                                         <div class="del-tfoot2">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                                     </div>
@@ -81,7 +87,11 @@
                                     <div class="del-tbody2-item-scost">
                                         <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }} </div>
                                         <div class="del-tbody2-item-txt">
-                                             <input :disabled="hideAccFields(cost)" :class="[{ 'delegations-tinput-disabled': hideAccFields(cost) },  'delegations-tinput']" type="number" min="0" @change="getAccCostRate(index)" v-model="cost.amount" /></div>
+                                            <div class="del-tbody-item-wrap">
+                                                <input :disabled="hideAccFields(cost)" :class="[{ 'delegations-tinput-disabled': hideAccFields(cost) },  'delegations-tinput']" type="number" min="0" @change="getAccCostRate(index)" v-model="cost.amount" />
+                                                <span class="delegations-div-bar"></span>
+                                            </div>
+                                        </div>
                                         <div class="del-tfoot2"></div>
                                     </div>
                                     
