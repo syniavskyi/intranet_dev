@@ -32,7 +32,7 @@
                                         </label>
                                     <!-- </div> -->
                                     <div class="del-div-tcool">
-                                        <input required class="delegations-tinput-s" v-show="hideAccFields(cost)" v-model="cost.flatRateDays" @input="countAccFlatRate(index)"/>
+                                        <input required class="delegations-tinput-s del-tinput-sfont" v-show="hideAccFields(cost)" v-model="cost.flatRateDays" @input="countAccFlatRate(index)"/>
                                         <span class="delegations-div-bar"></span>
                                         <label class="delegations-tlabel-cool" v-show="hideAccFields(cost)">{{ $t("table.delegations.days") }}</label>
                                     </div>
@@ -42,7 +42,7 @@
                             <div class="del-tbody2-item-scost">
                                 <div class="del-tbody2-item-title">{{ $t("table.delegations.docDate") }}</div>
                                 <div class="del-tbody2-item-txt">
-                                    <v-date-picker  :class="[{ 'delegations-tinput-date-disabled': hideAccFields(cost) },  'delegations-tinput-date']"  mode="single" @input="getAccCostRate(index)" v-model="cost.docDate">
+                                    <v-date-picker popover-direction="top" :class="[{ 'delegations-tinput-date-disabled': hideAccFields(cost) },  'delegations-tinput-date']"  mode="single" @input="getAccCostRate(index)" v-model="cost.docDate">
                                         <input :disabled="hideAccFields(cost)" value="accomodationCosts[index].docDate" />
                                     </v-date-picker>
                                 </div>
@@ -114,7 +114,7 @@
                     </div>
                     <div class="delegations-table-2 del-table-footer">
                         <div class="del-tbody-2">
-                            <div class="del-tbody2-item-wfoot-scost"></div>
+                            <div class="del-tbody2-item-xwfoot-scost"></div>
                             <div class="del-tbody2-item-scost">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                             <div class="del-tbody2-item-scost">{{ totalCostsInCurr.accPayback }}</div>
                             <div class="del-tbody2-item-scost">---</div>

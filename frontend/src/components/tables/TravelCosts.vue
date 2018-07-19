@@ -75,8 +75,11 @@
                                 <select class="delegations-tselect" :id="index" v-model="cost.transport" @change="setFieldsValues(cost)">
                                     <option v-for="transport in transportList" :key="transport.id" :value="transport.id">{{ transport.name }}</option>
                                 </select>
-                                <p class="table-p">{{ $t("label.registrationNo") }}</p>
-                                <input :disabled="hideLicencePlateNo(cost)" :class="[{ 'delegations-tinput-disabled': hideLicencePlateNo(cost) },  'delegations-tinput']" @change="checkTravelFields" v-model="cost.licencePlateNo" />
+                                <div class="del-div-tcool">
+                                    <input required :disabled="hideLicencePlateNo(cost)" :class="[{ 'delegations-tinput-disabled': hideLicencePlateNo(cost) },  'delegations-tinput', 'del-tinput-sfont']" @change="checkTravelFields" v-model="cost.licencePlateNo" />
+                                    <span class="delegations-div-bar"></span>
+                                    <label class="delegations-tlabel-cool">{{ $t("label.registrationNo") }}</label>
+                                </div>
                             </div>
                             <div class="del-tfoot2"></div>
                         </div>
