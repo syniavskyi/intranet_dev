@@ -186,7 +186,8 @@
     align-items: center;
     position: relative;
     width: 6rem;
-    margin-top: .8rem;
+    margin-top: .9rem;
+
 }
 .delegations-div-unders {
     display:flex;
@@ -382,8 +383,6 @@
 .delegations-input-cool:focus ~ label,
 .delegations-select-cool:focus ~ label,
 .delegations-input-cool:valid ~ label,
-.delegations-tinput-s:focus ~ label,
-.delegations-tinput-s:valid ~ label,
 .delegations-dinput-cool ~ label,
 .delegations-input-date ~ label,
 .delegations-dinput-date ~ label,
@@ -392,6 +391,16 @@
 .del-p-cool ~ label {
     top: -.65rem;
     font-size: 1rem;
+    color: rgb(255, 145, 0);
+    padding: 0 .2rem;
+}
+
+.delegations-tinput-s:focus ~ label,
+.delegations-tinput-s:valid ~ label,
+.delegations-tinput:focus ~ label,
+.delegations-tinput:valid ~ label {
+    top: -.7rem;
+    font-size: .9rem;
     color: rgb(255, 145, 0);
     padding: 0 .2rem;
 }
@@ -539,6 +548,9 @@
     text-align: center;
     position: relative;
 }
+.del-tinput-sfont {
+    font-size: 0.95rem;
+}
 .delegations-tinput-disabled,
 .delegations-tinput-w-disabled,
 .delegations-tinput-s-disabled {
@@ -553,7 +565,7 @@
 }
 .delegations-tinput,
 .delegations-tinput-disabled {
-    width: 6.7rem;
+    width: 6rem;
 }
 .delegations-tinput-w,
 .delegations-tinput-w-disabled {
@@ -877,6 +889,10 @@
 }
 .del-tbody2-item-wfoot-adv {
     width: 40%;
+}
+.del-tbody2-item-xwfoot-scost {
+    display: flex;
+    width: 37.5%;
 }
 .del-tbody2-item-wfoot-scost {
     display:flex;
