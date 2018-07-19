@@ -26,7 +26,20 @@ body {
     /* width: 100%; */
     height: 100%;
 }
-
+.modal {
+    width: 90%;
+    top: 1%;
+    left: 5%;
+    position: absolute;
+}
+.modal-event {
+    height: auto;
+}
+.modal-email{
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+}
 .calendar-header {
     display: flex;
     width: 95%;
@@ -75,6 +88,77 @@ body {
     box-shadow: 0 0 10px grey;
 }
 
+.department {
+    /* border: 3px solid #347582; */
+    width: 12rem;
+    position: absolute;
+    right: 2rem;
+    bottom: 2rem;
+    box-shadow: 0 0 4px;
+    background-color: white;
+    padding: .2rem;
+}
+
+.privacy-button {
+    background-color: white;
+    border: none;
+    color: inherit;
+    /* box-shadow: 0 0 4px rgba(255, 233, 207, 0.082); */
+    border: .7px solid grey;
+    padding: .4rem .6rem;
+    margin: .2rem;
+    width: 13rem;
+}
+.privacy-button:hover,
+.privacy-button:focus,
+.save-button:hover {
+   cursor: pointer;
+   outline: none;
+   box-shadow: 0 0 2px rgb(241, 153, 51);
+   border: .7px solid white;
+   padding: .4rem .6rem;
+   margin: .2rem;
+}
+
+ .input-active:focus {
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 0 2px rgb(241, 153, 51);
+    
+} 
+.input-event{
+    margin: 0;
+}
+.save-button {
+    position: absolute;
+    right: .4rem;
+    bottom: .4rem;
+    background-color: white;
+    border: none;
+    box-shadow: 0 0 4px rgb(173, 168, 163);
+}
+.event-feature{
+    display: flex;
+    flex-direction: column;
+     margin: 1rem 0 1rem 0;
+     /* display: flex; */
+     justify-content: space-between;
+     
+}
+.event-select, 
+.modal-input {
+    width: 13rem;
+}
+.input {
+    padding: 0;
+}
+.event-visibility {
+    width: 20rem;
+    display: flex;
+    flex-direction: row;
+    width: 10rem;
+}
+
 @media (min-width: 44rem) {
     .calendar-header-menu {
         display: none;
@@ -82,4 +166,42 @@ body {
     .calendar-content {
         width:80%;
     }
+    .modal {
+        width: 50%;
+        top: 15%;
+        left: 17%;
+    }
+    .event-feature {
+        display: flex;
+        flex-direction: row;
+    }
+    
+}
+@media (min-width: 85rem) {
+    .modal {
+        width: 40%;
+        /* top: 15%;
+        left: 17%; */
+    }
+    .event-feature {
+        margin: 1rem 0 1rem 0;
+        display: flex;
+        justify-content: space-between;
+        width: 28rem;
+        flex-direction: row;
+    }
+    .event-visibility {
+        width: 20rem;
+    }
+    .modal-email{
+        display: flex;
+        flex-direction: column;
+        width: 75%;
+    }
+    .event-select, 
+    .modal-input,
+    .privacy-button {
+        width: 15rem;
+    }
+    
 }

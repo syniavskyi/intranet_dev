@@ -38,29 +38,83 @@
                 <div class="backdrop" v-if="dialogEvent"></div>
               </transition>
               <transition name="slide">
-                <div class="modal" v-if="dialogEvent">
+                <div class="modal modal-event" v-if="dialogEvent">
                   <div class="modal-header">
                     <h1 class="modal-title">{{ $t("header.addNewEvent") }}</h1>
                     <button class="modal-exit" @click="performDialog">&#10006;</button>
                   </div>
                   <div class="modal-email">
-                    <label class="modal-label">{{ $t("label.eventTitle") }}</label>
-                    <input class="input modal-input" v-model="eventName" @blur="$v.eventName.$touch()">
-                    <label class="modal-label">{{ $t("label.eventTime") }}</label>
-                    <input class="modal-input" type="time" v-model="eventTime" @blur="$v.eventTime.$touch()">
-                    <label class="modal-label">{{ $t("label.eventDescription") }}</label>
-                    <input class="input modal-input" v-model="eventDescription">
+                    <div class="event-feature">
+                        <label class="modal-label">{{ $t("label.eventTitle") }}</label>
+                        <input class="input modal-input input-event" v-model="eventName" @blur="$v.eventName.$touch()">
+                    </div>
+                   <div class="event-feature">
+                      <label class="modal-label">{{ $t("label.eventTime") }}</label>
+                        <input class="modal-input input-active" type="time" v-model="eventTime" @blur="$v.eventTime.$touch()">
+                  </div>
+                  <div class="event-feature">
+                     <label class="modal-label">{{ $t("label.eventDescription") }}</label>
+                     <input class="input modal-input input-event" v-model="eventDescription">
+                  </div>
+                  <div class="event-feature">
                     <label class="modal-label">{{ $t("label.priority") }}</label>
-                    <select @change="checkPriority" v-model="priority" @blur="$v.priority.$touch()">
+                    <select class="event-select" @change="checkPriority" v-model="priority" @blur="$v.priority.$touch()">
                       <option>Wysoki</option>
                       <option>Średni</option>
                       <option>Niski</option>
                     </select>
+                    </div>
+                    <div class="event-feature">
                     <label class="modal-label">Typ wydarzenia</label>
-                    <select v-model="eventType" @blur="$v.eventType.$touch()">
+                    <select class="event-select" v-model="eventType" @blur="$v.eventType.$touch()">
                       <option>Szkolenie</option>
                       <option>Impreza integracyjna</option>
                     </select>
+                    </div>
+                     <div class="event-feature">
+                    <label class="modal-label">{{ $t("label.targetGroup") }}</label>
+                    <button class="privacy-button" type="button" @click="isSelected = !isSelected">Wybierz</button>
+                    </div>
+                    <div class="department" v-if="isSelected">
+                    <!-- <select multiple="true" >
+                     <option>Wysoki</option>
+                      <option>Średni</option>
+                      <option>Niski</option>
+                    </select> -->
+
+<input  type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+  <label for="jack">Jack</label>
+  <br>
+    <br>
+  <input type="checkbox" id="john" value="John" v-model="checkedNames">
+  <label for="john">John</label>
+  <br>
+    <br>
+  <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+  <label for="mike">Mike</label>
+  <br>
+    <br>
+  <input type="checkbox" id="jacek" value="Jack" v-model="checkedNames">
+  <label for="jacek">Jacek</label>
+  <br>
+    <br>
+  <input type="checkbox" id="johns" value="John" v-model="checkedNames">
+  <label for="johns">Johns</label>
+  <br>
+    <br>
+  <input type="checkbox" id="mikel" value="Mike" v-model="checkedNames">
+  <label for="mikel">Mike</label>
+
+                    <button class="save-button" type="button" @click="isSelected = !isSelected">Wróć</button>
+                    </div>
+                    <div class="event-feature event-visibility">
+                    <label class="modal-label">{{ $t("label.visibility") }}</label>
+                    <input type="radio" id="prv" value="priv" v-model="privacy">
+                    <label for="prv">Private</label>
+                    <input type="radio" id="pbl" value="public" v-model="privacy">
+                    <label for="pbl">Public</label>         
+                  <!--  <option v-for="department in departments" :value="department"></option> -->
+                  </div>
                   </div>
                   <button class="button modal-button" :disabled="$v.$invalid" type="button" @click="addNewEvent"><span class="span-arrow">{{ $t("button.addEvent") }}</span></button>
                 </div>
@@ -111,7 +165,15 @@ export default {
       eventTime: null,
       eventName: '',
       eventType: '',
-      priority: ''
+      priority: '',
+      visibility: '',
+      targetGroup: '',
+      branch: {},
+      departments: ['fiori', 'abap'],
+      employee: {},
+      isSelected: false,
+      privacy: ''
+
       // attributes: [
       //   {
       //     highlight({ onStart }) {
