@@ -37,7 +37,7 @@
                                         <label class="delegations-tlabel-cool" v-show="hideAccFields(cost)">{{ $t("table.delegations.days") }}</label>
                                     </div>
                                 </div>
-                                <div class="del-tfoot2"></div>
+                                <div class="del-tfoot2">&nbsp;</div>
                             </div>
                             <div class="del-tbody2-item-scost">
                                 <div class="del-tbody2-item-title">{{ $t("table.delegations.docDate") }}</div>
@@ -46,7 +46,7 @@
                                         <input :disabled="hideAccFields(cost)" value="accomodationCosts[index].docDate" />
                                     </v-date-picker>
                                 </div>
-                                <div class="del-tfoot2"></div>
+                                <div class="del-tfoot2">&nbsp;</div>
                             </div>
                             <div class="del-tbody2-item-scost">
                                 <div class="del-tbody2-item-title">{{ $t("table.delegations.company") }}</div>
@@ -56,7 +56,7 @@
                                         <span class="delegations-div-bar"></span>
                                     </div>
                                 </div>
-                                <div class="del-tfoot2"></div>
+                                <div class="del-tfoot2">&nbsp;</div>
                             </div>
                             <div class="del-tbody2-item-scost">
                                 <div class="del-tbody2-item-title">{{ $t("table.delegations.docNo") }}</div>
@@ -96,7 +96,7 @@
                                         <span class="delegations-div-bar"></span>
                                     </div>
                                 </div>
-                                <div class="del-tfoot2"></div>
+                                <div class="del-tfoot2">&nbsp;</div>
                             </div>
                             <div class="del-tbody2-item-scost">
                                 <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
@@ -107,8 +107,8 @@
                             </div>
                             <div class="del-tbody2-item-scost">
                                 <div class="del-tbody2-item-title"></div>
-                                <div class="del-tbody2-item-txt"><button @click="removeCostRow(index)"> X </button></div>
-                                <div class="del-tfoot2"></div>
+                                <div class="del-tbody2-item-txt"><button class="del-add-row" @click="removeCostRow(index)"> usuń </button></div>
+                                <div class="del-tfoot2">&nbsp;</div>
                             </div>
                         </div>
                     </div>
