@@ -27,9 +27,8 @@
                     </div>
                     <div class="delegations-tile-content delegations-tile-content-1">
                         <div class="delegations-inputs-section">
-                            <div class="delegations-div-cool">    
-                                <p class="del-p-cool"> {{ setDelegationNo() }} </p>
-                                <label class="delegations-label-cool">{{ $t("label.delegationNo") }} </label>
+                            <div class="delegations-div-unders">
+                                <div class="del-underscore">1</div>
                             </div>
                             <div class="delegations-div-cool">
                                 <input required class="delegations-input-cool" ref="autocomplete" placeholder=""  onfocus="value = ''" v-model="newDelegation.destination" @input="checkNewDelegation" />
@@ -55,6 +54,12 @@
                             </div>
                         </div>
                         <div class="delegations-inputs-section">
+                            
+                            <div class="delegations-div-cool">    
+                                <p class="del-p-cool"> DJA/0203/2018  </p>
+                                <!-- {{ setDelegationNo() }} -->
+                                <label class="delegations-label-cool">{{ $t("label.delegationNo") }} </label>
+                            </div>
                             <div class="delegations-div-cool">
                                 <select required class="delegations-select-cool" v-model="newDelegation.currency" @change="countAllCosts">
                                     <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
@@ -78,6 +83,11 @@
                             </div>
                         </div>
                         <div class="delegations-inputs-section">
+                            <div class="delegations-div-unders">
+                                <div class="del-underscore">3</div>
+                                <!-- <p class="del-div-p" style="display:none;">Sumaryczne</p>
+                                <div class="del-underscore"></div> -->
+                            </div>
                             <div class="delegations-div-cool">
                                 <p class="del-p-cool">{{ newDelegation.hours }}</p>
                                 <label class="delegations-label-cool">{{ $t("label.hoursInDelegation") }} </label>

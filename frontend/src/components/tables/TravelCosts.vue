@@ -42,21 +42,30 @@
                         <div class="del-tbody2-item-cost-w">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.company") }}</div>
                             <div class="del-tbody2-item-txt">
-                                <input class="delegations-tinput" @input="checkTravelFields" v-model="cost.company" />
+                                <div class="del-tbody-item-wrap">
+                                    <input class="delegations-tinput" @input="checkTravelFields" v-model="cost.company" />
+                                    <span class="delegations-div-bar"></span>
+                                </div>
                             </div>
                             <div class="del-tfoot2"></div>
                         </div>
                         <div class="del-tbody2-item-cost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.docNo") }}</div>
                             <div class="del-tbody2-item-txt">
-                                <input class="delegations-tinput" @input="checkTravelFields" v-model="cost.docNo" />
+                                <div class="del-tbody-item-wrap">
+                                    <input class="delegations-tinput" @input="checkTravelFields" v-model="cost.docNo" />
+                                    <span class="delegations-div-bar"></span>
+                                </div>
                             </div>
                             <div class="del-tfoot2">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                         </div>
                         <div class="del-tbody2-item-cost-s">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.return") }}?</div>
                             <div class="del-tbody2-item-txt">
-                                <input type="checkbox" @change="updateTravelCosts" v-model="cost.payback" />
+                                <label class="checkbox-wrap">
+                                    <input type="checkbox" class="checkbox-new" @change="updateTravelCosts" v-model="cost.payback" />
+                                    <div class="checkbox-in"></div>
+                                </label>
                             </div>
                             <div class="del-tfoot2-s">{{ totalCostsInCurr.trvPayback }}</div>
                         </div>
@@ -66,8 +75,11 @@
                                 <select class="delegations-tselect" :id="index" v-model="cost.transport" @change="setFieldsValues(cost)">
                                     <option v-for="transport in transportList" :key="transport.id" :value="transport.id">{{ transport.name }}</option>
                                 </select>
-                                <p class="table-p">{{ $t("label.registrationNo") }}</p>
-                                <input :disabled="hideLicencePlateNo(cost)" :class="[{ 'delegations-tinput-disabled': hideLicencePlateNo(cost) },  'delegations-tinput']" @change="checkTravelFields" v-model="cost.licencePlateNo" />
+                                <div class="del-div-tcool">
+                                    <input required :disabled="hideLicencePlateNo(cost)" :class="[{ 'delegations-tinput-disabled': hideLicencePlateNo(cost) },  'delegations-tinput', 'del-tinput-sfont']" @change="checkTravelFields" v-model="cost.licencePlateNo" />
+                                    <span class="delegations-div-bar"></span>
+                                    <label class="delegations-tlabel-cool">{{ $t("label.registrationNo") }}</label>
+                                </div>
                             </div>
                             <div class="del-tfoot2"></div>
                         </div>
@@ -95,7 +107,10 @@
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.kilometers") }}?</div>
                             <div class="del-tbody2-item-txt">
                                 <!-- class="delegations-tinput-s-disabled" :disabled="hideKilometers" -->
-                                <input :disabled="disableKilometers(cost)" :class="[{ 'delegations-tinput-s-disabled': disableKilometers(cost) },  'delegations-tinput-s']" type="number" @change="updateTravelCosts" v-model="cost.kilometers" />
+                                <div class="del-tbody-item-wrap">
+                                    <input :disabled="disableKilometers(cost)" :class="[{ 'delegations-tinput-s-disabled': disableKilometers(cost) },  'delegations-tinput-s']" type="number" @change="updateTravelCosts" v-model="cost.kilometers" />
+                                    <span class="delegations-div-bar"></span>
+                                </div>
                             </div>
                             <div class="del-tfoot2"></div>
                         </div>
@@ -112,7 +127,10 @@
                         <div class="del-tbody2-item-cost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }}</div>
                             <div class="del-tbody2-item-txt">
-                                <input :disabled="disableCostAmount(cost)" :class="[{ 'delegations-tinput-s-disabled': disableCostAmount(cost) },  'delegations-tinput-s']" type="number" min="0" @input="updateTravelCosts" v-model="cost.amount" />
+                                <div class="del-tbody-item-wrap">
+                                    <input :disabled="disableCostAmount(cost)" :class="[{ 'delegations-tinput-s-disabled': disableCostAmount(cost) },  'delegations-tinput-s']" type="number" min="0" @input="updateTravelCosts" v-model="cost.amount" />
+                                    <span class="delegations-div-bar"></span>
+                                </div>
                             </div>
                             <div class="del-tfoot2"></div>
                         </div>
@@ -177,10 +195,10 @@ export default {
         })
     },
     updated() {
-        this.$nextTick(this.calcHeight(this.$el.lastChild, this.$el.lastChild.firstChild).then(height => {
+        this.$nextTick(() => {this.calcHeight(this.$el.lastChild, this.$el.lastChild.firstChild).then(height => {
                     this.$el.lastChild.style.height = height
                     this.$el.lastChild.style.opacity = "1"
-                }))  
+                })})  
     },
     mounted() {
         this.$nextTick(function() {

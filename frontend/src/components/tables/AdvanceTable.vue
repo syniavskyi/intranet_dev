@@ -46,7 +46,11 @@
                     <div class="del-tbody2-item-adv">
                         <div class="del-tbody2-item-title">{{ $t("table.delegations.advanceAmount") }}</div>
                         <div class="del-tbody2-item-txt">
-                            <input class="delegations-tinput" type="number" min="0" @input="getAdvanceRate(index)" v-model="advance.amount" /></div>
+                            <div class="del-tbody-item-wrap">
+                                <input class="delegations-tinput" type="number" min="0" @input="getAdvanceRate(index)" v-model="advance.amount" />
+                                <span class="delegations-div-bar"></span>
+                            </div>
+                        </div>
                         <div class="del-tfoot2"></div>
                     </div>
                     
@@ -102,10 +106,10 @@ export default {
         })
     },
     updated() {
-        this.$nextTick(this.calcHeight(this.$el.lastChild, this.$el.lastChild.firstChild).then(height => {
+        this.$nextTick(() => {this.calcHeight(this.$el.lastChild, this.$el.lastChild.firstChild).then(height => {
                     this.$el.lastChild.style.height = height
                     this.$el.lastChild.style.opacity = "1"
-                }))  
+                })})  
     },
     mounted() {
         this.$nextTick(function() {
