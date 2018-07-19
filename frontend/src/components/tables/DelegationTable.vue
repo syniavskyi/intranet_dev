@@ -3,7 +3,7 @@
         <div  id="del-tile-head-1" class="delegations-tile-header">
             <div @click.self="toggleTile" class="delegations-tile-title">
                 {{ $t("header.travelExp") }}
-                <button class="del-add-row" @click="addRow" > dodaj wiersz </button>
+                <button class="del-add-row" @click="addRow">dodaj wiersz</button>
             </div>
             <div class="delegations-tile-underscore"></div>
         </div>
@@ -80,14 +80,6 @@
                         <div class="del-tbody-title">przyciski</div>
                         <div class="del-tbody-col"></div>
                     </div>
-                    <!-- <div class="del-tbody-cols">
-                        <div class="del-tbody-title">przyciski</div>
-                        <div class="del-tbody-col"></div>
-                    </div>
-                    <div class="del-tbody-cols">
-                        <div class="del-tbody-title">przyciski</div>
-                        <div class="del-tbody-col"></div>
-                    </div> -->
                 </div>
                 <!-- second default row  -->
                 <div class="del-tbody-1">
@@ -140,14 +132,6 @@
                         <div class="del-tbody-title">przyciski</div>
                         <div class="del-tbody-col"></div>
                     </div>
-                    <!-- <div class="del-tbody-cols">
-                        <div class="del-tbody-title">przyciski</div>
-                        <div class="del-tbody-col"></div>
-                    </div>
-                    <div class="del-tbody-cols">
-                        <div class="del-tbody-title">przyciski</div>
-                        <div class="del-tbody-col"></div>
-                    </div> -->
                 </div>
                 <!-- rows that are added -->
                 <div class="del-tbody-1" v-for="(cost, index) in customCosts" :key="index">
@@ -206,21 +190,10 @@
                         <div class="del-tbody-title">przyciski</div>
                         <div class="del-tbody-col"><button @click="removeRow(index)"> X </button></div>
                     </div>
-                    <!-- <div class="del-tbody-cols">
-                        <div class="del-tbody-title">przyciski</div>
-                        <div class="del-tbody-col"><button @click="removeRow(index)"> X </button></div>
-                    </div>
-                    <div class="del-tbody-cols">
-                        <div class="del-tbody-title">przyciski</div>
-                        <div class="del-tbody-col"><button @click="removeRow(index)"> X </button></div>
-                    </div> -->
                 </div>
             </div>
         </div>  
-                    <!--  -->
-        <!-- </div> -->
-    </div>
-            
+    </div>    
 </template>
 <script>
 import VueGoogleAutocomplete from 'vue-google-autocomplete'

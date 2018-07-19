@@ -31,8 +31,8 @@
                                             <div class="checkbox-in"></div>
                                         </label>
                                     <!-- </div> -->
-                                    <div class="del-div-tcool">
-                                        <input required class="delegations-tinput-s del-tinput-sfont" v-show="hideAccFields(cost)" v-model="cost.flatRateDays" @input="countAccFlatRate(index)"/>
+                                    <div class="del-div-tcool" v-show="hideAccFields(cost)">
+                                        <input required class="delegations-tinput-s del-tinput-sfont"  v-model="cost.flatRateDays" @input="countAccFlatRate(index)"/>
                                         <span class="delegations-div-bar"></span>
                                         <label class="delegations-tlabel-cool" v-show="hideAccFields(cost)">{{ $t("table.delegations.days") }}</label>
                                     </div>

@@ -361,7 +361,7 @@
 .delegations-label-cool-s {
     left:0.3rem;
     top: 0.5rem;
-    font-size: 1rem;
+    font-size: .95rem;
 }
 
 .delegations-label-cool-select {
@@ -384,6 +384,8 @@
 .delegations-select-cool:focus ~ label,
 .delegations-input-cool:valid ~ label,
 .delegations-dinput-cool ~ label,
+.delegations-input-cool-s:valid ~ label,
+.delegations-input-cool-s:focus ~ label,
 .delegations-input-date ~ label,
 .delegations-dinput-date ~ label,
 .delegations-select-cool:valid ~ label,
@@ -410,6 +412,7 @@
 }
 
 .delegations-input-cool:focus,
+.delegations-input-cool-s:focus,
 .delegations-dinput-cool:focus,
 .delegations-tinput-s:focus {
     outline: none;
@@ -509,7 +512,7 @@
     background: white;
     height: 1.8rem;
     border: 1px solid rgba(211, 211, 211, 0.5);
-    color: black;
+    color: #ccc;
     border-radius: 3px;
     /* appearance: none; */
     -webkit-appearance: none; 
@@ -550,6 +553,7 @@
 }
 .del-tinput-sfont {
     font-size: 0.95rem;
+    text-transform: uppercase;
 }
 .delegations-tinput-disabled,
 .delegations-tinput-w-disabled,
@@ -559,6 +563,7 @@
     width: 6.7rem;
     height: 1.5rem;
     font-size: 1.2rem;
+    color: #ccc;
     background: transparent;
     border: 0;
     text-align: center;
@@ -861,8 +866,10 @@
     display: flex;
     width: 100%;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    justify-content: stretch;
+    /* align-items: center; */
+    align-items: stretch;
     text-align: center;
 }
 
@@ -911,7 +918,6 @@
     align-items: center; 
     text-align: center;
     background: #ccc;
-    height: 100%;
     line-height: 2rem;
 }
 .del-tbody2-item-txt {
@@ -920,8 +926,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    /* justify-content: space-around; */
-    height: 100%;
     border-bottom:1px solid #e3e3e3;
     /* line-height: 2rem; */
 }
@@ -941,6 +945,12 @@
     background: #ccc; 
     height: 100%;
     line-height: 2rem;
+}
+
+.del-tfoot2 p ,
+.del-tfoot2-s p {
+    padding: 0;
+    margin: 0;
 }
 
 .del-tfoot2 {
@@ -993,6 +1003,8 @@
     .del-tbody2-item-scost {
         display: flex;
         width: 12.5%;
+        align-items: center;
+        justify-content: center;
     }
     .del-tfoot2-s {
         width: 5%;

@@ -1,19 +1,13 @@
 <template>
-<div class="delegations-tile" refs="travelCosts">
-    <!-- <input id="delegations-row-3" class="documents-tiles-row-header-input" type="checkbox">
-    <label class="delegations-tiles-row-header" for="delegations-row-3"> -->
-            <div  class="delegations-tile-header">
+    <div class="delegations-tile" refs="travelCosts">
+        <div  class="delegations-tile-header">
             <div v-on:click.self="toggleTile" class="delegations-tile-title">
                 {{ $t("header.travelCosts") }}
                 <button class="del-add-row"  @click="addCostRow"> dodaj wiersz </button>
             </div>
             <div class="delegations-tile-underscore"></div>
         </div>
-        <!-- </label>
-    <div class="delegations-tile-wrap"> -->
-
         <div class="delegations-tile-content">
-            
             <div class="delegations-table-wrapper" id="delegations-table">
                 <div class="delegations-table-2 del-table-2">
                     <div class="del-thead-2">
@@ -92,8 +86,8 @@
                                     <option key="true" :value="true">{{ $t("table.delegations.flatRate") }}</option>
                                     <option key="false" :value="false">{{ $t("table.delegations.noFlatRate") }}</option>
                                 </select>
-                                <!-- </div>
-                            <div class="del-tbody2-item-txt"> -->
+                            </div>
+                            <div class="del-tbody2-item-txt">
                                 <select :disabled="disableEngineCapacity(cost)" :class="[{ 'delegations-tselect-s-disabled': disableEngineCapacity(cost) },  'delegations-tselect-s']" v-model="cost.engineCapacity" @change="updateTravelCosts">
                                     <option disabled selected value></option>
                                     <!-- true is for more than 900 cm, false for less -->
@@ -106,7 +100,6 @@
                         <div class="del-tbody2-item-cost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.kilometers") }}?</div>
                             <div class="del-tbody2-item-txt">
-                                <!-- class="delegations-tinput-s-disabled" :disabled="hideKilometers" -->
                                 <div class="del-tbody-item-wrap">
                                     <input :disabled="disableKilometers(cost)" :class="[{ 'delegations-tinput-s-disabled': disableKilometers(cost) },  'delegations-tinput-s']" type="number" @change="updateTravelCosts" v-model="cost.kilometers" />
                                     <span class="delegations-div-bar"></span>
@@ -166,10 +159,10 @@
                     </div>
                 </div>
             </div>
-        <!-- </div> -->
+        </div>
     </div>
-</div>
 </template>
+
 <script>
 import {
     mapGetters,
