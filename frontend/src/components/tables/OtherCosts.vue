@@ -9,7 +9,7 @@
         </div>
         <div class="delegations-tile-content">
             <div class="delegations-table-wrapper">
-                <div class="delegations-table-2 del-table-2">
+                <div class="delegations-table-2">
                     <div class="del-thead-2">
                         <div class="del-thead-item-scost">{{ $t("table.delegations.docDate") }}</div>
                         <div class="del-thead-item-scost">{{ $t("table.delegations.company") }}</div>
@@ -28,7 +28,7 @@
                                     <input value="otherCosts[index].docDate" />
                                 </v-date-picker>
                             </div>
-                            <div class="del-tfoot2"></div>
+                            <div class="del-tfoot2">&nbsp;</div>
                         </div>
                         <div class="del-tbody2-item-scost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.company") }}</div>
@@ -38,7 +38,7 @@
                                     <span class="delegations-div-bar"></span>
                                 </div>
                             </div>
-                            <div class="del-tfoot2"></div>
+                            <div class="del-tfoot2">&nbsp;</div>
                         </div>
                         <div class="del-tbody2-item-scost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.docNo") }}</div>
@@ -78,7 +78,7 @@
                                     <span class="delegations-div-bar"></span>
                                 </div>
                             </div>
-                            <div class="del-tfoot2"></div>
+                            <div class="del-tfoot2">&nbsp;</div>
                         </div> 
                         <div class="del-tbody2-item-scost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
@@ -90,7 +90,7 @@
                         <div class="del-tbody2-item-scost">
                             <div class="del-tbody2-item-title"></div>
                             <div class="del-tbody2-item-txt"><button @click="removeCostRow(index)"> X </button></div>
-                            <div class="del-tfoot2"></div>
+                            <div class="del-tfoot2">&nbsp;</div>
                         </div>
                     </div>
                 </div>

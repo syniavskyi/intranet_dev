@@ -791,7 +791,8 @@
     width: 95%;
     height: 100%;
     /* min-height: 10rem; */
-    box-shadow: 0 0 10px grey;
+    box-shadow: 0 0 10px rgb(136, 136, 136);
+    border-radius: 4px;
     margin: .5rem 0 ;
 }
 
@@ -801,10 +802,11 @@
     border: 0;
     font-family: 'Roboto';
     font-size: 1rem;
+    color: rgb(119, 119, 119);
     border-radius: 0.5rem;
     transition: box-shadow 0.3s ease;
     height: 1.5rem;
-    z-index: 1000;
+    /* margin: .3rem 0; */
 }
 
 .del-add-row:hover {
@@ -816,7 +818,6 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    /* margin: 0.5rem 0; */
 }
 
 .del-thead-item,
@@ -873,7 +874,18 @@
     text-align: center;
 }
 
-.del-tbody02
+.del-tbody2-item-scost:first-of-type .del-tbody2-item-title {
+    border-top-left-radius: 4px;
+}
+.del-tbody2-item-scost:last-of-type .del-tbody2-item-title {
+    border-bottom-left-radius: 4px;
+}
+.del-tbody2-item-scost:first-of-type .del-tfoot2 {
+    border-top-right-radius: 4px;
+}
+.del-tbody2-item-scost:last-of-type .del-tfoot2 {
+    border-bottom-right-radius: 4px;
+}
 
 .del-tbody2-item-adv {
     width: 100%;
@@ -917,8 +929,9 @@
     justify-content: center;
     align-items: center; 
     text-align: center;
-    background: #ccc;
+    background: #e5e5e5;
     line-height: 2rem;
+    color: grey;
 }
 .del-tbody2-item-txt {
     display: flex;
