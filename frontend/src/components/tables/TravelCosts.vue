@@ -11,20 +11,20 @@
             <div class="delegations-table-wrapper" id="delegations-table">
                 <div class="delegations-table-2 del-table-2">
                     <div class="del-thead-2">
-                        <div class="del-thead-item-cost">{{ $t("table.delegations.docDate") }}</div>
-                        <div class="del-thead-item-cost-w">{{ $t("table.delegations.company") }}</div>
-                        <div class="del-thead-item-cost">{{ $t("table.delegations.docNo") }}</div>
-                        <div class="del-thead-item-cost-s">{{ $t("table.delegations.return") }}?</div>
-                        <div class="del-thead-item-cost-xw">{{ $t("table.delegations.transport") }}</div>
-                        <div class="del-thead-item-cost">{{ $t("table.delegations.paymentType") }}</div>
-                        <div class="del-thead-item-cost">{{ $t("table.delegations.kilometers") }}</div>
-                        <div class="del-thead-item-cost-s">{{ $t("table.delegations.currency") }}</div>
-                        <div class="del-thead-item-cost">{{ $t("table.delegations.amount") }}</div>
-                        <div class="del-thead-item-cost">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
-                        <div class="del-thead-item-cost">przyciski</div>
+                        <div class="del-thead-item-travel-l">{{ $t("table.delegations.docDate") }}</div>
+                        <div class="del-thead-item-travel">{{ $t("table.delegations.company") }}</div>
+                        <div class="del-thead-item-travel">{{ $t("table.delegations.docNo") }}</div>
+                        <div class="del-thead-item-travel-xs">{{ $t("table.delegations.return") }}?</div>
+                        <div class="del-thead-item-travel-xl">{{ $t("table.delegations.transport") }}</div>
+                        <div class="del-thead-item-travel-m">{{ $t("table.delegations.paymentType") }}</div>
+                        <div class="del-thead-item-travel">{{ $t("table.delegations.kilometers") }}</div>
+                        <div class="del-thead-item-travel-s">{{ $t("table.delegations.currency") }}</div>
+                        <div class="del-thead-item-travel">{{ $t("table.delegations.amount") }}</div>
+                        <div class="del-thead-item-travel">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
+                        <div class="del-thead-item-travel-s"></div>
                     </div>
                     <div class="del-tbody-2 del-tbody-2-travel" v-for="(cost, index) in travelCosts" :key="index">
-                        <div class="del-tbody2-item-cost">
+                        <div class="del-tbody2-item-travel-l">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.docDate") }}</div>
                             <div class="del-tbody2-item-txt">
                                 <v-date-picker class="delegations-tinput-date" mode="single" @change="getTravelRate(index)" v-model="cost.docDate">
@@ -33,7 +33,7 @@
                             </div>
                             <div class="del-tfoot2">&nbsp;</div>
                         </div>
-                        <div class="del-tbody2-item-cost-w">
+                        <div class="del-tbody2-item-travel">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.company") }}</div>
                             <div class="del-tbody2-item-txt">
                                 <div class="del-tbody-item-wrap">
@@ -43,7 +43,7 @@
                             </div>
                             <div class="del-tfoot2">&nbsp;</div>
                         </div>
-                        <div class="del-tbody2-item-cost">
+                        <div class="del-tbody2-item-travel">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.docNo") }}</div>
                             <div class="del-tbody2-item-txt">
                                 <div class="del-tbody-item-wrap">
@@ -53,7 +53,7 @@
                             </div>
                             <div class="del-tfoot2">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                         </div>
-                        <div class="del-tbody2-item-cost-s">
+                        <div class="del-tbody2-item-travel-xs">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.return") }}?</div>
                             <div class="del-tbody2-item-txt">
                                 <label class="checkbox-wrap">
@@ -63,7 +63,7 @@
                             </div>
                             <div class="del-tfoot2-s">{{ totalCostsInCurr.trvPayback }}</div>
                         </div>
-                        <div class="del-tbody2-item-cost-xw">
+                        <div class="del-tbody2-item-travel-xl">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.transport") }}</div>
                             <div class="del-tbody2-item-txt">
                                 <select class="delegations-tselect" :id="index" v-model="cost.transport" @change="setFieldsValues(cost)">
@@ -78,17 +78,17 @@
                             <div class="del-tfoot2">&nbsp;</div>
                         </div>
 
-                        <div class="del-tbody2-item-cost">
+                        <div class="del-tbody2-item-travel-m">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.paymentType") }}</div>
                             <div class="del-tbody2-item-txt">
-                                <select :id="index" :disabled="disableReturnType(cost)" :class="[{ 'delegations-tselect-s-disabled': disableReturnType(cost) },  'delegations-tselect-s']" v-model="cost.flatRate" @change="valuesForReturnType(cost)">
+                                <select :id="index" :disabled="disableReturnType(cost)" :class="[{ 'delegations-tselect-m-disabled': disableReturnType(cost) },  'delegations-tselect-m']" v-model="cost.flatRate" @change="valuesForReturnType(cost)">
                                     <option disabled selected value></option>
                                     <option key="true" :value="true">{{ $t("table.delegations.flatRate") }}</option>
                                     <option key="false" :value="false">{{ $t("table.delegations.noFlatRate") }}</option>
                                 </select>
-                            </div>
-                            <div class="del-tbody2-item-txt">
-                                <select :disabled="disableEngineCapacity(cost)" :class="[{ 'delegations-tselect-s-disabled': disableEngineCapacity(cost) },  'delegations-tselect-s']" v-model="cost.engineCapacity" @change="updateTravelCosts">
+                            <!-- </div>
+                            <div class="del-tbody2-item-txt"> -->
+                                <select :disabled="disableEngineCapacity(cost)" :class="[{ 'delegations-tselect-m-disabled': disableEngineCapacity(cost) },  'delegations-tselect-m']" v-model="cost.engineCapacity" @change="updateTravelCosts">
                                     <option disabled selected value></option>
                                     <!-- true is for more than 900 cm, false for less -->
                                     <option key="false" :value="false">{{ $t("label.capacityLess") }}<sup>3</sup></option>
@@ -97,7 +97,7 @@
                             </div>
                             <div class="del-tfoot2">&nbsp;</div>
                         </div>
-                        <div class="del-tbody2-item-cost">
+                        <div class="del-tbody2-item-travel">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.kilometers") }}?</div>
                             <div class="del-tbody2-item-txt">
                                 <div class="del-tbody-item-wrap">
@@ -107,7 +107,7 @@
                             </div>
                             <div class="del-tfoot2">&nbsp;</div>
                         </div>
-                        <div class="del-tbody2-item-cost-s">
+                        <div class="del-tbody2-item-travel-s">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.currency") }}</div>
                             <div class="del-tbody2-item-txt">
                                 <select :disabled="disableCostAmount(cost)" :class="[{ 'delegations-tselect-s-disabled': disableCostAmount(cost) },  'delegations-tselect-s']" v-model="travelCosts[index].currency" @change="getTravelRate(index)">
@@ -117,7 +117,7 @@
                             <div class="del-tfoot2">---</div>
                         </div>
                         <!-- acc -accomodation, trv - travel - oth - others -->
-                        <div class="del-tbody2-item-cost">
+                        <div class="del-tbody2-item-travel">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }}</div>
                             <div class="del-tbody2-item-txt">
                                 <div class="del-tbody-item-wrap">
@@ -128,17 +128,17 @@
                             <div class="del-tfoot2">&nbsp;</div>
                         </div>
 
-                        <div class="del-tbody2-item-cost">
+                        <div class="del-tbody2-item-travel">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                             <div class="del-tbody2-item-txt">{{cost.totalAmountCurr}}</div>
                             <div class="del-tfoot2">
                                 <p>{{totalCostsInCurr.travel }}</p>
                             </div>
                         </div>
-                        <div class="del-tbody2-item-cost">
+                        <div class="del-tbody2-item-travel-s">
                             <div class="del-tbody2-item-title"></div>
                             <div class="del-tbody2-item-txt">
-                                <button @click="removeCostRow(index)"> X </button>
+                                <button class="del-delete-row" @click="removeCostRow(index)">USUŃ</button>
                             </div>
                             <div class="del-tfoot2">&nbsp;</div>
                         </div>

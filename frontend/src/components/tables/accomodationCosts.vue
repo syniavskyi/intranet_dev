@@ -19,18 +19,16 @@
                             <div class="del-thead-item-scost">{{ $t("table.delegations.currency") }}</div>
                             <div class="del-thead-item-scost">{{ $t("table.delegations.amount") }}</div>
                             <div class="del-thead-item-scost">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
-                            <div class="del-thead-item-scost">przyciski</div>
+                            <div class="del-thead-item-scost"></div>
                         </div>
                         <div class="del-tbody-2 del-tbody-2-accom" v-for="(cost, index) in accomodationCosts" :key="index">
                             <div class="del-tbody2-item-scost">
                                 <div class="del-tbody2-item-title">{{ $t("table.delegations.flatRate") }}?</div>
                                 <div class="del-tbody2-item-txt">
-                                    <!-- <div class="checkbox-wrap">    -->
-                                        <label class="checkbox-wrap">
-                                            <input class="checkbox-new" type="checkbox" @change="checkAccomodationFields" v-model="cost.flatRate" />
-                                            <div class="checkbox-in"></div>
-                                        </label>
-                                    <!-- </div> -->
+                                    <label class="checkbox-wrap">
+                                        <input class="checkbox-new" type="checkbox" @change="checkAccomodationFields" v-model="cost.flatRate" />
+                                        <div class="checkbox-in"></div>
+                                    </label>
                                     <div class="del-div-tcool" v-show="hideAccFields(cost)">
                                         <input required class="delegations-tinput-s del-tinput-sfont"  v-model="cost.flatRateDays" @input="countAccFlatRate(index)"/>
                                         <span class="delegations-div-bar"></span>
@@ -107,7 +105,9 @@
                             </div>
                             <div class="del-tbody2-item-scost">
                                 <div class="del-tbody2-item-title"></div>
-                                <div class="del-tbody2-item-txt"><button class="del-add-row" @click="removeCostRow(index)"> usuń </button></div>
+                                <div class="del-tbody2-item-txt">
+                                    <button class="del-delete-row" @click="removeCostRow(index)">USUŃ</button>
+                                </div>
                                 <div class="del-tfoot2">&nbsp;</div>
                             </div>
                         </div>

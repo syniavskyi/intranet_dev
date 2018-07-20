@@ -18,7 +18,7 @@
                         <div class="del-thead-item-scost">{{ $t("table.delegations.currency") }}</div>
                         <div class="del-thead-item-scost">{{ $t("table.delegations.amount") }}</div>
                         <div class="del-thead-item-scost">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
-                        <div class="del-thead-item-scost">przyciski</div>
+                        <div class="del-thead-item-scost"></div>
                     </div>
                     <div class="del-tbody-2" v-for="(cost, index) in otherCosts" :key="index">
                         <div class="del-tbody2-item-scost">
@@ -89,7 +89,9 @@
                         </div>
                         <div class="del-tbody2-item-scost">
                             <div class="del-tbody2-item-title"></div>
-                            <div class="del-tbody2-item-txt"><button @click="removeCostRow(index)"> X </button></div>
+                            <div class="del-tbody2-item-txt">
+                                <button class="del-delete-row" @click="removeCostRow(index)">USUŃ</button>
+                            </div>
                             <div class="del-tfoot2">&nbsp;</div>
                         </div>
                     </div>

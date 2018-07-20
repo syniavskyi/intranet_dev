@@ -26,7 +26,7 @@
                             <div class="del-table-item">{{ $t("table.delegations.time") }}</div>
                         </div>
                     </div>
-                    <div class="del-table-btns">przyciski</div>
+                    <div class="del-table-btns"></div>
                 </div>
                 <!-- first default row -->
                 <div class="del-tbody-1">
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                     <div class="del-tbody-cols">
-                        <div class="del-tbody-title">przyciski</div>
+                        <div class="del-tbody-title"></div>
                         <div class="del-tbody-col"></div>
                     </div>
                 </div>
@@ -129,7 +129,7 @@
                         </div>
                     </div>
                     <div class="del-tbody-cols">
-                        <div class="del-tbody-title">przyciski</div>
+                        <div class="del-tbody-title"></div>
                         <div class="del-tbody-col"></div>
                     </div>
                 </div>
@@ -141,8 +141,11 @@
                             <div class="del-tbody-wrap">
                                 <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
                                 <div class="del-tbody-item">
-                                    <vue-google-autocomplete types="geocode" required class="delegations-input-cool" placeholder=""  :id="index + 'leave'" onfocus="value = ''" @input="customCosts[index].leavePlace = value"></vue-google-autocomplete>
+                                    <div class="del-tbody-item-wrap">
+                                        <vue-google-autocomplete types="geocode" required class="delegations-input-cool" placeholder=""  :id="index + 'leave'" onfocus="value = ''" @input="customCosts[index].leavePlace = value"></vue-google-autocomplete>
+                                        <span class="delegations-div-bar"></span>
                                     <!-- <input class="delegations-tinput-w" @input="checkDelegationTable" v-model="customCosts[index].leavePlace" /> -->
+                                    </div>
                                 </div>
                             </div>
                             <div class="del-tbody-wrap">
@@ -166,8 +169,11 @@
                             <div class="del-tbody-wrap">
                                 <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
                                 <div class="del-tbody-item">
-                                    <vue-google-autocomplete types="geocode" required class="delegations-input-cool" placeholder="" :id="index +'arrival'" onfocus="value = ''" @input="customCosts[index].arrivalPlace = value"></vue-google-autocomplete>
+                                    <div class="del-tbody-item-wrap">
+                                        <vue-google-autocomplete types="geocode" required class="delegations-input-cool" placeholder="" :id="index +'arrival'" onfocus="value = ''" @input="customCosts[index].arrivalPlace = value"></vue-google-autocomplete>
+                                        <span class="delegations-div-bar"></span>
                                     <!-- <input class="delegations-tinput-w" @input="checkDelegationTable" v-model="customCosts[index].arrivalPlace" /> -->
+                                    </div>
                                 </div>
                             </div>
                             <div class="del-tbody-wrap">
@@ -187,8 +193,10 @@
                         </div>
                     </div>
                     <div class="del-tbody-cols">
-                        <div class="del-tbody-title">przyciski</div>
-                        <div class="del-tbody-col"><button @click="removeRow(index)"> X </button></div>
+                        <div class="del-tbody-title"></div>
+                        <div class="del-tbody-col">
+                            <button class="del-delete-row" @click="removeRow(index)">USUŃ</button>
+                        </div>
                     </div>
                 </div>
             </div>

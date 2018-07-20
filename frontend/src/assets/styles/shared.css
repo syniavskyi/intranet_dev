@@ -367,7 +367,14 @@ li:hover p {
 .checkbox-wrap input:disabled ~ div {
     background: rgb(243, 243, 243);
     cursor: context-menu;
+    pointer-events: none;
 }
+/* FOR WHEN CHECKBOX IS CHECKED BUT DISABLED */
+.checkbox-wrap input:disabled:checked:hover ~ div {
+    background: rgb(243, 243, 243);
+}
+/* FOR WHEN CHECKBOX IS CHECKED BUT DISABLED */
+
 .checkbox-wrap div:hover {
     background: #ccc;
 }

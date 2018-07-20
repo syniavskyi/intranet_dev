@@ -15,7 +15,7 @@
                         <div class="del-thead-item-adv">{{ $t("table.delegations.advanceCurrency") }}</div>
                         <div class="del-thead-item-adv">{{ $t("table.delegations.advanceAmount") }}</div>
                         <div class="del-thead-item-adv">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
-                        <div class="del-thead-item-adv">przyciski</div>
+                        <div class="del-thead-item-adv"></div>
                     </div>
                     <div class="del-tbody-2" v-for="(advance, index) in advanceData" :key="index">
                         <div class="del-tbody2-item-adv">
@@ -25,7 +25,7 @@
                                     <input value="otherCosts[index].docDate" />
                                 </v-date-picker>
                             </div>
-                            <div class="del-tfoot2"></div>
+                            <div class="del-tfoot2">&nbsp;</div>
                         </div>
                         <div class="del-tbody2-item-adv">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.currency") }}</div>
@@ -44,17 +44,19 @@
                                     <span class="delegations-div-bar"></span>
                                 </div>
                             </div>
-                            <div class="del-tfoot2"></div>
+                            <div class="del-tfoot2">&nbsp;</div>
                         </div>
                         <div class="del-tbody2-item-adv">
-                            <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }}{{newDelegation.currency}}</div>
+                            <div class="del-tbody2-item-title">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
                             <div class="del-tbody2-item-txt">{{advance.totalAmountCurr}}</div>
                             <div class="del-tfoot2">{{totalCostsInCurr.advance }}</div>
                         </div>
                         <div class="del-tbody2-item-adv">
                             <div class="del-tbody2-item-title"></div>
-                            <div class="del-tbody2-item-txt"><button @click="removeAdvanceRow(index)"> X </button></div>
-                            <div class="del-tfoot2"></div>
+                            <div class="del-tbody2-item-txt">
+                                <button class="del-delete-row" @click="removeAdvanceRow(index)">USUŃ</button>
+                            </div>
+                            <div class="del-tfoot2">&nbsp;</div>
                         </div>
                     </div>
                 </div>
@@ -63,7 +65,7 @@
                         <div class="del-tbody2-item-wfoot-adv"></div>
                         <div class="del-tbody2-item-adv">{{ $t("table.delegations.amount") }}  {{newDelegation.currency}}</div>
                         <div class="del-tbody2-item-adv">{{totalCostsInCurr.advance }}</div>
-                        <div class="del-tbody2-item-adv"></div>
+                        <div class="del-tbody2-item-adv">&nbsp;</div>
                     </div>
                 </div>
             </div>
