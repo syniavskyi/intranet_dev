@@ -4,6 +4,7 @@
         "forgotPass": "Nie pamiętasz hasła?",
         "resetPass": "Zresetuj hasło",
         "editData": "Edytuj dane",
+        "edit": "Edytuj",
         "saveChanges": "Zapisz zmiany",
         "save": "Zapisz",
         "cancel": "Anuluj",
@@ -102,7 +103,8 @@
         "accomodationCosts": "Koszty noclegu",
         "otherCosts": "Pozostałe koszty",
         "travelCosts": "Koszty podróży",
-        "advance": "Zaliczka"
+        "advance": "Zaliczka",
+        "education": "Wykształcenie"
         
     },
     "message": {

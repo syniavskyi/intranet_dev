@@ -4,6 +4,7 @@
         "forgotPass": "Forgot password?",
         "resetPass": "Reset password",
         "editData": "Edit data",
+        "edit": "Edit",
         "saveChanges": "Save changes",
         "save": "Save",
         "cancel": "Cancel",
@@ -95,13 +96,15 @@
         "welcome": "Welcome in BTech!",
         "delegations": "Delegations",
         "experience": "Experience",
+        "projects": "Projects",
         "travelExp": "Travel expences",
         "costs": "Costs",
         "selectEmployee": "Select employee" ,
         "addProject": "Add project",
         "otherCosts": "Other costs",
         "travelCosts": "Travel costs",
-        "advance": "Advance"
+        "advance": "Advance",
+        "education": "Education"
     },
     "message": {
         "loginError": "Password or username are invalid.",

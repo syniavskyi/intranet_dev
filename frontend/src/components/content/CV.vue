@@ -3,10 +3,10 @@
         <!-- header with name and position-->
         <button @click="generateCV">Generuj</button>
         <div>
-            <h1 style="text-align:right">Imię i nazwisko</h1>
-            <h3 style="text-align:right">Pozycja</h3>
+            <h1 style="text-align:right"> {{ userData.firstName }} {{ userData.lastName }} </h1>
+            <h3 style="text-align:right"> {{ userData.position }} </h3>
         </div>
-
+        <img class="img-user-class" :src="userData.image" width="150px">
   <table width="100%">
     <tr>
       <td>
@@ -15,68 +15,72 @@
             <h3>Dane osobowe</h3>
             <table width="100%">
               <tr>
-                <td style='border:none;border-bottom:solid #F4B083 1.5pt;
-    mso-border-bottom-themecolor:accent2;mso-border-bottom-themetint:153;
-    background:white;mso-background-themecolor:background1;padding:0cm 5.4pt 0cm 5.4pt'>Data urodzenia</td>
+                <td>Data urodzenia</td>
                 <td>01.02.1996</td>
               </tr>
               <tr>
-                <td>Telefon</td>
-                <td>662 366 186</td>
+                <td>{{ $t("label.phone") }}</td>
+                <td>{{userData.phone}}</td>
               </tr>
               <tr>
-                <td>Adres e-mail</td>
-                <td>maria.harcej@btech.pl</td>
+                <td>{{ $t("label.email") }}</td>
+                <td>{{userData.email}}</td>
               </tr>
             </table>
         </div>
 
         <!-- education -->
         <div>
-          <h3>Edukacja</h3>
-          <table width="100%">
+          <h3>{{ $t("header.education") }}</h3>
+          <table width="100%" v-for="(education, index) in userEducation" :key='index'>
             <tr>
-              <td class="cv-table-header"><b>Politechnika Wrocławska</b></td>
-              <td class="cv-table-header"><b>Zarządzanie</b></td>
-              <td class="cv-table-header"><b>Licencjat</b></td>
+              <td>{{formatDate(education.DateStart)}}-{{formatDate(education.DateEnd)}}</td>
+              <td><b>{{education.FieldOfStudy}}</b></td>
             </tr>
             <tr>
-              <td>2015-2018</td>
-              <td>Tryb dzienny</td>
-              <td></td>
+              <td rowspan="3"></td>
+              <td >{{education.University}}</td>
+            </tr>
+            <tr>
+              <td>{{education.StudyType}}</td>
+            </tr>
+            <tr>
+              <td >{{education.AcademicTitle}}</td>
             </tr>
           </table>
         </div>
 
        <!-- experience -->
         <div>
-          <h3>Doświadczenie</h3>
-          <table width="100%">
+          <h3>{{ $t("header.experience") }}</h3>
+          <table width="100%" v-for="(experience, index) in userExperience" :key='index'>
             <tr>
-              <td class="cv-table-header"><b>BTech Sp. z o.o.</b></td>
-              <td class="cv-table-header"><b>SAPUI5 / Fiori Developer</b></td>
+              <thead>{{formatDate(experience.DateStart)}}-{{formatDate(experience.DateEnd)}}</thead>
+              <td><b>{{experience.WorkPos}}</b></td>
             </tr>
             <tr>
-              <td colspan="2">od 08.2017</td>
+              <td></td>
+              <td>{{experience.Employer}}</td>
             </tr>
           </table>
         </div>
 
         <!-- projects -->
         <div>
-          <h3>Projekty</h3>
-          <table width="100%">
+          <h3>{{ $t("header.projects") }}</h3>
+          <table width="100%" v-for="(project, index) in userProjects" :key="index">
             <tr>
-              <td class="cv-table-header"><b>KOMFORT S.A</b></td>
-              <td class="cv-table-header"><b>SAP Moduł: SD</b></td>
+              <td>{{formatDate(project.duration.start)}}-{{formatDate(project.duration.end)}}</td>
+              <td class="cv-table-header"><b>{{project.contractor}}</b>(Handel)</td>
             </tr>
             <tr>
-              <td>Handel </td>
-              <td rowspan="2">co się robiło</td>
+              <td rowspan="2"></td>
+              <td class="cv-table-header">Moduły SAP: <b v-for="sapModule in userProjects[index].modules" :key="sapModule.id"> {{ sapModule.id }}  </b></td>
             </tr>
             <tr>
-              <td>od 10.2017</td>
+              <td>{{project.descr}}</td>
             </tr>
+
           </table>
         </div>
       </td>
@@ -86,7 +90,18 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+import moment from "moment"
+
 export default {
+    computed: {
+    ...mapGetters({
+      userEducation: "getUserEducation",
+      userProjects: "getUserProjectsList",
+      userExperience: "getUserExperience",
+      userData: 'userData'
+    })
+  },
   methods: {
     generateCV() {
       var html, link, blob, url;
@@ -95,7 +110,7 @@ export default {
       // html = preHtml + document.getElementById('content').innerHTML + postHtml;
       html = document.getElementById("content").innerHTML;
       blob = new Blob(["\ufeff", html], {
-        type: "application/pdf"
+        type: "application/msword"
       });
       url = URL.createObjectURL(blob);
       link = document.createElement("A");
@@ -106,7 +121,12 @@ export default {
         navigator.msSaveOrOpenBlob(blob, "Document.doc"); // IE10-11
       else link.click(); // other browsers
       document.body.removeChild(link);
-    }
+    },
+    formatDate(date) {
+      return date !== null && date !== undefined
+        ? moment(date).format("YYYY")
+        : "-";
+    },
   }
 };
 </script>
