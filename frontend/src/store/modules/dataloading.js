@@ -142,7 +142,8 @@ const actions = {
   getUsersData({
     commit
   }) {
-    axios.get("/api/users")
+    // axios.get("/api/users")
+    axios.get("Contractors")
       .then(res => {
         const data = res.data,
           aData = [];
