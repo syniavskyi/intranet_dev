@@ -59,9 +59,7 @@
                                         <p class="prof-error" v-if="invalidPhone">{{ $t("message.phoneValidation") }}</p>
                                     </div>
                                 </div>
-                                
                             <!-- </div> -->
-                            
                         </div>
                     </div>
                     <div class="profile-tile-1-3">
@@ -92,7 +90,6 @@
                     </div>
                     <div class="profile-tile-1-3-emp">
                         <div class="profile-tile-header">
-                            
                             <!-- <div class="tile-underscore"></div> -->
                         </div>
                         <div class="profile-tile-content">
@@ -167,7 +164,6 @@
                                         <!-- <v-date-picker :max-date="new Date()" v-if="projectEditMode" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" is-expanded mode="single" v-model="userData.employmentDate">
                                                 <input value="userData.employmentDate" />
                                             </v-date-picker> -->
-                                        
                                         <!-- <p v-if="!editMode" class="inputDisabled">{{userData.employmentDate}}</p> -->
                                         <input disabled v-if="!editMode" class="inputProfile inputDisabled" v-model="userData.employmentDate">
                                         <span class="prof-div-bar"></span>
@@ -247,7 +243,6 @@
                 <user-experience-component></user-experience-component>
                 <user-projects-component></user-projects-component>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -255,192 +250,190 @@
 </template>
 
 <script>
-import moment from "moment"
-import MaskedInput from 'vue-masked-input'
+import moment from "moment";
+import MaskedInput from "vue-masked-input";
 
-import {
-    required,
-    email
-} from 'vuelidate/lib/validators'
+import { required, email } from "vuelidate/lib/validators";
 
-import {
-    mapGetters, mapActions
-} from 'vuex'
+import { mapGetters, mapActions } from "vuex";
 
-import Menu from '../Menu.vue'
-import LeavePageDialog from '../dialogs/LeavePageDialog'
-import UserProjects from './profileComponents/UserProjects'
-import UserEducation from './profileComponents/UserEducation'
-import UserExperience from './profileComponents/UserExperience'
+import Menu from "../Menu.vue";
+import LeavePageDialog from "../dialogs/LeavePageDialog";
+import UserProjects from "./profileComponents/UserProjects";
+import UserEducation from "./profileComponents/UserEducation";
+import UserExperience from "./profileComponents/UserExperience";
 
 export default {
-    data() {
-        return {
-            editMode: false,
-            _beforeEditingCache: null,
-            file: '',
-            photo: '',
-            hasDataChanged: false,
-            showNoChangesAlert: false,
-            invalidPhone: false,
-            invalidDate: false,
-            disableSaveBtn: true,
-            showLeavePageDialog: false,
-            routeToGo: null
-        }
-    },
-    validations: {
-        userData: {
-            email: {
-                required,
-                email
-            }
-        }
-    },
-    components: {
-        MaskedInput,
-        'app-menu': Menu,
-        'leave-page-dialog': LeavePageDialog,
-        'user-projects-component': UserProjects,
-        'user-experience-component': UserExperience,
-        'user-education-component': UserEducation
-    },
-    beforeCreate() {
-        if (this.$store.getters.isDataLoaded === false) {
-            this.$store.dispatch('loadData', localStorage.getItem('token'))
-        }
-    },
-    computed: {
-        ...mapGetters({
-            userData: 'userData',
-            saveChangesSuccess: 'isSaveChangesSuccess',
-            photoUploadError: 'isSavePhotoError',
-            fileUploadError: 'isFileUploadError'     
-        })
-    },
-    // beforeRouteLeave (to, from , next) {
-        // this.showLeavePageDialog = true
-    //     this.routeToGo = to.name
-    // },
-    methods: {
-
-        onEdit() {
-            this.showNoChangesAlert = false
-            this.editMode = !this.editMode
-            this._beforeEditingCache = Object.assign({}, this.userData)
-        },
-        onCancelEdit() {
-            Object.assign(this.userData, this._beforeEditingCache)
-            this._beforeEditingCache = null
-            this.showNoChangesAlert = false
-            this.editMode = !this.editMode
-        },
-        onSaveChanges() {
-            this.showNoChangesAlert = false
-            this.checkIfDataChanged()
-            if (this.hasDataChanged === false) {
-                this.showNoChangesAlert = true
-            } else {
-                this.$store.dispatch('saveContactData', this.userData)
-                this.$store.dispatch('saveUserData', this.userData)
-                this.editMode = !this.editMode
-            }
-            this.disableSaveBtn = true
-        },
-        checkIfDataChanged() {
-            let currentData = Object.assign({}, this.userData),
-                currDataProps = Object.getOwnPropertyNames(currentData),
-                beforeDataProps = Object.getOwnPropertyNames(this._beforeEditingCache)
-
-            for (let i = 0; i < beforeDataProps.length; i++) {
-                let propName = beforeDataProps[i];
-                if (currentData[propName] !== this._beforeEditingCache[propName]) {
-                    this.hasDataChanged = true
-                    return
-                } else {
-                    this.hasDataChanged = false
-                }
-            }
-        },
-        handlePhotoUpload() {
-            this.photo = this.$refs.photo.files[0];
-            this.disableSubmit = false
-            let data = {
-                file: this.photo,
-                id: localStorage.getItem('id')
-            }
-            this.$store.dispatch('submitPhoto', data)
-        },
-        handleCvUpload() {
-            this.file = this.$refs.file.files[0];
-            let data = {
-                file: this.file,
-                id: localStorage.getItem('id')
-            }
-            this.$store.dispatch('submitCv', data)
-        },
-        phoneValidation(value) {
-            const regex = new RegExp("^(?=.*[0-9])[- +()0-9]+$")
-            this.invalidPhone = (regex.test(value.target.value)) ? false : true
-            this.checkFormFields()
-        },
-        dateValidation(value) {
-            const day = parseInt(value.slice(0, 2)),
-                month = parseInt(value.slice(3, 5))
-
-            this.invalidDate = (day > 31 || month > 12) ? true : false
-            this.disableSaveBtn = (day > 31 || month > 12) ? true : false
-
-            this.checkFormFields()
-        },
-        checkFormFields() {
-            if (this.invalidPhone || this.invalidDate || this.$v.userData.email.$invalid) {
-                this.disableSaveBtn = true
-            } else {
-                this.checkIfDataChanged()
-                this.disableSaveBtn = (this.hasDataChanged === true) ? false : true
-            }
-        },
- 
-        // leavePage() {
-        //     if (this._beforeEditingProjects){
-        //         this.$store.commit('SET_EXP_LIST', this._beforeEditingProjects)
-        //     } 
-        //     if (this._beforeEditingCache) {
-        //         Object.assign(this.userData, this._beforeEditingCache)
-        //     }
-        //     this.$router.push({name: this.routeToGo})
-        // }
+  data() {
+    return {
+      editMode: false,
+      _beforeEditingCache: null,
+      file: "",
+      photo: "",
+      hasDataChanged: false,
+      showNoChangesAlert: false,
+      invalidPhone: false,
+      invalidDate: false,
+      disableSaveBtn: true,
+      showLeavePageDialog: false,
+      routeToGo: null
+    };
+  },
+  validations: {
+    userData: {
+      email: {
+        required,
+        email
+      }
     }
-}
+  },
+  components: {
+    MaskedInput,
+    "app-menu": Menu,
+    "leave-page-dialog": LeavePageDialog,
+    "user-projects-component": UserProjects,
+    "user-experience-component": UserExperience,
+    "user-education-component": UserEducation
+  },
+  beforeCreate() {
+    if (this.$store.getters.isDataLoaded === false) {
+      this.$store.dispatch("loadData", localStorage.getItem("token"));
+    }
+  },
+  computed: {
+    ...mapGetters({
+      userData: "userData",
+      saveChangesSuccess: "isSaveChangesSuccess",
+      photoUploadError: "isSavePhotoError",
+      fileUploadError: "isFileUploadError"
+    })
+  },
+  // beforeRouteLeave (to, from , next) {
+  // this.showLeavePageDialog = true
+  //     this.routeToGo = to.name
+  // },
+  methods: {
+    onEdit() {
+      this.showNoChangesAlert = false;
+      this.editMode = !this.editMode;
+      this._beforeEditingCache = Object.assign({}, this.userData);
+    },
+    onCancelEdit() {
+      Object.assign(this.userData, this._beforeEditingCache);
+      this._beforeEditingCache = null;
+      this.showNoChangesAlert = false;
+      this.editMode = !this.editMode;
+    },
+    onSaveChanges() {
+      this.showNoChangesAlert = false;
+      this.checkIfDataChanged();
+      if (this.hasDataChanged === false) {
+        this.showNoChangesAlert = true;
+      } else {
+        this.$store.dispatch("saveContactData", this.userData);
+        this.$store.dispatch("saveUserData", this.userData);
+        this.editMode = !this.editMode;
+      }
+      this.disableSaveBtn = true;
+    },
+    checkIfDataChanged() {
+      let currentData = Object.assign({}, this.userData),
+        currDataProps = Object.getOwnPropertyNames(currentData),
+        beforeDataProps = Object.getOwnPropertyNames(this._beforeEditingCache);
+
+      for (let i = 0; i < beforeDataProps.length; i++) {
+        let propName = beforeDataProps[i];
+        if (currentData[propName] !== this._beforeEditingCache[propName]) {
+          this.hasDataChanged = true;
+          return;
+        } else {
+          this.hasDataChanged = false;
+        }
+      }
+    },
+    handlePhotoUpload() {
+      this.photo = this.$refs.photo.files[0];
+      this.disableSubmit = false;
+      let data = {
+        file: this.photo,
+        id: localStorage.getItem("id")
+      };
+      this.$store.dispatch("submitPhoto", data);
+    },
+    handleCvUpload() {
+      this.file = this.$refs.file.files[0];
+      let data = {
+        file: this.file,
+        id: localStorage.getItem("id")
+      };
+      this.$store.dispatch("submitCv", data);
+    },
+    phoneValidation(value) {
+      const regex = new RegExp("^(?=.*[0-9])[- +()0-9]+$");
+      this.invalidPhone = regex.test(value.target.value) ? false : true;
+      this.checkFormFields();
+    },
+    dateValidation(value) {
+      const day = parseInt(value.slice(0, 2)),
+        month = parseInt(value.slice(3, 5));
+
+      this.invalidDate = day > 31 || month > 12 ? true : false;
+      this.disableSaveBtn = day > 31 || month > 12 ? true : false;
+
+      this.checkFormFields();
+    },
+    checkFormFields() {
+      if (
+        this.invalidPhone ||
+        this.invalidDate ||
+        this.$v.userData.email.$invalid
+      ) {
+        this.disableSaveBtn = true;
+      } else {
+        this.checkIfDataChanged();
+        this.disableSaveBtn = this.hasDataChanged === true ? false : true;
+      }
+    }
+
+    // leavePage() {
+    //     if (this._beforeEditingProjects){
+    //         this.$store.commit('SET_EXP_LIST', this._beforeEditingProjects)
+    //     }
+    //     if (this._beforeEditingCache) {
+    //         Object.assign(this.userData, this._beforeEditingCache)
+    //     }
+    //     this.$router.push({name: this.routeToGo})
+    // }
+  }
+};
 </script>
 
 <style>
 .input {
-    text-align: center;
+  text-align: center;
 }
 
 .inputEdit {
-    text-align: center;
+  text-align: center;
 }
 
 .inputDisabled {
-    text-align: center;
+  text-align: center;
 }
 
 .table-p {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 @keyframes slide-down {
-    100% {
-        transform: translateY(0rem);
-        opacity: 1;
-    }
-    0% {
-        transform: translateY(-8rem);
-        opacity: 0;
-    }
+  100% {
+    transform: translateY(0rem);
+    opacity: 1;
+  }
+  0% {
+    transform: translateY(-8rem);
+    opacity: 0;
+  }
 }
 </style>
