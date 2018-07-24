@@ -3,10 +3,13 @@
         <!-- header with name and position-->
         <button @click="generateCV">Generuj</button>
         <div>
-            <h1 style="text-align:right"> {{ userData.firstName }} {{ userData.lastName }} </h1>
-            <h3 style="text-align:right"> {{ userData.position }} </h3>
+          <!-- {{ userData.firstName }} {{ userData.lastName }} -->
+            <h1 style="text-align:right"> {{ returnUserInfo.Fullname }} </h1>
+            <h3 style="text-align:right">  </h3>
+            <!-- {{ userData.position }} -->
         </div>
-        <img class="img-user-class" :src="userData.image" width="150px">
+        <!-- :src="userData.image" -->
+        <img class="img-user-class"  width="150px">
   <table width="100%">
     <tr>
       <td>
@@ -20,15 +23,16 @@
               </tr>
               <tr>
                 <td>{{ $t("label.phone") }}</td>
-                <td>{{userData.phone}}</td>
+                <td></td>
+                <!-- {{userData.phone}} -->
               </tr>
               <tr>
                 <td>{{ $t("label.email") }}</td>
-                <td>{{userData.email}}</td>
+                <td></td>
+                <!-- {{userData.email}} -->
               </tr>
             </table>
         </div>
-
         <!-- education -->
         <div>
           <h3>{{ $t("header.education") }}</h3>
@@ -49,7 +53,6 @@
             </tr>
           </table>
         </div>
-
        <!-- experience -->
         <div>
           <h3>{{ $t("header.experience") }}</h3>
@@ -64,7 +67,6 @@
             </tr>
           </table>
         </div>
-
         <!-- projects -->
         <div>
           <h3>{{ $t("header.projects") }}</h3>
@@ -80,7 +82,6 @@
             <tr>
               <td>{{project.descr}}</td>
             </tr>
-
           </table>
         </div>
       </td>
@@ -90,17 +91,17 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import moment from "moment"
+import { mapGetters } from "vuex";
+import moment from "moment";
 
 export default {
-    computed: {
-    ...mapGetters({
-      userEducation: "getUserEducation",
-      userProjects: "getUserProjectsList",
-      userExperience: "getUserExperience",
-      userData: 'userData'
-    })
+  data() {
+    return {
+      userInfo: {}
+    }
+  },
+  beforeCreate() {
+    this.$store.dispatch("getUserInfo");
   },
   methods: {
     generateCV() {
@@ -127,7 +128,18 @@ export default {
         ? moment(date).format("YYYY")
         : "-";
     },
-  }
+  },
+  computed: {
+    ...mapGetters({
+      userEducation: "getUserEducation",
+      userProjects: "getUserProjectsList",
+      userExperience: "getUserExperience",
+      userData: "userData"
+    }),
+    returnUserInfo() {
+      return this.$store.getters.userInfo;
+    }
+  },
 };
 </script>
 <style>
@@ -141,9 +153,7 @@ td {
 }
 
 .cv-table-header {
-    text-align: left;
-    background-color: lightgray; 
+  text-align: left;
+  background-color: lightgray;
 }
 </style>
-
-

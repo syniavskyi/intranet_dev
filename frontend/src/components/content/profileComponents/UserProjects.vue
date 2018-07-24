@@ -75,7 +75,12 @@
                                         <div class="prof-tbody-item">
                                             <div class="prof-tbody-item-title">{{ $t("table.Industry") }} </div>
                                             <div class="prof-tbody-item-txt">
-                                                <select :disabled="!projectEditMode" class="profile-table-select profile-table-select-industry" v-model="userProjects[index].industry"> 
+                                                <!-- :disabled="!projectEditMode" -->
+                                                <div>
+                                                    <button :disabled="!projectEditMode" class="profile-table-module-button" @click="removeIndustry"></button>
+                                                </div>
+                                                <select v-if="projectEditMode" class="profile-table-select profile-table-select-industry" v-model="userProjects[index].industry">
+                                                    <option disabled selected value>{{ $t("table.addIndustry") }}:</option>
                                                     <option v-for="industry in industryList" :key="industry.id" :value="industry.id"> {{ industry.name }}</option>
                                                 </select>
                                             </div>
@@ -87,10 +92,10 @@
                                                     <button :disabled="!projectEditMode" class="profile-table-module-button" @click="removeModule" :name="index" v-for="sapModule in userProjects[index].modules" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.id }} </button>
                                                 </div>
                                                 <!-- <div id="addButtons"></div> -->
-                                                <select v-if="projectEditMode" class="profile-table-select profile-table-select-modules" @change="addModule" :id="index"> 
-                                                <option disabled selected value>{{ $t("table.addModule") }}:</option>
-                                                <option v-for="sapModule in modulesList" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.name }}</option>
-                                            </select>
+                                                <select v-if="projectEditMode" class="profile-table-select profile-table-select-modules" @change="addModule" :id="index">
+                                                    <option disabled selected value>{{ $t("table.addModule") }}:</option>
+                                                    <option v-for="sapModule in modulesList" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.name }}</option>
+                                                </select>
                                             </div>
 
                                         </div>
@@ -116,10 +121,8 @@
 </template>
 
 <script>
-import {
-    mapGetters, mapActions
-} from 'vuex'
-import moment from "moment"
+import { mapGetters, mapActions } from "vuex";
+import moment from "moment";
 
 export default {
   data() {
@@ -167,6 +170,13 @@ export default {
         moduleId: value.target.value
       };
       this.$store.dispatch("removeModule", data);
+    },
+    removeIndustry(value) {
+        const data = {
+            index: value.target.name,
+            industryId: value.target.value
+        };
+        this.$store.dispatch("removeIndustry", data);
     },
     disableEndDateInput(value) {
       const isCurrent = value.target.checked,
