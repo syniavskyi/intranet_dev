@@ -74,14 +74,14 @@
 <script>
 import axios from "axios";
 import { required, minLength, email } from "vuelidate/lib/validators";
-import i18n from '../../lang/lang'
+import i18n from "../../lang/lang";
 
 export default {
   data() {
     return {
       fullName: "",
       email: "",
-      mail: '',
+      mail: "",
       role: [],
       roleChosen: "",
       department: [],
@@ -105,9 +105,9 @@ export default {
     // }
   },
   beforeCreate() {
-    this.$store.commit('DISPLAY_MENU', false);
+    this.$store.commit("DISPLAY_MENU", false);
     if (this.$store.getters.idDataLoaded === false) {
-      this.$store.dispatch('loadData', localStorage.getItem('token'))
+      this.$store.dispatch("loadData", localStorage.getItem("token"));
     }
   },
   methods: {

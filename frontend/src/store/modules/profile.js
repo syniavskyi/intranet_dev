@@ -121,7 +121,6 @@ const actions = {
       commit('SET_FILE_ERROR', false)
     })
   },
-  
 };
 
 const getters = {
