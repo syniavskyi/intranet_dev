@@ -177,7 +177,8 @@
             "advanceAmount": "Advance amount",
             "days": "Number of days"
         },
-        "addModule": "Select module"   
+        "addModule": "Select module",
+        "addIndustry": "Select industry"
     },
     "news": {
         "monday": "Monday",

@@ -42,8 +42,8 @@
                             <select class="select-login" v-model="selectedLang">
                                 <option v-for="language in languageList" :key="language.id" :value="language.id">{{ language.description }}</option>
                             </select>
-                    </div> 
-                    <transition name="show-alert"> 
+                    </div>
+                    <transition name="show-alert">
                         <p class="login-error" v-if="loginError">{{ $t("message.loginError") }}</p>
                     </transition>
 
@@ -57,77 +57,77 @@
 </template>
 
 <script>
-    import { required, minLength, email } from 'vuelidate/lib/validators'
-    import Icon from 'vue-awesome/components/Icon'
-    import { mapGetters } from 'vuex'
-    import i18n from '../../lang/lang'
+import { required, minLength, email } from "vuelidate/lib/validators";
+import Icon from "vue-awesome/components/Icon";
+import { mapGetters } from "vuex";
+import i18n from "../../lang/lang";
 
-	export default {
-	    name: 'Login',
-	    data () {
-	        return {
-                username: '',
-                password: '',
-                showRemindPassword: false,
-                isLoading: false,
-                passwordFieldType: 'password',
-                eyeType: 'eye',
-                email:'',
-                selectedLang: i18n.locale
-            }
-        },
-        watch: {
-            selectedLang(newVal) {
-                this.setLanguage(newVal)
-            }
-        },
-        beforeCreate() {
-            this.$store.commit('DISPLAY_MENU', false)
-        },
-        components: { Icon },
-        validations: {
-            password: { required, minLen: minLength(8) },
-            username: { required },
-            email: { required, email }
-        },
-        methods: {
-            onSubmit() {
-                this.isLoading = true
-                this.$store.dispatch('login', {
-                    username: this.username,
-                    password: this.password
-                })
-                this.isLoading = false
-            },
-            switchForgotPassword() {
-                this.showRemindPassword = !this.showRemindPassword
-            },
-            switchPasswordVisibility() {
-                this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
-                this.eyeType = this.eyeType === 'eye' ? 'eye-slash' : 'eye'
-            },
-            onResetPassword(){ 
-                this.$store.dispatch('sendEmailWithPass', this.email)
-            },
-            setLanguage(language) {
-                this.$store.dispatch('setLanguage', language)
-            }
-        },
-        computed: {
-            ...mapGetters({
-                loginError: 'isLoginError',
-                sendEmailSuccess: 'isSendEmailSuccess',
-                sendEmailError: 'isSendEmailError',
-                newPAssword: 'password',
-                languageList: 'languageList'
-            })
-        },
-        created() {
-            this.$store.dispatch('tryAutoLogin')
-        }
-	}
+export default {
+  name: "Login",
+  data() {
+    return {
+      username: "",
+      password: "",
+      showRemindPassword: false,
+      isLoading: false,
+      passwordFieldType: "password",
+      eyeType: "eye",
+      email: "",
+      selectedLang: i18n.locale
+    };
+  },
+  watch: {
+    selectedLang(newVal) {
+      this.setLanguage(newVal);
+    }
+  },
+  beforeCreate() {
+    this.$store.commit("DISPLAY_MENU", false);
+  },
+  components: { Icon },
+  validations: {
+    password: { required, minLen: minLength(6) },
+    username: { required },
+    email: { required, email }
+  },
+  methods: {
+    onSubmit() {
+      this.isLoading = true;
+      this.$store.dispatch("login", {
+        username: this.username,
+        password: this.password
+      });
+      this.isLoading = false;
+    },
+    switchForgotPassword() {
+      this.showRemindPassword = !this.showRemindPassword;
+    },
+    switchPasswordVisibility() {
+      this.passwordFieldType =
+        this.passwordFieldType === "password" ? "text" : "password";
+      this.eyeType = this.eyeType === "eye" ? "eye-slash" : "eye";
+    },
+    onResetPassword() {
+      this.$store.dispatch("sendEmailWithPass", this.email);
+    },
+    setLanguage(language) {
+      this.$store.dispatch("setLanguage", language);
+    }
+  },
+  computed: {
+    ...mapGetters({
+      loginError: "isLoginError",
+      sendEmailSuccess: "isSendEmailSuccess",
+      sendEmailError: "isSendEmailError",
+      newPAssword: "password",
+      languageList: "languageList"
+    })
+  },
+  created() {
+    this.$store.dispatch("tryAutoLogin");
+  }
+};
 </script>
 
 <style scoped>
-
 </style>

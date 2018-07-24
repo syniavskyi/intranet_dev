@@ -32,7 +32,7 @@ const actions = {
     commit,
     dispatch
   }, authData) {
-    commit('CLEAR_AUTH_DATA');
+    // commit('CLEAR_AUTH_DATA');
     const md5 = require('js-md5')
     var hashedPassword = md5(authData.password)
     var params = new URLSearchParams()
@@ -43,13 +43,17 @@ const actions = {
       method: 'post',
       url: 'oauth/token',
       auth: {
-        username: 'vuejs-client',
-        password: 'password'
+        // username: 'vuejs-client',
+        // password: 'password'
+        username: 'psy',
+        password: 'ides01'
       },
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       },
-      data: params
+      // "X-CSRF-Token":"Fetch"
+      // ,
+      // data: params
     }).then(res => {
       console.log(res)
       commit('SET_LOGIN_ERROR', false)
@@ -68,7 +72,10 @@ const actions = {
       commit('SET_LOGIN_ERROR', true)
     })
   },
-  getUserId({commit, dispatch}) {
+  getUserId({
+    commit,
+    dispatch
+  }) {
     var URL = '/api/getIdByToken?access_token=' + localStorage.getItem('token');
 
     axios.get(URL).then(res => {
@@ -78,14 +85,17 @@ const actions = {
       dispatch('showStarterPage');
     })
   },
-  showStarterPage({commit, state}) {
+  showStarterPage({
+    commit,
+    state
+  }) {
     var URL = '/api/users/' + state.userId + '/showStarterPage';
 
     axios.get(URL).then(res => {
       const data = res.data;
 
       // console.log(data);
-      if(data) {
+      if (data) {
         router.replace('/starterpage')
       } else {
         router.replace('/dashboard')
@@ -151,8 +161,6 @@ const actions = {
       console.log(error)
     })
   },
-
-
 }
 
 const getters = {

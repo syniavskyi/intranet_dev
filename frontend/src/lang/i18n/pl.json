@@ -178,7 +178,8 @@
             "advanceAmount": "Kwota zaliczki",
             "days": "Liczba dni"
         },
-        "addModule": "Wybierz moduł z listy"  
+        "addModule": "Wybierz moduł z listy",
+        "addIndustry": "Wybierz branżę z listy"
     },
     "news": {
         "monday": "Poniedziałek",
