@@ -120,7 +120,7 @@ const actions = {
           console.log(res)
       }).catch(error => {
         console.log(error)
-      })  
+      })
   },
   getProjectsList({commit}) {
     axios.get("/api/projectList").then(res => {
@@ -129,7 +129,7 @@ const actions = {
 
       }).catch(error => {
         console.log(error)
-      })  
+      })
   },
   getContractorsList({commit}) {
     axios.get("/api/cotractorsList").then(res => {
@@ -137,33 +137,66 @@ const actions = {
           console.log(res)
       }).catch(error => {
         console.log(error)
-      })  
+      })
   },
   getUsersData({
     commit
   }) {
     // axios.get("/api/users")
-    axios.get("Contractors")
-      .then(res => {
-        const data = res.data,
-          aData = [];
+    axios({
+      method: 'GET',
+      url: 'Contractors',
+      auth: {
+        // username: 'vuejs-client',
+        // password: 'password'
+        username: 'psy',
+        password: 'ides01'
+      },
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      },
+    }).then(res => {
+      console.log(res);
+      // const data = res.data,
+      //   aData = [];
 
-        for (let key in data) {
-          const user = data[key];
-          user.id = user.id
-          user.section = user.userDetails[0].section
-          user.depName = user.deps[0] ? user.deps[0].depName : "";
-          user.roleName = user.roles[0] ? user.roles[0].name.slice(user.roles[0].name.indexOf("_") + 1, user.roles[0].name.length) : "";
-          // user.email = user.email ? user.email : "";
-          user.firstName = user.userInfo[0] ? user.userInfo[0].firstName : "";
-          user.lastName = user.userInfo[0] ? user.userInfo[0].lastName : "";
-          user.email = user.userContacts[0] ? user.userContacts[0].email : "";
-          user.phone = user.userContacts[0] ? user.userContacts[0].phone : "";
+      // for (let key in data) {
+      //   const user = data[key];
+      //   user.id = user.id
+      //   user.section = user.userDetails[0].section
+      //   user.depName = user.deps[0] ? user.deps[0].depName : "";
+      //   user.roleName = user.roles[0] ? user.roles[0].name.slice(user.roles[0].name.indexOf("_") + 1, user.roles[0].name.length) : "";
+      //   // user.email = user.email ? user.email : "";
+      //   user.firstName = user.userInfo[0] ? user.userInfo[0].firstName : "";
+      //   user.lastName = user.userInfo[0] ? user.userInfo[0].lastName : "";
+      //   user.email = user.userContacts[0] ? user.userContacts[0].email : "";
+      //   user.phone = user.userContacts[0] ? user.userContacts[0].phone : "";
 
-          aData.push(user);
-        }
-        commit('GET_USER_LIST', aData);
-      })
+      //   aData.push(user);
+      // }
+      // commit('GET_USER_LIST', aData);
+    })
+    // axios.get("Contractors")
+      // .then(res => {
+      //   const data = res.data,
+      //     aData = [];
+
+      //   for (let key in data) {
+      //     const user = data[key];
+      //     user.id = user.id
+      //     user.section = user.userDetails[0].section
+      //     user.depName = user.deps[0] ? user.deps[0].depName : "";
+      //     user.roleName = user.roles[0] ? user.roles[0].name.slice(user.roles[0].name.indexOf("_") + 1, user.roles[0].name.length) : "";
+      //     // user.email = user.email ? user.email : "";
+      //     user.firstName = user.userInfo[0] ? user.userInfo[0].firstName : "";
+      //     user.lastName = user.userInfo[0] ? user.userInfo[0].lastName : "";
+      //     user.email = user.userContacts[0] ? user.userContacts[0].email : "";
+      //     user.phone = user.userContacts[0] ? user.userContacts[0].phone : "";
+
+      //     aData.push(user);
+      //   }
+      //   commit('GET_USER_LIST', aData);
+      // })
       .catch(function (error) {
         alert('brak połączenia');
       });
