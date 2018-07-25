@@ -23,6 +23,9 @@
                   <!-- <li v-for="attr in todos"> -->
                     <!-- :key='attr.key' -->
                     {{ attr.customData.eventName }}, {{ attr.customData.time }}: {{ attr.customData.description }}
+                    {{ attr.customData.dateTo }}
+                    {{ attr.customData.priority }}
+                    {{ attr.customData.eventType }}
                     <button @click="editEvent(attr.customData, $t)">Edytuj</button>
                     <button>Usuń</button>
                     <!-- <slot v-bind:attr="attr">
@@ -33,6 +36,32 @@
                 </ul>
               </div>
             </div>
+             <div class="filters" v-if="permition">
+                <div class="filter">
+                    <label class="filter-label">{{ $t("label.branch") }}</label>
+                    <select class="filter-select" v-model="branch" @blur="$v.branch.$touch()">
+                      <option>Wysoki</option>
+                      <option>Średni</option>
+                      <option>Niski</option>
+                    </select>
+                </div>
+                <div class="filter">
+                    <label class="filter-label">{{ $t("label.department") }}</label>
+                    <select class="filter-select" v-model="departments" @blur="$v.department.$touch()">
+                      <option>Wysoki</option>
+                      <option>Średni</option>
+                      <option>Niski</option>
+                    </select>
+                </div>
+                <div class="filter">
+                    <label class="filter-label">{{ $t("label.employee") }}</label>
+                    <select class="filter-select" v-model="employee" @blur="$v.employee.$touch()">
+                      <option>Wysoki</option>
+                      <option>Średni</option>
+                      <option>Niski</option>
+                    </select>
+                </div>
+             </div>
             <!-- Modal for add event -->
               <transition name="slide-backdrop">
                 <div class="backdrop" v-if="dialogEvent"></div>
@@ -51,6 +80,10 @@
                    <div class="event-feature">
                       <label class="modal-label">{{ $t("label.eventTime") }}</label>
                         <input class="modal-input input-active" type="time" v-model="eventTime" @blur="$v.eventTime.$touch()">
+                  </div>
+                  <div class="event-feature">
+                      <label class="modal-label">{{ $t("label.endDate") }}</label>
+                        <input class="modal-input input-active" type="date" v-model="dateTo2" @blur="$v.dateTo2.$touch()">
                   </div>
                   <div class="event-feature">
                      <label class="modal-label">{{ $t("label.eventDescription") }}</label>
@@ -144,7 +177,8 @@ export default {
         {
           id: 1,
           description: 'Clean the house.',
-          date: new Date(2018, 4, 15),
+          date: new Date(2018, 6, 25),
+          dateTo: new Date(2018, 6, 27),
           // dates: {
           //   start: new Date('1/1/2018'),
           //   monthlyInterval: 2,           // Every other month
@@ -156,13 +190,15 @@ export default {
         {
           id: 2,
           description: 'Meeting.',
-          date: new Date(2018, 4, 15),
+          date: new Date(2018, 6, 15),
+          dateTo:  new Date(2018, 6, 18),
           isCompleted: false,
           color: 'pink'
         }
       ],
       eventDescription: '',
       eventTime: null,
+      dateTo2: null,
       eventName: '',
       eventType: '',
       priority: '',
@@ -171,8 +207,9 @@ export default {
       branch: {},
       departments: ['fiori', 'abap'],
       employee: {},
+      privacy: '',
       isSelected: false,
-      privacy: ''
+      permition: false
 
       // attributes: [
       //   {
@@ -191,20 +228,26 @@ export default {
     eventName: {
       required
     },
-    eventTime: {
-      required
-    },
+    // eventTime: {
+    //   required
+    // },
     priority: {
       required
     },
     eventType: {
+      required
+    },
+    privacy: {
       required
     }
   },
   beforeCreate() {
     if (this.$store.getters.idDataLoaded === false) {
       this.$store.dispatch('loadData', localStorage.getItem('token'));
-    }
+    };
+  },
+  created() {
+    this.checkRole();
   },
   computed: {
     attributes() {
@@ -215,7 +258,12 @@ export default {
         dot: {
           backgroundColor: t.color
         },
-        dates: t.date,
+        highlight: {
+           backgroundColor: t.color
+        },
+        dates: {
+          start: t.date, end: t.dateTo
+        },
         customData: t,
         popover: {
           label: t.description
@@ -261,7 +309,7 @@ export default {
       // delete request
     },
     addNewEvent() {
-      var oEvent = {
+      const oEvent = {
         description: this.eventDescription,
         date: new Date(this.selectedValue.getFullYear(), this.selectedValue.getMonth(), this.selectedValue.getDate()),
         color: this.eventColor,
@@ -269,7 +317,12 @@ export default {
         time: this.eventTime,
         eventName: this.eventName,
         eventType: this.eventType
-      };
+      }
+      if(this.dateTo2) {
+        oEvent.dateTo = new Date(this.dateTo2.slice(0,4), (this.dateTo2.slice(5,7)-1), this.dateTo2.slice(8,10))
+      } else {
+        oEvent.dateTo = new Date(this.selectedValue.getFullYear(), this.selectedValue.getMonth(), this.selectedValue.getDate())
+      }
       this.todos.push(oEvent);
       this.performDialog();
       Object.assign(this.$data, this.resetFormData());
@@ -278,6 +331,12 @@ export default {
       this.$store.dispatch("setColorPriority", {
         priority: this.priority
       });
+    },
+    checkRole() {
+      let role = 'BO';
+      if (role == 'BO' || role == 'Board'){
+        this.permition = true;
+      }
     }
   }
 };
