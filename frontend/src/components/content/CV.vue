@@ -143,17 +143,17 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import moment from "moment"
+import { mapGetters } from "vuex";
+import moment from "moment";
 
 export default {
-    computed: {
-    ...mapGetters({
-      userEducation: "getUserEducation",
-      userProjects: "getUserProjectsList",
-      userExperience: "getUserExperience",
-      userData: 'userData'
-    })
+  data() {
+    return {
+      userInfo: {}
+    }
+  },
+  beforeCreate() {
+    this.$store.dispatch("getUserInfo");
   },
   methods: {
     generateCV() {
@@ -189,7 +189,18 @@ export default {
         ? moment(date).format("YYYY")
         : "-";
     },
-  }
+  },
+  computed: {
+    ...mapGetters({
+      userEducation: "getUserEducation",
+      userProjects: "getUserProjectsList",
+      userExperience: "getUserExperience",
+      userData: "userData"
+    }),
+    returnUserInfo() {
+      return this.$store.getters.userInfo;
+    }
+  },
 };
 </script>
 <style>
@@ -203,9 +214,7 @@ td {
 }
 
 .cv-table-header {
-    text-align: left;
-    background-color: lightgray; 
+  text-align: left;
+  background-color: lightgray;
 }
 </style>
-
-
