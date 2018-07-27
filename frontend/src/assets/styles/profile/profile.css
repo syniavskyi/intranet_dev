@@ -234,6 +234,21 @@
     flex-grow: 1;
 }
 
+.prof-tile-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+    /* align-items: center; */
+}
+
+.prof-div-row {
+    display: flex;
+    /* justify-content: space-around; */
+    align-items: center;
+    margin: .5rem;
+}
+
 .profile-table-wrapper {
     height: 100%;
     width: 100%;

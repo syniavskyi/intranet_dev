@@ -12,8 +12,9 @@
                         <div class="tile-underscore"></div>
                     </div>
                     <!-- remove style after adding appropriate classes, it is only for testing purposes  -->
-                    <div>
-                        <div v-for="(experience, index) in userExperience" :key='index'>
+                    <div class="profile-tile-content">
+                      <div class="prof-tile-column">
+                        <div class="prof-div-row" v-for="(experience, index) in userExperience" :key='index'>
                             <p v-if="!editMode"> {{ formatDate(experience.DateStart) }} </p>
                             <v-date-picker :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateStart">
                                 <input value="" />
@@ -27,11 +28,22 @@
                             </div>
                             <input :disabled="!editMode" type="checkbox" @change="disableEndDateInput" id="checkbox" :name="index" v-model="experience.isCurrent" />
                             <label for="checkbox">Obecnie</label>
-                            <input :disabled="!editMode" v-model="experience.Employer"/>
-                            <input :disabled="!editMode" v-model="experience.WorkPos"/>
+                            <div class="prof-input-s">
+                              <input required v-if="editMode" class="inputProfile inputEdit" v-model="experience.Employer">
+                              <input class="inputProfile inputDisabled" v-if="!editMode" v-model="experience.Employer"/>
+                              <span class="prof-div-bar"></span>
+                              <label class="label-profile">Pracodawca</label>
+                            </div>
+                            <div class="prof-input-s">
+                              <input required v-if="editMode" class="inputProfile inputEdit" v-model="experience.WorkPos">
+                              <input class="inputProfile inputDisabled" v-if="!editMode" v-model="experience.WorkPos"/>
+                              <span class="prof-div-bar"></span>
+                              <label class="label-profile">Pracodawca</label>
+                            </div>
                             <button v-if="editMode">&#x2714;</button>
                             <button v-if="editMode" @click="removeUserExperience(index)">X</button>
                         </div>
+                      </div>
                     </div>
     </div>
 </template>
