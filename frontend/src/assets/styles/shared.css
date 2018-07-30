@@ -338,7 +338,10 @@ li:hover p {
     align-self: center;
     position: relative;
     font-size: 18px;
+    align-items: center;
+    justify-content: center;
 }
+.checkbox-margin {margin-right:.5rem}
 .checkbox-wrap input {
     opacity: 0;
 }

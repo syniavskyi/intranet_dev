@@ -15,19 +15,30 @@
                     <div class="profile-tile-content">
                       <div class="prof-tile-column">
                         <div class="prof-div-row" v-for="(experience, index) in userExperience" :key='index'>
-                            <p v-if="!editMode"> {{ formatDate(experience.DateStart) }} </p>
-                            <v-date-picker :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateStart">
-                                <input value="" />
-                            </v-date-picker>
+                          <div class="prof-div-date">
+                            <p class="prof-date-label" v-if="!editMode"> {{ formatDate(experience.DateStart) }} </p>
+                            <div v-if="editMode" class="prof-input-xxs">
+                              <v-date-picker class="prof-input-date" :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateStart">
+                                  <input value="" />
+                              </v-date-picker>
+                              <label v-if="editMode">Do</label>
+                            </div>
                             <span>-</span>
                             <div name="endDateDiv" :id="index">
-                                <p v-if="!editMode"> {{ formatDate(experience.DateEnd) }} </p>
-                                <v-date-picker popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateEnd">
+                              <p class="prof-date-label" v-if="!editMode"> {{ formatDate(experience.DateEnd) }} </p>
+                              <div v-if="editMode" class="prof-input-xxs">
+                                <v-date-picker class="prof-input-date" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateEnd">
                                     <input value="experience.DateEnd" />
                                 </v-date-picker>
+                                <label v-if="editMode">Do</label>
+                              </div>
                             </div>
-                            <input :disabled="!editMode" type="checkbox" @change="disableEndDateInput" id="checkbox" :name="index" v-model="experience.isCurrent" />
-                            <label for="checkbox">Obecnie</label>
+                            <label class="checkbox-wrap">
+                              <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="experience.isCurrent" />
+                              <div class="checkbox-in"></div>
+                              <p style="padding:0;margin:0;">Obecnie</p>
+                            </label>
+                          </div>
                             <div class="prof-input-s">
                               <input required v-if="editMode" class="inputProfile inputEdit" v-model="experience.Employer">
                               <input class="inputProfile inputDisabled" v-if="!editMode" v-model="experience.Employer"/>
@@ -40,8 +51,8 @@
                               <span class="prof-div-bar"></span>
                               <label class="label-profile">Pracodawca</label>
                             </div>
-                            <button v-if="editMode">&#x2714;</button>
-                            <button v-if="editMode" @click="removeUserExperience(index)">X</button>
+                            <button class="prof-row-btn" v-if="editMode">&#x2714;</button>
+                            <button class="prof-row-btn" v-if="editMode" @click="removeUserExperience(index)">X</button>
                         </div>
                       </div>
                     </div>
