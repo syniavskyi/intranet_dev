@@ -239,10 +239,11 @@
                         </div>
                     </div>
                 </div>
+                </div>
                 <user-education-component></user-education-component>
                 <user-experience-component></user-experience-component>
                 <user-projects-component></user-projects-component>
-                </div>
+                
             </div>
         </div>
     </div>

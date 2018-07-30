@@ -18,13 +18,13 @@
 
             <p v-if="!editMode"> {{ formatDate(education.DateStart) }} </p>
             <v-date-picker :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateStart">
-              <input value="education.DateStart" />
+              <input value="education.DateStart" >
             </v-date-picker>
             <span>-</span>
             <div name="endDateDiv" :id="index">
               <p v-if="!editMode"> {{ formatDate(education.DateEnd) }} </p>
               <v-date-picker popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateEnd">
-                <input value="education.DateEnd" />
+                <input value="education.DateEnd" >
               </v-date-picker>
             </div>
 
@@ -37,24 +37,26 @@
             <span class="prof-div-bar"></span>
             <label class="label-profile">Kierunek</label>
           </div>
-          <div class="prof-input-s">
+          <div class="prof-input-xs">
             <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.University"/>
             <!-- :disabled="!editMode" -->
             <input class="inputProfile inputDisabled" v-if="!editMode" v-model="education.University"/>
             <span class="prof-div-bar"></span>
-            <label class="label-profile">Kierunek</label>
+            <label class="label-profile">Uczelnia</label>
           </div>
-          <div class="prof-input-s">
+          <div class="prof-input-xs">
             <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.StudyType"/>
             <input class="inputProfile inputDisabled" v-if="!editMode" v-model="education.StudyType"/>
             <!-- :disabled="!editMode" -->
             <span class="prof-div-bar"></span>
-            <label class="label-profile">Kierunek</label>
+            <label class="label-profile">Tryb Studiów</label>
           </div>
-          <div class="prof-input-s">
+          <div class="prof-input-xs">
             <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.AcademicTitle"/>
             <input class="inputProfile inputDisabled" v-if="!editMode" v-model="education.AcademicTitle"/>
             <!-- :disabled="!editMode -->
+            <span class="prof-div-bar"></span>
+            <label class="label-profile">Stopień</label>
           </div>
           <button v-if="editMode">&#x2714;</button>
           <button v-if="editMode" @click="removeUserEducation(index)">X</button>
@@ -117,10 +119,13 @@ export default {
         input = document.getElementById(index);
 
       if (isCurrent) {
-        input.setAttribute("style", "opacity: 0");
+        // input.setAttribute("style", "opacity: 0");
+        input.setAttribute("style", "display: none;")
         this.userEducation[index].DateEnd = null;
       } else {
-        input.setAttribute("style", "opacity: 1");
+        // input.setAttribute("style", "opacity: 1");
+        input.setAttribute("style", "display: flex;");
+
       }
     },
   }
