@@ -23,7 +23,6 @@
                             <button class="del-generate-pdf" @click="generatePdf">GENERUJ PDF</button>
                         </div>
                         <div class="delegations-tile-underscore"></div>
-                        
                     </div>
                     <div class="delegations-tile-content delegations-tile-content-1">
                         <div class="delegations-inputs-section">

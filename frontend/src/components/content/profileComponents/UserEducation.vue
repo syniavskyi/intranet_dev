@@ -15,21 +15,30 @@
     <div class="profile-tile-content">
       <div class="prof-tile-column">
         <div class="prof-div-row" v-for="(education, index) in userEducation" :key='index'>
-
-            <p v-if="!editMode"> {{ formatDate(education.DateStart) }} </p>
-            <v-date-picker :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateStart">
-              <input value="education.DateStart" >
-            </v-date-picker>
-            <span>-</span>
-            <div name="endDateDiv" :id="index">
-              <p v-if="!editMode"> {{ formatDate(education.DateEnd) }} </p>
-              <v-date-picker popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateEnd">
-                <input value="education.DateEnd" >
+          <div class="prof-div-date">
+            <p class="prof-date-label" v-if="!editMode"> {{ formatDate(education.DateStart) }} </p>
+            <div class="prof-input-xxs">
+              <v-date-picker class="prof-input-date" :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateStart">
+                <input value="education.DateStart" >
               </v-date-picker>
+              <label v-if="editMode">Od</label>
             </div>
-
-          <input :disabled="!editMode" type="checkbox" @change="disableEndDateInput" id="checkbox" :name="index" v-model="education.isCurrent" />
-          <label for="checkbox">Obecnie</label>
+            <span class="prof-span-0">-</span>
+            <div name="endDateDiv" :id="index">
+              <p class="prof-date-label" v-if="!editMode"> {{ formatDate(education.DateEnd) }} </p>
+              <div v-if="editMode" class="prof-input-xxs">
+                <v-date-picker class="prof-input-date" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateEnd">
+                  <input value="education.DateEnd" >
+                </v-date-picker>
+                <label v-if="editMode">Do</label>
+              </div>
+            </div>
+            <label class="checkbox-wrap">
+              <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="education.isCurrent"/>
+              <div class="checkbox-in"></div>
+              <p style="padding:0;margin:0;">Obecnie</p> 
+            </label>
+          </div>
           <div class="prof-input-s"> 
             <input required v-if="editMode" class="inputProfile inputEdit" v-model="education.FieldOfStudy">
             <input class="inputProfile inputDisabled" v-if="!editMode" v-model="education.FieldOfStudy"/>
@@ -58,8 +67,8 @@
             <span class="prof-div-bar"></span>
             <label class="label-profile">Stopień</label>
           </div>
-          <button v-if="editMode">&#x2714;</button>
-          <button v-if="editMode" @click="removeUserEducation(index)">X</button>
+          <button class="prof-row-btn" v-if="editMode">&#x2714;</button>
+          <button class="prof-row-btn" v-if="editMode" @click="removeUserEducation(index)">X</button>
         </div>
       </div>
     </div>
