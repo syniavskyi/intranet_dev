@@ -109,8 +109,8 @@
               </tr>
             </table>
 
-            <!-- <h3 style="font-weight: normal; margin-bottom:1rem; padding:0; border-bottom: 2px solid #E79600; text-transform: uppercase; font-family: 'Arial';">Doświadczenie SAP</h3> -->
-            <!-- <table>
+            <h3 style="font-weight: normal; margin-bottom:1rem; padding:0; border-bottom: 2px solid #E79600; text-transform: uppercase; font-family: 'Arial';">Doświadczenie SAP</h3>
+            <table>
               <tr>
                 <td width="45%" style="font-family: 'Arial'; font-weight: bold;">Doświadczenie Modułowe SAP</td>
                 <td>SD, MM, FI, PP QM</td>
@@ -131,7 +131,7 @@
                 <td style="font-family: 'Arial'; font-weight: bold;">Dodatkowe doświadczenie</td>
                 <td>Autoryzacja, Role użytkowników</td>
               </tr>
-            </table> -->
+            </table>
         </td>
       </tr>
     </table>

@@ -4,8 +4,8 @@ import router from '@/router/index.js'
 
 const state = {
     userEducation: [
-        {DateStart: 'Wed May 02 2016 00:00:00 GMT+0200 (Środkowoeuropejski czas letni)', DateEnd: 'Wed May 02 2017 00:00:00 GMT+0200 (Środkowoeuropejski czas letni)', AcademicTitle: 'Licencjat', FieldOfStudy: 'Zarządzanie', University: 'Politechnika', isCurrent: false, StudyType: 'Tryb dzienny'},
-        {DateStart: 'Wed May 02 2015 00:00:00 GMT+0200 (Środkowoeuropejski czas letni)', DateEnd: 'Wed May 02 2018 00:00:00 GMT+0200 (Środkowoeuropejski czas letni)', AcademicTitle: 'Licencjat', FieldOfStudy: 'Informatyka w biznesie', University: 'Ekonomiczny', isCurrent: false, StudyType: 'Tryb zaoczny'}
+        {DateStart: new Date("2016","05","02"), DateEnd: new Date("2017","05","02"), AcademicTitle: 'Licencjat', FieldOfStudy: 'Zarządzanie', University: 'Politechnika', isCurrent: false, StudyType: 'Tryb dzienny'},
+        {DateStart: new Date("2017","05","02"), DateEnd: new Date("2018","05","02"), AcademicTitle: 'Licencjat', FieldOfStudy: 'Informatyka w biznesie', University: 'Ekonomiczny', isCurrent: false, StudyType: 'Tryb zaoczny'}
     ],
     showEducationError: false
 }
