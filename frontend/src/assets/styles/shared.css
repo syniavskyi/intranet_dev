@@ -395,6 +395,16 @@ li:hover p {
     transform: rotate(45deg);
 }
 
+/* Grey out checkbox in Profile Tile experience */
+.checkbox-margin:disabled:not(:checked),
+.checkbox-margin:disabled:not(:checked) ~ div,
+.checkbox-margin:disabled:not(:checked) ~ p {
+    display: none;
+    color: #ccc;
+}
+
+/* background: linear-gradient(to right, #ffffff 0%,#e5e5e5 10%,#e5e5e5 90%,#ffffff 100%); */
+
   @keyframes slide-in {
     from {
       transform: translateY(-30px);
