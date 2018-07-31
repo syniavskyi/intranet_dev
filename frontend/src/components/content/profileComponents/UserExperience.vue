@@ -14,16 +14,16 @@
                     <!-- remove style after adding appropriate classes, it is only for testing purposes  -->
                     <div class="profile-tile-content">
                       <div class="prof-tile-column">
-                        <div class="prof-div-row" v-for="(experience, index) in userExperience" :key='index'>
-                          <div class="prof-div-date">
+                        <div id="prof-user-exp" class="prof-div-row" v-for="(experience, index) in userExperience" :key='index'>
+                          <div :class="editMode ? 'prof-row-dates' : 'prof-row-dates-s'">
                             <p class="prof-date-label" v-if="!editMode"> {{ formatDate(experience.DateStart) }} </p>
                             <div v-if="editMode" class="prof-input-xxs">
                               <v-date-picker class="prof-input-date" :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateStart">
-                                  <input value="" />
+                                  <input value="experience.DateStart" />
                               </v-date-picker>
                               <label v-if="editMode">Do</label>
                             </div>
-                            <span>-</span>
+                            <span class="prof-span-0">&#8212;</span>
                             <div name="endDateDiv" :id="index">
                               <p class="prof-date-label" v-if="!editMode"> {{ formatDate(experience.DateEnd) }} </p>
                               <div v-if="editMode" class="prof-input-xxs">
@@ -39,20 +39,24 @@
                               <p style="padding:0;margin:0;">Obecnie</p>
                             </label>
                           </div>
+                          <div class="prof-row-inputs">
                             <div class="prof-input-s">
                               <input required v-if="editMode" class="inputProfile inputEdit" v-model="experience.Employer">
-                              <input class="inputProfile inputDisabled" v-if="!editMode" v-model="experience.Employer"/>
+                              <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="experience.Employer"/>
                               <span class="prof-div-bar"></span>
                               <label class="label-profile">Pracodawca</label>
                             </div>
                             <div class="prof-input-s">
                               <input required v-if="editMode" class="inputProfile inputEdit" v-model="experience.WorkPos">
-                              <input class="inputProfile inputDisabled" v-if="!editMode" v-model="experience.WorkPos"/>
+                              <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="experience.WorkPos"/>
                               <span class="prof-div-bar"></span>
                               <label class="label-profile">Pracodawca</label>
                             </div>
+                          </div>
+                          <div class="prof-row-btns">
                             <button class="prof-row-btn" v-if="editMode">&#x2714;</button>
                             <button class="prof-row-btn" v-if="editMode" @click="removeUserExperience(index)">X</button>
+                          </div>
                         </div>
                       </div>
                     </div>

@@ -15,22 +15,23 @@
     <div class="profile-tile-content">
       <div class="prof-tile-column">
         <div class="prof-div-row" v-for="(education, index) in userEducation" :key='index'>
-          <div class="prof-div-date">
+          <div :class="editMode ? 'prof-row-dates' : 'prof-row-dates-s'">
             <p class="prof-date-label" v-if="!editMode"> {{ formatDate(education.DateStart) }} </p>
-            <div class="prof-input-xxs">
+            <div v-if="editMode" class="prof-input-xxs">
               <v-date-picker class="prof-input-date" :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateStart">
                 <input value="education.DateStart" >
               </v-date-picker>
               <label v-if="editMode">Od</label>
             </div>
-            <span class="prof-span-0">-</span>
+            <span class="prof-span-0">&#8212;</span>
+            <!-- &#9472; -->
             <div name="endDateDiv" :id="index">
               <p class="prof-date-label" v-if="!editMode"> {{ formatDate(education.DateEnd) }} </p>
               <div v-if="editMode" class="prof-input-xxs">
                 <v-date-picker class="prof-input-date" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateEnd">
                   <input value="education.DateEnd" >
                 </v-date-picker>
-                <label v-if="editMode">Do</label>
+                <label>Do</label>
               </div>
             </div>
             <label class="checkbox-wrap">
@@ -39,36 +40,44 @@
               <p style="padding:0;margin:0;">Obecnie</p> 
             </label>
           </div>
-          <div class="prof-input-s"> 
-            <input required v-if="editMode" class="inputProfile inputEdit" v-model="education.FieldOfStudy">
-            <input class="inputProfile inputDisabled" v-if="!editMode" v-model="education.FieldOfStudy"/>
-             <!-- :disabled="!editMode" -->
-            <span class="prof-div-bar"></span>
-            <label class="label-profile">Kierunek</label>
+          <div class="prof-row-inputs">
+            <div class="prof-inputs-div">
+              <div class="prof-input-l"> 
+                <input required v-if="editMode" class="inputProfile inputEdit" v-model="education.FieldOfStudy">
+                <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="education.FieldOfStudy"/>
+                <!-- :disabled="!editMode" -->
+                <span class="prof-div-bar"></span>
+                <label class="label-profile">Kierunek</label>
+              </div>
+              <div class="prof-input-l">
+                <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.University"/>
+                <!-- :disabled="!editMode" -->
+                <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="education.University"/>
+                <span class="prof-div-bar"></span>
+                <label class="label-profile">Uczelnia</label>
+              </div>
+            </div>
+            <div class="prof-inputs-div">
+              <div class="prof-input-xs">
+                <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.StudyType"/>
+                <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="education.StudyType"/>
+                <!-- :disabled="!editMode" -->
+                <span class="prof-div-bar"></span>
+                <label class="label-profile">Tryb Studiów</label>
+              </div>
+              <div class="prof-input-xs">
+                <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.AcademicTitle"/>
+                <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="education.AcademicTitle"/>
+                <!-- :disabled="!editMode -->
+                <span class="prof-div-bar"></span>
+                <label class="label-profile">Stopień</label>
+              </div>
+            </div>
           </div>
-          <div class="prof-input-xs">
-            <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.University"/>
-            <!-- :disabled="!editMode" -->
-            <input class="inputProfile inputDisabled" v-if="!editMode" v-model="education.University"/>
-            <span class="prof-div-bar"></span>
-            <label class="label-profile">Uczelnia</label>
+          <div class="prof-row-btns">
+            <button class="prof-row-btn" v-if="editMode">&#x2714;</button>
+            <button class="prof-row-btn" v-if="editMode" @click="removeUserEducation(index)">X</button>
           </div>
-          <div class="prof-input-xs">
-            <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.StudyType"/>
-            <input class="inputProfile inputDisabled" v-if="!editMode" v-model="education.StudyType"/>
-            <!-- :disabled="!editMode" -->
-            <span class="prof-div-bar"></span>
-            <label class="label-profile">Tryb Studiów</label>
-          </div>
-          <div class="prof-input-xs">
-            <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.AcademicTitle"/>
-            <input class="inputProfile inputDisabled" v-if="!editMode" v-model="education.AcademicTitle"/>
-            <!-- :disabled="!editMode -->
-            <span class="prof-div-bar"></span>
-            <label class="label-profile">Stopień</label>
-          </div>
-          <button class="prof-row-btn" v-if="editMode">&#x2714;</button>
-          <button class="prof-row-btn" v-if="editMode" @click="removeUserEducation(index)">X</button>
         </div>
       </div>
     </div>
