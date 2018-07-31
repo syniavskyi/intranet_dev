@@ -2,16 +2,16 @@
   <div id="content">
     <div class="Section1" >
       <!-- header with name and position-->
-    <button @click="generateCV2">Generuj</button>
+    <button @click="generateCV2" v-if="showGenerateBtn" class="profile-edit-experience-e">Zatwierdź i generuj</button>
     <div>
-        <h1 style="text-align:right"> {{ userData.firstName }} {{ userData.lastName }} </h1>
+        <h1 style="text-align:right"  v-show="cvElements.name"> {{ userData.firstName }} {{ userData.lastName }} </h1>
         <h3 style="text-align:right"> {{ userData.position }} </h3>
     </div>
     <table width="100%">
       <tr>
         <td>
           <tr align="right">
-            <h1 style="font-family: 'Arial'">Damian Jankowski</h1>
+            <h1  v-if="cvElements.name" style="font-family: 'Arial'">Damian Jankowski</h1>
             <h2 style="font-family: 'Arial'">Programista Fiori</h2>
           </tr>
         <!-- personal data -->
@@ -25,16 +25,16 @@
                         <td width="42%" style="font-weight: bold; font-family: 'Arial'">Narodowość</td>
                         <td style="font-family: 'Arial'">Polska</td>
                       </tr>
-                      <tr>
+                      <tr v-if="cvElements.date">
                         <td style="font-weight: bold; font-family: 'Arial'">Data urodzenia</td>
                         <td style="font-family: 'Arial'">01.02.1996</td>
                       </tr>
-                      <tr>
+                      <tr  v-if="cvElements.phone">
                         <td style="font-weight: bold; font-family: 'Arial'">{{ $t("label.phone") }}</td>
                         <!-- <td>{{userData.phone}}</td> -->
                         <td style="font-family: 'Arial'">+48 600 374 541</td>
                       </tr>
-                      <tr>
+                      <tr  v-if="cvElements.address">
                         <td style="font-weight: bold; font-family: 'Arial'">{{ $t("label.email") }}</td>
                         <!-- <td>{{userData.email}}</td> -->
                         <td style="font-family: 'Arial'">damian.jankowski@btech.pl</td>
@@ -58,7 +58,7 @@
                     <table width="20%">
                       <tr>
                         <td>
-                          <img id="img" class="img-user-class" src="../../assets/images/hd.jpg"  width="150px">
+                          <img  v-if="cvElements.photo" id="cv-img" class="img-user-class" src="../../assets/images/hd.jpg"  width="150px">
                         </td>
                       </tr>
                     </table>
@@ -156,7 +156,8 @@ import { saveAs } from "file-saver";
 export default {
   data() {
     return {
-      userInfo: {}
+      userInfo: {},
+      showGenerateBtn: true
     };
   },
   beforeCreate() {
@@ -196,6 +197,7 @@ export default {
       document.body.removeChild(link);
     },
     generateCV2() {
+      this.showGenerateBtn = false
       this.convertImagesToBase64();
       // let image  = document.getElementById("img")
       //   this.toDataURL(image.src, function(dataURL) {
@@ -209,7 +211,7 @@ export default {
     },
     convertImagesToBase64() {
       let contentDocument = document.getElementById("content"),
-          image = document.getElementById("img"),
+          image = document.getElementById("cv-img"),
           canvas = document.createElement("canvas"),
           ctx = canvas.getContext("2d"),
           width = image.width,
@@ -250,7 +252,8 @@ toDataURL(src, callback) {
       userEducation: "getUserEducation",
       userProjects: "getUserProjectsList",
       userExperience: "getUserExperience",
-      userData: "userData"
+      userData: "userData",
+      cvElements: "getCvElements"
     }),
     returnUserInfo() {
       return this.$store.getters.userInfo;

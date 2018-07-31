@@ -1,12 +1,22 @@
 import axios from 'axios'
 
 const state = {
-    userInfo: {}
+    userInfo: {},
+    cvElements: {
+        photo: true,
+        address: true,
+        phone: true,
+        date:true,
+        name: true
+    }
 };
 
 const mutations = {
     GET_USER_INFO(state, data) {
         state.userInfo = data;
+    },
+    SET_CV_ELEMENTS(state, data){
+        state.cvElements = data
     }
 };
 
@@ -26,12 +36,37 @@ const actions = {
             let oUserData = res.data.d;
             commit('GET_USER_INFO', oUserData);
         }).catch(error =>{ })
+    },
+    selectAllCvElements({getters, commit}) {
+        let elements = getters.getCvElements
+        elements = {
+                photo: true,
+                address: true,
+                phone: true,
+                date:true,
+                name: true
+        }
+        commit('SET_CV_ELEMENTS', elements);
+    },
+    deselectAllCvElements({getters, commit}) {
+        let elements = getters.getCvElements
+        elements = {
+                photo: false,
+                address: false,
+                phone: false,
+                date:false,
+                name: false
+        }
+        commit('SET_CV_ELEMENTS', elements);
     }
 };
 
 const getters = {
     userInfo(state) {
         return state.userInfo;
+    },
+    getCvElements(state){
+        return state.cvElements
     }
 };
 

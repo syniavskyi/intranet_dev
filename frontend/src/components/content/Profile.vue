@@ -188,8 +188,10 @@
                         <div class="profile-tile-header">
                             <div class="profile-tile-header-row">
                                 <h2 class="prof-tile-h2">{{ $t("label.cv") }}</h2>
+                                <button class="profile-edit-experience-e" @click="showSelectCv = true">Generuj CV</button>
                             </div>
                             <div class="tile-underscore"></div>
+                            
                         </div>
                         <div class="profile-tile-content">
                                 <div class="cv-buttons">
@@ -243,7 +245,7 @@
                 <user-education-component></user-education-component>
                 <user-experience-component></user-experience-component>
                 <user-projects-component></user-projects-component>
-                
+                <select-cv-content v-show="showSelectCv"></select-cv-content>
             </div>
         </div>
     </div>
@@ -255,7 +257,8 @@ import moment from "moment";
 import MaskedInput from "vue-masked-input";
 
 import { required, email } from "vuelidate/lib/validators";
-
+import htmlDocx from "html-docx-js/dist/html-docx";
+import { saveAs } from "file-saver";
 import { mapGetters, mapActions } from "vuex";
 
 import Menu from "../Menu.vue";
@@ -263,7 +266,7 @@ import LeavePageDialog from "../dialogs/LeavePageDialog";
 import UserProjects from "./profileComponents/UserProjects";
 import UserEducation from "./profileComponents/UserEducation";
 import UserExperience from "./profileComponents/UserExperience";
-
+import SelectCvContent from "./profileComponents/SelectCvContent";
 export default {
   data() {
     return {
@@ -277,7 +280,8 @@ export default {
       invalidDate: false,
       disableSaveBtn: true,
       showLeavePageDialog: false,
-      routeToGo: null
+      routeToGo: null,
+      showSelectCv: false
     };
   },
   validations: {
@@ -294,7 +298,8 @@ export default {
     "leave-page-dialog": LeavePageDialog,
     "user-projects-component": UserProjects,
     "user-experience-component": UserExperience,
-    "user-education-component": UserEducation
+    "user-education-component": UserEducation,
+    "select-cv-content": SelectCvContent
   },
   beforeCreate() {
     if (this.$store.getters.isDataLoaded === false) {
@@ -394,7 +399,11 @@ export default {
         this.checkIfDataChanged();
         this.disableSaveBtn = this.hasDataChanged === true ? false : true;
       }
+    },
+    generateCV(){
+
     }
+
 
     // leavePage() {
     //     if (this._beforeEditingProjects){
