@@ -246,6 +246,7 @@
                 <user-experience-component></user-experience-component>
                 <user-projects-component></user-projects-component>
                 <select-cv-content v-show="showSelectCv"></select-cv-content>
+                <div v-show="showSelectCv" class="modal-overlay"></div>    
             </div>
         </div>
     </div>

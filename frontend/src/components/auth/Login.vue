@@ -1,9 +1,9 @@
 <template>
 	<div class="plane-parent plane-parent-login">
-         <transition name="slide-backdrop">
+      <transition name="slide-backdrop">
         <div class="backdrop" v-if="showRemindPassword"></div>
-         </transition>
-          <transition name="slide">
+      </transition>
+      <transition name="slide">
         <div class="modal" v-if="showRemindPassword">
             <div class="modal-header">
                 <h1 class="modal-title">{{ $t("header.forgotPass") }}</h1>
@@ -22,7 +22,7 @@
             </div>
             <button class="button modal-button" :disabled="$v.email.$invalid" type="button" @click="onResetPassword"><span class="span-arrow">{{ $t("button.resetPass") }}</span></button>
         </div>
-        </transition>
+      </transition>
             <div class="plane plane-login">
                 <div class="plane-left">
                     <img class="img-user" src="../../assets/images/grouper-256.png">
