@@ -73,7 +73,6 @@ export default {
         },
         showCv(){            
             this.$store.commit('SET_CV_ELEMENTS', this.cvElements)
-            localStorage.setItem('Object', JSON.stringify(this.cvElements));
             let routeData = this.$router.resolve({name: 'CV'});
             window.open(routeData.href, '_blank');
         }
