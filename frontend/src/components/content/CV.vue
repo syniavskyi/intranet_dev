@@ -162,6 +162,8 @@ export default {
   },
   beforeCreate() {
     this.$store.dispatch("getUserInfo");
+    const retrievedObject = JSON.parse(localStorage.getItem('Object'));
+    this.$store.commit('SET_CV_ELEMENTS', retrievedObject)
   },
 
   methods: {
