@@ -4,8 +4,8 @@ import router from '@/router/index.js'
 
 const state = {
     userExperience: [
-        {DateStart: 'Wed May 02 2016 00:00:00 GMT+0200 (Środkowoeuropejski czas letni)', DateEnd: 'Wed May 02 2017 00:00:00 GMT+0200 (Środkowoeuropejski czas letni)', Employer: 'BTech', WorkPos: 'SAP Fiori Developer', isCurrent: false},
-        {DateStart: 'Wed May 02 2015 00:00:00 GMT+0200 (Środkowoeuropejski czas letni)', DateEnd: 'Wed May 02 2018 00:00:00 GMT+0200 (Środkowoeuropejski czas letni)', Employer: 'BPX', WorkPos: 'Konsultant SAP MM', isCurrent: true}
+        {DateStart: new Date(), DateEnd: new Date(), Employer: 'BTech', WorkPos: 'SAP Fiori Developer', isCurrent: false},
+        {DateStart: new Date(), DateEnd: new Date(), Employer: 'BPX', WorkPos: 'Konsultant SAP MM', isCurrent: true}
     ],
     showExperienceError: false
 }

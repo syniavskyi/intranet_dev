@@ -24,7 +24,7 @@
                               <label v-if="editMode">Do</label>
                             </div>
                             <span class="prof-span-0">&#8212;</span>
-                            <div name="endDateDiv" :id="index">
+                            <div name="endDateDiv" :id="formatId(index)">
                               <p class="prof-date-label" v-if="!editMode"> {{ formatDate(experience.DateEnd) }} </p>
                               <div v-if="editMode" class="prof-input-xxs">
                                 <v-date-picker class="prof-input-date" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateEnd">
@@ -88,6 +88,9 @@ export default {
         JSON.stringify(this.userExperience)
       );
     },
+    formatId(index) {
+      return index +'e'
+    },
     cancel() {
       this.$store.commit("SET_EXPERIENCE_ERROR", false);
       this.$store.commit("SET_USER_EXPERIENCE", this._beforeEditingCache);
@@ -113,7 +116,7 @@ export default {
     disableEndDateInput(value) {
       const isCurrent = value.target.checked,
         index = value.target.name,
-        input = document.getElementById(index);
+        input = document.getElementById(index + 'e');
 
       if (isCurrent) {
         input.setAttribute("style", "opacity: 0");

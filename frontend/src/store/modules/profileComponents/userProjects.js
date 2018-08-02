@@ -6,6 +6,7 @@ const state = {
   showProjectError: false,
   errorProjectNo: null,
   ifModuleExist: null,
+  ifIndustryExist: null,
   beforeEditingProjects: null,
   industryList: [{
       id: 'FI',
@@ -41,15 +42,16 @@ const state = {
     project: 'Nazwa projektu',
     contractor: '2',
     // industry: 'FI',
-    industry: [{
+    industries: [{
       id: 'FI'
-    }],
+    },
+  {id: 'ADV'}],
     modules: [{
       id: 'SD'
     }],
     duration: {
-      start: 'Wed May 02 2018 00:00:00 GMT+0200 (Środkowoeuropejski czas letni)',
-      end: 'Thu May 17 2018 00:00:00 GMT+0200 (Środkowoeuropejski czas letni)'
+      start: new Date(),
+      end: new Date()
     },
     descr: 'Opis wykonanych czynności'
   }]
@@ -64,6 +66,9 @@ const mutations = {
   },
   SET_MODULE_EXIST(state, ifExist) {
     state.ifModuleExist = ifExist
+  },
+  SET_INDUSTRY_EXIST(state, ifExist) {
+    state.ifIndustryExist = ifExist
   },
   SET_ERROR_PROJECT_NO(state, number) {
     state.errorProjectNo = number
@@ -83,8 +88,12 @@ const actions = {
       project: null,
       descr: null,
       contractor: null,
-      industry: null,
-      modules: []
+      industries: [],
+      modules: [],
+      duration: {
+        start: null,
+        end: null
+      }
     })
     commit('SET_USER_PROJECTS_LIST', projectsList)
     commit('SET_PROJECT_ERROR', false)
@@ -172,13 +181,43 @@ const actions = {
     }
     commit('SET_USER_PROJECTS_LIST', projectsList)
   },
-  removeIndustry({commit, getters}, data) {
-    const industryList = getters.getIndustryList,
-          industries = industryList[data.index].industries
+  addIndustry({
+    commit,
+    getters
+  }, data) {
+    const projectsList = getters.getUserProjectsList,
+      industries = projectsList[data.index].industries
 
-    for(let i = 0; i < industries.length; i++) {
-      // if(industries[i].id === data.ind)
+    if (industries.length !== 0) {
+      for (let i = 0; i < industries.length; i++) {
+        if (industries[i].id === data.industryId) {
+          commit('SET_INDUSTRY_EXIST', true)
+          return
+        } else {
+          commit('SET_INDUSTRY_EXIST', false)
+        }
+      }
+    } else {
+      commit('SET_INDUSTRY_EXIST', false)
     }
+
+    if (getters.getIndustryExist === false) {
+      projectsList[data.index].industries.push({
+        id: data.industryId
+      })
+      commit('SET_USER_PROJECTS_LIST', projectsList)
+    }
+  },
+  removeIndustry({commit, getters}, data) {
+    const projectsList = getters.getUserProjectsList,
+    industries = projectsList[data.index].industries
+    for (let i = 0; i < industries.length; i++) {
+      if (industries[i].id === data.industryId) {
+        industries.splice(i, 1)
+      }
+    }
+    commit('SET_USER_PROJECTS_LIST', projectsList)
+    
   }
 }
 
@@ -197,6 +236,9 @@ const getters = {
   },
   getModuleExist(state) {
     return state.ifModuleExist
+  },
+  getIndustryExist(state){
+    return state.ifIndustryExist
   },
   getErrorProjectNo(state) {
     return state.errorProjectNo
