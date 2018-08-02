@@ -44,6 +44,19 @@ import { mapGetters } from 'vuex';
                     </div>
                 </div>
             </div>
+            <div>
+                <p>Wybierz język</p>
+                <select v-model="cvElements.language">
+                    <option v-for="language in languageList" :key="language.id" :value="language.id"> {{language.name}}</option>
+                </select>
+            </div>
+            <div>
+                <p>Wybierz format</p>
+                <select v-model="cvElements.format">
+                    <option value="DOCX"> DOCX </option>
+                    <option value="PDF"> PDF </option>
+                </select>
+            </div>
             <div class="cv-modal-bbuttons">
                 <button class="cv-modal-btn" @click="showCv">Zobacz podgląd</button>
                 <button class="cv-modal-btn-clear" @click="close">Zamknij</button>
@@ -61,7 +74,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            cvElements: 'getCvElements'
+            cvElements: 'getCvElements',
+            languageList: 'getLanguageList'
         })
     },
     methods: {

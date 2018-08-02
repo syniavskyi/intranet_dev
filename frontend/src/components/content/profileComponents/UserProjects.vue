@@ -62,7 +62,7 @@
                                                     <input value="userProjects[index].startDate" />
                                                 </v-date-picker>
                                                 <p class="table-p">Zakończenie</p>
-                                                <div name="endDateDiv" :id="index">
+                                                <div name="endDateDiv" :id="formatId(index)">
                                                     <p class="table-p" v-if="!projectEditMode"> {{ formatDate(userProjects[index].duration.end) }} </p>
                                                     <v-date-picker :max-date="new Date()" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].duration.end">
                                                         <input value="userProjects[index].endDate" />
@@ -77,9 +77,9 @@
                                             <div class="prof-tbody-item-txt">
                                                 <!-- :disabled="!projectEditMode" -->
                                                 <div>
-                                                    <button :disabled="!projectEditMode" class="profile-table-module-button" @click="removeIndustry"></button>
+                                                    <button :disabled="!projectEditMode" class="profile-table-module-button" @click="removeIndustry" :name="index" v-for="industry in userProjects[index].industries" :key="industry.id" :value="industry.id"> {{ formatIndustryName(industry.id) }}</button>
                                                 </div>
-                                                <select v-if="projectEditMode" class="profile-table-select profile-table-select-industry" v-model="userProjects[index].industry">
+                                                <select v-if="projectEditMode" class="profile-table-select profile-table-select-industry" @change="addIndustry" :id="index" >
                                                     <option disabled selected value>{{ $t("table.addIndustry") }}:</option>
                                                     <option v-for="industry in industryList" :key="industry.id" :value="industry.id"> {{ industry.name }}</option>
                                                 </select>
@@ -157,6 +157,9 @@ export default {
         JSON.stringify(this.userProjects)
       );
     },
+        formatId(index) {
+      return index +'p'
+    },
     addModule(value) {
       const data = {
         index: value.target.id,
@@ -178,10 +181,17 @@ export default {
         };
         this.$store.dispatch("removeIndustry", data);
     },
+    addIndustry(value) {
+      const data = {
+        index: value.target.id,
+        industryId: value.target.value
+      };
+      this.$store.dispatch("addIndustry", data);
+    },
     disableEndDateInput(value) {
       const isCurrent = value.target.checked,
         index = value.target.name,
-        input = document.getElementById(index);
+        input = document.getElementById(index + 'p');
 
       if (isCurrent) {
         input.setAttribute("style", "opacity: 0");
@@ -207,6 +217,13 @@ export default {
         : "-";
     },
 
+    formatIndustryName(id){
+        for  (let i=0; i<this.industryList.length; i++){
+            if (id === this.industryList[i].id) {
+                return this.industryList[i].name
+            }
+        }
+    },
     validateDates(index) {
       const startDate = this.userProjects[index].startDate,
         endDate = this.userProjects[index].endDate,

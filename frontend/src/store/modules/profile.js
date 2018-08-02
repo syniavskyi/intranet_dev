@@ -5,7 +5,11 @@ import i18n from '../../lang/lang'
 const state = {
   saveChangesSuccess: true,
   uploadPhotoError: false,
-  uploadFileError: false
+  uploadFileError: false,
+  languageList:[
+    {id: 'PL', name: 'Polski'},
+  {id: 'EN', name: 'Angielski'},
+{id:'DE', name: 'Niemiecki'}]
 };
 
 const mutations = {
@@ -132,6 +136,9 @@ const getters = {
   },
   isFileUploadError(state) {
     return state.isFileUploadError
+  },
+  getLanguageList(state){
+    return state.languageList
   }
 };
 
