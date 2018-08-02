@@ -41,8 +41,26 @@ import { mapGetters } from 'vuex';
                             <div class="checkbox-in"></div>
                             <p class="checkbox-label">Data urodzenia</p>
                         </label>
+                        <label class="checkbox-wrap cv-chkbx">
+                            <input type="checkbox" name="date" v-model="cvElements.contractor">
+                            <div class="checkbox-in"></div>
+                            <p class="checkbox-label">Nazwa kontrahenta</p>
+                        </label>
                     </div>
                 </div>
+            </div>
+            <div>
+                <p>Wybierz język</p>
+                <select v-model="cvElements.language">
+                    <option v-for="language in languageList" :key="language.id" :value="language.id"> {{language.name}}</option>
+                </select>
+            </div>
+            <div>
+                <p>Wybierz format</p>
+                <select v-model="cvElements.format">
+                    <option value="DOCX"> DOCX </option>
+                    <option value="PDF"> PDF </option>
+                </select>
             </div>
             <div class="cv-modal-bbuttons">
                 <button class="cv-modal-btn" @click="showCv">Zobacz podgląd</button>
@@ -61,7 +79,9 @@ export default {
     },
     computed: {
         ...mapGetters({
-            cvElements: 'getCvElements'
+            cvElements: 'getCvElements',
+            languageList: 'getLanguageList',
+            industryList: 'getIndustryList'
         })
     },
     methods: {
