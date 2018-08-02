@@ -9,7 +9,8 @@ const state = {
         date:true,
         name: true,
         language: null,
-        format: null
+        format: null,
+        contractor: true
     }
 };
 
@@ -50,7 +51,8 @@ const actions = {
                 date:true,
                 name: true,
                 language: lang,
-                format: format
+                format: format,
+                contractor: true
         }
         commit('SET_CV_ELEMENTS', elements);
     },
@@ -65,7 +67,8 @@ const actions = {
                 date:false,
                 name: false,
                 language: lang,
-                format: format
+                format: format,
+                contractor: false
         }
         commit('SET_CV_ELEMENTS', elements);
     }

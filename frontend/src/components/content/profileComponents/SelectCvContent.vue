@@ -41,6 +41,11 @@ import { mapGetters } from 'vuex';
                             <div class="checkbox-in"></div>
                             <p class="checkbox-label">Data urodzenia</p>
                         </label>
+                        <label class="checkbox-wrap cv-chkbx">
+                            <input type="checkbox" name="date" v-model="cvElements.contractor">
+                            <div class="checkbox-in"></div>
+                            <p class="checkbox-label">Nazwa kontrahenta</p>
+                        </label>
                     </div>
                 </div>
             </div>
@@ -75,7 +80,8 @@ export default {
     computed: {
         ...mapGetters({
             cvElements: 'getCvElements',
-            languageList: 'getLanguageList'
+            languageList: 'getLanguageList',
+            industryList: 'getIndustryList'
         })
     },
     methods: {

@@ -44,7 +44,8 @@ const state = {
     // industry: 'FI',
     industries: [{
       id: 'FI'
-    }],
+    },
+  {id: 'ADV'}],
     modules: [{
       id: 'SD'
     }],
