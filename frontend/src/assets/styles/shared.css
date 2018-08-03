@@ -410,19 +410,28 @@ li:hover p {
     margin-left:.5rem;
 }
 
-.modal-new {
+.modal-new,
+.modal-new-m {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 600px;
     max-width: 100%;
-    height: 400px;
     max-height: 100%;
     z-index: 1010;
     background: white;
     border-radius: .5rem;
     box-shadow: 0 0 50px 1px #333;
+}
+
+.modal-new {
+    width: 600px;
+    height: 400px;
+}
+
+.modal-new-m {
+    width: 800px;
+    height: 600px;
 }
 
 .modal-content {

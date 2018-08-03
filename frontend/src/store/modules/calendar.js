@@ -15,11 +15,13 @@ const state = {
     EventType:  '',
     TargetGroup:  '',
     EventPrivacy:  '',
-    color: '' 
+    color: '',
+    EventTypeName: '' 
   },
   event: {},
   aEvents: [],
-  todos: [],
+  aFilters: [],
+  // todos: [],
   aPriority: [],
   aEventType: [],
   editedData: {}
@@ -75,13 +77,13 @@ const actions = {
 
     switch(prior) {
       case 'L':
-        color = 'red';
+        color = '#fde997';
         break;
       case 'M':
-        color = 'orange';
+        color = '#fc9354';
         break;
       case 'H':
-        color = 'pink';
+        color = '#ff6666';
         break;
       default:
         color: 'blue';
@@ -144,11 +146,11 @@ setColor({commit, state}){
      const aEvents = state.aEvents;
      for(let i = 0; i<aEvents.length; i++) {
         if(aEvents[i].Priority == "L") {
-            aEvents[i].color = '#ee42a1';
+            aEvents[i].color = '#fde997';
           } else if (aEvents[i].Priority == "M") {
-            aEvents[i].color =='#565221';
+            aEvents[i].color =='#fc9354';
           } else {
-             aEvents[i].color = '#1244a3';
+             aEvents[i].color = '#ff6666';
           }
         }
      commit('SET_EVENTS', aEvents)
@@ -309,6 +311,7 @@ setColor({commit, state}){
       }
     }).then(res => {
       let aEventType = res.data.d.results;
+      console.log(res.data.d.results);
       commit('GET_EVENT_TYPE', aEventType);
     }).catch(error => { 
       console.log(error);

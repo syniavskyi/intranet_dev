@@ -201,8 +201,8 @@ const actions = {
       }
     }).then(res => {
 
-          let oContractors = res.data.d.results;
-      console.log(res.data.d);
+      let oContractors = res.data.d.results;
+
       commit('SET_CONTRACTORS_LIST', oContractors);
     }).catch(error => { 
       console.log(error);
