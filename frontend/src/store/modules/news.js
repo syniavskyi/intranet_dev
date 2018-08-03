@@ -54,8 +54,8 @@ const actions = {
     geoLoc({commit, state, dispatch}) {
         let geoLocat = {}
         //set Wrocław to default localisation
-        geoLocat.lat = 51.14
-        geoLocat.len = 16.94
+        geoLocat.lat = 51
+        geoLocat.len = 16
         const geo = navigator.geolocation
         if(geo) {
           geo.getCurrentPosition(function(location) {
