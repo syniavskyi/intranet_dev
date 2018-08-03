@@ -13,49 +13,39 @@
           <div class="calendar-tile">
             <div class="calendar">
               <v-date-picker mode='single' :min-date="new Date()" v-model="selectedValue" :attributes="attributes" is-inline @dayclick='dayClicked'>
+
               </v-date-picker>
-              <!-- <v-calendar is-expanded is-double-paned :attributes="attributes" @dayclick='dayClicked'></v-calendar> -->
               <div v-if='selectedDay' class='selected-day'>
                 <h3>{{ selectedDay.date.toDateString() }}</h3>
-                <button @click="performDialog">+</button>
+                <button @click="openDialog">+</button>
                 <ul>
-                  <li v-for='attr in selectedDay.attributes' :key='attr.customData.eventName'>
-                  <!-- <li v-for="attr in todos"> -->
-                    <!-- :key='attr.key' -->
-                    {{ attr.customData.eventName }}, {{ attr.customData.time }}: {{ attr.customData.description }}
-                    {{ attr.customData.dateTo }}
-                    {{ attr.customData.priority }}
-                    {{ attr.customData.eventType }}
-                    <button @click="editEvent(attr.customData, $t)">Edytuj</button>
-                    <button>Usuń</button>
-                    <!-- <slot v-bind:attr="attr">
-                      {{ attr.customData.eventName }}, {{ attr.customData.time }}: {{ attr.customData.description }}
-                    </slot> -->
-                    <!-- {{ attr.eventName }}, {{ attr.time }}: {{ attr.description }} -->
-                  </li>
+                  <li v-for='attr in selectedDay.attributes' :key='attr.customData.EventId'>
+                      {{ attr.customData.EventName }}, 
+                      {{ attr.customData.EventType }}
+                      {{ attr.customData.EventPrivacy }}
+                      {{ attr.customData.CreatedBy}}
+                      <button @click="editEvent(attr.customData, $t)">Edytuj</button>
+                      <button @click="deleteEvent(attr.customData, $t)">Usuń</button>
+                  </li>            
                 </ul>
               </div>
             </div>
              <div class="filters" v-if="permition">
                 <div class="filter">
                     <label class="filter-label">{{ $t("label.branch") }}</label>
-                    <select class="filter-select" v-model="branch" @blur="$v.branch.$touch()">
-                      <option>Wysoki</option>
-                      <option>Średni</option>
-                      <option>Niski</option>
+                    <select class="filter-select" v-model="branch">
+                         <option v-for="branch in branches" :key="branch.Key" :value="branch.Key">{{ branch.Value }}</option>
                     </select>
                 </div>
                 <div class="filter">
                     <label class="filter-label">{{ $t("label.department") }}</label>
-                    <select class="filter-select" v-model="departments" @blur="$v.department.$touch()">
-                      <option>Wysoki</option>
-                      <option>Średni</option>
-                      <option>Niski</option>
+                    <select class="filter-select" v-model="departments">
+                        <option v-for="department in departmentList" :key="department.Key" :value="department.Key">{{ department.Value }}</option>
                     </select>
                 </div>
                 <div class="filter">
                     <label class="filter-label">{{ $t("label.employee") }}</label>
-                    <select class="filter-select" v-model="employee" @blur="$v.employee.$touch()">
+                    <select class="filter-select" v-model="employee">
                       <option>Wysoki</option>
                       <option>Średni</option>
                       <option>Niski</option>
@@ -75,33 +65,39 @@
                   <div class="modal-email">
                     <div class="event-feature">
                         <label class="modal-label">{{ $t("label.eventTitle") }}</label>
-                        <input class="input modal-input input-event" v-model="eventName" @blur="$v.eventName.$touch()">
+                        <input class="input modal-input input-event" v-model="addEvent.EventName" >
+                        <!-- @blur="$v.eventName.$touch()" -->
                     </div>
                    <div class="event-feature">
                       <label class="modal-label">{{ $t("label.eventTime") }}</label>
-                        <input class="modal-input input-active" type="time" v-model="eventTime" @blur="$v.eventTime.$touch()">
+                        <input class="modal-input input-active" type="time" v-model="addEvent.EventTime" @blur="$v.eventTime.$touch()">
                   </div>
                   <div class="event-feature">
-                      <label class="modal-label">{{ $t("label.endDate") }}</label>
-                        <input class="modal-input input-active" type="date" v-model="dateTo2" @blur="$v.dateTo2.$touch()">
+                       <label class="modal-label">{{ $t("label.endDate") }}</label>
+                        <!-- <input class="modal-input input-active" type="date" v-model="addEvent.DateTo" @blur="$v.dateTo2.$touch()"> -->
+                        <v-date-picker popoverDirection="top" is-expanded mode="single" v-model="addEvent.DateTo" style="min-width: 15rem;" :min-date="this.selectedDay.date">
+                                            <input class="modal-input input-active" style="min-width: 15rem;" value="addEvent.DateTo"/>
+                                        </v-date-picker>
                   </div>
                   <div class="event-feature">
                      <label class="modal-label">{{ $t("label.eventDescription") }}</label>
-                     <input class="input modal-input input-event" v-model="eventDescription">
+                     <input class="input modal-input input-event" v-model="addEvent.Description">
                   </div>
                   <div class="event-feature">
                     <label class="modal-label">{{ $t("label.priority") }}</label>
-                    <select class="event-select" @change="checkPriority" v-model="priority" @blur="$v.priority.$touch()">
-                      <option>Wysoki</option>
-                      <option>Średni</option>
-                      <option>Niski</option>
+                    <select class="event-select"  v-model="addEvent.Priority" @blur="$v.priority.$touch()">
+                      <!-- @change="checkPriority" -->
+                      <option v-for="priority in priorities" :value="priority.Key" :key="priority.Key">
+                          {{ priority.Value }}
+                      </option>
                     </select>
                     </div>
                     <div class="event-feature">
                     <label class="modal-label">Typ wydarzenia</label>
-                    <select class="event-select" v-model="eventType" @blur="$v.eventType.$touch()">
-                      <option>Szkolenie</option>
-                      <option>Impreza integracyjna</option>
+                    <select class="event-select" v-model="addEvent.EventType">
+                         <option v-for="eventType in eventTypes" :value="eventType.Key" :key="eventType.Key">
+                           {{ eventType.Value }}
+                        </option>
                     </select>
                     </div>
                      <div class="event-feature">
@@ -142,14 +138,16 @@
                     </div>
                     <div class="event-feature event-visibility">
                     <label class="modal-label">{{ $t("label.visibility") }}</label>
-                    <input type="radio" id="prv" value="priv" v-model="privacy">
+                    <input type="radio" id="prv" value="priv" v-model="addEvent.EventPrivacy">
                     <label for="prv">Private</label>
-                    <input type="radio" id="pbl" value="public" v-model="privacy">
-                    <label for="pbl">Public</label>         
+                    <input type="radio" id="pbl" value="public" v-model="addEvent.EventPrivacy">
+                    <label for="pbl">Public</label>   
+                    <button @click="editForm()">edit</button>      
                   <!--  <option v-for="department in departments" :value="department"></option> -->
                   </div>
                   </div>
-                  <button class="button modal-button" :disabled="$v.$invalid" type="button" @click="addNewEvent"><span class="span-arrow">{{ $t("button.addEvent") }}</span></button>
+                  <button class="button modal-button"  type="button" @click="addNewEvent"><span class="span-arrow">{{ $t("button.addEvent") }}</span></button>
+              <!-- :disabled="$v.$invalid" -->
                 </div>
               </transition>
             <!-- End modal for add event -->
@@ -165,63 +163,22 @@ import moment from "moment";
 import { required } from "vuelidate/lib/validators";
 import i18n from "../../lang/lang";
 import Menu from '../Menu.vue'
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
     return {
       selectedValue: null,
       selectedDay: null,
+      selectedDay2: null,
       dialogEvent: false,
-      //get request
-      todos: [
-        {
-          id: 1,
-          description: 'Clean the house.',
-          date: new Date(2018, 6, 25),
-          dateTo: new Date(2018, 6, 27),
-          // dates: {
-          //   start: new Date('1/1/2018'),
-          //   monthlyInterval: 2,           // Every other month
-          //   ordinalWeekdays: { [-1]: 6 }  // ...on the last Friday
-          // },
-          isCompleted: false,
-          color: 'red'
-        },
-        {
-          id: 2,
-          description: 'Meeting.',
-          date: new Date(2018, 6, 15),
-          dateTo:  new Date(2018, 6, 18),
-          isCompleted: false,
-          color: 'pink'
-        }
-      ],
-      eventDescription: '',
-      eventTime: null,
-      dateTo2: null,
-      eventName: '',
-      eventType: '',
-      priority: '',
-      visibility: '',
-      targetGroup: '',
       branch: {},
-      departments: ['fiori', 'abap'],
+      department: {},
+      departments: [],
       employee: {},
-      privacy: '',
       isSelected: false,
-      permition: false
-
-      // attributes: [
-      //   {
-      //     highlight({ onStart }) {
-      //       return {
-      //         backgroundColor: 'orange',
-      //         borderRadius: '10px'
-      //       }
-      //     },
-      //     dates: new Date()
-      //   }
-      // ]
+      permition: false,
+      checkedNames: '',
     };
   },
   validations: {
@@ -242,19 +199,42 @@ export default {
     }
   },
   beforeCreate() {
-    if (this.$store.getters.idDataLoaded === false) {
-      this.$store.dispatch('loadData', localStorage.getItem('token'));
-    };
+    if (this.$store.getters.isDataLoaded === false) {
+            this.$store.dispatch('loadData', localStorage.getItem('token'))
+        }
+    //  this.showBranchSelect = (localStorage.getItem('role') === 'leader') ? false : true;   
+     this.$store.dispatch('getEvents');
   },
   created() {
     this.checkRole();
+    this.$store.dispatch('getPriority');
+    this.$store.dispatch('getEventType');
+    // this.$store.dispatch('getBranch')
+    // this.$store.dispatch('getDepartment')
   },
   computed: {
+    ...mapGetters({
+      departmentList: 'depList',
+      branches: 'branches'
+      // usersList: 'usersList',
+ }),
+    events() {
+        return this.$store.getters.events;
+    },
+    priorities() {
+        return this.$store.getters.priorities;
+      },
+    eventTypes() {
+        return this.$store.getters.eventTypes;
+    },
+    addEvent() {
+        return this.$store.getters.addEvent;
+    },
+    // branches() {
+    //     return this.$store.getters.branches;
+    // },
     attributes() {
-      return this.todos.map(t => ({
-        // key: 'todo.${t.id}',
-        time: t.eventTime,
-        eventName: t.eventName,
+      return this.$store.getters.events.map(t => ({
         dot: {
           backgroundColor: t.color
         },
@@ -262,76 +242,53 @@ export default {
            backgroundColor: t.color
         },
         dates: {
-          start: t.date, end: t.dateTo
+          start: t.DateFrom, end: t.DateTo
         },
         customData: t,
         popover: {
-          label: t.description
-        }
+          label: t.EventName
+        },
       }));
     },
-    eventColor() {
-      return this.$store.getters.priorityColor;
-    }
+    // eventColor() {
+    //   return this.$store.getters.priorityColor;
+    // } 
   },
   components: {
         'app-menu': Menu
     },
   methods: {
-    resetFormData() {
-      return {
-        eventDescription: '',
-        eventTime: null,
-        eventName: '',
-        priority: ''
-      }
-    },
-    editData(data) {
-      return {
-        eventDescription: data.description,
-        eventTime: data.time,
-        eventName: data.eventName,
-        eventType: data.eventType,
-        priority: data.priority
-      }
+    editForm() {
+        this.$store.getters.addEvent;
+        this.$store.dispatch('editEvent');
     },
     dayClicked(day) {
       this.selectedDay = day;
+    },
+    openDialog() {
+      this.$store.dispatch('clearForm');
+      this.performDialog();
     },
     performDialog() {
       this.dialogEvent = !this.dialogEvent;
     },
     editEvent(data) {
       this.performDialog();
-      Object.assign(this.$data, this.editData(data));
+      let editedData = data;
+      Object.assign(this.$store.getters.addEvent, editedData);
     },
-    deleteEvent() {
-      // delete request
+    deleteEvent(data) {
+      let editedData = data;
+      Object.assign(this.$store.getters.addEvent, editedData);
+     this.$store.dispatch('removeEvent')
     },
     addNewEvent() {
-      const oEvent = {
-        description: this.eventDescription,
-        date: new Date(this.selectedValue.getFullYear(), this.selectedValue.getMonth(), this.selectedValue.getDate()),
-        color: this.eventColor,
-        priority: this.priority,
-        time: this.eventTime,
-        eventName: this.eventName,
-        eventType: this.eventType
-      }
-      if(this.dateTo2) {
-        oEvent.dateTo = new Date(this.dateTo2.slice(0,4), (this.dateTo2.slice(5,7)-1), this.dateTo2.slice(8,10))
-      } else {
-        oEvent.dateTo = new Date(this.selectedValue.getFullYear(), this.selectedValue.getMonth(), this.selectedValue.getDate())
-      }
-      this.todos.push(oEvent);
+
+      this.$store.commit("SET_DATE_FROM", this.selectedValue);
+      this.$store.dispatch('addNewEvent');
       this.performDialog();
-      Object.assign(this.$data, this.resetFormData());
     },
-    checkPriority() {
-      this.$store.dispatch("setColorPriority", {
-        priority: this.priority
-      });
-    },
+    // permision to filter calendar
     checkRole() {
       let role = 'BO';
       if (role == 'BO' || role == 'Board'){

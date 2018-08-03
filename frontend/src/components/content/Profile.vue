@@ -9,6 +9,15 @@
                     <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="profile-header-menu">
                     <p class="profile-header-title">{{ $t("header.profile") }}</p>
                 </div>
+                <div v-if="!editMode" class="prof-input-lang"> 
+                    <select required class="selectLang">
+                        <option>PL</option>
+                        <option>EN</option>
+                        <option>DE</option>
+                        <option>RU</option>
+                    </select>
+                    <label class="label-select-lang">język</label>
+                </div>
                 <button class="profile-header-button" v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
                 <div v-if="editMode" class="header-button-save-reject">
                     <p class="profile-error profile-error-data" v-if="!saveChangesSuccess">{{ $t("message.saveChangesError") }}</p>

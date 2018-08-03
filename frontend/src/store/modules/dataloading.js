@@ -4,6 +4,7 @@ import router from '@/router/index.js'
 const state = {
   userRoles: [],
   departmentList: [],
+  branches: [],
   userList: [],
   sectionsList: [],
   projectsList: [],
@@ -17,8 +18,11 @@ const mutations = {
   GET_ROLE_LIST(state, data) {
     state.userRoles = data;
   },
-  GET_DEP_LIST(state, data) {
+  SET_DEP_LIST(state, data) {
     state.departmentList = data;
+  },
+  SET_BRANCH(state, data) {
+    state.branches = data;
   },
   GET_USER_LIST(state, data) {
     state.userList = data;
@@ -50,6 +54,7 @@ const actions = {
   }) {
     dispatch('getRoleList')
     dispatch('getDepartmentList')
+    dispatch('getBranch'),
     dispatch('getContractorsList')
     dispatch('getProjectsList')
     dispatch('getUserData')
@@ -102,30 +107,107 @@ const actions = {
     axios.get("/api/projectList").then(res => {
         commit('SET_PROJECTS_LIST', res.data)
         console.log(res)
+    }).catch(error => { 
+      console.log(error);
+    })
+  }, 
+  // getRoleList({
+  //   commit
+  // }) {
+  //   axios.get("/api/rolesList").then(res => {
+  //     const data = res.data,
+  //       aData = [];
 
-      }).catch(error => {
-        console.log(error)
-      })
-  },
-  getContractorsList({commit}) {
+  //     for (let key in data) {
+  //       const role = data[key];
+
+  //       data[key].roleName = data[key].roleName.slice(data[key].roleName.indexOf("_") + 1, data[key].roleName.length);
+
+  //       let upper = data[key].roleName.substring(0, 1),
+  //         toLower = data[key].roleName.slice(1, data[key].roleName.length).toLowerCase();
+
+  //       data[key].roleName = upper + toLower;
+  //       // role.roleName = data[key].roleName;
+  //       aData.push(role.roleName);
+  //     }
+  //     commit('GET_ROLE_LIST', aData);
+  //   });
+  // },
+  getDepartmentList({commit}) {
     axios({
       method: 'GET',
-      url: 'Contractors',
+      url: "Dictionaries?$filter=Name eq 'ZINTRANET_DEPARTMENT'",
       auth: {
-        // username: 'vuejs-client',
-        // password: 'password'
         username: 'psy',
         password: 'ides01'
       },
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-      },
+      }
     }).then(res => {
-      console.log(res);
-      }).catch(error => {
-        console.log(error)
-      })
+      let aDepartments = res.data.d.results;
+      commit('SET_DEP_LIST', aDepartments);
+    }).catch(error => { 
+      console.log(error);
+    })
   },
+  getBranch({commit}) {
+    axios({
+      method: 'GET',
+      url: "Dictionaries?$filter=Name eq 'ZINTRANET_BRANCH'",
+      auth: {
+        username: 'psy',
+        password: 'ides01'
+      },
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      }
+    }).then(res => {
+      let aBranches = res.data.d.results;
+      commit('SET_BRANCH', aBranches);
+    }).catch(error => { 
+      console.log(error);
+    })
+  },
+  getProjectsList({commit}) {
+    axios({
+      method: 'GET',
+      url: 'Projects',
+      auth: {
+        username: 'psy',
+        password: 'ides01'
+      },
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      }
+    }).then(res => {
+      let oProjects = res.data.d.results;
+      console.log(res.data.d);
+      commit('SET_PROJECTS_LIST', oProjects);
+    }).catch(error => { 
+      console.log(error);
+    })
+},
+ getContractorsList({commit}) {
+    axios({
+      method: 'GET',
+      url: 'Contractors',
+      auth: {
+        username: 'psy',
+        password: 'ides01'
+      },
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      }
+    }).then(res => {
+
+          let oContractors = res.data.d.results;
+      console.log(res.data.d);
+      commit('SET_CONTRACTORS_LIST', oContractors);
+    }).catch(error => { 
+      console.log(error);
+    })
+},
   getUserData({
     commit
   }) {
@@ -148,7 +230,8 @@ const actions = {
   }).catch(error =>{
       console.log(error)
    })
-  },
+  }
+
 };
 
 const getters = {
@@ -157,6 +240,9 @@ const getters = {
   },
   depList(state) {
     return state.departmentList;
+  },
+  branches(state) {
+    return state.branches;
   },
   sectionsList(state) {
       return state.sectionsList
