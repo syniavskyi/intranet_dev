@@ -3,7 +3,7 @@
     <div class="Section1" >
       <!-- header with name and position-->
 
-    <button @click="generateCV2" v-if="showGenerateBtn" class="cv-modal-btn-bclear">Zatwierdź i generuj</button>
+    <button @click="generate" v-if="showGenerateBtn" class="cv-modal-btn-bclear">Zatwierdź i generuj</button>
     <!-- <div>
     <button @click="generate" v-if="showGenerateBtn" class="profile-edit-experience-e">Zatwierdź i generuj</button>
     <div>
@@ -110,7 +110,7 @@
             <h3 style="font-weight:bold; margin-bottom:10px; margin-top:10px; padding-bottom:5px; border-bottom: 2px solid #E79600; text-transform:uppercase; font-family:'Arial';">{{ $t("header.projects") }}</h3>
             <table align="center" width="98%" v-for="(project, index) in userProjects" :key="index">
               <tr>
-                <td width="45%" style="font-weight:bold; font-family:'Arial';" v-if="!cvElements.contractor"><p style="mso-cellspacing:0; margin:0; padding:0;">Branża:</p> </td>
+                <td width="45%" style="font-weight:bold; font-family:'Arial';" v-if="!cvElements.contractor"><p style="mso-cellspacing:0; margin:0; padding:0;">Branża:</p> <p v-for="industry in userProjects[index].industries" :key="industry.id">{{formatIndustryName(industry.id)}}</p></td>
                 <td style="font-weight:bold; font-family:'Arial';" v-if="cvElements.contractor">{{project.contractor}} <p v-for="industry in userProjects[index].industries" :key="industry.id">{{formatIndustryName(industry.id)}}</p></td>
                 <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Moduły SAP: <strong class v-for="sapModule in userProjects[index].modules" :key="sapModule.id">{{ sapModule.id }}</strong></p></td>
               </tr>
@@ -177,41 +177,41 @@ export default {
   },
   beforeCreate() {
     this.$store.dispatch("getUserInfo");
-    const retrievedObject = JSON.parse(localStorage.getItem('Object'));
-    this.$store.commit('SET_CV_ELEMENTS', retrievedObject)
+    const retrievedObject = JSON.parse(localStorage.getItem("Object"));
+    this.$store.commit("SET_CV_ELEMENTS", retrievedObject);
   },
 
   methods: {
     generate() {
       if (this.cvElements.format == "DOCX") {
-        this.generateDocx()
+        this.generateDocx();
       } else {
-        this.generatePdf()
+        this.generatePdf();
       }
     },
-    generatePdf() {
-
-    },
+    generatePdf() {},
     generateDocx() {
-      this.showGenerateBtn = false
+      this.showGenerateBtn = false;
       this.convertImagesToBase64();
-      const preHtml  = "<html xmlns:v='urn:schemas-microsoft-com:vml' xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns:m='http://schemas.microsoft.com/office/2004/12/omml' xmlns='http://www.w3.org/TR/REC-html40'> <head><meta http-equiv=Content-Type content='text/html; charset=utf-8'></head> <body>",
-            postHtml = "</body></html>";
-      const content  = preHtml + document.getElementById("content").innerHTML + postHtml;
-      const converted = htmlDocx.asBlob(content, { margins: {bottom: 0}});
+      const preHtml =
+          "<html xmlns:v='urn:schemas-microsoft-com:vml' xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns:m='http://schemas.microsoft.com/office/2004/12/omml' xmlns='http://www.w3.org/TR/REC-html40'> <head><meta http-equiv=Content-Type content='text/html; charset=utf-8'></head> <body>",
+        postHtml = "</body></html>";
+      const content =
+        preHtml + document.getElementById("content").innerHTML + postHtml;
+      const converted = htmlDocx.asBlob(content, { margins: { bottom: 0 } });
       saveAs(converted, "document.docx");
     },
     convertImagesToBase64() {
       let contentDocument = document.getElementById("content"),
-          image = document.getElementById("cv-img"),
-          canvas = document.createElement("canvas"),
-          ctx = canvas.getContext("2d"),
-          width = image.width,
-          height = image.height
+        image = document.getElementById("cv-img"),
+        canvas = document.createElement("canvas"),
+        ctx = canvas.getContext("2d"),
+        width = image.width,
+        height = image.height;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       canvas.width = image.width;
       canvas.height = image.height;
-      ctx.drawImage(image, 0, 0,width,height);
+      ctx.drawImage(image, 0, 0, width, height);
       const dataURL = canvas.toDataURL("image/jpeg");
       image.setAttribute("src", dataURL);
     },
@@ -219,15 +219,16 @@ export default {
       return date !== null && date !== undefined
         ? moment(date).format("YYYY")
         : "-";
+    },
+
+    formatIndustryName(id) {
+      for (let i = 0; i < this.industryList.length; i++) {
+        if (id === this.industryList[i].id) {
+          return this.industryList[i].name;
+        }
+      }
     }
   },
-  formatIndustryName(id){
-        for  (let i=0; i<this.industryList.length; i++){
-            if (id === this.industryList[i].id) {
-                return this.industryList[i].name
-            }
-        }
-    },
   computed: {
     ...mapGetters({
       userEducation: "getUserEducation",
@@ -235,7 +236,7 @@ export default {
       userExperience: "getUserExperience",
       userData: "userData",
       cvElements: "getCvElements",
-      industryList: 'getIndustryList'
+      industryList: "getIndustryList"
     }),
     returnUserInfo() {
       return this.$store.getters.userInfo;
@@ -248,10 +249,9 @@ export default {
   background: grey;
   /* display: flex; */
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   width: 100%;
   height: min-content;
-  
 }
 .tr-header {
   display: flex;
@@ -259,7 +259,7 @@ export default {
   justify-content: flex-end;
 }
 .Section1 {
-   background: white;
+  background: white;
   display: flex;
   align-self: center;
   justify-content: flex-end;
@@ -267,9 +267,9 @@ export default {
   flex-direction: column;
   margin: 1rem auto;
   margin-bottom: 0.5cm;
-  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
   width: 50%;
-  height: 100%; 
+  height: 100%;
   padding: 6rem;
   /* transform: scale(0.5, 0.5); */
 }
@@ -281,28 +281,28 @@ export default {
 .cv-modal-btn,
 .cv-modal-btn-clear,
 .cv-modal-btn-bclear {
-    display: flex;
-    cursor: pointer;
-    color: #333;
-    border: 0;
-    height: 4rem;
-    border-radius: 4px;
-    transition: all 0.2s ease;
-    justify-content: center;
-    align-items: center;
-    margin: .2rem;
-    outline: none;
-    font-size: .85rem;
+  display: flex;
+  cursor: pointer;
+  color: #333;
+  border: 0;
+  height: 4rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  justify-content: center;
+  align-items: center;
+  margin: 0.2rem;
+  outline: none;
+  font-size: 0.85rem;
 }
 .cv-modal-btn-bclear {
-    background: transparent;
-    /* text-transform: uppercase; */
-    border: 2px solid rgb(61, 61, 61);
-    /* padding: .6rem .8rem; */
+  background: transparent;
+  /* text-transform: uppercase; */
+  border: 2px solid rgb(61, 61, 61);
+  /* padding: .6rem .8rem; */
 }
 .cv-modal-btn-bclear:hover {
-    box-shadow:0 0 8px #333;
-    background: #333;
-    color: white;
+  box-shadow: 0 0 8px #333;
+  background: #333;
+  color: white;
 }
 </style>
