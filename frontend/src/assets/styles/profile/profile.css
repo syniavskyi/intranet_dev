@@ -1022,27 +1022,40 @@
 .profile-table-select-industry {
     width: 10rem;
 }
-.profile-table-module-button {
+.prof-table-btns {
+    text-align: center;
+}
+.profile-table-module-button,
+.profile-table-industry-button {
     background: transparent;
     border:1px solid rgb(172, 172, 172);
     border-radius: 4px;
-    padding:.1rem;
-    width: 2rem;
     margin: .2rem;
     text-align: center;
     transition: all .2s ease;
     color: rgb(143, 143, 143);
 }
-.profile-table-textarea {
-    min-width: 10rem;
-    min-height: 2rem;
-    max-width: 98%;
+
+.profile-table-industry-button {
+    padding: .2rem;
 }
-.profile-table-module-button:hover {
+
+.profile-table-module-button {
+    width: 2rem;
+    padding:.1rem;
+}
+
+.profile-table-module-button:hover,
+.profile-table-industry-button:hover {
     box-shadow: 0 0 8px orange;
     border-color: orange;
     color: orange;
     cursor: pointer;
+}
+.profile-table-textarea {
+    min-width: 10rem;
+    min-height: 2rem;
+    max-width: 98%;
 }
 
 /* PROFILE TABLE  */

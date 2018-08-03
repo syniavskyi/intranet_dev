@@ -76,8 +76,8 @@
                                             <div class="prof-tbody-item-title">{{ $t("table.Industry") }} </div>
                                             <div class="prof-tbody-item-txt">
                                                 <!-- :disabled="!projectEditMode" -->
-                                                <div>
-                                                    <button :disabled="!projectEditMode" class="profile-table-module-button" @click="removeIndustry" :name="index" v-for="industry in userProjects[index].industries" :key="industry.id" :value="industry.id"> {{ formatIndustryName(industry.id) }}</button>
+                                                <div class="prof-table-btns">
+                                                    <button :disabled="!projectEditMode" class="profile-table-industry-button" @click="removeIndustry" :name="index" v-for="industry in userProjects[index].industries" :key="industry.id" :value="industry.id"> {{ formatIndustryName(industry.id) }}</button>
                                                 </div>
                                                 <select v-if="projectEditMode" class="profile-table-select profile-table-select-industry" @change="addIndustry" :id="index" >
                                                     <option disabled selected value>{{ $t("table.addIndustry") }}:</option>
@@ -88,7 +88,7 @@
                                         <div class="prof-tbody-item">
                                             <div class="prof-tbody-item-title"> {{ $t("table.Modules") }}</div>
                                             <div class="prof-tbody-item-txt profile-table-td-module">
-                                                <div id="for">
+                                                <div class="prof-table-btns">
                                                     <button :disabled="!projectEditMode" class="profile-table-module-button" @click="removeModule" :name="index" v-for="sapModule in userProjects[index].modules" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.id }} </button>
                                                 </div>
                                                 <!-- <div id="addButtons"></div> -->
