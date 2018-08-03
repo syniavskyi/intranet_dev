@@ -4,8 +4,8 @@ import router from '@/router/index.js'
 
 const state = {
     userExperience: [
-        {DateStart: new Date(), DateEnd: new Date(), Employer: 'BTech', WorkPos: 'SAP Fiori Developer', isCurrent: false, Duplicated: null},
-        {DateStart: new Date(), DateEnd: new Date(), Employer: 'BPX', WorkPos: 'Konsultant SAP MM', isCurrent: true, Duplicated: null}
+        {DateStart: new Date(), DateEnd: new Date(), Employer: 'BTech', WorkPos: 'SAP Fiori Developer', isCurrent: false},
+        {DateStart: new Date(), DateEnd: new Date(), Employer: 'BPX', WorkPos: 'Konsultant SAP MM', isCurrent: true}
     ],
     showExperienceError: false
 }
@@ -27,8 +27,7 @@ const actions = {
             DateEnd: null,
             Employer: null,
             WorkPos: null,
-            isCurrent: false,
-            Duplicated: null
+            isCurrent: false
         })
     },
     removeUserExperience({getters}, index){

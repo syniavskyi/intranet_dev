@@ -39,18 +39,21 @@ const state = {
     }
   ],
   userProjectsList: [{
-    ProjectName: 'Nazwa projektu',
-    ContractorName: 'Komfort',
-    Industries: [{id: 'FI' },
-                 {id: 'ADV'}],
-    SapModules: [{
+    project: 'Nazwa projektu',
+    contractor: '2',
+    // industry: 'FI',
+    industries: [{
+      id: 'FI'
+    },
+  {id: 'ADV'}],
+    modules: [{
       id: 'SD'
     }],
-    StartDate: new Date(),
-    EndDate: new Date(),
-    isCurrent: false,
-    Description: 'Opis wykonanych czynności'
-
+    duration: {
+      start: new Date(),
+      end: new Date()
+    },
+    descr: 'Opis wykonanych czynności'
   }]
 };
 
@@ -143,7 +146,7 @@ const actions = {
     getters
   }, data) {
     const projectsList = getters.getUserProjectsList,
-      modules = projectsList[data.index].SapModules
+      modules = projectsList[data.index].modules
 
     if (modules.length !== 0) {
       for (let i = 0; i < modules.length; i++) {
@@ -159,7 +162,7 @@ const actions = {
     }
 
     if (getters.getModuleExist === false) {
-      projectsList[data.index].SapModules.push({
+      projectsList[data.index].modules.push({
         id: data.moduleId
       })
       commit('SET_USER_PROJECTS_LIST', projectsList)
@@ -170,7 +173,7 @@ const actions = {
     getters
   }, data) {
     const projectsList = getters.getUserProjectsList,
-      modules = projectsList[data.index].SapModules
+      modules = projectsList[data.index].modules
     for (let i = 0; i < modules.length; i++) {
       if (modules[i].id === data.moduleId) {
         modules.splice(i, 1)
@@ -183,7 +186,7 @@ const actions = {
     getters
   }, data) {
     const projectsList = getters.getUserProjectsList,
-      industries = projectsList[data.index].Industries
+      industries = projectsList[data.index].industries
 
     if (industries.length !== 0) {
       for (let i = 0; i < industries.length; i++) {
@@ -199,7 +202,7 @@ const actions = {
     }
 
     if (getters.getIndustryExist === false) {
-      projectsList[data.index].Industries.push({
+      projectsList[data.index].industries.push({
         id: data.industryId
       })
       commit('SET_USER_PROJECTS_LIST', projectsList)
@@ -207,7 +210,7 @@ const actions = {
   },
   removeIndustry({commit, getters}, data) {
     const projectsList = getters.getUserProjectsList,
-    industries = projectsList[data.index].Industries
+    industries = projectsList[data.index].industries
     for (let i = 0; i < industries.length; i++) {
       if (industries[i].id === data.industryId) {
         industries.splice(i, 1)
