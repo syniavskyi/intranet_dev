@@ -309,12 +309,14 @@
     width: 38%;
 }
 .prof-row-dates-s {
-    width: 31%;
+    width: 100%;
 }
 
 .prof-row-inputs {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
     /* align-items: center; */
 }
@@ -1200,7 +1202,6 @@
         width:49%;
         align-self: flex-start;
     }
-
     .profile-tile-inputs-section {
         width: 100%;   
     }
@@ -1210,6 +1211,13 @@
     }
     .profile-tile-inputs > div {
         margin-bottom: 1.6rem;
+    }
+    .prof-row-inputs {
+        flex-direction: row;
+    }
+
+    .prof-row-dates-s {
+        width: 31%;
     }
 }
 
