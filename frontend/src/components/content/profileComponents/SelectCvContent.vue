@@ -29,6 +29,14 @@ import { mapGetters } from 'vuex';
                             <div class="checkbox-in"></div>
                             <p class="checkbox-label">Adres email</p>
                         </label>
+                        <div class="cv-modal-div">
+                            <!-- <p>Wybierz format</p> -->
+                            <select required class="cv-modal-select" v-model="cvElements.format">
+                                <option value="DOCX"> DOCX </option>
+                                <option value="PDF"> PDF </option>
+                            </select>
+                            <label class="cv-modal-label">Wybierz format</label>
+                        </div>
                     </div>
                     <div class="cv-modal-chkbxs">
                         <label class="checkbox-wrap cv-chkbx">
@@ -46,22 +54,18 @@ import { mapGetters } from 'vuex';
                             <div class="checkbox-in"></div>
                             <p class="checkbox-label">Nazwa kontrahenta</p>
                         </label>
+                        <div class="cv-modal-div">
+                            <!-- <p>Wybierz język</p> -->
+                            <select required class="cv-modal-select" v-model="cvElements.language">
+                                <option v-for="language in languageList" :key="language.id" :value="language.id"> {{language.name}}</option>
+                            </select>
+                            <label class="cv-modal-label">Wybierz język</label>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div>
-                <p>Wybierz język</p>
-                <select v-model="cvElements.language">
-                    <option v-for="language in languageList" :key="language.id" :value="language.id"> {{language.name}}</option>
-                </select>
-            </div>
-            <div>
-                <p>Wybierz format</p>
-                <select v-model="cvElements.format">
-                    <option value="DOCX"> DOCX </option>
-                    <option value="PDF"> PDF </option>
-                </select>
-            </div>
+            
+            
             <div class="cv-modal-bbuttons">
                 <button class="cv-modal-btn" @click="showCv">Zobacz podgląd</button>
                 <button class="cv-modal-btn-clear" @click="close">Zamknij</button>
@@ -162,6 +166,55 @@ export default {
     margin-bottom: 1rem;
 }
 
+.cv-modal-div {
+    display: flex;
+    position: relative;
+    margin-top: .4rem;
+    margin-bottom: 1rem;
+    width: 12rem;
+}
+
+.cv-modal-select {
+    display: flex;
+    width: 100%;
+    height: 2rem;
+    border-radius: 3px;
+    flex-shrink: 0;
+    border:0;
+    font-family: 'Roboto';
+    appearance: none;
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    font-size: 1rem;
+    background: white;
+    text-indent: .5rem;
+    background-image: url("../../../assets/images/expand2.png");
+    background-repeat: no-repeat;
+    background-position: right;
+    border: 1px solid lightgrey;
+}
+
+.cv-modal-select:valid ~ label,
+.cv-modal-select:focus ~ label {
+    top: -.65rem;
+    font-size: 1rem;
+    color: rgb(255, 145, 0);
+    padding: 0 .2rem;
+}
+.cv-modal-label {
+    display: flex;
+    align-items: flex-end;
+    color:#999; 
+    position:absolute;
+    pointer-events:none;
+    background-color: white;
+    transition:0.3s ease all; 
+    font-weight: 400;
+    left:0.35rem;
+    top:0.35rem;
+    font-size: 1.2rem;
+}
+
 .cv-modal-btn,
 .cv-modal-btn-clear,
 .cv-modal-btn-bclear {
@@ -178,9 +231,7 @@ export default {
     outline: none;
     font-size: .85rem;
 }
-.cv-modal-btn:first-letter {
-    font-weight: bold;
-}
+
 .cv-modal-btn {
     padding: .5rem .7rem;
     background: #ccc;
@@ -193,7 +244,6 @@ export default {
 
 .cv-modal-btn-bclear {
     background: transparent;
-    /* text-transform: uppercase; */
     border: 2px solid rgb(61, 61, 61);
     padding: .6rem .8rem;
 }
@@ -202,12 +252,6 @@ export default {
     box-shadow:0 0 8px #333;
     background: #333;
     color: white;
-}
-
-.cv-ballot-box {
-    display: flex;
-    /* font-weight: bold; */
-    font-size: 1rem;
 }
 
 .cv-modal-btn-clear {
