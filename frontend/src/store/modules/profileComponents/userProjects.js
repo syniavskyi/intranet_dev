@@ -41,8 +41,8 @@ const state = {
   userProjectsList: [{
     ProjectName: 'Nazwa projektu',
     ContractorName: 'Komfort',
-    Industries: [{id: 'FI' },
-                 {id: 'ADV'}],
+    Industries: [{id: 'FI' , name: 'Bankowość i finanse'},
+                 {id: 'ADV', name: 'Branża reklamowa'}],
     SapModules: [{
       id: 'SD'
     }],
