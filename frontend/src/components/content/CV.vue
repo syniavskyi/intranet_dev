@@ -14,8 +14,8 @@
       <tr>
         <td>
           <tr class="tr-header" align="right">
-            <h1  v-if="cvElements.name" style="font-family:'Arial'">Damian Jankowski</h1>
-            <h2 style="font-family: 'Arial'">Programista Fiori</h2>
+            <h1  v-if="cvElements.name" style="font-family:'Arial'">{{userInfo.Fullname}}</h1>
+            <h2 style="font-family: 'Arial'">{{userInfo.JobPosition}}</h2>
           </tr>
         <!-- personal data -->
               <h3 style="font-weight:bold; margin-bottom:10px; margin-top:10px; padding-bottom:5px; border-bottom:2px solid #E79600; text-transform:uppercase; font-family:'Arial';">Dane osobowe</h3>
@@ -30,17 +30,17 @@
                       </tr>
                       <tr v-if="cvElements.date">
                         <td style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Data urodzenia</p></td>
-                        <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">01.02.1996</p></td>
+                        <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{userInfo.DateBirth}}</p></td>
                       </tr>
                       <tr  v-if="cvElements.phone">
                         <td style="font-weight: bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.phone") }}</p></td>
                         <!-- <td>{{userData.phone}}</td> -->
-                        <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">+48 600 374 541</p></td>
+                        <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{userInfo.Telephone}}</p></td>
                       </tr>
                       <tr  v-if="cvElements.address">
                         <td style="font-weight: bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.email") }}</p></td>
                         <!-- <td>{{userData.email}}</td> -->
-                        <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">damian.jankowski@btech.pl</p></td>
+                        <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{userInfo.email}}</p></td>
                       </tr>
                       <tr>
                         <td style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Znajmość języków</p></td>
@@ -77,7 +77,7 @@
             <table align="center" cellspacing="0"  id="cv-education" width="98%" v-for="(education, index) in userEducation" :key='index'>
               <!-- style="border-spacing: 0;" cellpadding="0" -->
               <tr>
-                <td style="font-weight:bold; font-family:'Arial';" width="45%"><p style="mso-cellspacing:0; margin:0; padding:0;">Uniwersytet Ekonomiczny we Wrocławiu im. Adama Lange</p></td>
+                <td style="font-weight:bold; font-family:'Arial';" width="45%"><p style="mso-cellspacing:0; margin:0; padding:0;">{{education.University }}</p></td>
                 <!-- {{education.University}} -->
                 <td style="font-family:'Arial';" valign="top" ><p style="mso-cellspacing:0; margin:0; padding:0;">{{education.FieldOfStudy}}</p></td>
                 <!-- <td style="font-family: 'Arial'; background: #ccc; " width="20%">{{education.AcademicTitle}}</td> -->
