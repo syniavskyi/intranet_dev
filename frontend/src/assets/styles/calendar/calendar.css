@@ -35,10 +35,12 @@ body {
 .modal-event {
     height: auto;
 }
-.modal-email{
+.modal-calendar{
+    align-items: center;
     display: flex;
     flex-direction: column;
     width: 75%;
+    align-self: center;
 }
 .calendar-header {
     display: flex;
@@ -164,8 +166,9 @@ body {
     /* align-self: center; */
     font-family: inherit;
     width: 40%;
+    padding-right: 1rem;
 }
-.filter {
+/* .filter {
     display: flex;
     margin: .4rem .8rem .4rem;
     flex-direction: column;
@@ -177,6 +180,12 @@ body {
 .filter-select {
     width: 8rem;
     height: 1.8rem;
+} */
+
+.calendar-modal-date,
+.calendar-modal-date input {
+    width: 15rem;
+    padding: 0;
 }
 
 @media (min-width: 44rem) {
@@ -213,11 +222,6 @@ body {
     .event-visibility {
         width: 20rem;
     }
-    .modal-email{
-        display: flex;
-        flex-direction: column;
-        width: 75%;
-    }
     .event-select, 
     .modal-input,
     .privacy-button {
@@ -232,7 +236,7 @@ body {
         align-self: center;
         width: auto;
     }
-    .filter-label {
+    /* .filter-label {
         justify-content: center;
-    }
+    } */
 }

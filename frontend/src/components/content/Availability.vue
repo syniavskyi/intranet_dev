@@ -29,24 +29,18 @@
                             <div class="ava-select-and-calendar">
                                 <div class="availability-select-options">
                                     <div class="ava-div-select-cool">
-                                        <select required class="ava-select-cool" v-model="selectedDepartment">
-                                            <!-- SPi zmienić nazwy deprtment/branch -->
-                                             <!-- SPi zmieniłam opcje w selectie na moje -->
-                                                 <option v-for="branch in branches" :key="branch.Key" :value="branch.Key">{{ branch.Value }}</option>
-                                               <!-- <option v-for="department in departmentList" :key="department.Key" :value="department.Key">{{ department.Value }}</option> -->
-                                            <!-- <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option> -->
+                                        <select required class="ava-select-cool" v-model="selectedBranch">
+                                                 <option v-for="branch in branches" :key="branch.Key" :value="branch.Key">{{ branch.Value }}</option> 
                                         </select>
                                         <label class="ava-select-label-cool">{{ $t("label.department") }}</label>
                                     </div>
-                                    <div class="ava-div-select-cool" v-if="selectedDepartment != null">
-                                        <select required class="ava-select-cool" v-model="selectedBranch">
+                                    <div class="ava-div-select-cool" v-if="selectedBranch != null">
+                                        <select required class="ava-select-cool" v-model="selectedDepartment">
                                               <option v-for="department in departmentList" :key="department.Key" :value="department.Key">{{ department.Value }}</option>
-                                            <!-- <option v-for="section in sectionsList" :key="section.id" :value="section.id"> {{ section.name }}</option> -->
-                                            <!-- <option v-for="branch in branchList" :key="branch.branchId" :value="selectedBranch = branch.branchId">{{ branch.branchName }}</option> -->
                                         </select>
                                         <label class="ava-select-label-cool">{{ $t("label.branch") }}</label>
                                     </div>
-                                    <div class="ava-div-select-cool" v-if="selectedBranch != null">
+                                    <div class="ava-div-select-cool" v-if="selectedDepartment != null">
                                         <select required class="ava-select-cool" v-model="selectedUser" @change="loadUserProjects(selectedUser.id)">
                                             <option v-for="user in filteredUsers" :value="user" :key="user.id">{{ user.firstName }} {{ user.lastName }}</option>
                                         </select>
