@@ -211,7 +211,7 @@ export default {
     transition:0.3s ease all; 
     font-weight: 400;
     left:0.35rem;
-    top:0.35rem;
+    top:0.25rem;
     font-size: 1.2rem;
 }
 

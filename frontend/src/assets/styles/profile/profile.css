@@ -422,6 +422,12 @@
     flex-direction: column;
     width: 8rem;
 }
+.prof-input-lang {
+    display: flex;
+    position: relative;
+    width: 4rem;
+    flex-direction: column;
+}
 
 .prof-input-xs {
     display: flex;
@@ -725,29 +731,38 @@
 }
 
 .label-profile,
-.label-select-profile {
+.label-select-profile,
+.label-select-lang {
     position: absolute;
     padding: 0;
     margin: 0;
-    color: grey;
     /* height: 2rem; */
-    font-size: 1.2rem;
     font-family: 'Roboto';
     align-self: flex-start;
     pointer-events: none;
     color: #999;
     transition:0.3s ease all; 
-    background: white;
     padding: 0 .5rem;
+}
+
+.label-select-lang {
+    background: #d8d8d8;
+    top: .3rem;
+    left: .2rem;
+    font-size:.2rem;
 }
 
 .label-profile {
     top: .3rem;
     left: .2rem;
+    background: white;
+    font-size: 1.2rem;
 }
 .label-select-profile {
     top: .5rem;
     left: .2rem;
+    background: white;
+    font-size: 1.2rem;
 }
 
 .inputEdit:focus ~ label,
@@ -758,6 +773,14 @@
 .selectEdit:valid ~ label {
     top: -.65rem;
     font-size: 1rem;
+    color: rgb(255, 145, 0);
+    padding: 0 .2rem;
+}
+
+.selectLang:valid ~ label,
+.selectLang:focus ~ label {
+    top: -.55rem;
+    font-size: .9rem;
     color: rgb(255, 145, 0);
     padding: 0 .2rem;
 }
@@ -859,6 +882,25 @@
     background-image: url("../../images/expand2.png");
     background-repeat: no-repeat;
     background-position: right;
+}
+
+.selectLang {
+    text-indent: .6rem;
+    color: #7b7777;
+    height: 2rem;
+    border: 2px solid #7b7777;
+    border-radius: 4px;
+    background: transparent;
+    appearance: none;
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    background-image: url("../../images/expand2.png");
+    background-repeat: no-repeat;
+    background-position: right;
+    font-size: .95rem;
+}
+.selectLang option {
+    background: transparent;
 }
 
 .selectEdit {
@@ -980,27 +1022,40 @@
 .profile-table-select-industry {
     width: 10rem;
 }
-.profile-table-module-button {
+.prof-table-btns {
+    text-align: center;
+}
+.profile-table-module-button,
+.profile-table-industry-button {
     background: transparent;
     border:1px solid rgb(172, 172, 172);
     border-radius: 4px;
-    padding:.1rem;
-    width: 2rem;
     margin: .2rem;
     text-align: center;
     transition: all .2s ease;
     color: rgb(143, 143, 143);
 }
-.profile-table-textarea {
-    min-width: 10rem;
-    min-height: 2rem;
-    max-width: 98%;
+
+.profile-table-industry-button {
+    padding: .2rem;
 }
-.profile-table-module-button:hover {
+
+.profile-table-module-button {
+    width: 2rem;
+    padding:.1rem;
+}
+
+.profile-table-module-button:hover,
+.profile-table-industry-button:hover {
     box-shadow: 0 0 8px orange;
     border-color: orange;
     color: orange;
     cursor: pointer;
+}
+.profile-table-textarea {
+    min-width: 10rem;
+    min-height: 2rem;
+    max-width: 98%;
 }
 
 /* PROFILE TABLE  */
