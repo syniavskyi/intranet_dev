@@ -115,7 +115,7 @@
                 <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Moduły SAP: <strong class v-for="sapModule in userProjects[index].modules" :key="sapModule.id">{{ sapModule.id }}</strong></p></td>
               </tr>
               <tr>
-                <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatDate(project.duration.start)}} - {{formatDate(project.duration.end)}}</p></td>
+                <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatDate(project.DateStart)}} - {{formatDate(project.DateEnd)}}</p></td>
                 <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0; margin-bottom: 10px;">{{project.descr}}</p></td>
               </tr>
               <tr> 
@@ -171,22 +171,21 @@ import { saveAs } from "file-saver";
 export default {
   data() {
     return {
-      userInfo: {},
       showGenerateBtn: true
     };
   },
   beforeCreate() {
-    this.$store.dispatch("getUserInfo");
+    this.$store.dispatch("getUserData");
     const retrievedObject = JSON.parse(localStorage.getItem("Object"));
     this.$store.commit("SET_CV_ELEMENTS", retrievedObject);
   },
 
   methods: {
     generate() {
-      if (this.cvElements.format == "DOCX") {
-        this.generateDocx();
-      } else {
+      if (this.cvElements.format == "PDF") {
         this.generatePdf();
+      } else {
+        this.generateDocx();
       }
     },
     generatePdf() {},
@@ -236,11 +235,9 @@ export default {
       userExperience: "getUserExperience",
       userData: "userData",
       cvElements: "getCvElements",
-      industryList: "getIndustryList"
-    }),
-    returnUserInfo() {
-      return this.$store.getters.userInfo;
-    }
+      industryList: "getIndustryList",
+      userInfo: "getUserInfo"
+    })
   }
 };
 </script>

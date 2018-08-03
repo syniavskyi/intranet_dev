@@ -4,8 +4,8 @@ import router from '@/router/index.js'
 
 const state = {
     userEducation: [
-        {DateStart: new Date("2016","05","02"), DateEnd: new Date("2017","05","02"), AcademicTitle: 'Licencjat', FieldOfStudy: 'Zarządzanie', University: 'Politechnika', isCurrent: false, StudyType: 'Tryb dzienny'},
-        {DateStart: new Date("2017","05","02"), DateEnd: new Date("2018","05","02"), AcademicTitle: 'Licencjat', FieldOfStudy: 'Informatyka w biznesie', University: 'Ekonomiczny', isCurrent: false, StudyType: 'Tryb zaoczny'}
+        {DateStart: new Date("2016","05","02"), DateEnd: new Date("2017","05","02"), AcademicTitle: 'Licencjat', FieldOfStudy: 'Zarządzanie', University: 'Politechnika', isCurrent: false, StudyType: 'Tryb dzienny', Duplicated: null},
+        {DateStart: new Date("2017","05","02"), DateEnd: new Date("2018","05","02"), AcademicTitle: 'Licencjat', FieldOfStudy: 'Informatyka w biznesie', University: 'Ekonomiczny', isCurrent: false, StudyType: 'Tryb zaoczny',  Duplicated: null}
     ],
     showEducationError: false
 }
@@ -29,7 +29,8 @@ const actions = {
             FieldOfStudy: null,
             University: null,
             isCurrent: false,
-            StudyType: null
+            StudyType: null,
+            Duplicated: null
         })
     },
     removeUserEducation({getters}, index){
