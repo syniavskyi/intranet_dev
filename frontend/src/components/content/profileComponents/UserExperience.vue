@@ -6,7 +6,7 @@
                             <div class="profile-table-buttons">
                                 <button class="profile-edit-experience" v-if="!editMode" @click="edit">{{ $t("button.edit") }}</button>
                                 <button class="profile-edit-experience-e" v-if="editMode" @click="addUserExperience">Dodaj nowy wpis</button>
-                                <button class="profile-edit-experience-e" v-if="editMode" @click="cancel">Anuluj</button>
+                                <button class="profile-edit-experience-e" v-if="editMode" @click="cancel">{{ $t("button.finishEdit") }}</button>
                             </div>
                         </div>
                         <div class="tile-underscore"></div>
@@ -54,8 +54,8 @@
                             </div>
                           </div>
                           <div class="prof-row-btns">
-                            <button class="prof-row-btn" v-if="editMode">&#x2714;</button>
-                            <button class="prof-row-btn" v-if="editMode" @click="removeUserExperience(index)">X</button>
+                            <button class="prof-row-btn" v-if="editMode" @click="save(index)">&#x2714;</button>
+                            <button class="prof-row-btn" v-if="editMode" @click="remove(index)">X</button>
                           </div>
                         </div>
                       </div>
@@ -111,6 +111,24 @@ export default {
       this.$store.commit("SET_EXPERIENCE_ERROR", false);
       this.$store.commit("SET_USER_EXPERIENCE", this._beforeEditingCache);
       this.editMode = false;
+    },
+        remove(index){
+      this._beforeEditingCache.splice(index, 1)
+      this.removeUserExperience(index)
+    },
+    save(index){
+      const dataToChange = this._beforeEditingCache[index],
+            newData = this.userExperience[index]
+
+      if (dataToChange == undefined) {
+        // create new entry
+      } else {
+        // this.$store.dispatch('addNewUserEducation', newData)
+        // update existing entry
+      }
+      this._beforeEditingCache = JSON.parse(
+        JSON.stringify(this.userExperience)
+      );
     },
     formatDate(date) {
       return date !== null && date !== undefined
