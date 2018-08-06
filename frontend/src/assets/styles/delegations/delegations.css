@@ -254,11 +254,6 @@
     position: relative;
 }
 
-.delegations-input-cool:required,
-.delegations-dinput-cool:required {
-    box-shadow: none;
-}
-
 .del-inp-curr {
     position: absolute;
     right: -2rem;

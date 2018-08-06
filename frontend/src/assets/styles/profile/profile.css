@@ -411,7 +411,7 @@
     display: flex;
     /* flex-grow: 1; */
     flex-direction: column;
-    margin-bottom: 1rem;
+    margin-bottom: 1.6rem;
     position: relative;
 }
 .prof-input {
@@ -945,6 +945,7 @@
     border-radius: .5rem;
     outline: none;
     height: 2.8rem;
+    background: transparent;
 }
 .border-btn:hover {
     cursor: pointer;

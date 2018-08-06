@@ -455,6 +455,10 @@ li:hover p {
     height: 100%;
     background: rgba(0, 0, 0, 0.3);
 }
+/* Disabling firefox automatic red box-shadow for required inputs */
+input:required{
+    box-shadow: none;
+} 
 
 /* background: linear-gradient(to right, #ffffff 0%,#e5e5e5 10%,#e5e5e5 90%,#ffffff 100%); */
 
