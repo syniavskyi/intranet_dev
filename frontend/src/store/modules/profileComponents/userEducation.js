@@ -20,7 +20,7 @@ const mutations = {
 }
 
 const actions = {
-    addUserEducation({getters, commit}){
+    addUserEduRow({getters, commit}){
         const userEdu = getters.getUserEducation
         userEdu.push({
             DateStart: null,
@@ -36,6 +36,29 @@ const actions = {
     removeUserEducation({getters}, index){
         const userEdu = getters.getUserEducation
         userEdu.splice(index, 1)
+    },
+    addNewUserEducation({}, data){
+        axios({
+            method: 'POST',
+            url: 'UserEducation',
+             auth: {
+              username: 'psy',
+              password: 'ides01'
+            },
+            data: {
+                data
+            },
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-XHR-Logon": "accept='iframe'",
+                "sap-contextid-accept": "header"
+            }
+        }).then(res => {
+            console.log(res)
+          }).catch(error => { 
+            console.log(error);
+         })
     }
 }
 

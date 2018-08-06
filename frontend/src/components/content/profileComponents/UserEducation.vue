@@ -5,8 +5,8 @@
         <h2 class="profile-tile-title">{{ $t("header.education") }}</h2>
         <div class="profile-table-buttons">
           <button class="profile-edit-experience" v-if="!editMode" @click="edit">{{ $t("button.edit") }}</button>
-          <button class="profile-edit-experience-e" v-if="editMode" @click="addUserEducation">Dodaj nowy wpis</button>
-          <button class="profile-edit-experience-e" v-if="editMode" @click="cancel">Anuluj</button>
+          <button class="profile-edit-experience-e" v-if="editMode" @click="addUserEduRow">Dodaj nowy wpis</button>
+          <button class="profile-edit-experience-e" v-if="editMode" @click="cancel">{{ $t("button.finishEdit") }}</button>
         </div>
       </div>
       <div class="tile-underscore"></div>
@@ -59,8 +59,11 @@
             </div>
             <div class="prof-inputs-div">
               <div class="prof-input-xs">
-                <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.StudyType"/>
-                <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="education.StudyType"/>
+                <!-- <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.StudyType"/> -->
+                <!-- <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="education.StudyType"/> -->
+                <select v-model="education.StudyType">
+                  <option v-for="type in studyTypes" :key="type.Key" :value="type.Key">{{type.Value}}</option>
+                </select>
                 <!-- :disabled="!editMode" -->
                 <span class="prof-div-bar"></span>
                 <label class="label-profile">Tryb Studiów</label>
@@ -75,8 +78,8 @@
             </div>
           </div>
           <div class="prof-row-btns">
-            <button class="prof-row-btn" v-if="editMode">&#x2714;</button>
-            <button class="prof-row-btn" v-if="editMode" @click="removeUserEducation(index)">X</button>
+            <button class="prof-row-btn" v-if="editMode" @click="save(index)">&#x2714;</button>
+            <button class="prof-row-btn" v-if="editMode" @click="remove(index)">X</button>
           </div>
         </div>
       </div>
@@ -96,9 +99,15 @@ export default {
       invalidDates: false
     };
   },
+  beforeCreate() {
+    if (this.$store.getters.isDataLoaded === false) {
+            this.$store.dispatch('loadData')
+    }
+  },
   computed: {
     ...mapGetters({
-      userEducation: "getUserEducation"
+      userEducation: "getUserEducation",
+      studyTypes: "studyTypes"
     })
   },
   mounted() {
@@ -114,10 +123,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["addUserEducation", "removeUserEducation"]),
+    ...mapActions(["addUserEduRow", "removeUserEducation"]),
     edit() {
       this.editMode = true;
-      this._beforeEditingProjects = JSON.parse(
+      this._beforeEditingCache = JSON.parse(
         JSON.stringify(this.userEducation)
       );
       var checkboxes = this.$el.querySelectorAll(".checkbox-wrap")
@@ -125,10 +134,28 @@ export default {
         checkboxes[i].setAttribute("style", "display: flex;")
       }
     },
+    remove(index){
+      this._beforeEditingCache.splice(index, 1)
+      this.removeUserEducation(index)
+    },
     cancel() {
       this.$store.commit("SET_EDUCATION_ERROR", false);
       this.$store.commit("SET_USER_EDUCATION", this._beforeEditingCache);
       this.editMode = false;
+    },
+    save(index){
+      const dataToChange = this._beforeEditingCache[index],
+            newData = this.userEducation[index]
+
+      if (dataToChange == undefined) {
+        // create new entry
+      } else {
+        this.$store.dispatch('addNewUserEducation', newData)
+        // update existing entry
+      }
+      this._beforeEditingCache = JSON.parse(
+        JSON.stringify(this.userEducation)
+      );
     },
     formatDate(date) {
       return date !== null && date !== undefined
