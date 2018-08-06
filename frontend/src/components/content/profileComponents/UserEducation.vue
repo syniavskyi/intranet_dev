@@ -104,9 +104,12 @@ export default {
   mounted() {
     var list = this.$el.querySelectorAll("input[type='checkbox']")
     for (var i=0;i < list.length; i++) {
+      var endDate = list[i].parentElement.parentElement.children[2],
+      checkboxWrap = list[i].parentElement.parentElement.children[3];
       if (list[i].checked) {
-        var endDate = list[i].parentElement.parentElement.parentElement.firstElementChild.children[2];
         endDate.setAttribute("style", "display: none;")
+      } else {
+        checkboxWrap.setAttribute("style", "display:none;")
       }
     }
   },
@@ -117,6 +120,10 @@ export default {
       this._beforeEditingProjects = JSON.parse(
         JSON.stringify(this.userEducation)
       );
+      var checkboxes = this.$el.querySelectorAll(".checkbox-wrap")
+      for (var i=0; i < checkboxes.length; i++) {
+        checkboxes[i].setAttribute("style", "display: flex;")
+      }
     },
     cancel() {
       this.$store.commit("SET_EDUCATION_ERROR", false);
