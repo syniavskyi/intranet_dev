@@ -308,6 +308,7 @@
 .prof-row-dates {
     width: 38%;
 }
+.prof-row-dates,
 .prof-row-dates-s {
     width: 100%;
 }
@@ -437,15 +438,23 @@
     flex-direction: column;
     /* width: 10rem; */
     margin: 0 .5rem;
+    margin-bottom: .8rem;
     flex-grow: 1;
 }
-.prof-input-s {
+.prof-input-s,
+.prof-input-ss {
     display: flex;
     position: relative;
     flex-direction: column;
     width: 15rem;
     /* flex-grow: 1; */
 }
+
+.prof-input-ss {
+    margin: 0 1rem;
+    margin-bottom: .8rem;
+}
+
 .prof-input-m {
     width: 16rem;
 }
@@ -456,6 +465,7 @@
     flex-direction: column;
     flex: 1;
     margin: 0 .5rem;
+    margin-bottom: .8rem;
 }
 
 .prof-comm-img {
@@ -1218,6 +1228,9 @@
 
     .prof-row-dates-s {
         width: 31%;
+    }
+    .prof-row-dates {
+        width: 38%;
     }
 }
 
