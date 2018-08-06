@@ -40,13 +40,13 @@
                             </label>
                           </div>
                           <div class="prof-row-inputs">
-                            <div class="prof-input-s">
+                            <div class="prof-input-ss">
                               <input required v-if="editMode" class="inputProfile inputEdit" v-model="experience.Employer">
                               <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="experience.Employer"/>
                               <span class="prof-div-bar"></span>
                               <label class="label-profile">Pracodawca</label>
                             </div>
-                            <div class="prof-input-s">
+                            <div class="prof-input-ss">
                               <input required v-if="editMode" class="inputProfile inputEdit" v-model="experience.WorkPos">
                               <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="experience.WorkPos"/>
                               <span class="prof-div-bar"></span>
