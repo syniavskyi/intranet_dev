@@ -69,8 +69,11 @@
                 <label class="label-profile">Tryb Studiów</label>
               </div>
               <div class="prof-input-xs">
-                <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.AcademicTitle"/>
-                <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="education.AcademicTitle"/>
+                <!-- <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.AcademicTitle"/> -->
+                <!-- <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="education.AcademicTitle"/> -->
+                  <select v-model="education.AcademicTitle">
+                  <option v-for="type in academicTitles" :key="type.Key" :value="type.Key">{{type.Value}}</option>
+                </select>
                 <!-- :disabled="!editMode -->
                 <span class="prof-div-bar"></span>
                 <label class="label-profile">Stopień</label>
@@ -107,7 +110,8 @@ export default {
   computed: {
     ...mapGetters({
       userEducation: "getUserEducation",
-      studyTypes: "studyTypes"
+      studyTypes: "studyTypes",
+      academicTitles: "academicTitles"
     })
   },
   mounted() {

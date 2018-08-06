@@ -2,23 +2,20 @@ import axios from 'axios'
 import router from '@/router/index.js'
 
 const state = {
-  userRoles: [],
   departmentList: [],
   branches: [],
   userList: [],
   sectionsList: [],
   projectsList: [],
   contractorsList: [],
-  userData: {},
   isLoaded: false,
   userInfo: {},
-  studyTypes: []
+  studyTypes: [],
+  academicTitles: [],
+  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES" ]
 };
 
 const mutations = {
-  GET_ROLE_LIST(state, data) {
-    state.userRoles = data;
-  },
   SET_DEP_LIST(state, data) {
     state.departmentList = data;
   },
@@ -37,111 +34,35 @@ const mutations = {
   SET_PROJECTS_LIST(state, data) {
     state.projectsList = data;
   },
-  SET_PHOTO(state, photoUrl) {
-    state.userData.image = photoUrl
-  },
-  SET_SENIORITY (state, seniority) {
-    state.userData.seniority = seniority
-  },
   SET_USER_INFO(state, data) {
     state.userInfo = data;
   },
   SET_STUDY_TYPES_LIST(state, data){
     state.studyTypes = data;
+  },
+  SET_ACADEMIC_TITLES_LIST(state, data){
+    state.academicTitles = data;
   }
 };
 
 const actions = {
   loadData({
     commit,
+    state,
     dispatch
   }) {
-    dispatch('getRoleList')
-    dispatch('getDepartmentList')
-    dispatch('getBranch'),
     dispatch('getContractorsList')
     dispatch('getProjectsList')
-    dispatch('getUserData'),
-    dispatch('getStudyTypes')
+    dispatch('getUserData')
+    for (let i=0; i < state.sapDomains.length; i++) {
+      dispatch('getDomainValues', state.sapDomains[i])
+    }
     commit('SET_DATA_LOADED', true)
   },
-  getRoleList({
-    commit
-  }) {
-    axios.get("/api/rolesList").then(res => {
-      // const data = res.data,
-      //   aData = [];
-
-      // for (let key in data) {
-      //   const role = data[key];
-
-      //   data[key].roleName = data[key].roleName.slice(data[key].roleName.indexOf("_") + 1, data[key].roleName.length);
-
-      //   let upper = data[key].roleName.substring(0, 1),
-      //     toLower = data[key].roleName.slice(1, data[key].roleName.length).toLowerCase();
-
-      //   data[key].roleName = upper + toLower;
-      //   // role.roleName = data[key].roleName;
-      //   aData.push(role.roleName);
-      // }
-      commit('GET_ROLE_LIST', aData);
-    });
-  },
-  getDepartmentList({
-    commit
-  }) {
-    axios.get("/api/depsList").then(res => {
-      // const data = res.data,
-      //   aData = [];
-
-      // for (let key in data) {
-      //   const dep = data[key];
-
-      //   //for now
-      //   if (data[key].depName.includes('Dabrowa')) {
-      //     data[key].depName = 'Dąbrowa Górnicza';
-      //   } else if (data[key].depName.includes('Wroclaw')) {
-      //     data[key].depName = 'Wrocław';
-      //   }
-      //   aData.push(dep);
-      // }
-      // commit('GET_DEP_LIST', aData);
-    });
-  },
-  getProjectsList({commit}) {
-    axios.get("/api/projectList").then(res => {
-        commit('SET_PROJECTS_LIST', res.data)
-        console.log(res)
-    }).catch(error => { 
-      console.log(error);
-    })
-  }, 
-  // getRoleList({
-  //   commit
-  // }) {
-  //   axios.get("/api/rolesList").then(res => {
-  //     const data = res.data,
-  //       aData = [];
-
-  //     for (let key in data) {
-  //       const role = data[key];
-
-  //       data[key].roleName = data[key].roleName.slice(data[key].roleName.indexOf("_") + 1, data[key].roleName.length);
-
-  //       let upper = data[key].roleName.substring(0, 1),
-  //         toLower = data[key].roleName.slice(1, data[key].roleName.length).toLowerCase();
-
-  //       data[key].roleName = upper + toLower;
-  //       // role.roleName = data[key].roleName;
-  //       aData.push(role.roleName);
-  //     }
-  //     commit('GET_ROLE_LIST', aData);
-  //   });
-  // },
-  getDepartmentList({commit}) {
+  getDomainValues({commit},domainName) {
     axios({
       method: 'GET',
-      url: "Dictionaries?$filter=Name eq 'ZINTRANET_DEPARTMENT'",
+      url: "Dictionaries?$filter=Name eq '" + domainName + "'",
       auth: {
         username: 'psy',
         password: 'ides01'
@@ -150,26 +71,19 @@ const actions = {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
     }).then(res => {
-      let aDepartments = res.data.d.results;
-      commit('SET_DEP_LIST', aDepartments);
-    }).catch(error => { 
-      console.log(error);
-    })
-  },
-  getBranch({commit}) {
-    axios({
-      method: 'GET',
-      url: "Dictionaries?$filter=Name eq 'ZINTRANET_BRANCH'",
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      if (domainName == 'ZINTRANET_DEPARTMENT') {
+        const aDepartments = res.data.d.results;
+        commit('SET_DEP_LIST', aDepartments);
+      } else if (domainName == 'ZINTRANET_BRANCH') {
+        const aBranches = res.data.d.results;
+        commit('SET_BRANCH_LIST', aBranches);
+      } else if (domainName == 'ZINTRANET_STUDIES_TYPES'){
+        const aTypes = res.data.d.results;
+        commit('SET_STUDY_TYPES_LIST', aTypes); 
+      } else if (domainName == 'ZINTANET_ACADEMIC_TITLES') {
+        const aTitles = res.data.d.results;
+        commit('SET_ACADEMIC_TITLES_LIST', aTitles); 
       }
-    }).then(res => {
-      let aBranches = res.data.d.results;
-      commit('SET_BRANCH_LIST', aBranches);
     }).catch(error => { 
       console.log(error);
     })
@@ -218,7 +132,7 @@ const actions = {
   }) {
     axios({
       method: 'GET',
-      url: 'Users' + '(' + "'UIO'" + ')' + '?$expand=UserEducations,UserExperiences,UserProjects',
+      url: 'Users' + '(' + "'UIO'" + ')' + '?$expand=UserEducations,UserExperiences,UserCvProjects',
       auth: {
           username: 'psy',
           password: 'ides01'
@@ -235,40 +149,16 @@ const actions = {
   }).catch(error =>{
       console.log(error)
    })
-  },
-  getStudyTypes({commit}) {
-    axios({
-      method: 'GET',
-      url: "Dictionaries?$filter=Name eq 'ZINTRANET_STUDIES_TYPES'",
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-      }
-    }).then(res => {
-      let aTypes = res.data.d.results;
-      commit('SET_STUDY_TYPES_LIST', aTypes);
-    }).catch(error => { 
-      console.log(error);
-    })
-  },
+  }
 
 };
 
 const getters = {
-  roleList(state) {
-    return state.userRoles;
-  },
   depList(state) {
     return state.departmentList;
   },
   branchList(state) {
     return state.branches;
-  },
-  sectionsList(state) {
-      return state.sectionsList
   },
   projectsList(state) {
       return state.projectsList
@@ -279,9 +169,6 @@ const getters = {
   contractorsList(state) {
     return state.contractorsList;
   },
-  userData(state) {
-    return state.userData
-  },
   isDataLoaded(state) {
     return state.isLoaded
   },
@@ -290,6 +177,9 @@ const getters = {
   },
   studyTypes(state){
     return state.studyTypes;
+  },
+  academicTitles(state){
+    return state.academicTitles
   }
 };
 
