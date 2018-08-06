@@ -30,7 +30,7 @@
                                 <div class="availability-select-options">
                                     <div class="ava-div-select-cool">
                                         <select required class="ava-select-cool" v-model="selectedBranch">
-                                                 <option v-for="branch in branches" :key="branch.Key" :value="branch.Key">{{ branch.Value }}</option> 
+                                                 <option v-for="branch in branchList" :key="branch.Key" :value="branch.Key">{{ branch.Value }}</option> 
                                         </select>
                                         <label class="ava-select-label-cool">{{ $t("label.department") }}</label>
                                     </div>
@@ -216,7 +216,7 @@ export default {
     computed: {
         ...mapGetters({
             departmentList: 'depList',
-            branches: 'branches',
+            branchList: 'branchList',
             usersList: 'usersList',
             userProjectsList: 'userProjectsList',
             sectionsList: 'sectionsList',

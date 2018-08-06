@@ -23,6 +23,7 @@
                       {{ attr.customData.EventName }}, 
                       {{ attr.customData.EventTypeName }}
                       {{ attr.customData.EventPrivacy }}
+                      {{ attr.customData.EventPriorityValue }}
                       {{ attr.customData.CreatedBy}}
                       <button @click="editEvent(attr.customData, $t)">Edytuj</button>
                       <button @click="deleteEvent(attr.customData, $t)">Usuń</button>
@@ -32,24 +33,26 @@
             </div>
              <div class="filters" v-if="permition">
                 <div class="ava-div-select-cool">
-                    <select required class="ava-select-cool" v-model="branch">        
-                         <option v-for="branch in branches" :key="branch.Key" :value="branch.Key">{{ branch.Value }}</option>
+                    <select required class="ava-select-cool" v-model="filters.branch">        
+                         <option v-for="branch in branchList" :key="branch.Key" :value="branch.Key">{{ branch.Value }}</option>
                    </select>
                      <label class="ava-select-label-cool">{{ $t("label.branch") }}</label>
                 </div>
                 <div class="ava-div-select-cool">
-                    <select required class="ava-select-cool" v-model="departments">
+                    <select required class="ava-select-cool" v-model="filters.department">
                         <option v-for="department in departmentList" :key="department.Key" :value="department.Key">{{ department.Value }}</option>
                     </select>
                       <label class="ava-select-label-cool">{{ $t("label.department") }}</label>
                 </div>
                 <div class="ava-div-select-cool">
-                    <select required class="ava-select-cool" v-model="employee">
+                    <select required class="ava-select-cool" v-model="filters.employee">
                       <option>Wysoki</option>
                       <option>Średni</option>
                       <option>Niski</option>
                     </select>
                     <label class="ava-select-label-cool">{{ $t("label.employee") }}</label>
+                    <button @click="filter">klik</button>
+                    <button @click="clearFilters">clear</button>
                 </div>
              </div>
             <!-- Modal for add event -->
@@ -106,6 +109,7 @@
                     <button class="privacy-button" type="button" @click="isSelected = !isSelected">Wybierz</button>
                     </div>
                     <div class="department" v-if="isSelected">
+
                     <!-- <select multiple="true" >
                      <option>Wysoki</option>
                       <option>Średni</option>
@@ -211,30 +215,35 @@ export default {
     this.checkRole();
     this.$store.dispatch('getPriority');
     this.$store.dispatch('getEventType');
-    // this.$store.dispatch('getBranch')
-    // this.$store.dispatch('getDepartment')
   },
   computed: {
     ...mapGetters({
       departmentList: 'depList',
-      branches: 'branches'
+      branchList: 'branchList',
+      filters: 'filters',
+      eventTypes: 'eventTypes',
+      priorities: 'priorities',
+      events: 'events',
+      addEvent: 'addEvent'
       // usersList: 'usersList',
  }),
-    events() {
-        return this.$store.getters.events;
+    filteredEvents() {
+      const aEvents = state.aEvents,
+      aFilters = state.aFilters;
+      let afilteredEvents = [];
+
+     for (let i = 0; i<aEvents.length; i++) {
+         if (aEvents[i].Branch === aFilters.branch) {
+            afilteredEvents.push(aEvents[i]);
+         }
+         if(aEvents[i].Department === aFilters.department)  {
+           afilteredEvents.push(aEvents[i]);
+         }
+         if(aEvents[i].Employee === aFilters.employee)  {
+          afilteredEvents.push(aEvents[i]);
+        }
+     }
     },
-    priorities() {
-        return this.$store.getters.priorities;
-      },
-    eventTypes() {
-        return this.$store.getters.eventTypes;
-    },
-    addEvent() {
-        return this.$store.getters.addEvent;
-    },
-    // branches() {
-    //     return this.$store.getters.branches;
-    // },
     attributes() {
       return this.$store.getters.events.map(t => ({
         dot: {
@@ -252,9 +261,6 @@ export default {
         },
       }));
     },
-    // eventColor() {
-    //   return this.$store.getters.priorityColor;
-    // } 
   },
   components: {
         'app-menu': Menu
@@ -285,7 +291,6 @@ export default {
      this.$store.dispatch('removeEvent')
     },
     addNewEvent() {
-
       this.$store.commit("SET_DATE_FROM", this.selectedValue);
       this.$store.dispatch('addNewEvent');
       this.performDialog();
@@ -296,6 +301,12 @@ export default {
       if (role == 'BO' || role == 'Board'){
         this.permition = true;
       }
+    },
+    filter() {
+      this.$store.dispatch('filterEventsUsers');
+    },
+    clearFilters() {
+      this.$store.dispatch('clearFilters');
     }
   }
 };
