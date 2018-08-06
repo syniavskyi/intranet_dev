@@ -101,6 +101,15 @@ export default {
       userEducation: "getUserEducation"
     })
   },
+  mounted() {
+    var list = this.$el.querySelectorAll("input[type='checkbox']")
+    for (var i=0;i < list.length; i++) {
+      if (list[i].checked) {
+        var endDate = list[i].parentElement.parentElement.parentElement.firstElementChild.children[2];
+        endDate.setAttribute("style", "display: none;")
+      }
+    }
+  },
   methods: {
     ...mapActions(["addUserEducation", "removeUserEducation"]),
     edit() {

@@ -80,6 +80,15 @@ export default {
       userExperience: "getUserExperience"
     })
   },
+  mounted() {
+    var list = this.$el.querySelectorAll("input[type='checkbox']")
+    for (var i=0;i < list.length; i++) {
+      if (list[i].checked) {
+        var endDate = list[i].parentElement.parentElement.parentElement.firstElementChild.children[2];
+        endDate.setAttribute("style", "display: none;")
+      }
+    }
+  },
   methods: {
     ...mapActions(["addUserExperience", "removeUserExperience"]),
     edit() {
@@ -119,10 +128,10 @@ export default {
         input = document.getElementById(index + 'e');
 
       if (isCurrent) {
-        input.setAttribute("style", "opacity: 0");
+        input.setAttribute("style", "display: none;");
         this.userExperience[index].DateEnd = null;
       } else {
-        input.setAttribute("style", "opacity: 1");
+        input.setAttribute("style", "display: flex;");
       }
     },
   }
