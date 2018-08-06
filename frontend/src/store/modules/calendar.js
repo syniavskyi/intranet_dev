@@ -20,12 +20,15 @@ const state = {
   },
   event: {},
   aEvents: [],
-  aFilters: [],
-  // todos: [],
+  aFilteredEvents: [],
+  aFilters: {
+    branch: null,
+    department: null,
+    employee: null
+  },
   aPriority: [],
   aEventType: [],
   editedData: {}
-  // attributes: null
 };
 
 const mutations = {
@@ -35,9 +38,6 @@ const mutations = {
   GET_EVENT(state, data) {
     state.event = data;
 },
-  GET_EVENTS(state, data) {
-    state.aEvents = data;
-  },
   SET_EVENTS(state, data) {
     state.aEvents = data;
   },
@@ -58,16 +58,13 @@ const mutations = {
   },
   CLEAR_DATA(state, data) {
     state.addEvent = data;
+  },
+  SET_FILTERED_EVENTS(state, data) {
+    state.aFilteredEvents = data;
+  },
+  SET_CLEARED_FILTERS(state, data) {
+    state.aFilters = data;
   }
-  // GET_BRANCH(state, data) {
-  //   state.aBranch = data;
-  // },
-  // GET_DEPARTMENT(state, data) {
-  //   state.aDepartment = data;
-  // },
-  // SET_ATTRIBUTES(state, data) {
-  //   state.attributes = data;
-  // }
 }
 
 const actions = {
@@ -122,7 +119,7 @@ getEvents({commit, dispatch}) {
       }
     }).then(res => {
       let oEvents = res.data.d.results;
-      commit('GET_EVENTS', oEvents);
+      commit('SET_EVENTS', oEvents);
       dispatch('convertDate');
       dispatch('setColor')
     }).catch(error => { 
@@ -153,7 +150,8 @@ setColor({commit, state}){
              aEvents[i].color = '#ff6666';
           }
         }
-     commit('SET_EVENTS', aEvents)
+     commit('SET_EVENTS', aEvents);
+     commit('SET_FILTERED_EVENTS', aEvents);
   },
   addNewEvent({state, dispatch}) {
      state.addEvent.DateFrom = state.selectedDate;
@@ -171,6 +169,9 @@ setColor({commit, state}){
       //   username: 'psy',
       //   password: 'ides01'
       // },
+      data: {
+        CreatedBy: newData.CreatedBy
+      },
 
       // CreatedBy: newData.CreatedBy,
       // DateFrom: newData.DateFrom, 
@@ -185,18 +186,23 @@ setColor({commit, state}){
       // Priority: newData.Priority,
       // EventType: newData.EventType
 
-      // headers: {
-      //   "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-      //   "X-CSRF-Token":"Fetch",
-      //   'X-Custom-Header': 'foobar',
-      //   'X-My-Custom-Header': 'foo',
-      //   // 'Content-Type': 'application/json;charset=UTF-8',
-      //   "Access-Control-Allow-Origin": "*",
-      // },
-      data: {
-        bodyFormData
+      headers: {
+        // "Content-Type":	"application/atom+xml;type=entry; charset=utf-8",
+        // "content-length":	"989"
+        // "Content-Length": "989",
+        "Content-Type": "application/atom+xml;type=entry; charset=utf-8",
+        // "DataServiceVersion": "2.0"
+
+
+        // Content-Length:"336"
+        // Content-Type: "application/json"
+        // DataServiceVersion: "2.0"
+        // location: "http://nw5.local.pl:8050/sap/opu/odata/sap/ZTEACHER_SERVICE_SRV/Grades('0000000002')"
       },
-      config: { headers: {'Content-Type': 'multipart/form-data' }}
+      // data: {
+      //   bodyFormData
+      // },
+      // config: { headers: {'Content-Type': 'multipart/form-data' }}
     }).then(res => {
       let c = res.config;
     }).catch(error => { 
@@ -317,6 +323,37 @@ setColor({commit, state}){
       console.log(error);
     })
   },
+//   filterEventsUsers({state, commit}) {
+//     const aEvents = state.aEvents,
+//     aFilters = state.aFilters;
+//     let afilteredEvents = [];
+
+//      for (let i = 0; i<aEvents.length; i++) {
+//          if (aEvents[i].Branch === aFilters.branch) {
+//             afilteredEvents.push(aEvents[i]);
+//          }
+//          if(aEvents[i].Department === aFilters.department)  {
+//            afilteredEvents.push(aEvents[i]);
+//          }
+//          if(aEvents[i].Employee === aFilters.employee)  {
+//           afilteredEvents.push(aEvents[i]);
+//         }
+//      }
+//     //  commit('SET_FILTERED_EVENTS', filteredEvents);
+//     commit('SET_EVENTS', afilteredEvents);
+// },
+clearFilters({state, commit}) {
+  //aFilteredEvents contains all events from backend
+  let aFilters= state.aFilters;
+  let aEvents = state.aFilteredEvents;
+  aFilters = {
+    branch: null,
+    department: null,
+    employee: null
+  }
+  commit('SET_CLEARED_FILTERS', aFilters);
+  commit('SET_EVENTS', aEvents);
+}
 };
 
 const getters = {
@@ -340,13 +377,10 @@ const getters = {
  },
  addEvent(state) {
    return state.addEvent;
+ },
+ filters(state) {
+   return state.aFilters;
  }
-//  branches(state) {
-//    return state.aBranch;
-//  },
-//  departments(state) {
-//    return state.aDepartment;
-//  }
 };
 
 export default {

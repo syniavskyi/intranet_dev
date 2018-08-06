@@ -21,7 +21,7 @@ const mutations = {
   SET_DEP_LIST(state, data) {
     state.departmentList = data;
   },
-  SET_BRANCH(state, data) {
+  SET_BRANCH_LIST(state, data) {
     state.branches = data;
   },
   GET_USER_LIST(state, data) {
@@ -164,7 +164,7 @@ const actions = {
       }
     }).then(res => {
       let aBranches = res.data.d.results;
-      commit('SET_BRANCH', aBranches);
+      commit('SET_BRANCH_LIST', aBranches);
     }).catch(error => { 
       console.log(error);
     })
@@ -241,7 +241,7 @@ const getters = {
   depList(state) {
     return state.departmentList;
   },
-  branches(state) {
+  branchList(state) {
     return state.branches;
   },
   sectionsList(state) {
