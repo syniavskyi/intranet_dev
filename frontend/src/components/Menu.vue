@@ -3,7 +3,7 @@
         <button class="logout-button" @click="logout"><span class="logout-text">wyloguj</span></button> 
         <p class="nav-title">BTech</p>
         <div class="nav-user">
-            <img class="nav-user-img" width="130px" :src="userData.image">
+            <!-- <img class="nav-user-img" width="130px" :src="userData.image"> -->
         </div>
         <nav class="nav">
             <ul class="nav-list">
@@ -87,11 +87,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-computed: {
-    ...mapGetters({
-      userData: 'userData',
-    })
-  },
+ 
   methods: {
      logout() {
         this.$store.dispatch('logout')
