@@ -84,7 +84,7 @@ export default {
     ...mapActions(["addUserExperience", "removeUserExperience"]),
     edit() {
       this.editMode = true;
-      this._beforeEditingProjects = JSON.parse(
+      this._beforeEditingCache = JSON.parse(
         JSON.stringify(this.userExperience)
       );
     },

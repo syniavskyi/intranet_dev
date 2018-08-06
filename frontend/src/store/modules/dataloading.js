@@ -11,7 +11,8 @@ const state = {
   contractorsList: [],
   userData: {},
   isLoaded: false,
-  userInfo: {}
+  userInfo: {},
+  studyTypes: []
 };
 
 const mutations = {
@@ -44,7 +45,10 @@ const mutations = {
   },
   SET_USER_INFO(state, data) {
     state.userInfo = data;
-},
+  },
+  SET_STUDY_TYPES_LIST(state, data){
+    state.studyTypes = data;
+  }
 };
 
 const actions = {
@@ -57,7 +61,8 @@ const actions = {
     dispatch('getBranch'),
     dispatch('getContractorsList')
     dispatch('getProjectsList')
-    dispatch('getUserData')
+    dispatch('getUserData'),
+    dispatch('getStudyTypes')
     commit('SET_DATA_LOADED', true)
   },
   getRoleList({
@@ -230,7 +235,25 @@ const actions = {
   }).catch(error =>{
       console.log(error)
    })
-  }
+  },
+  getStudyTypes({commit}) {
+    axios({
+      method: 'GET',
+      url: "Dictionaries?$filter=Name eq 'ZINTRANET_STUDIES_TYPES'",
+      auth: {
+        username: 'psy',
+        password: 'ides01'
+      },
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      }
+    }).then(res => {
+      let aTypes = res.data.d.results;
+      commit('SET_STUDY_TYPES_LIST', aTypes);
+    }).catch(error => { 
+      console.log(error);
+    })
+  },
 
 };
 
@@ -265,6 +288,9 @@ const getters = {
   getUserInfo(state) {
     return state.userInfo;
   },
+  studyTypes(state){
+    return state.studyTypes;
+  }
 };
 
 export default {

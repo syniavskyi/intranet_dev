@@ -152,6 +152,11 @@ export default {
       addRow: "addUserProjectsRow",
       removeRow: "removeUserProjectsRow"
     }),
+    remove(index){
+        this._beforeEditingProjects.splice(index, 1)
+        this.removeRow(index)
+
+    },
     saveUserProject(index) {
       this.$store.dispatch("saveUserProjectPosition", index);
       this._beforeEditingProjects = JSON.parse(
