@@ -45,7 +45,7 @@
                                             <input v-model="userData.Street"/>
                                             <input v-model="userData.BuildingNumber"/>
                                             <input v-model="userData.ApartmentNumber">
-                                            <vue-google-autocomplete types="geocode" id="autocomplete" placeholder="" onfocus="value = ''" @input="userData.City = value"></vue-google-autocomplete>
+                                            <vue-google-autocomplete types="geocode" id="autocomplete" placeholder="" onfocus="value = ''" @input="userData.City = value.name" v-model="userData.City"></vue-google-autocomplete>
                                             <input v-model="userData.PostalCode">
                                         </div>
                                         <p v-if="!editMode" disabled class="inputProfile inputDisabled">{{formatAddress}}</p>
