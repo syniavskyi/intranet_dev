@@ -448,6 +448,11 @@ export default {
 </script>
 
 <style>
+
+.checkbox-wrap input {
+    height: 1.19rem;
+}
+
 .input {
   text-align: center;
 }

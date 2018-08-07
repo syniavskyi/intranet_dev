@@ -8,6 +8,15 @@
     font-family: 'Roboto'; */
     /* max-width: 100%; */
 /* } */
+.del-vline {
+    display: flex;
+    flex-direction: column;
+    height: 15rem;
+    width: 1.5px;
+    background: #ccc;
+    /* transform: rotate(5deg); */
+    /* box-shadow: 0 0 10px #ccc; */
+}
 
 .plane-delegations {
     margin:0;
@@ -155,12 +164,22 @@
 
 .delegations-tile-content-1 {
     flex-direction: row;
+    min-height: 20rem;
 }
 
 .delegations-inputs-section {
-    align-self:flex-end;
+    align-self:center;
     display:flex;
     flex-direction: column;
+    width: 17rem;
+    /* border-radius: 4px; */
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px #ccc;
+}
+
+.delegations-inputs-section div:first-of-type {
+    margin-top: 1rem;
 }
 
 .delegations-inputs {
