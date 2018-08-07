@@ -40,8 +40,15 @@
                                 <div class="profile-tile-inputs">
                                     <div class="prof-input">
                                         <!-- <input required v-if="editMode" class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.address"> -->
-                                        <input required v-if="editMode" @input="checkFormFields" class="inputProfile inputEdit" v-model="userData.address">
-                                        <input v-if="!editMode" disabled class="inputProfile inputDisabled" v-model="userData.address">
+                                        <!-- <input required v-if="editMode" @input="checkFormFields" class="inputProfile inputEdit" v-model="userData.address"> -->
+                                        <div v-if="editMode">
+                                            <input v-model="userData.Street"/>
+                                            <input v-model="userData.BuildingNumber"/>
+                                            <input v-model="userData.ApartmentNumber">
+                                            <vue-google-autocomplete types="geocode" id="autocomplete" placeholder="" onfocus="value = ''" @input="userData.City = value"></vue-google-autocomplete>
+                                            <input v-model="userData.PostalCode">
+                                        </div>
+                                        <p v-if="!editMode" disabled class="inputProfile inputDisabled">{{formatAddress}}</p>
                                         <span class="prof-div-bar"></span>
                                         <label class="label-profile">{{ $t("label.address") }}</label>
                                     </div>
@@ -271,6 +278,8 @@ import htmlDocx from "html-docx-js/dist/html-docx";
 import { saveAs } from "file-saver";
 import { mapGetters, mapActions } from "vuex";
 
+
+import VueGoogleAutocomplete from 'vue-google-autocomplete'
 import Menu from "../Menu.vue";
 import LeavePageDialog from "../dialogs/LeavePageDialog";
 import UserProjects from "./profileComponents/UserProjects";
@@ -309,7 +318,8 @@ export default {
     "user-projects-component": UserProjects,
     "user-experience-component": UserExperience,
     "user-education-component": UserEducation,
-    "select-cv-content": SelectCvContent
+    "select-cv-content": SelectCvContent,
+    VueGoogleAutocomplete: VueGoogleAutocomplete 
   },
   beforeCreate() {
     if (this.$store.getters.isDataLoaded === false) {
@@ -322,7 +332,16 @@ export default {
       saveChangesSuccess: "isSaveChangesSuccess",
       photoUploadError: "isSavePhotoError",
       fileUploadError: "isFileUploadError"
-    })
+    }),
+    formatAddress(){
+        const data = this.userData
+        let address =  data.Street + ' ' + data.BuildingNumber
+        if (data.ApartmentNumber){
+            address = address + '/' + data.ApartmentNumber
+        }
+        address = address + ', ' + data.PostalCode + ' ' +  data.City 
+        return address
+    }
   },
   // beforeRouteLeave (to, from , next) {
   // this.showLeavePageDialog = true
