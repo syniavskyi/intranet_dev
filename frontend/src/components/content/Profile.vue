@@ -171,6 +171,12 @@
                                         <input disabled class="inputProfile inputDisabled" v-model="userData.JobPosition">
                                         <label class="label-profile">{{ $t("label.position") }}</label>
                                     </div>
+                                    <!-- dodawanie nowej pozycji przez BO lub Management -->
+                                    <div>
+                                        <input v-model="newPosition"/>
+                                        <button @click="addNewPositionForUser">+</button>
+                                        <button v-for="position in userPositions" :key="position" @click="removeUserPosition(position)">{{position}}</button>
+                                    </div>
                                     <div class="prof-input-s">
                                         <input v-if="editMode" required class="inputProfile inputEdit" @input="checkFormFields" v-model="userData.CurrentProject">
                                         <input disabled v-if="!editMode" class="inputDisabled inputProfile" v-model="userData.CurrentProject">
@@ -290,6 +296,7 @@
         </div>
     </div>
 </div>
+
 </template>
 
 <script>
@@ -323,7 +330,8 @@ export default {
       disableSaveBtn: true,
       showLeavePageDialog: false,
       routeToGo: null,
-      showSelectCv: false
+      showSelectCv: false,
+      newPosition: null
     };
   },
   validations: {
@@ -354,7 +362,8 @@ export default {
       userData: "getUserInfo",
       saveChangesSuccess: "isSaveChangesSuccess",
       photoUploadError: "isSavePhotoError",
-      fileUploadError: "isFileUploadError"
+      fileUploadError: "isFileUploadError",
+      userPositions: "getUserJobPositions"
     }),
     formatAddress(){
         const data = this.userData
@@ -388,7 +397,6 @@ export default {
       if (this.hasDataChanged === false) {
         this.showNoChangesAlert = true;
       } else {
-        this.$store.dispatch("saveContactData", this.userData);
         this.$store.dispatch("saveUserData", this.userData);
         this.editMode = !this.editMode;
       }
@@ -454,9 +462,23 @@ export default {
     },
     generateCV(){
 
+    },
+    addNewPositionForUser(){
+        const userPos = this.userPositions
+        userPos.push(this.newPosition)
+        this.$store.commit('SET_USER_JOB_POS', userPos)
+    },
+    removeUserPosition(position) {
+        const userPos = this.userPositions
+        for (let i=0; userPos.length; i++){
+            if (userPos[i] == position){
+                userPos.splice(i, 1)
+                this.$store.commit('SET_USER_JOB_POS', userPos)
+                return
+            }
+        }
+        
     }
-
-
     // leavePage() {
     //     if (this._beforeEditingProjects){
     //         this.$store.commit('SET_EXP_LIST', this._beforeEditingProjects)

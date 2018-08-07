@@ -15,7 +15,7 @@
         <td>
           <tr class="tr-header" align="right">
             <h1  v-if="cvElements.name" style="font-family:'Arial'">{{userInfo.Fullname}}</h1>
-            <h2 style="font-family: 'Arial'">{{userInfo.JobPosition}}</h2>
+            <h2 style="font-family: 'Arial'">{{cvElements.position}}</h2>
           </tr>
         <!-- personal data -->
               <h3 style="font-weight:bold; margin-bottom:10px; margin-top:10px; padding-bottom:5px; border-bottom:2px solid #E79600; text-transform:uppercase; font-family:'Arial';">Dane osobowe</h3>

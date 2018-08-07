@@ -9,7 +9,8 @@ const state = {
         name: true,
         language: null,
         format: null,
-        contractor: true
+        contractor: true,
+        position: null
     }
 };
 
@@ -24,6 +25,7 @@ const actions = {
     selectAllCvElements({getters, commit}) {
         let elements = getters.getCvElements,
             lang = elements.language,
+            pos = elements.position
             format = elements.format
         elements = {
                 photo: true,
@@ -33,13 +35,15 @@ const actions = {
                 name: true,
                 language: lang,
                 format: format,
-                contractor: true
+                contractor: true,
+                position: pos
         }
         commit('SET_CV_ELEMENTS', elements);
     },
     deselectAllCvElements({getters, commit}) {
         let elements = getters.getCvElements,
         lang = elements.language,
+        pos = elements.position,
         format = elements.format
         elements = {
                 photo: false,
@@ -49,7 +53,8 @@ const actions = {
                 name: false,
                 language: lang,
                 format: format,
-                contractor: false
+                contractor: false,
+                position: pos
         }
         commit('SET_CV_ELEMENTS', elements);
     }
