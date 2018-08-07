@@ -51,8 +51,8 @@
                       <option>Niski</option>
                     </select>
                     <label class="ava-select-label-cool">{{ $t("label.employee") }}</label>
-                    <button @click="filter">klik</button>
-                    <button @click="clearFilters">clear</button>
+                    <!-- <button @click="a">klik</button> -->
+                    <!-- <button @click="clearFilters">clear</button> -->
                 </div>
              </div>
             <!-- Modal for add event -->
@@ -178,13 +178,18 @@ export default {
       selectedDay: null,
       selectedDay2: null,
       dialogEvent: false,
-      branch: {},
-      department: {},
-      departments: [],
-      employee: {},
+      // branch: {},
+      // department: {},
+      // departments: [],
+      // employee: {},
       isSelected: false,
       permition: false,
       checkedNames: '',
+      filters: {
+          branch: null,
+          department: null,
+          employee: null
+       }
     };
   },
   validations: {
@@ -220,7 +225,7 @@ export default {
     ...mapGetters({
       departmentList: 'depList',
       branchList: 'branchList',
-      filters: 'filters',
+      // filters: 'filters',
       eventTypes: 'eventTypes',
       priorities: 'priorities',
       events: 'events',
@@ -228,24 +233,38 @@ export default {
       // usersList: 'usersList',
  }),
     filteredEvents() {
-      const aEvents = state.aEvents,
-      aFilters = state.aFilters;
-      let afilteredEvents = [];
+      const aEvents = this.events,
+      aFilters = this.filters;
+      let aFilteredEvents = [];
 
+  // if(aFilters.department){
+  //   var fnFilterDeps = function(oItem){
+  //   return  oItem.Department === aFilters.department;
+  // }
+  //   aEvents = aEvents.filter(fnFilterDeps);
+  // }
+
+
+  if (aFilters.branch === null & aFilters.department === null & aFilters.employee === null) {
+    aFilteredEvents = this.events;
+  } 
+  else {
      for (let i = 0; i<aEvents.length; i++) {
          if (aEvents[i].Branch === aFilters.branch) {
-            afilteredEvents.push(aEvents[i]);
+            aFilteredEvents.push(aEvents[i]);
          }
          if(aEvents[i].Department === aFilters.department)  {
-           afilteredEvents.push(aEvents[i]);
+           aFilteredEvents.push(aEvents[i]);
          }
-         if(aEvents[i].Employee === aFilters.employee)  {
-          afilteredEvents.push(aEvents[i]);
+         if(aEvents[i].Employee.includes(aFilters.employee))  {
+          aFilteredEvents.push(aEvents[i]);
         }
      }
+  }   
+      return aFilteredEvents;
     },
     attributes() {
-      return this.$store.getters.events.map(t => ({
+      return this.filteredEvents.map(t => ({
         dot: {
           backgroundColor: t.color
         },
@@ -302,9 +321,9 @@ export default {
         this.permition = true;
       }
     },
-    filter() {
-      this.$store.dispatch('filterEventsUsers');
-    },
+    // filter() {
+    //   this.$store.dispatch('filterEventsUsers');
+    // },
     clearFilters() {
       this.$store.dispatch('clearFilters');
     }
