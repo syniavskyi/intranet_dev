@@ -109,7 +109,7 @@ export default {
       if (list[i].checked) {
         endDate.setAttribute("style", "display: none;")
       } else {
-        checkboxWrap.setAttribute("style", "display:none;")
+        checkboxWrap.setAttribute("style", "display: none;")
       }
     }
   },

@@ -25,85 +25,89 @@
                         <div class="delegations-tile-underscore"></div>
                     </div>
                     <div class="delegations-tile-content delegations-tile-content-1">
-                        <div class="delegations-inputs-section">
-                            <div class="delegations-div-unders">
-                                <div class="del-underscore">1</div>
+                        <div class="del-inputs-sections">
+                            <div class="delegations-inputs-section">
+                                <!-- <div class="delegations-div-unders">
+                                    <div class="del-underscore">1</div>
+                                </div> -->
+                                <div class="delegations-div-cool">
+                                    <input required class="delegations-input-cool" ref="autocomplete" placeholder=""  onfocus="value = ''" v-model="newDelegation.destination" @input="checkNewDelegation" />
+                                    <span class="delegations-div-bar"></span>
+                                    <label class="delegations-label-cool">{{ $t("label.to") }} </label>
+                                </div>
+                                <div class="delegations-div-cool">
+                                    <input required class="delegations-input-cool" v-model="newDelegation.purpose" @input="checkNewDelegation" />
+                                    <span class="delegations-div-bar"></span>
+                                    <label class="delegations-label-cool">{{ $t("label.target") }} </label>
+                                </div>
+                                <div class="delegations-div-cool">
+                                    <v-date-picker class="delegations-input-date" @input="checkNewDelegation" v-model="newDelegation.createDate">
+                                        <input value="newDelegation.createDate" />
+                                    </v-date-picker>
+                                    <label class="delegations-label-cool-select">{{ $t("label.day") }} </label>
+                                </div>
+                                <div class="delegations-div-cool">
+                                    <v-date-picker class="delegations-input-date" @input="countAllowance" is-expanded mode="range" v-model="newDelegation.dates">
+                                        <input value="newDelegation.dates" />
+                                    </v-date-picker>
+                                    <label class="delegations-label-cool-select">{{ $t("label.forTime") }} </label>
+                                </div>
                             </div>
-                            <div class="delegations-div-cool">
-                                <input required class="delegations-input-cool" ref="autocomplete" placeholder=""  onfocus="value = ''" v-model="newDelegation.destination" @input="checkNewDelegation" />
-                                <span class="delegations-div-bar"></span>
-                                <label class="delegations-label-cool">{{ $t("label.to") }} </label>
+                            <!-- <div class="del-vline"></div> -->
+                            <div class="delegations-inputs-section">
+                                
+                                <div class="delegations-div-cool">    
+                                    <p class="del-p-cool"> DJA/0203/2018  </p>
+                                    <!-- {{ setDelegationNo() }} -->
+                                    <label class="delegations-label-cool">{{ $t("label.delegationNo") }} </label>
+                                </div>
+                                <div class="delegations-div-cool">
+                                    <select required class="delegations-select-cool" v-model="newDelegation.currency" @change="countAllCosts">
+                                        <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
+                                    </select>
+                                    <label class="delegations-label-cool-select">{{ $t("table.delegations.currency") }} </label>
+                                </div>
+                                
+                                <div class="delegations-div-cool">
+                                    <p class="del-p-cool">{{dailyAllowance}} PLN </p>
+                                    <label class="delegations-label-cool">{{ $t("label.dailyAllowance") }} </label>
+                                </div>
+                                <div class="delegations-div-cool">
+                                    <p class="del-p-cool">{{newDelegation.totalAllowance}} {{newDelegation.currency}} </p>
+                                    <label class="delegations-label-cool">{{ $t("label.totalAllowance") }}: </label>
+                                </div>
+                                <div class="delegations-div-cool-curr">
+                                    <p class="del-inp-curr">{{newDelegation.currency}}</p>
+                                    <input required id="del-inp-curr1" class="delegations-input-cool" v-model="newDelegation.allowanceDeduction" @input="checkNewDelegation" />
+                                    <span class="delegations-div-bar"></span>
+                                    <label class="delegations-label-cool">{{ $t("label.allowanceDeduction") }}: </label>
+                                </div>
                             </div>
-                            <div class="delegations-div-cool">
-                                <input required class="delegations-input-cool" v-model="newDelegation.purpose" @input="checkNewDelegation" />
-                                <span class="delegations-div-bar"></span>
-                                <label class="delegations-label-cool">{{ $t("label.target") }} </label>
-                            </div>
-                            <div class="delegations-div-cool">
-                                <v-date-picker class="delegations-input-date" @input="checkNewDelegation" v-model="newDelegation.createDate">
-                                    <input value="newDelegation.createDate" />
-                                </v-date-picker>
-                                <label class="delegations-label-cool-select">{{ $t("label.day") }} </label>
-                            </div>
-                            <div class="delegations-div-cool">
-                                <v-date-picker class="delegations-input-date" @input="countAllowance" is-expanded mode="range" v-model="newDelegation.dates">
-                                    <input value="newDelegation.dates" />
-                                </v-date-picker>
-                                <label class="delegations-label-cool-select">{{ $t("label.forTime") }} </label>
-                            </div>
-                        </div>
-                        <div class="delegations-inputs-section">
-                            
-                            <div class="delegations-div-cool">    
-                                <p class="del-p-cool"> DJA/0203/2018  </p>
-                                <!-- {{ setDelegationNo() }} -->
-                                <label class="delegations-label-cool">{{ $t("label.delegationNo") }} </label>
-                            </div>
-                            <div class="delegations-div-cool">
-                                <select required class="delegations-select-cool" v-model="newDelegation.currency" @change="countAllCosts">
-                                    <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
-                                </select>
-                                <label class="delegations-label-cool-select">{{ $t("table.delegations.currency") }} </label>
-                            </div>
-                            
-                            <div class="delegations-div-cool">
-                                <p class="del-p-cool">{{dailyAllowance}} PLN </p>
-                                <label class="delegations-label-cool">{{ $t("label.dailyAllowance") }} </label>
-                            </div>
-                            <div class="delegations-div-cool">
-                                <p class="del-p-cool">{{newDelegation.totalAllowance}} {{newDelegation.currency}} </p>
-                                <label class="delegations-label-cool">{{ $t("label.totalAllowance") }}: </label>
-                            </div>
-                            <div class="delegations-div-cool-curr">
-                                <p class="del-inp-curr">{{newDelegation.currency}}</p>
-                                <input required id="del-inp-curr1" class="delegations-input-cool" v-model="newDelegation.allowanceDeduction" @input="checkNewDelegation" />
-                                <span class="delegations-div-bar"></span>
-                                <label class="delegations-label-cool">{{ $t("label.allowanceDeduction") }}: </label>
-                            </div>
-                        </div>
-                        <div class="delegations-inputs-section">
-                            <div class="delegations-div-unders">
-                                <div class="del-underscore">3</div>
-                                <!-- <p class="del-div-p" style="display:none;">Sumaryczne</p>
-                                <div class="del-underscore"></div> -->
-                            </div>
-                            <div class="delegations-div-cool">
-                                <p class="del-p-cool">{{ newDelegation.hours }}</p>
-                                <label class="delegations-label-cool">{{ $t("label.hoursInDelegation") }} </label>
-                            </div>
-                            <div class="delegations-div-cool">
-                                <p class="del-p-cool"> {{ totalCostsInCurr.amount}}  {{newDelegation.currency}}</p>
-                                <label class="delegations-label-cool">{{ $t("label.totalDelegationAmount") }}: </label>
-                            </div>
-                            <div class="delegations-div-cool">
-                                <p class="del-p-cool"> {{ totalCostsInCurr.advance}}  {{newDelegation.currency}}</p>
-                                <label class="delegations-label-cool">{{ $t("label.advanceAmount") }}: </label>
-                            </div>
-                            <div class="delegations-div-cool-curr">
-                                <p class="del-inp-curr">{{newDelegation.currency}}</p>
-                                <input required class="delegations-input-cool" v-model="totalCostsInCurr.totalPayback"/>
-                                <span class="delegations-div-bar"></span>
-                                <label class="delegations-label-cool-s">{{ $t("label.totalReturnAmount") }}: </label>
+                            <!-- <div class="del-vline"></div> -->
+                            <div class="delegations-inputs-section">
+                                <!-- <div class="delegations-div-unders"> -->
+                                    <!-- <div class="del-underscore">3</div> -->
+                                    <!-- <p class="del-div-p" style="display:none;">Sumaryczne</p>
+                                    <div class="del-underscore"></div> -->
+                                <!-- </div> -->
+                                <div class="delegations-div-cool">
+                                    <p class="del-p-cool">{{ newDelegation.hours }}</p>
+                                    <label class="delegations-label-cool">{{ $t("label.hoursInDelegation") }} </label>
+                                </div>
+                                <div class="delegations-div-cool">
+                                    <p class="del-p-cool"> {{ totalCostsInCurr.amount}}  {{newDelegation.currency}}</p>
+                                    <label class="delegations-label-cool">{{ $t("label.totalDelegationAmount") }}: </label>
+                                </div>
+                                <div class="delegations-div-cool">
+                                    <p class="del-p-cool"> {{ totalCostsInCurr.advance}}  {{newDelegation.currency}}</p>
+                                    <label class="delegations-label-cool">{{ $t("label.advanceAmount") }}: </label>
+                                </div>
+                                <div class="delegations-div-cool-curr">
+                                    <p class="del-inp-curr">{{newDelegation.currency}}</p>
+                                    <input required class="delegations-input-cool" v-model="totalCostsInCurr.totalPayback"/>
+                                    <span class="delegations-div-bar"></span>
+                                    <label class="delegations-label-cool-s">{{ $t("label.totalReturnAmount") }}: </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -322,6 +326,15 @@ const role = localStorage.getItem('role')
 </script>
 
 <style>
+
+.del-inputs-sections {
+    display:  flex;
+    width: 100%;
+    height: 90%;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
 table,
 th,
 td {
