@@ -41,16 +41,39 @@
                                     <div class="prof-input">
                                         <!-- <input required v-if="editMode" class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.address"> -->
                                         <!-- <input required v-if="editMode" @input="checkFormFields" class="inputProfile inputEdit" v-model="userData.address"> -->
-                                        <div v-if="editMode">
-                                            <input v-model="userData.Street"/>
-                                            <input v-model="userData.BuildingNumber"/>
-                                            <input v-model="userData.ApartmentNumber">
-                                            <vue-google-autocomplete types="geocode" id="autocomplete" placeholder="" onfocus="value = ''" @input="userData.City = value"></vue-google-autocomplete>
-                                            <input v-model="userData.PostalCode">
+                                        <div class="prof-input-adr" v-if="editMode">
+                                            <div class="prof-input-uno">
+                                                <input required v-model="userData.Street"/>
+                                                <span class="prof-div-bar"></span>
+                                                <label class="prof-ainput-lbl">Ulica</label>
+                                            </div>
+                                            <div class="prof-input-uno">
+                                                <input required v-model="userData.BuildingNumber"/>
+                                                <span class="prof-div-bar"></span>
+                                                <label class="prof-ainput-lbl">Nr bud.</label>
+                                            </div>
+                                            <div class="prof-input-uno">
+                                                <input required v-model="userData.ApartmentNumber">
+                                                <span class="prof-div-bar"></span>
+                                                <label class="prof-ainput-lbl">Nr lok.</label>
+                                                <!-- <label class="prof-ainput-lbl">Miasto</label> -->
+                                            </div>
+                                            <div class="prof-input-uno">
+                                                <vue-google-autocomplete required types="geocode" id="autocomplete" placeholder="" onfocus="value = ''" @input="userData.City = value"></vue-google-autocomplete>
+                                                <!-- <label class="prof-ainput-lbl">Miasto</label> -->
+                                                <span class="prof-div-bar"></span>
+                                                <label class="prof-ainput-lbl">Miasto</label>
+                                            </div>
+                                            <div class="prof-input-uno">
+                                                <input required v-model="userData.PostalCode">
+                                                <!-- <label class="prof-ainput-lbl">Miasto</label> -->
+                                                <span class="prof-div-bar"></span>
+                                                <label class="prof-ainput-lbl">Kod pocz.</label>
+                                            </div>
                                         </div>
                                         <p v-if="!editMode" disabled class="inputProfile inputDisabled">{{formatAddress}}</p>
-                                        <span class="prof-div-bar"></span>
-                                        <label class="label-profile">{{ $t("label.address") }}</label>
+                                        <!-- <span class="prof-div-bar"></span> -->
+                                        <!-- <label class="label-profile">{{ $t("label.address") }}</label> -->
                                     </div>
                                     <div class="prof-input">
                                         <!-- <input required class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()"> -->
@@ -448,6 +471,87 @@ export default {
 </script>
 
 <style>
+.prof-input-adr {
+    display: flex;
+    list-style: none;
+    
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    /* overflow: hidden; */
+}
+.prof-input-uno:first {
+    width: 25%;
+}
+.prof-input-uno {
+    position: relative;
+    width: 20%;
+    transition: all 0.5s ease;
+}
+
+.prof-input-uno input:focus ~ span:before,
+.prof-input-uno input:focus ~ span:after,
+.prof-input-uno input:hover ~ span:before,
+.prof-input-uno input:hover ~ span:after {
+    width: 50%;
+}
+
+.prof-input-uno input {
+    display: flex;
+    flex: initial;
+    width: 100%;
+    flex:1;
+    transition: flex 0.5s ease;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border:0;
+    border-bottom: 1px solid #ccc;
+    height: 2.2rem;
+    /* position: relative; */
+    flex-basis: 0;
+    padding-left: .4rem;
+}
+
+input:focus {
+    outline: none;
+    /* border-bottom: 2px solid orange; */
+} 
+
+
+.prof-input-uno:hover,
+.prof-input-uno:focus,
+.prof-input-uno:focus-within {
+    width: 70%;
+}
+
+.prof-input-uno input:hover ~ label,
+.prof-input-uno input:focus ~ label,
+.prof-input-uno input:valid ~ label {
+    transform: rotate(0deg);
+    /* font-size: .8rem; */
+    color: orange;
+    top: -.4rem;
+    left: .2rem;
+    background: white;
+    /* padding:.2rem; */
+}
+
+
+.prof-ainput-lbl {
+    display: flex;
+    flex-wrap: nowrap;
+    position: absolute;
+    width: 100%;
+    font-size: .75rem;
+    /* transform: rotate(-90deg); */
+    transition: all 0.5s ease;
+    color: #999;
+    /* left: -.8rem; */
+    top: .6rem;
+    pointer-events: none;
+    /* padding:0 .15rem; */
+}
 
 .checkbox-wrap input {
     height: 1.19rem;
