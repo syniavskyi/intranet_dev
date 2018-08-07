@@ -20,12 +20,6 @@ const state = {
   },
   event: {},
   aEvents: [],
-  aFilteredEvents: [],
-  aFilters: {
-    branch: null,
-    department: null,
-    employee: null
-  },
   aPriority: [],
   aEventType: [],
   editedData: {}
@@ -58,9 +52,6 @@ const mutations = {
   },
   CLEAR_DATA(state, data) {
     state.addEvent = data;
-  },
-  SET_FILTERED_EVENTS(state, data) {
-    state.aFilteredEvents = data;
   },
   SET_CLEARED_FILTERS(state, data) {
     state.aFilters = data;
@@ -151,7 +142,6 @@ setColor({commit, state}){
           }
         }
      commit('SET_EVENTS', aEvents);
-     commit('SET_FILTERED_EVENTS', aEvents);
   },
   addNewEvent({state, dispatch}) {
      state.addEvent.DateFrom = state.selectedDate;
@@ -323,25 +313,6 @@ setColor({commit, state}){
       console.log(error);
     })
   },
-//   filterEventsUsers({state, commit}) {
-//     const aEvents = state.aEvents,
-//     aFilters = state.aFilters;
-//     let afilteredEvents = [];
-
-//      for (let i = 0; i<aEvents.length; i++) {
-//          if (aEvents[i].Branch === aFilters.branch) {
-//             afilteredEvents.push(aEvents[i]);
-//          }
-//          if(aEvents[i].Department === aFilters.department)  {
-//            afilteredEvents.push(aEvents[i]);
-//          }
-//          if(aEvents[i].Employee === aFilters.employee)  {
-//           afilteredEvents.push(aEvents[i]);
-//         }
-//      }
-//     //  commit('SET_FILTERED_EVENTS', filteredEvents);
-//     commit('SET_EVENTS', afilteredEvents);
-// },
 clearFilters({state, commit}) {
   //aFilteredEvents contains all events from backend
   let aFilters= state.aFilters;
