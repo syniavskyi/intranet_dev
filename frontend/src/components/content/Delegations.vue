@@ -180,7 +180,7 @@ const role = localStorage.getItem('role')
     },
     computed: {
         ...mapGetters({
-            userData: 'userData',
+            userData: 'getUserInfo',
             accCostValidated: 'getAccCostValidated',
             currencyList: 'getCurrencyList',
             totalCosts: 'getTotalCosts',
