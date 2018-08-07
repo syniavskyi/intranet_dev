@@ -9,7 +9,8 @@ const state = {
   languageList:[
     {id: 'PL', name: 'Polski'},
   {id: 'EN', name: 'Angielski'},
-{id:'DE', name: 'Niemiecki'}]
+{id:'DE', name: 'Niemiecki'}],
+userJobPositions: ["SAP Fiori Developer"]
 };
 
 const mutations = {
@@ -21,64 +22,17 @@ const mutations = {
   },
   SET_FILE_ERROR(state, isError) {
     state.uploadFileError = isError
+  },
+  SET_USER_JOB_POS(state,list){
+    state.userJobPositions = list
   }
 };
 
 const actions = {
-  saveContactData({
-    commit
-  }, userData) {
-    commit('SET_USER_DATA', userData)
-    var params = new URLSearchParams()
-    params.append('id', localStorage.getItem('id'))
-    params.append('address', encodeURI(userData.address))
-    params.append('phone', userData.phone)
-    params.append('email', userData.email)
-    params.append('skypeId', userData.skype)
-    params.append('slackId', userData.slack)
-
-    axios({
-      method: 'post',
-      url: '/api/user/edit/contactNew/',
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-      },
-      data: params
-    }).then(res => {
-      commit('SET_SAVE_CHANGES_STATE', true)
-      console.log(res)
-    }).catch(error => {
-      commit('SET_SAVE_CHANGES_STATE', false)
-      console.log(error)
-    })
-  },
   saveUserData({
     commit
   }, userData) {
-    commit('SET_USER_DATA', userData)
-    var params = new URLSearchParams()
-    params.append('id', localStorage.getItem('id'))
-    params.append('currentProject', encodeURI(userData.currentProject))
-    params.append('employmentDate', userData.employmentDate)
-    params.append('state', encodeURI(userData.state))
-    params.append('branch', encodeURI(userData.branch))
-    params.append('section', encodeURI(userData.section))
-    params.append('position', encodeURI(userData.position))
-    axios({
-      method: 'post',
-      url: '/api/user/edit/detail',
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-      },
-      data: params
-    }).then(res => {
-      commit('SET_SAVE_CHANGES_STATE', true)
-      commit('SET_SENIORITY', res.data)
-      console.log(res)
-    }).catch(error => {
-      commit('SET_SAVE_CHANGES_STATE', false)
-      console.log(error)
-    })
+    commit('SET_USER_INFO', userData)
   },
 
   submitPhoto({
@@ -139,6 +93,9 @@ const getters = {
   },
   getLanguageList(state){
     return state.languageList
+  },
+  getUserJobPositions(state){
+    return state.userJobPositions
   }
 };
 

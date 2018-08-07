@@ -61,6 +61,13 @@ import { mapGetters } from 'vuex';
                             </select>
                             <label class="cv-modal-label">Wybierz język</label>
                         </div>
+                        <div class="cv-modal-div">
+                            <!-- <p>Wybierz pozycję</p> -->
+                        <select required class="cv-modal-select" v-model="cvElements.position">
+                                <option v-for="position in userPositions" :key="position" :value="position"> {{position}}</option>
+                            </select>
+                            <label class="cv-modal-label">Wybierz pozycję</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -85,7 +92,8 @@ export default {
         ...mapGetters({
             cvElements: 'getCvElements',
             languageList: 'getLanguageList',
-            industryList: 'getIndustryList'
+            industryList: 'getIndustryList',
+            userPositions: "getUserJobPositions"
         })
     },
     methods: {
