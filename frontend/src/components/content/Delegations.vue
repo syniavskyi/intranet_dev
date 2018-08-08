@@ -30,6 +30,7 @@
                                 <!-- <div class="delegations-div-unders">
                                     <div class="del-underscore">1</div>
                                 </div> -->
+                                <p class="del-inputs-header">Cel / Czas</p>
                                 <div class="delegations-div-cool">
                                     <input required class="delegations-input-cool" ref="autocomplete" placeholder=""  onfocus="value = ''" v-model="newDelegation.destination" @input="checkNewDelegation" />
                                     <span class="delegations-div-bar"></span>
@@ -326,6 +327,17 @@ const role = localStorage.getItem('role')
 </script>
 
 <style>
+.del-inputs-header {
+    position: absolute;
+    color: #ccc;
+    top:-.5rem;
+    left:auto;
+    right: auto;
+    border-radius: 2rem;
+    transition: all 0.4s ease;
+    padding: .2rem .3rem;
+}
+
 
 .del-inputs-sections {
     display:  flex;

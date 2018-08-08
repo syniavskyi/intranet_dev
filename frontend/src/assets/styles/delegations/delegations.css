@@ -176,10 +176,21 @@
     justify-content: center;
     align-items: center;
     box-shadow: 0 0 10px #ccc;
+    padding-top: 1.5rem;
+    position: relative;
+    border-radius: 3px;
+    transition: all 0.2s ease;
 }
 
-.delegations-inputs-section div:first-of-type {
-    margin-top: 1rem;
+.delegations-inputs-section:hover,
+.delegations-inputs-section:focus-within {
+    box-shadow: 0 0 30px rgba(255, 178, 78, 0.616);
+}
+.delegations-inputs-section:hover .del-inputs-header,
+.delegations-inputs-section:focus-within .del-inputs-header {
+    /* box-shadow: 0 1px 1px 5 #C7C7C7 inset; */
+    color: orange;
+    /* font-size: 1.1rem; */
 }
 
 .delegations-inputs {

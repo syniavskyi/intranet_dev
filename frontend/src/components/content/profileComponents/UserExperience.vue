@@ -21,7 +21,7 @@
                               <v-date-picker class="prof-input-date" :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateStart">
                                   <input value="experience.DateStart" />
                               </v-date-picker>
-                              <label v-if="editMode">Do</label>
+                              <label v-if="editMode">Od</label>
                             </div>
                             <span class="prof-span-0">&#8212;</span>
                             <div name="endDateDiv" :id="formatId(index)">
