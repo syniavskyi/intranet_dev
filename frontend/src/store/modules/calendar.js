@@ -18,6 +18,11 @@ const state = {
     color: '',
     EventTypeName: '' 
   },
+  clearedFilters: {
+    branch: null,
+    department: null,
+    employee: null
+  },
   event: {},
   aEvents: [],
   aPriority: [],
@@ -54,7 +59,7 @@ const mutations = {
     state.addEvent = data;
   },
   SET_CLEARED_FILTERS(state, data) {
-    state.aFilters = data;
+    state.clearedFilters = data;
   }
 }
 
@@ -126,6 +131,8 @@ convertDate({state, commit}) {
     if(oEvents[i].DateTo) {
     let miliscTo = parseInt(oEvents[i].DateTo.slice(6, 19));
       oEvents[i].DateTo = new Date(miliscTo);
+    } else {
+      oEvents[i].DateTo = oEvents[i].DateFrom;
     }
     commit('SET_EVENTS', oEvents);
   }
@@ -202,8 +209,13 @@ setColor({commit, state}){
      state.aEvents.push(newData);
       
   },
-  editEvent({commit, state}) {
+  editEvent({commit, state, dispatch}) {
     let editedData = state.addEvent;
+    let aEvents = state.aEvents;
+    let pos = aEvents.findIndex(x => x.EventId === editedData.EventId);
+    aEvents[pos] = editedData;
+    dispatch('getEvents');
+    commit('SET_EVENTS', aEvents);
     axios({
       method: 'PUT',
       url: 'Events' + "('" + editedData.EventId + "')",
@@ -234,6 +246,7 @@ setColor({commit, state}){
     }).then(res => {
       // i co dalej
       // let aPriority = res.data.d.results;
+      // dispatch('getEvents')
       // commit('GET_PRIORITY', aPriority);
     }).catch(error => { 
       console.log(error);
@@ -256,7 +269,7 @@ setColor({commit, state}){
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
     }).then(res => {
-        state.aEvents.splice(pos, 1)
+        state.aEvents.splice(pos, 1);
     }).catch(error => { 
       console.log(error);
     })
@@ -313,17 +326,13 @@ setColor({commit, state}){
       console.log(error);
     })
   },
-clearFilters({state, commit}) {
-  //aFilteredEvents contains all events from backend
-  let aFilters= state.aFilters;
-  let aEvents = state.aFilteredEvents;
-  aFilters = {
-    branch: null,
-    department: null,
-    employee: null
-  }
-  commit('SET_CLEARED_FILTERS', aFilters);
-  commit('SET_EVENTS', aEvents);
+clearFilters({commit}) {
+  let aFilters = {
+        branch: null,
+        department: null,
+        employee: null
+    }
+   commit('SET_CLEARED_FILTERS', aFilters);
 }
 };
 
@@ -349,8 +358,8 @@ const getters = {
  addEvent(state) {
    return state.addEvent;
  },
- filters(state) {
-   return state.aFilters;
+ clearedFilters(state) {
+   return state.clearedFilters;
  }
 };
 

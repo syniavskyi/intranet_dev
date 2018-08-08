@@ -13,7 +13,6 @@
           <div class="calendar-tile">
             <div class="calendar">
               <v-date-picker mode='single' :min-date="new Date()" v-model="selectedValue" :attributes="attributes" is-inline @dayclick='dayClicked'>
-
               </v-date-picker>
               <div v-if='selectedDay' class='selected-day'>
                 <h3>{{ selectedDay.date.toDateString() }}</h3>
@@ -24,7 +23,6 @@
                       {{ attr.customData.EventTypeName }}
                       {{ attr.customData.EventPrivacy }}
                       {{ attr.customData.EventPriorityValue }}
-                      {{ attr.customData.CreatedBy}}
                       <button @click="editEvent(attr.customData, $t)">Edytuj</button>
                       <button @click="deleteEvent(attr.customData, $t)">Usuń</button>
                   </li>            
@@ -51,15 +49,11 @@
                       <option>Niski</option>
                     </select>
                     <label class="ava-select-label-cool">{{ $t("label.employee") }}</label>
-                    <!-- <button @click="a">klik</button> -->
-                    <!-- <button @click="clearFilters">clear</button> -->
+                    <button @click="clearFilters">clear</button>
                 </div>
              </div>
             <!-- Modal for add event -->
-              <!-- <transition name="slide-backdrop"> -->
                 <div class="backdrop" v-if="dialogEvent"></div>
-              <!-- </transition> -->
-              <!-- <transition name="slide"> -->
                 <div class="modal-new-m " v-if="dialogEvent">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -67,47 +61,54 @@
                     <button class="modal-exit" @click="performDialog">&#10006;</button>
                   </div>
                   <div class="modal-calendar">
-                    <div class="event-feature">
-                        <label class="modal-label">{{ $t("label.eventTitle") }}</label>
-                        <input class="input modal-input input-event" v-model="addEvent.EventName" >
-                        <!-- @blur="$v.eventName.$touch()" -->
+                    <div class="prof-input2">
+                     
+                              <input required class="inputEdit2 inputProfile2 input-active" v-model="addEvent.EventName" @blur="$v.addEvent.EventName.$touch()">
+                              <span class="prof-div-bar"></span>
+                              <label class="label-profile2">{{ $t("label.eventTitle") }}</label>
+
+                        <!-- <div class="error" v-if="!$v.addEvent.EventName.required">Username is required.</div> -->
+                        <!-- <tree-view :data="$v.addEvent.EventName" :options="{rootObjectKey: '$v.addEvent.EventName', maxDepth: 2}"></tree-view> -->
+                        <!-- <p class="prof-error" v-if="!$v.addEvent.EventName.required">{{ "halo, źle" }}</p> -->
                     </div>
-                   <div class="event-feature">
-                      <label class="modal-label">{{ $t("label.eventTime") }}</label>
-                        <input class="modal-input input-active" type="time" v-model="addEvent.EventTime" @blur="$v.eventTime.$touch()">
+                   <div class="prof-input2">               
+                        <input required class="inputEdit2 inputProfile2 input-active" type="time" v-model="addEvent.EventTime">
+                         <label class="label-profile2">{{ $t("label.eventTime") }}</label>
                   </div>
-                  <div class="event-feature">
-                       <label class="modal-label">{{ $t("label.endDate") }}</label>
-                        <!-- <input class="modal-input input-active" type="date" v-model="addEvent.DateTo" @blur="$v.dateTo2.$touch()"> -->
-                        <v-date-picker class="calendar-modal-date" popoverDirection="" is-expanded mode="single" v-model="addEvent.DateTo" :min-date="this.selectedDay.date">
-                                            <input  value="addEvent.DateTo"/>
-                                        </v-date-picker>
+                  <div class="prof-input2">
+                        <v-date-picker class="inputEdit2 inputProfile2 calendar-modal-date input-active" popoverDirection="" is-expanded mode="single" v-model="addEvent.DateTo" :min-date="this.selectedDay.date">
+                            <input value="addEvent.DateTo"/>
+                       </v-date-picker>
+                        <span class="prof-div-bar"></span>
+                        <label class="label-profile2">{{ $t("label.endDate") }}</label>
                   </div>
-                  <div class="event-feature">
-                     <label class="modal-label">{{ $t("label.eventDescription") }}</label>
-                     <input class="input modal-input input-event" v-model="addEvent.Description">
+                  <div class="prof-input2">
+                     <input required class="inputEdit2 inputProfile2 input-active" v-model="addEvent.Description">
+                      <span class="prof-div-bar"></span>
+                     <label class="label-profile2">{{ $t("label.eventDescription") }}</label>         
                   </div>
-                  <div class="event-feature">
-                    <label class="modal-label">{{ $t("label.priority") }}</label>
-                    <select class="event-select"  v-model="addEvent.Priority" @blur="$v.priority.$touch()">
-                      <!-- @change="checkPriority" -->
+                  <div class="prof-input2">
+                    <select required class="ava-select-cool marginForm input-active"  v-model="addEvent.Priority" @blur="$v.addEvent.Priority.$touch()">
                       <option v-for="priority in priorities" :value="priority.Key" :key="priority.Key">
                           {{ priority.Value }}
                       </option>
                     </select>
+                       <label class="label-profile2">{{ $t("label.priority") }}</label>
                     </div>
-                    <div class="event-feature">
-                    <label class="modal-label">Typ wydarzenia</label>
-                    <select class="event-select" v-model="addEvent.EventType">
-                         <option v-for="eventType in eventTypes" :value="eventType.Key" :key="eventType.Key">
-                           {{ eventType.Value }}
-                        </option>
-                    </select>
+                    <div class="prof-input2">
+                      <select required class="marginForm ava-select-cool input-active" v-model="addEvent.EventType" @blur="$v.addEvent.EventType.$touch()">
+                          <option v-for="eventType in eventTypes" :value="eventType.Key" :key="eventType.Key">
+                            {{ eventType.Value }}
+                          </option>
+                      </select>
+                      <!-- do selektów dać margina -->
+                      <label class="label-profile2">Typ wydarzenia</label>
                     </div>
-                     <div class="event-feature">
-                    <label class="modal-label">{{ $t("label.targetGroup") }}</label>
-                    <button class="privacy-button" type="button" @click="isSelected = !isSelected">Wybierz</button>
-                    </div>
+                     <div class="prof-input2">
+                       <p class="click-paragraph">Kliknij</p>
+                        <button class="privacy-button marginForm" type="button" @click="isSelected = !isSelected"></button>
+                            <label class="label-profile2">{{ $t("label.targetGroup") }}</label>
+                        </div>
                     <div class="department" v-if="isSelected">
 
                     <!-- <select multiple="true" >
@@ -116,46 +117,45 @@
                       <option>Niski</option>
                     </select> -->
 
-<input  type="checkbox" id="jack" value="Jack" v-model="checkedNames">
-  <label for="jack">Jack</label>
-  <br>
-    <br>
-  <input type="checkbox" id="john" value="John" v-model="checkedNames">
-  <label for="john">John</label>
-  <br>
-    <br>
-  <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
-  <label for="mike">Mike</label>
-  <br>
-    <br>
-  <input type="checkbox" id="jacek" value="Jack" v-model="checkedNames">
-  <label for="jacek">Jacek</label>
-  <br>
-    <br>
-  <input type="checkbox" id="johns" value="John" v-model="checkedNames">
-  <label for="johns">Johns</label>
-  <br>
-    <br>
-  <input type="checkbox" id="mikel" value="Mike" v-model="checkedNames">
-  <label for="mikel">Mike</label>
+                                      <input  type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+                                        <label for="jack">Jack</label>
+                                        <br>
+                                          <br>
+                                        <input type="checkbox" id="john" value="John" v-model="checkedNames">
+                                        <label for="john">John</label>
+                                        <br>
+                                          <br>
+                                        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+                                        <label for="mike">Mike</label>
+                                        <br>
+                                          <br>
+                                        <input type="checkbox" id="jacek" value="Jack" v-model="checkedNames">
+                                        <label for="jacek">Jacek</label>
+                                        <br>
+                                          <br>
+                                        <input type="checkbox" id="johns" value="John" v-model="checkedNames">
+                                        <label for="johns">Johns</label>
+                                        <br>
+                                          <br>
+                                        <input type="checkbox" id="mikel" value="Mike" v-model="checkedNames">
+                                        <label for="mikel">Mike</label>
 
                     <button class="save-button" type="button" @click="isSelected = !isSelected">Wróć</button>
                     </div>
                     <div class="event-feature event-visibility">
-                    <label class="modal-label">{{ $t("label.visibility") }}</label>
-                    <input type="radio" id="prv" value="priv" v-model="addEvent.EventPrivacy">
-                    <label for="prv">Private</label>
-                    <input type="radio" id="pbl" value="public" v-model="addEvent.EventPrivacy">
-                    <label for="pbl">Public</label>   
-                    <button @click="editForm()">edit</button>      
-                  <!--  <option v-for="department in departments" :value="department"></option> -->
+                          <label class="modal-label">{{ $t("label.visibility") }}</label>
+                          <input class="input-active" type="radio" id="prv" value="priv" v-model="addEvent.EventPrivacy">
+                          <label for="prv">Private</label>
+                          <input class="input-active" type="radio" id="pbl" value="public" v-model="addEvent.EventPrivacy">
+                          <label for="pbl">Public</label>    
                   </div>
-                  </div>
-                  <button class="button modal-button"  type="button" @click="addNewEvent"><span class="span-arrow">{{ $t("button.addEvent") }}</span></button>
-              <!-- :disabled="$v.$invalid" -->
-                </div>
-                </div>
-              <!-- </transition> -->
+           </div>
+           <div class="form-buttons">
+               <button class="button modal-button" :disabled="$v.$invalid" type="button" @click="addNewEvent"><span class="span-arrow">{{ $t("button.addEvent") }}</span></button>
+               <button class="button modal-button" @click="editForm">edit</button>
+          </div>
+      </div>
+  </div>
             <!-- End modal for add event -->
             </div>
         </div>
@@ -178,10 +178,6 @@ export default {
       selectedDay: null,
       selectedDay2: null,
       dialogEvent: false,
-      // branch: {},
-      // department: {},
-      // departments: [],
-      // employee: {},
       isSelected: false,
       permition: false,
       checkedNames: '',
@@ -193,20 +189,19 @@ export default {
     };
   },
   validations: {
-    eventName: {
-      required
-    },
-    // eventTime: {
-    //   required
-    // },
-    priority: {
-      required
-    },
-    eventType: {
-      required
-    },
-    privacy: {
-      required
+    addEvent: {
+      EventName: {
+         required
+      },
+       Priority: {
+          required
+       },
+       EventType: {
+           required
+      },
+      //  Privacy: {
+      //      required
+      //   }
     }
   },
   beforeCreate() {
@@ -225,7 +220,6 @@ export default {
     ...mapGetters({
       departmentList: 'depList',
       branchList: 'branchList',
-      // filters: 'filters',
       eventTypes: 'eventTypes',
       priorities: 'priorities',
       events: 'events',
@@ -233,35 +227,51 @@ export default {
       // usersList: 'usersList',
  }),
     filteredEvents() {
-      const aEvents = this.events,
+      let aEvents = this.events,
       aFilters = this.filters;
       let aFilteredEvents = [];
 
-  // if(aFilters.department){
-  //   var fnFilterDeps = function(oItem){
-  //   return  oItem.Department === aFilters.department;
-  // }
-  //   aEvents = aEvents.filter(fnFilterDeps);
-  // }
 
-
-  if (aFilters.branch === null & aFilters.department === null & aFilters.employee === null) {
-    aFilteredEvents = this.events;
+ if (aFilters.branch === null && aFilters.department === null && aFilters.employee === null) {
+    return aEvents;
   } 
   else {
-     for (let i = 0; i<aEvents.length; i++) {
-         if (aEvents[i].Branch === aFilters.branch) {
-            aFilteredEvents.push(aEvents[i]);
-         }
-         if(aEvents[i].Department === aFilters.department)  {
-           aFilteredEvents.push(aEvents[i]);
-         }
-         if(aEvents[i].Employee.includes(aFilters.employee))  {
-          aFilteredEvents.push(aEvents[i]);
-        }
-     }
+    let fnFilter;
+          if (aFilters.department && aFilters.branch && aFilters.employee){
+              fnFilter = function(oItem){
+              return oItem.Department === aFilters.department && oItem.Branch === aFilters.branch && oItem.Employee === aFilters.employee;
+              }
+          } 
+          else if (aFilters.department && aFilters.branch) {
+              fnFilter = function(oItem){
+            return oItem.Department === aFilters.department && oItem.Branch === aFilters.branch;
+              }
+          }   
+          else if (aFilters.branch && aFilters.employee) {
+             fnFilter = function(oItem){
+              return oItem.Branch === aFilters.branch && oItem.Employee === aFilters.employee;
+              }
+          }
+          else if (aFilters.branch) {
+              fnFilter = function(oItem){
+              return oItem.Branch === aFilters.branch;
+              }
+          }
+          else if (aFilters.department) {
+             fnFilter = function(oItem){
+              return oItem.Department === aFilters.department;
+              }
+          }
+          else if (aFilters.employee) {
+             fnFilter = function(oItem){
+              return oItem.Employee === aFilters.employee;
+              }
+          }
+      if(fnFilter){
+        aEvents = aEvents.filter(fnFilter);
+      }
   }   
-      return aFilteredEvents;
+          return aEvents;
     },
     attributes() {
       return this.filteredEvents.map(t => ({
@@ -288,6 +298,8 @@ export default {
     editForm() {
         this.$store.getters.addEvent;
         this.$store.dispatch('editEvent');
+        // this.filteredEvents.
+        this.performDialog();
     },
     dayClicked(day) {
       this.selectedDay = day;
@@ -321,11 +333,9 @@ export default {
         this.permition = true;
       }
     },
-    // filter() {
-    //   this.$store.dispatch('filterEventsUsers');
-    // },
     clearFilters() {
       this.$store.dispatch('clearFilters');
+      this.filters = this.$store.getters.clearedFilters;
     }
   }
 };
