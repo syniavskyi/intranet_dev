@@ -132,7 +132,7 @@ convertDate({state, commit}) {
     let miliscTo = parseInt(oEvents[i].DateTo.slice(6, 19));
       oEvents[i].DateTo = new Date(miliscTo);
     } else {
-      oEvents[i].DateTo = oEvents[i].DateFrom;
+      oEvents[i].DateTo =  oEvents[i].DateFrom;
     }
     commit('SET_EVENTS', oEvents);
   }
