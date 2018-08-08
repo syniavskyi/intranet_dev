@@ -56,17 +56,14 @@
                                                 <input required v-model="userData.ApartmentNumber">
                                                 <span class="prof-div-bar"></span>
                                                 <label class="prof-ainput-lbl">Nr lok.</label>
-                                                <!-- <label class="prof-ainput-lbl">Miasto</label> -->
                                             </div>
                                             <div class="prof-input-uno">
                                                 <vue-google-autocomplete required types="geocode" id="autocomplete" placeholder="" onfocus="value = ''" @input="userData.City = value"></vue-google-autocomplete>
-                                                <!-- <label class="prof-ainput-lbl">Miasto</label> -->
                                                 <span class="prof-div-bar"></span>
                                                 <label class="prof-ainput-lbl">Miasto</label>
                                             </div>
                                             <div class="prof-input-uno">
                                                 <input required v-model="userData.PostalCode">
-                                                <!-- <label class="prof-ainput-lbl">Miasto</label> -->
                                                 <span class="prof-div-bar"></span>
                                                 <label class="prof-ainput-lbl">Kod pocz.</label>
                                             </div>
