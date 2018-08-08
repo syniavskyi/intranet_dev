@@ -93,7 +93,7 @@ const actions = {
          })
       },
 
-      getToday({commit, state}){
+      getToday({commit}){
           //day of the week
           const todayDate= {}
           todayDate.today = new Date()
@@ -124,7 +124,7 @@ const actions = {
           commit('ADD_TODAY', todayDate)
       },
 
-      getNews({commit, state, dispatch}) {
+      getNews({commit, dispatch}) {
           // get news from RSS -> XML
         axios.get('https://fakty.interia.pl/ciekawostki/feed')
         .then(res => {
