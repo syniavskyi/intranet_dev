@@ -25,7 +25,7 @@ const actions = {
     selectAllCvElements({getters, commit}) {
         let elements = getters.getCvElements,
             lang = elements.language,
-            pos = elements.position
+            pos = elements.position,
             format = elements.format
         elements = {
                 photo: true,
