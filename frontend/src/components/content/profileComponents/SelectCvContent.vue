@@ -29,14 +29,6 @@ import { mapGetters } from 'vuex';
                             <div class="checkbox-in"></div>
                             <p class="checkbox-label">Adres email</p>
                         </label>
-                        <div class="cv-modal-div">
-                            <!-- <p>Wybierz format</p> -->
-                            <select required class="cv-modal-select" v-model="cvElements.format">
-                                <option value="DOCX"> DOCX </option>
-                                <option value="PDF"> PDF </option>
-                            </select>
-                            <label class="cv-modal-label">Wybierz format</label>
-                        </div>
                     </div>
                     <div class="cv-modal-chkbxs">
                         <label class="checkbox-wrap cv-chkbx">
@@ -54,25 +46,34 @@ import { mapGetters } from 'vuex';
                             <div class="checkbox-in"></div>
                             <p class="checkbox-label">Nazwa kontrahenta</p>
                         </label>
-                        <div class="cv-modal-div">
-                            <!-- <p>Wybierz język</p> -->
-                            <select required class="cv-modal-select" v-model="cvElements.language">
-                                <option v-for="language in languageList" :key="language.id" :value="language.id"> {{language.name}}</option>
-                            </select>
-                            <label class="cv-modal-label">Wybierz język</label>
-                        </div>
-                        <div class="cv-modal-div">
-                            <!-- <p>Wybierz pozycję</p> -->
+                    </div>
+                </div>
+                <div class="cv-modal-selects">
+                    <div class="cv-modal-div-s">
+                        <!-- <p>Wybierz język</p> -->
+                        <select required class="cv-modal-select" v-model="cvElements.language">
+                            <option v-for="language in languageList" :key="language.id" :value="language.id"> {{language.name}}</option>
+                        </select>
+                        <label class="cv-modal-label">Wybierz język</label>
+                    </div>
+                    
+                    <div class="cv-modal-div">
+                        <!-- <p>Wybierz format</p> -->
+                        <select required class="cv-modal-select" v-model="cvElements.format">
+                            <option value="DOCX"> DOCX </option>
+                            <option value="PDF"> PDF </option>
+                        </select>
+                        <label class="cv-modal-label">Wybierz format</label>
+                    </div>
+                    <div class="cv-modal-div-l">
+                        <!-- <p>Wybierz pozycję</p> -->
                         <select required class="cv-modal-select" v-model="cvElements.position">
-                                <option v-for="position in userPositions" :key="position" :value="position"> {{position}}</option>
-                            </select>
-                            <label class="cv-modal-label">Wybierz pozycję</label>
-                        </div>
+                            <option v-for="position in userPositions" :key="position" :value="position"> {{position}}</option>
+                        </select>
+                        <label class="cv-modal-label">Wybierz pozycję</label>
                     </div>
                 </div>
             </div>
-            
-            
             <div class="cv-modal-bbuttons">
                 <button class="cv-modal-btn" @click="showCv">Zobacz podgląd</button>
                 <button class="cv-modal-btn-clear" @click="close">Zamknij</button>
@@ -151,20 +152,23 @@ export default {
     display: flex;
     align-self: center;
     width: 80%;
+    /* height: 3rem; */
+    margin: 1rem;
     justify-content: space-around;
 }
 .cv-modal-middle {
     display: flex;
     align-self: center;
     align-items: flex-start;
-    width: 80%;
-    height: 60%;
+    width: 100%;
+    margin: 1rem;
+    /* height: 60%; */
     justify-content: space-around;
 }
 
 .cv-modal-chkbxs {
     display: flex;
-    width: 40%;
+    width: 48%;
     flex-direction: column;
     justify-content: space-between
 }
@@ -174,11 +178,24 @@ export default {
     margin-bottom: 1rem;
 }
 
-.cv-modal-div {
+.cv-modal-div,
+.cv-modal-div-s,
+.cv-modal-div-l {
     display: flex;
     position: relative;
     margin-top: .4rem;
     margin-bottom: 1rem;
+    width: 10rem;
+}
+
+.cv-modal-div-s {
+    width: 9.2rem;
+}
+
+.cv-modal-div {
+    width: 10.1rem;
+}
+.cv-modal-div-l {
     width: 12rem;
 }
 
@@ -279,6 +296,30 @@ export default {
     align-self: flex-end;
     align-items: center;
     margin: 1rem;
+    /* height: 20%; */
+}
+
+.cv-modal-selects {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    align-self: center;
+    justify-content: space-around;
+}
+
+
+@media (min-width: 30rem) {
+    .cv-modal-middle {
+        width: 80%;
+        justify-content: space-around;
+    }
+    .cv-modal-chkbxs {
+        width: 40%;
+    }
+
+    .cv-modal-selects {
+        width: 80%;
+    }
 }
 
 </style>
