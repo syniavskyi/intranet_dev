@@ -41,6 +41,7 @@ body {
     flex-direction: column;
     width: 75%;
     align-self: center;
+    margin-top: 2%;
 }
 .calendar-header {
     display: flex;
@@ -108,10 +109,10 @@ body {
     border: none;
     color: inherit;
     /* box-shadow: 0 0 4px rgba(255, 233, 207, 0.082); */
-    border: .7px solid grey;
-    padding: .4rem .6rem;
-    margin: .2rem;
-    width: 13rem;
+    border: .7px solid #ccc;
+    border-radius: 3px;
+    height: 2.2rem;
+    width: 20.5rem;
 }
 .privacy-button:hover,
 .privacy-button:focus,
@@ -120,14 +121,13 @@ body {
    outline: none;
    box-shadow: 0 0 2px rgb(241, 153, 51);
    border: .7px solid white;
-   padding: .4rem .6rem;
-   margin: .2rem;
 }
 
- .input-active:focus {
+ .input-active:focus,
+ .input-active:hover{
     cursor: pointer;
     outline: none;
-    box-shadow: 0 0 2px rgb(241, 153, 51);
+    /* box-shadow: 0 0 2px rgb(241, 153, 51); */
     
 } 
 .input-event{
@@ -144,9 +144,11 @@ body {
 .event-feature{
     display: flex;
     flex-direction: column;
-     margin: 1rem 0 1rem 0;
+     /* margin: 1rem 0 1rem 0; */
      /* display: flex; */
+     height: 3.4rem;
      justify-content: space-between;
+     position: relative;
      
 }
 .event-select, 
@@ -168,25 +170,156 @@ body {
     width: 40%;
     padding-right: 1rem;
 }
-/* .filter {
-    display: flex;
-    margin: .4rem .8rem .4rem;
-    flex-direction: column;
-    font-size: 1.4rem;
-}
-.filter-label {
-    display: flex;
-}
-.filter-select {
-    width: 8rem;
-    height: 1.8rem;
-} */
-
 .calendar-modal-date,
 .calendar-modal-date input {
     width: 15rem;
     padding: 0;
+    border: 0;
 }
+
+/* new */
+.form-pointer:hover {
+    cursor: pointer;
+}
+.click-paragraph {
+    color: #ff5200eb;
+    font-size: 12px;
+    position: absolute;
+    right: 10px;
+    pointer-events: none;
+}
+
+.form-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 70%;
+    align-self: center;
+}
+.form-buttons button {
+    margin: 0;
+}
+.prof-input2 {
+    width: 20.5rem;
+    position: relative;
+    /* flex-grow:0; */
+    height: 3.4rem;
+}
+.prof-input2-xxs {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 8rem;
+}
+.prof-input2-lang {
+    display: flex;
+    position: relative;
+    width: 4rem;
+    flex-direction: column;
+}
+
+.prof-input2-xs {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    /* width: 10rem; */
+    margin: 0 .5rem;
+    margin-bottom: .8rem;
+    flex-grow: 1;
+}
+.prof-input2-s,
+.prof-input2-ss {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 15rem;
+    /* flex-grow: 1; */
+}
+
+.prof-input2-ss {
+    margin: 0 1rem;
+    margin-bottom: .8rem;
+}
+
+.prof-input2-m {
+    width: 16rem;
+}
+
+.prof-input2-l {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    flex: 1;
+    margin: 0 .5rem;
+    margin-bottom: .8rem;
+    height: 3.6rem;
+}
+
+.inputEdit2:focus ~ label,
+/* .inputDisabled2 ~ label, */
+/* .selectDisabled2 ~ label, */
+.inputEdit2:valid ~ label {
+/* .selectEdit2:focus ~ label, */
+/* .selectEdit2:valid ~ label { */
+    top: -.65rem;
+    font-size: 1rem;
+    color: rgb(255, 145, 0);
+    padding: 0 .2rem;
+}
+.inputEdit2 ~ .prof-comm-img {
+    top: .34rem;
+}
+
+.inputEdit2 {
+    position: relative;
+    font-family: 'Roboto';
+    font-size: 1.2rem;
+    height: 2.2rem;
+    border: 0;
+    margin:0;
+    border-bottom: 1px solid grey;
+    width: 100%;
+    animation: border-trans;
+    animation-duration: 0.5s;
+}
+.inputEdit2:focus ~ span:before,
+.inputEdit2:hover ~ span:before,
+.inputEdit2:focus ~ span:after,
+.inputEdit2:hover ~ span:after {
+    width: 50%;
+}
+.inputEdit2:hover,
+.inputEdit2:focus {
+    /* border-bottom: 2px solid orange; */
+    outline :none;
+}
+.inputProfile2 {
+    box-sizing: border-box;
+    background: transparent;
+    text-indent: 0.3rem;
+}
+.label-profile2
+ {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto';
+    align-self: flex-start;
+    transition:0.3s ease all; 
+    padding: 0 .5rem;
+    top: .3rem;
+    left: .2rem;
+    background: white;
+    font-size: 1.2rem;
+    pointer-events: none;
+    color: #999;
+}
+marginForm,
+marginForm select,
+marginForm button {
+    margin: .8rem 0 0 0;
+}
+/* neew */
 
 @media (min-width: 44rem) {
     .calendar-header-menu {
@@ -213,7 +346,7 @@ body {
         left: 17%; */
     }
     .event-feature {
-        margin: 1rem 0 1rem 0;
+        /* margin: 1rem 0 1rem 0; */
         display: flex;
         justify-content: space-between;
         width: 28rem;
@@ -225,7 +358,7 @@ body {
     .event-select, 
     .modal-input,
     .privacy-button {
-        width: 15rem;
+        width: 20.5rem;
     }
 }
 @media (min-width: 67rem){
