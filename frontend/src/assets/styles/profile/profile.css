@@ -757,6 +757,11 @@
     padding: 0 .5rem;
 }
 
+.prof-add-pos {
+    display: flex;
+    position: absolute;
+}
+
 .label-select-lang {
     background: #d8d8d8;
     top: .3rem;
@@ -777,12 +782,41 @@
     font-size: 1.2rem;
 }
 
+.prof-div-pos-btn,
+.prof-div-pos-elem {
+    display: flex;
+    background: transparent;
+    border:1px solid rgb(172, 172, 172);
+    margin: .2rem;
+    text-align: center;
+    transition: all .2s ease;
+    color: rgb(143, 143, 143);
+}
+.prof-div-pos-elem {
+    border-radius: 4px;
+}
+
+.prof-div-pos-btn {
+    align-items: center;
+    justify-content: center;
+    /* height: 1.5rem; */
+    font-size: 1.2rem;
+    height: 1.7rem;
+    width: 1.7rem;
+    border-radius: 50%;
+    top: 0;
+    right: 0;
+    position: absolute;
+}
+
 .inputEdit:focus ~ label,
 .inputDisabled ~ label,
 .selectDisabled ~ label,
 .inputEdit:valid ~ label,
 .selectEdit:focus ~ label,
-.selectEdit:valid ~ label {
+.selectEdit:valid ~ label,
+.inputEditPos:valid ~ label,
+.inputEditPos:focus ~ label {
     top: -.65rem;
     font-size: 1rem;
     color: rgb(255, 145, 0);
@@ -801,7 +835,8 @@
     top: .34rem;
 }
 
-.inputEdit {
+.inputEdit,
+.inputEditPos {
     position: relative;
     font-family: 'Roboto';
     font-size: 1.2rem;
@@ -810,8 +845,13 @@
     margin:0;
     border-bottom: 1px solid grey;
     width: 100%;
-    animation: border-trans;
-    animation-duration: 0.5s;
+    text-align: center;
+}
+
+.inputEditPos:focus ~ button,
+.inputEditPos:hover ~ button {
+    color:  orange;
+    border-color: orange;
 }
 
 @keyframes border-trans {
@@ -859,7 +899,11 @@
 .inputEdit:focus ~ span:before,
 .inputEdit:hover ~ span:before,
 .inputEdit:focus ~ span:after,
-.inputEdit:hover ~ span:after {
+.inputEdit:hover ~ span:after,
+.inputEditPos:hover ~ span:after,
+.inputEditPos:hover ~ span:before,
+.inputEditPos:focus ~ span:before,
+.inputEditPos:focus ~ span:after {
     width: 50%;
 }
 .prof-div-bar:before {
@@ -1059,11 +1103,14 @@
 }
 
 .profile-table-module-button:hover,
-.profile-table-industry-button:hover {
+.profile-table-industry-button:hover,
+.prof-div-pos-elem:hover,
+.prof-div-pos-btn:hover {
     box-shadow: 0 0 8px orange;
     border-color: orange;
     color: orange;
     cursor: pointer;
+    transition: border 0.3s ease;
 }
 .profile-table-textarea {
     min-width: 10rem;
