@@ -13,10 +13,23 @@
       <div class="tile-underscore"></div>
     </div>
     <!-- remove style after adding appropriate classes, it is only for testing purposes  -->
-    <div class="profile-tile-content">
+    <div >
         <div>
             <!-- languages -->
+            <p>Znajomość języków</p> <button @click="addLanguageSkillsRow">+</button>
+            <div v-for="(lang, index) in userLangs" :id="index" :key="index">
+              <label>Język</label>
+              <select v-model="lang.language">
+                <option></option>
+              </select>
+              <label>Poziom</label>
+            <select v-model="lang.langLevel" >
+              <option v-for="level in langLevels" :key="level.Key">{{level.Value}}</option>
+            </select>
+            <button @click="removeLanguageSkillsRow(index)">X</button>
+            </div>
         </div>
+
         <div>
             <!-- Sap modules -->
             <p>Doświadczenie modułowe SAP</p>
@@ -71,13 +84,17 @@ export default {
   computed: {
     ...mapGetters({
       UserSkills: "getUserSkills",
-      modulesList: "getModulesList"
+      modulesList: "getModulesList",
+      userLangs: "getUserLanguages",
+      langLevels: "langLevels"
     })
   },
   methods: {
     ...mapActions([
       "removeModuleForSkills",
       "removeSkill",
+      "addLanguageSkillsRow",
+      "removeLanguageSkillsRow"
     ]),
     edit() {
         this.editMode = true
@@ -170,6 +187,7 @@ export default {
       };
       this.$store.dispatch("removeSkill", data);
     },
+
   }
 };
 </script>
