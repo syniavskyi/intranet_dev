@@ -1013,22 +1013,6 @@
     box-shadow: 0 0 10px red;
 }
 
-.profile-table-save-btn, 
-.profile-table-delete-btn {
-    border: 0;
-    background: white;
-    transition: all .2s ease;
-    border-radius: .3rem;
-    /* margin-left: 1rem; */
-    padding: 5px 8px;
-}
-.profile-table-save-btn:hover,
-.profile-table-delete-btn:hover {
-    color: orange;
-    box-shadow: 0 0 10px orange;
-    cursor: pointer;
-}
-
 .profile-table-input {
     padding-bottom:.1rem;
     align-self: center;
@@ -1095,6 +1079,13 @@
 
 .profile-table-industry-button {
     padding: .2rem;
+}
+
+.profile-table-module-button:disabled,
+.profile-table-module-button:disabled:hover,
+.profile-table-industry-button:disabled,
+.profile-table-industry-button:disabled:hover {
+    color: #8a8a8a;
 }
 
 .profile-table-module-button {
@@ -1197,6 +1188,28 @@
 
 .prof-tbody-item:first-child .prof-tbody-item-txt {
     border-top: 1px solid #ccc;
+}
+
+.prof-tbtn {
+    width: 4rem;
+    height: 2rem;
+    color: #333;
+    background: #ccc;
+    box-shadow: 0 3px 3px -2px grey;
+    text-transform: capitalize;
+    border: 0;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    justify-content: center;
+    align-items: center;
+    margin: .5rem;
+    outline-color: orange;
+}
+
+.prof-tbtn:hover {
+    cursor: pointer;
+    background: rgb(173, 173, 173);
+    color: rgb(90, 90, 90);
 }
 
 @media (min-width: 30rem) {
