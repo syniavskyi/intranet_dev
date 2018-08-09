@@ -18,7 +18,7 @@
                           <div :class="editMode ? 'prof-row-dates' : 'prof-row-dates-s'">
                             <p class="prof-date-label" v-if="!editMode"> {{ formatDate(experience.DateStart) }} </p>
                             <div v-if="editMode" class="prof-input-xxs">
-                              <v-date-picker class="prof-input-date" :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateStart">
+                              <v-date-picker class="prof-input-date" :max-date="experience.DateEnd === null ? new Date() : experience.DateEnd" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateStart">
                                   <input value="experience.DateStart" />
                               </v-date-picker>
                               <label v-if="editMode">Od</label>
@@ -27,7 +27,7 @@
                             <div name="endDateDiv" :id="formatId(index)">
                               <p class="prof-date-label" v-if="!editMode"> {{ formatDate(experience.DateEnd) }} </p>
                               <div v-if="editMode" class="prof-input-xxs">
-                                <v-date-picker class="prof-input-date" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateEnd">
+                                <v-date-picker class="prof-input-date" :min-date="experience.DateStart" :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateEnd">
                                     <input value="experience.DateEnd" />
                                 </v-date-picker>
                                 <label v-if="editMode">Do</label>
