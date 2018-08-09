@@ -58,7 +58,7 @@
                                                 <label class="prof-ainput-lbl">Nr lok.</label>
                                             </div>
                                             <div class="prof-input-uno">
-                                                <vue-google-autocomplete required types="geocode" id="autocomplete" placeholder="" onfocus="value = ''" @input="userData.City = value"></vue-google-autocomplete>
+                                                <vue-google-autocomplete required types="geocode" id="autocomplete" placeholder="" onfocus="value = ''" @input="userData.City = value" :value="selectedCity"  @change="checkFormFields"></vue-google-autocomplete>
                                                 <span class="prof-div-bar"></span>
                                                 <label class="prof-ainput-lbl">Miasto</label>
                                             </div>
@@ -290,6 +290,7 @@
                 <user-education-component></user-education-component>
                 <user-experience-component></user-experience-component>
                 <user-projects-component></user-projects-component>
+                <user-skills-component></user-skills-component>
                 <select-cv-content v-show="showSelectCv"></select-cv-content>
                 <div v-show="showSelectCv" class="modal-overlay"></div>    
             </div>
@@ -315,6 +316,7 @@ import LeavePageDialog from "../dialogs/LeavePageDialog";
 import UserProjects from "./profileComponents/UserProjects";
 import UserEducation from "./profileComponents/UserEducation";
 import UserExperience from "./profileComponents/UserExperience";
+import UserSkills from "./profileComponents/UserSkills";
 import SelectCvContent from "./profileComponents/SelectCvContent";
 export default {
   data() {
@@ -331,7 +333,8 @@ export default {
       showLeavePageDialog: false,
       routeToGo: null,
       showSelectCv: false,
-      newPosition: null
+      newPosition: null,
+      selectedCity: null
     };
   },
   validations: {
@@ -348,6 +351,7 @@ export default {
     "leave-page-dialog": LeavePageDialog,
     "user-projects-component": UserProjects,
     "user-experience-component": UserExperience,
+    "user-skills-component": UserSkills,
     "user-education-component": UserEducation,
     "select-cv-content": SelectCvContent,
     VueGoogleAutocomplete: VueGoogleAutocomplete 

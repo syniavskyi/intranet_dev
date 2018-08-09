@@ -82,15 +82,14 @@ const actions = {
   }) {
     const projectsList = getters.getUserProjectsList
     projectsList.push({
-      project: null,
-      descr: null,
-      contractor: null,
-      industries: [],
-      modules: [],
-      duration: {
-        start: null,
-        end: null
-      }
+      ProjectName: null,
+      ContractorName: null,
+      Industries: [],
+      SapModules: [],
+      StartDate: null,
+      EndDate: null,
+      isCurrent: false,
+      Description: null
     })
     commit('SET_USER_PROJECTS_LIST', projectsList)
     commit('SET_PROJECT_ERROR', false)

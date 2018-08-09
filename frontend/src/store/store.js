@@ -20,6 +20,7 @@ import news from './modules/news'
 import userEducation from './modules/profileComponents/userEducation'
 import userExperience from './modules/profileComponents/userExperience'
 import userProjects from './modules/profileComponents/userProjects'
+import userSkills from './modules/profileComponents/userSkills'
 import cv from './modules/cv'
 
 import settings from './modules/settings'
@@ -50,6 +51,7 @@ export default new Vuex.Store({
         userEducation,
         userExperience,
         userProjects,
+        userSkills,
         cv
     }
 });
