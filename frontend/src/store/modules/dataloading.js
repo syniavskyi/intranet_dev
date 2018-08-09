@@ -12,7 +12,8 @@ const state = {
   userInfo: {},
   studyTypes: [],
   academicTitles: [],
-  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES"]
+  langLevels: [],
+  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL"]
 };
 
 const mutations = {
@@ -42,6 +43,9 @@ const mutations = {
   },
   SET_ACADEMIC_TITLES_LIST(state, data) {
     state.academicTitles = data;
+  },
+  SET_LANG_LEVELS(state,data){
+    state.langLevels = data
   }
 };
 
@@ -85,7 +89,10 @@ const actions = {
       } else if (domainName == 'ZINTANET_ACADEMIC_TITLES') {
         const aTitles = res.data.d.results;
         commit('SET_ACADEMIC_TITLES_LIST', aTitles);
-      }
+      } else if (domainName == 'ZINTRANET_LANG_LEVEL') {
+        const aLevels = res.data.d.results;
+        commit('SET_LANG_LEVELS', aLevels);
+      } 
     }).catch(error => {
       console.log(error);
     })
@@ -200,6 +207,9 @@ const getters = {
   },
   academicTitles(state) {
     return state.academicTitles
+  },
+  langLevels(state){
+    return state.langLevels
   }
 };
 

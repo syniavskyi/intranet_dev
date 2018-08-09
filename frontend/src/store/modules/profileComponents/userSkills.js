@@ -15,13 +15,19 @@ const state = {
         AdditionalSkills: [
             "Autoryzacja", "Role użytkowników"
         ]
-    }
-
+    },
+    userLanguages: [
+        {language:'EN',  langLevel: 'C1'},
+        {language: 'DE',  langLevel: 'A1'}
+    ]
 }
 
 const mutations = {
     SET_USER_SKILLS(state, list) {
         state.userSkills = list
+    },
+    SET_USER_LANGS(state,list) {
+        state.userLanguages = list
     }
 }
 
@@ -102,11 +108,36 @@ const actions = {
           commit('SET_USER_SKILLS', skillsList)
         }
     },
+    saveUserSkills(){
+
+    },
+    addLanguageSkillsRow({
+        commit,
+        getters
+      }) {
+        const langList = getters.getUserLanguages
+        langList.push({
+            language: null,
+            langLevel: null
+        })
+        commit('SET_USER_LANGS', langList)
+    },
+    removeLanguageSkillsRow({
+        commit,
+        getters
+      }, index){
+        const langList = getters.getUserLanguages
+        langList.splice(index, 1)
+        commit('SET_USER_LANGS', langList)
+    }
 }
  
 const getters = {
     getUserSkills(state) {
         return state.userSkills
+    },
+    getUserLanguages(state){
+        return state.userLanguages
     }
 }
 
