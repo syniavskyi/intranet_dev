@@ -234,6 +234,12 @@
     flex-grow: 1;
 }
 
+.prof-skills {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
 .prof-tile-column {
     display: flex;
     flex-direction: column;
@@ -442,13 +448,26 @@
     flex-grow: 1;
 }
 .prof-input-s,
-.prof-input-ss {
+.prof-input-ss,
+.prof-input-xl {
     display: flex;
     position: relative;
     flex-direction: column;
     width: 15rem;
-    /* flex-grow: 1; */
+    flex: 1;
+    margin-top: 1rem;
+    margin-bottom: 1.3rem;
 }
+
+.prof-input-s,
+.prof-input-ss {
+    width: 15rem;
+}
+
+.prof-input-xl {
+    width:18rem;
+}
+
 
 .prof-input-ss {
     margin: 0 1rem;
@@ -757,6 +776,19 @@
     padding: 0 .5rem;
 }
 
+.label-skills {
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto';
+    align-self: flex-start;
+    pointer-events: none;
+    font-size: 1.4rem;
+    color: #666;
+    transition:0.3s ease all; 
+    padding-left: .1rem;
+    line-height: 2.2rem;
+}
+
 .prof-add-pos {
     display: flex;
     position: absolute;
@@ -782,18 +814,34 @@
     font-size: 1.2rem;
 }
 
+.prof-skills-elems {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-wrap: wrap;
+    margin-top: .3rem;
+    margin-bottom: .5rem;
+}
+
 .prof-div-pos-btn,
 .prof-div-pos-elem {
     display: flex;
     background: transparent;
-    border:1px solid rgb(172, 172, 172);
+    font-family: inherit;
+    border:1px solid #acacac;
     margin: .2rem;
     text-align: center;
     transition: all .2s ease;
-    color: rgb(143, 143, 143);
+    color: #8f8f8f;
+    
 }
 .prof-div-pos-elem {
     border-radius: 4px;
+}
+
+.prof-div-pos-elem:disabled {
+    color: #8f8f8f;
+    border-color: #8f8f8f; 
 }
 
 .prof-div-pos-btn {
@@ -849,7 +897,9 @@
 }
 
 .inputEditPos:focus ~ button,
-.inputEditPos:hover ~ button {
+.inputEditPos:hover ~ button,
+.inputEditPos:hover ~ div button,
+.inputEditPos:focus ~ div button {
     color:  orange;
     border-color: orange;
 }
@@ -1075,6 +1125,7 @@
     text-align: center;
     transition: all .2s ease;
     color: rgb(143, 143, 143);
+    font-family: inherit;
 }
 
 .profile-table-industry-button {

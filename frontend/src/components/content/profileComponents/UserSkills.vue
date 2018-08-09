@@ -13,56 +13,79 @@
       <div class="tile-underscore"></div>
     </div>
     <!-- remove style after adding appropriate classes, it is only for testing purposes  -->
-    <div >
-        <div>
-            <!-- languages -->
-            <p>Znajomość języków</p> <button @click="addLanguageSkillsRow">+</button>
-            <div v-for="(lang, index) in userLangs" :id="index" :key="index">
-              <label>Język</label>
-              <select v-model="lang.language">
-                <option></option>
+    <div class="profile-tile-content">
+      <div class="prof-skills">
+        <div class="prof-skills-inputs">
+          <div class="prof-input-s">
+              <!-- languages -->
+              <p>Znajomość języków</p> <button @click="addLanguageSkillsRow">+</button>
+              <div v-for="(lang, index) in userLangs" :id="index" :key="index">
+                <label>Język</label>
+                <select v-model="lang.language">
+                  <option></option>
+                </select>
+                <label>Poziom</label>
+              <select v-model="lang.langLevel" >
+                <option v-for="level in langLevels" :key="level.Key">{{level.Value}}</option>
               </select>
-              <label>Poziom</label>
-            <select v-model="lang.langLevel" >
-              <option v-for="level in langLevels" :key="level.Key">{{level.Value}}</option>
-            </select>
-            <button @click="removeLanguageSkillsRow(index)">X</button>
-            </div>
+              <button @click="removeLanguageSkillsRow(index)">X</button>
+              </div>
+          </div>
+          <div class="prof-input-s">
+              <!-- Sap modules -->
+              <p>Doświadczenie modułowe SAP</p>
+              <select v-if="editMode" @change="addModule">
+                  <option disabled selected value>{{ $t("table.addModule") }}:</option>
+                  <option v-for="sapModule in modulesList" :key="sapModule.id" :value="sapModule.id" :id="sapModule.id" > {{ sapModule.name }}</option>
+              </select>
+              <div class="prof-skills-elems">
+                <button class="prof-div-pos-elem" :disabled="!editMode" v-for="sapModule in UserSkills.SapModules" :key="sapModule"  @click="removeModuleForSkills(sapModule)">{{sapModule}}</button>
+              </div>
+          </div>
+          <div class="prof-input-xl">
+              <!-- Języki programowania -->
+              <input v-on:keyup.enter="addProgramLang" required class="inputProfile inputEditPos" v-if="editMode" v-model="newProgramLang"/>
+              <span class="prof-div-bar"></span>
+              <button class="prof-div-pos-btn" v-if="editMode" @click="addProgramLang">+</button>
+              <label :class="editMode ? 'label-profile': 'label-skills'">Języki programowania</label>
+              <div class="prof-skills-elems">
+                <button class="prof-div-pos-elem" :disabled="!editMode" v-for="lang in UserSkills.ProgramLang" :key="lang"  @click="removeProgramLang(lang)">{{lang}}</button>
+              </div>
+          </div>
         </div>
-
-        <div>
-            <!-- Sap modules -->
-            <p>Doświadczenie modułowe SAP</p>
-            <select v-if="editMode" @change="addModule">
-                 <option disabled selected value>{{ $t("table.addModule") }}:</option>
-                 <option v-for="sapModule in modulesList" :key="sapModule.id" :value="sapModule.id" :id="sapModule.id" > {{ sapModule.name }}</option>
-            </select>
-            <button :disabled="!editMode" v-for="sapModule in UserSkills.SapModules" :key="sapModule"  @click="removeModuleForSkills(sapModule)">{{sapModule}}</button>
+        <div class="prof-skills-inputs">
+          <div class="prof-input-xl">
+              <!-- Technologie -->
+              <input v-on:keyup.enter="addTechnology" required class="inputProfile inputEditPos" v-if="editMode" v-model="newTechnology"/>
+              <span class="prof-div-bar"></span>
+              <button tooltip="usuń" class="prof-div-pos-btn" v-if="editMode" @click="addTechnology">+</button>
+              <label :class="editMode ? 'label-profile': 'label-skills'">Technologie</label>
+              <div class="prof-skills-elems">
+                <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="tech in UserSkills.Technologies" :key="tech"  @click="removeTechnology(tech)">{{tech}}</button>
+              </div>
+          </div>
+          <div class="prof-input-xl">
+              <!-- Extensions -->
+              <input v-on:keyup.enter="addExtension" required class="inputProfile inputEditPos" v-if="editMode" v-model="newExtension"/>
+              <span class="prof-div-bar"></span>
+              <button class="prof-div-pos-btn" v-if="editMode" @click="addExtension">+</button>
+              <label :class="editMode ? 'label-profile': 'label-skills'">Rozszerzenia</label>
+              <div class="prof-skills-elems">
+                <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="ext in UserSkills.Extensions" :key="ext"  @click="removeExtension(ext)">{{ext}}</button>
+              </div>
+          </div>
+          <div class="prof-input-xl">
+              <!-- Additional experience -->
+              <input v-on:keyup.enter="addAdditional" required class="inputProfile inputEditPos" v-if="editMode" v-model="newAdditional"/>
+              <span class="prof-div-bar"></span>
+              <button class="prof-div-pos-btn" v-if="editMode" @click="addAdditional">+</button>
+              <label :class="editMode ? 'label-profile': 'label-skills'">Dodatkowe doświadczenie</label>
+              <div class="prof-skills-elems">
+                <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="add in UserSkills.AdditionalSkills" :key="add"  @click="removeAdditional(add)">{{add}}</button>
+              </div>
+          </div>
         </div>
-        <div>
-            <!-- Języki programowania -->
-            <p>Języki programowania</p>
-            <input v-if="editMode" v-model="newProgramLang"/><button v-if="editMode" @click="addProgramLang">+</button>
-            <button :disabled="!editMode" v-for="lang in UserSkills.ProgramLang" :key="lang"  @click="removeProgramLang(lang)">{{lang}}</button>
-        </div>
-        <div>
-            <!-- Technologie -->
-            <p>Technologie</p>
-            <input v-if="editMode" v-model="newTechnology"/> <button v-if="editMode" @click="addTechnology">+</button>
-            <button :disabled="!editMode" v-for="tech in UserSkills.Technologies" :key="tech"  @click="removeTechnology(tech)">{{tech}}</button>
-        </div>
-        <div>
-            <!-- Extensions -->
-            <p>Rozszerzenia</p>
-            <input v-if="editMode" v-model="newExtension"/> <button v-if="editMode" @click="addExtension">+</button>
-            <button :disabled="!editMode" v-for="ext in UserSkills.Extensions" :key="ext"  @click="removeExtension(ext)">{{ext}}</button>
-        </div>
-        <div>
-            <!-- Additional experience -->
-            <p>Dodatkowe doświadczenie</p>
-            <input v-if="editMode" v-model="newAdditional"/> <button v-if="editMode" @click="addAdditional">+</button>
-            <button :disabled="!editMode" v-for="add in UserSkills.AdditionalSkills" :key="add"  @click="removeAdditional(add)">{{add}}</button>
-        </div>
+      </div>
     </div>
   </div>
 </template>
