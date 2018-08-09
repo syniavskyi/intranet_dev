@@ -772,7 +772,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: stretch; 
-    height: 2.5rem;
+    /* height: 2.5rem; */
 }
 
 .del-tbody-item {
