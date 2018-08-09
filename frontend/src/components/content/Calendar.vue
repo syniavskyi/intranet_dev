@@ -15,16 +15,24 @@
               <v-date-picker mode='single' :min-date="new Date()" v-model="selectedValue" :attributes="attributes" is-inline @dayclick='dayClicked'>
               </v-date-picker>
               <div v-if='selectedDay' class='selected-day'>
-                <h3>{{ selectedDay.date.toDateString() }}</h3>
-                <button @click="openDialog">+</button>
-                <ul>
-                  <li v-for='attr in selectedDay.attributes' :key='attr.customData.EventId'>
-                      {{ attr.customData.EventName }}, 
-                      {{ attr.customData.EventTypeName }}
-                      {{ attr.customData.EventPrivacy }}
-                      {{ attr.customData.EventPriorityValue }}
-                      <button @click="editEvent(attr.customData, $t)">Edytuj</button>
-                      <button @click="deleteEvent(attr.customData, $t)">Usuń</button>
+                <div class="add-event-header">
+                    <h3>{{ selectedDay.date.toDateString() }}</h3>
+                    <button @click="openDialog" class="button modal-button add-button">Dodaj</button>
+                </div>
+                <ul class="ul-event">
+                  <li v-for='attr in selectedDay.attributes' :key='attr.customData.EventId' class="li-event">
+                      <div class="event-attr">
+                          <div class="event-attr-header"> <p> {{ attr.customData.EventName }} </p> </div>
+                          <div> {{ attr.customData.Description}} </div>
+                          <div> {{ attr.customData.EventTime}} </div>
+                          <div> {{ attr.customData.EventTypeName }} </div> 
+                          <div> {{ attr.customData.EventPrivacy }} </div> 
+                          <div> {{ attr.customData.EventPriorityValue }} </div> 
+                      </div>    
+                      <div class="events-buttons">
+                          <button class="button edit-button" @click="editEvent(attr.customData, $t)">Edytuj</button>
+                          <button class="button edit-button" @click="deleteEvent(attr.customData, $t)">Usuń</button>
+                      </div>
                   </li>            
                 </ul>
               </div>
@@ -151,8 +159,8 @@
                   </div>
            </div>
            <div class="form-buttons">
-               <button class="button modal-button" :disabled="$v.$invalid" type="button" @click="addNewEvent"><span class="span-arrow">{{ $t("button.addEvent") }}</span></button>
-               <button class="button modal-button" @click="editForm">edit</button>
+               <button class="button modal-button" :disabled="$v.$invalid" type="button" @click="addNewEvent" v-if="displayButton"><span class="span-arrow">{{ $t("button.addEvent") }}</span></button>
+               <button class="button modal-button" :disabled="disabledButton" @click="editForm">edit</button>
           </div>
       </div>
   </div>
@@ -185,7 +193,9 @@ export default {
           branch: null,
           department: null,
           employee: null
-       }
+       },
+       disabledButton: true,
+       displayButton: true
     };
   },
   validations: {
@@ -307,6 +317,7 @@ export default {
     openDialog() {
       this.$store.dispatch('clearForm');
       this.performDialog();
+      this.displayButton = true;
     },
     performDialog() {
       this.dialogEvent = !this.dialogEvent;
@@ -315,6 +326,8 @@ export default {
       this.performDialog();
       let editedData = data;
       Object.assign(this.$store.getters.addEvent, editedData);
+      this.disabledButton = false;
+      this.displayButton = false;
     },
     deleteEvent(data) {
       let editedData = data;
@@ -350,11 +363,11 @@ export default {
   margin-left: 10px;
 }
 
-.selected-day ul li:first-child {
+/* .selected-day ul li:first-child {
   margin-top: 10px;
-}
+} */
 
-.selected-day ul li {
+/* .selected-day ul li {
   margin-bottom: 10px;
-}
+} */
 </style>
