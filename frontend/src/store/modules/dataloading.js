@@ -12,7 +12,7 @@ const state = {
   userInfo: {},
   studyTypes: [],
   academicTitles: [],
-  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES" ]
+  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES"]
 };
 
 const mutations = {
@@ -37,10 +37,10 @@ const mutations = {
   SET_USER_INFO(state, data) {
     state.userInfo = data;
   },
-  SET_STUDY_TYPES_LIST(state, data){
+  SET_STUDY_TYPES_LIST(state, data) {
     state.studyTypes = data;
   },
-  SET_ACADEMIC_TITLES_LIST(state, data){
+  SET_ACADEMIC_TITLES_LIST(state, data) {
     state.academicTitles = data;
   }
 };
@@ -54,12 +54,14 @@ const actions = {
     dispatch('getContractorsList')
     dispatch('getProjectsList')
     dispatch('getUserData')
-    for (let i=0; i < state.sapDomains.length; i++) {
+    for (let i = 0; i < state.sapDomains.length; i++) {
       dispatch('getDomainValues', state.sapDomains[i])
     }
     commit('SET_DATA_LOADED', true)
   },
-  getDomainValues({commit},domainName) {
+  getDomainValues({
+    commit
+  }, domainName) {
     axios({
       method: 'GET',
       url: "Dictionaries?$filter=Name eq '" + domainName + "'",
@@ -77,18 +79,20 @@ const actions = {
       } else if (domainName == 'ZINTRANET_BRANCH') {
         const aBranches = res.data.d.results;
         commit('SET_BRANCH_LIST', aBranches);
-      } else if (domainName == 'ZINTRANET_STUDIES_TYPES'){
+      } else if (domainName == 'ZINTRANET_STUDIES_TYPES') {
         const aTypes = res.data.d.results;
-        commit('SET_STUDY_TYPES_LIST', aTypes); 
+        commit('SET_STUDY_TYPES_LIST', aTypes);
       } else if (domainName == 'ZINTANET_ACADEMIC_TITLES') {
         const aTitles = res.data.d.results;
-        commit('SET_ACADEMIC_TITLES_LIST', aTitles); 
+        commit('SET_ACADEMIC_TITLES_LIST', aTitles);
       }
-    }).catch(error => { 
+    }).catch(error => {
       console.log(error);
     })
   },
-  getProjectsList({commit}) {
+  getProjectsList({
+    commit
+  }) {
     axios({
       method: 'GET',
       url: 'Projects',
@@ -103,11 +107,13 @@ const actions = {
       let oProjects = res.data.d.results;
       console.log(res.data.d);
       commit('SET_PROJECTS_LIST', oProjects);
-    }).catch(error => { 
+    }).catch(error => {
       console.log(error);
     })
-},
- getContractorsList({commit}) {
+  },
+  getContractorsList({
+    commit
+  }) {
     axios({
       method: 'GET',
       url: 'Contractors',
@@ -123,10 +129,10 @@ const actions = {
       let oContractors = res.data.d.results;
 
       commit('SET_CONTRACTORS_LIST', oContractors);
-    }).catch(error => { 
+    }).catch(error => {
       console.log(error);
     })
-},
+  },
   getUserData({
     commit
   }) {
@@ -134,23 +140,37 @@ const actions = {
       method: 'GET',
       url: 'Users' + '(' + "'UIO'" + ')' + '?$expand=UserEducations,UserExperiences,UserCvProjects',
       auth: {
-          username: 'psy',
-          password: 'ides01'
+        username: 'psy',
+        password: 'ides01'
       },
       headers: {
-          "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
-  }).then(res => {
+    }).then(res => {
       console.log(res)
       const oUserData = res.data.d;
       commit('SET_USER_INFO', oUserData)
       commit('SET_USER_EDUCATION', oUserData.UserEducations.results)
       commit('SET_USER_EXPERIENCE', oUserData.UserExperiences.results)
-  }).catch(error =>{
+    }).catch(error => {
       console.log(error)
-   })
+    })
+  },
+  getUsersLists({ commit }) {
+    axios({
+      method: 'GET',
+      url: 'EmployeesLists',
+      auth: {
+        username: 'psy',
+        password: 'ides01'
+      },
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      }
+    }).then(res => {
+      commit('GET_USER_LIST', res.data.d);
+    }).catch(error => { })
   }
-
 };
 
 const getters = {
@@ -161,7 +181,7 @@ const getters = {
     return state.branches;
   },
   projectsList(state) {
-      return state.projectsList
+    return state.projectsList
   },
   usersList(state) {
     return state.userList;
@@ -175,10 +195,10 @@ const getters = {
   getUserInfo(state) {
     return state.userInfo;
   },
-  studyTypes(state){
+  studyTypes(state) {
     return state.studyTypes;
   },
-  academicTitles(state){
+  academicTitles(state) {
     return state.academicTitles
   }
 };

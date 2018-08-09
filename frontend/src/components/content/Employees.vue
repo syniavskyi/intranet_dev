@@ -21,7 +21,7 @@
             <div class="emp-tbody-row" v-for="userInfo in getUserList" :key="userInfo.key">
               <div class="emp-tbody-item">
                 <div class="emp-tbody-item-title"> {{ $t("label.fullName") }} </div>
-                <div class="emp-tbody-item-txt"> {{ userInfo.firstName }} {{ userInfo.lastName }} </div>
+                <div class="emp-tbody-item-txt"> {{ userInfo.Fullname }} </div>
               </div>
               <div class="emp-tbody-item">
                 <div class="emp-tbody-item-title"> {{ $t("label.position") }} </div>
@@ -29,15 +29,15 @@
               </div>
               <div class="emp-tbody-item">
                 <div class="emp-tbody-item-title">{{ $t("label.department") }} </div>
-                <div class="emp-tbody-item-txt"> {{ userInfo.depName }} </div>
+                <div class="emp-tbody-item-txt"> {{ userInfo.DepartmentName }} </div>
               </div>
               <div class="emp-tbody-item">
                 <div class="emp-tbody-item-title">{{ $t("label.phone") }} </div>
-                <div class="emp-tbody-item-txt"> {{ userInfo.phone }} </div>
+                <div class="emp-tbody-item-txt"> {{ userInfo.Telephone }} </div>
               </div>
               <div class="emp-tbody-item">
                 <div class="emp-tbody-item-title">{{ $t("label.email") }} </div>
-                <div class="emp-tbody-item-txt"> {{ userInfo.email }} </div>
+                <div class="emp-tbody-item-txt"> {{ userInfo.Email }} </div>
               </div>
             </div>
           </div>
@@ -66,9 +66,12 @@ import Menu from '../Menu.vue'
             this.$store.dispatch('loadData', localStorage.getItem('token'))
       }
     },
+    created() {
+      this.$store.dispatch('getUsersLists');
+    },
     computed: {
       getUserList() {
-        return this.$store.getters.usersList;
+        return this.$store.getters.usersList.results;
       }
     }
   }
