@@ -69,8 +69,11 @@
                                                         <input value="userProjects[index].endDate" />
                                                     </v-date-picker>
                                                 </div>
-                                                <input :disabled="!projectEditMode" type="checkbox" @change="disableEndDateInput" id="checkbox" :name="index" v-model="userProjects[index].isCurrent" />
-                                                <label for="checkbox">Obecnie</label>
+                                                <label class="checkbox-wrap">
+                                                    <input :disabled="!projectEditMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="userProjects[index].isCurrent" />
+                                                    <div class="checkbox-in"></div>
+                                                    <p style="padding:0;margin:0;">Obecnie</p>
+                                                </label>
                                             </div>
                                         </div>
                                         <div class="prof-tbody-item">
@@ -109,8 +112,8 @@
                                         <div class="prof-tbody-item">
                                             <div class="prof-tbody-item-title"> --- </div>
                                             <div class="prof-tbody-item-txt">
-                                                <button v-if="projectEditMode" class="profile-table-delete-btn" @click="removeRow(index)">X</button>
-                                                <button v-if="projectEditMode" class="profile-table-save-btn" @click="saveUserProject(index)">&#x2714;</button>
+                                                <button v-if="projectEditMode" class="prof-tbtn" @click="removeRow(index)">USUŃ</button>
+                                                <button v-if="projectEditMode" class="prof-tbtn" @click="saveUserProject(index)">ZAPISZ</button>
                                             </div>
                                         </div>
                                     </div>

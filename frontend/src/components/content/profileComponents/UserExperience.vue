@@ -34,7 +34,7 @@
                               </div>
                             </div>
                             <label class="checkbox-wrap">
-                              <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="experience.isCurrent" />
+                              <input :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="experience.isCurrent" />
                               <div class="checkbox-in"></div>
                               <p style="padding:0;margin:0;">Obecnie</p>
                             </label>
