@@ -18,7 +18,7 @@
         <div class="prof-skills-inputs">
           <div class="prof-input-s">
               <!-- languages -->
-              <p>Znajomość języków</p> <button @click="addLanguageSkillsRow">+</button>
+              <p>Znajomość języków</p> <button @click="addLanguageSkillsRow" v-if="editMode">+</button>
               <div v-for="(lang, index) in userLangs" :id="index" :key="index">
                 <label>Język</label>
                 <select v-model="lang.language">
@@ -27,8 +27,9 @@
                 <label>Poziom</label>
               <select v-model="lang.langLevel" >
                 <option v-for="level in langLevels" :key="level.Key">{{level.Value}}</option>
-              </select>
-              <button @click="removeLanguageSkillsRow(index)">X</button>
+              </select> 
+              <button @click="removeLanguageSkillsRow(index)" v-if="editMode">Usuń</button>
+              <button @click="saveLang" v-if="editMode">Zapisz</button>
               </div>
           </div>
           <div class="prof-input-s">
@@ -96,7 +97,8 @@ export default {
   data() {
     return {
       editMode: false,
-      _beforeEditingCache: null,
+      _beforeEditingCacheSkills: null,
+      _beforeEditingCacheLangs: null,
       newSapModule: null,
       newProgramLang: null,
       newTechnology: null,
@@ -121,22 +123,35 @@ export default {
     ]),
     edit() {
         this.editMode = true
-        this._beforeEditingCache = JSON.parse(
+        this._beforeEditingCacheSkills = JSON.parse(
         JSON.stringify(this.UserSkills)
         )
+        this._beforeEditingCacheLangs = JSON.parse(
+        JSON.stringify(this.userLangs)
+        )
+        
     },
     cancel() {
-        
-        this.$store.commit("SET_USER_SKILLS", this._beforeEditingCache);
+        this.$store.commit("SET_USER_SKILLS", this._beforeEditingCacheSkills);
+        this.$store.commit("SET_USER_LANGS", this._beforeEditingCacheLangs);
         this.editMode = false
     },
     save(){
        this.$store.dispatch('saveUserSkills')
-       this._beforeEditingCache = JSON.parse(
+       this._beforeEditingCacheSkills = JSON.parse(
         JSON.stringify(this.UserSkills)
         )
+       this._beforeEditingCacheLangs = JSON.parse(
+        JSON.stringify(this.userLangs)
+        )
+
         this.editMode = false
     
+    },
+    saveLang(){
+      this._beforeEditingCacheLangs = JSON.parse(
+        JSON.stringify(this.userLangs)
+      );
     },
     addModule(value) {
       const moduleId = value.target.value;
