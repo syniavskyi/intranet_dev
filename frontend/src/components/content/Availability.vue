@@ -239,7 +239,7 @@ export default {
             let filteredUsers = []
 
             for (let i = 0; i < usersList.length; i++) {
-                if (usersList[i].section === this.selectedBranch.toString() && usersList[i].depName === this.selectedDepartment) {
+                if (usersList[i].SectionName === this.selectedBranch.toString() && usersList[i].DepartmentName === this.selectedDepartment) {
                     filteredUsers.push(usersList[i])
                 }
             }

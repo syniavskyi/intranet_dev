@@ -58,6 +58,7 @@ const actions = {
     dispatch('getContractorsList')
     dispatch('getProjectsList')
     dispatch('getUserData')
+    dispatch('getUsersLists')
     for (let i = 0; i < state.sapDomains.length; i++) {
       dispatch('getDomainValues', state.sapDomains[i])
     }
@@ -175,7 +176,7 @@ const actions = {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
     }).then(res => {
-      commit('GET_USER_LIST', res.data.d);
+      commit('GET_USER_LIST', res.data.d.results);
     }).catch(error => { })
   }
 };

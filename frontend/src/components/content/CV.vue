@@ -166,6 +166,7 @@
 <script>
 import { mapGetters } from "vuex";
 import moment from "moment";
+import jsPDF from "jsPdf";
 import htmlDocx from "html-docx-js/dist/html-docx";
 import { saveAs } from "file-saver";
 export default {
@@ -188,7 +189,17 @@ export default {
         this.generateDocx();
       }
     },
-    generatePdf() {},
+    generatePdf() {
+      // not working
+       const pdf = new jsPDF('p', 'pt', 'letter'),
+             source = document.getElementById("content")[0];
+
+        pdf.addHTML(source).then(res => {
+            pdf.save('Test.pdf');
+        });
+        // pdf.fromHTML(source)
+        // pdf.save('Test.pdf')
+    },
     generateDocx() {
       this.showGenerateBtn = false;
       this.convertImagesToBase64();

@@ -18,7 +18,7 @@
                 <div class="emp-thead-item">{{ $t("label.email") }}</div>
           </div>
           <div class="emp-tbody">
-            <div class="emp-tbody-row" v-for="userInfo in getUserList" :key="userInfo.key">
+            <div class="emp-tbody-row" v-for="userInfo in usersList" :key="userInfo.key">
               <div class="emp-tbody-item">
                 <div class="emp-tbody-item-title"> {{ $t("label.fullName") }} </div>
                 <div class="emp-tbody-item-txt"> {{ userInfo.Fullname }} </div>
@@ -51,6 +51,7 @@
 import axios from "axios";
 import i18n from '../../lang/lang'
 import Menu from '../Menu.vue'
+import { mapGetters } from 'vuex';
 
   export default {
     data() {
@@ -66,13 +67,8 @@ import Menu from '../Menu.vue'
             this.$store.dispatch('loadData', localStorage.getItem('token'))
       }
     },
-    created() {
-      this.$store.dispatch('getUsersLists');
-    },
     computed: {
-      getUserList() {
-        return this.$store.getters.usersList.results;
-      }
+      ...mapGetters(["usersList"])
     }
   }
 </script>
