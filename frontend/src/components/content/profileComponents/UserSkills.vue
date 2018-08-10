@@ -31,15 +31,15 @@
               <button @click="removeLanguageSkillsRow(index)">X</button>
               </div>
           </div>
-          <div class="prof-input-s">
+          <div class="prof-input-xl">
               <!-- Sap modules -->
-              <p>Doświadczenie modułowe SAP</p>
-              <select v-if="editMode" @change="addModule">
+              <select required class="selectProfileSkills selectEdit" v-if="editMode" @change="addModule">
                   <option disabled selected value>{{ $t("table.addModule") }}:</option>
                   <option v-for="sapModule in modulesList" :key="sapModule.id" :value="sapModule.id" :id="sapModule.id" > {{ sapModule.name }}</option>
               </select>
+              <label :class="editMode ? 'label-select-profile' : 'label-skills'">Doświadczenie modułowe SAP</label>
               <div class="prof-skills-elems">
-                <button class="prof-div-pos-elem" :disabled="!editMode" v-for="sapModule in UserSkills.SapModules" :key="sapModule"  @click="removeModuleForSkills(sapModule)">{{sapModule}}</button>
+                <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="sapModule in UserSkills.SapModules" :key="sapModule"  @click="removeModuleForSkills(sapModule)">{{sapModule}}</button>
               </div>
           </div>
           <div class="prof-input-xl">
