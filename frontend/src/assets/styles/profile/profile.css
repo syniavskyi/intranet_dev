@@ -236,8 +236,64 @@
 
 .prof-skills {
     display: flex;
+    flex-direction: column;
     width: 100%;
     justify-content: space-around;
+    align-items: center;
+}
+
+.prof-skills-inputs {
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+}
+
+.prof-skills-inputs:first-of-type .prof-input-xl,
+.prof-skills-inputs:first-of-type .prof-input-xl .prof-div-skills {
+    margin-bottom: 0;
+}
+
+.prof-skills-btn {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.prof-skills-save,
+.prof-skills-delete,
+.prof-skills-btn {
+    display: flex;
+    cursor: pointer;
+    color: #333;
+    text-transform: capitalize;
+    border: 0;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    justify-content: center;
+    align-items: center;
+    margin: .2rem;
+    outline: none;
+    font-size: .85rem;
+}
+
+.prof-skills-save,
+.prof-skills-btn {
+    padding: .5rem .7rem;
+    background: #ccc;
+    box-shadow: 0 3px 3px -2px gray;
+}
+.prof-skills-save:hover,
+.prof-skills-btn:hover {
+    background: rgb(156, 156, 156);
+}
+
+.prof-skills-delete {
+    background: transparent;
+}
+
+.prof-skills-delete:hover {
+    color: red;
 }
 
 .prof-tile-column {
@@ -455,8 +511,6 @@
     flex-direction: column;
     width: 15rem;
     flex: 1;
-    margin-top: 1rem;
-    margin-bottom: 1.3rem;
 }
 
 .prof-input-s,
@@ -465,7 +519,10 @@
 }
 
 .prof-input-xl {
-    width: 19rem;
+    width: 20rem;
+    flex-shrink: 0;
+    margin-top: 1rem;
+    margin-bottom: 1.3rem;
 }
 
 
@@ -496,8 +553,15 @@
 
 .prof-div-slang {
     display: flex;
-    width: 40%;
     position: relative;
+}
+
+.prof-div-slang:first-of-type {
+    width: 55%
+}
+
+.prof-div-slang:last-of-type {
+    width: 25%
 }
 
 .prof-comm-img {
@@ -828,10 +892,11 @@
 }
 
 .prof-skills-elems {
-    display: flex;
+    display: inline-flex;
     min-height: 0;
     flex: 1;
     flex-wrap: wrap;
+    flex-basis: auto;
     margin-top: .3rem;
     margin-bottom: .5rem;
 }
@@ -850,6 +915,8 @@
 }
 .prof-div-pos-elem {
     border-radius: 4px;
+    flex-shrink: 0;
+    /* flex-grow:0; */
 }
 
 .prof-div-pos-elem:disabled {
@@ -908,6 +975,10 @@
     border-bottom: 1px solid grey;
     width: 100%;
     text-align: center;
+}
+
+.inputEditPos {
+    padding-right: 2rem;
 }
 
 .inputEditPos:focus ~ button,
@@ -1007,6 +1078,17 @@
 .selectProfileSkills {
     width: 100%;
     text-indent: .5rem;
+    animation-name: view-in;
+    animation-duration: 0.7s; 
+}
+
+@keyframes view-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 .selectProfile {
@@ -1343,6 +1425,9 @@
     .profile-tiles-row-wrap {
         flex-direction: row;
         justify-content: space-between;
+    }
+    .prof-skills {
+        flex-direction: row;
     }
     .profile-tiles-row {
         flex-direction: column;
