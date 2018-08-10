@@ -16,20 +16,28 @@
     <div class="profile-tile-content">
       <div class="prof-skills">
         <div class="prof-skills-inputs">
-          <div class="prof-input-s">
-              <!-- languages -->
-              <p>Znajomość języków</p> <button @click="addLanguageSkillsRow" v-if="editMode">+</button>
-              <div v-for="(lang, index) in userLangs" :id="index" :key="index">
-                <label>Język</label>
-                <select v-model="lang.language">
-                  <option></option>
-                </select>
-                <label>Poziom</label>
-              <select v-model="lang.langLevel" >
-                <option v-for="level in langLevels" :key="level.Key">{{level.Value}}</option>
-              </select> 
-              <button @click="removeLanguageSkillsRow(index)" v-if="editMode">Usuń</button>
-              <button @click="saveLang" v-if="editMode">Zapisz</button>
+          <div class="prof-input-xl">
+            <!-- languages -->
+              <label class="label-skills">Znajomość języków</label> 
+              <button class="prof-skills-btn" @click="addLanguageSkillsRow" v-if="editMode">+</button>
+              <div class="prof-div-skills" v-for="(lang, index) in userLangs" :id="index" :key="index">
+                <div class="prof-div-slang">
+                  <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.language">
+                    <option>Angielski</option>
+                    <option>Niemiecki</option>
+                  </select>
+                  <select v-if="!editMode" class="selectProfileSkills selectDisabled" v-model="lang.language"></select>
+                  <label class="label-select-profile">Język</label>
+                </div>
+                <div class="prof-div-slang">
+                  <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.langLevel" >
+                    <option v-for="level in langLevels" :key="level.Key">{{level.Value}}</option>
+                  </select>
+                  <select v-if="!editMode" class="selectProfileSkills selectDisabled"></select>
+                  <label class="label-select-profile">Poziom</label>
+                </div>
+                <button class="prof-skills-delete" @click="removeLanguageSkillsRow(index)" v-if="editMode">Usuń</button>
+                <button class="prof-skills-save" @click="saveLang" v-if="editMode">Zapisz</button>
               </div>
           </div>
           <div class="prof-input-xl">
@@ -50,7 +58,7 @@
               <button class="prof-div-pos-btn" v-if="editMode" @click="addProgramLang">+</button>
               <label :class="editMode ? 'label-profile': 'label-skills'">Języki programowania</label>
               <div class="prof-skills-elems">
-                <button class="prof-div-pos-elem" :disabled="!editMode" v-for="lang in UserSkills.ProgramLang" :key="lang"  @click="removeProgramLang(lang)">{{lang}}</button>
+                <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="lang in UserSkills.ProgramLang" :key="lang"  @click="removeProgramLang(lang)">{{lang}}</button>
               </div>
           </div>
         </div>
