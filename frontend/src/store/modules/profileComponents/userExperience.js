@@ -1,4 +1,5 @@
 import axios from 'axios'
+import moment from 'moment'
 import router from '@/router/index.js'
 // import i18n from '../../lang/lang'
 
@@ -11,7 +12,7 @@ const state = {
 }
 
 const mutations = { 
-    SET_USER_EXPERIENCE(state, list) {
+    SET_USER_EXPERIENCE(state, list, moment) {
         state.userExperience = list
     },
     SET_EXPERIENCE_ERROR(state, isError) {
