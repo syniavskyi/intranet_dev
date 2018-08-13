@@ -141,7 +141,8 @@ const actions = {
     })
   },
   getUserData({
-    commit
+    commit,
+    moment
   }) {
     axios({
       method: 'GET',
