@@ -11,16 +11,18 @@
         </div>
         <div class="calendar-tiles">
           <div class="calendar-tile">
-            <div class="calendar">
+
+        <div class="calendar">
               <v-date-picker mode='single' :min-date="new Date()" v-model="selectedValue" :attributes="attributes" is-inline @dayclick='dayClicked'>
               </v-date-picker>
+      </div>       
               <div v-if='selectedDay' class='selected-day'>
                 <div class="add-event-header">
                     <h3>{{ selectedDay.date.toDateString() }}</h3>
                     <button @click="openDialog" class="button modal-button add-button">Dodaj</button>
                 </div>
                 <ul class="ul-event">
-                  <li v-for='attr in selectedDay.attributes' :key='attr.customData.EventId' class="li-event">
+                  <li v-for='attr in selectedDay.attributes' :key='attr.customData.EventId' class="delegations-inputs-section">
                       <div class="event-attr">
                           <div class="event-attr-header"> <p> {{ attr.customData.EventName }} </p> </div>
                           <div> {{ attr.customData.Description}} </div>
@@ -35,8 +37,8 @@
                       </div>
                   </li>            
                 </ul>
-              </div>
             </div>
+          <!-- to    </div> -->
              <div class="filters" v-if="permition">
                 <div class="ava-div-select-cool">
                     <select required class="ava-select-cool" v-model="filters.branch">        

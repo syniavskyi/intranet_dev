@@ -74,10 +74,10 @@ const actions = {
          const weather = {}
          weather.lon = data.coord.lon
          weather.lat = data.coord.lat
-         if(data.name = 'Wroclaw'){
+         if(data.name =='Wroclaw'){
             weather.town = 'Wrocław'
          }
-        else if(data.name = 'Dabrowa Gornicza'){
+        else if(data.name == 'Dabrowa Gornicza'){
             weather.town = 'Dąbrowa Górnicza'
              }
         else {
