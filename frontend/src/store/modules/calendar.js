@@ -3,6 +3,7 @@ import router from '@/router/index.js'
 import { stat } from 'fs';
 import jsontoxml from 'jsontoxml'
 import js2xml from 'js2xmlparser'
+import moment from 'moment'
 
 const state = {
   priorityColor: '',
@@ -25,7 +26,7 @@ const state = {
     department: null,
     employee: null
   },
-  event: {},
+  // event: {},
   aEvents: [],
   aPriority: [],
   aEventType: [],
@@ -36,23 +37,17 @@ const mutations = {
   SET_COLOR_PRIORITY(state, data) {
     state.priorityColor = data;
   },
-  GET_EVENT(state, data) {
-    state.event = data;
-},
+//   SET_EVENT(state, data) {
+//     state.event = data;
+// },
   SET_EVENTS(state, data) {
     state.aEvents = data;
   },
-  GET_PRIORITY(state, data) {
+  SET_PRIORITY(state, data) {
     state.aPriority = data;
   },
-  GET_EVENT_TYPE(state, data) {
+  SET_EVENT_TYPE(state, data) {
     state.aEventType = data;
-  },
-  GET_NEW_EVENT(state, data) {
-    state.events = data;
-  },
-  GET_EDITED_DATA(state, data) {
-    state.editedData = data;
   },
   SET_DATE_FROM(state, data) {
     state.selectedDate = data;
@@ -66,9 +61,9 @@ const mutations = {
 }
 
 const actions = {
-  setColorPriority({state, commit}) {
+  setColorPriority({getters, commit}) {
     let color = '';
-    let prior = state.addEvent.Priority;
+    let prior = getters.addEvent.Priority;
 
     switch(prior) {
       case 'L':
@@ -85,25 +80,25 @@ const actions = {
     }
     commit('SET_COLOR_PRIORITY', color);
   },
-  getEvent({commit}) {
-    axios({
-      method: 'GET',
-      url: 'Events' + '(' + "'006'" + ')',
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-      }
-    }).then(res => {
-      let oEvent = res.data.d.results;
-      oEvent.EventTime = oEvent.slice(2, 4) + ':' + oEvent.slice(5, 7) + ':' + oEvent.slice(8, 10)
-      commit('GET_EVENT', oEvent);
-    }).catch(error => { 
-      console.log(error);
-     })
-},
+//   getEvent({commit}) {
+//     axios({
+//       method: 'GET',
+//       url: 'Events' + '(' + "'006'" + ')',
+//       auth: {
+//         username: 'psy',
+//         password: 'ides01'
+//       },
+//       headers: {
+//         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+//       }
+//     }).then(res => {
+//       let oEvent = res.data.d.results;
+//       oEvent.EventTime = oEvent.slice(2, 4) + ':' + oEvent.slice(5, 7) + ':' + oEvent.slice(8, 10)
+//       commit('SET_EVENT', oEvent);
+//     }).catch(error => { 
+//       console.log(error);
+//      })
+// },
 getEvents({commit, dispatch}) {
     axios({
       method: 'GET',
@@ -124,23 +119,26 @@ getEvents({commit, dispatch}) {
       console.log(error);
     })
 },
-convertDate({state, commit}) {
-  let oEvents = state.aEvents;
+convertDate({getters, commit}) {
+  let oEvents = getters.events;
   for(let i = 0; i<oEvents.length; i++) {
-    let milisc = parseInt(oEvents[i].DateFrom.slice(6, 19));
-    oEvents[i].DateFrom = new Date(milisc);
-    oEvents[i].EventTime = oEvents[i].EventTime.slice(2, 4) + ':' + oEvents[i].EventTime.slice(5, 7) + ':' + oEvents[i].EventTime.slice(8, 10);
+      let milisc = parseInt(oEvents[i].DateFrom.slice(6, oEvents[i].DateFrom.length - 2));
+      oEvents[i].DateFrom = new Date(milisc);
+      oEvents[i].EventTime = oEvents[i].EventTime.slice(2, 4) + ':' + oEvents[i].EventTime.slice(5, 7) + ':' + oEvents[i].EventTime.slice(8, 10);
+      // let w = EventTime = oEvents[i].EventTime.slice(2, 4) + oEvents[i].EventTime.slice(5, 7) + oEvents[i].EventTime.slice(8, 10);
+      // let r = moment(w).format('LTS');
     if(oEvents[i].DateTo) {
-    let miliscTo = parseInt(oEvents[i].DateTo.slice(6, 19));
+      let miliscTo = parseInt(oEvents[i].DateTo.slice(6, oEvents[i].DateTo.length - 2));
       oEvents[i].DateTo = new Date(miliscTo);
-    } else {
+    } 
+    else {
       oEvents[i].DateTo =  oEvents[i].DateFrom;
     }
     commit('SET_EVENTS', oEvents);
   }
 },
-setColor({commit, state, getters}){
-     const aEvents = state.aEvents;
+setColor({commit, getters}){
+     const aEvents = getters.events;
      for(let i = 0; i<aEvents.length; i++) {
         if(aEvents[i].Priority == "L") {
             aEvents[i].color = '#fde997';
@@ -206,9 +204,9 @@ setColor({commit, state, getters}){
      state.aEvents.push(eventData);
       
   },
-  editEvent({commit, state, dispatch}) {
-    let editedData = state.addEvent;
-    let aEvents = state.aEvents;
+  editEvent({commit, getters, dispatch}) {
+    let editedData = getters.addEvent;
+    let aEvents = getters.events;
     let pos = aEvents.findIndex(x => x.EventId === editedData.EventId);
     aEvents[pos] = editedData;
     dispatch('getEvents');
@@ -244,7 +242,7 @@ setColor({commit, state, getters}){
       // i co dalej
       // let aPriority = res.data.d.results;
       // dispatch('getEvents')
-      // commit('GET_PRIORITY', aPriority);
+      // commit('SET_PRIORITY', aPriority);
     }).catch(error => { 
       console.log(error);
     })
@@ -272,7 +270,7 @@ setColor({commit, state, getters}){
       console.log(error);
     })
   },
-  clearForm({commit, state}) {
+  clearForm({commit}) {
     let clearForm = {
           EventName: null,
           EventTime: null,
@@ -300,7 +298,7 @@ setColor({commit, state, getters}){
       }
     }).then(res => {
       let aPriority = res.data.d.results;
-      commit('GET_PRIORITY', aPriority);
+      commit('SET_PRIORITY', aPriority);
     }).catch(error => { 
       console.log(error);
     })
@@ -319,7 +317,7 @@ setColor({commit, state, getters}){
     }).then(res => {
       let aEventType = res.data.d.results;
       console.log(res.data.d.results);
-      commit('GET_EVENT_TYPE', aEventType);
+      commit('SET_EVENT_TYPE', aEventType);
     }).catch(error => { 
       console.log(error);
     })
@@ -343,9 +341,6 @@ const getters = {
 },
   events(state) { 
     return state.aEvents;
- },
- attributes(state) {
-    return state.attributes;
  },
  priorities(state) {
    return state.aPriority;
