@@ -59,13 +59,13 @@
                                             <div class="prof-tbody-item-txt">
                                                 <p class="table-p">Rozpoczęcie</p>
                                                 <p class="table-p" v-if="!projectEditMode"> {{ formatDate(userProjects[index].StartDate) }} </p>
-                                                <v-date-picker :max-date="new Date()" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].StartDate">
+                                                <v-date-picker :max-date="userProjects[index].EndDate === null ? new Date() : userProjects[index].EndDate" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].StartDate">
                                                     <input value="userProjects[index].startDate" />
                                                 </v-date-picker>
                                                 <p class="table-p">Zakończenie</p>
                                                 <div name="endDateDiv" :id="formatId(index)">
                                                     <p class="table-p" v-if="!projectEditMode"> {{ formatDate(userProjects[index].EndDate) }} </p>
-                                                    <v-date-picker :max-date="new Date()" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].EndDate">
+                                                    <v-date-picker :max-date="new Date()" :min-date="userProjects[index].StartDate" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].EndDate">
                                                         <input value="userProjects[index].endDate" />
                                                     </v-date-picker>
                                                 </div>
