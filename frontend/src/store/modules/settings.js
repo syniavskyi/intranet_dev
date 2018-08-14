@@ -5,7 +5,11 @@ const state = {
     languageList: [
         { id: 'en', description: i18n.t('select.language.english') },
         { id: 'pl', description: i18n.t('select.language.polish')  }
-    ]
+    ],
+    preHtmlForRequest: '<?xml version="1.0" encoding="utf-8"?>'
+                        +'<entry xml:base="http://nw5.local.pl:8050/sap/opu/odata/SAP/ZGW_INTRANET_SRV/" xmlns="http://www.w3.org/2005/Atom" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">'
+                        +'<content type="application/xml">' ,
+    postHtmlForRequest: '</content>'+'</entry>'
 }
 
 const mutations = {
@@ -31,6 +35,12 @@ const actions = {
 const getters = {
     languageList(state) {
         return state.languageList
+    },
+    getPreHtmlForRequest(state){
+        return state.preHtmlForRequest
+    },
+    getPostHtmlForRequest(state){
+        return state.postHtmlForRequest
     }
 }
 
