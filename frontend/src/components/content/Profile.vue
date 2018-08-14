@@ -209,7 +209,7 @@
                                         <!-- <v-date-picker :max-date="new Date()" v-if="projectEditMode" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" is-expanded mode="single" v-model="userData.employmentDate">
                                                 <input value="userData.employmentDate" />
                                             </v-date-picker> -->
-                                        <!-- <p v-if="!editMode" class="inputDisabled">{{userData.employmentDate}}</p> -->
+                                        <p v-show="false" disabled class="inputProfile inputDisabled">{{formatData}}</p>
                                         <input disabled v-if="!editMode" class="inputProfile inputDisabled" v-model="userData.EmploymentDate">
                                         <span class="prof-div-bar"></span>
                                         <label class="label-profile">{{ $t("label.employmentDate") }}</label>
@@ -225,6 +225,7 @@
                                         <input disabled class="inputProfile inputDisabled" v-if="!editMode">
                                         <label class="label-profile">{{ $t("label.workExperience") }}</label>
                                     </div>
+                                    <!-- <p v-if="!editMode" disabled class="inputProfile inputDisabled">{{formatData}}</p> -->
                                 </div>
                             </div>
                         </div>
@@ -236,7 +237,6 @@
                                 <button class="profile-edit-experience-e" @click="showSelectCv = true">Generuj CV</button>
                             </div>
                             <div class="tile-underscore"></div>
-                            
                         </div>
                         <div class="profile-tile-content">
                                 <div class="cv-buttons">
@@ -309,8 +309,7 @@ import htmlDocx from "html-docx-js/dist/html-docx";
 import { saveAs } from "file-saver";
 import { mapGetters, mapActions } from "vuex";
 
-
-import VueGoogleAutocomplete from 'vue-google-autocomplete'
+import VueGoogleAutocomplete from "vue-google-autocomplete";
 import Menu from "../Menu.vue";
 import LeavePageDialog from "../dialogs/LeavePageDialog";
 import UserProjects from "./profileComponents/UserProjects";
@@ -345,6 +344,11 @@ export default {
       }
     }
   },
+  beforeCreate() {
+    if (this.$store.getters.isDataLoaded === false) {
+      this.$store.dispatch("loadData");
+    }
+  },
   components: {
     MaskedInput,
     "app-menu": Menu,
@@ -354,12 +358,7 @@ export default {
     "user-skills-component": UserSkills,
     "user-education-component": UserEducation,
     "select-cv-content": SelectCvContent,
-    VueGoogleAutocomplete: VueGoogleAutocomplete 
-  },
-  beforeCreate() {
-    if (this.$store.getters.isDataLoaded === false) {
-      this.$store.dispatch("loadData");
-    }
+    VueGoogleAutocomplete: VueGoogleAutocomplete
   },
   computed: {
     ...mapGetters({
@@ -369,14 +368,28 @@ export default {
       fileUploadError: "isFileUploadError",
       userPositions: "getUserJobPositions"
     }),
-    formatAddress(){
-        const data = this.userData
-        let address =  data.Street + ' ' + data.BuildingNumber
-        if (data.ApartmentNumber){
-            address = address + '/' + data.ApartmentNumber
+    formatAddress() {
+      const data = this.userData;
+      let address = data.Street + " " + data.BuildingNumber;
+      if (data.ApartmentNumber) {
+        address = address + "/" + data.ApartmentNumber;
+      }
+      address = address + ", " + data.PostalCode + " " + data.City;
+      return address;
+    },
+    formatData() {
+        const data = this.userData;
+
+        if(data.EmploymentDate && data.EmploymentDate.includes("Date"))
+        {
+            moment.locale();
+            let oChangedDate,
+                sDate
+
+            sDate = data.EmploymentDate.substring(6, data.EmploymentDate.length - 2);
+            oChangedDate = moment(sDate, "x").format("L");
+            data.EmploymentDate = oChangedDate;
         }
-        address = address + ', ' + data.PostalCode + ' ' +  data.City 
-        return address
     }
   },
   // beforeRouteLeave (to, from , next) {
@@ -464,24 +477,21 @@ export default {
         this.disableSaveBtn = this.hasDataChanged === true ? false : true;
       }
     },
-    generateCV(){
-
-    },
-    addNewPositionForUser(){
-        const userPos = this.userPositions
-        userPos.push(this.newPosition)
-        this.$store.commit('SET_USER_JOB_POS', userPos)
+    generateCV() {},
+    addNewPositionForUser() {
+      const userPos = this.userPositions;
+      userPos.push(this.newPosition);
+      this.$store.commit("SET_USER_JOB_POS", userPos);
     },
     removeUserPosition(position) {
-        const userPos = this.userPositions
-        for (let i=0; userPos.length; i++){
-            if (userPos[i] == position){
-                userPos.splice(i, 1)
-                this.$store.commit('SET_USER_JOB_POS', userPos)
-                return
-            }
+      const userPos = this.userPositions;
+      for (let i = 0; userPos.length; i++) {
+        if (userPos[i] == position) {
+          userPos.splice(i, 1);
+          this.$store.commit("SET_USER_JOB_POS", userPos);
+          return;
         }
-        
+      }
     }
     // leavePage() {
     //     if (this._beforeEditingProjects){
@@ -498,89 +508,87 @@ export default {
 
 <style>
 .prof-input-adr {
-    display: flex;
-    list-style: none;
-    
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: stretch;
-    /* overflow: hidden; */
+  display: flex;
+  list-style: none;
+
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  /* overflow: hidden; */
 }
 .prof-input-uno:first {
-    width: 25%;
+  width: 25%;
 }
 .prof-input-uno {
-    position: relative;
-    width: 20%;
-    transition: all 0.5s ease;
+  position: relative;
+  width: 20%;
+  transition: all 0.5s ease;
 }
 
 .prof-input-uno input:focus ~ span:before,
 .prof-input-uno input:focus ~ span:after,
 .prof-input-uno input:hover ~ span:before,
 .prof-input-uno input:hover ~ span:after {
-    width: 50%;
+  width: 50%;
 }
 
 .prof-input-uno input {
-    display: flex;
-    flex: initial;
-    width: 100%;
-    flex:1;
-    transition: flex 0.5s ease;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    border:0;
-    border-bottom: 1px solid #ccc;
-    height: 2.2rem;
-    /* position: relative; */
-    flex-basis: 0;
-    padding-left: .4rem;
+  display: flex;
+  flex: initial;
+  width: 100%;
+  flex: 1;
+  transition: flex 0.5s ease;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  height: 2.2rem;
+  /* position: relative; */
+  flex-basis: 0;
+  padding-left: 0.4rem;
 }
 
 input:focus {
-    outline: none;
-    /* border-bottom: 2px solid orange; */
-} 
-
+  outline: none;
+  /* border-bottom: 2px solid orange; */
+}
 
 .prof-input-uno:hover,
 .prof-input-uno:focus,
 .prof-input-uno:focus-within {
-    width: 70%;
+  width: 70%;
 }
 
 .prof-input-uno input:hover ~ label,
 .prof-input-uno input:focus ~ label,
 .prof-input-uno input:valid ~ label {
-    transform: rotate(0deg);
-    /* font-size: .8rem; */
-    color: orange;
-    top: -.4rem;
-    left: .2rem;
-    background: white;
-    /* padding:.2rem; */
+  transform: rotate(0deg);
+  /* font-size: .8rem; */
+  color: orange;
+  top: -0.4rem;
+  left: 0.2rem;
+  background: white;
+  /* padding:.2rem; */
 }
 
-
 .prof-ainput-lbl {
-    display: flex;
-    flex-wrap: nowrap;
-    position: absolute;
-    width: 100%;
-    font-size: .75rem;
-    /* transform: rotate(-90deg); */
-    transition: all 0.5s ease;
-    color: #999;
-    /* left: -.8rem; */
-    top: .6rem;
-    pointer-events: none;
-    /* padding:0 .15rem; */
+  display: flex;
+  flex-wrap: nowrap;
+  position: absolute;
+  width: 100%;
+  font-size: 0.75rem;
+  /* transform: rotate(-90deg); */
+  transition: all 0.5s ease;
+  color: #999;
+  /* left: -.8rem; */
+  top: 0.6rem;
+  pointer-events: none;
+  /* padding:0 .15rem; */
 }
 
 .checkbox-wrap input {
-    height: 1.19rem;
+  height: 1.19rem;
 }
 
 .input {

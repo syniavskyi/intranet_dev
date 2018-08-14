@@ -1,6 +1,8 @@
 import axios from 'axios'
 import router from '@/router/index.js'
 import { stat } from 'fs';
+import jsontoxml from 'jsontoxml'
+import js2xml from 'js2xmlparser'
 
 const state = {
   priorityColor: '',
@@ -137,7 +139,7 @@ convertDate({state, commit}) {
     commit('SET_EVENTS', oEvents);
   }
 },
-setColor({commit, state}){
+setColor({commit, state, getters}){
      const aEvents = state.aEvents;
      for(let i = 0; i<aEvents.length; i++) {
         if(aEvents[i].Priority == "L") {
@@ -150,55 +152,50 @@ setColor({commit, state}){
         }
      commit('SET_EVENTS', aEvents);
   },
-  addNewEvent({state, dispatch}) {
-     state.addEvent.DateFrom = state.selectedDate;
-     dispatch('setColorPriority');
-    let newData = new Object(state.addEvent);
-    if(!newData.DateTo) {
-       newData.DateTo = newData.DateFrom;
-     } 
-     let bodyFormData = new FormData();
-     bodyFormData.set('CreatedBy', newData.CreatedBy)
-    axios({
+  addNewEvent({getters, dispatch}) {
+     const eventData = getters.addEvent
+     eventData.DateFrom = getters.getSelectedDate;
+     if(!eventData.DateTo) {
+      eventData.DateTo = eventData.DateFrom;
+    } 
+    dispatch('setColorPriority');
+    
+    const   props = {
+       "d:CreatedBy": '',
+       "d:EventName": eventData.EventName,
+       "d:Description": eventData.Description,
+       "d:EventTime": eventData.EventTime,
+       "d:EventTypeName": eventData.EventTypeName,
+       "d:PriorityValue":'',
+       "d:DateFrom": '2018-08-02T00:00:00',
+       "d:EventPrivacy": 'PRV',
+       "d:TargetGroup":'',
+       "d:Branch": '',
+       "d:Department": 'Fiori',
+       "d:DateTo": '2018-08-02T00:00:00',
+       "d:Employee": '',
+       "d:Priority": 'M',
+       "d:EventType": 'TRN'
+       }
+
+     let xml = js2xml.parse("m:properties", props)
+
+     let xmlRequest = getters.getPreHtmlForRequest + xml + getters.getPostHtmlForRequest
+
+     axios({
       method: 'POST',
-      url: 'Events',
-      // auth: {
-      //   username: 'psy',
-      //   password: 'ides01'
-      // },
-      data: {
-        CreatedBy: newData.CreatedBy
+      url: '/Events',
+      auth: {
+        username: 'psy',
+        password: 'ides01'
       },
-
-      // CreatedBy: newData.CreatedBy,
-      // DateFrom: newData.DateFrom, 
-      // EventPrivacy: newData.EventPrivacy,
-      // Branch: newData.Branch,
-      // Description: newData.Description,
-      // Department: newData.Department,
-      // EventName: newData.EventName,
-      // DateTo: newData.DateTo,
-      // Employee: newData.Employee,
-      // EventTime: newData.EventTime,
-      // Priority: newData.Priority,
-      // EventType: newData.EventType
-
+      // data: bodyFormData,
+      data: xmlRequest,
       headers: {
-        // "Content-Type":	"application/atom+xml;type=entry; charset=utf-8",
-        // "content-length":	"989"
-        // "Content-Length": "989",
-        "Content-Type": "application/atom+xml;type=entry; charset=utf-8",
-        // "DataServiceVersion": "2.0"
-
-
-        // Content-Length:"336"
-        // Content-Type: "application/json"
-        // DataServiceVersion: "2.0"
-        // location: "http://nw5.local.pl:8050/sap/opu/odata/sap/ZTEACHER_SERVICE_SRV/Grades('0000000002')"
+        "Content-Type": "application/atom+xml; type=entry; charset=utf-8",
+        "X-Requested-With": "XMLHttpRequest"
       },
-      // data: {
-      //   bodyFormData
-      // },
+
       // config: { headers: {'Content-Type': 'multipart/form-data' }}
     }).then(res => {
       let c = res.config;
@@ -206,7 +203,7 @@ setColor({commit, state}){
       console.log(error);
     })
      state.addEvent.color = state.priorityColor
-     state.aEvents.push(newData);
+     state.aEvents.push(eventData);
       
   },
   editEvent({commit, state, dispatch}) {
@@ -254,22 +251,23 @@ setColor({commit, state}){
 
   },
   removeEvent({commit, state}) {
-    let editedData = state.addEvent;
-    let aEvents = state.aEvents;
-    let pos = aEvents.findIndex(x => x.EventId === editedData.EventId);
-    let pos2 = aEvents.find(x => x.EventId === editedData.EventId).foo;
+    // let editedData = state.addEvent;
+    // let aEvents = state.aEvents;
+    // let pos = aEvents.findIndex(x => x.EventId === editedData.EventId);
+    // let pos2 = aEvents.find(x => x.EventId === editedData.EventId).foo;
     axios({
       method: 'DELETE',
-      url: 'Events' + "('" + editedData.EventId + "')",
-      // auth: {
-      //   username: 'psy',
-      //   password: 'ides01'
-      // },
+      url: 'Events' + "('" + '004' + "')",
+      auth: {
+        username: 'psy',
+        password: 'ides01'
+      },
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
     }).then(res => {
-        state.aEvents.splice(pos, 1);
+      console.log(res)
+        // state.aEvents.splice(pos, 1);
     }).catch(error => { 
       console.log(error);
     })
@@ -360,6 +358,9 @@ const getters = {
  },
  clearedFilters(state) {
    return state.clearedFilters;
+ },
+ getSelectedDate(state){
+   return state.selectedDate
  }
 };
 
