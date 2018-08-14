@@ -22,18 +22,21 @@
               <button class="prof-skills-btn" @click="addLanguageSkillsRow" v-if="editMode">+</button>
               <div class="prof-div-skills" v-for="(lang, index) in userLangs" :id="index" :key="index">
                 <div class="prof-div-slang">
-                  <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.language">
-                    <option>Angielski</option>
-                    <option>Niemiecki</option>
+                  <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.Language">
+                      <option v-for="fullLang in fullLanguageList" :value="fullLang.Language" :key="fullLang.Language">{{fullLang.LangName}}</option>
                   </select>
-                  <select v-if="!editMode" class="selectProfileSkills selectDisabled" v-model="lang.language"></select>
+                  <select v-if="!editMode" class="selectProfileSkills selectDisabled" v-model="lang.Language">
+                     <option v-for="fullLang in fullLanguageList" :value="fullLang.Language" :key="fullLang.Language">{{fullLang.LangName}}</option>
+                  </select>
                   <label class="label-select-profile">Język</label>
                 </div>
                 <div class="prof-div-slang">
-                  <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.langLevel" >
-                    <option v-for="level in langLevels" :key="level.Key">{{level.Value}}</option>
+                  <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.LangLevel" >
+                    <option v-for="level in langLevels" :value="level.Key" :key="level.Key">{{level.Value}}</option>
                   </select>
-                  <select v-if="!editMode" class="selectProfileSkills selectDisabled"></select>
+                  <select v-if="!editMode" class="selectProfileSkills selectDisabled" v-model="lang.LangLevel">
+                      <option v-for="level in langLevels" :value="level.Key" :key="level.Key">{{level.Value}}</option>
+                  </select>
                   <label class="label-select-profile">Poziom</label>
                 </div>
                 <button class="prof-skills-delete" @click="removeLanguageSkillsRow(index)" v-if="editMode">Usuń</button>
@@ -119,7 +122,8 @@ export default {
       UserSkills: "getUserSkills",
       modulesList: "getModulesList",
       userLangs: "getUserLanguages",
-      langLevels: "langLevels"
+      langLevels: "langLevels",
+      fullLanguageList: "fullLanguageList"
     })
   },
   methods: {
