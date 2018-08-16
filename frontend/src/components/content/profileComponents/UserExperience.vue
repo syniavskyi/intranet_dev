@@ -15,29 +15,32 @@
                     <div class="profile-tile-content">
                       <div class="prof-tile-column">
                         <div id="prof-user-exp" class="prof-div-row" v-for="(experience, index) in userExperience" :key='index'>
-                          <div :class="editMode ? 'prof-row-dates' : 'prof-row-dates-s'">
-                            <p class="prof-date-label" v-if="!editMode"> {{ formatDate(experience.DateStart) }} </p>
-                            <div v-if="editMode" class="prof-input-xxs">
-                              <v-date-picker class="prof-input-date" :max-date="experience.DateEnd === null ? new Date() : experience.DateEnd" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateStart">
-                                  <input value="experience.DateStart" />
-                              </v-date-picker>
-                              <label v-if="editMode">Od</label>
-                            </div>
-                            <span class="prof-span-0">&#8212;</span>
-                            <div name="endDateDiv" :id="formatId(index)">
-                              <p class="prof-date-label" v-if="!editMode"> {{ formatDate(experience.DateEnd) }} </p>
+                          <div class="prof-row-dates">
+                            <div :class="editMode ? 'prof-row-dates-left' : 'prof-row-dates-left-s'">
+                              <p class="prof-date-label" v-if="!editMode"> {{ formatDate(experience.DateStart) }} </p>
                               <div v-if="editMode" class="prof-input-xxs">
-                                <v-date-picker class="prof-input-date" :min-date="experience.DateStart" :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateEnd">
-                                    <input value="experience.DateEnd" />
+                                <v-date-picker class="prof-input-date" :max-date="experience.DateEnd === null ? new Date() : experience.DateEnd" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateStart">
+                                    <input value="experience.DateStart" />
                                 </v-date-picker>
-                                <label v-if="editMode">Do</label>
+                                <label v-if="editMode">Od</label>
                               </div>
+                              <span class="prof-span-0">&#8212;</span>
+                              <div name="endDateDiv" :id="formatId(index)">
+                                <p class="prof-date-label" v-if="!editMode"> {{ formatDate(experience.DateEnd) }} </p>
+                                <div v-if="editMode" class="prof-input-xxs">
+                                  <v-date-picker class="prof-input-date" :min-date="experience.DateStart" :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateEnd">
+                                    <input value="experience.DateEnd" />
+                                  </v-date-picker>
+                                  <label v-if="editMode">Do</label>
+                                </div>
+                              </div>
+                              <label class="checkbox-wrap">
+                                <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="experience.isCurrent" />
+                                <div class="checkbox-in"></div>
+                                <p style="padding:0;margin:0;">Obecnie</p>
+                              </label>
                             </div>
-                            <label class="checkbox-wrap">
-                              <input :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="experience.isCurrent" />
-                              <div class="checkbox-in"></div>
-                              <p style="padding:0;margin:0;">Obecnie</p>
-                            </label>
+                            
                           </div>
                           <div class="prof-row-inputs">
                             <div class="prof-input-ss">
@@ -55,11 +58,12 @@
                           </div>
                           <div class="prof-row-btns">
                             <button class="prof-row-btn" v-if="editMode" @click="save(index)">&#x2714;</button>
-                            <button class="prof-row-btn" v-if="editMode" @click="remove(index)">X</button>
+                            <button class="prof-row-dbtn" v-if="editMode" @click="remove(index)">X</button>
                           </div>
                         </div>
                       </div>
                     </div>
+                    
     </div>
 </template>
 
@@ -80,18 +84,18 @@ export default {
       userExperience: "getUserExperience"
     })
   },
-  mounted() {
-    var list = this.$el.querySelectorAll("input[type='checkbox']")
-    for (var i=0;i < list.length; i++) {
-      var endDate = list[i].parentElement.parentElement.children[2],
-      checkboxWrap = list[i].parentElement.parentElement.children[3];
-      if (list[i].checked) {
-        endDate.setAttribute("style", "display: none;")
-      } else {
-        checkboxWrap.setAttribute("style", "display: none;")
-      }
-    }
-  },
+  // updated() {
+  //   var list = this.$el.querySelectorAll("input[type='checkbox']")
+  //   for (var i=0;i < list.length; i++) {
+  //     var endDate = list[i].parentElement.parentElement.children[2],
+  //     checkboxWrap = list[i].parentElement.parentElement.children[3];
+  //     if (list[i].checked) {
+  //       endDate.setAttribute("style", "display: none;")
+  //     } else {
+  //       checkboxWrap.setAttribute("style", "display: none;")
+  //     }
+  //   }
+  // },
   methods: {
     ...mapActions(["addUserExperience", "removeUserExperience"]),
     edit() {

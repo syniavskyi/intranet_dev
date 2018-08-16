@@ -118,7 +118,6 @@
                 <travel-costs-table></travel-costs-table>
                 <accomodation-costs-table></accomodation-costs-table>
                 <other-costs-table></other-costs-table>
- 
             </div>
         </div>
     </div>

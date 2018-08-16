@@ -15,8 +15,8 @@
     <div class="profile-tile-content">
       <div class="prof-tile-column">
         <div class="prof-div-row" v-for="(education, index) in userEducation" :key='index'>
-          <div :class="editMode ? 'prof-row-dates' : 'prof-row-dates-s'">
-            <div class="prof-row-dates-left">
+          <div class="prof-row-dates">
+            <div :class="editMode ? 'prof-row-dates-left' : 'prof-row-dates-left-s'">
               <p class="prof-date-label" v-if="!editMode"> {{ formatDate(education.DateStart) }} </p>
               <div v-if="editMode" class="prof-input-xxs">
                 <!-- :max-date="new Date()" -->
@@ -41,10 +41,6 @@
                 <div class="checkbox-in"></div>
                 <p style="padding:0;margin:0;">Obecnie</p> 
               </label>
-            </div>
-            <div class="prof-row-btns">
-              <button class="prof-row-btn" v-if="editMode" @click="save(index)">&#x2714;</button>
-              <button class="prof-row-btn" v-if="editMode" @click="remove(index)">X</button>
             </div>
           </div>
           <div class="prof-row-inputs">
@@ -93,7 +89,10 @@
               </div>
             </div>
           </div>
-          
+          <div class="prof-row-btns">
+              <button title="" class="prof-row-btn" v-if="editMode" @click="save(index)">&#x2714;</button>
+              <button class="prof-row-dbtn" v-if="editMode" @click="remove(index)">X</button>
+            </div>
         </div>
       </div>
     </div>
@@ -117,24 +116,26 @@ export default {
             this.$store.dispatch('loadData')
     }
   },
+  // updated() {
+  //   if (this.$el) {
+  //     var list = this.$el.querySelectorAll("input[type='checkbox']")
+  //     for (var i=0;i < list.length; i++) {
+  //       var endDate = list[i].parentElement.parentElement.children[2],
+  //       checkboxWrap = list[i].parentElement.parentElement.children[3];
+  //       if (list[i].checked) {
+  //         endDate.setAttribute("style", "display: none;")
+  //       } else {
+  //         checkboxWrap.setAttribute("style", "display: none;")
+  //       }
+  //     }
+  //   }
+  // },
   computed: {
     ...mapGetters({
       userEducation: "getUserEducation",
       studyTypes: "studyTypes",
       academicTitles: "academicTitles"
     })
-  },
-  mounted() {
-    var list = this.$el.querySelectorAll("input[type='checkbox']")
-    for (var i=0;i < list.length; i++) {
-      var endDate = list[i].parentElement.parentElement.children[2],
-      checkboxWrap = list[i].parentElement.parentElement.children[3];
-      if (list[i].checked) {
-        endDate.setAttribute("style", "display: none;")
-      } else {
-        checkboxWrap.setAttribute("style", "display: none;")
-      }
-    }
   },
   methods: {
     ...mapActions(["addUserEduRow", "removeUserEducation"]),
