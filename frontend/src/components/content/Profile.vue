@@ -69,8 +69,7 @@
                                             </div>
                                         </div>
                                         <p v-if="!editMode" disabled class="inputProfile inputDisabled">{{formatAddress}}</p>
-                                        <!-- <span class="prof-div-bar"></span> -->
-                                        <!-- <label class="label-profile">{{ $t("label.address") }}</label> -->
+                                        <label class="label-profile">{{ $t("label.address") }}</label>
                                     </div>
                                     <div class="prof-input">
                                         <!-- <input required class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()"> -->

@@ -39,8 +39,10 @@
                   </select>
                   <label class="label-select-profile">Poziom</label>
                 </div>
-                <button class="prof-skills-delete" @click="removeLanguageSkillsRow(index)" v-if="editMode">Usuń</button>
-                <button class="prof-skills-save" @click="saveLang" v-if="editMode">Zapisz</button>
+                <div class="prof-skills-btns">
+                  <button class="prof-skills-delete" @click="removeLanguageSkillsRow(index)" v-if="editMode">Usuń</button>
+                  <button class="prof-skills-save" @click="saveLang" v-if="editMode">Zapisz</button>
+                </div>
               </div>
           </div>
           <div class="prof-input-xl">
