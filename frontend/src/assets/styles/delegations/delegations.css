@@ -8,15 +8,6 @@
     font-family: 'Roboto'; */
     /* max-width: 100%; */
 /* } */
-.del-vline {
-    display: flex;
-    flex-direction: column;
-    height: 15rem;
-    width: 1.5px;
-    background: #ccc;
-    /* transform: rotate(5deg); */
-    /* box-shadow: 0 0 10px #ccc; */
-}
 
 .plane-delegations {
     margin:0;
@@ -166,6 +157,27 @@
     flex-direction: row;
     min-height: 20rem;
 }
+.del-inputs-sections {
+    position: relative;
+    flex-wrap: wrap;
+    padding-top: 2rem;
+}
+
+.delegation-number {
+    display: flex;
+    align-items:center;
+    position: absolute;
+    top: 0; left: 35%;
+    margin: auto;
+    color: #ccc;
+    font-size: 1.2rem;
+    transform: translate(-25%, 0%);
+}
+
+.delegation-number span {
+    font-size: 2rem;
+    color: rgb(80, 80, 80);
+}
 
 .delegations-inputs-section {
     align-self:center;
@@ -180,6 +192,7 @@
     position: relative;
     border-radius: 3px;
     transition: all 0.2s ease;
+    margin: 1rem;
 }
 
 .delegations-inputs-section:hover,
