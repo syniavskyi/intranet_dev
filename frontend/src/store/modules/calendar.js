@@ -124,9 +124,12 @@ convertDate({getters, commit}) {
   for(let i = 0; i<oEvents.length; i++) {
       let milisc = parseInt(oEvents[i].DateFrom.slice(6, oEvents[i].DateFrom.length - 2));
       oEvents[i].DateFrom = new Date(milisc);
-      oEvents[i].EventTime = oEvents[i].EventTime.slice(2, 4) + ':' + oEvents[i].EventTime.slice(5, 7) + ':' + oEvents[i].EventTime.slice(8, 10);
-      // let w = EventTime = oEvents[i].EventTime.slice(2, 4) + oEvents[i].EventTime.slice(5, 7) + oEvents[i].EventTime.slice(8, 10);
+      let format = oEvents[i].EventTime.slice(2, 4) + oEvents[i].EventTime.slice(5, 7) + oEvents[i].EventTime.slice(8, 10);
+      oEvents[i].EventTime = moment(format, "hmm").format('HH:mm:ss');
+      // oEvents[i].EventTime.slice(2, 4) + ':' + oEvents[i].EventTime.slice(5, 7) + ':' + oEvents[i].EventTime.slice(8, 10);
+      //  let w = oEvents[14].EventTime.slice(2, 4) + oEvents[14].EventTime.slice(5, 7) + oEvents[14].EventTime.slice(8, 10);
       // let r = moment(w).format('LTS');
+      // let s = moment(w, "hmm").format("HH:mm");
     if(oEvents[i].DateTo) {
       let miliscTo = parseInt(oEvents[i].DateTo.slice(6, oEvents[i].DateTo.length - 2));
       oEvents[i].DateTo = new Date(miliscTo);
