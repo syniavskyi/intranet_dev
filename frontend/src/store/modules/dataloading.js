@@ -10,6 +10,7 @@ const state = {
   contractorsList: [],
   isLoaded: false,
   userInfo: {},
+  userData: {},
   studyTypes: [],
   academicTitles: [],
   langLevels: [],
@@ -44,12 +45,61 @@ const mutations = {
   SET_ACADEMIC_TITLES_LIST(state, data) {
     state.academicTitles = data;
   },
-  SET_LANG_LEVELS(state,data){
+  SET_LANG_LEVELS(state, data) {
     state.langLevels = data
+  },
+  SET_FORMATTED_DATE(state, data) {
+    state.userData = data
   }
 };
 
 const actions = {
+  formatData({
+    commit
+  }, data) {
+    if (data) {
+      if (data.EmploymentDate !== null) {
+        let nParsedDate = parseInt(data.EmploymentDate.substring(6, data.EmploymentDate.length - 2))
+
+        data.EmploymentDate = new Date(nParsedDate);
+      }
+
+      if (data.UserCvProjects.results.length > 0) {
+        for (let i = 0; i < data.UserCvProjects.results.length; i++) {
+          if (data.UserCvProjects.results[i].DateStart !== null && data.UserCvProjects.results[i].DateEnd !== null) {
+            let nParsedCvDateStart = parseInt(data.UserCvProjects.results[i].DateStart.substring(6, data.UserCvProjects.results[i].DateStart.length - 2)),
+              nParsedCvDateEnd = parseInt(data.UserCvProjects.results[i].DateEnd.substring(6, data.UserCvProjects.results[i].DateEnd.length - 2))
+
+            data.UserCvProjects.results[i].DateStart = new Date(nParsedCvDateStart);
+            data.UserCvProjects.results[i].DateEnd = new Date(nParsedCvDateEnd);
+          }
+        }
+      }
+      if (data.UserEducations.results.length > 0) {
+        for (let j = 0; j < data.UserEducations.results.length; j++) {
+          if (data.UserEducations.results[j].DateStart !== null && data.UserEducations.results[j].DateEnd !== null) {
+            let nParsedEducationDateStart = parseInt(data.UserEducations.results[j].DateStart.substring(6, data.UserEducations.results[j].DateStart.length - 2)),
+              nParsedEducationDateEnd = parseInt(data.UserEducations.results[j].DateEnd.substring(6, data.UserEducations.results[j].DateEnd.length - 2))
+
+            data.UserEducations.results[j].DateStart = new Date(nParsedEducationDateStart);
+            data.UserEducations.results[j].DateEnd = new Date(nParsedEducationDateEnd);
+          }
+        }
+      }
+      if (data.UserExperiences.results.length > 0) {
+        for (let k = 0; k < data.UserExperiences.results.length; k++) {
+          if (data.UserExperiences.results[k].DateStart !== null && data.UserExperiences.results[k].DateEnd !== null) {
+            let nParsedExperienceDateStart = parseInt(data.UserExperiences.results[k].DateStart.substring(6, data.UserExperiences.results[k].DateStart.length - 2)),
+              nParsedExperienceDateEnd = parseInt(data.UserExperiences.results[k].DateEnd.substring(6, data.UserExperiences.results[k].DateEnd.length - 2))
+
+            data.UserExperiences.results[k].DateStart = new Date(nParsedExperienceDateStart);
+            data.UserExperiences.results[k].DateEnd = new Date(nParsedExperienceDateEnd);
+          }
+        }
+      }
+      commit('SET_FORMATTED_DATE', data);
+    }
+  },
   loadData({
     commit,
     state,
@@ -93,7 +143,7 @@ const actions = {
       } else if (domainName == 'ZINTRANET_LANG_LEVEL') {
         const aLevels = res.data.d.results;
         commit('SET_LANG_LEVELS', aLevels);
-      } 
+      }
     }).catch(error => {
       console.log(error);
     })
@@ -143,7 +193,8 @@ const actions = {
   },
   getUserData({
     commit,
-    moment
+    dispatch,
+    state
   }) {
     axios({
       method: 'GET',
@@ -158,14 +209,18 @@ const actions = {
     }).then(res => {
       console.log(res)
       const oUserData = res.data.d;
-      commit('SET_USER_INFO', oUserData)
+      dispatch('formatData', oUserData)
+      let oFormattedUserData = state.userData
+      commit('SET_USER_INFO', oFormattedUserData)
       commit('SET_USER_EDUCATION', oUserData.UserEducations.results)
       commit('SET_USER_EXPERIENCE', oUserData.UserExperiences.results)
     }).catch(error => {
       console.log(error)
     })
   },
-  getUsersLists({ commit }) {
+  getUsersLists({
+    commit
+  }) {
     axios({
       method: 'GET',
       url: 'EmployeesLists',
@@ -178,7 +233,7 @@ const actions = {
       }
     }).then(res => {
       commit('GET_USER_LIST', res.data.d.results);
-    }).catch(error => { })
+    }).catch(error => {})
   }
 };
 
@@ -210,7 +265,7 @@ const getters = {
   academicTitles(state) {
     return state.academicTitles
   },
-  langLevels(state){
+  langLevels(state) {
     return state.langLevels
   }
 };

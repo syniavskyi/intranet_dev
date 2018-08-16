@@ -19,6 +19,8 @@
         "html-docx-js": "^0.3.1",
         "html2canvas": "^1.0.0-alpha.12",
         "js-md5": "^0.7.3",
+        "js2xmlparser": "^3.0.0",
+        "jsontoxml": "^1.0.0",
         "jspdf": "^1.4.1",
         "moment": "^2.22.1",
         "moment-timezone": "^0.5.16",

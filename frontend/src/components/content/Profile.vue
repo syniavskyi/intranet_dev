@@ -205,12 +205,18 @@
                                     </div>
                                     <div class="prof-input-s">
                                         <!-- <masked-input mask="11.11.1111" @input="dateValidation" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.employmentDate" /> -->
-                                        <masked-input required v-if="editMode" mask="11.11.1111" @input="dateValidation" class="inputProfile inputEdit" v-model="userData.EmploymentDate" />
+                                        <!-- <masked-input required v-if="editMode" mask="11.11.1111" @input="dateValidation" class="inputProfile inputEdit" v-model="userData.EmploymentDate" /> -->
+                                        <v-date-picker  class="delegations-input-date" v-model="userData.EmploymentDate" :disabled-dates='{}'>
+                                            <input :disabled="!editMode" value="userData.employmentDate"/>
+                                        </v-date-picker>
+                                        <!-- <input required v-if="editMode" @input="dateValidation" class="inputProfile inputEdit" v-model="userData.EmploymentDate"> -->
                                         <!-- <v-date-picker :max-date="new Date()" v-if="projectEditMode" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" is-expanded mode="single" v-model="userData.employmentDate">
                                                 <input value="userData.employmentDate" />
                                             </v-date-picker> -->
-                                        <p v-show="false" disabled class="inputProfile inputDisabled">{{formatData}}</p>
-                                        <input disabled v-if="!editMode" class="inputProfile inputDisabled" v-model="userData.EmploymentDate">
+                                        <!-- <input disabled v-if="!editMode" class="inputProfile inputDisabled" v-model="userData.EmploymentDate"> -->
+                                        <!-- <v-date-picker disabled v-model="userData.EmploymentDate">
+                                            <input value="userData.EmploymentDate" />
+                                        </v-date-picker> -->
                                         <span class="prof-div-bar"></span>
                                         <label class="label-profile">{{ $t("label.employmentDate") }}</label>
                                         <!-- <div class="error-wrapper">
@@ -225,7 +231,6 @@
                                         <input disabled class="inputProfile inputDisabled" v-if="!editMode">
                                         <label class="label-profile">{{ $t("label.workExperience") }}</label>
                                     </div>
-                                    <!-- <p v-if="!editMode" disabled class="inputProfile inputDisabled">{{formatData}}</p> -->
                                 </div>
                             </div>
                         </div>
@@ -377,20 +382,6 @@ export default {
       address = address + ", " + data.PostalCode + " " + data.City;
       return address;
     },
-    formatData() {
-        const data = this.userData;
-
-        if(data.EmploymentDate && data.EmploymentDate.includes("Date"))
-        {
-            moment.locale();
-            let oChangedDate,
-                sDate
-
-            sDate = data.EmploymentDate.substring(6, data.EmploymentDate.length - 2);
-            oChangedDate = moment(sDate, "x").format("L");
-            data.EmploymentDate = oChangedDate;
-        }
-    }
   },
   // beforeRouteLeave (to, from , next) {
   // this.showLeavePageDialog = true
@@ -401,6 +392,11 @@ export default {
       this.showNoChangesAlert = false;
       this.editMode = !this.editMode;
       this._beforeEditingCache = Object.assign({}, this.userData);
+    },
+    formatDate(date) {
+      return date !== null && date !== undefined
+        ? moment(date).format("DD.MM.YYYY")
+        : "-";
     },
     onCancelEdit() {
       Object.assign(this.userData, this._beforeEditingCache);
