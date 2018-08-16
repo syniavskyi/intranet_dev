@@ -16,30 +16,36 @@
       <div class="prof-tile-column">
         <div class="prof-div-row" v-for="(education, index) in userEducation" :key='index'>
           <div :class="editMode ? 'prof-row-dates' : 'prof-row-dates-s'">
-            <p class="prof-date-label" v-if="!editMode"> {{ formatDate(education.DateStart) }} </p>
-            <div v-if="editMode" class="prof-input-xxs">
-              <!-- :max-date="new Date()" -->
-              <v-date-picker class="prof-input-date" :max-date="education.DateEnd === null ? new Date() : education.DateEnd" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateStart">
-                <input value="education.DateStart" >
-              </v-date-picker>
-              <label v-if="editMode">Od</label>
-            </div>
-            <span class="prof-span-0">&#8212;</span>
-            <!-- &#9472; -->
-            <div name="endDateDiv" :id="index">
-              <p class="prof-date-label" v-if="!editMode"> {{ formatDate(education.DateEnd) }} </p>
+            <div class="prof-row-dates-left">
+              <p class="prof-date-label" v-if="!editMode"> {{ formatDate(education.DateStart) }} </p>
               <div v-if="editMode" class="prof-input-xxs">
-                <v-date-picker class="prof-input-date" popoverDirection="top" :min-date="education.DateStart" :max-date="new Date()" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateEnd">
-                  <input value="education.DateEnd" />
+                <!-- :max-date="new Date()" -->
+                <v-date-picker class="prof-input-date" :max-date="education.DateEnd === null ? new Date() : education.DateEnd" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateStart">
+                  <input value="education.DateStart" >
                 </v-date-picker>
-                <label>Do</label>
+                <label v-if="editMode">Od</label>
               </div>
+              <span class="prof-span-0">&#8212;</span>
+              <!-- &#9472; -->
+              <div name="endDateDiv" :id="index">
+                <p class="prof-date-label" v-if="!editMode"> {{ formatDate(education.DateEnd) }} </p>
+                <div v-if="editMode" class="prof-input-xxs">
+                  <v-date-picker class="prof-input-date" popoverDirection="top" :min-date="education.DateStart" :max-date="new Date()" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateEnd">
+                    <input value="education.DateEnd" />
+                  </v-date-picker>
+                  <label>Do</label>
+                </div>
+              </div>
+              <label class="checkbox-wrap">
+                <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="education.isCurrent"/>
+                <div class="checkbox-in"></div>
+                <p style="padding:0;margin:0;">Obecnie</p> 
+              </label>
             </div>
-            <label class="checkbox-wrap">
-              <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="education.isCurrent"/>
-              <div class="checkbox-in"></div>
-              <p style="padding:0;margin:0;">Obecnie</p> 
-            </label>
+            <div class="prof-row-btns">
+              <button class="prof-row-btn" v-if="editMode" @click="save(index)">&#x2714;</button>
+              <button class="prof-row-btn" v-if="editMode" @click="remove(index)">X</button>
+            </div>
           </div>
           <div class="prof-row-inputs">
             <div class="prof-inputs-div">
@@ -87,10 +93,7 @@
               </div>
             </div>
           </div>
-          <div class="prof-row-btns">
-            <button class="prof-row-btn" v-if="editMode" @click="save(index)">&#x2714;</button>
-            <button class="prof-row-btn" v-if="editMode" @click="remove(index)">X</button>
-          </div>
+          
         </div>
       </div>
     </div>
