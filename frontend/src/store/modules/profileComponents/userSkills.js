@@ -1,24 +1,14 @@
 const state = {
     userSkills: {
-        SapModules: [
-            'FI', 'MM'
-        ],
-        ProgramLang: [
-            'JavaScript', 'ABAP'
-        ],
-        Technologies: [
-            "SAPUI5", "OData", "SAP Gateway", "RFC"
-        ],
-        Extensions: [
-            "BADI", "Enhancement Points", "OData Extension"
-        ],
-        AdditionalSkills: [
-            "Autoryzacja", "Role użytkowników"
-        ]
+        SapModules: [],
+        ProgramLang: [],
+        Technologies: [],
+        Extensions: [],
+        AdditionalSkills: []
     },
     userLanguages: [
-        {language:'EN',  langLevel: 'C1'},
-        {language: 'DE',  langLevel: 'A1'}
+        {Language:'EN',  LangLevel: 'C1'},
+        // {language: 'DE',  langLevel: 'A1'}
     ]
 }
 
@@ -129,6 +119,52 @@ const actions = {
         const langList = getters.getUserLanguages
         langList.splice(index, 1)
         commit('SET_USER_LANGS', langList)
+    },
+    adjustUserSkills({getters, commit}) {
+        const userSkills = getters.getUserSkills;
+        var adjustedSkills = {
+            AdditionalSkills: [],
+            Extensions: [],
+            ProgramLang: [],
+            SapModules: [],
+            Technologies: []
+        };
+        let index;
+        let string;
+
+        for(let key in adjustedSkills) {
+            if(userSkills[0][key].includes('||')) {
+                while(userSkills[0][key].length > 1) {
+                    index = userSkills[0][key].indexOf('||');
+                    if(userSkills[0][key].indexOf('||') > 0) {
+                        string = userSkills[0][key].slice(0, index)
+                        adjustedSkills[key].push(string);
+                        index += 2;
+                        userSkills[0][key] = userSkills[0][key].substr(index, userSkills[0][key].length)
+                    } 
+                    else {
+                        adjustedSkills[key].push(userSkills[0][key]);
+                         userSkills[0][key] = "";
+                    }
+                } 
+            }  
+            else {
+                adjustedSkills[key].push(userSkills[0][key]);
+            }
+        }
+        commit('SET_USER_SKILLS', adjustedSkills); 
+    },
+    adjustLang({getters, commit}) {
+        const lang = getters.getUserLanguages;
+        console.log(lang);
+        let selectList = [];
+        for(let i = 0; i < lang.length; i++) {
+            let select = new Object;
+            select.Language = lang[i].Language;
+            select.LangLevel = lang[i].LangLevel;
+            selectList.push(select);
+        }
+        commit('SET_USER_LANGS', selectList)
     }
 }
  

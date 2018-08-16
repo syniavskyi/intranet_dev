@@ -362,7 +362,7 @@
     margin-bottom: 1.5rem;
     /* padding: .5rem; */
     align-self: flex-start;
-    justify-content: space-around;
+    justify-content: space-between;
     /* box-shadow: 0 -5px 5px -5px #ccc,  -5px 0 5px -5px #ccc; */
     /* box-shadow: 5px 0 5px -5px #ccc, -5px 0 5px -5px #ccc; */
 }
@@ -373,6 +373,10 @@
 .prof-row-dates,
 .prof-row-dates-s {
     width: 100%;
+}
+
+.prof-row-dates-left {
+    display: flex;
 }
 
 .prof-row-inputs {
@@ -911,6 +915,8 @@
     text-align: center;
     transition: all .2s ease;
     color: #8f8f8f;
+    animation-name: view-in;
+    animation-duration: 0.7s;
     
 }
 .prof-div-pos-elem {
@@ -979,6 +985,8 @@
 
 .inputEditPos {
     padding-right: 2rem;
+    animation-name: view-in;
+    animation-duration: 0.7s;
 }
 
 .inputEditPos:focus ~ button,
