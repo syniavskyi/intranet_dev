@@ -199,7 +199,7 @@ const actions = {
   getUserData({
     commit,
     dispatch,
-    state
+    state,
     dispatch
   }) {
     axios({
