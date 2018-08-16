@@ -157,13 +157,21 @@ export default {
     save(index){
       const dataToChange = this._beforeEditingCache[index],
             newData = this.userEducation[index]
+      
+      let url
+    
 
-      if (dataToChange == undefined) {
-        // create new entry
+      if (dataToChange){
+        url = '/UsersEducation' + '(' + "UserAlias='UIO'," + "University='" + dataToChange.University + "',AcademicTitle='"+dataToChange.AcademicTitle + "',FieldOfStudy='"+ dataToChange.FieldOfStudy  + "')"
+        newData.AcademicTitleToChange = dataToChange.AcademicTitle
+        newData.FieldOfStudyToChange = dataToChange.FieldOfStudy
+        newData.UniversityToChange = dataToChange.University
+        newData.url = url
+        this.$store.dispatch('editUserEducation', newData)
       } else {
-        this.$store.dispatch('addNewUserEducation', newData)
-        // update existing entry
+        this.$store.dispatch('addUserEducation', newData)
       }
+
       this._beforeEditingCache = JSON.parse(
         JSON.stringify(this.userEducation)
       );
