@@ -16,7 +16,7 @@
                         <option>DE</option>
                         <option>RU</option>
                     </select>
-                    <label class="label-select-lang">język</label>
+                    <label class="label-select-lang">{{ $t("label.language") }}</label>
                 </div>
                 <button class="profile-header-button" v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
                 <div v-if="editMode" class="header-button-save-reject">
@@ -45,27 +45,27 @@
                                             <div class="prof-input-uno">
                                                 <input required v-model="userData.Street"/>
                                                 <span class="prof-div-bar"></span>
-                                                <label class="prof-ainput-lbl">Ulica</label>
+                                                <label class="prof-ainput-lbl">{{ $t("label.Street") }}</label>
                                             </div>
                                             <div class="prof-input-uno">
                                                 <input required v-model="userData.BuildingNumber"/>
                                                 <span class="prof-div-bar"></span>
-                                                <label class="prof-ainput-lbl">Nr bud.</label>
+                                                <label class="prof-ainput-lbl">{{ $t("label.buildingNumber") }}</label>
                                             </div>
                                             <div class="prof-input-uno">
                                                 <input required v-model="userData.ApartmentNumber">
                                                 <span class="prof-div-bar"></span>
-                                                <label class="prof-ainput-lbl">Nr lok.</label>
+                                                <label class="prof-ainput-lbl">{{ $t("label.apartmentNumber") }}</label>
                                             </div>
                                             <div class="prof-input-uno">
                                                 <vue-google-autocomplete required types="geocode" id="autocomplete" placeholder="" onfocus="value = ''" @input="userData.City = value" :value="selectedCity"  @change="checkFormFields"></vue-google-autocomplete>
                                                 <span class="prof-div-bar"></span>
-                                                <label class="prof-ainput-lbl">Miasto</label>
+                                                <label class="prof-ainput-lbl">{{ $t("label.city") }}</label>
                                             </div>
                                             <div class="prof-input-uno">
                                                 <input required v-model="userData.PostalCode">
                                                 <span class="prof-div-bar"></span>
-                                                <label class="prof-ainput-lbl">Kod pocz.</label>
+                                                <label class="prof-ainput-lbl">{{ $t("label.postalCode") }}</label>
                                             </div>
                                         </div>
                                         <p v-if="!editMode" disabled class="inputProfile inputDisabled">{{formatAddress}}</p>

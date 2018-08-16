@@ -6,7 +6,7 @@
         <div class="calendar-header">
             <div class="calendar-header-title-and-menu">
               <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="calendar-header-menu">
-              <p class="calendar-header-title">Kalendarz</p>
+              <p class="calendar-header-title">{{ $t("header.calendar") }}</p>
             </div>
         </div>
         <div class="calendar-tiles">
@@ -19,7 +19,7 @@
               <div v-if='selectedDay' class='selected-day'>
                 <div class="add-event-header">
                     <h3>{{ selectedDay.date.toDateString() }}</h3>
-                    <button @click="openDialog" class="button modal-button add-button">Dodaj</button>
+                    <button @click="openDialog" class="button modal-button add-button">{{ $t("button.add") }}</button>
                 </div>
                 <ul class="ul-event">
                   <li v-for='attr in selectedDay.attributes' :key='attr.customData.EventId' class="delegations-inputs-section">
@@ -32,8 +32,8 @@
                           <div> {{ attr.customData.EventPriorityValue }} </div> 
                       </div>    
                       <div class="events-buttons">
-                          <button class="button edit-button" @click="editEvent(attr.customData, $t)">Edytuj</button>
-                          <button class="button edit-button" @click="deleteEvent(attr.customData, $t)">Usuń</button>
+                          <button class="button edit-button" @click="editEvent(attr.customData, $t)">{{ $t("button.edit") }}</button>
+                          <button class="button edit-button" @click="deleteEvent(attr.customData, $t)">{{ $t("button.delete") }}</button>
                       </div>
                   </li>            
                 </ul>
@@ -59,7 +59,7 @@
                       <option>Niski</option>
                     </select>
                     <label class="ava-select-label-cool">{{ $t("label.employee") }}</label>
-                    <button @click="clearFilters">clear</button>
+                    <button @click="clearFilters">{{ $t("button.clear") }}</button>
                 </div>
              </div>
             <!-- Modal for add event -->
@@ -112,10 +112,10 @@
                           </option>
                       </select>
                       <!-- do selektów dać margina -->
-                      <label class="label-profile2">Typ wydarzenia</label>
+                      <label class="label-profile2">{{ $t("label.eventType") }}</label>
                     </div>
                      <div class="prof-input2">
-                       <p class="click-paragraph">Kliknij</p>
+                       <p class="click-paragraph">{{ $t("button.click") }}</p>
                         <button class="privacy-button marginForm" type="button" @click="isSelected = !isSelected"></button>
                             <label class="label-profile2">{{ $t("label.targetGroup") }}</label>
                         </div>
@@ -150,19 +150,19 @@
                                         <input type="checkbox" id="mikel" value="Mike" v-model="checkedNames">
                                         <label for="mikel">Mike</label>
 
-                    <button class="save-button" type="button" @click="isSelected = !isSelected">Wróć</button>
+                    <button class="save-button" type="button" @click="isSelected = !isSelected">{{ $t("button.back") }}</button>
                     </div>
                     <div class="event-feature event-visibility">
                           <label class="modal-label">{{ $t("label.visibility") }}</label>
                           <input class="input-active" type="radio" id="prv" value="priv" v-model="addEvent.EventPrivacy">
-                          <label for="prv">Private</label>
+                          <label for="prv">{{ $t("label.private") }}</label>
                           <input class="input-active" type="radio" id="pbl" value="public" v-model="addEvent.EventPrivacy">
-                          <label for="pbl">Public</label>    
+                          <label for="pbl">{{ $t("label.public") }}</label>    
                   </div>
            </div>
            <div class="form-buttons">
                <button class="button modal-button" :disabled="$v.$invalid" type="button" @click="addNewEvent" v-if="displayButton"><span class="span-arrow">{{ $t("button.addEvent") }}</span></button>
-               <button class="button modal-button" :disabled="disabledButton" @click="editForm">edit</button>
+               <button class="button modal-button" :disabled="disabledButton" @click="editForm">{{ $t("button.edit") }}</button>
           </div>
       </div>
   </div>

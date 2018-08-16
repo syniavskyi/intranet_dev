@@ -15,7 +15,12 @@
         "addProject": "Dodaj projekt",
         "editProjects": "Edytuj projekty",
         "removeProject": "Usuń projekt",
-        "finishEdit": "Zakończ edycję"
+        "finishEdit": "Zakończ edycję",
+        "add": "Dodaj",
+        "delete": "Usuń",
+        "click": "Kliknij",
+        "back": "Wróć",
+        "clear": "Wyczyść"
      },
     "label": {
         "user": "Użytkownik",
@@ -41,6 +46,7 @@
         "eventTitle": "Nazwa wydarzenia",
         "eventTime": "Godzina wydarzenia",
         "eventDescription": "Opis wydarzenia",
+        "eventType": "Typ wydarzenia",
         "priority": "Priorytet",
         "visibility": "Widoczność",
         "createdBy": "Utworzony przez",
@@ -73,7 +79,14 @@
         "totalDelegationAmount": "Łączna wartość delegacji",
         "advanceAmount": "Wartość zaliczki",
         "totalReturnAmount": "Łączna wartość do zwrotu",
-        "allowanceDeduction": "Potrącenie diety"
+        "allowanceDeduction": "Potrącenie diety",
+        "private": "Prywatne",
+        "public": "Publiczne",
+        "street": "Ulica",
+        "buildingNumber": "Nr budynku",
+        "apartmentNumber": "Nr lokalu",
+        "city": "Miasto",
+        "postalCode": "Kod pocztowy"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",
