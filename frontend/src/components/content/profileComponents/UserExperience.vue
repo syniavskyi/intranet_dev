@@ -124,11 +124,13 @@ export default {
       const dataToChange = this._beforeEditingCache[index],
             newData = this.userExperience[index]
 
-      if (dataToChange == undefined) {
-        // create new entry
+      if (dataToChange) {
+          newData.WorkPosToChange = dataToChange.WorkPos
+          newData.EmployerToChange = dataToChange.Employer
+          newData.DateStartToChange = dataToChange.DateStart
+          this.$store.dispatch('updateUserExp', newData)
       } else {
-        // this.$store.dispatch('addNewUserEducation', newData)
-        // update existing entry
+        this.$store.dispatch('saveNewUserExp', newData)
       }
       this._beforeEditingCache = JSON.parse(
         JSON.stringify(this.userExperience)
