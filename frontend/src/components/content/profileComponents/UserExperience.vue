@@ -50,10 +50,17 @@
                               <label class="label-profile">Pracodawca</label>
                             </div>
                             <div class="prof-input-ss">
-                              <input required v-if="editMode" class="inputProfile inputEdit" v-model="experience.WorkPos">
-                              <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="experience.WorkPos"/>
-                              <span class="prof-div-bar"></span>
-                              <label class="label-profile">Pracodawca</label>
+                             <select required v-if="editMode" class="selectProfile selectEdit" v-model="experience.WorkPos">
+                                  <option v-for="workPos in workPositions" :key="workPos.Key" :value="workPos.Key">{{workPos.Value}}</option>
+                             </select>
+                            <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="experience.WorkPos">
+                                  <option v-for="workPos in workPositions" :key="workPos.Key" :value="workPos.Key">{{workPos.Value}}</option>
+                            </select>
+                                <!-- :disabled="!editMode" -->
+                            <span class="prof-div-bar"></span>
+
+
+                              <label class="label-profile">Stanowisko</label>
                             </div>
                           </div>
                           <div class="prof-row-btns">
@@ -81,7 +88,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      userExperience: "getUserExperience"
+      userExperience: "getUserExperience",
+      workPositions: "workPositions"
     })
   },
   // updated() {

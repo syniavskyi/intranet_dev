@@ -15,7 +15,8 @@ const state = {
   academicTitles: [],
   langLevels: [],
   fullLanguageList: [],
-  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL"]
+  workPositionList: [],
+  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS"]
 };
 
 const mutations = {
@@ -54,6 +55,9 @@ const mutations = {
   },
   SET_LANGUAGE_LIST(state, data) {
     state.fullLanguageList = data;
+  },
+  SET_WORK_POSITION_LIST(state, data) {
+    state.workPositionList = data
   }
 };
 
@@ -148,6 +152,9 @@ const actions = {
       } else if (domainName == 'ZINTRANET_LANG_LEVEL') {
         const aLevels = res.data.d.results;
         commit('SET_LANG_LEVELS', aLevels);
+      } else if (domainName == 'ZWORK_POS') {
+        const aWorkPos = res.data.d.results;
+        commit('SET_WORK_POSITION_LIST', aWorkPos);
       }
     }).catch(error => {
       console.log(error);
@@ -301,6 +308,9 @@ const getters = {
   },
   fullLanguageList(state) {
     return state.fullLanguageList;
+  },
+  workPositions(state) {
+    return state.workPositionList;
   }
 };
 
