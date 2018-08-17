@@ -104,6 +104,7 @@
 
 import moment from "moment"
 import { mapGetters, mapActions, mapState } from "vuex";
+import jsZip from 'jszip'
 export default {
   data() {
     return {
@@ -139,6 +140,7 @@ export default {
   methods: {
     ...mapActions(["addUserEduRow", "removeUserEducation"]),
     edit() {
+      const plik = new jsZip()
       this.editMode = true;
       this._beforeEditingCache = JSON.parse(
         JSON.stringify(this.userEducation)
@@ -161,15 +163,10 @@ export default {
       const dataToChange = this._beforeEditingCache[index],
             newData = this.userEducation[index]
       
-      let url
-    
-
       if (dataToChange){
-        url = '/UsersEducation' + '(' + "UserAlias='UIO'," + "University='" + dataToChange.University + "',AcademicTitle='"+dataToChange.AcademicTitle + "',FieldOfStudy='"+ dataToChange.FieldOfStudy  + "')"
         newData.AcademicTitleToChange = dataToChange.AcademicTitle
         newData.FieldOfStudyToChange = dataToChange.FieldOfStudy
         newData.UniversityToChange = dataToChange.University
-        newData.url = url
         this.$store.dispatch('editUserEducation', newData)
       } else {
         this.$store.dispatch('addUserEducation', newData)
