@@ -3,7 +3,7 @@
 <div class="profile-tile">
     <div class="profile-tile-header">
       <div class="profile-tile-header-row">
-        <h2 class="profile-tile-title">Umiejętności</h2>
+        <h2 class="profile-tile-title">{{ $t("header.skills") }}</h2>
         <div class="profile-table-buttons">
           <button class="profile-edit-experience" v-if="!editMode" @click="edit">{{ $t("button.edit") }}</button>
           <button class="profile-edit-experience-e" v-if="editMode" @click="cancel">{{ $t("button.cancel") }}</button>
@@ -18,7 +18,7 @@
         <div class="prof-skills-inputs">
           <div class="prof-input-xl">
             <!-- languages -->
-              <label class="label-skills">Znajomość języków</label> 
+              <label class="label-skills">{{ $t("label.foreignLanguages") }}</label> 
               <button class="prof-skills-btn" @click="addLanguageSkillsRow" v-if="editMode">+</button>
               <div class="prof-div-skills" v-for="(lang, index) in userLangs" :id="index" :key="index">
                 <div class="prof-div-slang">
@@ -28,7 +28,7 @@
                   <select v-if="!editMode" class="selectProfileSkills selectDisabled" v-model="lang.Language">
                      <option v-for="fullLang in fullLanguageList" :value="fullLang.Language" :key="fullLang.Language">{{fullLang.LangName}}</option>
                   </select>
-                  <label class="label-select-profile">Język</label>
+                  <label class="label-select-profile">{{ $t("label.language") }}</label>
                 </div>
                 <div class="prof-div-slang">
                   <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.LangLevel" >
@@ -37,11 +37,11 @@
                   <select v-if="!editMode" class="selectProfileSkills selectDisabled" v-model="lang.LangLevel">
                       <option v-for="level in langLevels" :value="level.Key" :key="level.Key">{{level.Value}}</option>
                   </select>
-                  <label class="label-select-profile">Poziom</label>
+                  <label class="label-select-profile">{{ $t("label.level") }}</label>
                 </div>
                 <div class="prof-skills-btns">
-                  <button class="prof-skills-delete" @click="removeLanguageSkillsRow(index)" v-if="editMode">Usuń</button>
-                  <button class="prof-skills-save" @click="saveLang" v-if="editMode">Zapisz</button>
+                  <button class="prof-skills-delete" @click="removeLanguageSkillsRow(index)" v-if="editMode">{{ $t("button.edit") }}</button>
+                  <button class="prof-skills-save" @click="saveLang" v-if="editMode">{{ $t("button.save") }}</button>
                 </div>
               </div>
           </div>
@@ -51,7 +51,7 @@
                   <option disabled selected value>{{ $t("table.addModule") }}:</option>
                   <option v-for="sapModule in modulesList" :key="sapModule.id" :value="sapModule.id" :id="sapModule.id" > {{ sapModule.name }}</option>
               </select>
-              <label :class="editMode ? 'label-select-profile' : 'label-skills'">Doświadczenie modułowe SAP</label>
+              <label :class="editMode ? 'label-select-profile' : 'label-skills'">{{ $t("label.sapModulesExp") }}</label>
               <div class="prof-skills-elems">
                 <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="sapModule in UserSkills.SapModules" :key="sapModule"  @click="removeModuleForSkills(sapModule)">{{sapModule}}</button>
               </div>
@@ -61,7 +61,7 @@
               <input v-on:keyup.enter="addProgramLang" required class="inputProfile inputEditPos" v-if="editMode" v-model="newProgramLang"/>
               <span class="prof-div-bar"></span>
               <button class="prof-div-pos-btn" v-if="editMode" @click="addProgramLang">+</button>
-              <label :class="editMode ? 'label-profile': 'label-skills'">Języki programowania</label>
+              <label :class="editMode ? 'label-profile': 'label-skills'">{{ $t("label.programmingLanguages") }}</label>
               <div class="prof-skills-elems">
                 <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="lang in UserSkills.ProgramLang" :key="lang"  @click="removeProgramLang(lang)">{{lang}}</button>
               </div>
@@ -73,7 +73,7 @@
               <input v-on:keyup.enter="addTechnology" required class="inputProfile inputEditPos" v-if="editMode" v-model="newTechnology"/>
               <span class="prof-div-bar"></span>
               <button tooltip="usuń" class="prof-div-pos-btn" v-if="editMode" @click="addTechnology">+</button>
-              <label :class="editMode ? 'label-profile': 'label-skills'">Technologie</label>
+              <label :class="editMode ? 'label-profile': 'label-skills'">{{ $t("label.technologies") }}</label>
               <div class="prof-skills-elems">
                 <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="tech in UserSkills.Technologies" :key="tech"  @click="removeTechnology(tech)">{{tech}}</button>
               </div>
@@ -83,7 +83,7 @@
               <input v-on:keyup.enter="addExtension" required class="inputProfile inputEditPos" v-if="editMode" v-model="newExtension"/>
               <span class="prof-div-bar"></span>
               <button class="prof-div-pos-btn" v-if="editMode" @click="addExtension">+</button>
-              <label :class="editMode ? 'label-profile': 'label-skills'">Rozszerzenia</label>
+              <label :class="editMode ? 'label-profile': 'label-skills'">{{ $t("label.extensions") }}</label>
               <div class="prof-skills-elems">
                 <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="ext in UserSkills.Extensions" :key="ext"  @click="removeExtension(ext)">{{ext}}</button>
               </div>
@@ -93,7 +93,7 @@
               <input v-on:keyup.enter="addAdditional" required class="inputProfile inputEditPos" v-if="editMode" v-model="newAdditional"/>
               <span class="prof-div-bar"></span>
               <button class="prof-div-pos-btn" v-if="editMode" @click="addAdditional">+</button>
-              <label :class="editMode ? 'label-profile': 'label-skills'">Dodatkowe doświadczenie</label>
+              <label :class="editMode ? 'label-profile': 'label-skills'">{{ $t("label.additionalSkills") }}</label>
               <div class="prof-skills-elems">
                 <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="add in UserSkills.AdditionalSkills" :key="add"  @click="removeAdditional(add)">{{add}}</button>
               </div>

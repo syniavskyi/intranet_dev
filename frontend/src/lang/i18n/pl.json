@@ -86,7 +86,14 @@
         "buildingNumber": "Nr budynku",
         "apartmentNumber": "Nr lokalu",
         "city": "Miasto",
-        "postalCode": "Kod pocztowy"
+        "postalCode": "Kod pocztowy",
+        "foreignLanguages": "Języki obce",
+        "level": "Poziom",
+        "sapModulesExp": "Doświadczenie modułowe SAP",
+        "programmingLanguages": "Języki programowania",
+        "technologies": "Technologie",
+        "extensions": "Rozszerzenia",
+        "additionalSkills": "Dodatkowe umiejętności"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",
@@ -117,7 +124,8 @@
         "otherCosts": "Pozostałe koszty",
         "travelCosts": "Koszty podróży",
         "advance": "Zaliczka",
-        "education": "Wykształcenie"
+        "education": "Wykształcenie",
+        "skills": "Umiejętności"
         
     },
     "message": {
