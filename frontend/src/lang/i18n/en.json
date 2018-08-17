@@ -86,7 +86,14 @@
         "buildingNumber": "BuildingNumber",
         "apartmentNumber": "ApartmentNumber",
         "city": "City",
-        "postalCode": "PostalCode"
+        "postalCode": "PostalCode",
+        "foreignLanguages": "Foreign Languages",
+        "level": "Level",
+        "sapModulesExp": "SAP modules expirience",
+        "programmingLanguages": "Programming Languages",
+        "technologies": "Technologies",
+        "extensions": "Extensions",
+        "additionalSkills": "Additional skills"
 
     },
     "header": {
@@ -117,7 +124,8 @@
         "otherCosts": "Other costs",
         "travelCosts": "Travel costs",
         "advance": "Advance",
-        "education": "Education"
+        "education": "Education",
+        "skills": "Skills"
     },
     "message": {
         "loginError": "Password or username are invalid.",
