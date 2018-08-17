@@ -39,25 +39,25 @@
               <label class="checkbox-wrap">
                 <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="education.isCurrent"/>
                 <div class="checkbox-in"></div>
-                <p style="padding:0;margin:0;">Obecnie</p> 
+                <p style="padding:0;margin:0;">Obecnie</p>
               </label>
             </div>
             <div class="prof-row-btns">
-              <button class="prof-row-btn" v-if="editMode" @click="save(index)">&#x2714;</button>
+              <button class="prof-row-btn" :disabled="true" v-if="editMode" @click="save(index)">&#x2714;</button>
               <button class="prof-row-btn" v-if="editMode" @click="remove(index)">X</button>
             </div>
           </div>
           <div class="prof-row-inputs">
             <div class="prof-inputs-div">
-              <div class="prof-input-l"> 
-                <input required v-if="editMode" class="inputProfile inputEdit" v-model="education.FieldOfStudy">
+              <div class="prof-input-l">
+                <input required v-if="editMode" class="inputProfile inputEdit" v-model="education.FieldOfStudy" @input="checkFields">
                 <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="education.FieldOfStudy"/>
                 <!-- :disabled="!editMode" -->
                 <span class="prof-div-bar"></span>
                 <label class="label-profile">Kierunek</label>
               </div>
               <div class="prof-input-l">
-                <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.University"/>
+                <input required v-if="editMode" class="inputProfile inputEdit" v-model="education.University" @input="checkFields"/>
                 <!-- :disabled="!editMode" -->
                 <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="education.University"/>
                 <span class="prof-div-bar"></span>
@@ -68,7 +68,7 @@
               <div class="prof-input-xs">
                 <!-- <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.StudyType"/> -->
                 <!-- <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="education.StudyType"/> -->
-                <select required v-if="editMode" class="selectProfile selectEdit" v-model="education.StudyType">
+                <select required v-if="editMode" class="selectProfile selectEdit" @change="checkFields" v-model="education.StudyType">
                   <option v-for="type in studyTypes" :key="type.Key" :value="type.Key">{{type.Value}}</option>
                 </select>
                 <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="education.StudyType">
@@ -81,7 +81,7 @@
               <div class="prof-input-xs">
                 <!-- <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.AcademicTitle"/> -->
                 <!-- <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="education.AcademicTitle"/> -->
-                <select required v-if="editMode" class="selectProfile selectEdit" v-model="education.AcademicTitle">
+                <select required v-if="editMode" class="selectProfile selectEdit" @change="checkFields" v-model="education.AcademicTitle">
                   <option v-for="type in academicTitles" :key="type.Key" :value="type.Key">{{type.Value}}</option>
                 </select>
                 <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="education.AcademicTitle">
@@ -93,7 +93,6 @@
               </div>
             </div>
           </div>
-          
         </div>
       </div>
     </div>
@@ -101,9 +100,9 @@
 </template>
 
 <script>
-
-import moment from "moment"
+import moment from "moment";
 import { mapGetters, mapActions, mapState } from "vuex";
+import { required, minLength } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
@@ -114,7 +113,7 @@ export default {
   },
   beforeCreate() {
     if (this.$store.getters.isDataLoaded === false) {
-            this.$store.dispatch('loadData')
+      this.$store.dispatch("loadData");
     }
   },
   computed: {
@@ -125,14 +124,14 @@ export default {
     })
   },
   mounted() {
-    var list = this.$el.querySelectorAll("input[type='checkbox']")
-    for (var i=0;i < list.length; i++) {
+    var list = this.$el.querySelectorAll("input[type='checkbox']");
+    for (var i = 0; i < list.length; i++) {
       var endDate = list[i].parentElement.parentElement.children[2],
-      checkboxWrap = list[i].parentElement.parentElement.children[3];
+        checkboxWrap = list[i].parentElement.parentElement.children[3];
       if (list[i].checked) {
-        endDate.setAttribute("style", "display: none;")
+        endDate.setAttribute("style", "display: none;");
       } else {
-        checkboxWrap.setAttribute("style", "display: none;")
+        checkboxWrap.setAttribute("style", "display: none;");
       }
     }
   },
@@ -140,44 +139,70 @@ export default {
     ...mapActions(["addUserEduRow", "removeUserEducation"]),
     edit() {
       this.editMode = true;
-      this._beforeEditingCache = JSON.parse(
-        JSON.stringify(this.userEducation)
-      );
-      var checkboxes = this.$el.querySelectorAll(".checkbox-wrap")
-      for (var i=0; i < checkboxes.length; i++) {
-        checkboxes[i].setAttribute("style", "display: flex;")
+      this._beforeEditingCache = JSON.parse(JSON.stringify(this.userEducation));
+      var checkboxes = this.$el.querySelectorAll(".checkbox-wrap");
+      for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].setAttribute("style", "display: flex;");
       }
     },
-    remove(index){
-      this._beforeEditingCache.splice(index, 1)
-      this.removeUserEducation(index)
+    checkFields() {
+      let nPosition;
+
+      if (this.userEducation.length > 0) {
+        for (let i = 0; i < this.userEducation.length; i++) {
+          nPosition = i === 0 ? 0 : nPosition = i + 1;
+          if (
+            this.userEducation[i].FieldOfStudy &&
+            this.userEducation[i].University &&
+            this.userEducation[i].StudyType &&
+            this.userEducation[i].AcademicTitle &&
+            this.userEducation[i].DateStart &&
+            (this.userEducation[i].DateEnd !== null || this.userEducation[i].isCurrent)
+          ) {
+            document.getElementsByClassName("prof-row-btn")[nPosition].disabled = false
+          } else {
+            document.getElementsByClassName("prof-row-btn")[nPosition].disabled = true
+          }
+        }
+      }
+    },
+    remove(index) {
+      this._beforeEditingCache.splice(index, 1);
+      this.removeUserEducation(index);
     },
     cancel() {
       this.$store.commit("SET_EDUCATION_ERROR", false);
       this.$store.commit("SET_USER_EDUCATION", this._beforeEditingCache);
       this.editMode = false;
     },
-    save(index){
+    save(index) {
       const dataToChange = this._beforeEditingCache[index],
-            newData = this.userEducation[index]
-      
-      let url
-    
+        newData = this.userEducation[index];
 
-      if (dataToChange){
-        url = '/UsersEducation' + '(' + "UserAlias='UIO'," + "University='" + dataToChange.University + "',AcademicTitle='"+dataToChange.AcademicTitle + "',FieldOfStudy='"+ dataToChange.FieldOfStudy  + "')"
-        newData.AcademicTitleToChange = dataToChange.AcademicTitle
-        newData.FieldOfStudyToChange = dataToChange.FieldOfStudy
-        newData.UniversityToChange = dataToChange.University
-        newData.url = url
-        this.$store.dispatch('editUserEducation', newData)
+      let url;
+
+      if (dataToChange) {
+        url =
+          "/UsersEducation" +
+          "(" +
+          "UserAlias='UIO'," +
+          "University='" +
+          dataToChange.University +
+          "',AcademicTitle='" +
+          dataToChange.AcademicTitle +
+          "',FieldOfStudy='" +
+          dataToChange.FieldOfStudy +
+          "')";
+        newData.AcademicTitleToChange = dataToChange.AcademicTitle;
+        newData.FieldOfStudyToChange = dataToChange.FieldOfStudy;
+        newData.UniversityToChange = dataToChange.University;
+        newData.url = url;
+        this.$store.dispatch("editUserEducation", newData);
       } else {
-        this.$store.dispatch('addUserEducation', newData)
+        this.$store.dispatch("addUserEducation", newData);
       }
 
-      this._beforeEditingCache = JSON.parse(
-        JSON.stringify(this.userEducation)
-      );
+      this._beforeEditingCache = JSON.parse(JSON.stringify(this.userEducation));
     },
     formatDate(date) {
       return date !== null && date !== undefined
@@ -195,6 +220,7 @@ export default {
 
         this.invalidDates = formatStartDate > formatEndDate ? true : false;
       }
+      this.checkFields();
     },
     disableEndDateInput(value) {
       const isCurrent = value.target.checked,
@@ -203,18 +229,17 @@ export default {
 
       if (isCurrent) {
         // input.setAttribute("style", "opacity: 0");
-        input.setAttribute("style", "display: none;")
+        input.setAttribute("style", "display: none;");
         this.userEducation[index].DateEnd = null;
       } else {
         // input.setAttribute("style", "opacity: 1");
         input.setAttribute("style", "display: flex;");
-
       }
-    },
+      this.checkFields();
+    }
   }
 };
 </script>
 
 <style>
 </style>
-
