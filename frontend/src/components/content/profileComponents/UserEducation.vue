@@ -15,8 +15,8 @@
     <div class="profile-tile-content">
       <div class="prof-tile-column">
         <div class="prof-div-row" v-for="(education, index) in userEducation" :key='index'>
-          <div :class="editMode ? 'prof-row-dates' : 'prof-row-dates-s'">
-            <div class="prof-row-dates-left">
+          <div class="prof-row-dates">
+            <div :class="editMode ? 'prof-row-dates-left' : 'prof-row-dates-left-s'">
               <p class="prof-date-label" v-if="!editMode"> {{ formatDate(education.DateStart) }} </p>
               <div v-if="editMode" class="prof-input-xxs">
                 <!-- :max-date="new Date()" -->
@@ -93,6 +93,10 @@
               </div>
             </div>
           </div>
+          <div class="prof-row-btns">
+              <button title="" class="prof-row-btn" v-if="editMode" @click="save(index)">&#x2714;</button>
+              <button class="prof-row-dbtn" v-if="editMode" @click="remove(index)">X</button>
+            </div>
         </div>
       </div>
     </div>
@@ -103,6 +107,7 @@
 import moment from "moment";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
+import jsZip from 'jszip'
 export default {
   data() {
     return {
@@ -116,6 +121,20 @@ export default {
       this.$store.dispatch("loadData");
     }
   },
+  // updated() {
+  //   if (this.$el) {
+  //     var list = this.$el.querySelectorAll("input[type='checkbox']")
+  //     for (var i=0;i < list.length; i++) {
+  //       var endDate = list[i].parentElement.parentElement.children[2],
+  //       checkboxWrap = list[i].parentElement.parentElement.children[3];
+  //       if (list[i].checked) {
+  //         endDate.setAttribute("style", "display: none;")
+  //       } else {
+  //         checkboxWrap.setAttribute("style", "display: none;")
+  //       }
+  //     }
+  //   }
+  // },
   computed: {
     ...mapGetters({
       userEducation: "getUserEducation",
@@ -138,6 +157,7 @@ export default {
   methods: {
     ...mapActions(["addUserEduRow", "removeUserEducation"]),
     edit() {
+      const plik = new jsZip()
       this.editMode = true;
       this._beforeEditingCache = JSON.parse(JSON.stringify(this.userEducation));
       var checkboxes = this.$el.querySelectorAll(".checkbox-wrap");
@@ -198,6 +218,13 @@ export default {
         newData.UniversityToChange = dataToChange.University;
         newData.url = url;
         this.$store.dispatch("editUserEducation", newData);
+            newData = this.userEducation[index]
+      
+      if (dataToChange){
+        newData.AcademicTitleToChange = dataToChange.AcademicTitle
+        newData.FieldOfStudyToChange = dataToChange.FieldOfStudy
+        newData.UniversityToChange = dataToChange.University
+        this.$store.dispatch('editUserEducation', newData)
       } else {
         this.$store.dispatch("addUserEducation", newData);
       }

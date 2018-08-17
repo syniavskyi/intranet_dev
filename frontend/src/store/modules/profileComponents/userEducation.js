@@ -1,9 +1,8 @@
 import axios from 'axios'
 import router from '@/router/index.js'
-// import i18n from '../../lang/lang'
-import js2xml from 'js2xmlparser'
-import jsontoxml from 'jsontoxml'
 import moment from "moment";
+import odata from 'odata'
+let utils = require('../../../utils')
 
 const state = {
   userEducation: [{
@@ -27,6 +26,7 @@ const state = {
       Duplicated: null
     }
   ],
+  userEducation: [],
   showEducationError: false
 }
 
@@ -53,7 +53,12 @@ const actions = {
       University: null,
       isCurrent: false,
       StudyType: null,
-      Duplicated: null
+      Duplicated: null,
+      SchoolDescription: null,
+      UniversityToChange: null,
+      FieldOfStudyToChange: null,
+      AcademicTitleToChange: null,
+      FieldOfStudyDescription: null
     })
   },
   removeUserEducation({
@@ -79,6 +84,14 @@ const actions = {
       console.log(error);
     })
     userEdu.splice(index, 1)
+      url = 'UsersEducation' + '(' + "UserAlias='UIO'," + "University='" + data.University + "',AcademicTitle='" + data.AcademicTitle + "',FieldOfStudy='" + data.FieldOfStudy + "')"
+
+      odata(url).remove().save(function (data) {
+        console.log("removed");
+        userEdu.splice(index, 1)
+      }, function (status) {
+        console.error(status); 
+      });
   },
   editUserEducation({
     getters
@@ -118,6 +131,20 @@ const actions = {
     }).catch(error => {
       console.log(error);
     })
+    data.UserAlias = 'UIO'
+    // data.DateStart = utils.formatDateForBackend(data.DateStart)
+    // data.DateEnd = utils.formatDateForBackend(data.DateEnd)
+    data.DateStart ='/Date(1473465600000)/'
+    data.DateEnd = '/Date(1473465600000)/'
+    data.IsCurrent = data.IsCurrent ? 'X' : '-'
+
+    const url = 'UsersEducation' + '(' + "UserAlias='"+ data.UserAlias + "',University='" + data.UniversityToChange + "',AcademicTitle='" + data.AcademicTitleToChange + "',FieldOfStudy='" + data.FieldOfStudyToChange + "')"
+    odata(url).put(data).save(function (data) {
+      console.log("changed");
+    }, function (status) {
+      console.error(status); 
+    });
+
   },
   addUserEducation({
     getters
@@ -157,6 +184,15 @@ const actions = {
     }).catch(error => {
       console.log(error);
     })
+    data.UserAlias = 'UIO'
+    data.DateStart = utils.formatDateForBackend(data.DateStart)
+    data.DateEnd = utils.formatDateForBackend(data.DateEnd)
+    data.IsCurrent = data.IsCurrent ? 'X' : '-'
+    odata('UsersEducation').post(data).save(function (data) {
+      console.log("Working");
+    }, function (status) {
+      console.error(status); 
+    });
   }
 }
 

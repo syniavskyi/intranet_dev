@@ -26,6 +26,7 @@
                     </div>
                     <div class="delegations-tile-content delegations-tile-content-1">
                         <div class="del-inputs-sections">
+                            <div class="delegation-number">Numer Delegacji: <span>&nbsp; DJA/0203/2018</span> </div>
                             <div class="delegations-inputs-section">
                                 <!-- <div class="delegations-div-unders">
                                     <div class="del-underscore">1</div>
@@ -57,11 +58,11 @@
                             <!-- <div class="del-vline"></div> -->
                             <div class="delegations-inputs-section">
                                 
-                                <div class="delegations-div-cool">    
-                                    <p class="del-p-cool"> DJA/0203/2018  </p>
+                                <!-- <div class="delegations-div-cool">     -->
+                                    <!-- <p class="del-p-cool"> DJA/0203/2018  </p> -->
                                     <!-- {{ setDelegationNo() }} -->
-                                    <label class="delegations-label-cool">{{ $t("label.delegationNo") }} </label>
-                                </div>
+                                    <!-- <label class="delegations-label-cool">{{ $t("label.delegationNo") }} </label> -->
+                                <!-- </div> -->
                                 <div class="delegations-div-cool">
                                     <select required class="delegations-select-cool" v-model="newDelegation.currency" @change="countAllCosts">
                                         <option v-for="currency in currencyList" :key="currency.id" :value="currency.id">{{ currency.id }}</option>
@@ -118,7 +119,6 @@
                 <travel-costs-table></travel-costs-table>
                 <accomodation-costs-table></accomodation-costs-table>
                 <other-costs-table></other-costs-table>
- 
             </div>
         </div>
     </div>

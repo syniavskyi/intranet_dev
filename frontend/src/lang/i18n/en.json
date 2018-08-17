@@ -15,7 +15,12 @@
         "addProject": "Add project",
         "editProjects": "Edit projects",
         "removeProject": "Remove project",
-        "finishEdit": "Finish editing"
+        "finishEdit": "Finish editing",
+        "add": "Add",
+        "delete": "Delete",
+        "click": "Click",
+        "back": "Back",
+        "clear": "Clear"
     },
     "label": {
         "user": "User",
@@ -40,6 +45,7 @@
         "eventTitle": "Event title",
         "eventTime": "Event time",
         "eventDescription": "Event description",
+        "eventType": "Event type",
         "priority": "Priority",
         "visibility": "Visibility",
         "createdBy": "Created by",
@@ -73,7 +79,14 @@
         "totalDelegationAmount": "Total delegation amount",
         "advanceAmount": "Advance amount",
         "totalReturnAmount": "Total amount of return",
-        "allowanceDeduction": "Allowance deduction"
+        "allowanceDeduction": "Allowance deduction",
+        "private": "Private",
+        "public": "Public",
+        "street": "Street",
+        "buildingNumber": "BuildingNumber",
+        "apartmentNumber": "ApartmentNumber",
+        "city": "City",
+        "postalCode": "PostalCode"
 
     },
     "header": {
