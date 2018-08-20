@@ -107,7 +107,7 @@
 import moment from "moment";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
-import jsZip from 'jszip'
+import jsZip from "jszip";
 export default {
   data() {
     return {
@@ -157,7 +157,7 @@ export default {
   methods: {
     ...mapActions(["addUserEduRow", "removeUserEducation"]),
     edit() {
-      const plik = new jsZip()
+      const plik = new jsZip();
       this.editMode = true;
       this._beforeEditingCache = JSON.parse(JSON.stringify(this.userEducation));
       var checkboxes = this.$el.querySelectorAll(".checkbox-wrap");
@@ -170,18 +170,23 @@ export default {
 
       if (this.userEducation.length > 0) {
         for (let i = 0; i < this.userEducation.length; i++) {
-          nPosition = i === 0 ? 0 : nPosition = i + 1;
+          nPosition = i === 0 ? 0 : (nPosition = i + 1);
           if (
             this.userEducation[i].FieldOfStudy &&
             this.userEducation[i].University &&
             this.userEducation[i].StudyType &&
             this.userEducation[i].AcademicTitle &&
             this.userEducation[i].DateStart &&
-            (this.userEducation[i].DateEnd !== null || this.userEducation[i].isCurrent)
+            (this.userEducation[i].DateEnd !== null ||
+              this.userEducation[i].isCurrent)
           ) {
-            document.getElementsByClassName("prof-row-btn")[nPosition].disabled = false
+            document.getElementsByClassName("prof-row-btn")[
+              nPosition
+            ].disabled = false;
           } else {
-            document.getElementsByClassName("prof-row-btn")[nPosition].disabled = true
+            document.getElementsByClassName("prof-row-btn")[
+              nPosition
+            ].disabled = true;
           }
         }
       }
@@ -218,18 +223,21 @@ export default {
         newData.UniversityToChange = dataToChange.University;
         newData.url = url;
         this.$store.dispatch("editUserEducation", newData);
-            newData = this.userEducation[index]
-      
-      if (dataToChange){
-        newData.AcademicTitleToChange = dataToChange.AcademicTitle
-        newData.FieldOfStudyToChange = dataToChange.FieldOfStudy
-        newData.UniversityToChange = dataToChange.University
-        this.$store.dispatch('editUserEducation', newData)
-      } else {
-        this.$store.dispatch("addUserEducation", newData);
-      }
+        newData = this.userEducation[index];
 
-      this._beforeEditingCache = JSON.parse(JSON.stringify(this.userEducation));
+        if (dataToChange) {
+          newData.AcademicTitleToChange = dataToChange.AcademicTitle;
+          newData.FieldOfStudyToChange = dataToChange.FieldOfStudy;
+          newData.UniversityToChange = dataToChange.University;
+          this.$store.dispatch("editUserEducation", newData);
+        } else {
+          this.$store.dispatch("addUserEducation", newData);
+        }
+
+        this._beforeEditingCache = JSON.parse(
+          JSON.stringify(this.userEducation)
+        );
+      }
     },
     formatDate(date) {
       return date !== null && date !== undefined
