@@ -223,7 +223,7 @@ export default {
         newData.UniversityToChange = dataToChange.University;
         newData.url = url;
         this.$store.dispatch("editUserEducation", newData);
-        newData = this.userEducation[index];
+        // newData = this.userEducation[index];
 
         if (dataToChange) {
           newData.AcademicTitleToChange = dataToChange.AcademicTitle;
