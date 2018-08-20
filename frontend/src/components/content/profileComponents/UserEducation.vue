@@ -42,10 +42,10 @@
                 <p style="padding:0;margin:0;">Obecnie</p>
               </label>
             </div>
-            <div class="prof-row-btns">
+            <!-- <div class="prof-row-btns">
               <button class="prof-row-btn" :disabled="true" v-if="editMode" @click="save(index)">&#x2714;</button>
               <button class="prof-row-btn" v-if="editMode" @click="remove(index)">X</button>
-            </div>
+            </div> -->
           </div>
           <div class="prof-row-inputs">
             <div class="prof-inputs-div">
@@ -93,8 +93,8 @@
               </div>
             </div>
           </div>
-          <div class="prof-row-btns">
-              <button title="" class="prof-row-btn" v-if="editMode" @click="save(index)">&#x2714;</button>
+          <div class="prof-row-btns eduButtons">
+              <button title="" :disabled="true" class="prof-row-btn" v-if="editMode" @click="save(index)">&#x2714;</button>
               <button class="prof-row-dbtn" v-if="editMode" @click="remove(index)">X</button>
             </div>
         </div>
@@ -166,11 +166,8 @@ export default {
       }
     },
     checkFields() {
-      let nPosition;
-
       if (this.userEducation.length > 0) {
         for (let i = 0; i < this.userEducation.length; i++) {
-          nPosition = i === 0 ? 0 : (nPosition = i + 1);
           if (
             this.userEducation[i].FieldOfStudy &&
             this.userEducation[i].University &&
@@ -180,13 +177,9 @@ export default {
             (this.userEducation[i].DateEnd !== null ||
               this.userEducation[i].isCurrent)
           ) {
-            document.getElementsByClassName("prof-row-btn")[
-              nPosition
-            ].disabled = false;
+            document.getElementsByClassName("eduButtons")[i].children[0].disabled = false;
           } else {
-            document.getElementsByClassName("prof-row-btn")[
-              nPosition
-            ].disabled = true;
+            document.getElementsByClassName("eduButtons")[i].children[0].disabled = true;
           }
         }
       }
