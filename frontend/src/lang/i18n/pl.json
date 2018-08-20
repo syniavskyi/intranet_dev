@@ -151,6 +151,12 @@
             "english": "Angielski",
             "polish": "Polski"
         },
+        "cvLanguage": {
+            "english": "EN",
+            "polish": "PL",
+            "german": "DE",
+            "russian": "RU"
+        },
         "car": {
             "private": "Samochód prywatny",
             "company": "Samochód firmowy"

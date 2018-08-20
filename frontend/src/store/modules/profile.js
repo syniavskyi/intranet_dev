@@ -8,23 +8,30 @@ const state = {
   uploadFileError: false,
   languageList:[
     {id: 'PL', name: 'Polski'},
-  {id: 'EN', name: 'Angielski'},
-{id:'DE', name: 'Niemiecki'}],
+    {id: 'EN', name: 'Angielski'},
+    {id: 'DE', name: 'Niemiecki'}
+  ],
+  cvLanguageList: [
+    { id: 'en', description: i18n.t('select.cvLanguage.english') },
+    { id: 'pl', description: i18n.t('select.cvLanguage.polish')  },
+    { id: 'de', description: i18n.t('select.cvLanguage.german')  },
+    { id: 'ru', description: i18n.t('select.cvLanguage.russian') }
+],
 userJobPositions: ["SAP Fiori Developer"]
 };
 
 const mutations = {
   SET_SAVE_CHANGES_STATE(state, isSuccess) {
-    state.saveChangesSuccess = isSuccess
+    state.saveChangesSuccess = isSuccess;
   },
   SET_PHOTO_ERROR(state, isError) {
-    state.uploadPhotoError = isError
+    state.uploadPhotoError = isError;
   },
   SET_FILE_ERROR(state, isError) {
-    state.uploadFileError = isError
+    state.uploadFileError = isError;
   },
   SET_USER_JOB_POS(state,list){
-    state.userJobPositions = list
+    state.userJobPositions = list;
   }
 };
 
@@ -32,15 +39,15 @@ const actions = {
   saveUserData({
     commit
   }, userData) {
-    commit('SET_USER_INFO', userData)
+    commit('SET_USER_INFO', userData);
   },
 
   submitPhoto({
     commit
   }, data) {
-    let formData = new FormData()
-    formData.append('file', data.file)
-    formData.append('id', data.id)
+    let formData = new FormData();
+    formData.append('file', data.file);
+    formData.append('id', data.id);
     axios({
       method: 'post',
       url: '/api/files/uploadImage',
@@ -49,20 +56,20 @@ const actions = {
       },
       data: formData
     }).then(res => {
-      console.log(res)
-      commit('SET_PHOTO', res.data.fileDownloadUri)
-      commit('SET_PHOTO_ERROR', false)
+      console.log(res);
+      commit('SET_PHOTO', res.data.fileDownloadUri);
+      commit('SET_PHOTO_ERROR', false);
     }).catch(error => {
-      commit('SET_PHOTO_ERROR', true)
-      console.log(error)
+      commit('SET_PHOTO_ERROR', true);
+      console.log(error);
     })
   },
   submitCv({
     commit
   }, data) {
-    let formData = new FormData()
-    formData.append('file', data.file)
-    formData.append('id', data.id)
+    let formData = new FormData();
+    formData.append('file', data.file);
+    formData.append('id', data.id);
     axios({
       method: 'post',
       url: '/api/files/uploadFile',
@@ -71,31 +78,34 @@ const actions = {
       },
       data: formData
     }).then(res => {
-      commit('SET_CV', res.data.fileDownloadUri)
-      commit('SET_FILE_ERROR', false)
-      console.log(res)
+      commit('SET_CV', res.data.fileDownloadUri);
+      commit('SET_FILE_ERROR', false);
+      console.log(res);
     }).catch(error => {
-      console.log(error)
-      commit('SET_FILE_ERROR', false)
+      console.log(error);
+      commit('SET_FILE_ERROR', false);
     })
-  },
+  }
 };
 
 const getters = {
   isSaveChangesSuccess(state) {
-    return state.saveChangesSuccess
+    return state.saveChangesSuccess;
   },
   isSavePhotoError(state) {
-    return state.isSavePhotoError
+    return state.isSavePhotoError;
   },
   isFileUploadError(state) {
-    return state.isFileUploadError
+    return state.isFileUploadError;
   },
   getLanguageList(state){
-    return state.languageList
+    return state.languageList;
   },
   getUserJobPositions(state){
-    return state.userJobPositions
+    return state.userJobPositions;
+  },
+  getCvLanguageList(state){
+    return state.cvLanguageList;
   }
 };
 
