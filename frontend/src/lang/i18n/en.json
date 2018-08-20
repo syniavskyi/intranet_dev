@@ -150,6 +150,12 @@
             "english": "English",
             "polish": "Polish"
         },
+        "cvLanguage": {
+            "english": "EN",
+            "polish": "PL",
+            "german": "DE",
+            "russian": "RU"
+        },
         "car": {
             "private": "Private car",
             "company": "Company car"
