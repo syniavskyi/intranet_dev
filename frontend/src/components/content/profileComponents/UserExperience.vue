@@ -43,13 +43,13 @@
           </div>
           <div class="prof-row-inputs">
             <div class="prof-input-ss">
-              <input required v-if="editMode" class="inputProfile inputEdit" v-model="experience.Employer">
+              <input required v-if="editMode" class="inputProfile inputEdit" v-model="experience.Employer" @input="checkFields">
               <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="experience.Employer"/>
               <span class="prof-div-bar"></span>
               <label class="label-profile">Pracodawca</label>
             </div>
             <div class="prof-input-ss">
-              <select required v-if="editMode" class="selectProfile selectEdit" v-model="experience.WorkPos">
+              <select required v-if="editMode" class="selectProfile selectEdit" @change="checkFields" v-model="experience.WorkPos">
                 <option v-for="workPos in workPositions" :key="workPos.Key" :value="workPos.Key">{{workPos.Value}}</option>
               </select>
               <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="experience.WorkPos">
@@ -60,7 +60,7 @@
               <label class="label-profile">Stanowisko</label>
             </div>
           </div>
-          <div class="prof-row-btns">
+          <div class="prof-row-btns expButtons">
             <button class="prof-row-btn" v-if="editMode" @click="save(index)">&#x2714;</button>
             <button class="prof-row-dbtn" v-if="editMode" @click="remove(index)">X</button>
           </div>
@@ -111,6 +111,23 @@ export default {
         checkboxes[i].setAttribute("style", "display: flex;");
       }
     },
+    checkFields() {
+      if (this.userExperience.length > 0) {
+        for (let i = 0; i < this.userExperience.length; i++) {
+          if (
+            this.userExperience[i].Employer &&
+            this.userExperience[i].WorkPos &&
+            this.userExperience[i].DateStart &&
+            (this.userExperience[i].DateEnd !== null ||
+              this.userExperience[i].isCurrent)
+          ) {
+            document.getElementsByClassName("expButtons")[i].children[0].disabled = false;
+          } else {
+            document.getElementsByClassName("expButtons")[i].children[0].disabled = true;
+          }
+        }
+      }
+    },
     formatId(index) {
       return index + "e";
     },
@@ -155,6 +172,7 @@ export default {
 
         this.invalidDates = formatStartDate > formatEndDate ? true : false;
       }
+      this.checkFields();
     },
     disableEndDateInput(value) {
       const isCurrent = value.target.checked,
@@ -167,6 +185,7 @@ export default {
       } else {
         input.setAttribute("style", "display: flex;");
       }
+      this.checkFields();
     }
   }
 };
