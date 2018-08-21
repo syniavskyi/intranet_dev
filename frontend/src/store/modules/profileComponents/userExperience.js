@@ -34,18 +34,23 @@ const actions = {
             EmployerToChange: null,
             DateStartToChange: null,
             DateEndToChange: null,
-            Duplicated: null
+            Duplicated: null,
+            Language: null
 
         })
     },
     removeUserExperience({getters}, index){
         const userExp = getters.getUserExperience,      
-        data = userExp[index],
-        url = 'UserExperiences' + '(' + "UserAlias='"+ data.UserAlias + "',WorkPos='" + data.WorkPos + "',Employer='" + data.Employer + "',DateStart='" + data.DateStart + "')"
+        data = userExp[index]
+
+        data.Language = 'PL'
+        data.UserAlias = 'UIO'
+        
+        const url = 'UserExperiences' + '(' + "UserAlias='"+ data.UserAlias + "',Language='" + data.Language + "',WorkPos='" + data.WorkPos + "',Employer='" + data.Employer + "',DateStart=datetime'" + moment(data.DateStart).format("YYYY-MM-DD") + "T00:00:00')"
   
         odata(url).remove().save(function (data) {
           console.log("removed");
-          userEdu.splice(index, 1)
+          userExp.splice(index, 1)
         }, function (status) {
           console.error(status); 
         });
@@ -63,13 +68,16 @@ const actions = {
     },
     updateUserExp({getters}, data){
         data.UserAlias = 'UIO'
-        // data.DateStart = utils.formatDateForBackend(data.DateStart)
-        // data.DateEnd = utils.formatDateForBackend(data.DateEnd)
-        data.DateStart ='/Date(1473465600000)/'
-        data.DateEnd = '/Date(1473465600000)/'
+
+        data.DateStart = utils.formatDateForBackend(data.DateStart)
+        data.DateEnd = utils.formatDateForBackend(data.DateEnd)
         data.IsCurrent = data.IsCurrent ? 'X' : '-'
     
-        const url = 'UserExperiences' + '(' + "UserAlias='"+ data.UserAlias + "',WorkPos='" + data.WorkPosToChange + "',Employer='" + data.EmployerToChange + "',DateStart='" + data.DateStartToChange + "')"
+        const url = 'UserExperiences' + '(' + "UserAlias='"+ data.UserAlias + "',WorkPos='" + data.WorkPosToChange + "',Employer='" + data.EmployerToChange + "',Language='" + data.Language + "',DateStart=datetime'" + moment(data.DateStartToChange).format("YYYY-MM-DD") + "T00:00:00')"
+        
+        data.DateStartToChange = utils.formatDateForBackend(data.DateStartToChange)
+        data.DateEndToChange = utils.formatDateForBackend(data.DateEndToChange)
+        
         odata(url).put(data).save(function (data) {
           console.log("changed");
         }, function (status) {
