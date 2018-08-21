@@ -126,9 +126,10 @@ const actions = {
   getDomainValues({
     commit
   }, domainName) {
+    let lang = 'EN'
     axios({
       method: 'GET',
-      url: "Dictionaries?$filter=Name eq '" + domainName + "'",
+      url: "Dictionaries?$filter=Name eq '" + domainName + "' and Language eq'" + lang + "'",
       auth: {
         username: 'psy',
         password: 'ides01'
@@ -209,14 +210,13 @@ const actions = {
     commit,
     dispatch,
     state
-  }) {
-    let userData = {};
-    userData.user = 'UIO';
-    userData.lang = 'PL';
-    let halo = 'Users' + '(UserAlias=' + "'" + userData.user + "'," + "Language='" + userData.lang + "')" + '?$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang'
+  }, userData) {
+    let userData2 = {};
+    userData2.user = 'UIO';
+    userData2.lang = 'PL';
     axios({
       method: 'GET',
-      url: 'Users' + '(UserAlias=' + "'" + userData.user + "'," +  "Language='" + userData.lang + "')" + '?$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang',
+      url: 'Users' + '(UserAlias=' + "'" + userData2.user + "'," +  "Language='" + userData2.lang + "')" + '?$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang',
       auth: {
         username: 'psy',
         password: 'ides01'
@@ -272,8 +272,6 @@ const actions = {
       console.log(res.data.d.results);
       commit('SET_LANGUAGE_LIST', res.data.d.results);
     }).catch(error => { })
-    let a = 43;
-    a += 2;
   }
 };
 

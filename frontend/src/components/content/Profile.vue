@@ -10,7 +10,7 @@
                     <p class="profile-header-title">{{ $t("header.profile") }}</p>
                 </div>
                 <div v-if="!editMode" class="prof-input-lang"> 
-                    <select required class="selectLang" v-model="selectedCvLang" @change="getNewExpand">
+                    <select required class="selectLang" v-model="selectedCvLang" @change="getNewData">
                         <option v-for="language in cvLanguageList" :key="language.id" :value="language.id">{{ language.description }}</option>
                     </select>
                     <label class="label-select-lang">{{ $t("label.language") }}</label>
@@ -513,12 +513,13 @@ export default {
     setLanguage(language) {
          this.$store.dispatch("setLanguage", language);
     },
-    getNewExpand() {
+    getNewData() {
         let cvLang = this.selectedCvLang.toUpperCase();
         let userData = {};
         userData.user = 'UIO';
         userData.lang = cvLang;
         this.$store.dispatch('getUserData', userData);
+        this.$store.dispatch('getDomainValues');
     }
     // leavePage() {
     //     if (this._beforeEditingProjects){

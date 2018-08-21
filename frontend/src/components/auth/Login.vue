@@ -79,6 +79,13 @@ export default {
   watch: {
     selectedLang(newVal) {
       this.setLanguage(newVal);
+    },
+    // SPI sprawdzę jak już będzie logowanie
+    beforeRouteLeave(to, from, next) {
+      if(!this.selectedLang) {
+          let language = 'pl';
+          this.$store.commit('SET_LOGIN_LANGUAGE', language);
+      }
     }
   },
   beforeCreate() {
