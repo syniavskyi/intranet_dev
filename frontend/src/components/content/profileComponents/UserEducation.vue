@@ -197,28 +197,7 @@ export default {
       const dataToChange = this._beforeEditingCache[index],
         newData = this.userEducation[index];
 
-      let url;
-
       if (dataToChange) {
-        url =
-          "/UsersEducation" +
-          "(" +
-          "UserAlias='UIO'," +
-          "University='" +
-          dataToChange.University +
-          "',AcademicTitle='" +
-          dataToChange.AcademicTitle +
-          "',FieldOfStudy='" +
-          dataToChange.FieldOfStudy +
-          "')";
-        newData.AcademicTitleToChange = dataToChange.AcademicTitle;
-        newData.FieldOfStudyToChange = dataToChange.FieldOfStudy;
-        newData.UniversityToChange = dataToChange.University;
-        newData.url = url;
-        this.$store.dispatch("editUserEducation", newData);
-        // newData = this.userEducation[index];
-
-        if (dataToChange) {
           newData.AcademicTitleToChange = dataToChange.AcademicTitle;
           newData.FieldOfStudyToChange = dataToChange.FieldOfStudy;
           newData.UniversityToChange = dataToChange.University;
@@ -265,7 +244,7 @@ export default {
       }
       this.checkFields();
     }
-  }
+  
 };
 </script>
 
