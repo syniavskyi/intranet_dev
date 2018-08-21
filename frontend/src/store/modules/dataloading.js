@@ -16,7 +16,9 @@ const state = {
   langLevels: [],
   fullLanguageList: [],
   workPositionList: [],
-  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS"]
+  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS"],
+  schoolDescList: [],
+  fieldOfStudyDescList: []
 };
 
 const mutations = {
@@ -58,6 +60,12 @@ const mutations = {
   },
   SET_WORK_POSITION_LIST(state, data) {
     state.workPositionList = data
+  },
+  SET_SCHOOL_DESC_LIST(state, data) {
+    state.schoolDescList = data;
+  },
+  SET_FIELD_OF_STUDY_DESC_LIST(state, data) {
+    state.fieldOfStudyDescList = data;
   }
 };
 
@@ -121,6 +129,8 @@ const actions = {
     for (let i = 0; i < state.sapDomains.length; i++) {
       dispatch('getDomainValues', state.sapDomains[i])
     }
+    dispatch('getSchoolDesc');
+    dispatch('getFieldOfStudyDesc');
     commit('SET_DATA_LOADED', true)
   },
   getDomainValues({
@@ -274,7 +284,44 @@ const actions = {
       console.log(res.data.d.results);
       commit('SET_LANGUAGE_LIST', res.data.d.results);
     }).catch(error => { })
+  },
+  getSchoolDesc({commit}) {
+    let lang = 'PL';
+    let halo = "SchoolDesc?$filter=Language eq " + "'" + lang + "'";
+    axios({
+      method: 'GET',
+      url: "SchoolDesc?$filter=Language eq " + "'" + lang + "'",
+      auth: {
+        username: 'psy',
+        password: 'ides01'
+      },
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      }
+    }).then(res => {
+      console.log(res.data.d.results);
+      commit('SET_SCHOOL_DESC_LIST', res.data.d.results);
+    }).catch(error => { })
+  },
+  getFieldOfStudyDesc({commit}) {
+    let lang = 'PL';
+    let halo =  "FieldOfStudyDesc?$filter=Language eq '" + lang + "'";
+    axios({
+      method: 'GET',
+      url: "FieldOfStudyDesc?$filter=Language eq '" + lang + "'",
+      auth: {
+        username: 'psy',
+        password: 'ides01'
+      },
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      }
+    }).then(res => {
+      console.log(res.data.d.results);
+      commit('SET_FIELD_OF_STUDY_DESC_LIST', res.data.d.results);
+    }).catch(error => { })
   }
+
 };
 
 const getters = {
@@ -305,7 +352,6 @@ const getters = {
   academicTitles(state) {
     return state.academicTitles;
   },
-
   langLevels(state) {
     return state.langLevels
   },
@@ -317,6 +363,12 @@ const getters = {
   },
   workPositions(state) {
     return state.workPositionList;
+  },
+  schoolDescList(state) {
+    return state.schoolDescList;
+  },
+  fieldOfStudyDescList(state) {
+    return state.fieldOfStudyDescList;
   }
 };
 
