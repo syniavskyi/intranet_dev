@@ -229,6 +229,8 @@ const actions = {
       const oUserData = res.data.d;
       dispatch('formatData', oUserData)
       let oFormattedUserData = state.userData
+      // localStorage.setItem('id', oFormattedUserData.UserAlias)
+      localStorage.setItem('id','UIO')
       commit('SET_USER_INFO', oFormattedUserData)
       commit('SET_USER_EDUCATION', oUserData.UserEducations.results)
       commit('SET_USER_EXPERIENCE', oUserData.UserExperiences.results)

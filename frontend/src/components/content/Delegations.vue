@@ -9,6 +9,7 @@
                     <p class="delegations-header-title">{{ $t("header.delegations") }}</p>
                 </div>
             </div>
+            <confirm-dialog v-if="showDialog"></confirm-dialog>
             <div class="delegations-tiles">
                 <div class="delegations-tile delegations-inputs">
                     <div class="delegations-tile-header">
@@ -26,7 +27,7 @@
                     </div>
                     <div class="delegations-tile-content delegations-tile-content-1">
                         <div class="del-inputs-sections">
-                            <div class="delegation-number">Numer Delegacji: <span>&nbsp; DJA/0203/2018</span> </div>
+                            <div class="delegation-number">Numer Delegacji: <span>&nbsp; {{ delegationNumber }} </span> </div>
                             <div class="delegations-inputs-section">
                                 <!-- <div class="delegations-div-unders">
                                     <div class="del-underscore">1</div>
@@ -49,7 +50,7 @@
                                     <label class="delegations-label-cool-select">{{ $t("label.day") }} </label>
                                 </div>
                                 <div class="delegations-div-cool">
-                                    <v-date-picker class="delegations-input-date" @input="countAllowance" is-expanded mode="range" v-model="newDelegation.dates">
+                                    <v-date-picker class="delegations-input-date" @input="setDelegationNo" is-expanded mode="range" v-model="newDelegation.dates">
                                         <input value="newDelegation.dates" />
                                     </v-date-picker>
                                     <label class="delegations-label-cool-select">{{ $t("label.forTime") }} </label>
@@ -142,6 +143,10 @@ import OtherCosts from '../tables/OtherCosts'
 import TravelCosts from '../tables/TravelCosts'
 import AdvanceTable from '../tables/AdvanceTable'
 import DelegationTable from '../tables/DelegationTable'
+import Dialog from '../dialogs/ConfirmDelegationDialog'
+
+let utils = require('../../utils')
+
 export default {
     data() {
         return {
@@ -167,7 +172,8 @@ export default {
         'other-costs-table': OtherCosts,
         'travel-costs-table': TravelCosts,
         'advance-table': AdvanceTable,
-        'delegation-table': DelegationTable
+        'delegation-table': DelegationTable,
+        'confirm-dialog': Dialog
     },
     beforeCreate() {
         if (this.$store.getters.isDataLoaded === false) {
@@ -175,12 +181,12 @@ export default {
         }
     },
     created(){
-const role = localStorage.getItem('role')
+    const role = localStorage.getItem('role')
         if (role === 'ROLE_ADMIN') {
             this.showUsername = false
         } else {
             this.newDelegation.userId = localStorage.getItem('id')
-            this.delegationUsername = localStorage.getItem('name')
+            this.delegationUsername = localStorage.getItem('id')
         }
     },
     computed: {
@@ -195,7 +201,9 @@ const role = localStorage.getItem('role')
             dailyAllowance: 'getDailyAllowance',
             usersList: 'usersList',
             totalCostsInCurr: 'getTotalCostsInCurr',
-            advanceData: 'getAdvanceData'
+            advanceData: 'getAdvanceData',
+            delegationNumber: 'getNewDelegationNumber',
+            showDialog: 'getShowConfirmDelegation'
         }),
         disableSaveBtn() {
             return (this.newDelegationValidated && this.delegationTableValidated && this.accCostValidated) ? false : true
@@ -208,18 +216,16 @@ const role = localStorage.getItem('role')
             countAllCosts: 'countAllCosts'
         }),
         setDelegationNo(){
+            this.delegationUsername = 'UIO'
             if (this.newDelegation.dates && this.delegationUsername) {
-            const date = this.newDelegation.dates.start,
-                year = moment(date).format('YYYY'),
-                month = moment(date).format('MM'),
-                username = this.delegationUsername,
-                number = username + '/' + year + '/' + month
-            // number = '${username}/${year}/${month}'
-            this.newDelegation.number = number
-            return number
-            } else {
-                return null
-            }
+                const data = {
+                    UserAlias: this.delegationUsername,
+                    // DelegDate: utils.formatDateForBackend(this.newDelegation.dates.start)
+                    DelegDate: "datetime'" + moment(this.newDelegation.dates.start).format("YYYY-MM-DD") + "T00:00:00'"
+                }
+                this.$store.dispatch('getDelegationNumber', data)
+                this.countAllowance()
+            } 
         },
         setUsername(){
             const users = this.usersList,
@@ -232,42 +238,6 @@ const role = localStorage.getItem('role')
                 }
             }
         },
-        //  generatePdf() {
-        //    this.generatingPdfMode = true
-           
-        //    const source = document.body.getElementsByClassName('delegations-content')[0]
-        //    let pdf = new jsPDF('p', 'pt', 'letter'),
-        //          width = pdf.internal.pageSize.getWidth(),
-        //          height = pdf.internal.pageSize.getHeight()
-        
-        //    html2canvas(source).then(canvas => {
-        //     for (let i = 0; i < Math.round(source.clientHeight/980); i++) {
-        //         let srcImg  = canvas
-
-        //         window.onePageCanvas = document.createElement("canvas")
-        //         onePageCanvas.setAttribute('width', 900)
-        //         onePageCanvas.setAttribute('height', 980)
-        //         let ctx = onePageCanvas.getContext('2d')
-                
-        //         ctx.drawImage(srcImg, 0, 980*i,900,980,0,0,900,980)
-        //         // cxt.drawImage(img,sx,sy,swidth,sheight,x,y,width,height)
-
-        //         let canvasDataURL = onePageCanvas.toDataURL("image/png", 1),
-        //             width         = onePageCanvas.width,
-        //             height        = onePageCanvas.clientHeight
-                
-               
-        //         if (i > 0) {
-        //             pdf.addPage(612, 791); //8.5" x 11" in pts (in*72)
-        //         }
-
-        //         pdf.setPage(i+1); //! now we declare that we're working on that page
-        //         pdf.addImage(canvas, 'PNG', 20, 40, (width*.62), (height*.62)); //! now we add content to that page!
-        //     }
-        //     pdf.save(this.newDelegation.number + '.pdf'); //! after the for loop is finished running, we save the pdf.
-        //     })
-            
-        // } 
         generatePdf() {
             this.generatingPdfMode = true
             this.loopClasses()
@@ -295,7 +265,9 @@ const role = localStorage.getItem('role')
                             }
                         }
                     }
-                    pdf.save(this.newDelegation.number + '.pdf');
+                    let fileName = this.delegationNumber ? this.delegationNumber : 'Delegacja'
+                    pdf.save(fileName + '.pdf');
+                    this.$store.commit('SET_SHOW_CONFIRM_DELEG', true)
             })
         },
 
