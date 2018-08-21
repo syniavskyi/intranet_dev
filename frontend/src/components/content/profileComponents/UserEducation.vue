@@ -209,12 +209,9 @@ export default {
         this._beforeEditingCache = JSON.parse(
           JSON.stringify(this.userEducation)
         );
-      }
     },
     formatDate(date) {
-      return date !== null && date !== undefined
-        ? moment(date).format("DD.MM.YYYY")
-        : "-";
+      return date !== null && date !== undefined ? moment(date).format("DD.MM.YYYY") : "-";
     },
     validateDates(index) {
       const startDate = this.userEducation[index].DateStart,
@@ -244,7 +241,7 @@ export default {
       }
       this.checkFields();
     }
-  
+  }
 };
 </script>
 
