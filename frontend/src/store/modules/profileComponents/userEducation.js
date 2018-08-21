@@ -37,16 +37,19 @@ const actions = {
       UniversityToChange: null,
       FieldOfStudyToChange: null,
       AcademicTitleToChange: null,
-      FieldOfStudyDescription: null
+      FieldOfStudyDescription: null,
+      Language: 'PL'
     })
   },
   removeUserEducation({
     getters
   }, index) {
+    const lang = 'PL'
     const userEdu = getters.getUserEducation,
       data = userEdu[index],
-      url = 'UsersEducation' + '(' + "UserAlias='UIO'," + "University='" + data.University + "',AcademicTitle='" + data.AcademicTitle + "',FieldOfStudy='" + data.FieldOfStudy + "')"
+      url = 'UsersEducation' + '(' + "UserAlias='UIO'," + "University='" + data.University + "',AcademicTitle='" + data.AcademicTitle + "',FieldOfStudy='" + data.FieldOfStudy + "',Language='"+ lang +  "')"
 
+      data.Language = 'PL'
       odata(url).remove().save(function (data) {
         console.log("removed");
         userEdu.splice(index, 1)
@@ -58,13 +61,14 @@ const actions = {
     getters
   }, data) {
     data.UserAlias = 'UIO'
+    data.Language = 'PL'
     // data.DateStart = utils.formatDateForBackend(data.DateStart)
     // data.DateEnd = utils.formatDateForBackend(data.DateEnd)
     data.DateStart ='/Date(1473465600000)/'
     data.DateEnd = '/Date(1473465600000)/'
     data.IsCurrent = data.IsCurrent ? 'X' : '-'
 
-    const url = 'UsersEducation' + '(' + "UserAlias='"+ data.UserAlias + "',University='" + data.UniversityToChange + "',AcademicTitle='" + data.AcademicTitleToChange + "',FieldOfStudy='" + data.FieldOfStudyToChange + "')"
+    const url = 'UsersEducation' + '(' + "UserAlias='"+ data.UserAlias + "',University='" + data.UniversityToChange + "',AcademicTitle='" + data.AcademicTitleToChange + "',FieldOfStudy='" + data.FieldOfStudyToChange + "',Language='"+ data.Language + "')"
     odata(url).put(data).save(function (data) {
       console.log("changed");
     }, function (status) {
@@ -76,6 +80,7 @@ const actions = {
     getters
   }, data) {
     data.UserAlias = 'UIO'
+    data.Language = 'PL'
     data.DateStart = utils.formatDateForBackend(data.DateStart)
     data.DateEnd = utils.formatDateForBackend(data.DateEnd)
     data.IsCurrent = data.IsCurrent ? 'X' : '-'
