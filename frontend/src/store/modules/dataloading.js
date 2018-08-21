@@ -203,14 +203,20 @@ const actions = {
       console.log(error);
     })
   },
+  // (UserAlias='UIO',Language='PL')
+  // url: 'Users' + '(UserAlias=' + "'UIO'" + ',' + 'Language=' + "'PL'" + ')' + '?$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang',
   getUserData({
     commit,
     dispatch,
     state
   }) {
+    let userData = {};
+    userData.user = 'UIO';
+    userData.lang = 'PL';
+    let halo = 'Users' + '(UserAlias=' + "'" + userData.user + "'," + "Language='" + userData.lang + "')" + '?$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang'
     axios({
       method: 'GET',
-      url: 'Users' + '(' + "'UIO'" + ')' + '?$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang',
+      url: 'Users' + '(UserAlias=' + "'" + userData.user + "'," +  "Language='" + userData.lang + "')" + '?$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang',
       auth: {
         username: 'psy',
         password: 'ides01'
