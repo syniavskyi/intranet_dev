@@ -28,7 +28,7 @@ const mutations = {
 
 const actions = {
     setLanguage({commit, getters}, language) {
-        commit('SET_LOGIN_LANGUAGE', language)
+        commit('SET_LOGIN_LANGUAGE', language);
         commit('SET_LANG', language);
         var newList = [
             { id: 'en', description: i18n.t('select.language.english') },
