@@ -144,10 +144,12 @@ export default {
       const dataToChange = this._beforeEditingCache[index],
         newData = this.userExperience[index];
 
+      newData.Language = 'PL'
+
       if (dataToChange) {
         newData.WorkPosToChange = dataToChange.WorkPos;
         newData.EmployerToChange = dataToChange.Employer;
-        newData.DateStartToChange = dataToChange.DateStart;
+        newData.DateStartToChange = dataToChange.DateStart ;
         this.$store.dispatch("updateUserExp", newData);
       } else {
         this.$store.dispatch("saveNewUserExp", newData);
