@@ -50,16 +50,23 @@
           <div class="prof-row-inputs">
             <div class="prof-inputs-div">
               <div class="prof-input-l">
-                <input required v-if="editMode" class="inputProfile inputEdit" v-model="education.FieldOfStudy" @input="checkFields">
-                <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="education.FieldOfStudy"/>
-                <!-- :disabled="!editMode" -->
+                <select required v-if="editMode" class="selectProfile selectEdit" v-model="education.FieldOfStudy">
+                  <option v-for="fieldOfStudy in fieldOfStudyDescList" :key="fieldOfStudy.SchoolId" :value="fieldOfStudy.SchoolId">{{fieldOfStudy.SchoolDescription}}</option>
+                </select>
+                <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="education.FieldOfStudy">
+                  <option v-for="fieldOfStudy in fieldOfStudyDescList" :key="fieldOfStudy.SchoolId" :value="fieldOfStudy.SchoolId">{{fieldOfStudy.SchoolDescription}}</option>
+                </select>
+                <!-- :disabled="!editMode" -->            
                 <span class="prof-div-bar"></span>
-                <label class="label-profile">Kierunek</label>
+                <label class="label-profile">Kierunek</label>       
               </div>
               <div class="prof-input-l">
-                <input required v-if="editMode" class="inputProfile inputEdit" v-model="education.University" @input="checkFields"/>
-                <!-- :disabled="!editMode" -->
-                <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="education.University"/>
+                <select required v-if="editMode" class="selectProfile selectEdit" v-model="education.University">
+                  <option v-for="school in schoolDescList" :key="school.SchoolId" :value="school.SchoolId">{{school.SchoolDescription}}</option>
+                </select>
+                <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="education.University">
+                  <option v-for="school in schoolDescList" :key="school.SchoolId" :value="school.SchoolId">{{school.SchoolDescription}}</option>
+                </select>
                 <span class="prof-div-bar"></span>
                 <label class="label-profile">Uczelnia</label>
               </div>
@@ -139,7 +146,9 @@ export default {
     ...mapGetters({
       userEducation: "getUserEducation",
       studyTypes: "studyTypes",
-      academicTitles: "academicTitles"
+      academicTitles: "academicTitles",
+      schoolDescList: "schoolDescList",
+      fieldOfStudyDescList: "fieldOfStudyDescList"
     })
   },
   mounted() {
