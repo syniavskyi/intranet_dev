@@ -272,7 +272,7 @@ const actions = {
   getAllLanguages({commit}) {
     axios({
       method: 'GET',
-      url: 'languages',
+      url: 'Languages',
       auth: {
         username: 'psy',
         password: 'ides01'

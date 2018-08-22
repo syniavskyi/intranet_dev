@@ -20,7 +20,8 @@
         "delete": "Usuń",
         "click": "Kliknij",
         "back": "Wróć",
-        "clear": "Wyczyść"
+        "clear": "Wyczyść",
+        "addNewEntry": "Dodaj nowy wpis"
      },
     "label": {
         "user": "Użytkownik",
@@ -58,6 +59,7 @@
         "delegationNo": "Numer delegacji",
         "day": "Dnia",
         "forTime": "Na czas",
+        "from": "Od",
         "to": "Do",
         "target": "W celu",
         "transport": "Transport",
@@ -93,7 +95,12 @@
         "programmingLanguages": "Języki programowania",
         "technologies": "Technologie",
         "extensions": "Rozszerzenia",
-        "additionalSkills": "Dodatkowe umiejętności"
+        "additionalSkills": "Dodatkowe umiejętności",
+        "present": "Obecnie",
+        "fieldOfStudy": "Kierunek",
+        "university": "Uczelnia",
+        "formOfStudy": "Tryb studiów",
+        "degree": "Stopień"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",

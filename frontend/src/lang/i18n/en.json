@@ -20,7 +20,8 @@
         "delete": "Delete",
         "click": "Click",
         "back": "Back",
-        "clear": "Clear"
+        "clear": "Clear",
+        "addNewEntry": "Add new entry"
     },
     "label": {
         "user": "User",
@@ -57,6 +58,7 @@
         "delegationNo": "Delegation number",
         "day": "On",
         "forTime": "For:",
+        "from": "From",
         "to": "To",
         "target": "In order to",
         "transport": "Transport",
@@ -93,7 +95,12 @@
         "programmingLanguages": "Programming Languages",
         "technologies": "Technologies",
         "extensions": "Extensions",
-        "additionalSkills": "Additional skills"
+        "additionalSkills": "Additional skills",
+        "present": "Present",
+        "fieldOfStudy": "Field of Study",
+        "university": "University",
+        "formOfStudy": "Form of Study",
+        "degree": "Degree"
 
     },
     "header": {
