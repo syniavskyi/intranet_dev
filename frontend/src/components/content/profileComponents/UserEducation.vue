@@ -5,7 +5,7 @@
         <h2 class="profile-tile-title">{{ $t("header.education") }}</h2>
         <div class="profile-table-buttons">
           <button class="profile-edit-experience" v-if="!editMode" @click="edit">{{ $t("button.edit") }}</button>
-          <button class="profile-edit-experience-e" v-if="editMode" @click="addUserEduRow">Dodaj nowy wpis</button>
+          <button class="profile-edit-experience-e" v-if="editMode" @click="addUserEduRow">{{ $t("button.addNewEntry") }}</button>
           <button class="profile-edit-experience-e" v-if="editMode" @click="cancel">{{ $t("button.finishEdit") }}</button>
         </div>
       </div>
@@ -23,7 +23,7 @@
                 <v-date-picker class="prof-input-date" :max-date="education.DateEnd === null ? new Date() : education.DateEnd" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateStart">
                   <input value="education.DateStart" >
                 </v-date-picker>
-                <label v-if="editMode">Od</label>
+                <label v-if="editMode">{{ $t("label.from") }}</label>
               </div>
               <span class="prof-span-0">&#8212;</span>
               <!-- &#9472; -->
@@ -33,13 +33,13 @@
                   <v-date-picker class="prof-input-date" popoverDirection="top" :min-date="education.DateStart" :max-date="new Date()" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateEnd">
                     <input value="education.DateEnd" />
                   </v-date-picker>
-                  <label>Do</label>
+                  <label>{{ $t("label.to") }}</label>
                 </div>
               </div>
               <label class="checkbox-wrap">
                 <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="education.isCurrent"/>
                 <div class="checkbox-in"></div>
-                <p style="padding:0;margin:0;">Obecnie</p>
+                <p style="padding:0;margin:0;">{{ $t("label.present") }}</p>
               </label>
             </div>
             <!-- <div class="prof-row-btns">
@@ -58,7 +58,7 @@
                 </select>
                 <!-- :disabled="!editMode" -->            
                 <span class="prof-div-bar"></span>
-                <label class="label-profile">Kierunek</label>       
+                <label class="label-profile">{{ $t("label.fieldOfStudy") }}</label>       
               </div>
               <div class="prof-input-l">
                 <select required v-if="editMode" class="selectProfile selectEdit" v-model="education.University">
@@ -68,7 +68,7 @@
                   <option v-for="school in schoolDescList" :key="school.SchoolId" :value="school.SchoolId">{{school.SchoolDescription}}</option>
                 </select>
                 <span class="prof-div-bar"></span>
-                <label class="label-profile">Uczelnia</label>
+                <label class="label-profile">{{ $t("label.university") }}</label>
               </div>
             </div>
             <div class="prof-inputs-div">
@@ -83,7 +83,7 @@
                 </select>
                 <!-- :disabled="!editMode" -->
                 <span class="prof-div-bar"></span>
-                <label class="label-profile">Tryb Studiów</label>
+                <label class="label-profile">{{ $t("label.formOfStudy") }}</label>
               </div>
               <div class="prof-input-xs">
                 <!-- <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.AcademicTitle"/> -->
@@ -96,7 +96,7 @@
                 </select>
                 <!-- :disabled="!editMode -->
                 <span class="prof-div-bar"></span>
-                <label class="label-profile">Stopień</label>
+                <label class="label-profile">{{ $t("label.degree") }}</label>
               </div>
             </div>
           </div>
