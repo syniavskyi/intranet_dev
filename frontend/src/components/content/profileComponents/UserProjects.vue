@@ -58,15 +58,15 @@
               <div class="prof-tbody-item-title">{{ $t("table.duration") }} </div>
               <div class="prof-tbody-item-txt">
                 <p class="table-p">Rozpoczęcie</p>
-                <p class="table-p" v-if="!projectEditMode"> {{ formatDate(userProjects[index].StartDate) }} </p>
-                <v-date-picker :max-date="userProjects[index].EndDate === null ? new Date() : userProjects[index].EndDate" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].StartDate">
-                  <input value="userProjects[index].startDate" />
+                <p class="table-p" v-if="!projectEditMode"> {{ formatDate(userProjects[index].DateStart) }} </p>
+                <v-date-picker :max-date="userProjects[index].DateEnd === null ? new Date() : userProjects[index].DateEnd" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateStart">
+                  <input value="userProjects[index].DateStart" />
                 </v-date-picker>
                 <p class="table-p">Zakończenie</p>
                 <div name="endDateDiv" :id="formatId(index)">
-                  <p class="table-p" v-if="!projectEditMode"> {{ formatDate(userProjects[index].EndDate) }} </p>
-                  <v-date-picker :max-date="new Date()" :min-date="userProjects[index].StartDate" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].EndDate">
-                    <input value="userProjects[index].endDate" />
+                  <p class="table-p" v-if="!projectEditMode"> {{ formatDate(userProjects[index].DateEnd) }} </p>
+                  <v-date-picker :max-date="new Date()" :min-date="userProjects[index].DateStart" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateEnd">
+                    <input value="userProjects[index].DateEnd" />
                   </v-date-picker>
                 </div>
                 <label class="checkbox-wrap">
@@ -80,28 +80,31 @@
               <div class="prof-tbody-item-title">{{ $t("table.Industry") }} </div>
               <div class="prof-tbody-item-txt">
               <!-- :disabled="!projectEditMode" -->
+              <!-- ************************************************************************************************ -->
                 <div class="prof-table-btns industry">
-                  <button :disabled="!projectEditMode" class="profile-table-industry-button" @click="removeIndustry" :name="index" v-for="industry in userProjects[index].Industries" :key="industry.id" :value="industry.id"> {{ formatIndustryName(industry.id) }}</button>
+                  <button :disabled="!projectEditMode" class="profile-table-industry-button" @click="removeIndustry" :name="index" v-for="industry in userProjects[index].Industries" :key="industry.id" :value="industry.id"> {{ industry.name }}</button>
                 </div>
                 <select v-if="projectEditMode" class="profile-table-select profile-table-select-industry" @change="addIndustry" :id="index" >
                   <option disabled selected value>{{ $t("table.addIndustry") }}:</option>
-                  <option v-for="industry in industryList" :key="industry.id" :value="industry.id"> {{ industry.name }}</option>
+                  <option v-for="industry in industryList" :key="industry.IndustryId" :value="industry.IndustryId"> {{ industry.IndustryName }}</option>
                 </select>
               </div>
             </div>
+            <!-- ************************************************************************************************ -->
             <div class="prof-tbody-item">
               <div class="prof-tbody-item-title"> {{ $t("table.Modules") }}</div>
               <div class="prof-tbody-item-txt profile-table-td-module">
                 <div class="prof-table-btns sapModule">
-                  <button :disabled="!projectEditMode" class="profile-table-module-button" @click="removeModule" :name="index" v-for="sapModule in userProjects[index].SapModules" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.id }} </button>
+                  <button :disabled="!projectEditMode" class="profile-table-module-button" @click="removeModule" :name="index" v-for="sapModule in userProjects[index].Modules" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.id }} </button>
                 </div>
                 <!-- <div id="addButtons"></div> -->
                 <select v-if="projectEditMode" class="profile-table-select profile-table-select-modules" @change="addModule" :id="index">
                   <option disabled selected value>{{ $t("table.addModule") }}:</option>
-                  <option v-for="sapModule in modulesList" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.name }}</option>
+                  <option v-for="sapModule in modulesList" :key="sapModule.Key" :value="sapModule.Key"> {{ sapModule.Value }}</option>
                 </select>
               </div>
             </div>
+            <!-- ************************************************************************************************ -->
             <div class="prof-tbody-item">
               <div class="prof-tbody-item-title">{{ $t("table.Descr") }} </div>
               <div class="prof-tbody-item-txt">
@@ -165,7 +168,7 @@ export default {
             this.userProjects[i].ProjectName &&
             this.userProjects[i].ContractorName &&
             this.userProjects[i].Industries.length !== 0 &&
-            this.userProjects[i].SapModules.length !== 0 &&
+            this.userProjects[i].Modules.length !== 0 &&
             this.userProjects[i].StartDate &&
             this.userProjects[i].Description &&
             (this.userProjects[i].EndDate !== null ||

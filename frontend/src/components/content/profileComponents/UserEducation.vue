@@ -73,8 +73,6 @@
             </div>
             <div class="prof-inputs-div">
               <div class="prof-input-xs">
-                <!-- <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.StudyType"/> -->
-                <!-- <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="education.StudyType"/> -->
                 <select required v-if="editMode" class="selectProfile selectEdit" @change="checkFields" v-model="education.StudyType">
                   <option v-for="type in studyTypes" :key="type.Key" :value="type.Key">{{type.Value}}</option>
                 </select>
