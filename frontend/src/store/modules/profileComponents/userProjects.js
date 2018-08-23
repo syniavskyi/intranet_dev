@@ -8,50 +8,8 @@ const state = {
   ifModuleExist: null,
   ifIndustryExist: null,
   beforeEditingProjects: null,
-  industryList: [{
-      id: 'FI',
-      name: 'Bankowość i finanse'
-    },
-    {
-      id: 'ADV',
-      name: 'Branża reklamowa'
-    },
-    {
-      id: 'CTG',
-      name: 'Chałupnictwo'
-    },
-    {
-      id: 'CON',
-      name: 'Przemysł budowlany'
-    }
-  ],
-  modulesList: [{
-      id: 'FI',
-      name: 'Finanse'
-    },
-    {
-      id: 'SD',
-      name: 'Sprzedaż i dystrybucja'
-    },
-    {
-      id: 'MM',
-      name: 'Zarządzanie materiałami'
-    }
-  ],
-  userProjectsList: [{
-    ProjectName: 'Nazwa projektu',
-    ContractorName: 'Komfort',
-    Industries: [{id: 'FI' , name: 'Bankowość i finanse'},
-                 {id: 'ADV', name: 'Branża reklamowa'}],
-    SapModules: [{
-      id: 'SD'
-    }],
-    StartDate: new Date(),
-    EndDate: new Date(),
-    isCurrent: false,
-    Description: 'Opis wykonanych czynności'
-
-  }]
+  industryList: [],
+  userProjectsList: []
 };
 
 const mutations = {
@@ -72,7 +30,10 @@ const mutations = {
   },
   SET_BEFORE_EDITING_PROJECTS(state, projects) {
     state.beforeEditingProjects = projects
-  }
+  },
+  SET_INDUSTRY_DESC_LIST(state, data) {
+    state.industryList = data;
+  },
 }
 
 const actions = {
@@ -142,11 +103,11 @@ const actions = {
     getters
   }, data) {
     const projectsList = getters.getUserProjectsList,
-      modules = projectsList[data.index].SapModules
+      modules = projectsList[data.index].Modules;
 
     if (modules.length !== 0) {
       for (let i = 0; i < modules.length; i++) {
-        if (modules[i].id === data.moduleId) {
+        if (modules[i] === data.moduleId) {
           commit('SET_MODULE_EXIST', true)
           return
         } else {
@@ -158,7 +119,7 @@ const actions = {
     }
 
     if (getters.getModuleExist === false) {
-      projectsList[data.index].SapModules.push({
+      projectsList[data.index].Modules.push({
         id: data.moduleId
       })
       commit('SET_USER_PROJECTS_LIST', projectsList)
@@ -169,7 +130,7 @@ const actions = {
     getters
   }, data) {
     const projectsList = getters.getUserProjectsList,
-      modules = projectsList[data.index].SapModules
+      modules = projectsList[data.index].Modules
     for (let i = 0; i < modules.length; i++) {
       if (modules[i].id === data.moduleId) {
         modules.splice(i, 1)
@@ -182,7 +143,9 @@ const actions = {
     getters
   }, data) {
     const projectsList = getters.getUserProjectsList,
-      industries = projectsList[data.index].Industries
+      industries = projectsList[data.index].Industries;
+    let obj,
+    industryList = this.getters.getIndustryList;
 
     if (industries.length !== 0) {
       for (let i = 0; i < industries.length; i++) {
@@ -198,8 +161,10 @@ const actions = {
     }
 
     if (getters.getIndustryExist === false) {
+      obj = industryList.find(o => o.IndustryId === data.industryId)
       projectsList[data.index].Industries.push({
-        id: data.industryId
+        id: data.industryId,
+        name: obj.IndustryName
       })
       commit('SET_USER_PROJECTS_LIST', projectsList)
     }
@@ -214,6 +179,112 @@ const actions = {
     }
     commit('SET_USER_PROJECTS_LIST', projectsList)
     
+  },
+  getIndustries({commit}) {
+    let lang = 'PL';
+    // Industries?$filter=Lang eq 'EN'
+    axios({
+      method: 'GET',
+      url: "Industries?$filter=Lang eq '" + lang + "'",
+      auth: {
+        username: 'psy',
+        password: 'ides01'
+      },
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      }
+    }).then(res => {
+      console.log(res.data.d.results);
+      commit('SET_INDUSTRY_DESC_LIST', res.data.d.results);
+    }).catch(error => { })
+  },
+  adjustProjects({commit}) {
+    let projects = this.getters.getUserProjectsList;
+    let fullProjects= [];
+    const projectsKeys = {
+      Industries: [],
+      Modules: []
+    }
+    let index;
+    let modulesList = this.getters.getModulesList;
+    let industryList = this.getters.getIndustryList;
+    let obj;
+
+    for(let i = 0; i < projects.length; i++) {
+      let adjustedProjects = new Object();
+        adjustedProjects.Industries = [];
+        adjustedProjects.Modules = [];
+        for(let key in projectsKeys) {
+            if(projects[i][key].includes('||')) {
+                while(projects[i][key].length > 1) {
+                    index = projects[i][key].indexOf('||');
+                    if(index > 0) {
+                      let object = new Object();
+                        object.id = projects[i][key].slice(0, index);
+                          if([key] == "Industries") {
+                            obj = industryList.find(o => o.IndustryId === object.id)
+                            object.name = obj.IndustryName;
+                          }
+                          if([key] == "Modules") {
+                            obj = modulesList.find(o => o.Key === object.id)
+                            object.name = obj.Value;
+                          } 
+                        adjustedProjects[key].push(object);
+                        index += 2;
+                        projects[i][key] = projects[i][key].substr(index, projects[i][key].length)
+                    } 
+                    else {
+                      let object = new Object();
+                      object.id = projects[i][key];
+                      if([key] == "Industries") {
+                        obj = industryList.find(o => o.IndustryId === object.id)
+                        object.name = obj.IndustryName;
+                      }
+                      if([key] === "Modules") {
+                      obj = modulesList.find(o => o.Key === object.id)
+                      object.name = obj.Value;
+                      } 
+                        adjustedProjects[key].push(object);
+                        projects[i][key] = [];
+                    }
+                } 
+            }  
+            else {
+              let object = new Object();
+              object.id = projects[i][key];
+              if([key] == "Industries") {
+                obj = industryList.find(o => o.IndustryId === object.id)
+                object.name = obj.IndustryName;
+              }
+              if([key] == "Modules") {
+              obj = modulesList.find(o => o.Key === object.id)
+              object.name = obj.Value;
+              } 
+                adjustedProjects[key].push(object);
+                projects[i][key] = [];
+            }
+        }
+        fullProjects[i] = adjustedProjects;
+    }
+    for(let i = 0; i < projects.length; i++) {
+          projects[i].Industries = fullProjects[i].Industries;
+          projects[i].Modules = fullProjects[i].Modules;
+    } 
+    commit('SET_USER_PROJECTS_LIST', projects); 
+  },
+  checkProjectKey({state, commit, getters, dispatch}, {key, object} ) {
+    let modulesList = this.getters.getModulesList;
+    let industryList = this.getters.getIndustryList;
+    let obj;
+  
+    if([key] == "Industries") {
+      obj = industryList.find(o => o.IndustryId === object.id)
+      object.name = obj.IndustryName;
+    }
+    if([key] == "Modules") {
+      obj = modulesList.find(o => o.Key === object.id)
+      object.name = obj.Value;
+    } 
   }
 }
 
