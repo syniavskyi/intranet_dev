@@ -129,7 +129,7 @@
                                 <div class="profile-user-img">
                                     <img class="img-user-class" :src="userData.image" width="150px">
                                     <p class="profile-error profile-error-image" v-if="photoUploadError">{{ $t("message.photoUploadError") }}</p>
-                                    <label for="change-user-image" class="change-user-img">{{ $t("button.changePhoto") }}
+                                    <label for="change-user-image" class="profile-edit-btn">{{ $t("button.changePhoto") }}
                                         <input accept="image/*" style="width: 1rem;" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
                                     </label>
                                 </div>
@@ -406,6 +406,11 @@ export default {
   //     this.routeToGo = to.name
   // },
   methods: {
+    onEditTile() {
+        var el = this.$el;
+        let data = {el}
+        this.$store.dispatch("onEditTile", data)
+    },
     onHover() {
         document.querySelector(".profile-tiles-row-wrap").style.filter = "drop-shadow(0 0 5px orange)";
     },

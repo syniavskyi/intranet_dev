@@ -103,6 +103,7 @@ export default {
     ...mapActions(["addUserExperience", "removeUserExperience"]),
     edit() {
       this.editMode = true;
+      this.$el.style.boxShadow = "0 0 20px orange";
       this._beforeEditingCache = JSON.parse(
         JSON.stringify(this.userExperience)
       );
@@ -132,6 +133,7 @@ export default {
       return index + "e";
     },
     cancel() {
+      this.$el.style.boxShadow = "0 0 10px grey";
       this.$store.commit("SET_EXPERIENCE_ERROR", false);
       this.$store.commit("SET_USER_EXPERIENCE", this._beforeEditingCache);
       this.editMode = false;

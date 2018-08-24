@@ -112,7 +112,6 @@
 import moment from "moment";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
-import jsZip from "jszip";
 export default {
   data() {
     return {
@@ -164,8 +163,8 @@ export default {
   methods: {
     ...mapActions(["addUserEduRow", "removeUserEducation"]),
     edit() {
-      const plik = new jsZip();
       this.editMode = true;
+      this.$el.style.boxShadow = "0 0 20px orange";
       this._beforeEditingCache = JSON.parse(JSON.stringify(this.userEducation));
       var checkboxes = this.$el.querySelectorAll(".checkbox-wrap");
       for (var i = 0; i < checkboxes.length; i++) {
@@ -196,6 +195,7 @@ export default {
       this.removeUserEducation(index);
     },
     cancel() {
+      this.$el.style.boxShadow = "0 0 10px grey";
       this.$store.commit("SET_EDUCATION_ERROR", false);
       this.$store.commit("SET_USER_EDUCATION", this._beforeEditingCache);
       this.editMode = false;
