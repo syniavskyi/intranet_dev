@@ -41,7 +41,6 @@ const actions = {
   }, userData) {
     commit('SET_USER_INFO', userData);
   },
-
   submitPhoto({
     commit
   }, data) {
@@ -85,7 +84,11 @@ const actions = {
       console.log(error);
       commit('SET_FILE_ERROR', false);
     })
+  },
+  onTileEdit({}, data) {
+
   }
+
 };
 
 const getters = {

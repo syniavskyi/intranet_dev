@@ -136,6 +136,7 @@ export default {
     ]),
     edit() {
       this.editMode = true;
+      this.$el.style.boxShadow = "0 0 20px orange";
       this._beforeEditingCacheSkills = JSON.parse(
         JSON.stringify(this.UserSkills)
       );
@@ -144,11 +145,13 @@ export default {
       );
     },
     cancel() {
+      this.$el.style.boxShadow = "0 0 10px grey";
       this.$store.commit("SET_USER_SKILLS", this._beforeEditingCacheSkills);
       this.$store.commit("SET_USER_LANGS", this._beforeEditingCacheLangs);
       this.editMode = false;
     },
     save() {
+      this.$el.style.boxShadow = "0 0 10px grey";
       this.$store.dispatch("saveUserSkills");
       this._beforeEditingCacheSkills = JSON.parse(
         JSON.stringify(this.UserSkills)

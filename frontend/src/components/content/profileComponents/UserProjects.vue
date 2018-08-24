@@ -239,12 +239,14 @@ export default {
       }
     },
     finishEditing() {
+      this.$el.style.boxShadow = "0 0 10px grey";
       this.$store.commit("SET_PROJECT_ERROR", false);
       this.$store.commit("SET_USER_PROJECTS_LIST", this._beforeEditingProjects);
       this.projectEditMode = false;
     },
     editProjects() {
       this.projectEditMode = true;
+      this.$el.style.boxShadow = "0 0 20px orange";
       this._beforeEditingProjects = JSON.parse(
         JSON.stringify(this.userProjects)
       );
