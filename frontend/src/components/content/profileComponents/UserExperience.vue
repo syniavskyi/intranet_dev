@@ -4,9 +4,9 @@
       <div class="profile-tile-header-row">
         <h2 class="profile-tile-title">{{ $t("header.experience") }}</h2>
         <div class="profile-table-buttons">
-          <button class="profile-edit-experience" v-if="!editMode" @click="edit">{{ $t("button.edit") }}</button>
-          <button class="profile-edit-experience-e" v-if="editMode" @click="addUserExperience">Dodaj nowy wpis</button>
-          <button class="profile-edit-experience-e" v-if="editMode" @click="cancel">{{ $t("button.finishEdit") }}</button>
+          <button class="profile-edit-btn" v-if="!editMode" @click="edit">{{ $t("button.edit") }}</button>
+          <button class="profile-edit-btn-e" v-if="editMode" @click="addUserExperience">Dodaj nowy wpis</button>
+          <button class="profile-edit-btn-e" v-if="editMode" @click="cancel">{{ $t("button.finishEdit") }}</button>
         </div>
       </div>
       <div class="tile-underscore"></div>

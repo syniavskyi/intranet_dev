@@ -72,6 +72,11 @@ import { mapGetters } from 'vuex';
                         </select>
                         <label class="cv-modal-label">Wybierz pozycję</label>
                     </div>
+                    <div class="cv-modal-div-s">
+                        <input required class="cv-modal-input">
+                        <span class="imodal-div-bar"></span>
+                        <label class="cv-modal-label">Podmiot</label>
+                    </div>
                 </div>
             </div>
             <div class="cv-modal-bbuttons">
@@ -186,6 +191,7 @@ export default {
     margin-top: .4rem;
     margin-bottom: 1rem;
     width: 10rem;
+    flex-direction: column;
 }
 
 .cv-modal-div-s {
@@ -197,6 +203,45 @@ export default {
 }
 .cv-modal-div-l {
     width: 12rem;
+}
+
+.cv-modal-input {
+    display: flex;
+    text-align: center;
+    height: 2rem;
+    font-family: 'Roboto';
+    font-size: 1rem;
+    background :transparent;
+    border:0;
+    width: 100%;
+    text-indent: 0.5rem;
+    position: relative;
+    border-bottom: 1px solid #757575;
+}
+
+.imodal-div-bar { position:relative; display:flex; width:100%; }
+    
+.imodal-div-bar:before, 
+.imodal-div-bar:after {
+    content:'';
+    height:2px; 
+    width:0;
+    bottom:0; 
+    position:absolute;
+    background:rgb(255, 145, 0); 
+    transition:0.5s ease all; 
+    -moz-transition:0.5s ease all; 
+    -webkit-transition:0.5s ease all;
+}
+.imodal-div-bar:before {
+    left:50%;
+}
+.imodal-div-bar:after {
+    right:50%; 
+} 
+/* active state */
+.cv-modal-input:focus ~ span:before, .cv-modal-input:focus ~ span:after {
+    width:50%;
 }
 
 .cv-modal-select {
@@ -220,7 +265,9 @@ export default {
 }
 
 .cv-modal-select:valid ~ label,
-.cv-modal-select:focus ~ label {
+.cv-modal-select:focus ~ label,
+.cv-modal-input:valid ~ label,
+.cv-modal-input:focus ~ label {
     top: -.65rem;
     font-size: 1rem;
     color: rgb(255, 145, 0);
