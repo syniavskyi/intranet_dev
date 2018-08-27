@@ -4,7 +4,7 @@
       <div class="profile-tile-header-row">
         <h2 class="profile-tile-title">{{ $t("header.education") }}</h2>
         <div class="profile-table-buttons">
-          <button class="profile-edit-btn" v-if="!editMode" @click="edit">{{ $t("button.edit") }}</button>
+          <button class="profile-edit-btn" v-if="!editMode" @mouseover="onHover" @mouseout="onHoverOut" @click="edit">{{ $t("button.edit") }}</button>
           <button class="profile-edit-btn-e" v-if="editMode" @click="addUserEduRow">{{ $t("button.addNewEntry") }}</button>
           <button class="profile-edit-btn-e" v-if="editMode" @click="cancel">{{ $t("button.finishEdit") }}</button>
         </div>
@@ -164,11 +164,27 @@ export default {
     ...mapActions(["addUserEduRow", "removeUserEducation"]),
     edit() {
       this.editMode = true;
-      this.$el.style.boxShadow = "0 0 20px orange";
+      this.onHover(this.$el)
       this._beforeEditingCache = JSON.parse(JSON.stringify(this.userEducation));
       var checkboxes = this.$el.querySelectorAll(".checkbox-wrap");
       for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].setAttribute("style", "display: flex;");
+      }
+    },
+    onHover(el) {
+      const shadow = "0 0 20px orange"
+      if (el.style) {
+        el.style.boxShadow = shadow
+      } else {
+        this.$el.style.boxShadow = shadow
+      }
+    },
+    onHoverOut(el) {
+      const shadow = "0 0 10px grey"
+      if (el.style) {
+        el.style.boxShadow = shadow
+      } else {
+        this.$el.style.boxShadow = shadow 
       }
     },
     checkFields() {
@@ -195,7 +211,7 @@ export default {
       this.removeUserEducation(index);
     },
     cancel() {
-      this.$el.style.boxShadow = "0 0 10px grey";
+      this.onHoverOut(this.$el);
       this.$store.commit("SET_EDUCATION_ERROR", false);
       this.$store.commit("SET_USER_EDUCATION", this._beforeEditingCache);
       this.editMode = false;
