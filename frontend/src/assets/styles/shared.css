@@ -534,7 +534,7 @@ input:required{
     align-items: center;
     justify-content: space-between;
     height: 3%;
-    min-height: 3rem;
+    min-height: 3.5rem;
 }
 .content-header-title-and-menu {
     display: flex;
