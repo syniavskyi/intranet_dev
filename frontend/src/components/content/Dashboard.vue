@@ -1,19 +1,14 @@
 <template>
-       <!-- <div class="plane-dashboard-parent"> -->
-            <div class="plane-component">
-                <div class="component-nav-and-content">
-                    <app-menu></app-menu>
-                    <div class="component-content">
-                        <div class="content-header">
-                            <div class="content-header-title-and-menu">
-                                <!-- <img src="../../images/nav/if_menu-32.png" class="content-header-menu"> -->
-                                <p class="content-header-title">HOME</p>
-                            </div>
-                            <div class="search">
-                                <input class="dashboard-input dashboard-search" placeholder="szukaj">
-                                <!-- <img class="search-icon" src="../../images/nav/if_search_64.png"> -->
-                            </div>
-                        </div>
+        <div class="plane-component">
+            <div class="component-nav-and-content">
+            <app-menu></app-menu>
+            <div class="component-content">
+                <div class="content-header">
+                    <div class="content-header-title-and-menu">
+                        <!-- <img src="../../images/nav/if_menu-32.png" class="content-header-menu"> -->
+                        <p class="content-header-title">HOME</p>
+                    </div>
+                </div>
                         <div class="component-content-body">
                             <div class="dashboard-news dashboard-tile">
                                 <div class="dashboard-tile-header" @click="goToNews">
