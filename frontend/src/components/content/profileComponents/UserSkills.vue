@@ -4,7 +4,7 @@
       <div class="profile-tile-header-row">
         <h2 class="profile-tile-title">{{ $t("header.skills") }}</h2>
         <div class="profile-table-buttons">
-          <button class="profile-edit-btn" v-if="!editMode" @click="edit">{{ $t("button.edit") }}</button>
+          <button class="profile-edit-btn" v-if="!editMode" @mouseover="onHover" @mouseout="onHoverOut" @click="edit">{{ $t("button.edit") }}</button>
           <button class="profile-edit-btn-e" v-if="editMode" @click="cancel">{{ $t("button.cancel") }}</button>
           <button class="profile-edit-btn-e" v-if="editMode" @click="save">{{ $t("button.save") }}</button>
         </div>
@@ -134,9 +134,25 @@ export default {
       "addLanguageSkillsRow",
       "removeLanguageSkillsRow"
     ]),
+    onHover(el) {
+      const shadow = "0 0 20px orange"
+      if (el.style) {
+        el.style.boxShadow = shadow
+      } else {
+        this.$el.style.boxShadow = shadow
+      }
+    },
+    onHoverOut(el) {
+      const shadow = "0 0 10px grey"
+      if (el.style) {
+        el.style.boxShadow = shadow
+      } else {
+        this.$el.style.boxShadow = shadow 
+      }
+    },
     edit() {
       this.editMode = true;
-      this.$el.style.boxShadow = "0 0 20px orange";
+      this.onHover(this.$el)
       this._beforeEditingCacheSkills = JSON.parse(
         JSON.stringify(this.UserSkills)
       );
@@ -145,13 +161,13 @@ export default {
       );
     },
     cancel() {
-      this.$el.style.boxShadow = "0 0 10px grey";
+      this.onHoverOut(this.$el)
       this.$store.commit("SET_USER_SKILLS", this._beforeEditingCacheSkills);
       this.$store.commit("SET_USER_LANGS", this._beforeEditingCacheLangs);
       this.editMode = false;
     },
     save() {
-      this.$el.style.boxShadow = "0 0 10px grey";
+      this.onHoverOut(this.$el)
       this.$store.dispatch("saveUserSkills");
       this._beforeEditingCacheSkills = JSON.parse(
         JSON.stringify(this.UserSkills)

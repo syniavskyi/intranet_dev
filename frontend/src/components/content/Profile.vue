@@ -27,7 +27,7 @@
             <div class="profile-tiles">
             <div class="profile-tiles-row-wrap">
                 <div class="profile-tiles-row">
-                    <div class="profile-tile-1-3">
+                    <div class="profile-tile-1-3 profile-main-edit">
                         <div class="profile-tile-header">
                             <h2 class="prof-tile-h2">{{ $t("header.contact") }}</h2>
                             <div class="tile-underscore"></div>
@@ -94,7 +94,7 @@
                             <!-- </div> -->
                         </div>
                     </div>
-                    <div class="profile-tile-1-3">
+                    <div class="profile-tile-1-3 profile-main-edit">
                         <div class="profile-tile-header">
                             <h2 class="prof-tile-h2">Komunikatory</h2>
                             <div class="tile-underscore"></div>
@@ -138,7 +138,7 @@
                     </div>
                 </div>
                 <div class="profile-tiles-row">
-                    <div class="profile-tile-1-2">
+                    <div class="profile-tile-1-2 profile-main-edit">
                         <div class="profile-tile-header">
                             <div class="profile-tile-header-row">
                                 <h2 class="prof-tile-h2">{{ $t("header.employee") }}</h2>
@@ -412,10 +412,16 @@ export default {
         this.$store.dispatch("onEditTile", data)
     },
     onHover() {
-        document.querySelector(".profile-tiles-row-wrap").style.filter = "drop-shadow(0 0 5px orange)";
+        let mainEdits = document.querySelectorAll(".profile-main-edit")
+        for (let i = 0; i < mainEdits.length; i++) {
+            mainEdits[i].style.boxShadow = "0 0 20px orange";
+        }
     },
     onHoverOut() {
-        document.querySelector(".profile-tiles-row-wrap").style.filter = "none";
+        let mainEdits = document.querySelectorAll(".profile-main-edit")
+        for (let i = 0; i < mainEdits.length; i++) {
+            mainEdits[i].style.boxShadow = "0 0 10px grey";
+        }
     },
     onEdit() {
       this.onHover();
