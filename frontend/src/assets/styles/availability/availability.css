@@ -6,7 +6,7 @@
     /* max-width: 100%; */
 /* } */
 
-.plane-availability {
+/* .plane-availability {
     margin: 0;
     padding: 0;
     height: 100%;
@@ -29,10 +29,9 @@
     flex-direction: column;
     justify-content: space-between;
     flex-shrink: 1;
-}
+} */
 
-.availability-header {
-    /* position: relative; */
+/* .availability-header {
     align-self: center;
     width: 95%;
     display: flex;
@@ -65,7 +64,7 @@
     line-height: 2rem;
     font-size: 1.5rem;
     font-weight: bold;
-}
+} */
 
 .ava-error-header {
     display: flex;
