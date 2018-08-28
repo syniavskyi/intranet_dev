@@ -35,7 +35,7 @@
                 </div>
               </div>
               <label class="checkbox-wrap">
-                <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="experience.isCurrent" />
+                <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="experience.IsCurrent" />
                 <div class="checkbox-in"></div>
                 <p style="padding:0;margin:0;">Obecnie</p>
               </label>
@@ -104,9 +104,10 @@ export default {
     edit() {
       this.editMode = true;
       this.onHover(this.$el)
-      this._beforeEditingCache = JSON.parse(
-        JSON.stringify(this.userExperience)
-      );
+      this._beforeEditingCache = this.userExperience;
+      // JSON.parse(
+      //   JSON.stringify(this.userExperience)
+      // );
       var checkboxes = this.$el.querySelectorAll(".checkbox-wrap");
       for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].setAttribute("style", "display: flex;");
@@ -172,9 +173,10 @@ export default {
       } else {
         this.$store.dispatch("saveNewUserExp", newData);
       }
-      this._beforeEditingCache = JSON.parse(
-        JSON.stringify(this.userExperience)
-      );
+      this._beforeEditingCache = this.userExperience;
+      // JSON.parse(
+      //   JSON.stringify(this.userExperience)
+      // );
     },
     formatDate(date) {
       return date !== null && date !== undefined

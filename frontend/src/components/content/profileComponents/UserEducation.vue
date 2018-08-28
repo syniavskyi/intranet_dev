@@ -37,7 +37,7 @@
                 </div>
               </div>
               <label class="checkbox-wrap">
-                <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="education.isCurrent"/>
+                <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="education.IsCurrent"/>
                 <div class="checkbox-in"></div>
                 <p style="padding:0;margin:0;">{{ $t("label.present") }}</p>
               </label>
@@ -165,7 +165,8 @@ export default {
     edit() {
       this.editMode = true;
       this.onHover(this.$el)
-      this._beforeEditingCache = JSON.parse(JSON.stringify(this.userEducation));
+      this._beforeEditingCache = this.userEducation;
+      //  JSON.parse(JSON.stringify(this.userEducation));
       var checkboxes = this.$el.querySelectorAll(".checkbox-wrap");
       for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].setAttribute("style", "display: flex;");
@@ -197,7 +198,7 @@ export default {
             this.userEducation[i].AcademicTitle &&
             this.userEducation[i].DateStart &&
             (this.userEducation[i].DateEnd !== null ||
-              this.userEducation[i].isCurrent)
+              this.userEducation[i].IsCurrent)
           ) {
             document.getElementsByClassName("eduButtons")[i].children[0].disabled = false;
           } else {
@@ -229,9 +230,10 @@ export default {
           this.$store.dispatch("addUserEducation", newData);
         }
 
-        this._beforeEditingCache = JSON.parse(
-          JSON.stringify(this.userEducation)
-        );
+        this._beforeEditingCache = this.userEducation;
+        //  = JSON.parse(
+          // JSON.stringify(this.userEducation)
+        // );
     },
     formatDate(date) {
       return date !== null && date !== undefined ? moment(date).format("DD.MM.YYYY") : "-";
@@ -239,7 +241,7 @@ export default {
     validateDates(index) {
       const startDate = this.userEducation[index].DateStart,
         endDate = this.userEducation[index].DateEnd,
-        isCurrent = this.userEducation[index].isCurrent;
+        isCurrent = this.userEducation[index].IsCurrent;
 
       if (endDate && startDate && isCurrent === false) {
         const formatStartDate = moment(startDate).format("YYYY-MM-DD"),

@@ -83,7 +83,19 @@ const actions = {
         }, function (status) {
           console.error(status); 
         });
-    }
+    },
+    setExpIsCurrentField({commit, getters}) {
+        let exp = this.getters.getUserExperience;
+        for(let i = 0; i < exp.length; i++) {
+          if(exp[i].IsCurrent === 'X') {
+            exp[i].IsCurrent = true;
+          }
+          else {
+           exp[i].IsCurrent = false;
+          }
+        }
+        commit('SET_USER_EXPERIENCE', exp);
+      }
 }
 
 const getters = {

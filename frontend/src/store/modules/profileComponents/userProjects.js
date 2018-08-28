@@ -12,7 +12,8 @@ const state = {
   ifIndustryExist: null,
   beforeEditingProjects: null,
   industryList: [],
-  userProjectsList: []
+  userProjectsList: [],
+  object: {}
 };
 
 const mutations = {
@@ -37,6 +38,9 @@ const mutations = {
   SET_INDUSTRY_DESC_LIST(state, data) {
     state.industryList = data;
   },
+  SET_OBJECT(state, data) {
+    state.object = data;
+  }
 }
 
 const actions = {
@@ -106,30 +110,26 @@ const actions = {
       console.error(status); 
     });
   },
-  updateUserProjectsPosition({dispatch, getters, commit}, data) {
-    data.UserAlias = 'UIO';
-    // data.UserId = 'UIO';
-    data.DateStart = utils.formatDateForBackend(data.DateStart);
-    data.DateEnd = utils.formatDateForBackend(data.DateEnd);
-    data.IsCurrent = data.IsCurrent ? 'X' : '-' 
-
-    //  data.IsCurrent = true;
-    //  data.IsCurrent = 'X';
-    data.DateStartToChange = utils.formatDateForBackend(data.DateStartToChange)
-    data.DateEndToChange = utils.formatDateForBackend(data.DateEndToChange)
-    dispatch('formatToString', data)
-    const url = "UserCvProjects(UserAlias='" + data.UserAlias + "',DateStart=datetime'" + moment(data.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" +  moment(data.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" +  data.ProjectName + "',Language='" +  data.Language + "')";
-    
-    odata(url).put(data).save(function (data) {
+  updateUserProjectsPosition({dispatch}, data) {
+    const dataToSend = data;
+    dataToSend.UserAlias = 'UIO';
+    dataToSend.DateStart = utils.formatDateForBackend(dataToSend.DateStart);
+    dataToSend.DateEnd = utils.formatDateForBackend(dataToSend.DateEnd);
+    dataToSend.IsCurrent = dataToSend.IsCurrent ? 'X' : '-' 
+    dataToSend.DateStartToChange = utils.formatDateForBackend(dataToSend.DateStartToChange)
+    dataToSend.DateEndToChange = utils.formatDateForBackend(dataToSend.DateEndToChange)
+    dispatch('formatToString', dataToSend)
+    const url = "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" +  moment(dataToSend.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" +  dataToSend.ProjectName + "',Language='" +  dataToSend.Language + "')";
+    odata(url).put(dataToSend).save(function (oData) {
       console.log("zamianka");
     }, function (status) {
       console.error(status); 
     });
   },
-  formatToString({dispatch, getters, commit}, data) {
+  formatToString({dispatch, getters, commit}, dataToSend) {
     let object = {};
-    object.Modules = data.Modules;
-    object.Industries = data.Industries;
+    object.Modules = dataToSend.Modules;
+    object.Industries = dataToSend.Industries;
     let moduleString = '',
     industryString = '';
 
@@ -155,18 +155,18 @@ const actions = {
     }
     if(industryString.includes('||')) {
       object.Industries = industryString.slice(0, industryString.length-2);
-      data.Industries = industryString.slice(0, industryString.length-2);
+      dataToSend.Industries = industryString.slice(0, industryString.length-2);
     } else {
       object.Industries = industryString;
-      data.Industries = industryString;
+      dataToSend.Industries = industryString;
     }
     if(moduleString.includes('||')) {
       object.Modules = moduleString.slice(0, moduleString.length-2);
-      data.Modules = moduleString.slice(0, moduleString.length-2);
+      dataToSend.Modules = moduleString.slice(0, moduleString.length-2);
     }
     else {
       object.Modules = moduleString;
-      data.Modules = moduleString;
+      dataToSend.Modules = moduleString;
     }
   },
   // checkUserProjectsPosition({
@@ -197,7 +197,7 @@ const actions = {
 
     if (modules.length !== 0) {
       for (let i = 0; i < modules.length; i++) {
-        if (modules[i] === data.moduleId) {
+        if (modules[i].id === data.moduleId) {
           commit('SET_MODULE_EXIST', true)
           return
         } else {
@@ -289,7 +289,7 @@ const actions = {
       commit('SET_INDUSTRY_DESC_LIST', res.data.d.results);
     }).catch(error => { })
   },
-  adjustProjects({commit}) {
+  adjustProjects({commit, dispatch, getters}) {
     let projects = this.getters.getUserProjectsList;
     let fullProjects= [];
     const projectsKeys = {
@@ -297,9 +297,6 @@ const actions = {
       Modules: []
     }
     let index;
-    let modulesList = this.getters.getModulesList;
-    let industryList = this.getters.getIndustryList;
-    let obj;
 
     for(let i = 0; i < projects.length; i++) {
       let adjustedProjects = new Object();
@@ -312,14 +309,8 @@ const actions = {
                     if(index > 0) {
                       let object = new Object();
                         object.id = projects[i][key].slice(0, index);
-                          if([key] == "Industries") {
-                            obj = industryList.find(o => o.IndustryId === object.id)
-                            object.name = obj.IndustryName;
-                          }
-                          if([key] == "Modules") {
-                            obj = modulesList.find(o => o.Key === object.id)
-                            object.name = obj.Value;
-                          } 
+                        dispatch('checkProjectKey', {key, object})
+                          object = this.getters.getObject;
                         adjustedProjects[key].push(object);
                         index += 2;
                         projects[i][key] = projects[i][key].substr(index, projects[i][key].length)
@@ -327,14 +318,8 @@ const actions = {
                     else {
                       let object = new Object();
                       object.id = projects[i][key];
-                      if([key] == "Industries") {
-                        obj = industryList.find(o => o.IndustryId === object.id)
-                        object.name = obj.IndustryName;
-                      }
-                      if([key] === "Modules") {
-                      obj = modulesList.find(o => o.Key === object.id)
-                      object.name = obj.Value;
-                      } 
+                      dispatch('checkProjectKey', {key, object});
+                      object = this.getters.getObject;
                         adjustedProjects[key].push(object);
                         projects[i][key] = [];
                     }
@@ -343,14 +328,8 @@ const actions = {
             else {
               let object = new Object();
               object.id = projects[i][key];
-              if([key] == "Industries") {
-                obj = industryList.find(o => o.IndustryId === object.id)
-                object.name = obj.IndustryName;
-              }
-              if([key] == "Modules") {
-              obj = modulesList.find(o => o.Key === object.id)
-              object.name = obj.Value;
-              } 
+              dispatch('checkProjectKey', {key, object});
+              object = this.getters.getObject;
                 adjustedProjects[key].push(object);
                 projects[i][key] = [];
             }
@@ -363,7 +342,7 @@ const actions = {
     } 
     commit('SET_USER_PROJECTS_LIST', projects); 
   },
-  checkProjectKey({state, commit, getters, dispatch}, {key, object} ) {
+  checkProjectKey({commit}, {key, object} ) {
     let modulesList = this.getters.getModulesList;
     let industryList = this.getters.getIndustryList;
     let obj;
@@ -376,12 +355,16 @@ const actions = {
       obj = modulesList.find(o => o.Key === object.id)
       object.name = obj.Value;
     } 
+    commit('SET_OBJECT', object); 
   },
-  setIsCurrentField({state, commit, getters, dispatch}, data) {
+  setProjectsIsCurrentField({commit}) {
     let projects = this.getters.getUserProjectsList;
+    // let input;
     for(let i = 0; i < projects.length; i++) {
-      if(projects[i].IsCurrent == 'X') {
+      if(projects[i].IsCurrent === 'X') {
         projects[i].IsCurrent = true;
+        // input = document.getElementById(projects[i].Index);
+        // input.setAttribute("style", "opacity: 0");
       }
       else {
         projects[i].IsCurrent = false;
@@ -395,9 +378,6 @@ const getters = {
   getIndustryList(state) {
     return state.industryList
   },
-  // getModulesList(state) {
-  //   return state.modulesList
-  // },
   getUserProjectsList(state) {
     return state.userProjectsList
   },
@@ -415,6 +395,9 @@ const getters = {
   },
   getBeforeEditingProjects(state) {
     return state.beforeEditingProjects
+  },
+  getObject(state) {
+    return state.object;
   }
 }
 
