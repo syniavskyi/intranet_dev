@@ -1,12 +1,12 @@
 <template>
-<div class="plane-availability">
-    <div class="availability-nav-and-content">
+<div class="plane-component">
+    <div class="component-nav-and-content">
         <app-menu></app-menu>
-        <div class="availability-content">
-            <div class="availability-header">
-                <div class="avaiability-header-title-and-menu">
-                    <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="availability-header-menu">
-                    <p class="availability-header-title">{{ $t("header.availability") }}</p>
+        <div class="component-content">
+            <div class="content-header">
+                <div class="content-header-title-and-menu">
+                    <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu">
+                    <p class="content-header-title">{{ $t("header.availability") }}</p>
                     <p @click="closeAlert" class="ava-error-header" v-if="saveSuccess">Pomyślnie zapisano dane</p>
                     <p @click="closeAlert" v-if="editError">{{ $t("message.editProjectError") }}</p>
                     <p @click="closeAlert" v-if="removeError">{{ $t("message.removeProjectError") }}</p>

@@ -15,7 +15,7 @@
                     </select>
                     <label class="label-select-lang">{{ $t("label.language") }}</label>
                 </div>
-                <button class="profile-header-button" v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
+                <button class="profile-header-button" v-if="!editMode" @mouseout="onHoverOut" @mouseover="onHover" @click="onEdit">{{ $t("button.editData") }}</button>
                 <div v-if="editMode" class="header-button-save-reject">
                     <p class="profile-error profile-error-data" v-if="!saveChangesSuccess">{{ $t("message.saveChangesError") }}</p>
                     <button class="border-btn save-btn" @click="onSaveChanges" :disabled="disableSaveBtn">{{ $t("button.saveChanges") }}</button>
@@ -27,7 +27,7 @@
             <div class="profile-tiles">
             <div class="profile-tiles-row-wrap">
                 <div class="profile-tiles-row">
-                    <div class="profile-tile-1-3">
+                    <div class="profile-tile-1-3 profile-main-edit">
                         <div class="profile-tile-header">
                             <h2 class="prof-tile-h2">{{ $t("header.contact") }}</h2>
                             <div class="tile-underscore"></div>
@@ -66,7 +66,7 @@
                                             </div>
                                         </div>
                                         <p v-if="!editMode" disabled class="inputProfile inputDisabled">{{formatAddress}}</p>
-                                        <label class="label-profile">{{ $t("label.address") }}</label>
+                                        <!-- <label class="label-profile">{{ $t("label.address") }}</label> -->
                                     </div>
                                     <div class="prof-input">
                                         <!-- <input required class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()"> -->
@@ -94,7 +94,7 @@
                             <!-- </div> -->
                         </div>
                     </div>
-                    <div class="profile-tile-1-3">
+                    <div class="profile-tile-1-3 profile-main-edit">
                         <div class="profile-tile-header">
                             <h2 class="prof-tile-h2">Komunikatory</h2>
                             <div class="tile-underscore"></div>
@@ -129,7 +129,7 @@
                                 <div class="profile-user-img">
                                     <img class="img-user-class" :src="userData.image" width="150px">
                                     <p class="profile-error profile-error-image" v-if="photoUploadError">{{ $t("message.photoUploadError") }}</p>
-                                    <label for="change-user-image" class="change-user-img">{{ $t("button.changePhoto") }}
+                                    <label for="change-user-image" class="profile-edit-btn">{{ $t("button.changePhoto") }}
                                         <input accept="image/*" style="width: 1rem;" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
                                     </label>
                                 </div>
@@ -138,11 +138,11 @@
                     </div>
                 </div>
                 <div class="profile-tiles-row">
-                    <div class="profile-tile-1-2">
+                    <div class="profile-tile-1-2 profile-main-edit">
                         <div class="profile-tile-header">
                             <div class="profile-tile-header-row">
                                 <h2 class="prof-tile-h2">{{ $t("header.employee") }}</h2>
-                                <button class="profile-change-password">zmień hasło</button>
+                                <button class="profile-edit-btn">zmień hasło</button>
                             </div>
                             <div class="tile-underscore"></div>
                         </div>
@@ -235,7 +235,7 @@
                         <div class="profile-tile-header">
                             <div class="profile-tile-header-row">
                                 <h2 class="prof-tile-h2">{{ $t("label.cv") }}</h2>
-                                <button class="profile-edit-experience-e" @click="showSelectCv = true">Generuj CV</button>
+                                <button class="profile-edit-btn-e" @click="showSelectCv = true">Generuj CV</button>
                             </div>
                             <div class="tile-underscore"></div>
                         </div>
@@ -406,7 +406,25 @@ export default {
   //     this.routeToGo = to.name
   // },
   methods: {
+    onEditTile() {
+        var el = this.$el;
+        let data = {el}
+        this.$store.dispatch("onEditTile", data)
+    },
+    onHover() {
+        let mainEdits = document.querySelectorAll(".profile-main-edit")
+        for (let i = 0; i < mainEdits.length; i++) {
+            mainEdits[i].style.boxShadow = "0 0 20px orange";
+        }
+    },
+    onHoverOut() {
+        let mainEdits = document.querySelectorAll(".profile-main-edit")
+        for (let i = 0; i < mainEdits.length; i++) {
+            mainEdits[i].style.boxShadow = "0 0 10px grey";
+        }
+    },
     onEdit() {
+      this.onHover();
       this.showNoChangesAlert = false;
       this.editMode = !this.editMode;
       this._beforeEditingCache = Object.assign({}, this.userData);
@@ -417,12 +435,14 @@ export default {
         : "-";
     },
     onCancelEdit() {
+      this.onHoverOut();
       Object.assign(this.userData, this._beforeEditingCache);
       this._beforeEditingCache = null;
       this.showNoChangesAlert = false;
       this.editMode = !this.editMode;
     },
     onSaveChanges() {
+      this.onHoverOut();
       this.showNoChangesAlert = false;
       this.checkIfDataChanged();
       if (this.hasDataChanged === false) {

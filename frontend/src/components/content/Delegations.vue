@@ -1,12 +1,12 @@
 <template>
-<div class="plane-delegations" refs="delegationContent" id="delegation-content">
-    <div class="delegations-nav-and-content">
+<div class="plane-component" refs="delegationContent" id="delegation-content">
+    <div class="component-nav-and-content">
         <app-menu></app-menu>
-        <div name="testname" class="delegations-content" >
-            <div class="delegations-header">
-                <div class="delegations-header-title-and-menu">
-                    <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="delegations-header-menu">
-                    <p class="delegations-header-title">{{ $t("header.delegations") }}</p>
+        <div name="testname" class="component-content" >
+            <div class="content-header">
+                <div class="content-header-title-and-menu">
+                    <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu">
+                    <p class="content-header-title">{{ $t("header.delegations") }}</p>
                 </div>
             </div>
             <confirm-dialog v-if="showDialog"></confirm-dialog>
