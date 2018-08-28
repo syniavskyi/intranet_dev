@@ -258,6 +258,7 @@ const actions = {
       dispatch('adjustLang');
       commit('SET_USER_PROJECTS_LIST', oUserData.UserCvProjects.results);
       dispatch('adjustProjects');
+      dispatch('setIsCurrentField');
     }).catch(error => {
       console.log(error)
     })

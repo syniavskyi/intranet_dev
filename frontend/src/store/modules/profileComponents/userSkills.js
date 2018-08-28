@@ -136,7 +136,7 @@ const actions = {
             if(userSkills[0][key].includes('||')) {
                 while(userSkills[0][key].length > 1) {
                     index = userSkills[0][key].indexOf('||');
-                    if(userSkills[0][key].indexOf('||') > 0) {
+                    if(index > 0) {
                         string = userSkills[0][key].slice(0, index)
                         adjustedSkills[key].push(string);
                         index += 2;

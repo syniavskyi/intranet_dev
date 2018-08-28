@@ -289,9 +289,10 @@ setColor({commit, getters}){
   commit('CLEAR_DATA', clearForm);
   },
   getPriority({commit}) {
+    let lang = 'PL';
     axios({
       method: 'GET',
-      url: "Dictionaries?$filter=Name eq 'ZINTRANET_PRIORITY'",
+      url: "Dictionaries?$filter=Name eq 'ZINTRANET_PRIORITY' and Language eq'" + lang + "'",
       auth: {
         username: 'psy',
         password: 'ides01'
@@ -307,9 +308,10 @@ setColor({commit, getters}){
     })
   },
   getEventType({commit}) {
+    let lang = 'PL';
     axios({
       method: 'GET',
-      url: "Dictionaries?$filter=Name eq 'ZINTRANET_EVENT_TYPE'",
+      url: "Dictionaries?$filter=Name eq 'ZINTRANET_EVENT_TYPE' and Language eq'" + lang + "'",
       auth: {
         username: 'psy',
         password: 'ides01'
