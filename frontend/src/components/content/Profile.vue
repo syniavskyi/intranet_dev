@@ -626,13 +626,13 @@ input:focus {
   position: absolute;
   width: 100%;
   font-size: 0.75rem;
-  /* transform: rotate(-90deg); */
+  text-overflow: ellipsis;
+  white-space: nowrap;
   transition: all 0.5s ease;
+  overflow: hidden;
   color: #999;
-  /* left: -.8rem; */
   top: 0.6rem;
   pointer-events: none;
-  /* padding:0 .15rem; */
 }
 
 .checkbox-wrap input {
