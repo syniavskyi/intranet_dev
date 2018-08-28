@@ -48,7 +48,7 @@
             <!-- Sap modules -->
             <select required class="selectProfileSkills selectEdit" v-if="editMode" @change="addModule">
               <option disabled selected value>{{ $t("table.addModule") }}:</option>
-              <option v-for="sapModule in modulesList" :key="sapModule.id" :value="sapModule.id" :id="sapModule.id" > {{ sapModule.name }}</option>
+              <option v-for="sapModule in modulesList" :key="sapModule.Key" :value="sapModule.Key" :id="sapModule.id" > {{ sapModule.Value }}</option>
             </select>
             <label :class="editMode ? 'label-select-profile' : 'label-skills'">{{ $t("label.sapModulesExp") }}</label>
             <div class="prof-skills-elems">
