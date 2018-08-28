@@ -139,6 +139,7 @@ export default {
       _beforeEditingProjects: null
     };
   },
+
   computed: {
     ...mapGetters({
       showProjectError: "getShowProjectError",
@@ -163,7 +164,8 @@ export default {
     save(index) {
       const dataToChange = this._beforeEditingProjects[index],
       newData = this.userProjects[index];
-
+      const aModules = dataToChange.Modules,
+            aIndustries = dataToChange.Industries;
       newData.Language ='PL';
 
       if (dataToChange) {
@@ -175,6 +177,8 @@ export default {
         this.$store.dispatch('saveUserProjectsPosition', newData);
       }
       this._beforeEditingProjects = this.userProjects;
+      this._beforeEditingProjects[index].Modules = aModules;
+      this._beforeEditingProjects[index].Industries = aIndustries;
     },
     checkFields() {
       if (this.userProjects.length > 0) {

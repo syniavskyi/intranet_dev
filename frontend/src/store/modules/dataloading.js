@@ -244,23 +244,25 @@ const actions = {
       }
     }).then(res => {
       console.log(res)
-      const oUserData = res.data.d;
-      dispatch('formatData', oUserData)
-      let oFormattedUserData = state.userData
+      const oUserData = res.data.d;;
+      dispatch('formatData', oUserData);
+      let oFormattedUserData = state.userData;
       // localStorage.setItem('id', oFormattedUserData.UserAlias)
-      localStorage.setItem('id','UIO')
-      commit('SET_USER_INFO', oFormattedUserData)
-      commit('SET_USER_EDUCATION', oUserData.UserEducations.results)
-      commit('SET_USER_EXPERIENCE', oUserData.UserExperiences.results)
+      localStorage.setItem('id','UIO');
+      commit('SET_USER_INFO', oFormattedUserData);
+      commit('SET_USER_EDUCATION', oUserData.UserEducations.results);
+      dispatch('setEduIsCurrentField');
+      commit('SET_USER_EXPERIENCE', oUserData.UserExperiences.results);
+      dispatch('setExpIsCurrentField');
       commit('SET_USER_SKILLS', oUserData.UserSkills.results);
       dispatch('adjustUserSkills');
       commit('SET_USER_LANGS', oUserData.UserLang.results);
       dispatch('adjustLang');
       commit('SET_USER_PROJECTS_LIST', oUserData.UserCvProjects.results);
       dispatch('adjustProjects');
-      dispatch('setIsCurrentField');
+      dispatch('setProjectsIsCurrentField');
     }).catch(error => {
-      console.log(error)
+      console.log(error);
     })
   },
   getUsersLists({

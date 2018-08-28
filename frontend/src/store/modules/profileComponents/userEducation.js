@@ -89,6 +89,18 @@ const actions = {
     }, function (status) {
       console.error(status);
     });
+  },
+  setEduIsCurrentField({commit, getters}) {
+    let edu = this.getters.getUserEducation;
+    for(let i = 0; i < edu.length; i++) {
+      if(edu[i].IsCurrent === 'X') {
+       edu[i].IsCurrent = true;
+      }
+      else {
+       edu[i].IsCurrent = false;
+      }
+    }
+    commit('SET_USER_EDUCATION', edu);
   }
 }
 
