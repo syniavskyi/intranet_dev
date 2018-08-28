@@ -1181,6 +1181,9 @@
     background-image: url("../../images/expand2.png");
     background-repeat: no-repeat;
     background-position: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .profile-table-select-contractor {
@@ -1291,9 +1294,9 @@
     align-items: center;
     border-top-left-radius: 10px;
 }
-.prof-tbody-row:not(:last-of-type) {
+/* .prof-tbody-row:not(:last-of-type) {
     margin-bottom: 1rem;
-}
+} */
 
 .prof-tbody-item {
     display:flex;
