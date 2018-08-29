@@ -14,6 +14,7 @@ const state = {
   studyTypes: [],
   academicTitles: [],
   langLevels: [],
+  userFiles: [],
   fullLanguageList: [],
   workPositionList: [],
   sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES"],
@@ -70,6 +71,9 @@ const mutations = {
   },
   SET_SAP_MODULES_LIST(state, data) {
     state.sapModulesList = data;
+  },
+  SET_USER_FILES_LIST(state, data){
+    state.userFiles = data
   }
 };
 
@@ -249,6 +253,7 @@ const actions = {
       let oFormattedUserData = state.userData;
       // localStorage.setItem('id', oFormattedUserData.UserAlias)
       localStorage.setItem('id','UIO');
+      dispatch('getUserFilesData')
       commit('SET_USER_INFO', oFormattedUserData);
       commit('SET_USER_EDUCATION', oUserData.UserEducations.results);
       dispatch('setEduIsCurrentField');
@@ -311,6 +316,22 @@ const actions = {
       }
     }).then(res => {
       commit('SET_SCHOOL_DESC_LIST', res.data.d.results);
+    }).catch(error => { })
+  },
+  getUserFilesData({commit}){
+    let userId = localStorage.getItem('id')
+    axios({
+      method: 'GET',
+      url: "Attachments?$filter=UserAlias eq " + "'" + userId + "'",
+      auth: {
+        username: 'psy',
+        password: 'ides01'
+      },
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      }
+    }).then(res => {
+      commit('SET_USER_FILES_LIST', res.data.d.results);
     }).catch(error => { })
   },
   getFieldOfStudyDesc({commit}) {
@@ -380,6 +401,9 @@ const getters = {
   },
   getModulesList(state) {
     return state.sapModulesList;
+  },
+  getUserFiles(state) {
+    return state.userFiles;
   }
 };
 

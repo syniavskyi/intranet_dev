@@ -107,7 +107,7 @@ export default {
             'selectAllCvElements', 'deselectAllCvElements'
         ]),
         close(){
-            this.$parent._data.showSelectCv = false
+            this.$store.commit('SET_SHOW_CV_DIALOG', false)
         },
         showCv(){            
             this.$store.commit('SET_CV_ELEMENTS', this.cvElements)
