@@ -82,7 +82,7 @@ const actions = {
     
         if (list.length !== 0) {
           for (let i = 0; i < list.length; i++) {
-            if (list[i] === skill.value) {
+            if (list[i] === skill.value || /^\s*$/.test(skill.value) ) {
                 ifExist =  true
                 return
             } else {

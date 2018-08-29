@@ -890,12 +890,14 @@
     font-family: inherit;
     border:1px solid #acacac;
     margin: .2rem;
-    text-align: center;
+    text-align: left;
     transition: all .2s ease;
     color: #8f8f8f;
     animation-name: view-in;
     animation-duration: 0.7s;
-    
+    max-width: 100%;
+max-width: max-content;
+    word-break: break-word;
 }
 .prof-div-pos-elem {
     border-radius: 4px;
