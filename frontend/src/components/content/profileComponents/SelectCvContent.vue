@@ -107,7 +107,7 @@ export default {
             'selectAllCvElements', 'deselectAllCvElements', 'getDomainValues', 'getIndustryList', 'getUserData'
         ]),
         close(){
-            this.$parent._data.showSelectCv = false
+            this.$store.commit('SET_SHOW_CV_DIALOG', false)
         },
         showCv(){   
             /* Sylwia */

@@ -15,7 +15,7 @@
                     </select>
                     <label class="label-select-lang">{{ $t("label.language") }}</label>
                 </div>
-                <button class="profile-header-button" v-if="!editMode" @mouseout="onHoverOut" @mouseover="onHover" @click="onEdit">{{ $t("button.editData") }}</button>
+                <button class="profile-header-button" v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
                 <div v-if="editMode" class="header-button-save-reject">
                     <p class="profile-error profile-error-data" v-if="!saveChangesSuccess">{{ $t("message.saveChangesError") }}</p>
                     <button class="border-btn save-btn" @click="onSaveChanges" :disabled="disableSaveBtn">{{ $t("button.saveChanges") }}</button>
@@ -27,7 +27,7 @@
             <div class="profile-tiles">
             <div class="profile-tiles-row-wrap">
                 <div class="profile-tiles-row">
-                    <div class="profile-tile-1-3 profile-main-edit">
+                    <div class="profile-tile-1-3">
                         <div class="profile-tile-header">
                             <h2 class="prof-tile-h2">{{ $t("header.contact") }}</h2>
                             <div class="tile-underscore"></div>
@@ -66,7 +66,7 @@
                                             </div>
                                         </div>
                                         <p v-if="!editMode" disabled class="inputProfile inputDisabled">{{formatAddress}}</p>
-                                        <!-- <label class="label-profile">{{ $t("label.address") }}</label> -->
+                                        <label class="label-profile">{{ $t("label.address") }}</label>
                                     </div>
                                     <div class="prof-input">
                                         <!-- <input required class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()"> -->
@@ -94,7 +94,7 @@
                             <!-- </div> -->
                         </div>
                     </div>
-                    <div class="profile-tile-1-3 profile-main-edit">
+                    <div class="profile-tile-1-3">
                         <div class="profile-tile-header">
                             <h2 class="prof-tile-h2">Komunikatory</h2>
                             <div class="tile-underscore"></div>
@@ -129,7 +129,7 @@
                                 <div class="profile-user-img">
                                     <img class="img-user-class" :src="userData.image" width="150px">
                                     <p class="profile-error profile-error-image" v-if="photoUploadError">{{ $t("message.photoUploadError") }}</p>
-                                    <label for="change-user-image" class="profile-edit-btn">{{ $t("button.changePhoto") }}
+                                    <label for="change-user-image" class="change-user-img">{{ $t("button.changePhoto") }}
                                         <input accept="image/*" style="width: 1rem;" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
                                     </label>
                                 </div>
@@ -138,11 +138,11 @@
                     </div>
                 </div>
                 <div class="profile-tiles-row">
-                    <div class="profile-tile-1-2 profile-main-edit">
+                    <div class="profile-tile-1-2">
                         <div class="profile-tile-header">
                             <div class="profile-tile-header-row">
                                 <h2 class="prof-tile-h2">{{ $t("header.employee") }}</h2>
-                                <button class="profile-edit-btn">zmień hasło</button>
+                                <button class="profile-change-password">zmień hasło</button>
                             </div>
                             <div class="tile-underscore"></div>
                         </div>
@@ -231,61 +231,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="profile-tile-1-2">
-                        <div class="profile-tile-header">
-                            <div class="profile-tile-header-row">
-                                <h2 class="prof-tile-h2">{{ $t("label.cv") }}</h2>
-                                <button class="profile-edit-btn-e" @click="showSelectCv = true">Generuj CV</button>
-                            </div>
-                            <div class="tile-underscore"></div>
-                        </div>
-                        <div class="profile-tile-content">
-                                <div class="cv-buttons">
-                                    <div class="button-cv">
-                                        <a>
-                                            <span class="button-circle lang-circle">PL</span>
-                                        </a>
-                                        <div class="add-download">
-                                            <p class="profile-error profile-error-upload-top" v-if="fileUploadError">{{ $t("message.fileUploadError") }}</p>
-                                            <label class="add" for="add-docx-pl">+
-                                                <input accept=".doc,.docx" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload">
-                                            </label>
-                                            <div class="docx">.docx</div>
-                                            <a :href="userData.cv" class="download doc-download-pl">&#x21e3;</a>
-                                        </div>
-                                        <div class="add-download">
-                                            <p v-show="false" class="profile-error profile-error-upload-bottom">{{ $t("message.fileUploadError") }}</p>
-                                            <label for="add-pdf-pl" class="add">+
-                                                <input id="add-pdf-pl" accept=".pdf" class="add pdf-add-pl" type="file">
-                                            </label>
-                                            <div class="pdf">.pdf</div>
-                                            <a class="download pdf-add-pl">&#x21e3;</a>
-                                        </div>
-                                    </div>
-                                    <div class="button-cv">
-                                        <a>
-                                            <span class="button-circle lang-circle">EN</span>
-                                        </a>
-                                        <div class="add-download">
-                                            <p v-show="false" class="profile-error profile-error-upload-top">{{ $t("message.fileUploadError") }}</p>
-                                            <label class="add" for="add-docx-en">+
-                                                <input accept=".doc,.docx" id="add-docx-en" class="add" type="file">
-                                            </label>
-                                                <div class="docx">.docx</div>
-                                                <a class="download">&#x21e3;</a>
-                                        </div>
-                                        <div class="add-download">
-                                            <p v-show="false" class="profile-error profile-error-upload-bottom">{{ $t("message.fileUploadError") }}</p>
-                                            <label class="add" for="add-pdf-en">+
-                                                <input id="add-pdf-en" accept=".pdf" class="add" type=file>
-                                            </label>
-                                            <div class="pdf">.pdf</div>
-                                            <a class="download">&#x21e3;</a>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
+                    <user-cv-tile></user-cv-tile>
                 </div>
                 </div>
                 <user-education-component></user-education-component>
@@ -318,6 +264,7 @@ import UserEducation from "./profileComponents/UserEducation";
 import UserExperience from "./profileComponents/UserExperience";
 import UserSkills from "./profileComponents/UserSkills";
 import SelectCvContent from "./profileComponents/SelectCvContent";
+import UserCvTile from "./profileComponents/UserCvTile"
 import i18n from "../../lang/lang";
 export default {
   data() {
@@ -333,7 +280,6 @@ export default {
       disableSaveBtn: true,
       showLeavePageDialog: false,
       routeToGo: null,
-      showSelectCv: false,
       newPosition: null,
       selectedCity: null,
       selectedCvLang: i18n.locale
@@ -348,9 +294,9 @@ export default {
     }
   },
   watch: {
-      selectedCvLang(lang){
-          this.setCvLanguage(lang);
-      }
+    selectedCvLang(lang) {
+      this.setCvLanguage(lang);
+    }
   },
   beforeCreate() {
     if (this.$store.getters.isDataLoaded === false) {
@@ -360,12 +306,12 @@ export default {
   beforeRouteLeave(to, from, next) {
     //   const answer = window.confirm('Zmiana')
     //   if(answer) {
-          let lang = this.loginLanguage;
-          if (lang == '') {
-              lang = 'pl';
-          }
-          this.setLanguage(lang);
-          next();
+    let lang = this.loginLanguage;
+    if (lang == "") {
+      lang = "pl";
+    }
+    this.setLanguage(lang);
+    next();
     //   } else {
     //       next(false);
     //   }
@@ -379,6 +325,7 @@ export default {
     "user-skills-component": UserSkills,
     "user-education-component": UserEducation,
     "select-cv-content": SelectCvContent,
+    "user-cv-tile": UserCvTile,
     VueGoogleAutocomplete: VueGoogleAutocomplete
   },
   computed: {
@@ -389,7 +336,8 @@ export default {
       fileUploadError: "isFileUploadError",
       userPositions: "getUserJobPositions",
       cvLanguageList: "getCvLanguageList",
-      loginLanguage: "getLoginLanguage"
+      loginLanguage: "getLoginLanguage",
+      showSelectCv: 'getShowSelectCvDialog'
     }),
     formatAddress() {
       const data = this.userData;
@@ -399,50 +347,31 @@ export default {
       }
       address = address + ", " + data.PostalCode + " " + data.City;
       return address;
-    },
+    }
   },
   // beforeRouteLeave (to, from , next) {
   // this.showLeavePageDialog = true
   //     this.routeToGo = to.name
   // },
   methods: {
-    onEditTile() {
-        var el = this.$el;
-        let data = {el}
-        this.$store.dispatch("onEditTile", data)
-    },
-    onHover() {
-        let mainEdits = document.querySelectorAll(".profile-main-edit")
-        for (let i = 0; i < mainEdits.length; i++) {
-            mainEdits[i].style.boxShadow = "0 0 20px orange";
-        }
-    },
-    onHoverOut() {
-        let mainEdits = document.querySelectorAll(".profile-main-edit")
-        for (let i = 0; i < mainEdits.length; i++) {
-            mainEdits[i].style.boxShadow = "0 0 10px grey";
-        }
-    },
     onEdit() {
-      this.onHover();
       this.showNoChangesAlert = false;
       this.editMode = !this.editMode;
       this._beforeEditingCache = Object.assign({}, this.userData);
     },
-    formatDate(date) {
+
+        formatDate(date) {
       return date !== null && date !== undefined
         ? moment(date).format("DD.MM.YYYY")
         : "-";
     },
     onCancelEdit() {
-      this.onHoverOut();
       Object.assign(this.userData, this._beforeEditingCache);
       this._beforeEditingCache = null;
       this.showNoChangesAlert = false;
       this.editMode = !this.editMode;
     },
     onSaveChanges() {
-      this.onHoverOut();
       this.showNoChangesAlert = false;
       this.checkIfDataChanged();
       if (this.hasDataChanged === false) {
@@ -477,14 +406,7 @@ export default {
       };
       this.$store.dispatch("submitPhoto", data);
     },
-    handleCvUpload() {
-      this.file = this.$refs.file.files[0];
-      let data = {
-        file: this.file,
-        id: localStorage.getItem("id")
-      };
-      this.$store.dispatch("submitCv", data);
-    },
+
     phoneValidation(value) {
       const regex = new RegExp("^(?=.*[0-9])[- +()0-9]+$");
       this.invalidPhone = regex.test(value.target.value) ? false : true;
@@ -527,19 +449,19 @@ export default {
         }
       }
     },
-     setCvLanguage(language) {
+    setCvLanguage(language) {
       this.$store.dispatch("setCvLanguage", language);
     },
     setLanguage(language) {
-         this.$store.dispatch("setLanguage", language);
+      this.$store.dispatch("setLanguage", language);
     },
     getNewData() {
-        let cvLang = this.selectedCvLang.toUpperCase();
-        let userData = {};
-        userData.user = 'UIO';
-        userData.lang = cvLang;
-        this.$store.dispatch('getUserData', userData);
-        this.$store.dispatch('getDomainValues');
+      let cvLang = this.selectedCvLang.toUpperCase();
+      let userData = {};
+      userData.user = "UIO";
+      userData.lang = cvLang;
+      this.$store.dispatch("getUserData", userData);
+      this.$store.dispatch("getDomainValues");
     }
     // leavePage() {
     //     if (this._beforeEditingProjects){
@@ -626,13 +548,13 @@ input:focus {
   position: absolute;
   width: 100%;
   font-size: 0.75rem;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /* transform: rotate(-90deg); */
   transition: all 0.5s ease;
-  overflow: hidden;
   color: #999;
+  /* left: -.8rem; */
   top: 0.6rem;
   pointer-events: none;
+  /* padding:0 .15rem; */
 }
 
 .checkbox-wrap input {
