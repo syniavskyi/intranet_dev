@@ -104,12 +104,17 @@ export default {
     },
     methods: {
         ...mapActions([
-            'selectAllCvElements', 'deselectAllCvElements'
+            'selectAllCvElements', 'deselectAllCvElements', 'getDomainValues', 'getIndustryList', 'getUserData'
         ]),
         close(){
             this.$store.commit('SET_SHOW_CV_DIALOG', false)
         },
-        showCv(){            
+        showCv(){   
+            /* Sylwia */
+            let lang = this.cvElements.language;
+            // this.getDomainValues("ZINTRANET_SAP_MODULES", lang);
+            // this.getUserData(lang);
+            /* Sylwia */        
             this.$store.commit('SET_CV_ELEMENTS', this.cvElements)
             localStorage.setItem('Object', JSON.stringify(this.cvElements));
             let routeData = this.$router.resolve({name: 'CV'});

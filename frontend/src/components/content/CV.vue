@@ -74,12 +74,12 @@
 
          <!-- education -->
            <h3 style="mso-cellspacing:0pt; margin-bottom:10px; margin-top:10px; padding-bottom:5px; font-family:'Arial'; font-weight:bold; border-bottom:2px solid #E79600; text-transform:uppercase; ">{{ $t("header.education") }}</h3>
-           <table align="center" cellspacing="0"  id="cv-education" width="98%" v-for="(education, index) in userEducation" :key='index'>
+           <table align="center" cellspacing="0"  id="cv-education" width="98%" v-for="(education) in userEducation" :key="education.id">
              <!-- style="border-spacing: 0;" cellpadding="0" -->
              <tr>
-               <td style="font-weight:bold; font-family:'Arial';" width="45%"><p style="mso-cellspacing:0; margin:0; padding:0;">{{education.University }}</p></td>
+               <td style="font-weight:bold; font-family:'Arial';" width="45%"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatSchoolDsec(education.University)}}</p></td>
                <!-- {{education.University}} -->
-               <td style="font-family:'Arial';" valign="top" ><p style="mso-cellspacing:0; margin:0; padding:0;">{{education.FieldOfStudy}}</p></td>
+               <td style="font-family:'Arial';" valign="top" ><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatFieldOfStudyDesc(education.FieldOfStudy)}}</p></td>
                <!-- <td style="font-family: 'Arial'; background: #ccc; " width="20%">{{education.AcademicTitle}}</td> -->
              </tr>
              <tr>
@@ -93,10 +93,10 @@
 
        <!-- experience -->
            <h3 style="font-weight:bold; margin-bottom:10px; margin-top:10px; padding-bottom:5px; border-bottom:2px solid #E79600; text-transform:uppercase; font-family:'Arial';">{{ $t("header.experience") }}</h3>
-           <table align="center" class="border-collapse: collapse;"  width="98%" v-for="(experience, index) in userExperience" :key='index'>
+           <table align="center" class="border-collapse: collapse;"  width="98%" v-for="(experience) in userExperience" :key='experience.id'>
              <tr>
                <td style="padding:0; font-family:'Arial'; font-weight:bold;" width="45%"><p style="mso-cellspacing:0; margin:0; padding:0;"> {{experience.Employer}}</p></td>
-               <td style="padding:0; font-family:'Arial'; font-size:0.9rem;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{experience.WorkPos}}</p></td>
+               <td style="padding:0; font-family:'Arial'; font-size:0.9rem;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatPositionName(experience.WorkPos)}}</p></td>
              </tr>
              <tr>
                <td style="border-spacing:0; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0; margin-bottom:10px;">{{formatDate(experience.DateStart)}} - {{formatDate(experience.DateEnd)}}</p></td>
@@ -108,15 +108,15 @@
 
          <!-- projects -->
            <h3 style="font-weight:bold; margin-bottom:10px; margin-top:10px; padding-bottom:5px; border-bottom: 2px solid #E79600; text-transform:uppercase; font-family:'Arial';">{{ $t("header.projects") }}</h3>
-           <table align="center" width="98%" v-for="(project, index) in userProjects" :key="index">
+           <table align="center" width="98%" v-for="(project) in userProjects" :key="project.id">
              <tr>
-               <td width="45%" style="font-weight:bold; font-family:'Arial';" v-if="!cvElements.contractor"><p style="mso-cellspacing:0; margin:0; padding:0;">Branża:</p> <p v-for="industry in userProjects[index].industries" :key="industry.id">{{formatIndustryName(industry.id)}}</p></td>
-               <td style="font-weight:bold; font-family:'Arial';" v-if="cvElements.contractor">{{project.contractor}} <p v-for="industry in userProjects[index].industries" :key="industry.id">{{formatIndustryName(industry.id)}}</p></td>
-               <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Moduły SAP: <strong class v-for="sapModule in userProjects[index].modules" :key="sapModule.id">{{ sapModule.id }}</strong></p></td>
+               <td width="45%" style="font-weight:bold; font-family:'Arial';" v-if="!cvElements.contractor"><p style="mso-cellspacing:0; margin:0; padding:0;">Branża:</p> <p v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p></td>
+               <td style="font-weight:bold; font-family:'Arial';" v-if="cvElements.contractor">{{project.ContractorName}} <p v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p></td>
+               <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Moduły SAP: <strong class v-for="sapModule in project.Modules" :key="sapModule.id">{{ sapModule.id }} </strong></p></td>
              </tr>
              <tr>
                <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatDate(project.DateStart)}} - {{formatDate(project.DateEnd)}}</p></td>
-               <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0; margin-bottom: 10px;">{{project.descr}}</p></td>
+               <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0; margin-bottom: 10px;">{{project.Description}}</p></td>
              </tr>
              <tr>
                <!-- <td><p style="mso-cellspacing:0; margin:0; padding:0;">&nbsp;</p></td> -->
@@ -127,24 +127,24 @@
            <h3 style="font-weight: bold; margin-bottom: 10px; margin-top:10px; padding-bottom:5px; border-bottom:2px solid #E79600; text-transform: uppercase; font-family: 'Arial';">Doświadczenie SAP</h3>
            <table>
              <tr>
-               <td width="46%" style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">Doświadczenie Modułowe SAP</p></td>
-               <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';">SD, MM, FI, PP QM</p></td>
+               <td width="46%" style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">Moduły</p></td>
+               <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';" v-for="sapModule in userSkills.SapModules" :key="sapModule.id">{{sapModule}}</p></td>
              </tr>
              <tr>
                <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">Języki programowania</p></td>
-               <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';">JavaScript, JSON, XML, ABAP, OO ABAP</p></td>
+               <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';"  v-for="programLang in userSkills.ProgramLang" :key="programLang.id">{{programLang}}</p></td>
              </tr>
              <tr>
                <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">Technologie</p></td>
-               <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';">SAPUI5, OData, SAP Gateway, RFC</p></td>
+               <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';" v-for="technology in userSkills.Technologies" :key="technology.id">{{technology}}</p></td>
              </tr>
              <tr>
                <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">Rozszerzenia</p></td>
-               <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';">BADI, Enhancement Points, OData Extension</p></td>
+               <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';" v-for="extension in userSkills.Extensions" :key="extension.id">{{extension}}</p></td>
              </tr>
              <tr>
                <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">Dodatkowe doświadczenie</p></td>
-               <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';">Autoryzacja, Role użytkowników</p></td>
+               <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';" v-for="additionalSkill in userSkills.AdiitionalSkills" :key="additionalSkill.id">{{additionalSkill}}</p></td>
              </tr>
            </table>
        </td>
@@ -155,7 +155,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import moment from "moment";
 import jsPDF from "jsPdf";
 import jszip from "jszip";
@@ -168,12 +168,18 @@ export default {
     };
   },
   beforeCreate() {
-    this.$store.dispatch("getUserData");
-    const retrievedObject = JSON.parse(localStorage.getItem("Object"));
+ const retrievedObject = JSON.parse(localStorage.getItem("Object"));
     this.$store.commit("SET_CV_ELEMENTS", retrievedObject);
+
+    if (this.$store.getters.isDataLoaded === false) {
+      this.$store.dispatch("loadData", retrievedObject.language);
+    }
   },
 
   methods: {
+     ...mapActions([
+       "getIndustries"
+     ]),
     generate() {
       if (this.cvElements.format == "PDF") {
         this.generatePdf();
@@ -246,17 +252,31 @@ export default {
     },
     formatDate(date) {
       return date !== null && date !== undefined
-        ? moment(date).format("YYYY")
+        ? moment(date).format("YYYY-MM")
         : "-";
     },
-
-    formatIndustryName(id) {
-      for (let i = 0; i < this.industryList.length; i++) {
-        if (id === this.industryList[i].id) {
-          return this.industryList[i].name;
-        }
-      }
+    formatSchoolDsec(University) {
+         let schoolName = [];
+         schoolName = this.schoolDesc.find(o => o.SchoolId === University);
+         return schoolName.SchoolDescription;
+    },
+    formatFieldOfStudyDesc(FieldOfStudy) {
+        let fieldOfStudyName = [];
+         fieldOfStudyName = this.fieldOfStudyDesc.find(o => o.SchoolId === FieldOfStudy);
+         return fieldOfStudyName.SchoolDescription;
+    },
+    formatPositionName(WorkPos) {
+       let workPoses = [];
+         workPoses = this.workPositions.find(o => o.Key === WorkPos);
+         return workPoses.Value;
     }
+    // formatIndustryName(id) {
+    //   for (let i = 0; i < this.industryList.length; i++) {
+    //     if (id === this.industryList[i].id) {
+    //       return this.industryList[i].name;
+    //     }
+    //   }
+    // }
   },
   computed: {
     ...mapGetters({
@@ -265,8 +285,12 @@ export default {
       userExperience: "getUserExperience",
       userData: "userData",
       cvElements: "getCvElements",
-      industryList: "getIndustryList",
-      userInfo: "getUserInfo"
+      userInfo: "getUserInfo",
+      userLangs: "getUserLanguages",
+      userSkills: "getUserSkills",
+      schoolDesc: 'schoolDescList',
+      fieldOfStudyDesc: 'fieldOfStudyDescList',
+      workPositions: 'workPositions'
     })
   }
 };

@@ -359,12 +359,9 @@ const actions = {
   },
   setProjectsIsCurrentField({commit}) {
     let projects = this.getters.getUserProjectsList;
-    // let input;
     for(let i = 0; i < projects.length; i++) {
       if(projects[i].IsCurrent === 'X') {
         projects[i].IsCurrent = true;
-        // input = document.getElementById(projects[i].Index);
-        // input.setAttribute("style", "opacity: 0");
       }
       else {
         projects[i].IsCurrent = false;
