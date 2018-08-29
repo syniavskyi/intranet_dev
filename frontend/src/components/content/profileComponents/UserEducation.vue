@@ -20,7 +20,8 @@
               <p class="prof-date-label" v-if="!editMode"> {{ formatDate(education.DateStart) }} </p>
               <div v-if="editMode" class="prof-input-xxs">
                 <!-- :max-date="new Date()" -->
-                <v-date-picker class="prof-input-date" :max-date="education.DateEnd === null ? new Date() : education.DateEnd" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateStart">
+                <v-date-picker class="prof-input-date" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateStart">
+                   <!-- <v-date-picker class="prof-input-date" :max-date="education.DateEnd === null ? new Date() : education.DateEnd" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateStart"> -->
                   <input value="education.DateStart" >
                 </v-date-picker>
                 <label v-if="editMode">{{ $t("label.from") }}</label>
@@ -30,7 +31,8 @@
               <div name="endDateDiv" :id="index">
                 <p class="prof-date-label" v-if="!editMode"> {{ formatDate(education.DateEnd) }} </p>
                 <div v-if="editMode" class="prof-input-xxs">
-                  <v-date-picker class="prof-input-date" popoverDirection="top" :min-date="education.DateStart" :max-date="new Date()" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateEnd">
+                  <v-date-picker class="prof-input-date" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateEnd">
+                  <!-- <v-date-picker class="prof-input-date" popoverDirection="top" :min-date="education.DateStart" :max-date="new Date()" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateEnd"> -->
                     <input value="education.DateEnd" />
                   </v-date-picker>
                   <label>{{ $t("label.to") }}</label>
@@ -125,6 +127,9 @@ export default {
       this.$store.dispatch("loadData");
     }
   },
+  updated() {
+    this.setEduCheckbox();
+  },
   // updated() {
   //   if (this.$el) {
   //     var list = this.$el.querySelectorAll("input[type='checkbox']")
@@ -149,16 +154,16 @@ export default {
     })
   },
   mounted() {
-    var list = this.$el.querySelectorAll("input[type='checkbox']");
-    for (var i = 0; i < list.length; i++) {
-      var endDate = list[i].parentElement.parentElement.children[2],
-        checkboxWrap = list[i].parentElement.parentElement.children[3];
-      if (list[i].checked) {
-        endDate.setAttribute("style", "display: none;");
-      } else {
-        checkboxWrap.setAttribute("style", "display: none;");
-      }
-    }
+    // var list = this.$el.querySelectorAll("input[type='checkbox']");
+    // for (var i = 0; i < list.length; i++) {
+    //   var endDate = list[i].parentElement.parentElement.children[2],
+    //     checkboxWrap = list[i].parentElement.parentElement.children[3];
+    //   if (list[i].checked) {
+    //     endDate.setAttribute("style", "display: none;");
+    //   } else {
+    //     checkboxWrap.setAttribute("style", "display: none;");
+    //   }
+    // }
   },
   methods: {
     ...mapActions(["addUserEduRow", "removeUserEducation"]),
@@ -265,6 +270,17 @@ export default {
         input.setAttribute("style", "display: flex;");
       }
       this.checkFields();
+    },
+    setEduCheckbox(index) {
+      let edu = this.$store.getters.getUserEducation;
+      let input;
+
+      for(let i = 0; i < edu.length; i++) {
+         if(edu[i].IsCurrent === true) {
+              input = document.getElementById(i);
+              input.setAttribute("style", "display: none");
+          }
+      }
     }
   }
 };
