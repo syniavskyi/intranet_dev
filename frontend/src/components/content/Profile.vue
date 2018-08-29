@@ -242,47 +242,38 @@
                         <div class="profile-tile-content">
                                 <div class="cv-buttons">
                                     <div class="button-cv">
-                                        <a>
-                                            <span class="button-circle lang-circle">PL</span>
-                                        </a>
-                                        <div class="add-download">
+                                            <label>{{ $t("label.language") }}</label>
+                                            <select required  v-model="selectedDownloadLang">
+                                                <option v-for="language in cvLanguageList" :key="language.id" :value="language.id">{{ language.description }}</option>
+                                            </select>
+                                            <label>Format</label>
+                                           <select required v-model="selectedFormat" @change="setSelectedFormat">
+                                               <option v-for="format in formats" :key="format">{{format}}</option>
+                                            </select>
+                               
+                                        <div class="add-download" v-if="selectedFormat">
                                             <p class="profile-error profile-error-upload-top" v-if="fileUploadError">{{ $t("message.fileUploadError") }}</p>
-                                            <label class="add" for="add-docx-pl">+
-                                                <input accept=".doc,.docx" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload">
-                                            </label>
-                                            <div class="docx">.docx</div>
-                                            <a :href="userData.cv" class="download doc-download-pl">&#x21e3;</a>
-                                        </div>
-                                        <div class="add-download">
-                                            <p v-show="false" class="profile-error profile-error-upload-bottom">{{ $t("message.fileUploadError") }}</p>
-                                            <label for="add-pdf-pl" class="add">+
-                                                <input id="add-pdf-pl" accept=".pdf" class="add pdf-add-pl" type="file">
-                                            </label>
-                                            <div class="pdf">.pdf</div>
-                                            <a class="download pdf-add-pl">&#x21e3;</a>
-                                        </div>
-                                    </div>
-                                    <div class="button-cv">
-                                        <a>
-                                            <span class="button-circle lang-circle">EN</span>
-                                        </a>
-                                        <div class="add-download">
-                                            <p v-show="false" class="profile-error profile-error-upload-top">{{ $t("message.fileUploadError") }}</p>
-                                            <label class="add" for="add-docx-en">+
-                                                <input accept=".doc,.docx" id="add-docx-en" class="add" type="file">
-                                            </label>
-                                                <div class="docx">.docx</div>
-                                                <a class="download">&#x21e3;</a>
-                                        </div>
-                                        <div class="add-download">
-                                            <p v-show="false" class="profile-error profile-error-upload-bottom">{{ $t("message.fileUploadError") }}</p>
-                                            <label class="add" for="add-pdf-en">+
-                                                <input id="add-pdf-en" accept=".pdf" class="add" type=file>
-                                            </label>
-                                            <div class="pdf">.pdf</div>
-                                            <a class="download">&#x21e3;</a>
+                                            <div v-if="selectedFormat==='DOCX'">
+                                                <label class="add" for="add-docx-pl">+
+                                                    <input accept=".docx" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload('DOCX')">
+                                                </label>
+                                            </div>
+                                             <div v-if="selectedFormat==='DOC'">
+                                                <label class="add" for="add-docx-pl">+
+                                                    <input accept=".doc" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload('DOC')">
+                                                </label>
+                                            </div>
+                                            <div v-if="selectedFormat==='PDF'">
+                                                <label class="add" for="add-docx-pl">+
+                                                    <input accept=".pdf" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload('PDF')">
+                                                </label>
+                                            </div>
+                                            <a class="download pdf-add-pl" :href="setDownloadLink()">&#x21e3;</a>
+                                            <button class="download pdf-add-pl">X</button>
+                                            <!-- <button @click="getCv" class="download doc-download-pl">&#x21e3;</button> -->
                                         </div>
                                     </div>
+                                    
                                 </div>
                         </div>
                     </div>
@@ -336,7 +327,9 @@ export default {
       showSelectCv: false,
       newPosition: null,
       selectedCity: null,
-      selectedCvLang: i18n.locale
+      selectedCvLang: i18n.locale,
+      selectedDownloadLang: i18n.locale,
+      selectedFormat: null
     };
   },
   validations: {
@@ -348,9 +341,9 @@ export default {
     }
   },
   watch: {
-      selectedCvLang(lang){
-          this.setCvLanguage(lang);
-      }
+    selectedCvLang(lang) {
+      this.setCvLanguage(lang);
+    }
   },
   beforeCreate() {
     if (this.$store.getters.isDataLoaded === false) {
@@ -360,12 +353,12 @@ export default {
   beforeRouteLeave(to, from, next) {
     //   const answer = window.confirm('Zmiana')
     //   if(answer) {
-          let lang = this.loginLanguage;
-          if (lang == '') {
-              lang = 'pl';
-          }
-          this.setLanguage(lang);
-          next();
+    let lang = this.loginLanguage;
+    if (lang == "") {
+      lang = "pl";
+    }
+    this.setLanguage(lang);
+    next();
     //   } else {
     //       next(false);
     //   }
@@ -389,7 +382,8 @@ export default {
       fileUploadError: "isFileUploadError",
       userPositions: "getUserJobPositions",
       cvLanguageList: "getCvLanguageList",
-      loginLanguage: "getLoginLanguage"
+      loginLanguage: "getLoginLanguage",
+      formats: "getCvFormats"
     }),
     formatAddress() {
       const data = this.userData;
@@ -399,13 +393,18 @@ export default {
       }
       address = address + ", " + data.PostalCode + " " + data.City;
       return address;
-    },
+    }
   },
   // beforeRouteLeave (to, from , next) {
   // this.showLeavePageDialog = true
   //     this.routeToGo = to.name
   // },
   methods: {
+
+    //   ...mapActions(["getCv"]),
+    setSelectedFormat(value){
+        this.selectedFormat = value.target.value
+   },
     onEditTile() {
         var el = this.$el;
         let data = {el}
@@ -422,12 +421,41 @@ export default {
         for (let i = 0; i < mainEdits.length; i++) {
             mainEdits[i].style.boxShadow = "0 0 10px grey";
         }
+
     },
     onEdit() {
       this.onHover();
       this.showNoChangesAlert = false;
       this.editMode = !this.editMode;
       this._beforeEditingCache = Object.assign({}, this.userData);
+    },
+
+    setDownloadLink(format) {
+      // AttachmentMedias(FileType='CV',Language='PL',UserAlias='MHA')/$value
+      const sUserId = localStorage.getItem("id"),
+        sLanguage = this.selectedDownloadLang.toUpperCase(),
+        sFileType = "CV-" + this.selectedFormat;
+
+      const url =
+        "http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileType='" +
+        sFileType +
+        "',Language='" +
+        sLanguage +
+        "',UserAlias='" +
+        sUserId +
+        "')/$value";
+
+      return url;
+    },
+    handleCvUpload() {
+      this.file = this.$refs.file.files[0];
+      let data = {
+        file: this.file,
+        language: this.selectedDownloadLang.toUpperCase(),
+        userId: localStorage.getItem("id"),
+        type: "CV-" + this.selectedFormat
+      };
+      this.$store.dispatch("submitCv", data);
     },
     formatDate(date) {
       return date !== null && date !== undefined
@@ -477,14 +505,7 @@ export default {
       };
       this.$store.dispatch("submitPhoto", data);
     },
-    handleCvUpload() {
-      this.file = this.$refs.file.files[0];
-      let data = {
-        file: this.file,
-        id: localStorage.getItem("id")
-      };
-      this.$store.dispatch("submitCv", data);
-    },
+
     phoneValidation(value) {
       const regex = new RegExp("^(?=.*[0-9])[- +()0-9]+$");
       this.invalidPhone = regex.test(value.target.value) ? false : true;
@@ -527,19 +548,19 @@ export default {
         }
       }
     },
-     setCvLanguage(language) {
+    setCvLanguage(language) {
       this.$store.dispatch("setCvLanguage", language);
     },
     setLanguage(language) {
-         this.$store.dispatch("setLanguage", language);
+      this.$store.dispatch("setLanguage", language);
     },
     getNewData() {
-        let cvLang = this.selectedCvLang.toUpperCase();
-        let userData = {};
-        userData.user = 'UIO';
-        userData.lang = cvLang;
-        this.$store.dispatch('getUserData', userData);
-        this.$store.dispatch('getDomainValues');
+      let cvLang = this.selectedCvLang.toUpperCase();
+      let userData = {};
+      userData.user = "UIO";
+      userData.lang = cvLang;
+      this.$store.dispatch("getUserData", userData);
+      this.$store.dispatch("getDomainValues");
     }
     // leavePage() {
     //     if (this._beforeEditingProjects){
