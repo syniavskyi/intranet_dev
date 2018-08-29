@@ -71,8 +71,8 @@
                     <input value="userProjects[index].DateEnd"/>
                   </v-date-picker>
                 </div>
-                <label class="checkbox-wrap">
-                  <input :disabled="!projectEditMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="userProjects[index].IsCurrent" />
+                <label class="checkbox-wrap" >
+                  <input class="checkbox-margin" :disabled="!projectEditMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="userProjects[index].IsCurrent" />
                   <div class="checkbox-in"></div>
                   <p style="padding:0;margin:0;">Obecnie</p>
                 </label>
@@ -139,7 +139,9 @@ export default {
       _beforeEditingProjects: null
     };
   },
-
+updated() {
+  this.setProCheckbox();
+},
   computed: {
     ...mapGetters({
       showProjectError: "getShowProjectError",
@@ -267,10 +269,10 @@ export default {
         input = document.getElementById(index + "p");
 
       if (isCurrent) {
-        input.setAttribute("style", "opacity: 0");
+        input.setAttribute("style", "display: none");
         this.userProjects[index].DateEnd = null;
       } else {
-        input.setAttribute("style", "opacity: 1");
+        input.setAttribute("style", "display: flex");
       }
     },
     finishEditing() {
@@ -311,6 +313,20 @@ export default {
           formatStartDate > formatEndDate ? index + 1 : null;
       }
       this.checkFields();
+    },
+    setProCheckbox() {
+      let projects = this.$store.getters.getUserProjectsList;
+      let input;
+
+      for(let i = 0; i < projects.length; i++) {
+         if(projects[i].IsCurrent === true) {
+              input = document.getElementById(i + "p");
+              input.setAttribute("style", "display: none");
+          }
+          else {
+            let checkBoxes = document.querySelectorAll("checkbox:not(:checked)")
+          }
+      }
     }
   }
 };
