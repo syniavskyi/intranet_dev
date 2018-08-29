@@ -16,9 +16,10 @@ const state = {
   langLevels: [],
   fullLanguageList: [],
   workPositionList: [],
-  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS"],
+  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES"],
   schoolDescList: [],
-  fieldOfStudyDescList: []
+  fieldOfStudyDescList: [],
+  sapModulesList: []
 };
 
 const mutations = {
@@ -66,6 +67,9 @@ const mutations = {
   },
   SET_FIELD_OF_STUDY_DESC_LIST(state, data) {
     state.fieldOfStudyDescList = data;
+  },
+  SET_SAP_MODULES_LIST(state, data) {
+    state.sapModulesList = data;
   }
 };
 
@@ -121,14 +125,15 @@ const actions = {
     state,
     dispatch
   }) {
+    for (let i = 0; i < state.sapDomains.length; i++) {
+      dispatch('getDomainValues', state.sapDomains[i])
+    }
     dispatch('getContractorsList');
+    dispatch('getIndustries');
     dispatch('getProjectsList');
     dispatch('getUserData');
     dispatch('getUsersLists');
     dispatch('getAllLanguages');
-    for (let i = 0; i < state.sapDomains.length; i++) {
-      dispatch('getDomainValues', state.sapDomains[i])
-    }
     dispatch('getSchoolDesc');
     dispatch('getFieldOfStudyDesc');
     commit('SET_DATA_LOADED', true)
@@ -136,7 +141,7 @@ const actions = {
   getDomainValues({
     commit
   }, domainName) {
-    let lang = 'EN'
+    let lang = 'PL'
     axios({
       method: 'GET',
       url: "Dictionaries?$filter=Name eq '" + domainName + "' and Language eq'" + lang + "'",
@@ -166,7 +171,10 @@ const actions = {
       } else if (domainName == 'ZWORK_POS') {
         const aWorkPos = res.data.d.results;
         commit('SET_WORK_POSITION_LIST', aWorkPos);
-      }
+      } else if (domainName == 'ZINTRANET_SAP_MODULES') {
+        const aSapModules = res.data.d.results;
+        commit('SET_SAP_MODULES_LIST', aSapModules);
+      } 
     }).catch(error => {
       console.log(error);
     })
@@ -236,20 +244,25 @@ const actions = {
       }
     }).then(res => {
       console.log(res)
-      const oUserData = res.data.d;
-      dispatch('formatData', oUserData)
-      let oFormattedUserData = state.userData
+      const oUserData = res.data.d;;
+      dispatch('formatData', oUserData);
+      let oFormattedUserData = state.userData;
       // localStorage.setItem('id', oFormattedUserData.UserAlias)
-      localStorage.setItem('id','UIO')
-      commit('SET_USER_INFO', oFormattedUserData)
-      commit('SET_USER_EDUCATION', oUserData.UserEducations.results)
-      commit('SET_USER_EXPERIENCE', oUserData.UserExperiences.results)
+      localStorage.setItem('id','UIO');
+      commit('SET_USER_INFO', oFormattedUserData);
+      commit('SET_USER_EDUCATION', oUserData.UserEducations.results);
+      dispatch('setEduIsCurrentField');
+      commit('SET_USER_EXPERIENCE', oUserData.UserExperiences.results);
+      dispatch('setExpIsCurrentField');
       commit('SET_USER_SKILLS', oUserData.UserSkills.results);
       dispatch('adjustUserSkills');
       commit('SET_USER_LANGS', oUserData.UserLang.results);
-      dispatch('adjustLang')
+      dispatch('adjustLang');
+      commit('SET_USER_PROJECTS_LIST', oUserData.UserCvProjects.results);
+      dispatch('adjustProjects');
+      dispatch('setProjectsIsCurrentField');
     }).catch(error => {
-      console.log(error)
+      console.log(error);
     })
   },
   getUsersLists({
@@ -281,13 +294,11 @@ const actions = {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
     }).then(res => {
-      console.log(res.data.d.results);
       commit('SET_LANGUAGE_LIST', res.data.d.results);
     }).catch(error => { })
   },
   getSchoolDesc({commit}) {
     let lang = 'PL';
-    let halo = "SchoolDesc?$filter=Language eq " + "'" + lang + "'";
     axios({
       method: 'GET',
       url: "SchoolDesc?$filter=Language eq " + "'" + lang + "'",
@@ -299,13 +310,11 @@ const actions = {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
     }).then(res => {
-      console.log(res.data.d.results);
       commit('SET_SCHOOL_DESC_LIST', res.data.d.results);
     }).catch(error => { })
   },
   getFieldOfStudyDesc({commit}) {
     let lang = 'PL';
-    let halo =  "FieldOfStudyDesc?$filter=Language eq '" + lang + "'";
     axios({
       method: 'GET',
       url: "FieldOfStudyDesc?$filter=Language eq '" + lang + "'",
@@ -317,7 +326,6 @@ const actions = {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
     }).then(res => {
-      console.log(res.data.d.results);
       commit('SET_FIELD_OF_STUDY_DESC_LIST', res.data.d.results);
     }).catch(error => { })
   }
@@ -369,6 +377,9 @@ const getters = {
   },
   fieldOfStudyDescList(state) {
     return state.fieldOfStudyDescList;
+  },
+  getModulesList(state) {
+    return state.sapModulesList;
   }
 };
 

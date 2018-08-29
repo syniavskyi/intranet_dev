@@ -4,9 +4,9 @@
       <div class="profile-tile-header-row">
         <h2 class="profile-tile-title">{{ $t("header.experience") }}</h2>
         <div class="profile-table-buttons">
-          <button class="profile-edit-experience" v-if="!editMode" @click="edit">{{ $t("button.edit") }}</button>
-          <button class="profile-edit-experience-e" v-if="editMode" @click="addUserExperience">Dodaj nowy wpis</button>
-          <button class="profile-edit-experience-e" v-if="editMode" @click="cancel">{{ $t("button.finishEdit") }}</button>
+          <button class="profile-edit-btn" v-if="!editMode" @mouseover="onHover" @mouseout="onHoverOut" @click="edit">{{ $t("button.edit") }}</button>
+          <button class="profile-edit-btn-e" v-if="editMode" @click="addUserExperience">Dodaj nowy wpis</button>
+          <button class="profile-edit-btn-e" v-if="editMode" @click="cancel">{{ $t("button.finishEdit") }}</button>
         </div>
       </div>
       <div class="tile-underscore"></div>
@@ -19,7 +19,8 @@
             <div :class="editMode ? 'prof-row-dates-left' : 'prof-row-dates-left-s'">
               <p class="prof-date-label" v-if="!editMode"> {{ formatDate(experience.DateStart) }} </p>
               <div v-if="editMode" class="prof-input-xxs">
-                <v-date-picker class="prof-input-date" :max-date="experience.DateEnd === null ? new Date() : experience.DateEnd" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateStart">
+                <v-date-picker class="prof-input-date" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateStart">
+                   <!-- <v-date-picker class="prof-input-date" :max-date="experience.DateEnd === null ? new Date() : experience.DateEnd" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateStart"> -->
                   <input value="experience.DateStart" />
                 </v-date-picker>
                 <label v-if="editMode">Od</label>
@@ -28,14 +29,15 @@
               <div name="endDateDiv" :id="formatId(index)">
                 <p class="prof-date-label" v-if="!editMode"> {{ formatDate(experience.DateEnd) }} </p>
                 <div v-if="editMode" class="prof-input-xxs">
-                  <v-date-picker class="prof-input-date" :min-date="experience.DateStart" :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateEnd">
+                  <v-date-picker class="prof-input-date" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateEnd">
+                         <!-- <v-date-picker class="prof-input-date" :min-date="experience.DateStart" :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateEnd"> -->
                     <input value="experience.DateEnd" />
                   </v-date-picker>
                   <label v-if="editMode">Do</label>
                 </div>
               </div>
               <label class="checkbox-wrap">
-                <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="experience.isCurrent" />
+                <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="experience.IsCurrent" />
                 <div class="checkbox-in"></div>
                 <p style="padding:0;margin:0;">Obecnie</p>
               </label>
@@ -87,6 +89,9 @@ export default {
       workPositions: "workPositions"
     })
   },
+  updated() {
+    this.setExpCheckbox();
+  },
   // updated() {
   //   var list = this.$el.querySelectorAll("input[type='checkbox']")
   //   for (var i=0;i < list.length; i++) {
@@ -103,12 +108,30 @@ export default {
     ...mapActions(["addUserExperience", "removeUserExperience"]),
     edit() {
       this.editMode = true;
-      this._beforeEditingCache = JSON.parse(
-        JSON.stringify(this.userExperience)
-      );
+      this.onHover(this.$el)
+      this._beforeEditingCache = this.userExperience;
+      // JSON.parse(
+      //   JSON.stringify(this.userExperience)
+      // );
       var checkboxes = this.$el.querySelectorAll(".checkbox-wrap");
       for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].setAttribute("style", "display: flex;");
+      }
+    },
+    onHover(el) {
+      const shadow = "0 0 20px orange"
+      if (el.style) {
+        el.style.boxShadow = shadow
+      } else {
+        this.$el.style.boxShadow = shadow
+      }
+    },
+    onHoverOut(el) {
+      const shadow = "0 0 10px grey"
+      if (el.style) {
+        el.style.boxShadow = shadow
+      } else {
+        this.$el.style.boxShadow = shadow 
       }
     },
     checkFields() {
@@ -132,6 +155,7 @@ export default {
       return index + "e";
     },
     cancel() {
+      this.onHoverOut(this.$el)
       this.$store.commit("SET_EXPERIENCE_ERROR", false);
       this.$store.commit("SET_USER_EXPERIENCE", this._beforeEditingCache);
       this.editMode = false;
@@ -154,9 +178,10 @@ export default {
       } else {
         this.$store.dispatch("saveNewUserExp", newData);
       }
-      this._beforeEditingCache = JSON.parse(
-        JSON.stringify(this.userExperience)
-      );
+      this._beforeEditingCache = this.userExperience;
+      // JSON.parse(
+      //   JSON.stringify(this.userExperience)
+      // );
     },
     formatDate(date) {
       return date !== null && date !== undefined
@@ -188,6 +213,17 @@ export default {
         input.setAttribute("style", "display: flex;");
       }
       this.checkFields();
+    },
+    setExpCheckbox(index) {
+      let exp = this.$store.getters.getUserExperience;
+      let input;
+
+      for(let i = 0; i < exp.length; i++) {
+         if(exp[i].IsCurrent === true) {
+              input = document.getElementById(i + "e");
+              input.setAttribute("style", "display: none");
+          }
+      }
     }
   }
 };

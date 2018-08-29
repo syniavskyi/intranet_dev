@@ -372,6 +372,9 @@ li:hover p {
     cursor: context-menu;
     pointer-events: none;
 }
+.checkbox-wrap input:disabled:checked ~ div {
+    background: orange;
+}
 /* FOR WHEN CHECKBOX IS CHECKED BUT DISABLED */
 .checkbox-wrap input:disabled:checked:hover ~ div {
     background: rgb(243, 243, 243);
@@ -426,7 +429,7 @@ li:hover p {
 
 .modal-new {
     width: 600px;
-    height: 500px;
+    height: 550px;
 }
 
 .modal-new-m {
@@ -534,7 +537,7 @@ input:required{
     align-items: center;
     justify-content: space-between;
     height: 3%;
-    min-height: 3rem;
+    min-height: 3.5rem;
 }
 .content-header-title-and-menu {
     display: flex;

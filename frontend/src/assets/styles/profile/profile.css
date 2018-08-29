@@ -7,17 +7,6 @@
     outline: solid #f00 1px !important;
 } */
 
-/* body {
-    height: 100vh;
-    width: 100vw;
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto';
-    max-width: 100%; */
-/*    margin: 0 calc(-100vw + 100%);*/
-/*    overflow-x: hidden;*/
-/* } */
-
 .plane-profile {
     margin:0;
     padding: 0;
@@ -82,7 +71,7 @@
     font-family: 'Raleway';
     font-size: 1rem;
     border-radius: 19px;
-    border: 1px solid transparent;
+    border: 1px solid #9e9e9e;
     transition: all .5s ease;
     margin-right: .5rem;
 }
@@ -118,11 +107,15 @@
     width: 100%;
     align-self: center;
     justify-content: space-between;
+    position: relative;
 }
+
 
 .profile-tiles-row-wrap {
     display: flex;
     flex-direction: column;
+    position: relative;
+    transition: filter 0.3s ease;
 }
 
 .profile-tile,
@@ -135,6 +128,7 @@
     background: white;
     flex-grow: 0;
     margin: 0.5rem 0;
+    transition: box-shadow 0.25s ease;
 }
 .profile-tile-1-2:nth-of-type(1) {
     width: 100%;
@@ -173,43 +167,32 @@
 .profile-tile-header-row {
     display: flex;
     justify-content: space-between; 
+    align-items: center;
 }
-.profile-change-password,
-.profile-edit-experience,
-.profile-edit-experience-e {
+
+.profile-edit-btn,
+.profile-edit-btn-e {
     background: transparent;
     display: flex;
-    border: 0;
-    padding:.1rem;
+    padding:0 .7rem;
     margin-right: 1rem;
-    width: 4rem;
     border-radius: 1rem;
-    line-height: 1.2rem;
     justify-content: center;
+    align-items: center;
     text-align: center;
     color: grey;
     font-family: 'Open Sans';
     font-size: 1rem;
     transition: all .2s ease;
+    height: 2.1rem;
+    border: 1px solid #ccc;
 }
 
-.profile-edit-experience {
-    white-space:nowrap;
-    width: 7.6rem;
-    line-height: 1rem;
-    height: 2.2rem;
-}
-.profile-edit-experience-e {
-    white-space:nowrap;
-    width: 8rem;
-    line-height: 1rem;
-    height: 1.1rem;
-}
-
-.profile-change-password:hover,
-.profile-edit-experience:hover,
-.profile-edit-experience-e:hover {
-    box-shadow: 0 0 15px rgba(255, 151, 71, 0.78);
+.profile-edit-btn:hover,
+.profile-edit-btn-e:hover {
+    /* box-shadow: 0 0 15px rgba(255, 151, 71, 0.78); */
+    color: orange;
+    border-color: orange;
     cursor: pointer;
 }
 
@@ -681,19 +664,6 @@
     justify-content: center;
 }
 
-.change-user-img {
-    display: flex;
-    align-items: center;
-    margin: .5rem;
-    height: 2rem;
-    width: 8rem;
-    text-align: center;
-    justify-content: center;
-    color: grey;
-    border-radius: 1rem;
-    transition: box-shadow .3s ease;
-}
-
 .profile-error-image {
     bottom: -2.5rem;
     min-width: 7rem;
@@ -704,11 +674,6 @@
     bottom: 3rem;
     right: 3.5rem;
     transform: rotate(180deg);
-}
-
-.change-user-img:hover {
-    box-shadow: 1px 0px 30px rgba(255, 151, 71, 0.78);
-    cursor: pointer;
 }
 
 .profile-user-img {
@@ -935,7 +900,6 @@
 .prof-div-pos-elem {
     border-radius: 4px;
     flex-shrink: 0;
-    /* flex-grow:0; */
 }
 
 .prof-div-pos-elem:disabled {
@@ -1217,6 +1181,9 @@
     background-image: url("../../images/expand2.png");
     background-repeat: no-repeat;
     background-position: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .profile-table-select-contractor {
@@ -1327,9 +1294,9 @@
     align-items: center;
     border-top-left-radius: 10px;
 }
-.prof-tbody-row:not(:last-of-type) {
+/* .prof-tbody-row:not(:last-of-type) {
     margin-bottom: 1rem;
-}
+} */
 
 .prof-tbody-item {
     display:flex;
@@ -1407,9 +1374,6 @@
     .profile-tile {
         width: 100%;
         border-radius: 5px;
-    }
-    .profile-change-password {
-        width: 7rem;
     }
     .profile-user-header {
         order: 1;
@@ -1600,9 +1564,6 @@
     }
     .profile-table-buttons {
         flex-direction: row;
-    }
-    .profile-edit-experience-e {
-        height: 2rem;
     }
     .prof-thead-item {
         text-align: center;

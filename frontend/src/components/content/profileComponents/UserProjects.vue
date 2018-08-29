@@ -4,9 +4,9 @@
       <div class="profile-tile-header-row">
         <h2 class="profile-tile-title">{{ $t("header.projects") }}</h2>
         <div class="profile-table-buttons">
-          <button class="profile-edit-experience" @click="editProjects" v-if="!projectEditMode">{{ $t("button.editProjects") }}</button>
-          <button class="profile-edit-experience-e" v-if="projectEditMode" @click="addRow">{{ $t("button.addProject") }}</button>
-          <button class="profile-edit-experience-e" v-if="projectEditMode" @click="finishEditing">{{ $t("button.finishEdit") }}</button>
+          <button class="profile-edit-btn" @click="editProjects" @mouseover="onHover" @mouseout="onHoverOut" v-if="!projectEditMode">{{ $t("button.editProjects") }}</button>
+          <button class="profile-edit-btn-e" v-if="projectEditMode" @click="addRow">{{ $t("button.addProject") }}</button>
+          <button class="profile-edit-btn-e" v-if="projectEditMode" @click="finishEditing">{{ $t("button.finishEdit") }}</button>
         </div>
       </div>
       <div class="tile-underscore"></div>
@@ -58,19 +58,21 @@
               <div class="prof-tbody-item-title">{{ $t("table.duration") }} </div>
               <div class="prof-tbody-item-txt">
                 <p class="table-p">Rozpoczęcie</p>
-                <p class="table-p" v-if="!projectEditMode"> {{ formatDate(userProjects[index].StartDate) }} </p>
-                <v-date-picker :max-date="userProjects[index].EndDate === null ? new Date() : userProjects[index].EndDate" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].StartDate">
-                  <input value="userProjects[index].startDate" />
+                <p class="table-p" v-if="!projectEditMode"> {{ formatDate(userProjects[index].DateStart) }} </p>
+               <v-date-picker popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateStart">
+                <!-- <v-date-picker :max-date="userProjects[index].DateEnd === null ? new Date() : userProjects[index].DateEnd" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateStart"> -->
+                  <input value="userProjects[index].DateStart" />
                 </v-date-picker>
                 <p class="table-p">Zakończenie</p>
                 <div name="endDateDiv" :id="formatId(index)">
-                  <p class="table-p" v-if="!projectEditMode"> {{ formatDate(userProjects[index].EndDate) }} </p>
-                  <v-date-picker :max-date="new Date()" :min-date="userProjects[index].StartDate" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].EndDate">
-                    <input value="userProjects[index].endDate" />
+                  <p class="table-p" v-if="!projectEditMode"> {{ formatDate(userProjects[index].DateEnd) }} </p>
+                  <v-date-picker popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateEnd">
+                      <!-- <v-date-picker :max-date="new Date()" :min-date="userProjects[index].DateStart" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateEnd"> -->
+                    <input value="userProjects[index].DateEnd"/>
                   </v-date-picker>
                 </div>
-                <label class="checkbox-wrap">
-                  <input :disabled="!projectEditMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="userProjects[index].isCurrent" />
+                <label class="checkbox-wrap" >
+                  <input class="checkbox-margin" :disabled="!projectEditMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="userProjects[index].IsCurrent" />
                   <div class="checkbox-in"></div>
                   <p style="padding:0;margin:0;">Obecnie</p>
                 </label>
@@ -81,11 +83,11 @@
               <div class="prof-tbody-item-txt">
               <!-- :disabled="!projectEditMode" -->
                 <div class="prof-table-btns industry">
-                  <button :disabled="!projectEditMode" class="profile-table-industry-button" @click="removeIndustry" :name="index" v-for="industry in userProjects[index].Industries" :key="industry.id" :value="industry.id"> {{ formatIndustryName(industry.id) }}</button>
+                  <button :disabled="!projectEditMode" class="profile-table-industry-button" @click="removeIndustry" :name="index" v-for="industry in userProjects[index].Industries" :key="industry.id" :value="industry.id"> {{ industry.name }}</button>
                 </div>
                 <select v-if="projectEditMode" class="profile-table-select profile-table-select-industry" @change="addIndustry" :id="index" >
                   <option disabled selected value>{{ $t("table.addIndustry") }}:</option>
-                  <option v-for="industry in industryList" :key="industry.id" :value="industry.id"> {{ industry.name }}</option>
+                  <option v-for="industry in industryList" :key="industry.IndustryId" :value="industry.IndustryId"> {{ industry.IndustryName }}</option>
                 </select>
               </div>
             </div>
@@ -93,12 +95,12 @@
               <div class="prof-tbody-item-title"> {{ $t("table.Modules") }}</div>
               <div class="prof-tbody-item-txt profile-table-td-module">
                 <div class="prof-table-btns sapModule">
-                  <button :disabled="!projectEditMode" class="profile-table-module-button" @click="removeModule" :name="index" v-for="sapModule in userProjects[index].SapModules" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.id }} </button>
+                  <button :disabled="!projectEditMode" class="profile-table-module-button" @click="removeModule" :name="index" v-for="sapModule in userProjects[index].Modules" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.id }} </button>
                 </div>
                 <!-- <div id="addButtons"></div> -->
                 <select v-if="projectEditMode" class="profile-table-select profile-table-select-modules" @change="addModule" :id="index">
                   <option disabled selected value>{{ $t("table.addModule") }}:</option>
-                  <option v-for="sapModule in modulesList" :key="sapModule.id" :value="sapModule.id"> {{ sapModule.name }}</option>
+                  <option v-for="sapModule in modulesList" :key="sapModule.Key" :value="sapModule.Key"> {{ sapModule.Value }}</option>
                 </select>
               </div>
             </div>
@@ -111,8 +113,8 @@
             <div class="prof-tbody-item">
               <div class="prof-tbody-item-title"> --- </div>
               <div class="prof-tbody-item-txt">
-                <button v-if="projectEditMode" class="prof-tbtn" @click="removeRow(index)">USUŃ</button>
-                <button v-if="projectEditMode" :disabled="true" class="prof-tbtn projSaveButton" @click="saveUserProject(index)">ZAPISZ</button>
+                <button v-if="projectEditMode" class="prof-tbtn" @click="remove(index)">USUŃ</button>
+                <button v-if="projectEditMode" :disabled="true" class="prof-tbtn projSaveButton" @click="save(index)">ZAPISZ</button>
               </div>
             </div>
             </div>
@@ -137,6 +139,9 @@ export default {
       _beforeEditingProjects: null
     };
   },
+updated() {
+  this.setProCheckbox();
+},
   computed: {
     ...mapGetters({
       showProjectError: "getShowProjectError",
@@ -148,15 +153,34 @@ export default {
       errorProjectNo: "getErrorProjectNo"
     })
   },
-
   methods: {
     ...mapActions({
       addRow: "addUserProjectsRow",
-      removeRow: "removeUserProjectsRow"
+      removeRow: "removeUserProjectsRow",
+      adjustProjects: "adjustProject"
     }),
     remove(index) {
-      this._beforeEditingProjects.splice(index, 1);
       this.removeRow(index);
+      this._beforeEditingProjects.splice(index, 1);
+    },
+    save(index) {
+      const dataToChange = this._beforeEditingProjects[index],
+      newData = this.userProjects[index];
+      const aModules = dataToChange.Modules,
+            aIndustries = dataToChange.Industries;
+      newData.Language ='PL';
+
+      if (dataToChange) {
+        newData.DateStartToChange = dataToChange.DateStart;
+        newData.DateEndToChange = dataToChange.DateEnd;
+        newData.ProjectNameToChange = dataToChange.ProjectName;
+        this.$store.dispatch('updateUserProjectsPosition', newData);
+     } else {
+        this.$store.dispatch('saveUserProjectsPosition', newData);
+      }
+      this._beforeEditingProjects = this.userProjects;
+      this._beforeEditingProjects[index].Modules = aModules;
+      this._beforeEditingProjects[index].Industries = aIndustries;
     },
     checkFields() {
       if (this.userProjects.length > 0) {
@@ -165,11 +189,11 @@ export default {
             this.userProjects[i].ProjectName &&
             this.userProjects[i].ContractorName &&
             this.userProjects[i].Industries.length !== 0 &&
-            this.userProjects[i].SapModules.length !== 0 &&
-            this.userProjects[i].StartDate &&
+            this.userProjects[i].Modules.length !== 0 &&
+            this.userProjects[i].DateStart &&
             this.userProjects[i].Description &&
-            (this.userProjects[i].EndDate !== null ||
-              this.userProjects[i].isCurrent)
+            (this.userProjects[i].DateEnd !== null ||
+              this.userProjects[i].IsCurrent)
           ) {
             document.getElementsByClassName(
               "projSaveButton"
@@ -182,11 +206,27 @@ export default {
         }
       }
     },
-    saveUserProject(index) {
-      this.$store.dispatch("saveUserProjectPosition", index);
-      this._beforeEditingProjects = JSON.parse(
-        JSON.stringify(this.userProjects)
-      );
+    // saveUserProject(index) {
+    //   this.$store.dispatch("saveUserProjectsPosition", index);
+    //   this._beforeEditingProjects = JSON.parse(
+    //     JSON.stringify(this.userProjects)
+    //   );
+    // },
+    onHover(el) {
+      const shadow = "0 0 20px orange"
+      if (el.style) {
+        el.style.boxShadow = shadow
+      } else {
+        this.$el.style.boxShadow = shadow
+      }
+    },
+    onHoverOut(el) {
+      const shadow = "0 0 10px grey"
+      if (el.style) {
+        el.style.boxShadow = shadow
+      } else {
+        this.$el.style.boxShadow = shadow 
+      }
     },
     formatId(index) {
       return index + "p";
@@ -229,22 +269,22 @@ export default {
         input = document.getElementById(index + "p");
 
       if (isCurrent) {
-        input.setAttribute("style", "opacity: 0");
-        this.userProjects[index].endDate = null;
+        input.setAttribute("style", "display: none");
+        this.userProjects[index].DateEnd = null;
       } else {
-        input.setAttribute("style", "opacity: 1");
+        input.setAttribute("style", "display: flex");
       }
     },
     finishEditing() {
+      this.onHoverOut(this.$el);
       this.$store.commit("SET_PROJECT_ERROR", false);
       this.$store.commit("SET_USER_PROJECTS_LIST", this._beforeEditingProjects);
       this.projectEditMode = false;
     },
     editProjects() {
       this.projectEditMode = true;
-      this._beforeEditingProjects = JSON.parse(
-        JSON.stringify(this.userProjects)
-      );
+      this._beforeEditingProjects = this.userProjects;
+      this.onHover(this.$el)
     },
     formatDate(date) {
       return date !== null && date !== undefined
@@ -260,9 +300,9 @@ export default {
       }
     },
     validateDates(index) {
-      const startDate = this.userProjects[index].startDate,
-        endDate = this.userProjects[index].endDate,
-        isCurrent = this.userProjects[index].isCurrent;
+      const startDate = this.userProjects[index].DateStart,
+        endDate = this.userProjects[index].DateEnd,
+        isCurrent = this.userProjects[index].IsCurrent;
 
       if (endDate && startDate && isCurrent === false) {
         const formatStartDate = moment(startDate).format("YYYY-MM-DD"),
@@ -273,6 +313,20 @@ export default {
           formatStartDate > formatEndDate ? index + 1 : null;
       }
       this.checkFields();
+    },
+    setProCheckbox() {
+      let projects = this.$store.getters.getUserProjectsList;
+      let input;
+
+      for(let i = 0; i < projects.length; i++) {
+         if(projects[i].IsCurrent === true) {
+              input = document.getElementById(i + "p");
+              input.setAttribute("style", "display: none");
+          }
+          else {
+            let checkBoxes = document.querySelectorAll("checkbox:not(:checked)")
+          }
+      }
     }
   }
 };

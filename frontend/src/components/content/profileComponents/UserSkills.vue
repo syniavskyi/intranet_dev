@@ -4,9 +4,9 @@
       <div class="profile-tile-header-row">
         <h2 class="profile-tile-title">{{ $t("header.skills") }}</h2>
         <div class="profile-table-buttons">
-          <button class="profile-edit-experience" v-if="!editMode" @click="edit">{{ $t("button.edit") }}</button>
-          <button class="profile-edit-experience-e" v-if="editMode" @click="cancel">{{ $t("button.cancel") }}</button>
-          <button class="profile-edit-experience-e" v-if="editMode" @click="save">{{ $t("button.save") }}</button>
+          <button class="profile-edit-btn" v-if="!editMode" @mouseover="onHover" @mouseout="onHoverOut" @click="edit">{{ $t("button.edit") }}</button>
+          <button class="profile-edit-btn-e" v-if="editMode" @click="cancel">{{ $t("button.cancel") }}</button>
+          <button class="profile-edit-btn-e" v-if="editMode" @click="save">{{ $t("button.save") }}</button>
         </div>
       </div>
       <div class="tile-underscore"></div>
@@ -48,7 +48,7 @@
             <!-- Sap modules -->
             <select required class="selectProfileSkills selectEdit" v-if="editMode" @change="addModule">
               <option disabled selected value>{{ $t("table.addModule") }}:</option>
-              <option v-for="sapModule in modulesList" :key="sapModule.id" :value="sapModule.id" :id="sapModule.id" > {{ sapModule.name }}</option>
+              <option v-for="sapModule in modulesList" :key="sapModule.Key" :value="sapModule.Key" :id="sapModule.id" > {{ sapModule.Value }}</option>
             </select>
             <label :class="editMode ? 'label-select-profile' : 'label-skills'">{{ $t("label.sapModulesExp") }}</label>
             <div class="prof-skills-elems">
@@ -134,8 +134,25 @@ export default {
       "addLanguageSkillsRow",
       "removeLanguageSkillsRow"
     ]),
+    onHover(el) {
+      const shadow = "0 0 20px orange"
+      if (el.style) {
+        el.style.boxShadow = shadow
+      } else {
+        this.$el.style.boxShadow = shadow
+      }
+    },
+    onHoverOut(el) {
+      const shadow = "0 0 10px grey"
+      if (el.style) {
+        el.style.boxShadow = shadow
+      } else {
+        this.$el.style.boxShadow = shadow 
+      }
+    },
     edit() {
       this.editMode = true;
+      this.onHover(this.$el)
       this._beforeEditingCacheSkills = JSON.parse(
         JSON.stringify(this.UserSkills)
       );
@@ -144,11 +161,13 @@ export default {
       );
     },
     cancel() {
+      this.onHoverOut(this.$el)
       this.$store.commit("SET_USER_SKILLS", this._beforeEditingCacheSkills);
       this.$store.commit("SET_USER_LANGS", this._beforeEditingCacheLangs);
       this.editMode = false;
     },
     save() {
+      this.onHoverOut(this.$el)
       this.$store.dispatch("saveUserSkills");
       this._beforeEditingCacheSkills = JSON.parse(
         JSON.stringify(this.UserSkills)

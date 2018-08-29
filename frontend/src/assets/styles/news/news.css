@@ -18,16 +18,16 @@ body {
 .api {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
 }
+
 
 .content-event {
     width: 100%;
-    margin: 10px 0 10px 0;
     background-color: white;
     min-height: 50%;
     box-shadow: 0 0 10px grey;
     border-radius: 4px;
+    margin-bottom: 1rem;
 }
 
 .content-weather {
@@ -35,8 +35,8 @@ body {
     height: 50%;
     box-sizing: border-box;
     box-shadow: 0 0 10px grey;
-    margin: 10px 0 10px 0;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
     border-radius: 4px;
     background-color: white;
     background-repeat: no-repeat;
@@ -118,6 +118,7 @@ body {
     background-color: white;
     box-shadow: 5px 0 10px grey;
     border-radius: 4px;
+    margin: 1rem 0;
 }
 .artAll {
     display: flex;
@@ -174,6 +175,7 @@ body {
     .content-event {
         width: 67%;
         box-sizing: border-box;
+        margin: 0;
     }
     .content-weather{
         width: 30%;

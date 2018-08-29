@@ -1,12 +1,12 @@
 <template>
-  <div class="plane-starter-page">
-    <div class="starter-page-nav-and-content">
+  <div class="plane-component">
+    <div class="component-nav-and-content">
       <app-menu></app-menu>
-      <div class="starter-page-content">
-        <div class="starter-header">
-          <div class="starter-header-title-and-menu">
-            <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="starter-header-menu">
-            <p class="starter-header-title">{{ $t("header.starterPage") }}</p>
+      <div class="component-content">
+        <div class="content-header">
+          <div class="content-header-title-and-menu">
+            <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu">
+            <p class="content-header-title">{{ $t("header.starterPage") }}</p>
           </div>
         </div>
         <h3 class="starter-page-user-header">{{ $t("header.welcome") }}</h3>

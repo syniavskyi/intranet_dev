@@ -1,42 +1,41 @@
 <template>
-  <div class="plane-calendar">
-    <div class="calendar-nav-and-content">
+  <div class="plane-component">
+    <div class="component-nav-and-content">
       <app-menu></app-menu>
-      <div class="calendar-content">
-        <div class="calendar-header">
-            <div class="calendar-header-title-and-menu">
-              <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="calendar-header-menu">
-              <p class="calendar-header-title">{{ $t("header.calendar") }}</p>
+      <div class="component-content">
+        <div class="content-header">
+            <div class="content-header-title-and-menu">
+              <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu">
+              <p class="content-header-title">{{ $t("header.calendar") }}</p>
             </div>
         </div>
         <div class="calendar-tiles">
           <div class="calendar-tile">
-
-        <div class="calendar">
-              <v-date-picker mode='single' :min-date="new Date()" v-model="selectedValue" :attributes="attributes" is-inline @dayclick='dayClicked'>
-              </v-date-picker>
-      </div>       
-              <div v-if='selectedDay' class='selected-day'>
-                <div class="add-event-header">
-                    <h3>{{ selectedDay.date.toDateString() }}</h3>
-                    <button @click="openDialog" class="button modal-button add-button">{{ $t("button.add") }}</button>
-                </div>
-                <ul class="ul-event">
-                  <li v-for='attr in selectedDay.attributes' :key='attr.customData.EventId' class="delegations-inputs-section">
-                      <div class="event-attr">
-                          <div class="event-attr-header"> <p> {{ attr.customData.EventName }} </p> </div>
-                          <div> {{ attr.customData.Description}} </div>
-                          <div> {{ attr.customData.EventTime}} </div>
-                          <div> {{ attr.customData.EventTypeName }} </div> 
-                          <div> {{ attr.customData.EventPrivacy }} </div> 
-                          <div> {{ attr.customData.EventPriorityValue }} </div> 
-                      </div>    
-                      <div class="events-buttons">
-                          <button class="button edit-button" @click="editEvent(attr.customData, $t)">{{ $t("button.edit") }}</button>
-                          <button class="button edit-button" @click="deleteEvent(attr.customData, $t)">{{ $t("button.delete") }}</button>
-                      </div>
-                  </li>            
-                </ul>
+            <div class="calendar">
+                  <v-date-picker mode='single' :min-date="new Date()" v-model="selectedValue" :attributes="attributes" is-inline @dayclick='dayClicked'>
+                  </v-date-picker>
+            </div>       
+            <div v-if='selectedDay' class='selected-day'>
+              <div class="add-event-header">
+                <h3>{{ selectedDay.date.toDateString() }}</h3>
+                <button @click="openDialog" class="button modal-button add-button">{{ $t("button.add") }}</button>
+              </div>
+              <ul class="ul-event">
+                <li v-for='attr in selectedDay.attributes' :key='attr.customData.EventId' class="delegations-inputs-section">
+                  <div class="event-attr">
+                    <div class="event-attr-header"> <p> {{ attr.customData.EventName }} </p> </div>
+                    <div> {{ attr.customData.Description}} </div>
+                    <div> {{ attr.customData.EventTime}} </div>
+                    <div> {{ attr.customData.EventTypeName }} </div> 
+                    <div> {{ attr.customData.EventPrivacy }} </div> 
+                    <div> {{ attr.customData.EventPriorityValue }} </div> 
+                  </div>    
+                  <div class="events-buttons">
+                    <button class="button edit-button" @click="editEvent(attr.customData, $t)">{{ $t("button.edit") }}</button>
+                    <button class="button edit-button" @click="deleteEvent(attr.customData, $t)">{{ $t("button.delete") }}</button>
+                  </div>
+                </li>            
+              </ul>
             </div>
           <!-- to    </div> -->
              <div class="filters" v-if="permition">
