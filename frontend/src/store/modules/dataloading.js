@@ -124,27 +124,28 @@ const actions = {
     commit,
     state,
     dispatch
-  }) {
+  }, lang) {
     for (let i = 0; i < state.sapDomains.length; i++) {
       dispatch('getDomainValues', state.sapDomains[i])
     }
     dispatch('getContractorsList');
     dispatch('getIndustries');
     dispatch('getProjectsList');
-    dispatch('getUserData');
+    // dispatch('getUserData');
     dispatch('getUsersLists');
     dispatch('getAllLanguages');
-    dispatch('getSchoolDesc');
-    dispatch('getFieldOfStudyDesc');
+    dispatch('getSchoolDesc', lang);
+    dispatch('getFieldOfStudyDesc', lang);
+    dispatch('getUserData', lang);
     commit('SET_DATA_LOADED', true)
   },
   getDomainValues({
     commit
-  }, domainName) {
-    let lang = 'PL'
+  }, domainName, lang) {
+    let lang2 = 'PL'
     axios({
       method: 'GET',
-      url: "Dictionaries?$filter=Name eq '" + domainName + "' and Language eq'" + lang + "'",
+      url: "Dictionaries?$filter=Name eq '" + domainName + "' and Language eq'" + lang2 + "'",
       auth: {
         username: 'psy',
         password: 'ides01'
@@ -229,6 +230,7 @@ const actions = {
     dispatch,
     state
   }, userData) {
+    let c = userData;
     let userData2 = {};
     userData2.user = 'UIO';
     userData2.lang = 'PL';
@@ -297,11 +299,11 @@ const actions = {
       commit('SET_LANGUAGE_LIST', res.data.d.results);
     }).catch(error => { })
   },
-  getSchoolDesc({commit}) {
-    let lang = 'PL';
+  getSchoolDesc({commit}, lang) {
+    let lang2 = 'PL';
     axios({
       method: 'GET',
-      url: "SchoolDesc?$filter=Language eq " + "'" + lang + "'",
+      url: "SchoolDesc?$filter=Language eq " + "'" + lang2 + "'",
       auth: {
         username: 'psy',
         password: 'ides01'
@@ -313,11 +315,11 @@ const actions = {
       commit('SET_SCHOOL_DESC_LIST', res.data.d.results);
     }).catch(error => { })
   },
-  getFieldOfStudyDesc({commit}) {
-    let lang = 'PL';
+  getFieldOfStudyDesc({commit}, lang) {
+    let lang2 = 'PL';
     axios({
       method: 'GET',
-      url: "FieldOfStudyDesc?$filter=Language eq '" + lang + "'",
+      url: "FieldOfStudyDesc?$filter=Language eq '" + lang2 + "'",
       auth: {
         username: 'psy',
         password: 'ides01'
