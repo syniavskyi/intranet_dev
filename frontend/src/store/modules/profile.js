@@ -1,6 +1,10 @@
 import axios from 'axios'
 import router from '@/router/index.js'
 import i18n from '../../lang/lang'
+import odata from 'odata'
+
+let utils = require('../../utils')
+
 
 const state = {
   saveChangesSuccess: true,
@@ -45,47 +49,53 @@ const actions = {
   submitPhoto({
     commit
   }, data) {
-    let formData = new FormData();
-    formData.append('file', data.file);
-    formData.append('id', data.id);
-    axios({
-      method: 'post',
-      url: '/api/files/uploadImage',
-      headers: {
-        "Content-type": "multipart/form-data"
-      },
-      data: formData
-    }).then(res => {
-      console.log(res);
-      commit('SET_PHOTO', res.data.fileDownloadUri);
-      commit('SET_PHOTO_ERROR', false);
-    }).catch(error => {
-      commit('SET_PHOTO_ERROR', true);
-      console.log(error);
-    })
+    // let formData = new FormData();
+    // formData.append('file', data.file);
+    // formData.append('id', data.id);
+    // axios({
+    //   method: 'post',
+    //   url: '/api/files/uploadImage',
+    //   headers: {
+    //     "Content-type": "multipart/form-data"
+    //   },
+    //   data: formData
+    // }).then(res => {
+    //   console.log(res);
+    //   commit('SET_PHOTO', res.data.fileDownloadUri);
+    //   commit('SET_PHOTO_ERROR', false);
+    // }).catch(error => {
+    //   commit('SET_PHOTO_ERROR', true);
+    //   console.log(error);
+    // })
   },
+ 
   submitCv({
-    commit
+    commit, dispatch
   }, data) {
-    let formData = new FormData();
-    formData.append('file', data.file);
-    formData.append('id', data.id);
+    let slugHeader = data.file.name + ';' + data.type + ';' + data.language + ';' + data.userId + ';' +  data.file.type
+    let url = 'http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias'
+
     axios({
-      method: 'post',
-      url: '/api/files/uploadFile',
-      headers: {
-        "Content-type": "multipart/form-data"
+      method: 'POST',
+      url: '/AttachmentMedias',
+      auth: {
+        username: 'psy',
+        password: 'ides01'
       },
-      data: formData
+      data: data.file,
+      headers: {
+        "Content-type": data.file.type,
+        "X-Requested-With": "XMLHttpRequest",
+        "Slug": slugHeader
+      }
     }).then(res => {
-      commit('SET_CV', res.data.fileDownloadUri);
-      commit('SET_FILE_ERROR', false);
       console.log(res);
-    }).catch(error => {
+    }).catch(error => { 
       console.log(error);
-      commit('SET_FILE_ERROR', false);
     })
-  }
+
+  },
+
 };
 
 const getters = {

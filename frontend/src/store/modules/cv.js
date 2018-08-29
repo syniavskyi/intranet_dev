@@ -11,7 +11,8 @@ const state = {
         format: null,
         contractor: true,
         position: null
-    }
+    },
+    cvFormats: ["DOCX", "DOC", "PDF"]
 };
 
 const mutations = {
@@ -63,6 +64,9 @@ const actions = {
 const getters = {
     getCvElements(state){
         return state.cvElements
+    },
+    getCvFormats(state){
+        return state.cvFormats
     }
 };
 
