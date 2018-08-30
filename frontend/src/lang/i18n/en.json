@@ -104,7 +104,8 @@
         "degree": "Degree",
         "dateOfBirth": "Date of birth",
         "knowledgeOfForeignLanguages": "Knowledge of foreign languages",
-        "sapModules": "sapModules"
+        "sapModules": "SAP Modules",
+        "industry": "Industry"
 
     },
     "header": {

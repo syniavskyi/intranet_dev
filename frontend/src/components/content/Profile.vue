@@ -299,10 +299,13 @@ export default {
     },
   },
   beforeCreate() {
-      let lang = 'PL'
+     let userData = {
+        user: 'UIO',
+        lang: 'PL'
+      }
     //   this.loginLanguage
     if (this.$store.getters.isDataLoaded === false) {
-      this.$store.dispatch("loadData", lang);
+      this.$store.dispatch("loadData", userData);
     }
   },
   beforeRouteLeave(to, from, next) {

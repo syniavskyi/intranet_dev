@@ -139,12 +139,11 @@ const actions = {
     dispatch('getContractorsList');
     dispatch('getIndustries', userData.lang);
     dispatch('getProjectsList');
-    // dispatch('getUserData');
     dispatch('getUsersLists');
     dispatch('getAllLanguages',);
     dispatch('getSchoolDesc', userData.lang);
     dispatch('getFieldOfStudyDesc', userData.lang);
-    dispatch('getUserData', userData.user);
+    dispatch('getUserData', userData);
     commit('SET_DATA_LOADED', true)
   },
   getDomainValues({
@@ -241,13 +240,19 @@ const actions = {
     dispatch,
     state
   }, userData) {
-    let c = userData;
-    let userData2 = {};
-    userData2.user = 'UIO';
-    userData2.lang = 'PL';
+    if(userData === undefined) {
+     let userData = {
+        user: 'UIO',
+         lang: 'PL'
+    }
+  }
+    // let c = userData;
+    // let userData2 = {};
+    // userData2.user = 'UIO';
+    // userData2.lang = 'PL';
     axios({
       method: 'GET',
-      url: 'Users' + '(UserAlias=' + "'" + userData2.user + "'," +  "Language='" + userData2.lang + "')" + '?$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang',
+      url: 'Users' + '(UserAlias=' + "'" + userData.user + "'," +  "Language='" + userData.lang + "')" + '?$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang',
       auth: {
         username: 'psy',
         password: 'ides01'
@@ -269,7 +274,7 @@ const actions = {
       commit('SET_USER_EXPERIENCE', oUserData.UserExperiences.results);
       dispatch('setExpIsCurrentField');
       commit('SET_USER_SKILLS', oUserData.UserSkills.results);
-      dispatch('adjustUserSkills');
+      dispatch('adjustUserSkills', userData);
       commit('SET_USER_LANGS', oUserData.UserLang.results);
       dispatch('adjustLang');
       commit('SET_USER_PROJECTS_LIST', oUserData.UserCvProjects.results);
