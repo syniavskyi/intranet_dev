@@ -25,36 +25,39 @@
                  <td>
                    <table width="85%">
                      <tr>
-                       <td width="65%" style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Narodowość</p></td>
-                       <td style="font-family: 'Arial'"><p style="mso-cellspacing:0; margin:0; padding:0;">Polska</p></td>
-                     </tr>
-                     <tr v-if="cvElements.date">
-                       <td style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Data urodzenia</p></td>
-                       <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{userInfo.DateBirth}}</p></td>
-                     </tr>
-                     <tr  v-if="cvElements.phone">
-                       <td style="font-weight: bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.phone") }}</p></td>
-                       <!-- <td>{{userData.phone}}</td> -->
-                       <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{userInfo.Telephone}}</p></td>
-                     </tr>
-                     <tr  v-if="cvElements.address">
-                       <td style="font-weight: bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.email") }}</p></td>
-                       <!-- <td>{{userData.email}}</td> -->
-                       <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{userInfo.email}}</p></td>
-                     </tr>
-                     <tr>
-                       <td style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Znajmość języków</p></td>
-                       <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Polski - ojczysty</p></td>
-                     </tr>
-                     <tr>
+                        <td width="65%" style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Narodowość</p></td>
+                        <td style="font-family: 'Arial'"><p style="mso-cellspacing:0; margin:0; padding:0;">Polska</p></td>
+                      </tr>
+                      <tr v-if="cvElements.date">
+                        <td style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Data urodzenia</p></td>
+                        <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ formatDate(userInfo.DateBirth)}}</p></td>
+                      </tr>
+                      <tr  v-if="cvElements.phone">
+                        <td style="font-weight: bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.phone") }}</p></td>
+                        <!-- <td>{{userData.phone}}</td> -->
+                        <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{userInfo.Telephone}}</p></td>
+                      </tr>
+                      <tr  v-if="cvElements.address">
+                        <td style="font-weight: bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.email") }}</p></td>
+                        <!-- <td>{{userData.email}}</td> -->
+                        <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{userInfo.Email}}</p></td>
+                      </tr>
+                   </table>
+                   <table width="85%" v-for="lang in userLangs" :key="lang.id">
+                        <tr>
+                          <td style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Znajmość języków</p></td>
+                          <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatLangName(lang.Language)}} - {{formatLangLevel(lang.LangLevel)}}</p></td>
+                        </tr>
+
+                     <!-- <tr>
                        <td></td>
                        <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Angielski - C1</p></td>
                      </tr>
                      <tr>
                        <td></td>
                        <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Niemiecki - A1</p></td>
-                       <!-- <td>Niemiecki - A1</td> -->
-                     </tr>
+                    <td>Niemiecki - A1</td>
+                     </tr> -->
                    </table>
                  </td>
                  <td>
@@ -83,7 +86,8 @@
                <!-- <td style="font-family: 'Arial'; background: #ccc; " width="20%">{{education.AcademicTitle}}</td> -->
              </tr>
              <tr>
-               <td style="font-family:'Arial';"><p style="margin:0; padding:0; margin-bottom:10px;">{{formatDate(education.DateStart)}} - {{formatDate(education.DateEnd)}}</p></td>
+               <td style="font-family:'Arial';"><p style="margin:0; padding:0; margin-bottom:10px;" v-if="!education.IsCurrent">{{formatDate(education.DateStart)}} - {{formatDate(education.DateEnd)}}</p></td>
+              <td style="font-family:'Arial';" ><p style="margin:0; padding:0; margin-bottom:10px;" v-if="education.IsCurrent">{{formatDate(education.DateStart)}} - {{setIfCurrentDate(education.IsCurrent)}}</p></td>
                <!-- <td style="font-style: italic; font-size: 0.95rem; font-family: 'Arial'">{{education.StudyType}}</td> -->
              </tr>
              <tr>
@@ -99,7 +103,8 @@
                <td style="padding:0; font-family:'Arial'; font-size:0.9rem;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatPositionName(experience.WorkPos)}}</p></td>
              </tr>
              <tr>
-               <td style="border-spacing:0; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0; margin-bottom:10px;">{{formatDate(experience.DateStart)}} - {{formatDate(experience.DateEnd)}}</p></td>
+               <td style="border-spacing:0; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0; margin-bottom:10px;" v-if="!experience.IsCurrent">{{formatDate(experience.DateStart)}} - {{formatDate(experience.DateEnd)}}</p></td>
+                 <td style="font-family:'Arial';" ><p style="margin:0; padding:0; margin-bottom:10px;" v-if="experience.IsCurrent">{{formatDate(experience.DateStart)}} - {{setIfCurrentDate(experience.IsCurrent)}}</p></td>
              </tr>
              <tr>
                <!-- <td><p style="mso-cellspacing:0; margin:0; padding:0;">&nbsp;</p></td> -->
@@ -110,12 +115,15 @@
            <h3 style="font-weight:bold; margin-bottom:10px; margin-top:10px; padding-bottom:5px; border-bottom: 2px solid #E79600; text-transform:uppercase; font-family:'Arial';">{{ $t("header.projects") }}</h3>
            <table align="center" width="98%" v-for="(project) in userProjects" :key="project.id">
              <tr>
-               <td width="45%" style="font-weight:bold; font-family:'Arial';" v-if="!cvElements.contractor"><p style="mso-cellspacing:0; margin:0; padding:0;">Branża:</p> <p v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p></td>
-               <td style="font-weight:bold; font-family:'Arial';" v-if="cvElements.contractor">{{project.ContractorName}} <p v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p></td>
+               <td width="45%" style="font-weight:bold; font-family:'Arial';" v-if="!cvElements.contractor"><p style="mso-cellspacing:0; margin:0; padding:0;">Kontrahent nie</p> <p>Branża kontrahenta</p></td>
+               <td style="font-weight:bold; font-family:'Arial';" v-if="cvElements.contractor">Kontrahent Tak{{project.ContractorName}} </td>
+               <!-- <p v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p> -->
+               <td style="font-weight:bold; font-family:'Arial';"> Branże <p v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p></td>
                <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Moduły SAP: <strong class v-for="sapModule in project.Modules" :key="sapModule.id">{{ sapModule.id }} </strong></p></td>
              </tr>
              <tr>
-               <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatDate(project.DateStart)}} - {{formatDate(project.DateEnd)}}</p></td>
+               <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;" v-if="!project.IsCurrent">{{formatDate(project.DateStart)}} - {{formatDate(project.DateEnd)}}</p></td>
+               <td style="font-family:'Arial';" ><p style="margin:0; padding:0; margin-bottom:10px;" v-if="project.IsCurrent">{{formatDate(project.DateStart)}} - {{setIfCurrentDate(project.IsCurrent)}}</p></td>
                <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0; margin-bottom: 10px;">{{project.Description}}</p></td>
              </tr>
              <tr>
@@ -161,6 +169,7 @@ import jsPDF from "jsPdf";
 import jszip from "jszip";
 import htmlDocx from "html-docx-js/dist/html-docx";
 import { saveAs } from "file-saver";
+import i18n from "../../lang/lang";
 export default {
   data() {
     return {
@@ -269,6 +278,21 @@ export default {
        let workPoses = [];
          workPoses = this.workPositions.find(o => o.Key === WorkPos);
          return workPoses.Value;
+    },
+    formatLangName(Lang) {
+      let langNames = [];
+       langNames = this.fullLanguageList.find(o => o.Language === Lang);
+       return langNames.LangName;
+    }, 
+    formatLangLevel(LangLevel) {
+       let langLevels = [];
+       langLevels = this.langLevels.find(o => o.Key === LangLevel);
+       return langLevels.Value;
+    },
+    setIfCurrentDate(IsCurrent){
+          if(IsCurrent === true) {
+            return i18n.t("label.present");
+          }
     }
     // formatIndustryName(id) {
     //   for (let i = 0; i < this.industryList.length; i++) {
@@ -290,7 +314,10 @@ export default {
       userSkills: "getUserSkills",
       schoolDesc: 'schoolDescList',
       fieldOfStudyDesc: 'fieldOfStudyDescList',
-      workPositions: 'workPositions'
+      workPositions: 'workPositions',
+      fullLanguageList: 'fullLanguageList',
+      langLevels: 'langLevels'
+
     })
   }
 };
