@@ -118,7 +118,7 @@
                <!-- <td width="45%" style="font-weight:bold; font-family:'Arial';" v-if="!cvElements.contractor"><p style="mso-cellspacing:0; margin:0; padding:0;">Kontrahent nie</p> <p>Branża kontrahenta</p></td> -->
                <td style="font-weight:bold; font-family:'Arial';" v-if="cvElements.contractor">{{project.ContractorName}} </td>
                <!-- <p v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p> -->
-               <td style="font-weight:bold; font-family:'Arial';"> {{ $t("label.industries") }} <p v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p></td>
+               <td style="font-weight:bold; font-family:'Arial';"> {{ $t("label.industry") }} <p v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p></td>
                <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.phone") }}<strong class v-for="sapModule in project.Modules" :key="sapModule.id">{{ sapModule.id }} </strong></p></td>
              </tr>
              <tr>
