@@ -89,6 +89,9 @@ import { mapGetters } from 'vuex';
 
 <script>
 import  { mapActions, mapGetters } from 'vuex'
+import i18n from "../../../lang/lang";
+import { app } from '../../../main'
+
 export default {
     data() {
         return {
@@ -114,6 +117,17 @@ export default {
             let lang = this.cvElements.language;
             // this.getDomainValues("ZINTRANET_SAP_MODULES", lang);
             // this.getUserData(lang);
+                // this.$store.dispatch("setCvLanguage", lang.toLowerCase());
+                // this.$store.commit("HALO", lang.toLowerCase())
+                //  app.$i18n.locale = lang.toLowerCase();
+                //  this.$i18n.locale  = lang.toLowerCase();
+//  let a = this.$store.getters.getCvElements.language;
+//       if (this.$store.getters.getCvElements.language == "") {
+//                 // retrievedObject.language = "pl";
+//             }
+//             this.$store.dispatch("setCvLanguage", a);
+//             next();
+//   },
             /* Sylwia */        
             this.$store.commit('SET_CV_ELEMENTS', this.cvElements)
             localStorage.setItem('Object', JSON.stringify(this.cvElements));

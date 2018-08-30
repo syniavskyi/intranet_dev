@@ -25,11 +25,11 @@
                  <td>
                    <table width="85%">
                      <tr>
-                        <td width="65%" style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Narodowość</p></td>
+                        <td width="65%" style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.nationality") }}</p></td>
                         <td style="font-family: 'Arial'"><p style="mso-cellspacing:0; margin:0; padding:0;">Polska</p></td>
                       </tr>
                       <tr v-if="cvElements.date">
-                        <td style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Data urodzenia</p></td>
+                        <td style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.dateOfBirth") }}</p></td>
                         <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ formatDate(userInfo.DateBirth)}}</p></td>
                       </tr>
                       <tr  v-if="cvElements.phone">
@@ -43,10 +43,10 @@
                         <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{userInfo.Email}}</p></td>
                       </tr>
                    </table>
-                   <table width="85%" v-for="lang in userLangs" :key="lang.id">
+                   <table width="85%" v-for="langu in userLangs" :key="langu.id">
                         <tr>
-                          <td style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Znajmość języków</p></td>
-                          <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatLangName(lang.Language)}} - {{formatLangLevel(lang.LangLevel)}}</p></td>
+                          <td style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.knowledgeOfForeignLanguages") }}</p></td>
+                          <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatLangName(langu.Language)}} - {{formatLangLevel(langu.LangLevel)}}</p></td>
                         </tr>
 
                      <!-- <tr>
@@ -115,11 +115,11 @@
            <h3 style="font-weight:bold; margin-bottom:10px; margin-top:10px; padding-bottom:5px; border-bottom: 2px solid #E79600; text-transform:uppercase; font-family:'Arial';">{{ $t("header.projects") }}</h3>
            <table align="center" width="98%" v-for="(project) in userProjects" :key="project.id">
              <tr>
-               <td width="45%" style="font-weight:bold; font-family:'Arial';" v-if="!cvElements.contractor"><p style="mso-cellspacing:0; margin:0; padding:0;">Kontrahent nie</p> <p>Branża kontrahenta</p></td>
-               <td style="font-weight:bold; font-family:'Arial';" v-if="cvElements.contractor">Kontrahent Tak{{project.ContractorName}} </td>
+               <!-- <td width="45%" style="font-weight:bold; font-family:'Arial';" v-if="!cvElements.contractor"><p style="mso-cellspacing:0; margin:0; padding:0;">Kontrahent nie</p> <p>Branża kontrahenta</p></td> -->
+               <td style="font-weight:bold; font-family:'Arial';" v-if="cvElements.contractor">{{project.ContractorName}} </td>
                <!-- <p v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p> -->
-               <td style="font-weight:bold; font-family:'Arial';"> Branże <p v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p></td>
-               <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Moduły SAP: <strong class v-for="sapModule in project.Modules" :key="sapModule.id">{{ sapModule.id }} </strong></p></td>
+               <td style="font-weight:bold; font-family:'Arial';"> {{ $t("label.industries") }} <p v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p></td>
+               <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.phone") }}<strong class v-for="sapModule in project.Modules" :key="sapModule.id">{{ sapModule.id }} </strong></p></td>
              </tr>
              <tr>
                <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;" v-if="!project.IsCurrent">{{formatDate(project.DateStart)}} - {{formatDate(project.DateEnd)}}</p></td>
@@ -132,26 +132,26 @@
            </table>
 
            <!-- SAP experience -->
-           <h3 style="font-weight: bold; margin-bottom: 10px; margin-top:10px; padding-bottom:5px; border-bottom:2px solid #E79600; text-transform: uppercase; font-family: 'Arial';">Doświadczenie SAP</h3>
+           <h3 style="font-weight: bold; margin-bottom: 10px; margin-top:10px; padding-bottom:5px; border-bottom:2px solid #E79600; text-transform: uppercase; font-family: 'Arial';">{{ $t("label.sapModulesExp") }}</h3>
            <table>
              <tr>
-               <td width="46%" style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">Moduły</p></td>
+               <td width="46%" style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.sapModules") }}</p></td>
                <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';" v-for="sapModule in userSkills.SapModules" :key="sapModule.id">{{sapModule}}</p></td>
              </tr>
              <tr>
-               <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">Języki programowania</p></td>
+               <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.programmingLanguages") }}</p></td>
                <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';"  v-for="programLang in userSkills.ProgramLang" :key="programLang.id">{{programLang}}</p></td>
              </tr>
              <tr>
-               <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">Technologie</p></td>
+               <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.technologies") }}</p></td>
                <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';" v-for="technology in userSkills.Technologies" :key="technology.id">{{technology}}</p></td>
              </tr>
              <tr>
-               <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">Rozszerzenia</p></td>
+               <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.extensions") }}</p></td>
                <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';" v-for="extension in userSkills.Extensions" :key="extension.id">{{extension}}</p></td>
              </tr>
              <tr>
-               <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">Dodatkowe doświadczenie</p></td>
+               <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.additionalSkills") }}</p></td>
                <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';" v-for="additionalSkill in userSkills.AdiitionalSkills" :key="additionalSkill.id">{{additionalSkill}}</p></td>
              </tr>
            </table>
@@ -179,12 +179,15 @@ export default {
   beforeCreate() {
  const retrievedObject = JSON.parse(localStorage.getItem("Object"));
     this.$store.commit("SET_CV_ELEMENTS", retrievedObject);
-
+      let userData = {
+      user: 'UIO',
+      lang: retrievedObject.language
+      }
     if (this.$store.getters.isDataLoaded === false) {
-      this.$store.dispatch("loadData", retrievedObject.language);
+      this.$store.dispatch("loadData", userData);
     }
+     this.$i18n.locale  = retrievedObject.language.toLowerCase();
   },
-
   methods: {
      ...mapActions([
        "getIndustries"
@@ -280,20 +283,27 @@ export default {
          return workPoses.Value;
     },
     formatLangName(Lang) {
+       if(this.fullLanguageList.length > 0) {
       let langNames = [];
        langNames = this.fullLanguageList.find(o => o.Language === Lang);
        return langNames.LangName;
+       }
     }, 
     formatLangLevel(LangLevel) {
+      if(this.langLevels.length > 0) {
        let langLevels = [];
        langLevels = this.langLevels.find(o => o.Key === LangLevel);
        return langLevels.Value;
+      }
     },
     setIfCurrentDate(IsCurrent){
           if(IsCurrent === true) {
             return i18n.t("label.present");
           }
-    }
+    },
+    // setCvLanguage(language) {
+    //   this.$store.dispatch("setCvLanguage", language);
+    // },
     // formatIndustryName(id) {
     //   for (let i = 0; i < this.industryList.length; i++) {
     //     if (id === this.industryList[i].id) {
