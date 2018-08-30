@@ -24,6 +24,7 @@
         "addNewEntry": "Dodaj nowy wpis"
      },
     "label": {
+        "nationality": "Narodowość",
         "user": "Użytkownik",
         "password": "Hasło",
         "enterEmail": "Wprowadź email",
@@ -100,7 +101,10 @@
         "fieldOfStudy": "Kierunek",
         "university": "Uczelnia",
         "formOfStudy": "Tryb studiów",
-        "degree": "Stopień"
+        "degree": "Stopień",
+        "dateOfBirth": "Data urodzenia",
+        "knowledgeOfForeignLanguages": "Znajomość języków",
+        "sapModules": "Moduły SAP"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",

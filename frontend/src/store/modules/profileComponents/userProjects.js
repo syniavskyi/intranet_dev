@@ -272,8 +272,10 @@ const actions = {
     commit('SET_USER_PROJECTS_LIST', projectsList)
     
   },
-  getIndustries({commit}) {
-    let lang = 'PL';
+  getIndustries({commit}, lang) {
+    if(lang === undefined) {
+      lang = "PL"
+    }
     axios({
       method: 'GET',
       url: "Industries?$filter=Lang eq '" + lang + "'",

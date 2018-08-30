@@ -18,6 +18,9 @@ const mutations = {
     SET_LANG(state, language) {
         app.$i18n.locale = language;
     },
+    // HALO(language) {
+    //     this.$root.i18n.locale  = 'language'
+    // },
     SET_LANG_LIST(state, list) {
        state.languageList = list;
     },
@@ -36,6 +39,8 @@ const actions = {
         ]
         commit('SET_LANG_LIST', newList);
     },
+
+
     setCvLanguage({commit}, language) {
         commit('SET_LANG', language);
     }

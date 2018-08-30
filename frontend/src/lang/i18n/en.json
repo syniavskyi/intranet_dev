@@ -24,6 +24,7 @@
         "addNewEntry": "Add new entry"
     },
     "label": {
+        "nationality": "Nationality",
         "user": "User",
         "password": "Password",
         "enterEmail": "Enter email",
@@ -100,7 +101,10 @@
         "fieldOfStudy": "Field of Study",
         "university": "University",
         "formOfStudy": "Form of Study",
-        "degree": "Degree"
+        "degree": "Degree",
+        "dateOfBirth": "Date of birth",
+        "knowledgeOfForeignLanguages": "Knowledge of foreign languages",
+        "sapModules": "sapModules"
 
     },
     "header": {
