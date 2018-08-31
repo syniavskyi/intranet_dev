@@ -59,12 +59,12 @@ odata().config({
     // {name:"Accept", value : "application/json"}
 ],
                 //         "Content-type": "application/atom+xml; type=entry; charset=utf-8",      
-    isWithCredentials: true,
+    // isWithCredentials: true,
     format: 'json',
     version: 3, 
-    autoFormat: false,
-    username: 'psy',
-    password: 'ides01'
+    autoFormat: false
+    // username: 'psy',
+    // password: 'ides01'
 })
 
 export const app = new Vue({
