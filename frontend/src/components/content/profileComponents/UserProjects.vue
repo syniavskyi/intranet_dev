@@ -42,7 +42,7 @@
               <div class="prof-tbody-item-title">{{ $t("table.projectName") }} </div>
               <!-- class="prof-tbody-item-txt" -->
               <div class="prof-tbody-item-txt">
-                <input :disabled="!projectEditMode" @input="checkFields" class="profile-table-input" v-model="userProjects[index].ProjectName" />
+                <input :disabled="!projectEditMode" @input="checkFields(index)" class="profile-table-input" v-model="userProjects[index].ProjectName" />
               </div>
             </div>
             <div class="prof-tbody-item">
@@ -51,7 +51,7 @@
               <!-- <select :disabled="!projectEditMode" class="profile-table-select profile-table-select-contractor" v-model="userProjects[index].ContractorId"> 
               <option v-for="contractor in contractorsList" :key="contractor.id" :value="contractor.id"> {{ contractor.name }}</option>
               </select> -->
-                <input :disabled="!projectEditMode" @input="checkFields" class="profile-table-input" v-model="userProjects[index].ContractorName" />
+                <input :disabled="!projectEditMode" @input="checkFields(index)" class="profile-table-input" v-model="userProjects[index].ContractorName" />
               </div>
             </div>
             <div class="prof-tbody-item">
@@ -107,7 +107,7 @@
             <div class="prof-tbody-item">
               <div class="prof-tbody-item-title">{{ $t("table.Descr") }} </div>
               <div class="prof-tbody-item-txt">
-                <textarea :disabled="!projectEditMode" @input="checkFields" class="profile-table-textarea" v-model="userProjects[index].Description" />
+                <textarea :disabled="!projectEditMode" @input="checkFields(index)" class="profile-table-textarea" v-model="userProjects[index].Description" />
               </div>
             </div>
             <div class="prof-tbody-item">
@@ -182,28 +182,28 @@ updated() {
       this._beforeEditingProjects[index].Modules = aModules;
       this._beforeEditingProjects[index].Industries = aIndustries;
     },
-    checkFields() {
-      if (this.userProjects.length > 0) {
-        for (let i = 0; i < this.userProjects.length; i++) {
+    checkFields(index) {
+      // if (this.userProjects.length > 0) {
+        // for (let i = 0; i < this.userProjects.length; i++) {
           if (
-            this.userProjects[i].ProjectName &&
-            this.userProjects[i].ContractorName &&
-            this.userProjects[i].Industries.length !== 0 &&
-            this.userProjects[i].Modules.length !== 0 &&
-            this.userProjects[i].DateStart &&
-            this.userProjects[i].Description &&
-            (this.userProjects[i].DateEnd !== null ||
-              this.userProjects[i].IsCurrent)
+            this.userProjects[index].ProjectName &&
+            this.userProjects[index].ContractorName &&
+            this.userProjects[index].Industries.length !== 0 &&
+            this.userProjects[index].Modules.length !== 0 &&
+            this.userProjects[index].DateStart &&
+            this.userProjects[index].Description &&
+            (this.userProjects[index].DateEnd !== null ||
+              this.userProjects[index].IsCurrent)
           ) {
             document.getElementsByClassName(
               "projSaveButton"
-            )[i].disabled = false;
+            )[index].disabled = false;
           } else {
             document.getElementsByClassName(
               "projSaveButton"
-            )[i].disabled = true;
-          }
-        }
+            )[index].disabled = true;
+          // }
+        // }
       }
     },
     // saveUserProject(index) {
@@ -237,7 +237,7 @@ updated() {
         moduleId: value.target.value
       };
       this.$store.dispatch("addModule", data);
-      this.checkFields();
+      this.checkFields(data.index);
     },
     removeModule(value) {
       const data = {
@@ -245,7 +245,7 @@ updated() {
         moduleId: value.target.value
       };
       this.$store.dispatch("removeModule", data);
-      this.checkFields();
+      this.checkFields(data.index);
     },
     removeIndustry(value) {
       const data = {
@@ -253,7 +253,7 @@ updated() {
         industryId: value.target.value
       };
       this.$store.dispatch("removeIndustry", data);
-      this.checkFields();
+      this.checkFields(data.index);
     },
     addIndustry(value) {
       const data = {
@@ -261,7 +261,7 @@ updated() {
         industryId: value.target.value
       };
       this.$store.dispatch("addIndustry", data);
-      this.checkFields();
+      this.checkFields(data.index);
     },
     disableEndDateInput(value) {
       const isCurrent = value.target.checked,

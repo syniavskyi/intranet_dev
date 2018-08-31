@@ -45,13 +45,13 @@
           </div>
           <div class="prof-row-inputs">
             <div class="prof-input-ss">
-              <input required v-if="editMode" class="inputProfile inputEdit" v-model="experience.Employer" @input="checkFields">
+              <input required v-if="editMode" class="inputProfile inputEdit" v-model="experience.Employer" @input="checkFields(index)">
               <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="experience.Employer"/>
               <span class="prof-div-bar"></span>
               <label class="label-profile">Pracodawca</label>
             </div>
             <div class="prof-input-ss">
-              <select required v-if="editMode" class="selectProfile selectEdit" @change="checkFields" v-model="experience.WorkPos">
+              <select required v-if="editMode" class="selectProfile selectEdit" @change="checkFields(index)" v-model="experience.WorkPos">
                 <option v-for="workPos in workPositions" :key="workPos.Key" :value="workPos.Key">{{workPos.Value}}</option>
               </select>
               <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="experience.WorkPos">
@@ -134,21 +134,21 @@ export default {
         this.$el.style.boxShadow = shadow 
       }
     },
-    checkFields() {
+    checkFields(index) {
       if (this.userExperience.length > 0) {
-        for (let i = 0; i < this.userExperience.length; i++) {
+        // for (let i = 0; i < this.userExperience.length; i++) {
           if (
-            this.userExperience[i].Employer &&
-            this.userExperience[i].WorkPos &&
-            this.userExperience[i].DateStart &&
-            (this.userExperience[i].DateEnd !== null ||
-              this.userExperience[i].isCurrent)
+            this.userExperience[index].Employer &&
+            this.userExperience[index].WorkPos &&
+            this.userExperience[index].DateStart &&
+            (this.userExperience[index].DateEnd !== null ||
+              this.userExperience[index].isCurrent)
           ) {
-            document.getElementsByClassName("expButtons")[i].children[0].disabled = false;
+            document.getElementsByClassName("expButtons")[index].children[0].disabled = false;
           } else {
-            document.getElementsByClassName("expButtons")[i].children[0].disabled = true;
+            document.getElementsByClassName("expButtons")[index].children[0].disabled = true;
           }
-        }
+        // }
       }
     },
     formatId(index) {
@@ -199,7 +199,7 @@ export default {
 
         this.invalidDates = formatStartDate > formatEndDate ? true : false;
       }
-      this.checkFields();
+      this.checkFields(index);
     },
     disableEndDateInput(value) {
       const isCurrent = value.target.checked,
@@ -212,7 +212,7 @@ export default {
       } else {
         input.setAttribute("style", "display: flex;");
       }
-      this.checkFields();
+      this.checkFields(index);
     },
     setExpCheckbox(index) {
       let exp = this.$store.getters.getUserExperience;

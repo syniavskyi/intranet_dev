@@ -7,7 +7,6 @@ const state = {
         AdditionalSkills: []
     },
     userLanguages: [
-        {Language:'EN',  LangLevel: 'C1'},
         // {language: 'DE',  langLevel: 'A1'}
     ]
 }
@@ -98,8 +97,13 @@ const actions = {
           commit('SET_USER_SKILLS', skillsList)
         }
     },
-    saveUserSkills(){
-
+    saveUserSkills({dispatch, getters,commit}, data){
+        dispatch('formatToString', data);
+        odata('UserSkills').post(data).save(function (data) {
+            console.log("skile");
+          }, function (status) {
+            console.error(status); 
+          });
     },
     addLanguageSkillsRow({
         commit,
