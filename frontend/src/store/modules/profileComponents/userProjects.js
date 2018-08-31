@@ -272,17 +272,14 @@ const actions = {
     commit('SET_USER_PROJECTS_LIST', projectsList)
     
   },
-  getIndustries({commit}, lang) {
+  getIndustries({commit, getters}, lang) {
     if(lang === undefined) {
       lang = "PL"
     }
+    let urlQuery = getters.getUrlQuery
     axios({
       method: 'GET',
-      url: "Industries?$filter=Lang eq '" + lang + "'",
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
+      url: "Industries" + urlQuery + "&$filter=Lang eq '" + lang + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }

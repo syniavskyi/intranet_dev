@@ -1,5 +1,6 @@
 import axios from 'axios'
 import router from '@/router/index.js'
+import odata from 'odata'
 
 const state = {
   departmentList: [],
@@ -147,19 +148,17 @@ const actions = {
     commit('SET_DATA_LOADED', true)
   },
   getDomainValues({
-    commit
+    commit, getters
   }, domainData) {
+    let urlQuery = getters.getUrlQuery
     if(domainData.lang === undefined) {
       domainData.lang = "PL"
     }
+
     // let lang = 'PL'
     axios({
       method: 'GET',
-      url: "Dictionaries?$filter=Name eq '" + domainData.name + "' and Language eq'" + domainData.lang + "'",
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
+      url: "Dictionaries" + urlQuery  + "&$filter=Name eq '" + domainData.name + "' and Language eq '" + domainData.lang + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -191,15 +190,12 @@ const actions = {
     })
   },
   getProjectsList({
-    commit
+    commit, getters
   }) {
+    let urlQuery = getters.getUrlQuery
     axios({
       method: 'GET',
-      url: 'Projects',
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
+      url: 'Projects'  + urlQuery,
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -212,15 +208,13 @@ const actions = {
     })
   },
   getContractorsList({
-    commit
+    commit, getters
   }) {
+    let urlQuery = getters.getUrlQuery
     axios({
       method: 'GET',
-      url: 'Contractors',
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
+      url: 'Contractors'  + urlQuery,
+
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -236,13 +230,14 @@ const actions = {
   // (UserAlias='UIO',Language='PL')
   // url: 'Users' + '(UserAlias=' + "'UIO'" + ',' + 'Language=' + "'PL'" + ')' + '?$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang',
   getUserData({
-    commit,
+    commit, getters,
     dispatch,
     state
   }, userData) {
+    let urlQuery = getters.getUrlQuery
     let c = userData;
     let userData2 = {};
-    userData2.user = 'UCZEN015';
+    userData2.user = 'UIO';
     userData2.lang = 'PL';
     if(userData === undefined) {
      let userData = {
@@ -254,20 +249,17 @@ const actions = {
     // let userData2 = {};
     // userData2.user = 'UIO';
     // userData2.lang = 'PL';
+    userData.user = 'UIO'
     axios({
       method: 'GET',
-      url: 'Users' + '(UserAlias=' + "'" + userData.user + "'," +  "Language='" + userData.lang + "')" + '?$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang',
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
+      url: 'Users' + '(UserAlias=' + "'" + userData.user + "'," +  "Language='" + userData.lang + "')"  + urlQuery +  '&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang',
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
     }).then(res => {
       console.log(res)
       const oUserData = res.data.d,
-        sUserId = 'UCZEN015'
+        sUserId = 'UIO'
       dispatch('formatData', oUserData);
       let oFormattedUserData = state.userData;
       oFormattedUserData.imgUrl = "http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileType='USER-PHOTO',Language='PL',UserAlias='" +
@@ -292,15 +284,12 @@ const actions = {
     })
   },
   getUsersLists({
-    commit
+    commit,getters
   }) {
+    let urlQuery = getters.getUrlQuery
     axios({
       method: 'GET',
-      url: 'EmployeesLists',
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
+      url: 'EmployeesLists' + urlQuery,
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -308,14 +297,11 @@ const actions = {
       commit('GET_USER_LIST', res.data.d.results);
     }).catch(error => { })
   },
-  getAllLanguages({commit},) {
+  getAllLanguages({commit, getters},) {
+    let urlQuery = getters.getUrlQuery
     axios({
       method: 'GET',
-      url: 'Languages',
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
+      url: 'Languages' + urlQuery,
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -323,17 +309,14 @@ const actions = {
       commit('SET_LANGUAGE_LIST', res.data.d.results);
     }).catch(error => { })
   },
-  getSchoolDesc({commit}, lang) {
+  getSchoolDesc({commit, getters}, lang) {
     if(lang === undefined) {
       lang = "PL"
     }
+    let urlQuery = getters.getUrlQuery
     axios({
       method: 'GET',
-      url: "SchoolDesc?$filter=Language eq " + "'" + lang + "'",
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
+      url: "SchoolDesc" + urlQuery + "&$filter=Language eq " + "'" + lang + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -342,15 +325,12 @@ const actions = {
     }).catch(error => { })
   },
 
-  getUserFilesData({commit}){
+  getUserFilesData({commit, getters}){
     let userId = localStorage.getItem('id')
+    let urlQuery = getters.getUrlQuery
     axios({
       method: 'GET',
-      url: "Attachments?$filter=UserAlias eq " + "'" + userId + "'",
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
+      url: "Attachments" + urlQuery +  "&$filter=UserAlias eq " + "'" + userId + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -358,18 +338,14 @@ const actions = {
       commit('SET_USER_FILES_LIST', res.data.d.results);
     }).catch(error => { })
   },
-  getFieldOfStudyDesc({commit}, lang) {
+  getFieldOfStudyDesc({commit, getters}, lang) {
     if(lang === undefined) {
       lang = "PL"
     }
-
+    let urlQuery = getters.getUrlQuery
     axios({
       method: 'GET',
-      url: "FieldOfStudyDesc?$filter=Language eq '" + lang + "'",
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
+      url: "FieldOfStudyDesc" + urlQuery + "&$filter=Language eq '" + lang + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }

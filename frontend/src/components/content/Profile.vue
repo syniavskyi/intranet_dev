@@ -10,12 +10,12 @@
                     <p class="profile-header-title">{{ $t("header.profile") }}</p>
                 </div>
                 <div v-if="!editMode" class="prof-input-lang"> 
-                    <select required class="selectLang" v-model="selectedProfileLang" @change="getNewData">
+                    <select required class="selectLang" v-model="selectedCvLang" @change="getNewData">
                         <option v-for="language in cvLanguageList" :key="language.id" :value="language.id">{{ language.description }}</option>
                     </select>
                     <label class="label-select-lang">{{ $t("label.language") }}</label>
                 </div>
-                <button class="profile-header-button" v-if="!editMode" @mouseout="onHoverOut" @mouseover="onHover" @click="onEdit">{{ $t("button.editData") }}</button>
+                <button class="profile-header-button" v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
                 <div v-if="editMode" class="header-button-save-reject">
                     <p class="profile-error profile-error-data" v-if="!saveChangesSuccess">{{ $t("message.saveChangesError") }}</p>
                     <button class="border-btn save-btn" @click="onSaveChanges" :disabled="disableSaveBtn">{{ $t("button.saveChanges") }}</button>
@@ -27,7 +27,7 @@
             <div class="profile-tiles">
             <div class="profile-tiles-row-wrap">
                 <div class="profile-tiles-row">
-                    <div class="profile-tile-1-3  profile-main-edit">
+                    <div class="profile-tile-1-3">
                         <div class="profile-tile-header">
                             <h2 class="prof-tile-h2">{{ $t("header.contact") }}</h2>
                             <div class="tile-underscore"></div>
@@ -66,7 +66,7 @@
                                             </div>
                                         </div>
                                         <p v-if="!editMode" disabled class="inputProfile inputDisabled">{{formatAddress}}</p>
-                                        <label class="label-profile">{{ $t("label.address") }}</label>
+                                        <!-- <label class="label-profile">{{ $t("label.address") }}</label> -->
                                     </div>
                                     <div class="prof-input">
                                         <!-- <input required class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()"> -->
@@ -94,7 +94,7 @@
                             <!-- </div> -->
                         </div>
                     </div>
-                    <div class="profile-tile-1-3  profile-main-edit">
+                    <div class="profile-tile-1-3">
                         <div class="profile-tile-header">
                             <h2 class="prof-tile-h2">Komunikatory</h2>
                             <div class="tile-underscore"></div>
@@ -131,7 +131,7 @@
                                     <!-- <img class="img-user-class" id="userProfilePhoto" src="nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileType='USER-PHOTO',Language='PL',UserAlias='UIO')/$value" width="150px"> -->
                                     <!-- <img class="img-user-class" id="userProfilePhoto" :src="userData.imgUrl" width="150px"> -->
                                     <p class="profile-error profile-error-image" v-if="photoUploadError">{{ $t("message.photoUploadError") }}</p>
-                                    <label for="change-user-image" class="profile-edit-btn">{{ $t("button.changePhoto") }}
+                                    <label for="change-user-image" class="change-user-img">{{ $t("button.changePhoto") }}
                                         <input accept="image/*" style="width: 1rem;" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
                                     </label>
                                 </div>
@@ -140,11 +140,11 @@
                     </div>
                 </div>
                 <div class="profile-tiles-row">
-                    <div class="profile-tile-1-2 profile-main-edit">
+                    <div class="profile-tile-1-2">
                         <div class="profile-tile-header">
                             <div class="profile-tile-header-row">
                                 <h2 class="prof-tile-h2">{{ $t("header.employee") }}</h2>
-                                <button class="profile-edit-btn">zmień hasło</button>
+                                <button class="profile-change-password">zmień hasło</button>
                             </div>
                             <div class="tile-underscore"></div>
                         </div>
@@ -267,7 +267,7 @@ import UserExperience from "./profileComponents/UserExperience";
 import UserSkills from "./profileComponents/UserSkills";
 import SelectCvContent from "./profileComponents/SelectCvContent";
 import UserCvTile from "./profileComponents/UserCvTile"
-import i18n from "../../lang/lang"
+import i18n from "../../lang/lang";
 export default {
   data() {
     return {
@@ -284,7 +284,7 @@ export default {
       routeToGo: null,
       newPosition: null,
       selectedCity: null,
-      selectedProfileLang: i18n.locale
+      selectedCvLang: i18n.locale
     };
   },
   validations: {
@@ -296,18 +296,13 @@ export default {
     }
   },
   watch: {
-    selectedProfileLang(lang) {
+    selectedCvLang(lang) {
       this.setCvLanguage(lang);
-    },
+    }
   },
   beforeCreate() {
-     let userData = {
-        user: 'UIO',
-        lang: 'PL'
-      }
-    //   this.loginLanguage
     if (this.$store.getters.isDataLoaded === false) {
-      this.$store.dispatch("loadData", userData);
+      this.$store.dispatch("loadData");
     }
   },
   // mounted() {
@@ -328,12 +323,17 @@ export default {
   //         image.src = url
   // },
   beforeRouteLeave(to, from, next) {
+    //   const answer = window.confirm('Zmiana')
+    //   if(answer) {
     let lang = this.loginLanguage;
     if (lang == "") {
       lang = "pl";
     }
     this.setLanguage(lang);
     next();
+    //   } else {
+    //       next(false);
+    //   }
   },
   components: {
     MaskedInput,
@@ -377,19 +377,8 @@ export default {
       this.editMode = !this.editMode;
       this._beforeEditingCache = Object.assign({}, this.userData);
     },
-        onHover() {
-        let mainEdits = document.querySelectorAll(".profile-main-edit")
-        for (let i = 0; i < mainEdits.length; i++) {
-            mainEdits[i].style.boxShadow = "0 0 20px orange";
-        }
-    },
-    onHoverOut() {
-        let mainEdits = document.querySelectorAll(".profile-main-edit")
-        for (let i = 0; i < mainEdits.length; i++) {
-            mainEdits[i].style.boxShadow = "0 0 10px grey";
-        }
-    },
-    formatDate(date) {
+
+        formatDate(date) {
       return date !== null && date !== undefined
         ? moment(date).format("DD.MM.YYYY")
         : "-";
@@ -406,6 +395,7 @@ export default {
       if (this.hasDataChanged === false) {
         this.showNoChangesAlert = true;
       } else {
+        
         this.$store.dispatch("saveUserData", this.userData);
         this.editMode = !this.editMode;
       }
@@ -503,12 +493,12 @@ export default {
       this.$store.dispatch("setLanguage", language);
     },
     getNewData() {
-      let cvLang = this.selectedProfileLang.toUpperCase();
+      let cvLang = this.selectedCvLang.toUpperCase();
       let userData = {};
       userData.user = "UIO";
       userData.lang = cvLang;
-      this.$store.dispatch("loadData", userData);
-    //   this.$store.dispatch("getDomainValues");
+      this.$store.dispatch("getUserData", userData);
+      this.$store.dispatch("getDomainValues");
     }
     // leavePage() {
     //     if (this._beforeEditingProjects){
