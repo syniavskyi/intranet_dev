@@ -15,6 +15,7 @@
                     </select>
                     <label class="label-select-lang">{{ $t("label.language") }}</label>
                 </div>
+                <button class="profile-header-button" v-if="!editMode" @mouseout="onHoverOut" @mouseover="onHover" @click="onEdit">{{ $t("button.editData") }}</button>
                 <div v-if="editMode" class="header-button-save-reject">
                     <p class="profile-error profile-error-data" v-if="!saveChangesSuccess">{{ $t("message.saveChangesError") }}</p>
                     <button class="border-btn save-btn" @click="onSaveChanges" :disabled="disableSaveBtn">{{ $t("button.saveChanges") }}</button>
@@ -26,7 +27,7 @@
             <div class="profile-tiles">
             <div class="profile-tiles-row-wrap">
                 <div class="profile-tiles-row">
-                    <div class="profile-tile-1-3">
+                    <div class="profile-tile-1-3  profile-main-edit">
                         <div class="profile-tile-header">
                             <h2 class="prof-tile-h2">{{ $t("header.contact") }}</h2>
                             <div class="tile-underscore"></div>
@@ -93,7 +94,7 @@
                             <!-- </div> -->
                         </div>
                     </div>
-                    <div class="profile-tile-1-3">
+                    <div class="profile-tile-1-3  profile-main-edit">
                         <div class="profile-tile-header">
                             <h2 class="prof-tile-h2">Komunikatory</h2>
                             <div class="tile-underscore"></div>
@@ -130,7 +131,7 @@
                                     <!-- <img class="img-user-class" id="userProfilePhoto" src="nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileType='USER-PHOTO',Language='PL',UserAlias='UIO')/$value" width="150px"> -->
                                     <!-- <img class="img-user-class" id="userProfilePhoto" :src="userData.imgUrl" width="150px"> -->
                                     <p class="profile-error profile-error-image" v-if="photoUploadError">{{ $t("message.photoUploadError") }}</p>
-                                    <label for="change-user-image" class="change-user-img">{{ $t("button.changePhoto") }}
+                                    <label for="change-user-image" class="profile-edit-btn">{{ $t("button.changePhoto") }}
                                         <input accept="image/*" style="width: 1rem;" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
                                     </label>
                                 </div>
@@ -139,11 +140,11 @@
                     </div>
                 </div>
                 <div class="profile-tiles-row">
-                    <div class="profile-tile-1-2">
+                    <div class="profile-tile-1-2 profile-main-edit">
                         <div class="profile-tile-header">
                             <div class="profile-tile-header-row">
                                 <h2 class="prof-tile-h2">{{ $t("header.employee") }}</h2>
-                                <button class="profile-change-password">zmień hasło</button>
+                                <button class="profile-edit-btn">zmień hasło</button>
                             </div>
                             <div class="tile-underscore"></div>
                         </div>
@@ -376,8 +377,19 @@ export default {
       this.editMode = !this.editMode;
       this._beforeEditingCache = Object.assign({}, this.userData);
     },
-
-        formatDate(date) {
+        onHover() {
+        let mainEdits = document.querySelectorAll(".profile-main-edit")
+        for (let i = 0; i < mainEdits.length; i++) {
+            mainEdits[i].style.boxShadow = "0 0 20px orange";
+        }
+    },
+    onHoverOut() {
+        let mainEdits = document.querySelectorAll(".profile-main-edit")
+        for (let i = 0; i < mainEdits.length; i++) {
+            mainEdits[i].style.boxShadow = "0 0 10px grey";
+        }
+    },
+    formatDate(date) {
       return date !== null && date !== undefined
         ? moment(date).format("DD.MM.YYYY")
         : "-";
