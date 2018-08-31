@@ -1,28 +1,26 @@
 <template>
 	<div class="plane-parent plane-parent-login">
-      <transition name="slide-backdrop">
-        <div class="backdrop" v-if="showRemindPassword"></div>
-      </transition>
-      <transition name="slide">
-        <div class="modal" v-if="showRemindPassword">
+        <div class="modal-overlay" v-if="showRemindPassword"></div>
+        <div class="modal-new-s" v-if="showRemindPassword">
             <div class="modal-header">
                 <h1 class="modal-title">{{ $t("header.forgotPass") }}</h1>
                 <button class="modal-exit" @click="switchForgotPassword">&#10006;</button>
             </div>
             <div class="modal-email">
-                <label class="modal-label">{{ $t("label.enterEmail") }}</label>
-                <input class="input modal-input" v-model="email">
+              <div class="cd-for-input-xxl">
+                <input required class="cd-input" v-model="email">
+                <span class="cd-span"></span>
+                <label class="cd-label">{{ $t("label.enterEmail") }}</label>
+              </div>
                 <transition name="fade-alert">
                     <p class="success-alert" v-if="sendEmailSuccess">{{ $t("message.sendEmailSuccess") }}</p>
                 </transition>
                 <transition name="fade-alert">
                     <p class="success-alert" v-if="sendEmailError">{{ $t("message.sendEmailError") }}</p>
                 </transition>
-                <!-- <p class="p-modal-txt">na który otrzymasz link resetujący.</p> -->
             </div>
             <button class="button modal-button" :disabled="$v.email.$invalid" type="button" @click="onResetPassword"><span class="span-arrow">{{ $t("button.resetPass") }}</span></button>
         </div>
-      </transition>
             <div class="plane plane-login">
                 <div class="plane-left">
                     <img class="img-user" src="../../assets/images/grouper-256.png">
