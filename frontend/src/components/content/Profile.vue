@@ -15,7 +15,6 @@
                     </select>
                     <label class="label-select-lang">{{ $t("label.language") }}</label>
                 </div>
-                <button class="profile-header-button" v-if="!editMode" @mouseout="onHoverOut" @mouseover="onHover" @click="onEdit">{{ $t("button.editData") }}</button>
                 <div v-if="editMode" class="header-button-save-reject">
                     <p class="profile-error profile-error-data" v-if="!saveChangesSuccess">{{ $t("message.saveChangesError") }}</p>
                     <button class="border-btn save-btn" @click="onSaveChanges" :disabled="disableSaveBtn">{{ $t("button.saveChanges") }}</button>
@@ -27,7 +26,7 @@
             <div class="profile-tiles">
             <div class="profile-tiles-row-wrap">
                 <div class="profile-tiles-row">
-                    <div class="profile-tile-1-3 profile-main-edit">
+                    <div class="profile-tile-1-3">
                         <div class="profile-tile-header">
                             <h2 class="prof-tile-h2">{{ $t("header.contact") }}</h2>
                             <div class="tile-underscore"></div>
@@ -94,7 +93,7 @@
                             <!-- </div> -->
                         </div>
                     </div>
-                    <div class="profile-tile-1-3 profile-main-edit">
+                    <div class="profile-tile-1-3">
                         <div class="profile-tile-header">
                             <h2 class="prof-tile-h2">Komunikatory</h2>
                             <div class="tile-underscore"></div>
@@ -127,9 +126,11 @@
                         <div class="profile-tile-content">
                             <div class="profile-user-header">
                                 <div class="profile-user-img">
-                                    <img class="img-user-class" :src="userData.image" width="150px">
+                                    <img class="img-user-class" id="userProfilePhoto" :src="setImageSrc()" width="150px">
+                                    <!-- <img class="img-user-class" id="userProfilePhoto" src="nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileType='USER-PHOTO',Language='PL',UserAlias='UIO')/$value" width="150px"> -->
+                                    <!-- <img class="img-user-class" id="userProfilePhoto" :src="userData.imgUrl" width="150px"> -->
                                     <p class="profile-error profile-error-image" v-if="photoUploadError">{{ $t("message.photoUploadError") }}</p>
-                                    <label for="change-user-image" class="profile-edit-btn">{{ $t("button.changePhoto") }}
+                                    <label for="change-user-image" class="change-user-img">{{ $t("button.changePhoto") }}
                                         <input accept="image/*" style="width: 1rem;" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
                                     </label>
                                 </div>
@@ -138,11 +139,11 @@
                     </div>
                 </div>
                 <div class="profile-tiles-row">
-                    <div class="profile-tile-1-2 profile-main-edit">
+                    <div class="profile-tile-1-2">
                         <div class="profile-tile-header">
                             <div class="profile-tile-header-row">
                                 <h2 class="prof-tile-h2">{{ $t("header.employee") }}</h2>
-                                <button class="profile-edit-btn">zmień hasło</button>
+                                <button class="profile-change-password">zmień hasło</button>
                             </div>
                             <div class="tile-underscore"></div>
                         </div>
@@ -308,6 +309,23 @@ export default {
       this.$store.dispatch("loadData", userData);
     }
   },
+  // mounted() {
+  //   const sUserId = localStorage.getItem("id"),
+  //               sLanguage = 'PL',
+  //               sFileType = "USER-PHOTO",
+  //               image = document.getElementById('userProfilePhoto');
+
+  //           const url =
+  //               "http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileType='" +
+  //               sFileType +
+  //               "',Language='" +
+  //               sLanguage +
+  //               "',UserAlias='" +
+  //               sUserId +
+  //               "')/$value";
+        
+  //         image.src = url
+  // },
   beforeRouteLeave(to, from, next) {
     let lang = this.loginLanguage;
     if (lang == "") {
@@ -333,7 +351,6 @@ export default {
       userData: "getUserInfo",
       saveChangesSuccess: "isSaveChangesSuccess",
       photoUploadError: "isSavePhotoError",
-      fileUploadError: "isFileUploadError",
       userPositions: "getUserJobPositions",
       cvLanguageList: "getCvLanguageList",
       loginLanguage: "getLoginLanguage",
@@ -356,23 +373,11 @@ export default {
   methods: {
     onEdit() {
       this.showNoChangesAlert = false;
-      this.onHover();
       this.editMode = !this.editMode;
       this._beforeEditingCache = Object.assign({}, this.userData);
     },
-    onHover() {
-        let mainEdits = document.querySelectorAll(".profile-main-edit")
-        for (let i = 0; i < mainEdits.length; i++) {
-            mainEdits[i].style.boxShadow = "0 0 20px orange";
-        }
-    },
-    onHoverOut() {
-        let mainEdits = document.querySelectorAll(".profile-main-edit")
-        for (let i = 0; i < mainEdits.length; i++) {
-            mainEdits[i].style.boxShadow = "0 0 10px grey";
-        }
-     },
-    formatDate(date) {
+
+        formatDate(date) {
       return date !== null && date !== undefined
         ? moment(date).format("DD.MM.YYYY")
         : "-";
@@ -413,12 +418,30 @@ export default {
       this.photo = this.$refs.photo.files[0];
       this.disableSubmit = false;
       let data = {
-        file: this.photo,
-        id: localStorage.getItem("id")
+        file: this.photo,            
+        userId: localStorage.getItem("id"),
+        type: "USER-PHOTO",
+        language: 'PL'
       };
       this.$store.dispatch("submitPhoto", data);
     },
+    setImageSrc() {
+        // e.g. AttachmentMedias(FileType='CV',Language='PL',UserAlias='MHA')/$value
+            const sUserId = localStorage.getItem("id"),
+                sLanguage = 'PL',
+                sFileType = "USER-PHOTO";
 
+            const url =
+                "https://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileType='" +
+                sFileType +
+                "',Language='" +
+                sLanguage +
+                "',UserAlias='" +
+                sUserId +
+                "')/$value";
+
+            return url;
+        },
     phoneValidation(value) {
       const regex = new RegExp("^(?=.*[0-9])[- +()0-9]+$");
       this.invalidPhone = regex.test(value.target.value) ? false : true;

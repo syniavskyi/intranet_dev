@@ -240,12 +240,16 @@ const actions = {
     dispatch,
     state
   }, userData) {
+    let c = userData;
+    let userData2 = {};
+    userData2.user = 'UCZEN015';
+    userData2.lang = 'PL';
     if(userData === undefined) {
      let userData = {
         user: 'UIO',
          lang: 'PL'
+      }
     }
-  }
     // let c = userData;
     // let userData2 = {};
     // userData2.user = 'UIO';
@@ -262,11 +266,14 @@ const actions = {
       }
     }).then(res => {
       console.log(res)
-      const oUserData = res.data.d;;
+      const oUserData = res.data.d,
+        sUserId = 'UCZEN015'
       dispatch('formatData', oUserData);
       let oFormattedUserData = state.userData;
+      oFormattedUserData.imgUrl = "http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileType='USER-PHOTO',Language='PL',UserAlias='" +
+      sUserId + "')/$value"
       // localStorage.setItem('id', oFormattedUserData.UserAlias)
-      localStorage.setItem('id','UIO');
+      localStorage.setItem('id', sUserId);
       dispatch('getUserFilesData')
       commit('SET_USER_INFO', oFormattedUserData);
       commit('SET_USER_EDUCATION', oUserData.UserEducations.results);

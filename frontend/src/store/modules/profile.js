@@ -43,56 +43,49 @@ const actions = {
   saveUserData({
     commit
   }, userData) {
+    userData.Action = 'E'
+    userData.Language = 'PL'
+    delete userData.UserCvProjects
+    delete userData.UserEducations
+    delete userData.UserExperiences
+    delete userData.imgUrl
+    delete userData.UserSkills
+    delete userData.UserLang
+    userData.EmploymentDate = utils.formatDateForBackend(userData.EmploymentDate)
+    
+    const url = 'Users' + '(' + "UserAlias='"+ userData.UserAlias + "',Language='" + userData.Language +  "')"
+    odata(url).put(userData).save(function (data) {
+      console.log("changed");
+    }, function (status) {
+      console.error(status); 
+    });
     commit('SET_USER_INFO', userData);
   },
-  submitPhoto({
-    commit
-  }, data) {
-    // let formData = new FormData();
-    // formData.append('file', data.file);
-    // formData.append('id', data.id);
-    // axios({
-    //   method: 'post',
-    //   url: '/api/files/uploadImage',
-    //   headers: {
-    //     "Content-type": "multipart/form-data"
-    //   },
-    //   data: formData
-    // }).then(res => {
-    //   console.log(res);
-    //   commit('SET_PHOTO', res.data.fileDownloadUri);
-    //   commit('SET_PHOTO_ERROR', false);
-    // }).catch(error => {
-    //   commit('SET_PHOTO_ERROR', true);
-    //   console.log(error);
-    // })
+  submitPhoto({commit}, data) {
+    let slugHeader = data.file.name + ';' + data.type + ';' + data.language + ';' + data.userId + ';' +  data.file.type
+        let url = 'http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias'
+    
+        axios({
+          method: 'POST',
+          url: '/AttachmentMedias',
+          auth: {
+            username: 'psy',
+            password: 'ides01'
+          },
+          data: data.file,
+          headers: {
+            "Content-type": data.file.type,
+            "X-Requested-With": "XMLHttpRequest",
+            "Slug": slugHeader
+          }
+        }).then(res => {
+          console.log(res);
+        }).catch(error => { 
+          console.log(error);
+        })
   },
  
-  submitCv({
-    commit, dispatch
-  }, data) {
-    let slugHeader = data.file.name + ';' + data.type + ';' + data.language + ';' + data.userId + ';' +  data.file.type
-    let url = 'http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias'
-
-    axios({
-      method: 'POST',
-      url: '/AttachmentMedias',
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
-      data: data.file,
-      headers: {
-        "Content-type": data.file.type,
-        "X-Requested-With": "XMLHttpRequest",
-        "Slug": slugHeader
-      }
-    }).then(res => {
-      console.log(res);
-    }).catch(error => { 
-      console.log(error);
-    })
-  },
+  
   onTileEdit({}, data) {
 
   }
@@ -117,6 +110,7 @@ const getters = {
   getCvLanguageList(state){
     return state.cvLanguageList;
   }
+
 };
 
 export default {

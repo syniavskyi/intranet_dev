@@ -107,27 +107,31 @@ export default {
             return url;
         },
         handleCvUpload() {
+            
         this.file = this.$refs.file.files[0];
+
         let data = {
             file: this.file,
             language: this.selectedDownloadLang.toUpperCase(),
             userId: localStorage.getItem("id"),
             type: "CV-" + this.selectedFormat
         };
+
         let isToChange = null
          for(let i=0; i < this.userFilesList.length;  i++){
                 if (this.userFilesList[i].FileType == data.type && this.userFilesList[i].Language == data.language){
                    isToChange = true
+                   this.$store.dispatch("updateCv", data);
                    return
                 }  else {
-                    false
+                   isToChange = false
                 }
-            }
-            if (isToChange){
-                this.$store.dispatch("updateCv", data);
-            } else{
+         }
+            if (isToChange == false){
                 this.$store.dispatch("submitCv", data);
             }
+            this.checkIfFileExist()
+        
         },
         deleteFile() {
         let data = {

@@ -85,6 +85,7 @@ const actions = {
           }
         }).then(res => {
           console.log(res);
+          dispatch('getUserFilesData')
         }).catch(error => { 
           console.log(error);
         })
@@ -93,11 +94,11 @@ const actions = {
         commit, dispatch
       }, data) {
         let slugHeader = data.file.name + ';' + data.type + ';' + data.language + ';' + data.userId + ';' +  data.file.type
-        let url = 'http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias'
+        let url = "/AttachmentMedias(FileType='" + data.type + "',Language='" + data.language + "',UserAlias='" + data.userId + "')/$value"
     
         axios({
           method: 'PUT',
-          url: '/AttachmentMedias',
+          url: url,
           auth: {
             username: 'psy',
             password: 'ides01'
@@ -110,6 +111,7 @@ const actions = {
           }
         }).then(res => {
           console.log(res);
+          dispatch('getUserFilesData')
         }).catch(error => { 
           console.log(error);
         })
@@ -118,6 +120,7 @@ const actions = {
         let url = "/AttachmentMedias(FileType='" + data.type + "',Language='" + data.language + "',UserAlias='" + data.userId + "')/$value"
         odata(url).remove().save(function (data) {
             console.log("removed");
+            dispatch('getUserFilesData')
           }, function (status) {
             console.error(status); 
           });
