@@ -6,7 +6,7 @@
         <div class="profile-table-buttons">
           <button class="profile-edit-btn" v-if="!editMode" @mouseover="onHover" @mouseout="onHoverOut" @click="edit">{{ $t("button.edit") }}</button>
           <button class="profile-edit-btn-e" v-if="editMode" @click="cancel">{{ $t("button.cancel") }}</button>
-          <button class="profile-edit-btn-e" v-if="editMode" @click="save">{{ $t("button.save") }}</button>
+          <button class="profile-edit-btn-e" v-if="editMode" @click="save(index)">{{ $t("button.save") }}</button>
         </div>
       </div>
       <div class="tile-underscore"></div>
@@ -166,7 +166,7 @@ export default {
       this.$store.commit("SET_USER_LANGS", this._beforeEditingCacheLangs);
       this.editMode = false;
     },
-    save() {
+    save(index) {
       this.onHoverOut(this.$el)
       this.$store.dispatch("saveUserSkills");
       this._beforeEditingCacheSkills = JSON.parse(

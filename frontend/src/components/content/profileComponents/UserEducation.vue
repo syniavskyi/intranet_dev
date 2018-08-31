@@ -52,7 +52,7 @@
           <div class="prof-row-inputs">
             <div class="prof-inputs-div">
               <div class="prof-input-l">
-                <select required v-if="editMode" class="selectProfile selectEdit" v-model="education.FieldOfStudy">
+                <select required v-if="editMode" class="selectProfile selectEdit" v-model="education.FieldOfStudy" @change="checkFields(index)">
                   <option v-for="fieldOfStudy in fieldOfStudyDescList" :key="fieldOfStudy.SchoolId" :value="fieldOfStudy.SchoolId">{{fieldOfStudy.SchoolDescription}}</option>
                 </select>
                 <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="education.FieldOfStudy">
@@ -63,7 +63,7 @@
                 <label class="label-profile">{{ $t("label.fieldOfStudy") }}</label>       
               </div>
               <div class="prof-input-l">
-                <select required v-if="editMode" class="selectProfile selectEdit" v-model="education.University">
+                <select required v-if="editMode" class="selectProfile selectEdit" v-model="education.University" @change="checkFields(index)">
                   <option v-for="school in schoolDescList" :key="school.SchoolId" :value="school.SchoolId">{{school.SchoolDescription}}</option>
                 </select>
                 <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="education.University">
@@ -75,7 +75,7 @@
             </div>
             <div class="prof-inputs-div">
               <div class="prof-input-xs">
-                <select required v-if="editMode" class="selectProfile selectEdit" @change="checkFields" v-model="education.StudyType">
+                <select required v-if="editMode" class="selectProfile selectEdit" @change="checkFields(index)" v-model="education.StudyType">
                   <option v-for="type in studyTypes" :key="type.Key" :value="type.Key">{{type.Value}}</option>
                 </select>
                 <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="education.StudyType">
@@ -88,7 +88,7 @@
               <div class="prof-input-xs">
                 <!-- <input required v-if="editMode" class="inputProfile inputEdit"  v-model="education.AcademicTitle"/> -->
                 <!-- <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="education.AcademicTitle"/> -->
-                <select required v-if="editMode" class="selectProfile selectEdit" @change="checkFields" v-model="education.AcademicTitle">
+                <select required v-if="editMode" class="selectProfile selectEdit" @change="checkFields(index)" v-model="education.AcademicTitle">
                   <option v-for="type in academicTitles" :key="type.Key" :value="type.Key">{{type.Value}}</option>
                 </select>
                 <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="education.AcademicTitle">
@@ -193,23 +193,23 @@ export default {
         this.$el.style.boxShadow = shadow 
       }
     },
-    checkFields() {
+    checkFields(index) {
       if (this.userEducation.length > 0) {
-        for (let i = 0; i < this.userEducation.length; i++) {
+        // for (let i = 0; i < this.userEducation.length; i++) {
           if (
-            this.userEducation[i].FieldOfStudy &&
-            this.userEducation[i].University &&
-            this.userEducation[i].StudyType &&
-            this.userEducation[i].AcademicTitle &&
-            this.userEducation[i].DateStart &&
-            (this.userEducation[i].DateEnd !== null ||
-              this.userEducation[i].IsCurrent)
+            this.userEducation[index].FieldOfStudy &&
+            this.userEducation[index].University &&
+            this.userEducation[index].StudyType &&
+            this.userEducation[index].AcademicTitle &&
+            this.userEducation[index].DateStart &&
+            (this.userEducation[index].DateEnd !== null ||
+              this.userEducation[index].IsCurrent)
           ) {
-            document.getElementsByClassName("eduButtons")[i].children[0].disabled = false;
+            document.getElementsByClassName("eduButtons")[index].children[0].disabled = false;
           } else {
-            document.getElementsByClassName("eduButtons")[i].children[0].disabled = true;
+            document.getElementsByClassName("eduButtons")[index].children[0].disabled = true;
           }
-        }
+        // }
       }
     },
     remove(index) {
@@ -254,7 +254,7 @@ export default {
 
         this.invalidDates = formatStartDate > formatEndDate ? true : false;
       }
-      this.checkFields();
+      this.checkFields(index);
     },
     disableEndDateInput(value) {
       const isCurrent = value.target.checked,
@@ -269,7 +269,7 @@ export default {
         // input.setAttribute("style", "opacity: 1");
         input.setAttribute("style", "display: flex;");
       }
-      this.checkFields();
+      this.checkFields(index);
     },
     setEduCheckbox(index) {
       let edu = this.$store.getters.getUserEducation;
