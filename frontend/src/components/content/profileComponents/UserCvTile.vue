@@ -3,26 +3,21 @@
                         <div class="profile-tile-header">
                             <div class="profile-tile-header-row">
                                 <h2 class="prof-tile-h2">{{ $t("label.cv") }}</h2>
-                                <button class="profile-edit-btn" @click="showSelectDialog">Generuj CV</button>
+                                <button class="profile-edit-experience-e" @click="showSelectDialog">Generuj CV</button>
                             </div>
                             <div class="tile-underscore"></div>
                         </div>
                         <div class="profile-tile-content">
                                 <div class="cv-buttons">
                                     <div class="button-cv">
-                                        <div class="prof-input-100">    
-                                            <select class="selectProfile selectEdit" required  v-model="selectedDownloadLang" @change="checkIfFileExist">
+                                            <label>{{ $t("label.language") }}</label>
+                                            <select required  v-model="selectedDownloadLang" @change="checkIfFileExist">
                                                 <option v-for="language in cvLanguageList" :key="language.id" :value="language.id">{{ language.description }}</option>
                                             </select>
-                                            <label class="label-profile">{{ $t("label.language") }}</label>
-                                        </div>
-                                        <div class="prof-input-100">
-                                            
-                                           <select class="selectProfile selectEdit" required v-model="selectedFormat" @change="setSelectedFormat">
+                                            <label>Format</label>
+                                           <select required v-model="selectedFormat" @change="setSelectedFormat">
                                                <option v-for="format in formats" :key="format">{{format}}</option>
                                             </select>
-                                            <label class="label-profile">Format</label>
-                                        </div>
                                
                                         <div class="add-download" v-if="selectedFormat">
                                             <p class="profile-error profile-error-upload-top" v-if="fileUploadError">{{ $t("message.fileUploadError") }}</p>
@@ -41,8 +36,8 @@
                                                     <input accept=".pdf" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload('PDF')">
                                                 </label>
                                             </div>
-                                            <a title="ściągnij" :disabled="disableFileOptions" class="download pdf-add-pl" :href="setDownloadLink()">&#x21e3;</a>
-                                            <button title="usuń" :disabled="disableFileOptions" class="download pdf-add-pl" @click="deleteFile">X</button>
+                                            <a :disabled="disableFileOptions" class="download pdf-add-pl" :href="setDownloadLink()">&#x21e3;</a>
+                                            <button :disabled="disableFileOptions" class="download pdf-add-pl" @click="deleteFile">X</button>
                                            </div>
                                     </div>
                                     
@@ -110,27 +105,31 @@ export default {
             return url;
         },
         handleCvUpload() {
+            
         this.file = this.$refs.file.files[0];
+
         let data = {
             file: this.file,
             language: this.selectedDownloadLang.toUpperCase(),
             userId: localStorage.getItem("id"),
             type: "CV-" + this.selectedFormat
         };
+
         let isToChange = null
          for(let i=0; i < this.userFilesList.length;  i++){
                 if (this.userFilesList[i].FileType == data.type && this.userFilesList[i].Language == data.language){
                    isToChange = true
+                   this.$store.dispatch("updateCv", data);
                    return
                 }  else {
-                    false
+                   isToChange = false
                 }
-            }
-            if (isToChange){
-                this.$store.dispatch("updateCv", data);
-            } else{
+         }
+            if (isToChange == false){
                 this.$store.dispatch("submitCv", data);
             }
+            this.checkIfFileExist()
+        
         },
         deleteFile() {
         let data = {
