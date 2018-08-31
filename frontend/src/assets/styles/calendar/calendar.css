@@ -5,12 +5,7 @@ body {
     height: 100vh;
 }
 
-.modal {
-    width: 90%;
-    top: 1%;
-    left: 5%;
-    position: absolute;
-}
+
 .modal-event {
     height: auto;
 }
@@ -317,11 +312,6 @@ marginForm button {
     .calendar-content {
         width:80%;
     }
-    .modal {
-        width: 50%;
-        top: 15%;
-        left: 17%;
-    }
     .event-feature {
         display: flex;
         flex-direction: row;
@@ -329,9 +319,6 @@ marginForm button {
     
 }
 @media (min-width: 85rem) {
-    .modal {
-        width: 40%;
-    }
     .event-feature {
         display: flex;
         justify-content: space-between;
