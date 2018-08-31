@@ -128,28 +128,34 @@ const actions = {
     commit,
     state,
     dispatch
-  }, lang) {
+  }, userData) {
     for (let i = 0; i < state.sapDomains.length; i++) {
-      dispatch('getDomainValues', state.sapDomains[i])
+      let domainData = {
+        name: state.sapDomains[i],
+        lang: userData.lang
+      };
+      dispatch('getDomainValues', domainData)
     }
     dispatch('getContractorsList');
-    dispatch('getIndustries');
+    dispatch('getIndustries', userData.lang);
     dispatch('getProjectsList');
-    // dispatch('getUserData');
     dispatch('getUsersLists');
-    dispatch('getAllLanguages');
-    dispatch('getSchoolDesc', lang);
-    dispatch('getFieldOfStudyDesc', lang);
-    dispatch('getUserData', lang);
+    dispatch('getAllLanguages',);
+    dispatch('getSchoolDesc', userData.lang);
+    dispatch('getFieldOfStudyDesc', userData.lang);
+    dispatch('getUserData', userData);
     commit('SET_DATA_LOADED', true)
   },
   getDomainValues({
     commit
-  }, domainName, lang) {
-    let lang2 = 'PL'
+  }, domainData) {
+    if(domainData.lang === undefined) {
+      domainData.lang = "PL"
+    }
+    // let lang = 'PL'
     axios({
       method: 'GET',
-      url: "Dictionaries?$filter=Name eq '" + domainName + "' and Language eq'" + lang2 + "'",
+      url: "Dictionaries?$filter=Name eq '" + domainData.name + "' and Language eq'" + domainData.lang + "'",
       auth: {
         username: 'psy',
         password: 'ides01'
@@ -158,25 +164,25 @@ const actions = {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
     }).then(res => {
-      if (domainName == 'ZINTRANET_DEPARTMENT') {
+      if (domainData.name == 'ZINTRANET_DEPARTMENT') {
         const aDepartments = res.data.d.results;
         commit('SET_DEP_LIST', aDepartments);
-      } else if (domainName == 'ZINTRANET_BRANCH') {
+      } else if (domainData.name == 'ZINTRANET_BRANCH') {
         const aBranches = res.data.d.results;
         commit('SET_BRANCH_LIST', aBranches);
-      } else if (domainName == 'ZINTRANET_STUDIES_TYPES') {
+      } else if (domainData.name == 'ZINTRANET_STUDIES_TYPES') {
         const aTypes = res.data.d.results;
         commit('SET_STUDY_TYPES_LIST', aTypes);
-      } else if (domainName == 'ZINTANET_ACADEMIC_TITLES') {
+      } else if (domainData.name == 'ZINTANET_ACADEMIC_TITLES') {
         const aTitles = res.data.d.results;
         commit('SET_ACADEMIC_TITLES_LIST', aTitles);
-      } else if (domainName == 'ZINTRANET_LANG_LEVEL') {
+      } else if (domainData.name == 'ZINTRANET_LANG_LEVEL') {
         const aLevels = res.data.d.results;
         commit('SET_LANG_LEVELS', aLevels);
-      } else if (domainName == 'ZWORK_POS') {
+      } else if (domainData.name == 'ZWORK_POS') {
         const aWorkPos = res.data.d.results;
         commit('SET_WORK_POSITION_LIST', aWorkPos);
-      } else if (domainName == 'ZINTRANET_SAP_MODULES') {
+      } else if (domainData.name == 'ZINTRANET_SAP_MODULES') {
         const aSapModules = res.data.d.results;
         commit('SET_SAP_MODULES_LIST', aSapModules);
       } 
@@ -238,9 +244,19 @@ const actions = {
     let userData2 = {};
     userData2.user = 'UCZEN015';
     userData2.lang = 'PL';
+    if(userData === undefined) {
+     let userData = {
+        user: 'UIO',
+         lang: 'PL'
+      }
+    }
+    // let c = userData;
+    // let userData2 = {};
+    // userData2.user = 'UIO';
+    // userData2.lang = 'PL';
     axios({
       method: 'GET',
-      url: 'Users' + '(UserAlias=' + "'" + userData2.user + "'," +  "Language='" + userData2.lang + "')" + '?$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang',
+      url: 'Users' + '(UserAlias=' + "'" + userData.user + "'," +  "Language='" + userData.lang + "')" + '?$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang',
       auth: {
         username: 'psy',
         password: 'ides01'
@@ -265,7 +281,7 @@ const actions = {
       commit('SET_USER_EXPERIENCE', oUserData.UserExperiences.results);
       dispatch('setExpIsCurrentField');
       commit('SET_USER_SKILLS', oUserData.UserSkills.results);
-      dispatch('adjustUserSkills');
+      dispatch('adjustUserSkills', userData);
       commit('SET_USER_LANGS', oUserData.UserLang.results);
       dispatch('adjustLang');
       commit('SET_USER_PROJECTS_LIST', oUserData.UserCvProjects.results);
@@ -292,7 +308,7 @@ const actions = {
       commit('GET_USER_LIST', res.data.d.results);
     }).catch(error => { })
   },
-  getAllLanguages({commit}) {
+  getAllLanguages({commit},) {
     axios({
       method: 'GET',
       url: 'Languages',
@@ -308,10 +324,12 @@ const actions = {
     }).catch(error => { })
   },
   getSchoolDesc({commit}, lang) {
-    let lang2 = 'PL';
+    if(lang === undefined) {
+      lang = "PL"
+    }
     axios({
       method: 'GET',
-      url: "SchoolDesc?$filter=Language eq " + "'" + lang2 + "'",
+      url: "SchoolDesc?$filter=Language eq " + "'" + lang + "'",
       auth: {
         username: 'psy',
         password: 'ides01'
@@ -341,11 +359,13 @@ const actions = {
     }).catch(error => { })
   },
   getFieldOfStudyDesc({commit}, lang) {
-    let lang2 = 'PL';
+    if(lang === undefined) {
+      lang = "PL"
+    }
 
     axios({
       method: 'GET',
-      url: "FieldOfStudyDesc?$filter=Language eq '" + lang2 + "'",
+      url: "FieldOfStudyDesc?$filter=Language eq '" + lang + "'",
       auth: {
         username: 'psy',
         password: 'ides01'

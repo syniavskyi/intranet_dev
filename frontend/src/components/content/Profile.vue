@@ -10,7 +10,7 @@
                     <p class="profile-header-title">{{ $t("header.profile") }}</p>
                 </div>
                 <div v-if="!editMode" class="prof-input-lang"> 
-                    <select required class="selectLang" v-model="selectedCvLang" @change="getNewData">
+                    <select required class="selectLang" v-model="selectedProfileLang" @change="getNewData">
                         <option v-for="language in cvLanguageList" :key="language.id" :value="language.id">{{ language.description }}</option>
                     </select>
                     <label class="label-select-lang">{{ $t("label.language") }}</label>
@@ -266,7 +266,7 @@ import UserExperience from "./profileComponents/UserExperience";
 import UserSkills from "./profileComponents/UserSkills";
 import SelectCvContent from "./profileComponents/SelectCvContent";
 import UserCvTile from "./profileComponents/UserCvTile"
-import i18n from "../../lang/lang";
+import i18n from "../../lang/lang"
 export default {
   data() {
     return {
@@ -283,7 +283,7 @@ export default {
       routeToGo: null,
       newPosition: null,
       selectedCity: null,
-      selectedCvLang: i18n.locale
+      selectedProfileLang: i18n.locale
     };
   },
   validations: {
@@ -295,13 +295,18 @@ export default {
     }
   },
   watch: {
-    selectedCvLang(lang) {
+    selectedProfileLang(lang) {
       this.setCvLanguage(lang);
-    }
+    },
   },
   beforeCreate() {
+     let userData = {
+        user: 'UIO',
+        lang: 'PL'
+      }
+    //   this.loginLanguage
     if (this.$store.getters.isDataLoaded === false) {
-      this.$store.dispatch("loadData");
+      this.$store.dispatch("loadData", userData);
     }
   },
   // mounted() {
@@ -322,17 +327,12 @@ export default {
   //         image.src = url
   // },
   beforeRouteLeave(to, from, next) {
-    //   const answer = window.confirm('Zmiana')
-    //   if(answer) {
     let lang = this.loginLanguage;
     if (lang == "") {
       lang = "pl";
     }
     this.setLanguage(lang);
     next();
-    //   } else {
-    //       next(false);
-    //   }
   },
   components: {
     MaskedInput,
@@ -491,12 +491,12 @@ export default {
       this.$store.dispatch("setLanguage", language);
     },
     getNewData() {
-      let cvLang = this.selectedCvLang.toUpperCase();
+      let cvLang = this.selectedProfileLang.toUpperCase();
       let userData = {};
       userData.user = "UIO";
       userData.lang = cvLang;
-      this.$store.dispatch("getUserData", userData);
-      this.$store.dispatch("getDomainValues");
+      this.$store.dispatch("loadData", userData);
+    //   this.$store.dispatch("getDomainValues");
     }
     // leavePage() {
     //     if (this._beforeEditingProjects){

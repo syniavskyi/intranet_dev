@@ -88,7 +88,7 @@
                         <div class="del-table-items">
                             <div class="del-tbody-wrap">
                                 <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
-                                <div class="del-tbody-item"> {{ newDelegation.destination}}</div>
+                                <div class="del-tbody-item">{{ newDelegation.destination}}</div>
                             </div>
                             <div class="del-tbody-wrap">
                                 <div class="del-tbody-title">{{ $t("table.delegations.date") }}</div>

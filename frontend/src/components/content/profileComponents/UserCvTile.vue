@@ -1,49 +1,51 @@
 <template>
     <div class="profile-tile-1-2">
-                        <div class="profile-tile-header">
-                            <div class="profile-tile-header-row">
-                                <h2 class="prof-tile-h2">{{ $t("label.cv") }}</h2>
-                                <button class="profile-edit-experience-e" @click="showSelectDialog">Generuj CV</button>
-                            </div>
-                            <div class="tile-underscore"></div>
+        <div class="profile-tile-header">
+            <div class="profile-tile-header-row">
+                <h2 class="prof-tile-h2">{{ $t("label.cv") }}</h2>
+                <button class="profile-edit-btn" @click="showSelectDialog">Generuj CV</button>
+            </div>
+            <div class="tile-underscore"></div>
+        </div>
+        <div class="profile-tile-content">
+            <div class="cv-buttons">
+                <div class="button-cv">
+                    <div class="prof-input-100">    
+                        <select class="selectProfile selectEdit" required  v-model="selectedDownloadLang" @change="checkIfFileExist">
+                            <option v-for="language in cvLanguageList" :key="language.id" :value="language.id">{{ language.description }}</option>
+                        </select>
+                        <label class="label-profile">{{ $t("label.language") }}</label>
+                    </div>
+                    <div class="prof-input-100">
+                        <select class="selectProfile selectEdit" required v-model="selectedFormat" @change="setSelectedFormat">
+                            <option v-for="format in formats" :key="format">{{format}}</option>
+                        </select>
+                        <label class="label-profile">Format</label>
+                    </div>
+                    <div class="add-download" v-if="selectedFormat">
+                        <p class="profile-error profile-error-upload-top" v-if="fileUploadError">{{ $t("message.fileUploadError") }}</p>
+                        <div v-if="selectedFormat==='DOCX'">
+                            <label class="add" for="add-docx-pl">+
+                                <input accept=".docx" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload('DOCX')">
+                            </label>
                         </div>
-                        <div class="profile-tile-content">
-                                <div class="cv-buttons">
-                                    <div class="button-cv">
-                                            <label>{{ $t("label.language") }}</label>
-                                            <select required  v-model="selectedDownloadLang" @change="checkIfFileExist">
-                                                <option v-for="language in cvLanguageList" :key="language.id" :value="language.id">{{ language.description }}</option>
-                                            </select>
-                                            <label>Format</label>
-                                           <select required v-model="selectedFormat" @change="setSelectedFormat">
-                                               <option v-for="format in formats" :key="format">{{format}}</option>
-                                            </select>
-                               
-                                        <div class="add-download" v-if="selectedFormat">
-                                            <p class="profile-error profile-error-upload-top" v-if="fileUploadError">{{ $t("message.fileUploadError") }}</p>
-                                            <div v-if="selectedFormat==='DOCX'">
-                                                <label class="add" for="add-docx-pl">+
-                                                    <input accept=".docx" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload('DOCX')">
-                                                </label>
-                                            </div>
-                                             <div v-if="selectedFormat==='DOC'">
-                                                <label class="add" for="add-docx-pl">+
-                                                    <input accept=".doc" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload('DOC')">
-                                                </label>
-                                            </div>
-                                            <div v-if="selectedFormat==='PDF'">
-                                                <label class="add" for="add-docx-pl">+
-                                                    <input accept=".pdf" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload('PDF')">
-                                                </label>
-                                            </div>
-                                            <a :disabled="disableFileOptions" class="download pdf-add-pl" :href="setDownloadLink()">&#x21e3;</a>
-                                            <button :disabled="disableFileOptions" class="download pdf-add-pl" @click="deleteFile">X</button>
-                                           </div>
-                                    </div>
-                                    
-                                </div>
+                        <div v-if="selectedFormat==='DOC'">
+                            <label class="add" for="add-docx-pl">+
+                                <input accept=".doc" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload('DOC')">
+                            </label>
                         </div>
-                    </div> 
+                        <div v-if="selectedFormat==='PDF'">
+                            <label class="add" for="add-docx-pl">+
+                                <input accept=".pdf" id="add-docx-pl" type="file" class="add doc-add-pl" ref="file" @change="handleCvUpload('PDF')">
+                            </label>
+                        </div>
+                        <a title="ściągnij" :disabled="disableFileOptions" class="download pdf-add-pl" :href="setDownloadLink()">&#x21e3;</a>
+                        <button title="usuń" :disabled="disableFileOptions" class="download pdf-add-pl" @click="deleteFile">X</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
 </template>
 
 <script>
