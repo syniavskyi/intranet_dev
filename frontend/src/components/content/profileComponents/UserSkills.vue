@@ -6,7 +6,7 @@
         <div class="profile-table-buttons">
           <button class="profile-edit-btn" v-if="!editMode" @mouseover="onHover" @mouseout="onHoverOut" @click="edit">{{ $t("button.edit") }}</button>
           <button class="profile-edit-btn-e" v-if="editMode" @click="cancel">{{ $t("button.cancel") }}</button>
-          <button class="profile-edit-btn-e" v-if="editMode" @click="save(index)">{{ $t("button.save") }}</button>
+          <button class="profile-edit-btn-e" v-if="editMode" @click="save()">{{ $t("button.save") }}</button>
         </div>
       </div>
       <div class="tile-underscore"></div>
@@ -52,7 +52,7 @@
             </select>
             <label :class="editMode ? 'label-select-profile' : 'label-skills'">{{ $t("label.sapModulesExp") }}</label>
             <div class="prof-skills-elems">
-              <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="sapModule in UserSkills.SapModules" :key="sapModule"  @click="removeModuleForSkills(sapModule)">{{sapModule}}</button>
+              <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="sapModule in userSkills.SapModules" :key="sapModule"  @click="removeModuleForSkills(sapModule)">{{sapModule}}</button>
             </div>
           </div>
           <div class="prof-input-xl">
@@ -62,7 +62,7 @@
             <button class="prof-div-pos-btn" v-if="editMode" @click="addProgramLang">+</button>
             <label :class="editMode ? 'label-profile': 'label-skills'">{{ $t("label.programmingLanguages") }}</label>
             <div class="prof-skills-elems">
-              <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="lang in UserSkills.ProgramLang" :key="lang"  @click="removeProgramLang(lang)">{{lang}}</button>
+              <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="lang in userSkills.ProgramLang" :key="lang"  @click="removeProgramLang(lang)">{{lang}}</button>
             </div>
           </div>
         </div>
@@ -74,7 +74,7 @@
             <button tooltip="usuń" class="prof-div-pos-btn" v-if="editMode" @click="addTechnology">+</button>
             <label :class="editMode ? 'label-profile': 'label-skills'">{{ $t("label.technologies") }}</label>
             <div class="prof-skills-elems">
-              <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="tech in UserSkills.Technologies" :key="tech"  @click="removeTechnology(tech)">{{tech}}</button>
+              <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="tech in userSkills.Technologies" :key="tech"  @click="removeTechnology(tech)">{{tech}}</button>
             </div>
           </div>
           <div class="prof-input-xl">
@@ -84,7 +84,7 @@
             <button class="prof-div-pos-btn" v-if="editMode" @click="addExtension">+</button>
             <label :class="editMode ? 'label-profile': 'label-skills'">{{ $t("label.extensions") }}</label>
             <div class="prof-skills-elems">
-              <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="ext in UserSkills.Extensions" :key="ext"  @click="removeExtension(ext)">{{ext}}</button>
+              <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="ext in userSkills.Extensions" :key="ext"  @click="removeExtension(ext)">{{ext}}</button>
             </div>
           </div>
           <div class="prof-input-xl">
@@ -94,7 +94,7 @@
             <button class="prof-div-pos-btn" v-if="editMode" @click="addAdditional">+</button>
             <label :class="editMode ? 'label-profile': 'label-skills'">{{ $t("label.additionalSkills") }}</label>
             <div class="prof-skills-elems">
-              <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="add in UserSkills.AdditionalSkills" :key="add"  @click="removeAdditional(add)">{{add}}</button>
+              <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="add in userSkills.AdditionalSkills" :key="add"  @click="removeAdditional(add)">{{add}}</button>
             </div>
           </div>
         </div>
@@ -120,7 +120,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      UserSkills: "getUserSkills",
+      userSkills: "getUserSkills",
       modulesList: "getModulesList",
       userLangs: "getUserLanguages",
       langLevels: "langLevels",
@@ -154,7 +154,7 @@ export default {
       this.editMode = true;
       this.onHover(this.$el)
       this._beforeEditingCacheSkills = JSON.parse(
-        JSON.stringify(this.UserSkills)
+        JSON.stringify(this.userSkills)
       );
       this._beforeEditingCacheLangs = JSON.parse(
         JSON.stringify(this.userLangs)
@@ -166,15 +166,18 @@ export default {
       this.$store.commit("SET_USER_LANGS", this._beforeEditingCacheLangs);
       this.editMode = false;
     },
-    save(index) {
+    save() {
       this.onHoverOut(this.$el)
-      this.$store.dispatch("saveUserSkills");
-      this._beforeEditingCacheSkills = JSON.parse(
-        JSON.stringify(this.UserSkills)
-      );
-      this._beforeEditingCacheLangs = JSON.parse(
-        JSON.stringify(this.userLangs)
-      );
+      let data = this.userSkills;
+      this.$store.dispatch("saveUserSkills", data);
+      this._beforeEditingCacheSkills = this.userSkills;
+      // JSON.parse(
+      //   JSON.stringify(this.userSkills)
+      // );
+      this._beforeEditingCacheLangs = this.userLangs;
+      // JSON.parse(
+      //   JSON.stringify(this.userLangs)
+      // );
 
       this.editMode = false;
     },
