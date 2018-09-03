@@ -1,3 +1,5 @@
+import odata from 'odata';
+
 const state = {
     userSkills: {
         SapModules: [],
@@ -8,7 +10,8 @@ const state = {
     },
     userLanguages: [
         // {language: 'DE',  langLevel: 'A1'}
-    ]
+    ],
+    newSkills: []
 }
 
 const mutations = {
@@ -17,6 +20,9 @@ const mutations = {
     },
     SET_USER_LANGS(state,list) {
         state.userLanguages = list
+    },
+    SET_NEW_SKILLS(state, list) {
+        state.newSkills = list;
     }
 }
 
@@ -98,8 +104,17 @@ const actions = {
         }
     },
     saveUserSkills({dispatch, getters,commit}, data){
-        dispatch('formatToString', data);
-        odata('UserSkills').post(data).save(function (data) {
+        let urlQuery = getters.getUrlQuery;
+        let data2 = {
+            UserAlias: 'UIO',
+            Language: 'PL'
+        }
+        let url3 = 'UserSkills' + urlQuery + "&(UserAlias='UIO',Language='PL')";
+        let url2 = 'UserSkills' + urlQuery + "(UserAlias='UIO',Language='PL')";
+        let url = 'UserSkills' + urlQuery + "(UserAlias='" + data2.UserAlias + "',Language='" + data2.Language + "')";
+        dispatch('formatSkillsToString', data);
+        let newSkills = this.getters.getNewSkills;
+        odata(url3).post(newSkills).save(function (oData) {
             console.log("skile");
           }, function (status) {
             console.error(status); 
@@ -126,7 +141,7 @@ const actions = {
     },
     adjustUserSkills({getters, commit}) {
         const userSkills = getters.getUserSkills;
-        var adjustedSkills = {
+        const adjustedSkills = {
             AdditionalSkills: [],
             Extensions: [],
             ProgramLang: [],
@@ -169,6 +184,33 @@ const actions = {
             selectList.push(select);
         }
         commit('SET_USER_LANGS', selectList)
+    },
+    formatSkillsToString({commit},data) {
+        var newData = {
+            AdditionalSkills: [],
+            Extensions: [],
+            ProgramLang: [],
+            SapModules: [],
+            Technologies: []
+        };
+        let string;
+    
+        for(let key in newData) {
+          for(let i = 0; i < data[key].length; i++) {
+              if(data[key].length <= 1) {
+                newData[key] = data[key][i]
+              }
+              else {
+                newData[key] += data[key][i] + '||';
+              }
+          }       
+        }
+        for(let key in newData) {   
+            if(newData[key].includes('||')) {
+                newData[key] = newData[key].slice(0, newData[key].length-2);
+                }
+        }
+        commit('SET_NEW_SKILLS', newData)
     }
 }
  
@@ -178,6 +220,9 @@ const getters = {
     },
     getUserLanguages(state){
         return state.userLanguages
+    },
+    getNewSkills(state) {
+        return state.newSkills
     }
 }
 

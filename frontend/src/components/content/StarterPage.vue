@@ -17,7 +17,7 @@
               </div>
               <div class="starter-page-list-content">
                 <ul class="starter-page-ul">
-                  <li class="starter-page-item" v-for="list in getFullListOfDoc" :key="list.title">
+                  <li class="starter-page-item" v-for="list in docList" :key="list.FileType">
                     <div class="starter-page-list-item-btns">
                       <a class="starter-page-file-btn" :href="list.link">&#x21e3;</a>
                       <div v-if="list.format === 'pdf'" class="starter-page-pdf">.pdf</div>
@@ -25,15 +25,16 @@
                     </div>
                     <div class="starter-page-list-item-wrapper">
                       <div class="starter-page-item-text" :class="list.status ? 'line-through' : 'none'">
-                        {{ list.title }}
-                        <p class="starter-list-item-popover">{{ list.description }}</p>
+                        {{ list.Filename }}
+                        <p class="starter-list-item-popover">{{ list.FileType }}</p>
                       </div>
                     </div>
                     <input class="starter-page-checkbox" :checked="list.status" @change="changeCheckbox(list)" type="checkbox">
                   </li>
                 </ul>
                 <div class="starter-page-list-bottom">
-                  <button class="starter-page-docs-btn button" :disabled="setButton" @click="submitDocuments">{{ $t("button.documentComplete") }}</button>
+                  <button class="starter-page-docs-btn button" @click="submitDocuments">{{ $t("button.documentComplete") }}</button>
+                  <!-- <button class="starter-page-docs-btn button" :disabled="setButton" @click="submitDocuments">{{ $t("button.documentComplete") }}</button> -->
                 </div>
               </div>
             </div>
@@ -43,7 +44,7 @@
               </div>
               <div class="starter-page-list-content">
                 <ul class="starter-page-ul">
-                  <li class="starter-page-item" v-for="list in getFullListOfDoc" :key="list.title">
+                  <li class="starter-page-item" v-for="list in getFullListOfDoc" :key="list.FileType">
                     <div class="starter-page-list-item-btns">
                       <a class="starter-page-file-btn" :href="list.link">&#x21e3;</a>
                       <div v-if="list.format === 'pdf'" class="starter-page-pdf">.pdf</div>
@@ -51,15 +52,16 @@
                     </div>
                     <div class="starter-page-list-item-wrapper">
                       <div class="starter-page-item-text" :class="list.status ? 'line-through' : 'none'">
-                        {{ list.title }}
-                        <p class="starter-list-item-popover">{{ list.description }}</p>
+                        {{ list.FileType }}
+                        <p class="starter-list-item-popover">{{ list.FileName }}</p>
                       </div>
                     </div>
                     <input class="starter-page-checkbox" :checked="list.status" @change="changeCheckbox(list)" type="checkbox">
                   </li>
                 </ul>
                 <div class="starter-page-list-bottom">
-                  <button class="starter-page-docs-btn button" :disabled="setButton" @click="submitDocuments">{{ $t("button.documentComplete") }}</button>
+                  <!-- <button class="starter-page-docs-btn button" :disabled="setButton" @click="submitDocuments">{{ $t("button.documentComplete") }}</button> -->
+                     <button class="starter-page-docs-btn button" @click="submitDocuments">{{ $t("button.documentComplete") }}</button>
                 </div>
               </div>
             </div>
@@ -70,9 +72,10 @@
 </template>
 
 <script>
-import Menu from '../Menu.vue'
-import axios from 'axios'
-import i18n from '../../lang/lang'
+import Menu from '../Menu.vue';
+import axios from 'axios';
+import i18n from '../../lang/lang';
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
@@ -90,12 +93,28 @@ export default {
     }
   },
   created() {
-    this.getId();
-    this.getDocList();
-    this.getDocStatus();
-    this.setStatusToDoc();
+    // this.getId();
+    this.getDocs();
+    // this.getDocStatus();
+    // this.setStatusToDoc();
+  },
+    computed: {
+      ...mapGetters({
+      // setBuTTon: 'returnCheckList',
+      docList: 'docLists',
+      // docStatusList: 'docStatusList',
+      //  statusToDoc: 'getFullListOfDoc'
+      }),
+      getFullListOfDoc() {
+        return this.setStatusToDoc();
+    }
   },
   methods: {
+     ...mapActions([
+       'getUserId',
+       'getDocs',
+       'getDocsStatus'
+    ]),
     changeCheckbox(data) {
       if(data.status === undefined) {
         data["status"] = true;
@@ -112,15 +131,15 @@ export default {
         listOfDoc: data
       })
     },
-    getId() {
-      this.$store.dispatch("getUserId");
-    },
-    getDocList(){
-      this.$store.dispatch("getDocs");
-    },
-    getDocStatus(){
-      this.$store.dispatch("getDocsStatus");
-    },
+    // getId() {
+    //   this.$store.dispatch("getUserId");
+    // },
+    // getDocList(){
+    //   this.$store.dispatch("getDocs");
+    // },
+    // getDocStatus(){
+    //   this.$store.dispatch("getDocsStatus");
+    // },
     setStatusToDoc() {
       var docs = this.getDocs;
       const status = this.getDocsListStatus;
@@ -137,20 +156,6 @@ export default {
     },
     submitDocuments() {
       this.$store.dispatch("sentDocuments");
-    }
-  },
-  computed: {
-    setButton() {
-      return this.$store.getters.returnCheckList;
-    },
-    getDocs(){
-      return this.$store.getters.docLists;
-    },
-    getDocsListStatus() {
-      return this.$store.getters.docStatusList;
-    },
-    getFullListOfDoc() {
-      return this.setStatusToDoc();
     }
   }
 }

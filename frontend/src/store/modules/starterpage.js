@@ -38,21 +38,40 @@ const actions = {
       commit('CHECK_LIST', bState);
     }
   },
-  getDocs({
-    commit
-  }) {
-    axios.get('/api/documentsList').then(res => {
-      const data = res.data,
-        aData = [];
+  // getDocs({
+  //   commit
+  // }) {
+  //   axios.get('/api/documentsList').then(res => {
+  //     const data = res.data,
+  //       aData = [];
 
-      for (let key in data) {
-        const doc = data[key];
+  //     for (let key in data) {
+  //       const doc = data[key];
 
-        aData.push(doc);
-      }
-      commit('GET_DOC_LIST', aData);
-    });
+  //       aData.push(doc);
+  //     }
+  //     commit('GET_DOC_LIST', aData);
+  //   });
+  // },
+
+  // Attachments?$filter=FileType eq 'new'
+
+getDocs({commit, getters}) {
+  let urlQuery = getters.getUrlQuery
+  axios({
+    method: 'GET',
+    url: 'Attachments'  + urlQuery + "&$filter=FileType eq 'new'",
+    headers: {
+      "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+    }
+  }).then(res => {
+    let oAttachments = res.data.d.results;
+    commit('GET_DOC_LIST', oAttachments);
+  }).catch(error => {
+    console.log(error);
+  })
   },
+  
   getDocsStatus({
     commit,
     state
