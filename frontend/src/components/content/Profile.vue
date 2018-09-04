@@ -144,7 +144,7 @@
                         <div class="profile-tile-header">
                             <div class="profile-tile-header-row">
                                 <h2 class="prof-tile-h2">{{ $t("header.employee") }}</h2>
-                                <button class="profile-edit-btn">zmień hasło</button>
+                                <button class="profile-edit-btn"><span class="prof-btn-txt">zmień hasło</span><span class="prof-btn-icon">&#x1f513;</span></button>
                             </div>
                             <div class="tile-underscore"></div>
                         </div>

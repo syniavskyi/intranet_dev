@@ -161,7 +161,12 @@
 }
 .profile-table-buttons {
     display: flex;
-    flex-direction: column;
+}
+.prof-btn-icon {
+    display: flex;
+}
+.prof-btn-txt {
+    display: none;
 }
 
 .profile-tile-header-row {
@@ -1067,6 +1072,8 @@ max-width: max-content;
     background-image: url("../../images/expand2.png");
     background-repeat: no-repeat;
     background-position: right;
+    text-indent: .4rem;
+    width: 100%;
 }
 
 .selectProfileSkills {
@@ -1083,12 +1090,6 @@ max-width: max-content;
     100% {
         opacity: 1;
     }
-}
-
-.selectProfile {
-    width: 13.7rem;
-    /* width: 100%; */
-    text-indent: .4rem;
 }
 
 .selectLang {
@@ -1571,8 +1572,11 @@ max-width: max-content;
     .prof-thead {
         display:flex;
     }
-    .profile-table-buttons {
-        flex-direction: row;
+    .prof-btn-icon {
+        display: none;
+    }
+    .prof-btn-txt {
+        display: flex;
     }
     .prof-thead-item {
         text-align: center;
