@@ -5,8 +5,8 @@
         <h2 class="profile-tile-title">{{ $t("header.skills") }}</h2>
         <div class="profile-table-buttons">
           <button class="profile-edit-btn" v-if="!editMode" @mouseover="onHover" @mouseout="onHoverOut" @click="edit">{{ $t("button.edit") }}</button>
-          <button class="profile-edit-btn-e" v-if="editMode" @click="cancel">{{ $t("button.cancel") }}</button>
-          <button class="profile-edit-btn-e" v-if="editMode" @click="save()">{{ $t("button.save") }}</button>
+          <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-txt">{{ $t("button.cancel") }}</span><span class="prof-btn-icon">&plus;</span></button>
+          <button class="profile-edit-btn-e" v-if="editMode" @click="save()"><span class="prof-btn-txt">{{ $t("button.save") }}</span><span class="prof-btn-icon">&#10004;</span></button>
         </div>
       </div>
       <div class="tile-underscore"></div>

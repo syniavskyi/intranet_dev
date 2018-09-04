@@ -373,7 +373,7 @@ export default {
   cursor: pointer;
   color: #333;
   border: 0;
-  height: 4rem;
+  /* height: 4rem; */
   border-radius: 4px;
   transition: all 0.2s ease;
   justify-content: center;
