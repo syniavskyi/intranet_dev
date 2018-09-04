@@ -37,11 +37,6 @@ const actions = {
     var params = new URLSearchParams()
     params.append('sap-user', authData.username)
     params.append('sap-password', authData.password)
-    // odata().get(function (data) {
-    //   router.replace('/dashboard')
-    // }, function (status) {
-    //   console.error(status);
-    // });
     let url = '?sap-user=' + authData.username + '&sap-password=' + authData.password + '&sap-language=' +authData.language
 
     axios({
@@ -50,10 +45,9 @@ const actions = {
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       },
-      // "X-CSRF-Token":"Fetch"
-      // ,
       data: params
     }).then(res => {
+      localStorage.setItem('authorized', true)
       console.log(res)
       commit('SET_URL_QUERY', url)
       commit('SET_LOGIN_ERROR', false)
@@ -65,8 +59,7 @@ const actions = {
       } 
       dispatch('loadData', userData)
 
-      router.replace('/dashboard')
-    }).catch(error => {
+      }).catch(error => {
       console.log(error)
       commit('SET_LOGIN_ERROR', true)
     })

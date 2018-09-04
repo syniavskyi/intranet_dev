@@ -65,18 +65,14 @@ const actions = {
         commit('SET_CV_ELEMENTS', elements);
     },
     submitCv({
-        commit, dispatch
+        commit, dispatch, getters
       }, data) {
+        let urlQuery = getters.getUrlQuery
         let slugHeader = data.file.name + ';' + data.type + ';' + data.language + ';' + data.userId + ';' +  data.file.type
-        let url = 'http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias'
     
         axios({
           method: 'POST',
-          url: '/AttachmentMedias',
-          auth: {
-            username: 'psy',
-            password: 'ides01'
-          },
+          url: 'AttachmentMedias' + urlQuery,
           data: data.file,
           headers: {
             "Content-type": data.file.type,
@@ -91,18 +87,15 @@ const actions = {
         })
       },
       updateCv({
-        commit, dispatch
+        commit, dispatch, getters
       }, data) {
+        let urlQuery = getters.getUrlQuery
         let slugHeader = data.file.name + ';' + data.type + ';' + data.language + ';' + data.userId + ';' +  data.file.type
-        let url = "/AttachmentMedias(FileType='" + data.type + "',Language='" + data.language + "',UserAlias='" + data.userId + "')/$value"
+        let url = "AttachmentMedias(FileType='" + data.type + "',Language='" + data.language + "',UserAlias='" + data.userId + "')"   + "/$value"+ urlQuery
     
         axios({
           method: 'PUT',
           url: url,
-          auth: {
-            username: 'psy',
-            password: 'ides01'
-          },
           data: data.file,
           headers: {
             "Content-type": data.file.type,
@@ -116,15 +109,19 @@ const actions = {
           console.log(error);
         })
         },
-      deleteCv({commit, dispatch}, data){
-        let url = "/AttachmentMedias(FileType='" + data.type + "',Language='" + data.language + "',UserAlias='" + data.userId + "')/$value"
+      deleteCv({commit, dispatch, getters}, data){
+        let urlQuery = getters.getUrlQuery
+        let url = "AttachmentMedias(FileType='" + data.type + "',Language='" + data.language + "',UserAlias='" + data.userId + "')"  + "/$value"  + urlQuery
         odata(url).remove().save(function (data) {
             console.log("removed");
             dispatch('getUserFilesData')
           }, function (status) {
             console.error(status); 
           });
-        }
+      },
+      loadDataForCv({commit, dispatch}, data) {
+
+      }
     
 };
 
