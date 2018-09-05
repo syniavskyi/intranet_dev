@@ -17,7 +17,7 @@
               </div>
               <div class="starter-page-list-content">
                 <ul class="starter-page-ul">
-                  <li class="starter-page-item" v-for="list in docList" :key="list.FileType">
+                  <li class="starter-page-item" v-for="list in docList" :key="list.FileId">
                     <div class="starter-page-list-item-btns">
                       <a class="starter-page-file-btn" :href="list.link">&#x21e3;</a>
                       <div v-if="list.format === 'pdf'" class="starter-page-pdf">.pdf</div>
@@ -26,7 +26,7 @@
                     <div class="starter-page-list-item-wrapper">
                       <div class="starter-page-item-text" :class="list.status ? 'line-through' : 'none'">
                         {{ list.Filename }}
-                        <p class="starter-list-item-popover">{{ list.FileType }}</p>
+                        <p class="starter-list-item-popover">{{ list.FileId }}</p>
                       </div>
                     </div>
                     <input class="starter-page-checkbox" :checked="list.status" @change="changeCheckbox(list)" type="checkbox">
@@ -44,7 +44,7 @@
               </div>
               <div class="starter-page-list-content">
                 <ul class="starter-page-ul">
-                  <li class="starter-page-item" v-for="list in getFullListOfDoc" :key="list.FileType">
+                  <li class="starter-page-item" v-for="list in getFullListOfDoc" :key="list.FileId">
                     <div class="starter-page-list-item-btns">
                       <a class="starter-page-file-btn" :href="list.link">&#x21e3;</a>
                       <div v-if="list.format === 'pdf'" class="starter-page-pdf">.pdf</div>
@@ -52,7 +52,7 @@
                     </div>
                     <div class="starter-page-list-item-wrapper">
                       <div class="starter-page-item-text" :class="list.status ? 'line-through' : 'none'">
-                        {{ list.FileType }}
+                        {{ list.FileId }}
                         <p class="starter-list-item-popover">{{ list.FileName }}</p>
                       </div>
                     </div>

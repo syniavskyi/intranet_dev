@@ -21,7 +21,8 @@ const state = {
   sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES"],
   schoolDescList: [],
   fieldOfStudyDescList: [],
-  sapModulesList: []
+  sapModulesList: [],
+  newUserFiles: []
 };
 
 const mutations = {
@@ -75,6 +76,9 @@ const mutations = {
   },
   SET_USER_FILES_LIST(state, data){
     state.userFiles = data
+  },
+  SET_NEW_USER_FILES_LIST(state, data) {
+    state.newUserFiles = data;
   }
 };
 
@@ -239,7 +243,6 @@ const actions = {
     state
   }, userData) {
     let urlQuery = getters.getUrlQuery
-    let c = userData;
     let userData2 = {};
     userData2.user = 'UIO';
     userData2.lang = 'PL';
@@ -256,7 +259,7 @@ const actions = {
     userData.user = 'UIO'
     axios({
       method: 'GET',
-      url: 'Users' + '(UserAlias=' + "'" + userData.user + "'," +  "Language='" + userData.lang + "')"  + urlQuery +  '&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang',
+      url: 'Users' + '(UserAlias=' + "'" + userData.user + "'," +  "Language='" + userData.lang + "')"  + urlQuery +  '&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang,UserFiles,UserRole',
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -283,6 +286,8 @@ const actions = {
       commit('SET_USER_PROJECTS_LIST', oUserData.UserCvProjects.results);
       dispatch('adjustProjects');
       dispatch('setProjectsIsCurrentField');
+      commit('SET_NEW_USER_FILES_LIST', oUserData.UserFile.results);
+      dispatch('checkStatus');
       commit('SET_DATA_LOADED', true)
     }).catch(error => {
       console.log(error);
@@ -414,6 +419,9 @@ const getters = {
   },
   getUserFiles(state) {
     return state.userFiles;
+  },
+  getNewUserFiles(state) {
+    return state.newUserFiles;
   }
 };
 
