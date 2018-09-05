@@ -39,10 +39,10 @@ const actions = {
     }
   },
   checkStatus({commit, getters}, data) {
-      let newUserFiles = this.getters.getnewUserFilesList;
+      let newUserFiles = this.getters.getNewUserFilesList;
       for(let i = 0; i < newUserFiles.length; i++) {
         if(newUserFiles[i].Status === 'X') {
-          newUserFiless[i].Status = true;
+          newUserFiles[i].Status = true;
         }
         else {
           newUserFiles[i].Status = false;
