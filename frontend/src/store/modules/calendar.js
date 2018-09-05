@@ -99,10 +99,11 @@ const actions = {
 //       console.log(error);
 //      })
 // },
-getEvents({commit, dispatch}) {
+getEvents({commit, dispatch, getters}) {
+  let urlQuery = getters.getUrlQuery
     axios({
       method: 'GET',
-      url: 'Events',
+      url: 'Events' + urlQuery,
       auth: {
         username: 'psy',
         password: 'ides01'
@@ -287,45 +288,6 @@ setColor({commit, getters}){
           color: null
          };
   commit('CLEAR_DATA', clearForm);
-  },
-  getPriority({commit}) {
-    let lang = 'PL';
-    axios({
-      method: 'GET',
-      url: "Dictionaries?$filter=Name eq 'ZINTRANET_PRIORITY' and Language eq'" + lang + "'",
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-      }
-    }).then(res => {
-      let aPriority = res.data.d.results;
-      commit('SET_PRIORITY', aPriority);
-    }).catch(error => { 
-      console.log(error);
-    })
-  },
-  getEventType({commit}) {
-    let lang = 'PL';
-    axios({
-      method: 'GET',
-      url: "Dictionaries?$filter=Name eq 'ZINTRANET_EVENT_TYPE' and Language eq'" + lang + "'",
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-      }
-    }).then(res => {
-      let aEventType = res.data.d.results;
-      console.log(res.data.d.results);
-      commit('SET_EVENT_TYPE', aEventType);
-    }).catch(error => { 
-      console.log(error);
-    })
   },
 clearFilters({commit}) {
   let aFilters = {

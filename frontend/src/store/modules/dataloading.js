@@ -18,11 +18,12 @@ const state = {
   userFiles: [],
   fullLanguageList: [],
   workPositionList: [],
-  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES"],
+  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES", 'ZINTRANET_PRIORITY', 'ZINTRANET_EVENT_TYPE'],
   schoolDescList: [],
   fieldOfStudyDescList: [],
   sapModulesList: [],
-  newUserFiles: []
+  newUserFiles: [],
+  UserRole: []
 };
 
 const mutations = {
@@ -79,6 +80,9 @@ const mutations = {
   },
   SET_NEW_USER_FILES_LIST(state, data) {
     state.newUserFiles = data;
+  },
+  SET_USER_ROLE(state, data) {
+    state.userRole = data;
   }
 };
 
@@ -192,7 +196,14 @@ const actions = {
       } else if (domainData.name == 'ZINTRANET_SAP_MODULES') {
         const aSapModules = res.data.d.results;
         commit('SET_SAP_MODULES_LIST', aSapModules);
-      } 
+      } else if (domainData.name == 'ZINTRANET_PRIORITY') {
+        const aPriority = res.data.d.results;
+        commit('SET_PRIORITY', aPriority);
+      } else if (domainData.name == 'ZINTRANET_EVENT_TYPE') {
+        const aEventType = res.data.d.results;
+        commit('SET_EVENT_TYPE', aEventType);
+      }
+
     }).catch(error => {
       console.log(error);
     })
@@ -286,8 +297,9 @@ const actions = {
       commit('SET_USER_PROJECTS_LIST', oUserData.UserCvProjects.results);
       dispatch('adjustProjects');
       dispatch('setProjectsIsCurrentField');
-      // commit('SET_NEW_USER_FILES_LIST', oUserData.UserFile.results);
-      // dispatch('checkStatus');
+      commit('SET_NEW_USER_FILES_LIST', oUserData.UserFiles.results);
+      dispatch('checkStatus');
+      commit('SET_USER_ROLE', oUserData.UserRole.results)
       commit('SET_DATA_LOADED', true)
     }).catch(error => {
       console.log(error);
@@ -420,7 +432,7 @@ const getters = {
   getUserFiles(state) {
     return state.userFiles;
   },
-  getNewUserFiles(state) {
+  getNewUserFilesList(state) {
     return state.newUserFiles;
   }
 };
