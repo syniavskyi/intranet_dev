@@ -132,7 +132,8 @@ const actions = {
   loadData({
     commit,
     state,
-    dispatch
+    dispatch,
+    getters
   }, userData) {
     for (let i = 0; i < state.sapDomains.length; i++) {
       let domainData = {
@@ -149,7 +150,10 @@ const actions = {
     dispatch('getSchoolDesc', userData.lang);
     dispatch('getFieldOfStudyDesc', userData.lang);
     dispatch('getUserData', userData);
-    commit('SET_DATA_LOADED', true)
+    
+    if (getters.isDataLoaded){
+      router.replace('/dashboard')
+    }
   },
   getDomainValues({
     commit, getters
@@ -284,6 +288,7 @@ const actions = {
       dispatch('setProjectsIsCurrentField');
       commit('SET_NEW_USER_FILES_LIST', oUserData.UserFile.results);
       dispatch('checkStatus');
+      commit('SET_DATA_LOADED', true)
     }).catch(error => {
       console.log(error);
     })
@@ -356,7 +361,9 @@ const actions = {
       }
     }).then(res => {
       commit('SET_FIELD_OF_STUDY_DESC_LIST', res.data.d.results);
-    }).catch(error => { })
+    }).catch(error => { 
+      console.log(error)
+    })
   }
 
 };

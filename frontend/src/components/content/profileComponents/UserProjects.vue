@@ -5,8 +5,8 @@
         <h2 class="profile-tile-title">{{ $t("header.projects") }}</h2>
         <div class="profile-table-buttons">
           <button class="profile-edit-btn" @click="editProjects" @mouseover="onHover" @mouseout="onHoverOut" v-if="!projectEditMode">{{ $t("button.editProjects") }}</button>
-          <button class="profile-edit-btn-e" v-if="projectEditMode" @click="addRow">{{ $t("button.addProject") }}</button>
-          <button class="profile-edit-btn-e" v-if="projectEditMode" @click="finishEditing">{{ $t("button.finishEdit") }}</button>
+          <button class="profile-edit-btn-e" v-if="projectEditMode" @click="addRow"><span class="prof-btn-txt">{{ $t("button.addProject") }}</span><span class="prof-btn-icon">&plus;</span></button>
+          <button class="profile-edit-btn-e" v-if="projectEditMode" @click="finishEditing"><span class="prof-btn-txt">{{ $t("button.finishEdit") }}</span><span class="prof-btn-icon">&#10004;</span></button>
         </div>
       </div>
       <div class="tile-underscore"></div>

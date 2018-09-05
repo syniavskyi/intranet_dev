@@ -67,8 +67,8 @@ const actions = {
     data.DateStart ='/Date(1473465600000)/'
     data.DateEnd = '/Date(1473465600000)/'
     data.IsCurrent = data.IsCurrent ? 'X' : '-'
-
-    const url = 'UsersEducation' + '(' + "UserAlias='"+ data.UserAlias + "',University='" + data.UniversityToChange + "',AcademicTitle='" + data.AcademicTitleToChange + "',FieldOfStudy='" + data.FieldOfStudyToChange + "',Language='"+ data.Language + "')"
+    let query = getters.getUrlQuery
+    const url = 'UsersEducation' + '(' + "UserAlias='"+ data.UserAlias + "',University='" + data.UniversityToChange + "',AcademicTitle='" + data.AcademicTitleToChange + "',FieldOfStudy='" + data.FieldOfStudyToChange + "',Language='"+ data.Language + "')" + query
     odata(url).put(data).save(function (data) {
       console.log("changed");
     }, function (status) {
