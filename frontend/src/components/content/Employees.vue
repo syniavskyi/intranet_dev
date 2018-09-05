@@ -9,6 +9,11 @@
             <p class="content-header-title">Lista Pracowników</p>
           </div>
         </div>
+        <div id="searchEmployee">
+          <p>Wpisz imię lub nazwisko</p>
+          <input v-model="searchUser"/>
+          <p>Lub wybierz oddział</p>
+        </div>
         <div class="employees-table">
           <div class="emp-thead">
                 <div class="emp-thead-item">{{ $t("label.fullName") }}</div>
@@ -18,26 +23,26 @@
                 <div class="emp-thead-item">{{ $t("label.email") }}</div>
           </div>
           <div class="emp-tbody">
-            <div class="emp-tbody-row" v-for="userInfo in usersList" :key="userInfo.key">
+            <div class="emp-tbody-row" v-for="user in filteredUsers" :key="user.PersonNumber">
               <div class="emp-tbody-item">
                 <div class="emp-tbody-item-title"> {{ $t("label.fullName") }} </div>
-                <div class="emp-tbody-item-txt"> {{ userInfo.Fullname }} </div>
+                <div class="emp-tbody-item-txt"> {{ user.Fullname }} </div>
               </div>
               <div class="emp-tbody-item">
                 <div class="emp-tbody-item-title"> {{ $t("label.position") }} </div>
-                <div class="emp-tbody-item-txt"> {{ userInfo.roleName }} </div>
+                <div class="emp-tbody-item-txt"> {{ user.JobPosition }} </div>
               </div>
               <div class="emp-tbody-item">
                 <div class="emp-tbody-item-title">{{ $t("label.department") }} </div>
-                <div class="emp-tbody-item-txt"> {{ userInfo.DepartmentName }} </div>
+                <div class="emp-tbody-item-txt"> {{ user.SectionName }} </div>
               </div>
               <div class="emp-tbody-item">
                 <div class="emp-tbody-item-title">{{ $t("label.phone") }} </div>
-                <div class="emp-tbody-item-txt"> {{ userInfo.Telephone }} </div>
+                <div class="emp-tbody-item-txt"> {{ user.Telephone }} </div>
               </div>
               <div class="emp-tbody-item">
                 <div class="emp-tbody-item-title">{{ $t("label.email") }} </div>
-                <div class="emp-tbody-item-txt"> {{ userInfo.Email }} </div>
+                <div class="emp-tbody-item-txt"> {{ user.Email }} </div>
               </div>
             </div>
           </div>
@@ -56,7 +61,8 @@ import { mapGetters } from 'vuex';
   export default {
     data() {
       return {
-        userInfo: {}
+        userInfo: {},
+        searchUser: ''
       }
     },
     components: {
@@ -68,7 +74,11 @@ import { mapGetters } from 'vuex';
       }
     },
     computed: {
-      ...mapGetters(["usersList"])
+      ...mapGetters(["usersList"]),
+    filteredUsers:function(){
+        let self = this
+        return this.usersList.filter(function(user){return user.Fullname.toLowerCase().indexOf(self.searchUser.toLowerCase())>=0;});
+    }
     }
   }
 </script>
