@@ -23,7 +23,8 @@ const state = {
   fieldOfStudyDescList: [],
   sapModulesList: [],
   newUserFiles: [],
-  UserRole: []
+  UserRole: [],
+  userAdverts: [{Id: '001', Message: 'Wiadomość1', ValidTo: new Date()}, {Id:'002', Message: 'Wiadomość2', ValidTo: new Date()}]
 };
 
 const mutations = {
@@ -311,7 +312,7 @@ const actions = {
     let urlQuery = getters.getUrlQuery
     axios({
       method: 'GET',
-      url: 'EmployeesLists' + urlQuery,
+      url: 'Users' + urlQuery,
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -434,6 +435,9 @@ const getters = {
   },
   getNewUserFilesList(state) {
     return state.newUserFiles;
+  },
+  userAdverts(state) {
+    return state.userAdverts
   }
 };
 

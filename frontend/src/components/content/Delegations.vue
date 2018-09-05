@@ -14,7 +14,7 @@
                 <div class="delegations-tile delegations-inputs">
                     <div class="delegations-tile-header">
                         <div class="delegations-tile-title"> 
-                            <p  v-show="showUsername">{{userData.firstName}} {{userData.lastName}}</p>
+                            <p  v-show="showUsername">{{userData.Fullname}}</p>
                             <div class="delegations-div-cool-head">
                                 <select required v-if="!showUsername" class="delegations-select-cool" v-model="newDelegation.userId" @change="setUsername">
                                     <option v-for="user in usersList" :key="user.id" :value="user.id">{{ user.firstName }} {{ user.lastName }}</option>

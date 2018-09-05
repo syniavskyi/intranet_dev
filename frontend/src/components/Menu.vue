@@ -16,21 +16,21 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link class="nav-router-link" to="/dashboard">
+                    <router-link class="nav-router-link" to="/news">
                         <button class="nav-item">
                             <img class="nav-item-img" src="../assets/images/nav3/grey_616161/home-g-24.png">
                             <p>{{ $t("header.home") }}</p>
                         </button>
                     </router-link>
                 </li>
-                <li>
+                <!-- <li>
                     <router-link class="nav-router-link" to="/news">
                         <button class="nav-item">
                             <img class="nav-item-img" src="../assets/images/nav3/grey_616161/view-dashboard-g-24.png">
                             <p>{{ $t("header.news") }}</p>
                         </button>
                     </router-link>
-                </li>
+                </li> -->
                 <li>
                     <router-link class="nav-router-link" to="/calendar">
                         <button class="nav-item">
@@ -47,14 +47,14 @@
                         </button>
                     </router-link>
                 </li>
-                <li>
+                <!-- <li>
                     <router-link class="nav-router-link" to="/informations">
                         <button class="nav-item">
                             <img class="nav-item-img" src="../assets/images/nav3/grey_616161/information-g-24.png">
                             <p>{{ $t("header.informations") }}</p>
                         </button>
                     </router-link>
-                </li>
+                </li> -->
                 <li>
                     <router-link class="nav-router-link" to="/files">
                         <button class="nav-item">
