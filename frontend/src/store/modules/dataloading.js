@@ -286,8 +286,8 @@ const actions = {
       commit('SET_USER_PROJECTS_LIST', oUserData.UserCvProjects.results);
       dispatch('adjustProjects');
       dispatch('setProjectsIsCurrentField');
-      commit('SET_NEW_USER_FILES_LIST', oUserData.UserFile.results);
-      dispatch('checkStatus');
+      // commit('SET_NEW_USER_FILES_LIST', oUserData.UserFile.results);
+      // dispatch('checkStatus');
       commit('SET_DATA_LOADED', true)
     }).catch(error => {
       console.log(error);
