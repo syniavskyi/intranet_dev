@@ -137,7 +137,8 @@
         "travelCosts": "Travel costs",
         "advance": "Advance",
         "education": "Education",
-        "skills": "Skills"
+        "skills": "Skills",
+        "registration": "Rejestracja"
     },
     "message": {
         "loginError": "Password or username are invalid.",

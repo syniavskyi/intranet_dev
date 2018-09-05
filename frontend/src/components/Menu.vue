@@ -79,6 +79,14 @@
                         </button>
                     </router-link>
                 </li>
+                 <li>
+                    <router-link class="nav-router-link" to="/registration">
+                        <button class="nav-item">
+                             <!-- <img class="nav-item-img" src="../assets/images/nav3/grey_616161/car-g-24.png"> -->
+                             <p>{{ $t("header.registration") }}</p>
+                        </button>
+                    </router-link>
+                </li>
             </ul>
         </nav>
     </div>
