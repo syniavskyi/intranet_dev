@@ -38,29 +38,23 @@ const actions = {
       commit('CHECK_LIST', bState);
     }
   },
-  // getDocs({
-  //   commit
-  // }) {
-  //   axios.get('/api/documentsList').then(res => {
-  //     const data = res.data,
-  //       aData = [];
-
-  //     for (let key in data) {
-  //       const doc = data[key];
-
-  //       aData.push(doc);
-  //     }
-  //     commit('GET_DOC_LIST', aData);
-  //   });
-  // },
-
-  // Attachments?$filter=FileType eq 'new'
-
+  checkStatus({commit, getters}, data) {
+      let newUserFiles = this.getters.getnewUserFilesList;
+      for(let i = 0; i < newUserFiles.length; i++) {
+        if(newUserFiles[i].Status === 'X') {
+          newUserFiless[i].Status = true;
+        }
+        else {
+          newUserFiles[i].Status = false;
+        }
+      }
+      commit('SET_NEW_USER_FILES_LIST', newUserFiles);
+  },
 getDocs({commit, getters}) {
   let urlQuery = getters.getUrlQuery
   axios({
     method: 'GET',
-    url: 'Attachments'  + urlQuery + "&$filter=FileType eq 'new'",
+    url: 'Attachments'  + urlQuery + "&$filter=FileId eq 'new'",
     headers: {
       "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
     }
