@@ -4,6 +4,7 @@ import router from '@/router/index.js'
 const state = {
   buttonState: false,
   docList: [],
+  listForStatus: [],
   docStatus: [],
   userId: ''
 }
@@ -12,9 +13,12 @@ const mutations = {
   CHECK_LIST(state, data) {
     state.buttonState = data;
   },
-  GET_DOC_LIST(state, data) {
+  SET_DOC_LIST(state, data) {
     state.docList = data;
   },
+  // SET_LIST_FOR_STATUS(state, data) {
+  //   state.listForStatus = data;
+  // },
   GET_DOC_STATUS(state, data) {
     state.docStatus = data;
   },
@@ -29,8 +33,8 @@ const actions = {
   }, data) {
     var bState = false;
 
-    for (var i = 0; i < data.listOfDoc.length; i++) {
-      if (data.listOfDoc[i].status) {
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].Status) {
         bState = false;
       } else {
         return commit('CHECK_LIST', true)
@@ -38,8 +42,9 @@ const actions = {
       commit('CHECK_LIST', bState);
     }
   },
-  checkStatus({commit, getters}, data) {
-      let newUserFiles = this.getters.getNewUserFilesList;
+  // nowe
+  checkStatus({commit, getters}) {
+      let newUserFiles = getters.docLists;
       for(let i = 0; i < newUserFiles.length; i++) {
         if(newUserFiles[i].Status === 'X') {
           newUserFiles[i].Status = true;
@@ -50,22 +55,26 @@ const actions = {
       }
       commit('SET_NEW_USER_FILES_LIST', newUserFiles);
   },
-getDocs({commit, getters}) {
+   // nowe
+getDocs({commit, getters, dispatch}) {
   let urlQuery = getters.getUrlQuery
+  let query = "?sap-user=psy&sap-password=ides01&sap-language=pl"
+  let user = 'UIO'
   axios({
     method: 'GET',
-    url: 'Attachments'  + urlQuery + "&$filter=FileId eq 'new'",
+    url: 'Attachments'  + query + "&$filter=FileId eq 'new' and UserAlias eq '" + user + "'",
     headers: {
       "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
     }
   }).then(res => {
     let oAttachments = res.data.d.results;
-    commit('GET_DOC_LIST', oAttachments);
+    commit('SET_DOC_LIST', oAttachments);
+    // commit('SET_LIST_FOR_STATUS', oAttachments);
+    dispatch('checkStatus');
   }).catch(error => {
     console.log(error);
   })
   },
-  
   getDocsStatus({
     commit,
     state
@@ -121,6 +130,9 @@ const getters = {
   docLists(state) {
     return state.docList;
   },
+  // getListForStatus(state) {
+  //   return state.listForStatus;
+  // },
   docStatusList(state) {
     return state.docStatus;
   }

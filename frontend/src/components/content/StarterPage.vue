@@ -24,16 +24,16 @@
                       <div v-else class="starter-page-docx">.docx</div>
                     </div>
                     <div class="starter-page-list-item-wrapper">
-                      <div class="starter-page-item-text" :class="list.status ? 'line-through' : 'none'">
+                      <div class="starter-page-item-text" :class="list.Status ? 'line-through' : 'none'">
                         {{ list.Filename }}
                         <p class="starter-list-item-popover">{{ list.FileId }}</p>
                       </div>
                     </div>
-                    <input class="starter-page-checkbox" :checked="list.status" @change="changeCheckbox(list)" type="checkbox">
+                    <input class="starter-page-checkbox" :checked="list.Status" @change="changeCheckbox(list)" type="checkbox">
                   </li>
                 </ul>
                 <div class="starter-page-list-bottom">
-                  <button class="starter-page-docs-btn button" @click="submitDocuments">{{ $t("button.documentComplete") }}</button>
+                  <button class="starter-page-docs-btn button" disabled="this.setButton">{{ $t("button.documentComplete") }}</button>
                   <!-- <button class="starter-page-docs-btn button" :disabled="setButton" @click="submitDocuments">{{ $t("button.documentComplete") }}</button> -->
                 </div>
               </div>
@@ -44,7 +44,7 @@
               </div>
               <div class="starter-page-list-content">
                 <ul class="starter-page-ul">
-                  <li class="starter-page-item" v-for="list in getFullListOfDoc" :key="list.FileId">
+                  <!-- <li class="starter-page-item" v-for="list in getFullListOfDoc" :key="list.FileId">
                     <div class="starter-page-list-item-btns">
                       <a class="starter-page-file-btn" :href="list.link">&#x21e3;</a>
                       <div v-if="list.format === 'pdf'" class="starter-page-pdf">.pdf</div>
@@ -57,11 +57,11 @@
                       </div>
                     </div>
                     <input class="starter-page-checkbox" :checked="list.status" @change="changeCheckbox(list)" type="checkbox">
-                  </li>
+                  </li> -->
                 </ul>
                 <div class="starter-page-list-bottom">
                   <!-- <button class="starter-page-docs-btn button" :disabled="setButton" @click="submitDocuments">{{ $t("button.documentComplete") }}</button> -->
-                     <button class="starter-page-docs-btn button" @click="submitDocuments">{{ $t("button.documentComplete") }}</button>
+                     <button class="starter-page-docs-btn button">{{ $t("button.documentComplete") }}</button>
                 </div>
               </div>
             </div>
@@ -100,63 +100,73 @@ export default {
   },
     computed: {
       ...mapGetters({
-      // setBuTTon: 'returnCheckList',
+      setBuTton: 'returnCheckList',
       docList: 'docLists',
+      listForStatus: 'getListForStatus'
       // docStatusList: 'docStatusList',
       //  statusToDoc: 'getFullListOfDoc'
       }),
-      getFullListOfDoc() {
-        return this.setStatusToDoc();
-    }
+    //   getFullListOfDoc() {
+    //     return this.setStatusToDoc();
+    // }
   },
   methods: {
      ...mapActions([
        'getUserId',
-       'getDocs',
-       'getDocsStatus'
+       'getDocs', // używam
+       'getDocsStatus',
+       'checkList', // używam
+       'saveDocs'
     ]),
     changeCheckbox(data) {
-      if(data.status === undefined) {
+      if(data.Status === undefined) {
         data["status"] = true;
       } else {
-        data.status = !data.status;
+        data.Status = !data.Status;
       }
-      this.checkList(this.listOfDoc);
-      this.$store.dispatch("saveDocs", {
-        data
-      });
+      this.checkList(this.listForStatus);
+      this.saveDocs(data)
+      // this.$store.dispatch("saveDocs", {
+      //   data
+      // });
     },
-    checkList(data) {
-      this.$store.dispatch("checkList", {
-        listOfDoc: data
-      })
-    },
+
+    // checkList(data) {
+    //   this.$store.dispatch("checkList", {
+    //     listOfDoc: data
+    //   })
+    // },
+
     // getId() {
     //   this.$store.dispatch("getUserId");
     // },
+
     // getDocList(){
     //   this.$store.dispatch("getDocs");
     // },
+
     // getDocStatus(){
     //   this.$store.dispatch("getDocsStatus");
     // },
-    setStatusToDoc() {
-      var docs = this.getDocs;
-      const status = this.getDocsListStatus;
 
-        for(let i = 0; i < docs.length; i++){
-          for(let j = 0; j < status.length; j++) {
-            if(docs[i].id == status[j].docId) {
-              docs[i]["status"] = status[j].status;
-            }
-          }
-        }
-        this.checkList(docs);
-        return this.listOfDoc = docs;
-    },
-    submitDocuments() {
-      this.$store.dispatch("sentDocuments");
-    }
+    // setStatusToDoc() {
+    //   var docs = this.getDocs;
+    //   const status = this.getDocsListStatus;
+
+    //     for(let i = 0; i < docs.length; i++){
+    //       for(let j = 0; j < status.length; j++) {
+    //         if(docs[i].id == status[j].docId) {
+    //           docs[i]["status"] = status[j].status;
+    //         }
+    //       }
+    //     }
+    //     this.checkList(docs);
+    //     return this.listOfDoc = docs;
+    // },
+
+    // submitDocuments() {
+    //   this.$store.dispatch("sentDocuments");
+    // }
   }
 }
 </script>
