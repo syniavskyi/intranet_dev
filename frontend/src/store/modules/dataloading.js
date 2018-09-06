@@ -24,7 +24,8 @@ const state = {
   sapModulesList: [],
   newUserFiles: [],
   UserRole: [],
-  userAdverts: [{Id: '001', Message: 'Wiadomość1', ValidTo: new Date()}, {Id:'002', Message: 'Wiadomość2', ValidTo: new Date()}]
+  userAdverts: [{Id: '001', Message: 'Wiadomość1', ValidTo: new Date()}, {Id:'002', Message: 'Wiadomość2', ValidTo: new Date()}],
+  userAuth: []
 };
 
 const mutations = {
@@ -84,6 +85,9 @@ const mutations = {
   },
   SET_USER_ROLE(state, data) {
     state.userRole = data;
+  },
+  SET_USER_AUTH(state, data) {
+    state.userAuth = data;
   }
 };
 
@@ -271,7 +275,7 @@ const actions = {
     userData.user = 'UIO'
     axios({
       method: 'GET',
-      url: 'Users' + '(UserAlias=' + "'" + userData.user + "'," +  "Language='" + userData.lang + "')"  + urlQuery +  '&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang,UserFiles,UserRole',
+      url: 'Users' + '(UserAlias=' + "'" + userData.user + "'," +  "Language='" + userData.lang + "')"  + urlQuery +  '&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang,UserFiles,UserRole,UserAuth',
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -286,6 +290,7 @@ const actions = {
       // localStorage.setItem('id', oFormattedUserData.UserAlias)
       localStorage.setItem('id', sUserId);
       dispatch('getUserFilesData')
+      commit('SET_USER_AUTH', oFormattedUserData.UserAuth.results)
       commit('SET_USER_INFO', oFormattedUserData);
       commit('SET_USER_EDUCATION', oUserData.UserEducations.results);
       dispatch('setEduIsCurrentField');
@@ -438,6 +443,9 @@ const getters = {
   },
   userAdverts(state) {
     return state.userAdverts
+  },
+  getUserAuth(state){
+    return state.userAuth
   }
 };
 

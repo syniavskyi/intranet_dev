@@ -327,29 +327,47 @@ const actions = {
       totalCostsInCurr.amount =  0
       totalCostsInCurr.amount =  totalCostsInCurr.travel + totalCostsInCurr.accomodation + totalCostsInCurr.others - allDeduction
     },
-    getDelegationNumber({commit}, data) {
-      let url = "Delegations(DelegDate=" + data.DelegDate + ",UserId='" + data.UserAlias + "')"
-      odata(url).get().then(function(res) {
+    getDelegationNumber({commit, getters}, data) {
+      
+      let urlQuery = getters.getUrlQuery
+      let url = "Delegations(DelegDate=" + data.DelegDate + ",UserId='" + data.UserAlias + "')" +urlQuery
+      axios({
+        method: 'GET',
+        url: url,
+        headers: {
+          "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        }
+      }).then(res => {
         commit('SET_NEW_DELEG_NO', res.data.d.DelegNo)
         console.log(res.data.d);
-      }).fail(function(error) {
+      }).catch(error => {
         console.log(error);
-      });
+      })
     },
     saveDelegationNumber({commit, dispatch, getters}){
         const oDelegation = getters.getNewDelegation
+        let urlQuery = getters.getUrlQuery
         let data = {
             UserId: oDelegation.userId,
             DelegDate: utils.formatDateForBackend(oDelegation.dates.start),
             DelegNo: getters.getNewDelegationNumber
         }
-        odata('Delegations').post(data).save(function(data) {
+        
+        axios({
+          method: 'POST',
+          url: 'Delegations' + urlQuery,
+          data: data,
+          headers: {
+            "X-Requested-With": "XMLHttpRequest"
+          }
+        }).then(res => {
           commit('CREATE_DELEG_SUCCESS',true)
           dispatch('clearDelegationForm')
-        }, function (status) {
-          console.error(status); 
+        }).catch(error => { 
+          console.log(error);
           commit('CREATE_DELEG_SUCCESS',false)
-        });
+        })
+      
      },
      clearDelegationForm({commit}){
       const totalCosts= {
