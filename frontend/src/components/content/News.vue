@@ -1,46 +1,38 @@
 <template>
 <div class="plane-component">
     <div class="component-nav-and-content">
-      <app-menu></app-menu>
-      <div class="component-content">
-        <div class="content-header">
-          <div class="content-header-title-and-menu">
-            <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu">
-            <p class="content-header-title">Strona główna</p>
-          </div>
+        <app-menu></app-menu>
+            <div class="component-content">
+                <div class="content-header">
+                <div class="content-header-title-and-menu">
+                <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu">
+                <p class="content-header-title">Strona główna</p>
+            </div>
         </div>
         <!-- slideshow with users adverts -->
         <div id="adverts">
-          <div class="slider elements-list" id="slider1">
-                  <div class="slider-slides-cnt">
-                      <article class="element slider-slide">
-                          <h2 class="element-title">
-                              1 Lorem ipsum dolor sit.
-                          </h2>
-                          <div class="element-text">
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit...
-                          </div>
-                      </article>
-                      <article class="element slider-slide">
-                          <h2 class="element-title">
-                              2 Lorem ipsum dolor sit.
-                          </h2>
-                          <div class="element-text">
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit...
-                          </div>
-                      </article>
-                  </div>
-                  <div class="slider-nav">
-                      <button type="button" class="slider-button slider-button-prev">Poprzedni</button>
-                      <button type="button" class="slider-button slider-button-next">Następny</button>
-                  </div>
-                  <ul class="slider-dots">
-                      <li class="slider-dots-element slider-dots-element-active"><button class="slider-dots-button" type="button">1</button></li>
-                      <li class="slider-dots-element"><button class="slider-dots-button" type="button">2</button></li>
-                      <li class="slider-dots-element"><button class="slider-dots-button" type="button">3</button></li>
-                  </ul>
-              </div>
-           </div>
+            <div class="slider elements-list" id="slider1">
+                <div class="slider-slides-cnt">
+                    <article class="element slider-slide">
+                        <h2 class="element-title">1 Lorem ipsum dolor sit.</h2>
+                        <div class="element-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</div>
+                    </article>
+                    <article class="element slider-slide">
+                        <h2 class="element-title">2 Lorem ipsum dolor sit.</h2>
+                        <div class="element-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</div>
+                    </article>
+                </div>
+                <div class="slider-nav">
+                    <button type="button" class="slider-button slider-button-prev">Poprzedni</button>
+                    <button type="button" class="slider-button slider-button-next">Następny</button>
+                </div>
+                <ul class="slider-dots">
+                    <li class="slider-dots-element slider-dots-element-active"><button class="slider-dots-button" type="button">1</button></li>
+                    <li class="slider-dots-element"><button class="slider-dots-button" type="button">2</button></li>
+                    <li class="slider-dots-element"><button class="slider-dots-button" type="button">3</button></li>
+                </ul>
+            </div>
+        </div>
         <div class="content-body">
           <div id="usersAdverts">
             <!-- place to add custom adverts and edit existing ones -->

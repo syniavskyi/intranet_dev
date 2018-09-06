@@ -22,10 +22,9 @@
                     <button class="border-btn reject-btn" @click="onCancelEdit">{{ $t("button.cancel") }}</button>
                 </div>
             </div>
-
             <h3 class="prof-user-header-name">{{userData.Fullname}}</h3>
             <div class="profile-tiles">
-            <div class="profile-tiles-row-wrap">
+              <div class="profile-tiles-row-wrap">
                 <div class="profile-tiles-row">
                     <div class="profile-tile-1-3 profile-main-edit">
                         <div class="profile-tile-header">
@@ -144,7 +143,7 @@
                         <div class="profile-tile-header">
                             <div class="profile-tile-header-row">
                                 <h2 class="prof-tile-h2">{{ $t("header.employee") }}</h2>
-                                <button class="profile-edit-btn"><span class="prof-btn-txt">zmień hasło</span><span class="prof-btn-icon">&#x1f513;</span></button>
+                                <button @click="showChangePassword" class="func-btn"><span class="prof-btn-txt">zmień hasło</span><span class="prof-btn-icon">&#x1f513;</span></button>
                             </div>
                             <div class="tile-underscore"></div>
                         </div>
@@ -241,7 +240,9 @@
                 <user-projects-component></user-projects-component>
                 <user-skills-component></user-skills-component>
                 <select-cv-content v-show="showSelectCv"></select-cv-content>
-                <div v-show="showSelectCv" class="modal-overlay"></div>    
+                <div v-show="showSelectCv" class="modal-overlay"></div>  
+                <change-user-password v-show="showPasswordDialog"></change-user-password>  
+
             </div>
         </div>
     </div>
@@ -267,6 +268,7 @@ import UserExperience from "./profileComponents/UserExperience";
 import UserSkills from "./profileComponents/UserSkills";
 import SelectCvContent from "./profileComponents/SelectCvContent";
 import UserCvTile from "./profileComponents/UserCvTile";
+import ChangePasswordDialog from "./profileComponents/ChangePasswordDialog"; 
 import i18n from "../../lang/lang";
 export default {
   data() {
@@ -347,6 +349,7 @@ export default {
     "user-education-component": UserEducation,
     "select-cv-content": SelectCvContent,
     "user-cv-tile": UserCvTile,
+    "change-user-password": ChangePasswordDialog,
     VueGoogleAutocomplete: VueGoogleAutocomplete
   },
   computed: {
@@ -357,7 +360,8 @@ export default {
       userPositions: "getUserJobPositions",
       cvLanguageList: "getCvLanguageList",
       loginLanguage: "getLoginLanguage",
-      showSelectCv: "getShowSelectCvDialog"
+      showSelectCv: "getShowSelectCvDialog",
+      showPasswordDialog: "getShowSelectChangePasswordDialog"
     }),
     formatAddress() {
       const data = this.userData;
@@ -379,7 +383,9 @@ export default {
       this.editMode = !this.editMode;
       this._beforeEditingCache = Object.assign({}, this.userData);
     },
-
+    showChangePassword() {
+      this.$store.commit('SET_SHOW_CHANGE_PASSWORD_DIALOG', true)
+    },
     formatDate(date) {
       return date !== null && date !== undefined
         ? moment(date).format("DD.MM.YYYY")

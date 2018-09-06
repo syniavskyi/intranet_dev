@@ -1577,6 +1577,10 @@ max-width: max-content;
     }
     .prof-btn-txt {
         display: flex;
+        align-items: baseline;
+        text-align: center;
+        padding:0;
+        margin:0;
     }
     .prof-thead-item {
         text-align: center;

@@ -73,7 +73,7 @@
     flex-direction: column;
     width: 100%;
     height: 88%;
-    flex-grow: 1;
+    /* flex-grow: 1; */
 }
 
 .delegations-tile {
