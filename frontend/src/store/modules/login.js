@@ -31,7 +31,8 @@ const mutations = {
 const actions = {
   login({
     commit,
-    dispatch
+    dispatch,
+    getters
   }, authData) {
     // commit('CLEAR_AUTH_DATA');
     var params = new URLSearchParams()
@@ -58,7 +59,9 @@ const actions = {
         lang: authData.language
       } 
       dispatch('loadData', userData)
-
+      if (getters.isDataLoaded){
+        router.replace('/dashboard')
+      }
       }).catch(error => {
       console.log(error)
       commit('SET_LOGIN_ERROR', true)

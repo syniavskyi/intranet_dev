@@ -156,9 +156,9 @@ const actions = {
     dispatch('getFieldOfStudyDesc', userData.lang);
     dispatch('getUserData', userData);
     
-    if (getters.isDataLoaded){
-      router.replace('/dashboard')
-    }
+    // if (getters.isDataLoaded){
+    //   router.replace('/dashboard')
+    // }
   },
   getDomainValues({
     commit, getters
@@ -299,7 +299,7 @@ const actions = {
       dispatch('adjustProjects');
       dispatch('setProjectsIsCurrentField');
       commit('SET_NEW_USER_FILES_LIST', oUserData.UserFiles.results);
-      dispatch('checkStatus');
+      // dispatch('checkStatus');
       commit('SET_USER_ROLE', oUserData.UserRole.results)
       commit('SET_DATA_LOADED', true)
     }).catch(error => {

@@ -297,7 +297,8 @@ export default {
   },
   watch: {
     selectedCvLang(lang) {
-      this.setCvLanguage(lang);
+      // this.$store.commit('SET_LANG', lang);
+      // this.setCvLanguage(lang);
     }
   },
   beforeCreate() {
@@ -329,7 +330,8 @@ export default {
     if (lang == "") {
       lang = "pl";
     }
-    this.setLanguage(lang);
+    this.$store.commit('SET_LANG', lang);
+    // this.setLanguage(lang);
     next();
     //   } else {
     //       next(false);
@@ -485,19 +487,19 @@ export default {
         }
       }
     },
-    setCvLanguage(language) {
-      this.$store.dispatch("setCvLanguage", language);
-    },
-    setLanguage(language) {
-      this.$store.dispatch("setLanguage", language);
-    },
+    // setCvLanguage(language) {
+    //   this.$store.dispatch("setCvLanguage", language);
+    // },
+    // setLanguage(language) {
+    //   this.$store.dispatch("setLanguage", language);
+    // },
     getNewData() {
+      this.$store.commit('SET_LANG', this.selectedCvLang);
       let cvLang = this.selectedCvLang.toUpperCase();
       let userData = {};
       userData.user = "UIO";
       userData.lang = cvLang;
-      this.$store.dispatch("getUserData", userData);
-      this.$store.dispatch("getDomainValues");
+      this.$store.dispatch("loadData", userData);
     },
     onHover() {
       let mainEdits = document.querySelectorAll(".profile-main-edit");
