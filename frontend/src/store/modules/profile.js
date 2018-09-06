@@ -21,10 +21,14 @@ const state = {
     { id: 'de', description: i18n.t('select.cvLanguage.german')  },
     { id: 'ru', description: i18n.t('select.cvLanguage.russian') }
 ],
-userJobPositions: ["SAP Fiori Developer"]
+userJobPositions: ["SAP Fiori Developer"],
+showChangePasswordDialog: false
 };
 
 const mutations = {
+  SET_SHOW_CHANGE_PASSWORD_DIALOG(state, show) {
+    state.showChangePasswordDialog = show
+  },
   SET_SAVE_CHANGES_STATE(state, isSuccess) {
     state.saveChangesSuccess = isSuccess;
   },
@@ -109,7 +113,11 @@ const getters = {
   },
   getCvLanguageList(state){
     return state.cvLanguageList;
+  },
+  getShowSelectChangePasswordDialog(state){
+    return state.showChangePasswordDialog
   }
+
 
 };
 

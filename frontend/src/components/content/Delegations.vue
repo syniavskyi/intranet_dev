@@ -1,5 +1,5 @@
 <template>
-<div class="plane-component" refs="delegationContent" id="delegation-content">
+<div class="plane-component" >
     <div class="component-nav-and-content">
         <app-menu></app-menu>
         <div name="testname" class="component-content delegations-content" >
@@ -345,14 +345,4 @@ export default {
     align-items: flex-end;
 }
 
-table,
-th,
-td {
-    border: 1px solid black;
-}
-
-#delegationCostsTabletd,
-td {
-    width: 200px;
-}
 </style>

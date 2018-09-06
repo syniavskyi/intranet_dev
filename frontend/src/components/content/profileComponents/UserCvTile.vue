@@ -3,7 +3,7 @@
         <div class="profile-tile-header">
             <div class="profile-tile-header-row">
                 <h2 class="prof-tile-h2">{{ $t("label.cv") }}</h2>
-                <button class="profile-edit-btn" @click="showSelectDialog">Generuj CV</button>
+                <button class="func-btn" @click="showSelectDialog">Generuj CV</button>
             </div>
             <div class="tile-underscore"></div>
         </div>
@@ -54,13 +54,12 @@ import i18n from "../../../lang/lang";
 import { mapGetters } from 'vuex';
 export default {
     data() {
-    return {
-      selectedDownloadLang: i18n.locale,
-      selectedFormat: null,
-      disableFileOptions:null
-    }
+        return {
+        selectedDownloadLang: i18n.locale,
+        selectedFormat: null,
+        disableFileOptions:null
+        }
     },
-
     computed: {
         ...mapGetters({
             cvLanguageList: "getCvLanguageList",
