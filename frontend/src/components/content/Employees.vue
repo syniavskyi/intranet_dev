@@ -11,13 +11,20 @@
         </div>
         <div id="searchEmployee">
           <p>Wpisz imię lub nazwisko</p>
-          <input v-model="searchUser"/>
-          <p>Lub wybierz oddział</p>
+          <input v-model="aFilters.user"/>
+          <p>Lub wybierz dział</p>
+          <div class="ava-div-select-cool">
+                    <select required class="ava-select-cool" v-model="aFilters.department">
+                        <option v-for="department in departmentList" :key="department.Key" :value="department.Value">{{ department.Value }}</option>
+                    </select>
+                      <label class="ava-select-label-cool">{{ $t("label.branch") }}</label>
+          </div>
+          <button @click="clearFilters">Wyczyść</button>
         </div>
         <div class="employees-table">
           <div class="emp-thead">
                 <div class="emp-thead-item">{{ $t("label.fullName") }}</div>
-                <div class="emp-thead-item">{{ $t("label.position") }}</div>
+                <div class="emp-thead-item">{{ $t("label.branch") }}</div>
                 <div class="emp-thead-item">{{ $t("label.department") }}</div>
                 <div class="emp-thead-item">{{ $t("label.phone") }}</div>
                 <div class="emp-thead-item">{{ $t("label.email") }}</div>
@@ -29,8 +36,8 @@
                 <div class="emp-tbody-item-txt"> {{ user.Fullname }} </div>
               </div>
               <div class="emp-tbody-item">
-                <div class="emp-tbody-item-title"> {{ $t("label.position") }} </div>
-                <div class="emp-tbody-item-txt"> {{ user.JobPosition }} </div>
+                <div class="emp-tbody-item-title"> {{ $t("label.branch") }} </div>
+                <div class="emp-tbody-item-txt"> {{ user.DepartmentName }} </div>
               </div>
               <div class="emp-tbody-item">
                 <div class="emp-tbody-item-title">{{ $t("label.department") }} </div>
@@ -62,7 +69,10 @@ import { mapGetters } from 'vuex';
     data() {
       return {
         userInfo: {},
-        searchUser: ''
+       aFilters: {
+          user: '',
+          department: null
+       }
       }
     },
     components: {
@@ -74,11 +84,35 @@ import { mapGetters } from 'vuex';
       }
     },
     computed: {
-      ...mapGetters(["usersList"]),
-    filteredUsers:function(){
-        let self = this
-        return this.usersList.filter(function(user){return user.Fullname.toLowerCase().indexOf(self.searchUser.toLowerCase())>=0;});
-    }
+      ...mapGetters({usersList:"usersList", departmentList: 'depList'}),
+      filteredUsers:function(){
+        let self = this,
+            aFilteredUsers = this.usersList,
+            aFilters = this.aFilters;
+        
+        if (aFilters.user == ''  && aFilters.department === null) {
+          aFilteredUsers = this.usersList
+        } else {
+          let fnFilter;
+          if (aFilters.user) {
+            aFilteredUsers =  self.usersList.filter(function(user){ 
+                return user.Fullname.toLowerCase().indexOf(aFilters.user.toLowerCase())>=0;
+            });
+          } 
+          if (aFilters.department) {
+             fnFilter = function(oItem){
+                return oItem.DepartmentName === aFilters.department;
+              }
+              aFilteredUsers = aFilteredUsers.filter(fnFilter);
+          }
+        }
+        return aFilteredUsers;
+      }
+    },
+    methods: {
+      clearFilters() {
+        this.aFilters = {}
+      }
     }
   }
 </script>

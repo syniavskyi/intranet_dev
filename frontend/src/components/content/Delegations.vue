@@ -2,7 +2,7 @@
 <div class="plane-component" refs="delegationContent" id="delegation-content">
     <div class="component-nav-and-content">
         <app-menu></app-menu>
-        <div name="testname" class="component-content" >
+        <div name="testname" class="component-content delegations-content" >
             <div class="content-header">
                 <div class="content-header-title-and-menu">
                     <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu">
@@ -14,12 +14,18 @@
                 <div class="delegations-tile delegations-inputs">
                     <div class="delegations-tile-header">
                         <div class="delegations-tile-title"> 
-                            <p  v-show="showUsername">{{userData.Fullname}}</p>
-                            <div class="delegations-div-cool-head">
-                                <select required v-if="!showUsername" class="delegations-select-cool" v-model="newDelegation.userId" @change="setUsername">
+                            <p  v-if="showUsername">{{userData.Fullname}}</p>
+                            <div class="delegations-div-cool-head" v-if="showSelectForAllUsers">
+                                <select required  class="delegations-select-cool" v-model="newDelegation.userId" @change="setUsername">
                                     <option v-for="user in usersList" :key="user.id" :value="user.id">{{ user.firstName }} {{ user.lastName }}</option>
                                 </select> 
-                                <label v-if="!showUsername" class="delegations-label-cool-select">Wybierz pracownika</label>
+                                <label class="delegations-label-cool-select">Wybierz pracownika</label>
+                            </div>
+                             <div  v-if="showSelectForTeam" class="delegations-div-cool-head">
+                                <select required class="delegations-select-cool" v-model="newDelegation.userId" @change="setUsername">
+                                    <option v-for="user in filteredTeamUsers" :key="user.UserAlias" :value="user.UserAlias">{{ user.Fullname }}</option>
+                                </select> 
+                                <label  class="delegations-label-cool-select">Wybierz członka zespołu</label>
                             </div>
                             <button class="del-generate-pdf" @click="generatePdf">GENERUJ PDF</button>
                         </div>
@@ -152,7 +158,9 @@ export default {
         return {
             showUsername: true,
             delegationUsername: null,
-            generatingPdfMode: false
+            generatingPdfMode: false,
+            showSelectForTeam: false,
+            showSelectForAllUsers: false
         }
     },
     mounted() {
@@ -181,13 +189,24 @@ export default {
         }
     },
     created(){
-    const role = localStorage.getItem('role')
-        if (role === 'ROLE_ADMIN') {
-            this.showUsername = false
-        } else {
-            this.newDelegation.userId = localStorage.getItem('id')
-            this.delegationUsername = localStorage.getItem('id')
+    const roles = this.$store.getters.getUserAuth
+        for (let i=0; i<roles.length; i++) {
+            if (roles[i].Key === "ZDELEG" && roles[i].Value === "TEAM"){
+                this.showSelectForTeam = true
+                this.showUsername = false
+            } else  if (roles[i].Key === "ZDELEG" && roles[i].Value === "*"){
+                this.showUsername = false
+                this.showSelectForAllUsers = true
+            } else {
+                this.showUsername = true
+            }
         }
+        // if (role === 'ROLE_ADMIN') {
+        //     this.showUsername = false
+        // } else {
+        //     this.newDelegation.userId = localStorage.getItem('id')
+        //     this.delegationUsername = localStorage.getItem('id')
+        // }
     },
     computed: {
         ...mapGetters({
@@ -207,6 +226,13 @@ export default {
         }),
         disableSaveBtn() {
             return (this.newDelegationValidated && this.delegationTableValidated && this.accCostValidated) ? false : true
+        },
+        filteredTeamUsers(){
+            let aFilteredUsers = this.usersList,
+                sTeam = this.userData.DepartmentName
+
+              aFilteredUsers = aFilteredUsers.filter(function(oData){ return oData.DepartmentName === sTeam });
+              return aFilteredUsers
         }
     },
     methods: {
@@ -240,7 +266,7 @@ export default {
         },
         generatePdf() {
             this.generatingPdfMode = true
-            this.loopClasses()
+            // this.loopClasses()
             const source = document.body.getElementsByClassName('delegations-content')[0]
 
             html2canvas(source).then(canvas => {
