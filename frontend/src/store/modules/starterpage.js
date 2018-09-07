@@ -3,7 +3,8 @@ import router from '@/router/index.js'
 
 const state = {
   buttonState: false,
-  docList: [],
+  docListNew: [],
+  docListInfo: [],
   listForStatus: [],
   docStatus: [],
   userId: ''
@@ -13,8 +14,11 @@ const mutations = {
   CHECK_LIST(state, data) {
     state.buttonState = data;
   },
-  SET_DOC_LIST(state, data) {
-    state.docList = data;
+  SET_DOC_LIST_NEW(state, data) {
+    state.docListNew = data;
+  },
+  SET_DOC_LIST_INFO(state, data) {
+    state.docListInfo = data;
   },
   // SET_LIST_FOR_STATUS(state, data) {
   //   state.listForStatus = data;
@@ -43,36 +47,66 @@ const actions = {
     }
   },
   // nowe
-  checkStatus({commit, getters}) {
-      let newUserFiles = getters.docLists;
-      for(let i = 0; i < newUserFiles.length; i++) {
-        if(newUserFiles[i].Status === 'X') {
-          newUserFiles[i].Status = true;
-        }
-        else {
-          newUserFiles[i].Status = false;
-        }
+  // checkStatus({commit, getters}, files) {
+  //     let newUserFiles = getters.docListNew;
+  //     for(let i = 0; i < newUserFiles.length; i++) {
+  //       if(newUserFiles[i].Status === 'X') {
+  //         newUserFiles[i].Status = true;
+  //       }
+  //       else {
+  //         newUserFiles[i].Status = false;
+  //       }
+  //     }
+  //     commit('SET_NEW_USER_FILES_LIST', newUserFiles);
+  // },
+  checkStatus({commit, getters}, files) {
+    // let newUserFiles = getters.docListNew;
+    for(let i = 0; i < files.length; i++) {
+      if(files[i].Status === 'X') {
+        files[i].Status = true;
       }
-      commit('SET_NEW_USER_FILES_LIST', newUserFiles);
-  },
-   // nowe
-getDocs({commit, getters, dispatch}) {
-  let urlQuery = getters.getUrlQuery
-  let query = "?sap-user=psy&sap-password=ides01&sap-language=pl"
-  let user = 'UIO'
-  axios({
-    method: 'GET',
-    url: 'Attachments'  + query + "&$filter=FileId eq 'new' and UserAlias eq '" + user + "'",
-    headers: {
-      "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      else {
+        files[i].Status = false;
+      }
     }
-  }).then(res => {
-    let oAttachments = res.data.d.results;
-    commit('SET_DOC_LIST', oAttachments);
-    dispatch('checkStatus');
-  }).catch(error => {
-    console.log(error);
-  })
+    // commit('SET_NEW_USER_FILES_LIST', files);
+},
+   // nowe
+getNewDocs({commit, getters, dispatch}) {
+    let urlQuery = getters.getUrlQuery
+    let query = "?sap-user=psy&sap-password=ides01&sap-language=pl"
+    let user = 'UIO'
+    axios({
+      method: 'GET',
+      url: 'Attachments'  + query + "&$filter=FileId eq 'new' and UserAlias eq '" + user + "'",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      }
+    }).then(res => {
+      let oAttachments = res.data.d.results;
+      commit('SET_DOC_LIST_NEW', oAttachments);
+      dispatch('checkStatus', oAttachments);
+    }).catch(error => {
+      console.log(error);
+    })
+  },
+  getInfoDocs({commit, getters, dispatch}) {
+    let urlQuery = getters.getUrlQuery
+    let query = "?sap-user=psy&sap-password=ides01&sap-language=pl"
+    let user = 'UIO'
+    axios({
+      method: 'GET',
+      url: 'Attachments'  + query + "&$filter=FileId eq 'info' and UserAlias eq '" + user + "'",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      }
+    }).then(res => {
+      let oAttachments = res.data.d.results;
+      commit('SET_DOC_LIST_INFO', oAttachments);
+      dispatch('checkStatus', oAttachments);
+    }).catch(error => {
+      console.log(error);
+    })
   },
   getDocsStatus({
     commit,
@@ -119,21 +153,17 @@ getDocs({commit, getters, dispatch}) {
         console.log(error)
     })
   },
-  // checkFileFormat({commit, getters}) {
-  //   let docs = getters.docLists;
-  //   for(let i = 0; i < docs.length; i++) {
-  //      a = docs[i].Filename.slice(docs[i].Filename.lastIndexOf('.'));
-  //     //  docs[i].Filename = docs[i].Filename.slice(docs[i].Filename.lastIndexOf('.'));
-  //   }
-  // }
 }
 
 const getters = {
   returnCheckList(state) {
     return state.buttonState;
   },
-  docLists(state) {
-    return state.docList;
+  docListNew(state) {
+    return state.docListNew;
+  },
+  docListInfo(state) {
+    return state.docListInfo;
   },
   // getListForStatus(state) {
   //   return state.listForStatus;

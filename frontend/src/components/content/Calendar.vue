@@ -28,7 +28,7 @@
                         <div> {{ attr.customData.EventTime}} </div>
                         <div> {{ attr.customData.EventTypeName }} </div> 
                         <div> {{ attr.customData.EventPrivacy }} </div> 
-                        <div> {{ attr.customData.EventPriorityValue }} </div> 
+                        <div> {{ attr.customData.PrioritytValue }} </div> 
                         <div> {{ attr.customData.DateTo}} </div> 
                   </div>    
                   <div class="events-buttons">
@@ -230,7 +230,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      departmentList: 'depList',
+      departmentList: 'getTargetGroup',
       branchList: 'branchList',
       eventTypes: 'eventTypes',
       priorities: 'priorities',
