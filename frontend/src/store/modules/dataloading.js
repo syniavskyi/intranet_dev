@@ -155,7 +155,7 @@ const actions = {
     dispatch('getSchoolDesc', userData.lang);
     dispatch('getFieldOfStudyDesc', userData.lang);
     dispatch('getUserData', userData);
-    
+    dispatch('getEvents')
     // if (getters.isDataLoaded){
     //   router.replace('/dashboard')
     // }

@@ -104,10 +104,6 @@ getEvents({commit, dispatch, getters}) {
     axios({
       method: 'GET',
       url: 'Events' + urlQuery,
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -138,8 +134,8 @@ convertDate({getters, commit}) {
     else {
       oEvents[i].DateTo =  oEvents[i].DateFrom;
     }
-    commit('SET_EVENTS', oEvents);
   }
+  commit('SET_EVENTS', oEvents);
 },
 setColor({commit, getters}){
      const aEvents = getters.events;

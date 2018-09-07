@@ -69,7 +69,6 @@ getDocs({commit, getters, dispatch}) {
   }).then(res => {
     let oAttachments = res.data.d.results;
     commit('SET_DOC_LIST', oAttachments);
-    // commit('SET_LIST_FOR_STATUS', oAttachments);
     dispatch('checkStatus');
   }).catch(error => {
     console.log(error);
@@ -107,20 +106,26 @@ getDocs({commit, getters, dispatch}) {
   },
   sentDocuments({commit, state}){
     let formData = new FormData();
-
-    formData.append('id', state.userId);
-    axios({
-      method: 'post',
-      url: 'api/users/userStarterPage/disableStarterPage',
-      headers: { "Content-type": "multipart/form-data" },
-      data: formData
-  }).then(res => {
-      console.log(res)
-      router.replace('/dashboard')
-  }).catch(error => {
-      console.log(error)
-  })
-  }
+      formData.append('id', state.userId);
+      axios({
+        method: 'post',
+        url: 'api/users/userStarterPage/disableStarterPage',
+        headers: { "Content-type": "multipart/form-data" },
+        data: formData
+    }).then(res => {
+        console.log(res)
+        router.replace('/dashboard')
+    }).catch(error => {
+        console.log(error)
+    })
+  },
+  // checkFileFormat({commit, getters}) {
+  //   let docs = getters.docLists;
+  //   for(let i = 0; i < docs.length; i++) {
+  //      a = docs[i].Filename.slice(docs[i].Filename.lastIndexOf('.'));
+  //     //  docs[i].Filename = docs[i].Filename.slice(docs[i].Filename.lastIndexOf('.'));
+  //   }
+  // }
 }
 
 const getters = {

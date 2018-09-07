@@ -20,8 +20,11 @@
                   <li class="starter-page-item" v-for="list in docList" :key="list.FileId">
                     <div class="starter-page-list-item-btns">
                       <a class="starter-page-file-btn" :href="list.link">&#x21e3;</a>
-                      <div v-if="list.format === 'pdf'" class="starter-page-pdf">.pdf</div>
-                      <div v-else class="starter-page-docx">.docx</div>
+                      <div v-if="checkFileFormat(list.Filename) == '.pdf'">
+                         <p class="starter-page-pdf"> {{  checkFileFormat(list.Filename)}}</p>
+                      </div>
+                      <div v-if="checkFileFormat(list.Filename) == '.doc'"> 
+                          <p class="starter-page-docx">{{checkFileFormat(list.Filename)}} </p> </div>
                     </div>
                     <div class="starter-page-list-item-wrapper">
                       <div class="starter-page-item-text" :class="list.Status ? 'line-through' : 'none'">
@@ -116,7 +119,8 @@ export default {
        'getDocs', // używam
        'getDocsStatus',
        'checkList', // używam
-       'saveDocs'
+       'saveDocs',
+       'checkFileFormat'
     ]),
     changeCheckbox(data) {
       if(data.Status === undefined) {
@@ -130,6 +134,14 @@ export default {
       //   data
       // });
     },
+      checkFileFormat(name) {
+         return name.slice(name.lastIndexOf('.'));
+    // let docs = this.docList;
+    // for(let i = 0; i < docs.length; i++) {
+      //  return docs[i].Filename.slice(docs[i].Filename.lastIndexOf('.'));
+      //  docs[i].Filename = docs[i].Filename.slice(docs[i].Filename.lastIndexOf('.'));
+    // }
+  }
 
     // checkList(data) {
     //   this.$store.dispatch("checkList", {
