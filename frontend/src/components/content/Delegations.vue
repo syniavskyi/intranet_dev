@@ -17,7 +17,7 @@
                             <p  v-if="showUsername">{{userData.Fullname}}</p>
                             <div class="delegations-div-cool-head" v-if="showSelectForAllUsers">
                                 <select required  class="delegations-select-cool" v-model="newDelegation.userId" @change="setUsername">
-                                    <option v-for="user in usersList" :key="user.id" :value="user.id">{{ user.firstName }} {{ user.lastName }}</option>
+                                    <option v-for="user in usersList" :key="user.id" :value="user.id">{{ user.Fullname }}</option>
                                 </select> 
                                 <label class="delegations-label-cool-select">Wybierz pracownika</label>
                             </div>
@@ -191,7 +191,7 @@ export default {
     created(){
     const roles = this.$store.getters.getUserAuth
         for (let i=0; i<roles.length; i++) {
-            if (roles[i].Key === "ZDELEG" && roles[i].Value === "TEAM"){
+            if (roles[i].Key === "ZDELEG" && roles[i].Value === "TEAM" && this.userData.DepartmentName !== ""){
                 this.showSelectForTeam = true
                 this.showUsername = false
             } else  if (roles[i].Key === "ZDELEG" && roles[i].Value === "*"){
@@ -242,7 +242,6 @@ export default {
             countAllCosts: 'countAllCosts'
         }),
         setDelegationNo(){
-            this.delegationUsername = 'UIO'
             if (this.newDelegation.dates && this.delegationUsername) {
                 const data = {
                     UserAlias: this.delegationUsername,
@@ -254,15 +253,8 @@ export default {
             } 
         },
         setUsername(){
-            const users = this.usersList,
-                    selectedId = this.newDelegation.userId
-            for (let i=0; i <users.length; i ++) {
-                let user = users[i]
-                if (selectedId == user.id) {
-                    this.delegationUsername = (user.username).toUpperCase()
-                    return
-                }
-            }
+            this.delegationUsername = this.newDelegation.userId
+            this.setDelegationNo()
         },
         generatePdf() {
             this.generatingPdfMode = true
