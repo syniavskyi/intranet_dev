@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const state = {
     userProjects: [],
-    userProjects1: [],
+    userAvail: [],
     disableSaveNewProject: true,
     disableSaveEditProject: true,
     beforeEditingCache: null,
@@ -27,6 +27,9 @@ const state = {
 const mutations = {
     SET_USER_PROJECTS(state, userProjects) {
         state.userProjects = userProjects
+    },
+    SET_USER_AVAIL(state, userAvail) {
+        state.userAvail = userAvail
     },
     SET_NEW_PROJECT_FOR_USER(state, project) {
         state.newProjectForUser = project
@@ -69,15 +72,58 @@ const mutations = {
 const actions = {
     getUserProjects({commit, dispatch, getters}, userId) {
     //get user projects for calendar and editing projects 
-        const URL = "/api/users/" + userId + "/userEngag"
+        userId= 'UIO'
+        let urlQuery = getters.getUrlQuery
+        const URL = "UserAvailabilities" + urlQuery + "&$filter=UserId eq '" + userId + "'"
          axios.get(URL).then(res => {
              console.log(res)
-            const userProjects = res.data
+            const userProjects = res.data.d.results
             dispatch('setUserProjects', userProjects)
             commit('SET_PROJECT_TO_EDIT', {})
         }).catch(error => {
             console.log(error)
         });
+    },
+    getUserAvail({commit, dispatch, getters}, userId) {
+        //get user projects for calendar and editing projects 
+            userId= 'UIO'
+            let urlQuery = getters.getUrlQuery
+            const URL = "UserAvailabilities" + urlQuery + "&$filter=UserId eq '" + userId + "'"
+             axios.get(URL).then(res => {
+                console.log(res)
+                const userAvail = res.data.d.results
+                for(let i=0;i<userAvail.length;i++){
+                    userAvail[i].startDate = new Date(userAvail[i].DateStart)
+                    userAvail[i].endDate = new Date(userAvail[i].DateEnd)
+                }
+                commit('SET_USER_AVAIL', userAvail)
+                // dispatch('setUserAvails', userAvail)
+            }).catch(error => {
+                console.log(error)
+            });
+        },
+        setUserProjects({commit, getters}, userProjects){
+    // set projects data with props for calendar 
+        const projectsList = getters.projectsList
+            for (let i=0; i<userProjects.length; i++) {
+                for (let j=0; j<projectsList.length; j++){
+                    if (userProjects[i].projId === projectsList[j].id) {
+                        userProjects[i].projName = projectsList[j].name
+                    } 
+                }
+            }
+            for (let i=0; i<userProjects.length; i++) {
+                if (userProjects[i].engag === "100") {
+                    userProjects[i].color = '#EDA1A1'
+                    userProjects[i].order = 2
+                } else {
+                    userProjects[i].color = '#fde692'
+                    userProjects[i].order = 1
+                }
+                userProjects[i].startDate = new Date(userProjects[i].startDate)
+                userProjects[i].endDate = new Date(userProjects[i].endDate)
+            }
+            commit('SET_USER_PROJECTS', userProjects)
     },
     setUserProjects({commit, getters}, userProjects){
     // set projects data with props for calendar 
@@ -285,8 +331,10 @@ const getters = {
     },
     getProjectToEdit(state){
         return state.projectToEdit
+    },
+    getUserAvail(state){
+        return state.userAvail
     }
-
 
 };
 
