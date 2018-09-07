@@ -13,15 +13,19 @@
           <div class="starter-page-lists">
             <div class="starter-page-list">
               <div class="starter-page-list-header">
-                <p class="starter-page-list-title">{{ $t("label.documentList") }}</p>
+                <p class="starter-page-list-title">{{ $t("label.documentListNew") }}</p>
               </div>
               <div class="starter-page-list-content">
                 <ul class="starter-page-ul">
-                  <li class="starter-page-item" v-for="list in docList" :key="list.FileId">
+                  <li class="starter-page-item" v-for="list in docListNew" :key="list.FileId">
                     <div class="starter-page-list-item-btns">
                       <a class="starter-page-file-btn" :href="list.link">&#x21e3;</a>
-                      <div v-if="list.format === 'pdf'" class="starter-page-pdf">.pdf</div>
-                      <div v-else class="starter-page-docx">.docx</div>
+                      <div v-if="checkFileFormat(list.Filename) == '.pdf'">
+                         <p class="starter-page-pdf"> {{  checkFileFormat(list.Filename)}}</p>
+                      </div>
+                      <div v-if="checkFileFormat(list.Filename) == '.doc'"> 
+                          <p class="starter-page-docx">{{checkFileFormat(list.Filename)}} </p> 
+                      </div>
                     </div>
                     <div class="starter-page-list-item-wrapper">
                       <div class="starter-page-item-text" :class="list.Status ? 'line-through' : 'none'">
@@ -40,24 +44,28 @@
             </div>
             <div class="starter-page-list">
               <div class="starter-page-list-header">
-                <p class="starter-page-list-title">{{ $t("label.documentList") }}</p>
+                <p class="starter-page-list-title">{{ $t("label.documentListInfo") }}</p>
               </div>
               <div class="starter-page-list-content">
                 <ul class="starter-page-ul">
-                  <!-- <li class="starter-page-item" v-for="list in getFullListOfDoc" :key="list.FileId">
+                  <li class="starter-page-item" v-for="list in docListInfo" :key="list.FileId">
                     <div class="starter-page-list-item-btns">
                       <a class="starter-page-file-btn" :href="list.link">&#x21e3;</a>
-                      <div v-if="list.format === 'pdf'" class="starter-page-pdf">.pdf</div>
-                      <div v-else class="starter-page-docx">.docx</div>
+                     <div v-if="checkFileFormat(list.Filename) == '.pdf'">
+                         <p class="starter-page-pdf"> {{  checkFileFormat(list.Filename)}}</p>
+                      </div>
+                      <div v-if="checkFileFormat(list.Filename) == '.doc'"> 
+                          <p class="starter-page-docx">{{checkFileFormat(list.Filename)}} </p> 
+                      </div>
                     </div>
                     <div class="starter-page-list-item-wrapper">
-                      <div class="starter-page-item-text" :class="list.status ? 'line-through' : 'none'">
+                      <div class="starter-page-item-text" :class="list.Status ? 'line-through' : 'none'">
                         {{ list.FileId }}
                         <p class="starter-list-item-popover">{{ list.FileName }}</p>
                       </div>
                     </div>
-                    <input class="starter-page-checkbox" :checked="list.status" @change="changeCheckbox(list)" type="checkbox">
-                  </li> -->
+                    <input class="starter-page-checkbox" :checked="list.Status" @change="changeCheckbox(list)" type="checkbox">
+                  </li>
                 </ul>
                 <div class="starter-page-list-bottom">
                   <!-- <button class="starter-page-docs-btn button" :disabled="setButton" @click="submitDocuments">{{ $t("button.documentComplete") }}</button> -->
@@ -94,15 +102,17 @@ export default {
   },
   created() {
     // this.getId();
-    this.getDocs();
+    this.getNewDocs();
+    this.getInfoDocs();
     // this.getDocStatus();
     // this.setStatusToDoc();
   },
     computed: {
       ...mapGetters({
       setBuTton: 'returnCheckList',
-      docList: 'docLists',
-      listForStatus: 'getListForStatus'
+      docListNew: 'docListNew',
+      listForStatus: 'getListForStatus',
+      docListInfo: 'docListInfo'
       // docStatusList: 'docStatusList',
       //  statusToDoc: 'getFullListOfDoc'
       }),
@@ -113,10 +123,12 @@ export default {
   methods: {
      ...mapActions([
        'getUserId',
-       'getDocs', // używam
+       'getNewDocs', // używam
+       'getInfoDocs',
        'getDocsStatus',
        'checkList', // używam
-       'saveDocs'
+       'saveDocs',
+       'checkFileFormat'
     ]),
     changeCheckbox(data) {
       if(data.Status === undefined) {
@@ -130,6 +142,14 @@ export default {
       //   data
       // });
     },
+      checkFileFormat(name) {
+         return name.slice(name.lastIndexOf('.'));
+    // let docs = this.docList;
+    // for(let i = 0; i < docs.length; i++) {
+      //  return docs[i].Filename.slice(docs[i].Filename.lastIndexOf('.'));
+      //  docs[i].Filename = docs[i].Filename.slice(docs[i].Filename.lastIndexOf('.'));
+    // }
+  }
 
     // checkList(data) {
     //   this.$store.dispatch("checkList", {

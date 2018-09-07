@@ -18,7 +18,7 @@ const state = {
   userFiles: [],
   fullLanguageList: [],
   workPositionList: [],
-  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_AVAIL_TYPE", "ZINTRANET_AVAIL_STATUS", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES", 'ZINTRANET_PRIORITY', 'ZINTRANET_EVENT_TYPE'],
+  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_AVAIL_TYPE", "ZINTRANET_AVAIL_STATUS", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES", 'ZINTRANET_PRIORITY', 'ZINTRANET_EVENT_TYPE', 'ZINTRANET_EVENT_TYPE', 'ZINTRANET_TARGET_GROUP'],
   schoolDescList: [],
   fieldOfStudyDescList: [],
   sapModulesList: [],
@@ -28,6 +28,7 @@ const state = {
   userAuth: [],
   availStatus: [],
   availType: []
+  targetGroup: []
 };
 
 const mutations = {
@@ -96,6 +97,9 @@ const mutations = {
   },
   SET_AVAIL_TYPE(state, data){
     state.availType = data
+  },
+  SET_TARGET_GROUP(state, data) {
+    state.targetGroup = data;
   }
 };
 
@@ -167,7 +171,7 @@ const actions = {
     dispatch('getSchoolDesc', userData.lang);
     dispatch('getFieldOfStudyDesc', userData.lang);
     dispatch('getUserData', userData);
-    
+    dispatch('getEvents')
     // if (getters.isDataLoaded){
     //   router.replace('/dashboard')
     // }
@@ -221,8 +225,10 @@ const actions = {
       } else if (domainData.name == 'ZINTRANET_AVAIL_TYPE'){
         const aType = res.data.d.results;
         commit('SET_AVAIL_TYPE', aType);
+      } else if (domainData.name == 'ZINTRANET_TARGET_GROUP') {
+        const aTargetGroup = res.data.d.results;
+        commit('SET_TARGET_GROUP', aTargetGroup);
       }
-
     }).catch(error => {
       console.log(error);
     })
@@ -456,7 +462,7 @@ const getters = {
     return state.newUserFiles;
   },
   userAdverts(state) {
-    return state.userAdverts
+    return state.userAdverts;
   },
   getUserAuth(state){
     return state.userAuth
@@ -466,6 +472,9 @@ const getters = {
   },
   getAvailType(state) {
     return state.availType
+  },
+  getTargetGroup(state) {
+    return state.targetGroup;
   }
 };
 

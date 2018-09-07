@@ -23,16 +23,17 @@
               <ul class="ul-event">
                 <li v-for='attr in selectedDay.attributes' :key='attr.customData.EventId' class="delegations-inputs-section">
                   <div class="event-attr">
-                    <div class="event-attr-header"> <p> {{ attr.customData.EventName }} </p> </div>
-                    <div> {{ attr.customData.Description}} </div>
-                    <div> {{ attr.customData.EventTime}} </div>
-                    <div> {{ attr.customData.EventTypeName }} </div> 
-                    <div> {{ attr.customData.EventPrivacy }} </div> 
-                    <div> {{ attr.customData.EventPriorityValue }} </div> 
+                        <div class="event-attr-header"> <p> {{ attr.customData.EventName }} </p> </div>
+                        <div> {{ attr.customData.Description}} </div>
+                        <div> {{ attr.customData.EventTime}} </div>
+                        <div> {{ attr.customData.EventTypeName }} </div> 
+                        <div> {{ attr.customData.EventPrivacy }} </div> 
+                        <div> {{ attr.customData.PrioritytValue }} </div> 
+                        <div> {{ attr.customData.DateTo}} </div> 
                   </div>    
                   <div class="events-buttons">
-                    <button class="button edit-button" @click="editEvent(attr.customData, $t)">{{ $t("button.edit") }}</button>
-                    <button class="button edit-button" @click="deleteEvent(attr.customData, $t)">{{ $t("button.delete") }}</button>
+                      <button class="button edit-button" @click="editEvent(attr.customData, $t)">{{ $t("button.edit") }}</button>
+                      <button class="button edit-button" @click="deleteEvent(attr.customData, $t)">{{ $t("button.delete") }}</button>
                   </div>
                 </li>            
               </ul>
@@ -70,8 +71,7 @@
                     <button class="modal-exit" @click="performDialog">&#10006;</button>
                   </div>
                   <div class="modal-calendar">
-                    <div class="prof-input2">
-                     
+                    <div class="prof-input2">                 
                               <input required class="inputEdit2 inputProfile2 input-active" v-model="addEvent.EventName" @blur="$v.addEvent.EventName.$touch()">
                               <span class="prof-div-bar"></span>
                               <label class="label-profile2">{{ $t("label.eventTitle") }}</label>
@@ -85,11 +85,12 @@
                          <label class="label-profile2">{{ $t("label.eventTime") }}</label>
                   </div>
                   <div class="prof-input2">
-                        <v-date-picker class="inputEdit2 inputProfile2 calendar-modal-date input-active" popoverDirection="" is-expanded mode="single" v-model="addEvent.DateTo" :min-date="this.selectedDay.date">
+                        <v-date-picker required class="delegations-input-date inputEdit2 inputProfile2 calendar-modal-date input-active" popoverDirection="" is-expanded mode="single" v-model="addEvent.DateTo" :min-date="this.selectedDay.date">
                             <input value="addEvent.DateTo"/>
                        </v-date-picker>
-                        <span class="prof-div-bar"></span>
-                        <label class="label-profile2">{{ $t("label.endDate") }}</label>
+                        <label class="delegations-label-cool-select">{{ $t("label.endDate") }} </label>
+                        <!-- <span class="prof-div-bar"></span> -->
+                        <!-- <label class="label-profile2">{{ $t("label.endDate") }}</label> -->
                   </div>
                   <div class="prof-input2">
                      <input required class="inputEdit2 inputProfile2 input-active" v-model="addEvent.Description">
@@ -216,20 +217,20 @@ export default {
     }
   },
   beforeCreate() {
-    if (this.$store.getters.isDataLoaded === false) {
-            this.$store.dispatch('loadData', localStorage.getItem('token'))
-        }
+    // if (this.$store.getters.isDataLoaded === false) {
+    //         this.$store.dispatch('loadData', localStorage.getItem('token'))
+    //     }
     //  this.showBranchSelect = (localStorage.getItem('role') === 'leader') ? false : true;   
-     this.$store.dispatch('getEvents');
+    //  this.$store.dispatch('getEvents');
   },
   created() {
     this.checkRole();
-    this.$store.dispatch('getPriority');
-    this.$store.dispatch('getEventType');
+    // this.$store.dispatch('getPriority');
+    // this.$store.dispatch('getEventType');
   },
   computed: {
     ...mapGetters({
-      departmentList: 'depList',
+      departmentList: 'getTargetGroup',
       branchList: 'branchList',
       eventTypes: 'eventTypes',
       priorities: 'priorities',

@@ -1,4 +1,3 @@
-
 import { mapGetters } from 'vuex';
 <template>
     <div class="modal-new">
@@ -114,26 +113,10 @@ export default {
         },
         showCv(){   
             /* Sylwia */
-            let lang = this.cvElements.language;
-            // this.getDomainValues("ZINTRANET_SAP_MODULES", lang);
-            // this.getUserData(lang);
-                // this.$store.dispatch("setCvLanguage", lang.toLowerCase());
-                // this.$store.commit("HALO", lang.toLowerCase())
-                //  app.$i18n.locale = lang.toLowerCase();
-                //  this.$i18n.locale  = lang.toLowerCase();
-//  let a = this.$store.getters.getCvElements.language;
-//       if (this.$store.getters.getCvElements.language == "") {
-//                 // retrievedObject.language = "pl";
-//             }
-//             this.$store.dispatch("setCvLanguage", a);
-//             next();
-//   },
-            /* Sylwia */        
+            let lang = this.cvElements.language;    
             this.$store.commit('SET_CV_ELEMENTS', this.cvElements)
             localStorage.setItem('Object', JSON.stringify(this.cvElements));
             this.$router.push({name: 'CV'});
-            // let routeData = this.$router.resolve({name: 'CV'});
-            // window.open(routeData.href, '_blank');
         }
     }
 }
