@@ -18,14 +18,16 @@ const state = {
   userFiles: [],
   fullLanguageList: [],
   workPositionList: [],
-  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES", 'ZINTRANET_PRIORITY', 'ZINTRANET_EVENT_TYPE'],
+  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_AVAIL_TYPE", "ZINTRANET_AVAIL_STATUS", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES", 'ZINTRANET_PRIORITY', 'ZINTRANET_EVENT_TYPE'],
   schoolDescList: [],
   fieldOfStudyDescList: [],
   sapModulesList: [],
   newUserFiles: [],
   UserRole: [],
   userAdverts: [{Id: '001', Message: 'Wiadomość1', ValidTo: new Date()}, {Id:'002', Message: 'Wiadomość2', ValidTo: new Date()}],
-  userAuth: []
+  userAuth: [],
+  availStatus: [],
+  availType: []
 };
 
 const mutations = {
@@ -88,6 +90,12 @@ const mutations = {
   },
   SET_USER_AUTH(state, data) {
     state.userAuth = data;
+  },
+  SET_AVAIL_STATUS(state, data){
+    state.availStatus = data
+  },
+  SET_AVAIL_TYPE(state, data){
+    state.availType = data
   }
 };
 
@@ -207,6 +215,12 @@ const actions = {
       } else if (domainData.name == 'ZINTRANET_EVENT_TYPE') {
         const aEventType = res.data.d.results;
         commit('SET_EVENT_TYPE', aEventType);
+      } else if (domainData.name == 'ZINTRANET_AVAIL_STATUS'){
+        const aStatus = res.data.d.results;
+        commit('SET_AVAIL_STATUS', aStatus);
+      } else if (domainData.name == 'ZINTRANET_AVAIL_TYPE'){
+        const aType = res.data.d.results;
+        commit('SET_AVAIL_TYPE', aType);
       }
 
     }).catch(error => {
@@ -446,6 +460,12 @@ const getters = {
   },
   getUserAuth(state){
     return state.userAuth
+  },
+  getAvailStatus(state){
+    return state.availStatus
+  },
+  getAvailType(state) {
+    return state.availType
   }
 };
 
