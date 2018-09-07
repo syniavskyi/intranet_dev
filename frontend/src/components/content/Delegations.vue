@@ -144,11 +144,11 @@ import {
     mapActions
 } from 'vuex'
 import Menu from '../Menu.vue'
-import AccomodationCosts from '../tables/accomodationCosts'
-import OtherCosts from '../tables/OtherCosts'
-import TravelCosts from '../tables/TravelCosts'
-import AdvanceTable from '../tables/AdvanceTable'
-import DelegationTable from '../tables/DelegationTable'
+import AccomodationCosts from './delegationComponents/accomodationCosts'
+import OtherCosts from './delegationComponents/OtherCosts'
+import TravelCosts from './delegationComponents/TravelCosts'
+import AdvanceTable from './delegationComponents/AdvanceTable'
+import DelegationTable from './delegationComponents/DelegationTable'
 import Dialog from '../dialogs/ConfirmDelegationDialog'
 
 let utils = require('../../utils')
