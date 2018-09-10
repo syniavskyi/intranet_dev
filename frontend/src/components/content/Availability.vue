@@ -53,6 +53,7 @@
                                             <!-- <option v-for="branch in branchList" :key="branch.branchId" :value="selectedBranch = branch.branchId">{{ branch.branchName }}</option> -->
                                         </select>
                                         <label class="ava-select-label-cool">Rodzaj wpisu</label>
+                                        <button v-if="selectedType" @click="selectedType = null">X</button>
                                     </div>
                                     <div class="ava-div-select-cool" v-if="selectedUser != null">
                                         <select required class="ava-select-cool" v-model="selectedStatus">
@@ -60,8 +61,9 @@
                                              <!-- <option v-for="branch in branchList" :key="branch.branchId" :value="selectedBranch = branch.branchId">{{ branch.branchName }}</option> -->
                                         </select>
                                         <label class="ava-select-label-cool">Status</label>
+                                        <button v-if="selectedStatus" @click="selectedStatus = null">X</button>
                                     </div>
-                                    <button class="ava-button ava-button-edit" v-if="selectedUser != null" @click="showContent=true">Wyświetl</button>
+                                    <button class="ava-button ava-button-edit" v-if="selectedUser != null" @click="showContent = true">Wyświetl</button>
                                 </div>
 
                                 <!-- <div class="calendar" v-if="selectedUser != null"> -->
@@ -74,11 +76,11 @@
                     </div>
                     
                         <app-projects-tile v-if="selectedType === 'PR' && showContent == true"></app-projects-tile>
-                        <app-leaves-tile  :selected-type="selectedType" v-if="selectedType !== 'PR' && showContent == true"></app-leaves-tile>
+                        <app-leaves-tile   :selected-type="selectedType"  v-if="selectedType !== 'PR' && showContent == true"></app-leaves-tile>
                </div>
                 <div class="availability-tiles-row">
                     <app-projects-table v-if="selectedType === 'PR' && showContent == true"></app-projects-table>
-                    <app-leaves-table v-if="selectedType !== 'PR' && showContent == true"></app-leaves-table>
+                    <app-leaves-table :selected-type="selectedType" :selected-status="selectedStatus" v-if="selectedType !== 'PR' && showContent == true"></app-leaves-table>
                 </div>
             </div>
 
@@ -149,7 +151,8 @@ export default {
             newProjectForUser: 'getNewProjectForUser',
             projectToEdit: 'getProjectToEdit',
             availStatusList: 'getAvailStatus',
-            availTypesList: 'getAvailType'
+            availTypesList: 'getAvailType',
+            newLeave: 'getNewLeaveForUser'
         }),
         filteredUsers() {
             const usersList = this.usersList
@@ -201,6 +204,14 @@ export default {
         }
 
     },
+    watch: {
+        selectedType(value) {
+            this.newLeave.TypeId = value
+        },
+        selectedUser(value){
+            this.newLeave.UserId = value.UserAlias
+        }
+    },
     methods: {
         ...mapActions({
             validateEditProject: 'validateEditProject',
@@ -209,19 +220,8 @@ export default {
             validateEditEngag: 'validateEditEngag'
         }),
         loadUserProjects(userId) {
-            this.$store.commit('SET_USER_ID', userId)
             this.$store.dispatch('getUserProjects', userId)
             this.$store.dispatch('getUserAvail', userId)
-        },
-        onEdit() {
-            const beforeEditingCache = Object.assign({}, this.projectToEdit)
-            this.$store.commit('SET_BEFORE_EDIT_CACHE', beforeEditingCache)
-        },
-        onCancelEdit() {
-            Object.assign(this.projectToEdit, this.beforeEditingCache)
-            this.$store.commit('SET_BEFORE_EDIT_CACHE', null)
-            this.$store.commit('SET_PROJECT_TO_EDIT', {})
-            this.$store.commit('SET_DISABLE_SAVE_EDIT', true)
         },
         editProjectForUser() {
             this.projectToEdit.userId = this.selectedUser.id
@@ -234,7 +234,6 @@ export default {
             }
             this.$store.dispatch('removeUserProject', data)
         },
-
         removeNewProjectData(userId) {
             const newProjectForUser = {
                 userId: userId,
