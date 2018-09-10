@@ -9,17 +9,23 @@
             <p class="content-header-title">Lista Pracowników</p>
           </div>
         </div>
-        <div id="searchEmployee">
-          <p>Wpisz imię lub nazwisko</p>
-          <input v-model="aFilters.user"/>
-          <p>Lub wybierz dział</p>
-          <div class="ava-div-select-cool">
-                    <select required class="ava-select-cool" v-model="aFilters.department">
-                        <option v-for="department in departmentList" :key="department.Key" :value="department.Value">{{ department.Value }}</option>
-                    </select>
-                      <label class="ava-select-label-cool">{{ $t("label.branch") }}</label>
+        <div class="emp-tile">
+          <div class="emp-filters">
+            <div class="emp-section">
+              <div class="cd-for-input"> 
+                <input required class="cd-input" v-model="aFilters.user"/>
+                <span class="cd-span"></span>
+                <label class="cd-label">Wpisz imię lub nazwisko</label>
+              </div>
+              <div class="ava-div-select-cool">
+                <select required class="ava-select-cool" v-model="aFilters.department">
+                  <option v-for="department in departmentList" :key="department.Key" :value="department.Value">{{ department.Value }}</option>
+                </select>
+                <label class="ava-select-label-cool">Lub wybierz dział</label>
+              </div>
+            </div>
+            <button class="func-btn emp-btn" @click="clearFilters">Wyczyść</button>
           </div>
-          <button @click="clearFilters">Wyczyść</button>
         </div>
         <div class="employees-table">
           <div class="emp-thead">
