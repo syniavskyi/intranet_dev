@@ -61,7 +61,7 @@
                     <div class="starter-page-list-item-wrapper">
                       <div class="starter-page-item-text" :class="list.Status ? 'line-through' : 'none'">
                         {{ list.FileId }}
-                        <p class="starter-list-item-popover">{{ list.FileName }}</p>
+                        <p class="starter-list-item-popover">{{ list.Filename }}</p>
                       </div>
                     </div>
                     <input class="starter-page-checkbox" :checked="list.Status" @change="changeCheckbox(list)" type="checkbox">

@@ -154,9 +154,9 @@
                     </div>
                     <div class="event-feature event-visibility">
                           <label class="modal-label">{{ $t("label.visibility") }}</label>
-                          <input class="input-active" type="radio" id="prv" value="priv" v-model="addEvent.EventPrivacy">
+                          <input class="input-active" type="radio" id="prv" value="PRV" v-model="addEvent.EventPrivacy" :checked="addEvent.EventPrivacy == 'PRV'"  @change="radio(addEvent.EventPrivacy)">
                           <label for="prv">{{ $t("label.private") }}</label>
-                          <input class="input-active" type="radio" id="pbl" value="public" v-model="addEvent.EventPrivacy">
+                          <input class="input-active" type="radio" id="pbl" value="PBL" v-model="addEvent.EventPrivacy" :checked="addEvent.EventPrivacy == 'PBL'" @change="radio(addEvent.EventPrivacy)">
                           <label for="pbl">{{ $t("label.public") }}</label>    
                   </div>
            </div>
@@ -312,6 +312,9 @@ export default {
         this.$store.dispatch('editEvent');
         // this.filteredEvents.
         this.performDialog();
+    },
+    radio(data) {
+      let a = "hej"
     },
     dayClicked(day) {
       this.selectedDay = day;
