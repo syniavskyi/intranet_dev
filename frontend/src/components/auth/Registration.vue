@@ -1,80 +1,89 @@
 <template>
-<div class="plane-profile">
-    <div class="profile-nav-and-content">
-  <app-menu></app-menu>
-  <h1> {{ $t("header.registration") }} </h1>
-  <div class="plane-parent plane-parent-registration">
-    <!-- SUCCESS DIALOG -->
-    <transition name="slide-backdrop" v-if="closeSuccessDialog">
-      <div class="backdrop" v-if="closeSuccessDialog"></div>
-    </transition>
-    <transition name="slide" v-if="closeSuccessDialog">
-      <div class="modal" v-if="closeSuccessDialog">
-        <div class="modal-header">
-          <h1 class="modal-title">{{ $t("header.accountCreated") }}</h1>
-          <button class="modal-exit" @click="closeDialog">&#10006;</button>
-        </div>
-        <div class="modal-text">
-          <p>{{ $t("message.newAccountPassword") }}</p>
+<div class="plane-component" >
+  <div class="component-nav-and-content">
+    <app-menu></app-menu>
+    <div class="component-content">
+      <div class="content-header">
+        <div class="content-header-title-and-menu">
+          <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu">
+          <p class="content-header-title">{{ $t("header.registration") }}</p>
         </div>
       </div>
-    </transition>
-    <!-- END OF SUCCESS DIALOG -->
-    <!-- FAILED DIALOG -->
-    <transition name="slide-backdrop" v-if="openDialogFalse">
-      <div class="backdrop" v-if="openDialogFalse"></div>
-    </transition>
-    <transition name="slide" v-if="openDialogFalse">
-      <div class="modal" v-if="openDialogFalse">
-        <div class="modal-header">
-          <h1 class="modal-title">Niepowodzenie podczas wysyłania wiadomości.</h1>
-          <button class="modal-exit" @click="closeDialog">&#10006;</button>
-        </div>
-        <div class="modal-text">
-          <p>{{ $t("message.newAccountPassword") }}</p>
+      <div class="reg-tile">
+        <div class="registration-credentials">
+          <div class="cd-for-input">
+            <input required class="cd-input" type="text" name="fullName" @input="getFullNameToEmail()" v-model="fullName" @change="checkEmail()" @blur="$v.fullName.$touch()">
+            <span class="cd-span"></span>
+            <label for="fullName" class="cd-label">{{ $t("label.fullName") }}</label>
+          </div>
+          <div class="cd-for-input-s">
+            <!-- <div class="input-with-checkbox"> -->
+            <input required class="cd-input" :disabled="isEmail" @blur="$v.fullNameToEmail.$touch()" :value="fullNameToEmail" @change="checkEmail($event.target.value)">
+            <div class="checkbox-absolute">              
+              <div class="checkbox-wrap">
+                <input class="checkbox" :checked="isEmail" type="checkbox" disabled>
+                <div class="checkbox-in"></div>
+              </div>
+            </div>
+            <!-- </div> -->
+            <span class="cd-span"></span>
+            <label for="email" class="cd-label">{{ $t("label.email") }}</label>
+          </div>
+          <div class="cd-for-select">
+            <select required class="cd-select">
+              <option v-for="role in getRoleList" :value="roleChosen = role" :key="role.roleId">{{ role }}</option>
+            </select>
+            <label class="cd-slabel" for="role">{{ $t("label.role") }}</label>
+          </div>
+          <div class="cd-for-select">
+            <select required class="cd-select">
+              <option v-for="department in getDepartmentList" :value="depId = department.depId" :key="department.depId">{{ department.depName }}</option>
+            </select>
+            <label class="cd-slabel" for="role">{{ $t("label.department") }}</label>
+          </div>
+          <button class="button" :disabled="$v.$invalid" @click="submit">
+            <span class="loading-icon"><img  src="../../assets/images/loading-white.png" v-show="isLoading"></span>
+            <span class="span-arrow" v-show="!isLoading">{{ $t("button.register") }}</span>
+          </button>
         </div>
       </div>
-    </transition>
-    <!-- END OF FAILED DIALOG -->
-    <div class="plane plane-registration">
-      <div class="plane-left">
-        <img class="img-user" src="../../assets/images/grouper-256.png">
-        <p class="p-registration">{{ $t("header.userRegister") }}</p>
-      </div>
-      <div class="registration-credentials">
-        <label for="fullName" class="label">{{ $t("label.fullName") }}</label>
-        <input type="text" name="fullName" @input="getFullNameToEmail()" v-model="fullName" @change="checkEmail()" class="input input-registration" @blur="$v.fullName.$touch()">
-        <label for="email" class="label">{{ $t("label.email") }}</label>
-        <div class="input-with-checkbox">
-          <input :disabled="isEmail" @blur="$v.fullNameToEmail.$touch()" :value="fullNameToEmail" @change="checkEmail($event.target.value)" class="input input-registration input-highlight">
-          <input class="checkbox" :checked="isEmail" type="checkbox" disabled>
-        </div>
-                <!-- <label class="label" for="password">Hasło</label>
-                <div class="div-pass">
-                    <input disabled @input="$v.setPassword()" class="input reg-pass-input input-registration" type="password" v-model="setPassword">
-                    <button class="gen-pass" @click="generatePassword">Generuj hasło</button>
-                </div> -->
-        <div class="div-select">
-          <label class="label" for="role">{{ $t("label.role") }}</label>
-          <select class="select">
-            <option v-for="role in getRoleList" :value="roleChosen = role" :key="role.roleId">{{ role }}</option>
-          </select>
-        </div>
-        <div class="div-select">
-          <label class="label" for="role">{{ $t("label.department") }}</label>
-          <select class="select">
-            <option v-for="department in getDepartmentList" :value="depId = department.depId" :key="department.depId">{{ department.depName }}</option>
-          </select>
-        </div>
-        <button class="button" :disabled="$v.$invalid" @click="submit">
-          <span class="loading-icon"><img  src="../../assets/images/loading-white.png" v-show="isLoading"></span>
-          <span class="span-arrow" v-show="!isLoading">{{ $t("button.register") }}</span>
-        </button>
+    </div>
+
+        <!-- SUCCESS DIALOG -->
+        <transition name="slide-backdrop" v-if="closeSuccessDialog">
+          <div class="backdrop" v-if="closeSuccessDialog"></div>
+        </transition>
+        <transition name="slide" v-if="closeSuccessDialog">
+          <div class="modal" v-if="closeSuccessDialog">
+            <div class="modal-header">
+              <h1 class="modal-title">{{ $t("header.accountCreated") }}</h1>
+              <button class="modal-exit" @click="closeDialog">&#10006;</button>
+            </div>
+            <div class="modal-text">
+              <p>{{ $t("message.newAccountPassword") }}</p>
+            </div>
+          </div>
+        </transition>
+        <!-- END OF SUCCESS DIALOG -->
+        <!-- FAILED DIALOG -->
+        <transition name="slide-backdrop" v-if="openDialogFalse">
+          <div class="backdrop" v-if="openDialogFalse"></div>
+        </transition>
+        <transition name="slide" v-if="openDialogFalse">
+          <div class="modal" v-if="openDialogFalse">
+            <div class="modal-header">
+              <h1 class="modal-title">Niepowodzenie podczas wysyłania wiadomości.</h1>
+              <button class="modal-exit" @click="closeDialog">&#10006;</button>
+            </div>
+            <div class="modal-text">
+              <p>{{ $t("message.newAccountPassword") }}</p>
+            </div>
+          </div>
+        </transition>
+        <!-- END OF FAILED DIALOG -->
       </div>
     </div>
   </div>
-    </div>
-    </div>
 </template>
 
 <script>
