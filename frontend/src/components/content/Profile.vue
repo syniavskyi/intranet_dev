@@ -378,6 +378,9 @@ export default {
   //     this.routeToGo = to.name
   // },
   methods: {
+    // onResetPassword() {
+    //   const url = "https://nw5.local.pl:8050/Users(UserAlias='SJI',Language='PL')"
+    // },
     onEdit() {
       this.showNoChangesAlert = false;
       this.editMode = !this.editMode;

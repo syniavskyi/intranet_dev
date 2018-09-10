@@ -27,7 +27,7 @@ const state = {
   userAdverts: [{Id: '001', Message: 'Wiadomość1', ValidTo: new Date()}, {Id:'002', Message: 'Wiadomość2', ValidTo: new Date()}],
   userAuth: [],
   availStatus: [],
-  availType: []
+  availType: [],
   targetGroup: []
 };
 
