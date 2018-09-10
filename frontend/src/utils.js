@@ -30,3 +30,9 @@ export const createRateDate = function(rateDate) {
   export const formatDateForBackend = function(date){
     return '\/Date(' + new Date(date).getTime().toString() + ')\/'
   }
+
+  export const dateStringToObj = function(date){ 
+    if (date !== null) {
+      return new Date(parseInt(date.substring(6, date.length - 2)))
+    }
+  }
