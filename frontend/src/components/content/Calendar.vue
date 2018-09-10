@@ -28,7 +28,7 @@
                         <div> {{ attr.customData.EventTime}} </div>
                         <div> {{ attr.customData.EventTypeName }} </div> 
                         <div> {{ attr.customData.EventPrivacy }} </div> 
-                        <div> {{ attr.customData.PrioritytValue }} </div> 
+                        <div> {{ attr.customData.Priority }} </div> 
                         <div> {{ attr.customData.DateTo}} </div> 
                   </div>    
                   <div class="events-buttons">
@@ -85,7 +85,7 @@
                          <label class="label-profile2">{{ $t("label.eventTime") }}</label>
                   </div>
                   <div class="prof-input2">
-                        <v-date-picker required class="delegations-input-date inputEdit2 inputProfile2 calendar-modal-date input-active" popoverDirection="" is-expanded mode="single" v-model="addEvent.DateTo" :min-date="this.selectedDay.date">
+                        <v-date-picker required class="delegations-input-date inputProfile2 calendar-modal-date input-active" popoverDirection="" is-expanded mode="single" v-model="addEvent.DateTo" :min-date="this.selectedDay.date">
                             <input value="addEvent.DateTo"/>
                        </v-date-picker>
                         <label class="delegations-label-cool-select">{{ $t("label.endDate") }} </label>
@@ -111,7 +111,6 @@
                             {{ eventType.Value }}
                           </option>
                       </select>
-                      <!-- do selektów dać margina -->
                       <label class="label-profile2">{{ $t("label.eventType") }}</label>
                     </div>
                      <div class="prof-input2">
@@ -119,44 +118,27 @@
                         <button class="privacy-button marginForm" type="button" @click="isSelected = !isSelected"></button>
                             <label class="label-profile2">{{ $t("label.targetGroup") }}</label>
                         </div>
-                    <div class="department" v-if="isSelected">
-
-                    <!-- <select multiple="true" >
-                     <option>Wysoki</option>
-                      <option>Średni</option>
-                      <option>Niski</option>
-                    </select> -->
-
-                                      <input  type="checkbox" id="jack" value="Jack" v-model="checkedNames">
-                                        <label for="jack">Jack</label>
-                                        <br>
-                                          <br>
-                                        <input type="checkbox" id="john" value="John" v-model="checkedNames">
-                                        <label for="john">John</label>
-                                        <br>
-                                          <br>
-                                        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
-                                        <label for="mike">Mike</label>
-                                        <br>
-                                          <br>
-                                        <input type="checkbox" id="jacek" value="Jack" v-model="checkedNames">
-                                        <label for="jacek">Jacek</label>
-                                        <br>
-                                          <br>
-                                        <input type="checkbox" id="johns" value="John" v-model="checkedNames">
-                                        <label for="johns">Johns</label>
-                                        <br>
-                                          <br>
-                                        <input type="checkbox" id="mikel" value="Mike" v-model="checkedNames">
-                                        <label for="mikel">Mike</label>
-
-                    <button class="save-button" type="button" @click="isSelected = !isSelected">{{ $t("button.back") }}</button>
+                                  <div class="department" v-if="isSelected">
+                                   <button class="privacy-button marginForm select-button" type="button" @click="selectedUser = !selectedUser">{{ $t("button.selectUser") }}</button>
+                                     <select multiple="true" class="user-list" v-if="selectedUser" v-model="addEvent.Employee">
+                                         <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias">
+                                               {{ user.Fullname }}
+                                          </option>
+                                    </select> 
+                                   <button class="privacy-button marginForm select-button" type="button" @click="selectedGroup = !selectedGroup">{{ $t("button.selectGroup") }}</button>
+                                    <select multiple="true" required class="user-list" v-if="selectedGroup" v-model="addEvent.TargetGroup">
+                                          <option v-for="group in targetGroup" :value="group.Key" :key="group.Key">
+                                            {{ group.Value }}
+                                      </option>
+                                    </select>
+                    <button class="save-button" type="button" @click="isSelected = !isSelected">{{ $t("button.save") }}</button>
+                    <button class="save-button clear-button" type="button" @click="backToModal">{{ $t("button.clear") }}</button>
                     </div>
                     <div class="event-feature event-visibility">
                           <label class="modal-label">{{ $t("label.visibility") }}</label>
-                          <input class="input-active" type="radio" id="prv" value="PRV" v-model="addEvent.EventPrivacy" :checked="addEvent.EventPrivacy == 'PRV'"  @change="radio(addEvent.EventPrivacy)">
+                          <input class="input-active" type="radio" id="prv" value="PRV" v-model="addEvent.EventPrivacy" :checked="addEvent.EventPrivacy == 'PRV'" @blur="$v.addEvent.EventPrivacy.$touch()">
                           <label for="prv">{{ $t("label.private") }}</label>
-                          <input class="input-active" type="radio" id="pbl" value="PBL" v-model="addEvent.EventPrivacy" :checked="addEvent.EventPrivacy == 'PBL'" @change="radio(addEvent.EventPrivacy)">
+                          <input class="input-active" type="radio" id="pbl" value="PBL" v-model="addEvent.EventPrivacy" :checked="addEvent.EventPrivacy == 'PBL'" @blur="$v.addEvent.EventPrivacy.$touch()">
                           <label for="pbl">{{ $t("label.public") }}</label>    
                   </div>
            </div>
@@ -189,6 +171,8 @@ export default {
       selectedDay2: null,
       dialogEvent: false,
       isSelected: false,
+      selectedUser: false,
+      selectedGroup: false,
       permition: false,
       checkedNames: '',
       filters: {
@@ -211,9 +195,9 @@ export default {
        EventType: {
            required
       },
-      //  Privacy: {
-      //      required
-      //   }
+       EventPrivacy: {
+           required
+        }
     }
   },
   beforeCreate() {
@@ -235,8 +219,9 @@ export default {
       eventTypes: 'eventTypes',
       priorities: 'priorities',
       events: 'events',
-      addEvent: 'addEvent'
-      // usersList: 'usersList',
+      addEvent: 'addEvent',
+      usersList: 'usersList',
+      targetGroup: 'getTargetGroup'
  }),
     filteredEvents() {
       let aEvents = this.events,
@@ -313,9 +298,6 @@ export default {
         // this.filteredEvents.
         this.performDialog();
     },
-    radio(data) {
-      let a = "hej"
-    },
     dayClicked(day) {
       this.selectedDay = day;
     },
@@ -354,6 +336,11 @@ export default {
     clearFilters() {
       this.$store.dispatch('clearFilters');
       this.filters = this.$store.getters.clearedFilters;
+    },
+    backToModal(){
+      this.isSelected = !this.isSelected;
+      this.addEvent.Employee = '';
+      this.addEvent.TargetGroup = '';
     }
   }
 };
