@@ -1,4 +1,5 @@
 import axios from 'axios'
+let utils = require('../../utils')
 
 const state = {
     userProjects: [],
@@ -92,9 +93,9 @@ const actions = {
              axios.get(URL).then(res => {
                 console.log(res)
                 const userAvail = res.data.d.results
-                for(let i=0;i<userAvail.length;i++){
-                    userAvail[i].startDate = new Date(userAvail[i].DateStart)
-                    userAvail[i].endDate = new Date(userAvail[i].DateEnd)
+                for(let i = 0;i < userAvail.length; i++){
+                    userAvail[i].startDate = utils.dateStringToObj(userAvail[i].DateStart)
+                    userAvail[i].endDate = utils.dateStringToObj(userAvail[i].DateEnd)
                 }
                 commit('SET_USER_AVAIL', userAvail)
                 // dispatch('setUserAvails', userAvail)

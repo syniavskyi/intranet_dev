@@ -356,18 +356,6 @@ const actions = {
     } 
     commit('SET_OBJECT', object); 
   },
-  setProjectsIsCurrentField({commit}) {
-    let projects = this.getters.getUserProjectsList;
-    for(let i = 0; i < projects.length; i++) {
-      if(projects[i].IsCurrent === 'X') {
-        projects[i].IsCurrent = true;
-      }
-      else {
-        projects[i].IsCurrent = false;
-      }
-    }
-    commit('SET_USER_PROJECTS_LIST', projects);
-  }
 }
 
 const getters = {
