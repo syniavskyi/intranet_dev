@@ -4,6 +4,7 @@ import { stat } from 'fs';
 import jsontoxml from 'jsontoxml'
 import js2xml from 'js2xmlparser'
 import moment from 'moment'
+import dataloading from './dataloading';
 
 const state = {
   priorityColor: '',
@@ -16,10 +17,11 @@ const state = {
     Description:  '',
     Priority:  '',
     EventType:  '',
-    TargetGroup:  '',
+    TargetGroup:  [],
     EventPrivacy:  '',
     color: '',
-    EventTypeName: '' 
+    EventTypeName: '' ,
+    Employee: []
   },
   clearedFilters: {
     branch: null,
@@ -123,10 +125,6 @@ convertDate({getters, commit}) {
       oEvents[i].DateFrom = new Date(milisc);
       let format = oEvents[i].EventTime.slice(2, 4) + oEvents[i].EventTime.slice(5, 7) + oEvents[i].EventTime.slice(8, 10);
       oEvents[i].EventTime = moment(format, "hmm").format('HH:mm:ss');
-      // oEvents[i].EventTime.slice(2, 4) + ':' + oEvents[i].EventTime.slice(5, 7) + ':' + oEvents[i].EventTime.slice(8, 10);
-      //  let w = oEvents[14].EventTime.slice(2, 4) + oEvents[14].EventTime.slice(5, 7) + oEvents[14].EventTime.slice(8, 10);
-      // let r = moment(w).format('LTS');
-      // let s = moment(w, "hmm").format("HH:mm");
     if(oEvents[i].DateTo) {
       let miliscTo = parseInt(oEvents[i].DateTo.slice(6, oEvents[i].DateTo.length - 2));
       oEvents[i].DateTo = new Date(miliscTo);
@@ -157,49 +155,27 @@ setColor({commit, getters}){
       eventData.DateTo = eventData.DateFrom;
     } 
     dispatch('setColorPriority');
-    
-    const   props = {
-       "d:CreatedBy": '',
-       "d:EventName": eventData.EventName,
-       "d:Description": eventData.Description,
-       "d:EventTime": eventData.EventTime,
-       "d:EventTypeName": eventData.EventTypeName,
-       "d:PriorityValue":'',
-       "d:DateFrom": '2018-08-02T00:00:00',
-       "d:EventPrivacy": 'PRV',
-       "d:TargetGroup":'',
-       "d:Branch": '',
-       "d:Department": 'Fiori',
-       "d:DateTo": '2018-08-02T00:00:00',
-       "d:Employee": '',
-       "d:Priority": 'M',
-       "d:EventType": 'TRN'
-       }
+    dispatch('formatToString', eventData)
+    //  axios({
+    //   method: 'POST',
+    //   url: '/Events',
+    //   auth: {
+    //     username: 'psy',
+    //     password: 'ides01'
+    //   },
+    //   // data: bodyFormData,
+    //   data: xmlRequest,
+    //   headers: {
+    //     "Content-Type": "application/atom+xml; type=entry; charset=utf-8",
+    //     "X-Requested-With": "XMLHttpRequest"
+    //   },
 
-     let xml = js2xml.parse("m:properties", props)
-
-     let xmlRequest = getters.getPreHtmlForRequest + xml + getters.getPostHtmlForRequest
-
-     axios({
-      method: 'POST',
-      url: '/Events',
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
-      // data: bodyFormData,
-      data: xmlRequest,
-      headers: {
-        "Content-Type": "application/atom+xml; type=entry; charset=utf-8",
-        "X-Requested-With": "XMLHttpRequest"
-      },
-
-      // config: { headers: {'Content-Type': 'multipart/form-data' }}
-    }).then(res => {
-      let c = res.config;
-    }).catch(error => { 
-      console.log(error);
-    })
+    //   // config: { headers: {'Content-Type': 'multipart/form-data' }}
+    // }).then(res => {
+    //   let c = res.config;
+    // }).catch(error => { 
+    //   console.log(error);
+    // })
      state.addEvent.color = state.priorityColor
      state.aEvents.push(eventData);
       
@@ -292,7 +268,29 @@ clearFilters({commit}) {
         employee: null
     }
    commit('SET_CLEARED_FILTERS', aFilters);
-}
+  },
+  formatToString({commit}, data) {
+    let formattedData = {};
+    for(let key in data) {
+      if(data[key]) {
+        if(data[key].constructor === Array) {
+          formattedData[key] = "";
+          for(let i = 0; i < data[key].length; i++) {
+                if(data[key].length <= 1) {
+                    formattedData[key] = data[key][i]
+                }
+                else {
+                    formattedData[key] += data[key][i] + '||';
+                }
+              } 
+           if(formattedData[key].includes('||')) {
+                formattedData[key] = formattedData[key].slice(0, formattedData[key].length-2);
+            }
+            data[key] = formattedData[key];
+          }
+      }
+    }
+ } 
 };
 
 const getters = {
