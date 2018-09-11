@@ -36,3 +36,7 @@ export const createRateDate = function(rateDate) {
       return new Date(parseInt(date.substring(6, date.length - 2)))
     }
   }
+
+  const actions = {
+    
+  }
