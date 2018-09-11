@@ -96,7 +96,7 @@ export default {
             allProjects: 'projectsList'
         }),
         noAvailEntries() {
-            if (this.filteredUserAvail.length === 0) {
+            if (this.filteredUserProjects.length === 0) {
                 return true
             } else {
                 return false

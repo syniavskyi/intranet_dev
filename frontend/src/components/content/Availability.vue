@@ -67,10 +67,14 @@
                                 </div>
 
                                 <!-- <div class="calendar" v-if="selectedUser != null"> -->
-                                <div class="ava-calendar">
-                                    <v-calendar class="availability-calendar" :theme-styles="themeStyles" v-if="selectedUser != null" :attributes="attributes" mode='single' is-inline></v-calendar>
+                                <!-- calendar for projects -->
+                                <div class="ava-calendar" v-if="selectedUser != null">
+                                    <v-calendar class="availability-calendar" v-if="selectedType === 'PR'" :theme-styles="themeStyles" :attributes="projectsAttr" mode='single' is-inline></v-calendar>
                                 </div>
-
+                                <!-- calendar for leaves -->
+                                <div class="ava-calendar" v-if="selectedUser != null">
+                                    <v-calendar class="availability-calendar"  v-if="selectedType !== 'PR'" :theme-styles="themeStyles" :attributes="leavesAttr" mode='single' is-inline></v-calendar>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -147,7 +151,9 @@ export default {
             availStatusList: 'getAvailStatus',
             availTypesList: 'getAvailType',
             newLeave: 'getNewLeaveForUser',
-            newProject: 'getNewProjectForUser'
+            newProject: 'getNewProjectForUser',
+            userProjects: 'userProjectsList',
+            userAvail: 'getUserAvail'
         }),
         filteredUsers() {
             const usersList = this.usersList
@@ -161,24 +167,42 @@ export default {
             }
             return filteredUsers
         },
-        attributes() {
-            // return this.userProjectsList.map(t => ({
-            //     key: t.id,
-            //     highlight: {
-            //         backgroundColor: t.color,
-            //         borderRadius: '0px',
-            //         height: '100%'
-            //     },
-            //     order: t.order,
-            //     dates: {
-            //         start: t.startDate,
-            //         end: t.endDate
-            //     },
-            //     popover: {
-            //         label: t.projName + ' (' + t.engag + '%)'
-            //     },
-            //     customData: t
-            // }))
+        leavesAttr() {
+            return this.userAvail.map(t => ({
+                key: t.EntryId,
+                highlight: {
+                    backgroundColor: t.Color,
+                    borderRadius: '0px',
+                    height: '100%'
+                },
+                dates: {
+                    start: t.DateStart,
+                    end: t.DateEnd
+                },
+                popover: {
+                    label: t.TypeName 
+                },
+                customData: t
+            }))
+        },
+        projectsAttr() {
+            return this.userProjects.map(t => ({
+                key: t.EntryId,
+                highlight: {
+                    backgroundColor: t.Color,
+                    borderRadius: '0px',
+                    height: '100%'
+                },
+                order: t.Order,
+                dates: {
+                    start: t.StartDate,
+                    end: t.EndDate
+                },
+                popover: {
+                    label: t.ProjectId + ' (' + t.Engag + '%)'
+                },
+                customData: t
+            }))
         },
         themeStyles() {
             return {

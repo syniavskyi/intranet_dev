@@ -37,39 +37,30 @@ const actions = {
     const URL = "UserProjects" + urlQuery + "&$filter=UserAlias eq '" + userId + "'"
     axios.get(URL).then(res => {
       console.log(res)
-      const userProj = res.data.d.results
-      for (let i = 0; i < userProj.length; i++) {
-        userProj[i].StartDate = utils.dateStringToObj(userProj[i].StartDate)
-        userProj[i].EndDate = utils.dateStringToObj(userProj[i].EndDate)
-      }
-
-      dispatch('setUserProjects', userProj)
+      dispatch('formatUserProjects', res.data.d.results)
       // dispatch('setUserAvails', userAvail)
     }).catch(error => {
       console.log(error)
     });
   },
-  setUserProjects({commit, getters}, userProjects){
+  formatUserProjects({commit, getters}, userProjects){
     // set projects data with props for calendar 
-        // const projectsList = getters.projectsList
-        //     for (let i=0; i<userProjects.length; i++) {
-        //         for (let j=0; j<projectsList.length; j++){
-        //             if (userProjects[i].projId === projectsList[j].id) {
-        //                 userProjects[i].projName = projectsList[j].name
-        //             } 
-        //         }
-        //     }
-        //     for (let i=0; i<userProjects.length; i++) {
-        //         if (userProjects[i].engag === "100") {
-        //             userProjects[i].color = '#EDA1A1'
-        //             userProjects[i].order = 2
-        //         } else {
-        //             userProjects[i].color = '#fde692'
-        //             userProjects[i].order = 1
-        //         }
-        //         userProjects[i].startDate = new Date(userProjects[i].startDate)
-        //         userProjects[i].endDate = new Date(userProjects[i].endDate)
-        //     }
+        const projectsList = getters.projectsList
+            for (let i=0; i<userProjects.length; i++) {
+                for (let j=0; j<projectsList.length; j++){
+                    if (userProjects[i].ProjectId === projectsList[j].ProjectId) {
+                        userProjects[i].ProjectName = projectsList[j].ProjectName
+                    } 
+                }
+            }
+            for (let i=0; i<userProjects.length; i++) {
+              let project = userProjects[i]
+              project.Color = project.Engag === 100 ? '#EDA1A1' : '#fde692'
+              project.Order = project.Engag === 100 ? 2 : 1
+              project.EntryId = i
+              project.StartDate = utils.dateStringToObj(project.StartDate)
+              project.EndDate = utils.dateStringToObj(project.EndDate)
+            }
             commit('SET_USER_AVAIL_PROJECTS', userProjects)
     },
         

@@ -11,7 +11,7 @@
                         <div class="availability-tile-content">
                             <div id="add-project-dialog">
                                 <div class="ava-add-1">
-                                    <p v-if="newLeave.TypeId === null">Wybierz rodzaj wpisu po lewej stronie</p>
+                                    <p v-if="newLeave.TypeId === null">Aby dodać wpis, Wybierz jego rodzaj po lewej stronie</p>
                                     <div class="ava-div-select-cool">
                                         <v-date-picker required class="ava-input-range-wide" popoverDirection="top" is-expanded mode="range" v-model="selectedDates" @change="checkFields">
                                             <input class="ava-input-range-wide" value="selectedDates"/>
