@@ -9,7 +9,8 @@
             <button class="profile-edit-btn" v-if="!editMode"  @click="edit">{{ $t("button.edit") }}</button>
              <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-txt">{{ $t("button.finishEdit") }}</span><span class="prof-btn-icon">&#10004;</span></button>
         </div>
-        <div class="availability-tile-content">
+        <p v-if="noAvailEntries">Brak wpisów dla podanych kryteriów</p>
+        <div v-if="!noAvailEntries" class="availability-tile-content">
             <div class="ava-proj-table">
                 <div class="ava-proj-thead">
                     <div class="ava-thproj-item">Rodzaj wpisu</div>
@@ -68,7 +69,7 @@
                     </div>
                     <div class="ava-tbproj-item">
                         <div class="ava-tbproj-ititle">Uwagi</div>
-                        <div class="ava-tbproj-itxt"><textarea>Dostęp dzielony z Pavlo (brak tokena)</textarea></div>
+                        <div class="ava-tbproj-itxt"><textarea :disabled="!editMode" v-model="project.Description"></textarea></div>
                     </div>
                 </div>
             </div>
@@ -94,18 +95,22 @@ export default {
             availStatus: 'getAvailStatus',
             allProjects: 'projectsList'
         }),
-
+        noAvailEntries() {
+            if (this.filteredUserAvail.length === 0) {
+                return true
+            } else {
+                return false
+            }
+        },
         filteredUserProjects() {
             let aFilteredProjets = this.userProjects,
-                sType = this.selectedType,
-                fnFilter;
-            
+                sStatus = this.selectedStatus;            
            
-           if(sType === null){
+           if(sStatus === null){
                return aFilteredProjets
            } else {
                aFilteredProjets = aFilteredProjets.filter(function(oItem){
-                  return oItem.TypeId === sType;
+                  return oItem.StatusId === sStatus;
               })
             return aFilteredProjets
             }
@@ -143,7 +148,7 @@ export default {
             : "-";
         },
         validateNewEngag(index){
-            let project = userProjects[index]
+            let project = this.userProjects[index]
             if (project.Engag < 0) project.Engag = null;
             if (project.Engag > 100) project.Engag = 100;
         },

@@ -9,7 +9,8 @@
              <button class="profile-edit-btn" v-if="!editMode"  @click="edit">{{ $t("button.edit") }}</button>
              <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-txt">{{ $t("button.finishEdit") }}</span><span class="prof-btn-icon">&#10004;</span></button>
         </div>
-        <div class="availability-tile-content">
+        <p v-if="noAvailEntries">Brak wpisów dla podanych kryteriów</p>
+        <div class="availability-tile-content" v-if="!noAvailEntries">
             <div class="ava-table-s" v-for="(avail, index) in filteredUserAvail" :key="index">
                 <div class="ava-thead-s">
                     <div class="ava-ths-item">Rodzaj wpisu</div>
@@ -25,7 +26,7 @@
                             <option v-for="type in availTypes" :key="type.Key" :value="type.Key">{{type.Value}}</option>
                         </select>
                         <select v-if="editMode" class="selectProfile selectEdit" v-model="avail.TypeId">
-                            <option v-for="type in filteredAavailTypes" :key="type.Key" :value="type.Key">{{type.Value}}</option>
+                            <option v-for="type in filteredAvailTypes" :key="type.Key" :value="type.Key">{{type.Value}}</option>
                         </select>
                     </div>
                     <div class="ava-tbs-item">
@@ -70,7 +71,8 @@ export default {
         return {
             invalidDates: false,
             editMode: false,
-            _beforeEditingCache: null       
+            _beforeEditingCache: null
+                
         }
     },
     computed: {
@@ -106,6 +108,24 @@ export default {
                 return aFilteredAvail
             }
             
+        },
+        noAvailEntries() {
+            if (this.filteredUserAvail.length === 0) {
+                return true
+            } else {
+                return false
+            }
+        },
+        filteredAvailTypes() {
+            let aAvailTypes = this.availTypes,
+                aFilteredTypes = this.availTypes
+
+            for(let i = 0; i < aAvailTypes.length; i++){
+                if (aAvaiTypes[i].Key = 'PR') {
+                    delete aFilteredTypes[i]
+                    return
+                }
+            }
         }
     },
     methods: {

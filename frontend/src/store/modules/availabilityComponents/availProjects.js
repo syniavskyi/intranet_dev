@@ -4,12 +4,12 @@ let utils = require('../../../utils')
 const state = {
   userAvailProjects: [],
   newProjectForUser: {
-    userId: null,
-    projectId: null,
-    contractorId: null,
-    engag: null,
-    statusId: null,
-    notes: null
+    UserAlias: null,
+    ProjectId: null,
+    ContractorId: null,
+    Engag: null,
+    StatusId: null,
+    Description: null
   }
 };
 
@@ -22,7 +22,7 @@ const mutations = {
   },
   SET_NEW_PROJECT_FOR_USER(state, project) {
     state.newProjectForUser = project
-  },
+  }
 };
 
 const actions = {

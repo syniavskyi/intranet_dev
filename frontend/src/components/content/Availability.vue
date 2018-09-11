@@ -79,7 +79,7 @@
                         <app-leaves-tile   :selected-type="selectedType"  v-if="selectedType !== 'PR' && showContent == true"></app-leaves-tile>
                </div>
                 <div class="availability-tiles-row">
-                    <app-projects-table v-if="selectedType === 'PR' && showContent == true"></app-projects-table>
+                    <app-projects-table :selected-status="selectedStatus" v-if="selectedType === 'PR' && showContent == true"></app-projects-table>
                     <app-leaves-table :selected-type="selectedType" :selected-status="selectedStatus" v-if="selectedType !== 'PR' && showContent == true"></app-leaves-table>
                 </div>
             </div>
@@ -137,22 +137,17 @@ export default {
             departmentList: 'depList',
             branchList: 'branchList',
             usersList: 'usersList',
-            userProjectsList: 'userProjectsList',
             sectionsList: 'sectionsList',
             projectsList: 'projectsList',
-            disableSaveEditProject: 'getDisableSaveEditProject',
-            beforeEditingCache: 'getBeforeEditingCache',
-            hasDataChanged: 'getHasDataChanged',
             addingError: "getAddingError",
             removeError: "getRemoveError",
             editError: "getEditError",
             saveSuccess: "getSaveDataSucccess",
             removeSuccess: "getRemoveSuccess",
-            newProjectForUser: 'getNewProjectForUser',
-            projectToEdit: 'getProjectToEdit',
             availStatusList: 'getAvailStatus',
             availTypesList: 'getAvailType',
-            newLeave: 'getNewLeaveForUser'
+            newLeave: 'getNewLeaveForUser',
+            newProject: 'getNewProjectForUser'
         }),
         filteredUsers() {
             const usersList = this.usersList
@@ -210,42 +205,14 @@ export default {
         },
         selectedUser(value){
             this.newLeave.UserId = value.UserAlias
+            this.newProject.UserAlias = value.UserAlias
         }
     },
     methods: {
-        ...mapActions({
-            validateEditProject: 'validateEditProject',
-            closeAlert: 'hideAllMessages',
-            validateNewEngag: 'validateNewEngag',
-            validateEditEngag: 'validateEditEngag'
-        }),
         loadUserProjects(userId) {
             this.$store.dispatch('getUserProjects', userId)
             this.$store.dispatch('getUserAvail', userId)
-        },
-        editProjectForUser() {
-            this.projectToEdit.userId = this.selectedUser.id
-            this.$store.dispatch('editUserProject', this.projectToEdit)
-        },
-        removeUserProject() {
-            const data = {
-                projectId: this.projectToEdit.id,
-                userId: this.selectedUser.id
-            }
-            this.$store.dispatch('removeUserProject', data)
-        },
-        removeNewProjectData(userId) {
-            const newProjectForUser = {
-                userId: userId,
-                projectId: null,
-                contractorId: null,
-                engag: null,
-                notes: null,
-                statusId: null
-            }
-            this.$store.dispatch('SET_NEW_PROJECT_FOR_USER', newProjectForUser)
-        },
-        
+        }
     }
 }
 </script>
