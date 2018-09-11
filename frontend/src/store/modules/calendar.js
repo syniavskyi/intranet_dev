@@ -112,6 +112,7 @@ getEvents({commit, dispatch, getters}) {
     }).then(res => {
       let oEvents = res.data.d.results;
       commit('SET_EVENTS', oEvents);
+      dispatch('formatToArray', oEvents);
       dispatch('convertDate');
       dispatch('setColor')
     }).catch(error => { 
@@ -290,6 +291,43 @@ clearFilters({commit}) {
           }
       }
     }
+ },
+ formatToArray({commit}, data) {
+  let dataSet = data[0].__metadata.type;
+  let index, string;
+  let array = [];
+
+  for(let i = 0; i < data.length; i++) {
+    delete data[i].__metadata;
+    for(let key in data[i]) { 
+      if(data[i][key].includes('||')) {
+        while(data[i][key].length > 1) {
+          index = data[i][key].indexOf('||');
+          if(index > 0) {
+              string = data[i][key].slice(0, index);
+              array.push(string);
+              index += 2;
+              data[i][key] = data[i][key].substr(index, data[i][key].length);
+          } 
+          else {
+              array.push(data[i][key]);
+               data[i][key] = "";
+          }
+        }
+         data[i][key] = array;
+         array = [];
+      } else {
+           if(dataSet == 'ZGW_INTRANET_SRV.UserSkills' && key != "UserAlias" && key != "Language") {
+              array.push(data[i][key]);
+              data[i][key] = array;
+              array = [];
+      }
+      }
+    }
+  }  
+  if(dataSet == 'ZGW_INTRANET_SRV.UserSkills') {
+    commit('SET_USER_SKILLS', data[0]);
+  }
  } 
 };
 
