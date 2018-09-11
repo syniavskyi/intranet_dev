@@ -38,6 +38,12 @@
     min-height: 45rem;
 }
 
+.nav-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
 .nav-title {
     width: 100%;
     font-family: 'Roboto';
@@ -52,16 +58,17 @@
 }
 
 .logout-button {
-    position: absolute;
+    position: relative;
     z-index: 1;
     top: .5rem;
     left: .7rem;
     background: url(../images/nav3/power-20.png) no-repeat center;
-    width: 2.2rem;
+    width: 2.6rem;
     height: 2.2rem;
     border: 0;
     border-radius: 50%;
     transition: all .3s ease;
+    padding:0;
 }
 
 .logout-button:hover {
@@ -86,16 +93,39 @@
     display:none;
 }
 
+.close-btn {
+    font-size: 1.2rem;
+    align-self: flex-start;
+    margin-top: .5rem;
+    margin-right: .5rem;
+    font-size: 1.5rem;
+    background: transparent;
+    color: #ccc;
+    font-weight: bold;
+    border: 0;
+    -webkit-transition: color 0.2s ease;
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: grey;
+}
+
 .plane-nav {
     z-index: 100;
-    display: none;
+    /* display: none; */
+    position: absolute;
+    top: 0;
+    left: 0;
     flex-direction: column;
     justify-content: flex-start;
-    width: 15%;
+    /* width: 15%; */
+    width: 300px;
     align-items: center;
     min-width: 12rem;
     min-height: 45rem;
-    height: 100%;
+    height: auto;
     /* background: url("../images/banner4.png"); */
     background: white;
     box-shadow: 0 0 5px 3px grey;
@@ -346,6 +376,8 @@ li p {
 .checkbox-margin {margin-right:.5rem}
 .checkbox-wrap input {
     opacity: 0;
+    margin:5px;
+    padding: 0;
 }
 .checkbox-in {
     position: absolute;
@@ -374,14 +406,15 @@ li p {
     cursor: context-menu;
     pointer-events: none;
 }
+
+/* WHEN CHECKBOX IS CHECKED BUT DISABLED */
 .checkbox-wrap input:disabled:checked ~ div {
     background: orange;
 }
-/* FOR WHEN CHECKBOX IS CHECKED BUT DISABLED */
 .checkbox-wrap input:disabled:checked:hover ~ div {
     background: rgb(243, 243, 243);
 }
-/* FOR WHEN CHECKBOX IS CHECKED BUT DISABLED */
+/* WHEN CHECKBOX IS CHECKED BUT DISABLED */
 
 .checkbox-wrap div:hover {
     background: #ccc;
@@ -414,6 +447,7 @@ li p {
     cursor: pointer;
     margin-left:.5rem;
 }
+/* CHECKBOX */
 
 /*     DIALOG  /   MODAL - start       */
 .modal-new,
@@ -696,9 +730,14 @@ input:required {
 
 @media (min-width: 40rem) {
     .plane-nav {
+        position: static;
         width: 20%;
         display: flex;
         min-width: 15.7rem;
+    }
+
+    .close-btn {
+        visibility: hidden;
     }
 
     .plane-nav-and-content {
@@ -753,9 +792,14 @@ input:required {
     color: #7b7777;
     margin: 0;
     line-height: 2rem;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
     padding: 0 .5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+.content-header-menu:hover {
+    color: orange;
 }
 .content-header-title {
     color: #7b7777;

@@ -1,11 +1,12 @@
 <template>
   <div class="plane-component">
     <div class="component-nav-and-content">
-      <app-menu></app-menu>
+      <app-menu v-show="displayMenu"></app-menu>
       <div class="component-content">
         <div class="content-header">
             <div class="content-header-title-and-menu">
-              <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu">
+              <!-- <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu"> -->
+              <div @click="showMenu" class="content-header-menu">&#9776;</div>
               <p class="content-header-title">{{ $t("header.calendar") }}</p>
             </div>
         </div>
@@ -209,8 +210,12 @@ export default {
   },
   created() {
     this.checkRole();
+    window.addEventListener("resize", this.showMenu)
     // this.$store.dispatch('getPriority');
     // this.$store.dispatch('getEventType');
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.showMenu)
   },
   computed: {
     ...mapGetters({
@@ -221,7 +226,8 @@ export default {
       events: 'events',
       addEvent: 'addEvent',
       usersList: 'usersList',
-      targetGroup: 'getTargetGroup'
+      targetGroup: 'getTargetGroup',
+      displayMenu: "showMenu"
  }),
     filteredEvents() {
       let aEvents = this.events,
@@ -229,7 +235,7 @@ export default {
       let aFilteredEvents = [];
 
 
- if (aFilters.branch === null && aFilters.department === null && aFilters.employee === null) {
+  if (aFilters.branch === null && aFilters.department === null && aFilters.employee === null) {
     return aEvents;
   } 
   else {
@@ -290,8 +296,16 @@ export default {
   },
   components: {
         'app-menu': Menu
-    },
+  },
   methods: {
+    showMenu(event) {
+      var x = window.matchMedia("(max-width: 40rem)")
+      if (x.matches && event.type === "resize") {
+        this.$store.commit("DISPLAY_MENU", false)
+      } else {
+        this.$store.commit("DISPLAY_MENU", true);
+      }
+    },
     editForm() {
         this.$store.getters.addEvent;
         this.$store.dispatch('editEvent');

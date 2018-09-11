@@ -1,11 +1,12 @@
 <template>
 <div class="plane-component" >
     <div class="component-nav-and-content">
-        <app-menu></app-menu>
+        <app-menu v-show="displayMenu"></app-menu>
         <div name="testname" class="component-content delegations-content" >
             <div class="content-header">
                 <div class="content-header-title-and-menu">
-                    <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu">
+                    <!-- <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu"> -->
+                    <div @click="showMenu" class="content-header-menu">&#9776;</div>
                     <p class="content-header-title">{{ $t("header.delegations") }}</p>
                 </div>
             </div>
@@ -189,7 +190,8 @@ export default {
         }
     },
     created(){
-    const roles = this.$store.getters.getUserAuth
+        window.addEventListener("resize", this.showMenu)
+        const roles = this.$store.getters.getUserAuth
         for (let i=0; i<roles.length; i++) {
             if (roles[i].Key === "ZDELEG" && roles[i].Value === "TEAM" && this.userData.DepartmentName !== ""){
                 this.showSelectForTeam = true
@@ -208,6 +210,9 @@ export default {
         //     this.delegationUsername = localStorage.getItem('id')
         // }
     },
+    destroyed() {
+        window.removeEventListener("resize", this.showMenu)
+    },
     computed: {
         ...mapGetters({
             userData: 'getUserInfo',
@@ -222,7 +227,8 @@ export default {
             totalCostsInCurr: 'getTotalCostsInCurr',
             advanceData: 'getAdvanceData',
             delegationNumber: 'getNewDelegationNumber',
-            showDialog: 'getShowConfirmDelegation'
+            showDialog: 'getShowConfirmDelegation',
+            displayMenu: 'showMenu'
         }),
         disableSaveBtn() {
             return (this.newDelegationValidated && this.delegationTableValidated && this.accCostValidated) ? false : true
@@ -308,7 +314,14 @@ export default {
                 cClasses[i].className = sClassName
             }
         },
-
+        showMenu(event) {
+            var x = window.matchMedia("(max-width: 40rem)")
+            if (x.matches && event.type === "resize") {
+                this.$store.commit("DISPLAY_MENU", false)
+            } else {
+                this.$store.commit("DISPLAY_MENU", true);
+            }
+        },
         setCurrency(e) {
             let el = this.$el
         }

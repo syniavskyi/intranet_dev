@@ -1,12 +1,13 @@
 <template>
 <div class="plane-profile">
     <div class="profile-nav-and-content">
-        <app-menu></app-menu>
+        <app-menu v-show="displayMenu"></app-menu>
         <!-- <leave-page-dialog v-if="showLeavePageDialog" @action-selected="leavePage" @close="showLeavePageDialog = false"></leave-page-dialog> -->
         <div class="profile-content">
             <div class="profile-header">
                 <div class="profile-header-title-and-menu">
-                    <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="profile-header-menu">
+                    <!-- <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="profile-header-menu"> -->
+                    <div @click="showMenu" class="content-header-menu">&#9776;</div>
                     <p class="profile-header-title">{{ $t("header.profile") }}</p>
                 </div>
                 <div v-if="!editMode" class="prof-input-lang"> 
@@ -143,7 +144,10 @@
                         <div class="profile-tile-header">
                             <div class="profile-tile-header-row">
                                 <h2 class="prof-tile-h2">{{ $t("header.employee") }}</h2>
-                                <button @click="showChangePassword" class="func-btn"><span class="prof-btn-txt">zmień hasło</span><span class="prof-btn-icon">&#x1f513;</span></button>
+                                <button @click="showChangePassword" class="func-btn">
+                                  <span class="prof-btn-txt">zmień hasło</span>
+                                  <span class="prof-btn-icon">&#x1f513;</span>
+                                </button>
                             </div>
                             <div class="tile-underscore"></div>
                         </div>
@@ -308,6 +312,12 @@ export default {
       this.$store.dispatch("loadData");
     }
   },
+  created() {
+    window.addEventListener("resize", this.showMenu)
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.showMenu)
+  },
   // mounted() {
   //   const sUserId = localStorage.getItem("id"),
   //               sLanguage = 'PL',
@@ -361,7 +371,8 @@ export default {
       cvLanguageList: "getCvLanguageList",
       loginLanguage: "getLoginLanguage",
       showSelectCv: "getShowSelectCvDialog",
-      showPasswordDialog: "getShowSelectChangePasswordDialog"
+      showPasswordDialog: "getShowSelectChangePasswordDialog",
+      displayMenu: "showMenu"
     }),
     formatAddress() {
       const data = this.userData;
@@ -381,6 +392,14 @@ export default {
     // onResetPassword() {
     //   const url = "https://nw5.local.pl:8050/Users(UserAlias='SJI',Language='PL')"
     // },
+    showMenu(event) {
+      var x = window.matchMedia("(max-width: 40rem)")
+      if (x.matches && event.type === "resize") {
+        this.$store.commit("DISPLAY_MENU", false)
+      } else {
+        this.$store.commit("DISPLAY_MENU", true);
+      }
+    },
     onEdit() {
       this.showNoChangesAlert = false;
       this.editMode = !this.editMode;

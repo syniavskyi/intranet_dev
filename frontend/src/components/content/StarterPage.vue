@@ -33,7 +33,10 @@
                         <p class="starter-list-item-popover">{{ list.FileId }}</p>
                       </div>
                     </div>
-                    <input class="starter-page-checkbox" :checked="list.Status" @change="changeCheckbox(list)" type="checkbox">
+                    <!-- <div class="checkbox-wrap starter-page-checkbox"> -->
+                      <input class="starter-page-checkbox" :checked="list.Status" @change="changeCheckbox(list)" type="checkbox">
+                      <!-- <div @change="changeCheckbox(list)" class="checkbox-in"></div> -->
+                    <!-- </div> -->
                   </li>
                 </ul>
                 <div class="starter-page-list-bottom">

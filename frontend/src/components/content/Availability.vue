@@ -1,11 +1,12 @@
 <template>
 <div class="plane-component">
     <div class="component-nav-and-content">
-        <app-menu></app-menu>
+        <app-menu v-show="displayMenu"></app-menu>
         <div class="component-content">
             <div class="content-header">
                 <div class="content-header-title-and-menu">
-                    <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu">
+                    <!-- <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu"> -->
+                    <div @click="showMenu" class="content-header-menu">&#9776;</div>
                     <p class="content-header-title">{{ $t("header.availability") }}</p>
                     <p @click="closeAlert" class="ava-error-header" v-if="saveSuccess">Pomyślnie zapisano dane</p>
                     <p @click="closeAlert" v-if="editError">{{ $t("message.editProjectError") }}</p>
@@ -125,6 +126,12 @@ export default {
             selectedStatus: null
         }
     },
+    created() {
+        window.addEventListener("resize", this.showMenu)
+    },
+    destroyed() {
+        window.removeEventListener("resize", this.showMenu)
+    },
     components: {
         'app-menu': Menu,
         'app-projects-table': ProjectsTable,
@@ -152,7 +159,8 @@ export default {
             projectToEdit: 'getProjectToEdit',
             availStatusList: 'getAvailStatus',
             availTypesList: 'getAvailType',
-            newLeave: 'getNewLeaveForUser'
+            newLeave: 'getNewLeaveForUser',
+            displayMenu: "showMenu"
         }),
         filteredUsers() {
             const usersList = this.usersList
@@ -219,6 +227,14 @@ export default {
             validateNewEngag: 'validateNewEngag',
             validateEditEngag: 'validateEditEngag'
         }),
+        showMenu(event) {
+            var x = window.matchMedia("(max-width: 40rem)")
+            if (x.matches && event.type === "resize") {
+                this.$store.commit("DISPLAY_MENU", false)
+            } else {
+                this.$store.commit("DISPLAY_MENU", true);
+            }
+        },
         loadUserProjects(userId) {
             this.$store.dispatch('getUserProjects', userId)
             this.$store.dispatch('getUserAvail', userId)
