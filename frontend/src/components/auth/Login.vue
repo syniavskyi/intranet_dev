@@ -90,14 +90,17 @@ export default {
   methods: {
     onSubmit() {
       this.isLoading = true;
+      if(this.SelectedLang === undefined) {
+          this.SelectedLang = "PL";
+      }
       this.$store.dispatch("login", {
         username: this.username,
         password: this.password,
-        language: this.selectedLang
+        language: this.selectedLang.toUpperCase()
       });
       this.isLoading = false;
 
-        this.$store.commit('SET_LOGIN_LANGUAGE', this.selectedLang);
+        this.$store.commit('SET_LOGIN_LANGUAGE', this.selectedLang.toUpperCase());
     },
     switchForgotPassword() {
       this.showRemindPassword = !this.showRemindPassword;
