@@ -328,7 +328,7 @@ export default {
   beforeRouteLeave(to, from, next) {
     //   const answer = window.confirm('Zmiana')
     //   if(answer) {
-    let lang = this.loginLanguage;
+    let lang = this.loginLanguage.toLowerCase();
     if (lang == "") {
       lang = "pl";
     }
@@ -505,9 +505,12 @@ export default {
     getNewData() {
       this.$store.commit('SET_LANG', this.selectedCvLang);
       let cvLang = this.selectedCvLang.toUpperCase();
+      if(!cvLang) {
+        let cvLang = loginLanguage.toUpperCase();
+      }
       let userData = {};
-      userData.user = "UIO";
-      userData.lang = cvLang;
+        userData.user = "UIO";
+        userData.lang = cvLang;
       this.$store.dispatch("loadData", userData);
     },
     onHover() {

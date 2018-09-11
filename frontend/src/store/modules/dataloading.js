@@ -131,8 +131,6 @@ const actions = {
     if(domainData.lang === undefined) {
       domainData.lang = "PL"
     }
-
-    // let lang = 'PL'
     axios({
       method: 'GET',
       url: "Dictionaries" + urlQuery  + "&$filter=Name eq '" + domainData.name + "' and Language eq '" + domainData.lang + "'",
@@ -259,13 +257,13 @@ const actions = {
       commit('SET_USER_EXPERIENCE', oData.UserExperiences.results); //set user experience data for profile and cv
       
       commit('SET_USER_SKILLS', oData.UserSkills.results); //set user skills data for profile and cv
-      dispatch('adjustUserSkills', oData); 
+      dispatch('formatToArray',  oData.UserSkills.results); 
 
       commit('SET_USER_PROJECTS_LIST', oData.UserCvProjects.results); //set user projects data for profile and cv
       dispatch('adjustProjects');
 
       commit('SET_USER_LANGS', oData.UserLang.results);
-      dispatch('adjustLang');
+      // dispatch('adjustLang');
 
       commit('SET_NEW_USER_FILES_LIST', oData.UserFiles.results); //set list of files for starter page for new user
       
