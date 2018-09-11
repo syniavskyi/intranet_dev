@@ -25,18 +25,30 @@ const actions = {
             let urlQuery = getters.getUrlQuery
             const URL = "UserAvailabilities" + urlQuery + "&$filter=UserId eq '" + userId + "'"
              axios.get(URL).then(res => {
-                console.log(res)
-                const userAvail = res.data.d.results
-                for(let i = 0;i < userAvail.length; i++){
-                    userAvail[i].DateStart = utils.dateStringToObj(userAvail[i].DateStart)
-                    userAvail[i].DateEnd = utils.dateStringToObj(userAvail[i].DateEnd)
-                }
-                commit('SET_USER_AVAIL', userAvail)
-                // dispatch('setUserAvails', userAvail)
+                dispatch('formatUserLeaves', res.data.d.results)
             }).catch(error => {
                 console.log(error)
             });
     },
+    formatUserLeaves({commit, getters}, userAvail){
+        // set projects data with props for calendar 
+            const typesList = getters.getAvailType
+                for (let i=0; i<userAvail.length; i++) {
+                    for (let j=0; j<typesList.length; j++){
+                        if (userAvail[i].TypeId === typesList[j].Key) {
+                            userAvail[i].TypeName = typesList[j].Value
+                        } 
+                    }
+                }
+                for (let i=0; i<userAvail.length; i++) {
+                  let avail = userAvail[i]
+                  avail.Color = userAvail[i].TypeId === 'LE' ? '#EDA1A1' : '#fde692'
+                  avail.EntryId = i
+                  avail.DateStart = utils.dateStringToObj(avail.DateStart)
+                  avail.DateEnd = utils.dateStringToObj(avail.DateEnd)
+                }
+                commit('SET_USER_AVAIL', userAvail)
+        },
     removeUserAvail({commit, getters, dispatch}, data) {
     //     const URL = "/api/users/" + data.userId + "/userEngag/" + data.projectId + "/delete"
     //     axios.delete(URL).then(res => {
