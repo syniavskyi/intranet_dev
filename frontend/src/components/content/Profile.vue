@@ -207,8 +207,9 @@
                                     <div class="prof-input-s">
                                         <!-- <masked-input mask="11.11.1111" @input="dateValidation" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.employmentDate" /> -->
                                         <!-- <masked-input required v-if="editMode" mask="11.11.1111" @input="dateValidation" class="inputProfile inputEdit" v-model="userData.EmploymentDate" /> -->
-                                        <v-date-picker  class="delegations-input-date" v-model="userData.EmploymentDate" :disabled-dates='{}'>
-                                            <input :disabled="!editMode" value="userData.employmentDate"/>
+                                        <input :value="formatDate" disabled class="inputProfile inputDisabled" v-if="!editMode">
+                                        <v-date-picker v-if="editMode" class="delegations-input-date inputDisabled" v-model="userData.EmploymentDate" :max-date="new Date()">
+                                            <input value="userData.employmentDate"/>
                                         </v-date-picker>
                                         <!-- <input required v-if="editMode" @input="dateValidation" class="inputProfile inputEdit" v-model="userData.EmploymentDate"> -->
                                         <!-- <v-date-picker :max-date="new Date()" v-if="projectEditMode" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" is-expanded mode="single" v-model="userData.employmentDate">
@@ -366,7 +367,7 @@ export default {
       loginLanguage: "getLoginLanguage",
       showSelectCv: "getShowSelectCvDialog",
       showPasswordDialog: "getShowSelectChangePasswordDialog",
-      displayMenu: "showMenu"
+      displayMenu: "getShowMenu"
     }),
     formatAddress() {
       const data = this.userData;
@@ -376,7 +377,14 @@ export default {
       }
       address = address + ", " + data.PostalCode + " " + data.City;
       return address;
-    }
+    },
+    formatDate() {
+      let date = this.userData.EmploymentDate;
+
+      return date !== null && date !== undefined
+        ? moment(date).format("DD.MM.YYYY")
+        : "-";
+    },
   },
   // beforeRouteLeave (to, from , next) {
   // this.showLeavePageDialog = true
@@ -389,9 +397,9 @@ export default {
     showMenu(event) {
       var x = window.matchMedia("(max-width: 40rem)")
       if (x.matches && event.type === "resize") {
-        this.$store.commit("DISPLAY_MENU", false)
+        this.$store.commit("SET_DISPLAY_MENU", false)
       } else {
-        this.$store.commit("DISPLAY_MENU", true);
+        this.$store.commit("SET_DISPLAY_MENU", true);
       }
     },
     onEdit() {
@@ -402,11 +410,11 @@ export default {
     showChangePassword() {
       this.$store.commit('SET_SHOW_CHANGE_PASSWORD_DIALOG', true)
     },
-    formatDate(date) {
-      return date !== null && date !== undefined
-        ? moment(date).format("DD.MM.YYYY")
-        : "-";
-    },
+    // formatDate(date) {
+    //   return date !== null && date !== undefined
+    //     ? moment(date).format("DD.MM.YYYY")
+    //     : "-";
+    // },
     onCancelEdit() {
       Object.assign(this.userData, this._beforeEditingCache);
       this._beforeEditingCache = null;

@@ -8,17 +8,17 @@
             </div>
             <div class="modal-content-new">
                 <div class="cd-for-input">
-                    <input required class="cd-input" v-model="email" id="oldPass">
+                    <input required class="cd-input" id="oldPass">
                     <span class="cd-span"></span>
                     <label class="cd-label">Stare hasło</label>
                 </div>
                 <div class="cd-for-input">
-                    <input required class="cd-input" v-model="email" id="newPass">
+                    <input required class="cd-input" id="newPass">
                     <span class="cd-span"></span>
                     <label class="cd-label">Nowe hasło</label>
                 </div>
                 <div class="cd-for-input">
-                    <input required class="cd-input" v-model="email" id="newPassConfirm">
+                    <input required class="cd-input" id="newPassConfirm">
                     <span class="cd-span"></span>
                     <label class="cd-label">Potwierdź nowe hasło</label>
                 </div>

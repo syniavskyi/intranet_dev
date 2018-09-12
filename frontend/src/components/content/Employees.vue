@@ -99,7 +99,7 @@ import { mapGetters } from 'vuex';
       }
     },
     computed: {
-      ...mapGetters({usersList:"usersList", departmentList: 'depList', displayMenu: 'showMenu'}),
+      ...mapGetters({usersList:"usersList", departmentList: 'depList', displayMenu: 'getShowMenu'}),
       filteredUsers:function(){
         let self = this,
             aFilteredUsers = this.usersList,

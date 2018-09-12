@@ -190,7 +190,7 @@ export default {
         }
     },
     created(){
-        window.addEventListener("resize", this.showMenu)
+        // window.addEventListener("resize", this.showMenu)
         const roles = this.$store.getters.getUserAuth
         for (let i=0; i<roles.length; i++) {
             if (roles[i].Key === "ZDELEG" && roles[i].Value === "TEAM" && this.userData.DepartmentName !== ""){
@@ -210,9 +210,9 @@ export default {
         //     this.delegationUsername = localStorage.getItem('id')
         // }
     },
-    destroyed() {
-        window.removeEventListener("resize", this.showMenu)
-    },
+    // destroyed() {
+    //     window.removeEventListener("resize", this.showMenu)
+    // },
     computed: {
         ...mapGetters({
             userData: 'getUserInfo',
@@ -228,7 +228,7 @@ export default {
             advanceData: 'getAdvanceData',
             delegationNumber: 'getNewDelegationNumber',
             showDialog: 'getShowConfirmDelegation',
-            displayMenu: 'showMenu'
+            displayMenu: 'getShowMenu'
         }),
         disableSaveBtn() {
             return (this.newDelegationValidated && this.delegationTableValidated && this.accCostValidated) ? false : true
@@ -317,9 +317,9 @@ export default {
         showMenu(event) {
             var x = window.matchMedia("(max-width: 40rem)")
             if (x.matches && event.type === "resize") {
-                this.$store.commit("DISPLAY_MENU", false)
+                this.$store.commit("SET_DISPLAY_MENU", false)
             } else {
-                this.$store.commit("DISPLAY_MENU", true);
+                this.$store.commit("SET_DISPLAY_MENU", true);
             }
         },
         setCurrency(e) {

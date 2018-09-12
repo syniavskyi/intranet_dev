@@ -182,7 +182,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      displayMenu: "showMenu"
+      displayMenu: "getShowMenu"
     }),
     getRoleList() {
       return this.$store.getters.roleList;

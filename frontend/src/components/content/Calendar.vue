@@ -210,13 +210,13 @@ export default {
   },
   created() {
     this.checkRole();
-    window.addEventListener("resize", this.showMenu)
+    // window.addEventListener("resize", this.showMenu)
     // this.$store.dispatch('getPriority');
     // this.$store.dispatch('getEventType');
   },
-  destroyed() {
-    window.removeEventListener("resize", this.showMenu)
-  },
+  // destroyed() {
+  //   window.removeEventListener("resize", this.showMenu)
+  // },
   computed: {
     ...mapGetters({
       departmentList: 'getTargetGroup',
@@ -227,7 +227,7 @@ export default {
       addEvent: 'addEvent',
       usersList: 'usersList',
       targetGroup: 'getTargetGroup',
-      displayMenu: "showMenu"
+      displayMenu: "getShowMenu"
  }),
     filteredEvents() {
       let aEvents = this.events,
@@ -301,9 +301,9 @@ export default {
     showMenu(event) {
       var x = window.matchMedia("(max-width: 40rem)")
       if (x.matches && event.type === "resize") {
-        this.$store.commit("DISPLAY_MENU", false)
+        this.$store.commit("SET_DISPLAY_MENU", false)
       } else {
-        this.$store.commit("DISPLAY_MENU", true);
+        this.$store.commit("SET_DISPLAY_MENU", true);
       }
     },
     editForm() {

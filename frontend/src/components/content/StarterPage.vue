@@ -98,7 +98,7 @@ export default {
     'app-menu': Menu
   },
   beforeCreate() {
-    this.$store.commit('DISPLAY_MENU', false);
+    // this.$store.commit('DISPLAY_MENU', false);
     if (this.$store.getters.idDataLoaded === false) {
       this.$store.dispatch('loadData', localStorage.getItem('token'))
     }
@@ -112,7 +112,7 @@ export default {
   },
     computed: {
       ...mapGetters({
-      setBuTton: 'returnCheckList',
+      setButton: 'returnCheckList',
       docListNew: 'docListNew',
       listForStatus: 'getListForStatus',
       docListInfo: 'docListInfo'
