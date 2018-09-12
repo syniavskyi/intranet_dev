@@ -158,7 +158,7 @@ export default {
             availStatusList: 'getAvailStatus',
             availTypesList: 'getAvailType',
             newLeave: 'getNewLeaveForUser',
-            displayMenu: "showMenu"
+            displayMenu: "getShowMenu",
             newProject: 'getNewProjectForUser',
             userProjects: 'userProjectsList',
             userAvail: 'getUserAvail'
@@ -221,9 +221,6 @@ export default {
         }
     },
     beforeCreate() {
-        if (this.showMenu === false) {
-            this.$store.commit('DISPLAY_MENU', true)
-        }
         this.showBranchSelect = (localStorage.getItem('role') === 'leader') ? false : true
 
         if (this.$store.getters.isDataLoaded === false) {
@@ -250,9 +247,9 @@ export default {
         showMenu(event) {
             var x = window.matchMedia("(max-width: 40rem)")
             if (x.matches && event.type === "resize") {
-                this.$store.commit("DISPLAY_MENU", false)
+                this.$store.commit("SET_DISPLAY_MENU", false)
             } else {
-                this.$store.commit("DISPLAY_MENU", true);
+                this.$store.commit("SET_DISPLAY_MENU", true);
             }
         },
         loadUserProjects(userId) {

@@ -155,24 +155,24 @@ export default {
       listOfDoc: []
     }
   },
-  created() {
-    window.addEventListener("resize", this.showMenu)
-  },
-  destroyed() {
-    window.removeEventListener("resize", this.showMenu)
-  },
+  // created() {
+  //   window.addEventListener("resize", this.showMenu)
+  // },
+  // destroyed() {
+  //   window.removeEventListener("resize", this.showMenu)
+  // },
   computed: {
     ...mapGetters({
-      displayMenu: 'showMenu'
+      displayMenu: 'getShowMenu'
     })
   },
   methods: {
     showMenu(event) {
       var x = window.matchMedia("(max-width: 40rem)")
       if (x.matches && event.type === "resize") {
-        this.$store.commit("DISPLAY_MENU", false)
+        this.$store.commit("SET_DISPLAY_MENU", false)
       } else {
-        this.$store.commit("DISPLAY_MENU", true);
+        this.$store.commit("SET_DISPLAY_MENU", true);
       }
     },
   },
