@@ -121,9 +121,9 @@ export default {
                 aFilteredTypes = this.availTypes
 
             for(let i = 0; i < aAvailTypes.length; i++){
-                if (aAvaiTypes[i].Key = 'PR') {
-                    delete aFilteredTypes[i]
-                    return
+                if (aAvailTypes[i].Key === 'PR') {
+                    aFilteredTypes.splice(i, 1)
+                    return aFilteredTypes
                 }
             }
         }
