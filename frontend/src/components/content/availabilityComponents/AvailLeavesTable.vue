@@ -65,6 +65,7 @@
 <script>
 import {mapGetters, mapActions} from 'vuex'
 import moment from 'moment'
+let utils = require('../../../utils')
 export default {
     props: ['selected-type', 'selected-status'],
     data () {
@@ -132,7 +133,7 @@ export default {
         ...mapActions(["removeUserAvail"]),
          edit() {
             this.editMode = true;
-            this._beforeEditingCache = JSON.parse(JSON.stringify(this.userAvail));
+            this._beforeEditingCache = utils.createClone(this.userAvail);
         },
         remove(index) {
             this._beforeEditingCache.splice(index, 1);
