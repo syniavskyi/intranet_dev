@@ -75,6 +75,7 @@
 <script>
 import moment from "moment";
 import { mapGetters, mapActions, mapState } from "vuex";
+let utils = require('../../../utils');
 export default {
   data() {
     return {
@@ -109,10 +110,7 @@ export default {
     edit() {
       this.editMode = true;
       this.onHover(this.$el)
-      this._beforeEditingCache = this.userExperience;
-      // JSON.parse(
-      //   JSON.stringify(this.userExperience)
-      // );
+      this._beforeEditingCache = utils.createClone(this.userExperience);
       var checkboxes = this.$el.querySelectorAll(".checkbox-wrap");
       for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].setAttribute("style", "display: flex;");
@@ -166,7 +164,8 @@ export default {
     },
     save(index) {
       const dataToChange = this._beforeEditingCache[index],
-        newData = this.userExperience[index];
+        // newData = this.userExperience[index];
+       newData = utils.createClone(this.userExperience[index]);
 
       newData.Language = 'PL'
 
@@ -178,10 +177,7 @@ export default {
       } else {
         this.$store.dispatch("saveNewUserExp", newData);
       }
-      this._beforeEditingCache = this.userExperience;
-      // JSON.parse(
-      //   JSON.stringify(this.userExperience)
-      // );
+     this._beforeEditingCache = utils.createClone(this.userExperience);
     },
     formatDate(date) {
       return date !== null && date !== undefined

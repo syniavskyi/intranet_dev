@@ -128,6 +128,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import moment from "moment";
+let utils = require('../../../utils');
 
 export default {
   data() {

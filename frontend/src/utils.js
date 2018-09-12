@@ -37,6 +37,13 @@ export const createRateDate = function(rateDate) {
     }
   }
 
+  export const createClone = function(data) {
+    let clone = JSON.parse(
+        JSON.stringify(data)
+      );
+      return clone;
+  } 
+
   const actions = {
     
   }
