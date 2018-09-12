@@ -114,7 +114,7 @@
 import moment from "moment";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
-let utils = require('../../../utils');
+const utils = require('../../../utils');
 export default {
   data() {
     return {
