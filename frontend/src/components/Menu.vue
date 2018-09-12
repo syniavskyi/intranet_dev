@@ -15,7 +15,7 @@
             <ul class="nav-list">
                 <li>
                     <router-link class="nav-router-link" to="/profile">
-                        <button class="nav-item">
+                        <button @click="closeMenu" class="nav-item">
                             <img class="nav-item-img" src="../assets/images/nav3/grey_616161/account-g-24.png">
                             <p>{{ $t("header.profile") }}</p>
                         </button>
@@ -23,7 +23,7 @@
                 </li>
                 <li>
                     <router-link class="nav-router-link" to="/news">
-                        <button class="nav-item">
+                        <button @click="closeMenu" class="nav-item">
                             <img class="nav-item-img" src="../assets/images/nav3/grey_616161/home-g-24.png">
                             <p>{{ $t("header.home") }}</p>
                         </button>
@@ -39,7 +39,7 @@
                 </li> -->
                 <li>
                     <router-link class="nav-router-link" to="/calendar">
-                        <button class="nav-item">
+                        <button @click="closeMenu" class="nav-item">
                             <img class="nav-item-img" src="../assets/images/nav3/grey_616161/calendar-text-g-24.png">
                             <p>{{ $t("header.calendar") }}</p>
                         </button>
@@ -47,7 +47,7 @@
                 </li>
                 <li>
                     <router-link class="nav-router-link"  to="/employees">
-                        <button class="nav-item">
+                        <button @click="closeMenu" class="nav-item">
                             <img class="nav-item-img" src="../assets/images/nav3/grey_616161/account-multiple-g-24.png">
                             <p>{{ $t("header.employees") }}</p>
                         </button>
@@ -63,7 +63,7 @@
                 </li> -->
                 <li>
                     <router-link class="nav-router-link" to="/files">
-                        <button class="nav-item">
+                        <button @click="closeMenu" class="nav-item">
                             <img class="nav-item-img" src="../assets/images/nav3/grey_616161/file-g-24.png">
                             <p>{{ $t("header.documents") }}</p>
                         </button>
@@ -71,7 +71,7 @@
                 </li>
                 <li>
                     <router-link class="nav-router-link" to="/availability">
-                        <button class="nav-item">
+                        <button @click="closeMenu" class="nav-item">
                              <img class="nav-item-img" src="../assets/images/nav3/grey_616161/account-search-g-24.png">
                              <p>{{ $t("header.availability") }}</p>
                         </button>
@@ -79,7 +79,7 @@
                 </li>
                 <li>
                     <router-link class="nav-router-link" to="/delegations">
-                        <button class="nav-item">
+                        <button @click="closeMenu" class="nav-item">
                              <img class="nav-item-img" src="../assets/images/nav3/grey_616161/car-g-24.png">
                              <p>{{ $t("header.delegations") }}</p>
                         </button>
@@ -87,7 +87,7 @@
                 </li>
                  <li>
                     <router-link class="nav-router-link" to="/registration">
-                        <button class="nav-item">
+                        <button @click="closeMenu" class="nav-item">
                              <img class="nav-item-img" src="../assets/images/nav3/grey_616161/account-plus-24.png">
                              <p>{{ $t("header.registration") }}</p>
                         </button>
@@ -100,6 +100,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+const utils = require("../utils")
 export default {
  
     methods: {
@@ -108,7 +109,10 @@ export default {
         },
 
         closeMenu() {
-            this.$store.commit("DISPLAY_MENU", false)
+            if (window.matchMedia("(max-width: 40rem)").matches) {
+                this.$store.commit("SET_DISPLAY_MENU", false)
+                this.$store.commit("SET_MENU_OVERLAY", false)
+            }
         }
     }
 }

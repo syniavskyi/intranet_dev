@@ -2,6 +2,7 @@
   <div class="plane-component">
     <div class="component-nav-and-content">
       <app-menu v-show="displayMenu"></app-menu>
+      <div class="modal-overlay" v-show="displayOverlay"></div>
       <div class="component-content">
         <div class="content-header">
           <div class="content-header-title-and-menu">
@@ -99,7 +100,7 @@ import { mapGetters } from 'vuex';
       }
     },
     computed: {
-      ...mapGetters({usersList:"usersList", departmentList: 'depList', displayMenu: 'getShowMenu'}),
+      ...mapGetters({usersList:"usersList", departmentList: 'depList', displayMenu: 'getShowMenu', displayOverlay: "getShowMenuOverlay"}),
       filteredUsers:function(){
         let self = this,
             aFilteredUsers = this.usersList,
@@ -129,12 +130,8 @@ import { mapGetters } from 'vuex';
         this.aFilters = {}
       },
       showMenu(event) {
-        var x = window.matchMedia("(max-width: 40rem)")
-        if (x.matches && event.type === "resize") {
-          this.$store.commit("DISPLAY_MENU", false)
-        } else {
-          this.$store.commit("DISPLAY_MENU", true);
-        }
+        let name = {window, event}
+        this.$store.dispatch("setSideMenu", name);
       },
     }
   }

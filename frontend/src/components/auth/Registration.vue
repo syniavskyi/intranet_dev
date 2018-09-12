@@ -2,6 +2,7 @@
 <div class="plane-component" >
   <div class="component-nav-and-content">
     <app-menu v-show="displayMenu"></app-menu>
+    <div class="modal-overlay" v-show="displayMenuOverlay"></div>
     <div class="component-content"> 
       <div class="content-header">
         <div class="content-header-title-and-menu">
@@ -91,9 +92,9 @@
 import axios from "axios";
 import { required, minLength, email } from "vuelidate/lib/validators";
 import i18n from "../../lang/lang";
-
 import Menu from "../Menu.vue";
 import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
@@ -134,17 +135,16 @@ export default {
   destroyed() {
     window.removeEventListener("resize", this.showMenu)
   },
+  mounted() {
+    
+  },
   components: {
     "app-menu": Menu
   },
   methods: {
     showMenu(event) {
-      var x = window.matchMedia("(max-width: 40rem)")
-      if (x.matches && event.type === "resize") {
-        this.$store.commit("DISPLAY_MENU", false)
-      } else {
-        this.$store.commit("DISPLAY_MENU", true);
-      }
+      let obj = {window, event}
+      this.$store.dispatch("setSideMenu", obj);
     },
     checkEmail(value) {
       this.mail = value;
@@ -182,7 +182,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      displayMenu: "getShowMenu"
+      displayMenu: "getShowMenu",
+      displayMenuOverlay: "getShowMenuOverlay"
     }),
     getRoleList() {
       return this.$store.getters.roleList;
