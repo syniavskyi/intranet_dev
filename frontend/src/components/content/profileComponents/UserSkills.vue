@@ -105,6 +105,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+let utils = require('../../../utils');
 export default {
   data() {
     return {
@@ -153,12 +154,8 @@ export default {
     edit() {
       this.editMode = true;
       this.onHover(this.$el)
-      this._beforeEditingCacheSkills = JSON.parse(
-        JSON.stringify(this.userSkills)
-      );
-      this._beforeEditingCacheLangs = JSON.parse(
-        JSON.stringify(this.userLangs)
-      );
+      this._beforeEditingCacheSkills = utils.createClone(this.userSkills);
+      this._beforeEditingCacheLangs = utils.createClone(this.userLangs);
     },
     cancel() {
       this.onHoverOut(this.$el)
@@ -170,15 +167,8 @@ export default {
       this.onHoverOut(this.$el)
       let data = this.userSkills;
       this.$store.dispatch("saveUserSkills", data);
-      this._beforeEditingCacheSkills = this.userSkills;
-      // JSON.parse(
-      //   JSON.stringify(this.userSkills)
-      // );
-      this._beforeEditingCacheLangs = this.userLangs;
-      // JSON.parse(
-      //   JSON.stringify(this.userLangs)
-      // );
-
+      this._beforeEditingCacheSkills = utils.createClone(this.userSkills);
+      this._beforeEditingCacheLangs = utils.createClone(this.userLangs);
       this.editMode = false;
     },
     checkFields() {

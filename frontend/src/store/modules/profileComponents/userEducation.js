@@ -62,10 +62,8 @@ const actions = {
   }, data) {
     data.UserAlias = 'UIO'
     data.Language = 'PL'
-    // data.DateStart = utils.formatDateForBackend(data.DateStart)
-    // data.DateEnd = utils.formatDateForBackend(data.DateEnd)
-    data.DateStart ='/Date(1473465600000)/'
-    data.DateEnd = '/Date(1473465600000)/'
+    data.DateStart = utils.formatDateForBackend(data.DateStart)
+    data.DateEnd = utils.formatDateForBackend(data.DateEnd)
     data.IsCurrent = data.IsCurrent ? 'X' : '-'
     let query = getters.getUrlQuery
     const url = 'UsersEducation' + '(' + "UserAlias='"+ data.UserAlias + "',University='" + data.UniversityToChange + "',AcademicTitle='" + data.AcademicTitleToChange + "',FieldOfStudy='" + data.FieldOfStudyToChange + "',Language='"+ data.Language + "')" + query

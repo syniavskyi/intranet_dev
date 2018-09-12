@@ -114,6 +114,7 @@
 import moment from "moment";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
+let utils = require('../../../utils');
 export default {
   data() {
     return {
@@ -170,8 +171,7 @@ export default {
     edit() {
       this.editMode = true;
       this.onHover(this.$el)
-      this._beforeEditingCache = this.userEducation;
-      //  JSON.parse(JSON.stringify(this.userEducation));
+      this._beforeEditingCache = utils.createClone(this.userEducation);
       var checkboxes = this.$el.querySelectorAll(".checkbox-wrap");
       for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].setAttribute("style", "display: flex;");
@@ -224,7 +224,8 @@ export default {
     },
     save(index) {
       const dataToChange = this._beforeEditingCache[index],
-        newData = this.userEducation[index];
+        // newData = this.userEducation[index];
+        newData = utils.createClone(this.userEducation[index])
 
       if (dataToChange) {
           newData.AcademicTitleToChange = dataToChange.AcademicTitle;
@@ -234,11 +235,8 @@ export default {
         } else {
           this.$store.dispatch("addUserEducation", newData);
         }
-
-        this._beforeEditingCache = this.userEducation;
-        //  = JSON.parse(
-          // JSON.stringify(this.userEducation)
-        // );
+        // this._beforeEditingCache = this.userEducation;
+         this._beforeEditingCache = utils.createClone(this.userEducation);
     },
     formatDate(date) {
       return date !== null && date !== undefined ? moment(date).format("DD.MM.YYYY") : "-";

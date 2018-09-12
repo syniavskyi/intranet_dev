@@ -158,7 +158,7 @@ export default {
             availStatusList: 'getAvailStatus',
             availTypesList: 'getAvailType',
             newLeave: 'getNewLeaveForUser',
-            displayMenu: "showMenu"
+            displayMenu: "showMenu",
             newProject: 'getNewProjectForUser',
             userProjects: 'userProjectsList',
             userAvail: 'getUserAvail'
