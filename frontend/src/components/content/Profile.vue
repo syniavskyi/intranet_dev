@@ -372,7 +372,7 @@ export default {
       loginLanguage: "getLoginLanguage",
       showSelectCv: "getShowSelectCvDialog",
       showPasswordDialog: "getShowSelectChangePasswordDialog",
-      displayMenu: "showMenu"
+      displayMenu: "getShowMenu"
     }),
     formatAddress() {
       const data = this.userData;
@@ -395,9 +395,9 @@ export default {
     showMenu(event) {
       var x = window.matchMedia("(max-width: 40rem)")
       if (x.matches && event.type === "resize") {
-        this.$store.commit("DISPLAY_MENU", false)
+        this.$store.commit("SET_DISPLAY_MENU", false)
       } else {
-        this.$store.commit("DISPLAY_MENU", true);
+        this.$store.commit("SET_DISPLAY_MENU", true);
       }
     },
     onEdit() {

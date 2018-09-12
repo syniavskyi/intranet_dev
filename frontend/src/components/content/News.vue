@@ -1,7 +1,7 @@
 <template>
 <div class="plane-component">
     <div class="component-nav-and-content">
-        <app-menu></app-menu>
+        <app-menu v-show="getShowMenu"></app-menu>
             <div class="component-content">
                 <div class="content-header">
                 <div class="content-header-title-and-menu">
@@ -134,7 +134,7 @@ export default {
     "app-menu": Menu
   },
   computed: {
-    ...mapGetters(["geoLocation2", "weatherData", "today", "articlesRaw", "articlesJson", "articles", "userAdverts"]),
+    ...mapGetters(["geoLocation2", "weatherData", "today", "articlesRaw", "articlesJson", "articles", "userAdverts", "getShowMenu"]),
   },
   methods: {
     ...mapActions(["geoLoc", "getWeatherData", "getToday", "getNews", "xmlToJson", "getArticles"]),
