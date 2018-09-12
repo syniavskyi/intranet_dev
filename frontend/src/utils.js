@@ -38,10 +38,17 @@ export const createRateDate = function(rateDate) {
   }
 
   export const createClone = function(data) {
-    let clone = JSON.parse(
+    let  clone = JSON.parse(
         JSON.stringify(data)
       );
       return clone;
+
+      // for(let i = 0; i < this._beforeEditingCache.length; i++) {
+      //   this._beforeEditingCache[i].DateStart = new Date(this._beforeEditingCache[i].DateStart);
+      //   this._beforeEditingCache[i].DateEnd = new Date(this._beforeEditingCache[i].DateEnd);
+      // }
+
+
   } 
 
   const actions = {

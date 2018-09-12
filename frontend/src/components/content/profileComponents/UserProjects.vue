@@ -166,10 +166,11 @@ updated() {
     },
     save(index) {
       const dataToChange = this._beforeEditingProjects[index],
-      newData = this.userProjects[index];
-      const aModules = dataToChange.Modules,
-            aIndustries = dataToChange.Industries;
-      newData.Language ='PL';
+      newData = utils.createClone(this.userProjects[index])
+      // newData = this.userProjects[index];
+      // const aModules = dataToChange.Modules,
+      //       aIndustries = dataToChange.Industries;
+      // newData.Language ='PL';
 
       if (dataToChange) {
         newData.DateStartToChange = dataToChange.DateStart;
@@ -179,9 +180,9 @@ updated() {
      } else {
         this.$store.dispatch('saveUserProjectsPosition', newData);
       }
-      this._beforeEditingProjects = this.userProjects;
-      this._beforeEditingProjects[index].Modules = aModules;
-      this._beforeEditingProjects[index].Industries = aIndustries;
+      this._beforeEditingProjects = utils.createClone(this.userProjects);
+      // this._beforeEditingProjects[index].Modules = aModules;
+      // this._beforeEditingProjects[index].Industries = aIndustries;
     },
     checkFields(index) {
       // if (this.userProjects.length > 0) {
