@@ -336,18 +336,12 @@ export default {
   //         image.src = url
   // },
   beforeRouteLeave(to, from, next) {
-    //   const answer = window.confirm('Zmiana')
-    //   if(answer) {
     let lang = this.loginLanguage.toLowerCase();
     if (lang == "") {
       lang = "pl";
     }
     this.$store.commit('SET_LANG', lang);
-    // this.setLanguage(lang);
     next();
-    //   } else {
-    //       next(false);
-    //   }
   },
   components: {
     MaskedInput,

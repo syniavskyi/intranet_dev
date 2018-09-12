@@ -18,7 +18,7 @@
             </div>       
             <div v-if='selectedDay' class='selected-day'>
               <div class="add-event-header">
-                <h3>{{ selectedDay.date.toDateString() }}</h3>
+                <h3>{{ selectedDay.date.toLocaleDateString() }}</h3>
                 <button @click="openDialog" class="button modal-button add-button">{{ $t("button.add") }}</button>
               </div>
               <ul class="ul-event">
@@ -55,9 +55,9 @@
                 </div>
                 <div class="ava-div-select-cool">
                     <select required class="ava-select-cool" v-model="filters.employee">
-                      <option>Wysoki</option>
-                      <option>Średni</option>
-                      <option>Niski</option>
+                         <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias">
+                                {{ user.Fullname }}
+                         </option>
                     </select>
                     <label class="ava-select-label-cool">{{ $t("label.employee") }}</label>
                     <button @click="clearFilters">{{ $t("button.clear") }}</button>

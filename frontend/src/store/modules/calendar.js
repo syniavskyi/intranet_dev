@@ -5,6 +5,8 @@ import jsontoxml from 'jsontoxml'
 import js2xml from 'js2xmlparser'
 import moment from 'moment'
 import dataloading from './dataloading';
+let utils = require('../../utils');
+import odata from 'odata';
 
 const state = {
   priorityColor: '',
@@ -151,100 +153,69 @@ setColor({commit, getters}){
   },
   addNewEvent({getters, dispatch}) {
      const eventData = getters.addEvent
-     eventData.DateFrom = getters.getSelectedDate;
+     eventData.DateFrom = utils.formatDateForBackend(getters.getSelectedDate);
      if(!eventData.DateTo) {
       eventData.DateTo = eventData.DateFrom;
-    } 
+    } else {
+      eventData.DateTo = utils.formatDateForBackend(eventData.DateTo);
+    }
+    eventData.EventTime = "PT" + eventData.EventTime.slice(0,2) + "H" + eventData.EventTime.slice(3,5) + "M00S";
     dispatch('setColorPriority');
-    dispatch('formatToString', eventData)
-    //  axios({
-    //   method: 'POST',
-    //   url: '/Events',
-    //   auth: {
-    //     username: 'psy',
-    //     password: 'ides01'
-    //   },
-    //   // data: bodyFormData,
-    //   data: xmlRequest,
-    //   headers: {
-    //     "Content-Type": "application/atom+xml; type=entry; charset=utf-8",
-    //     "X-Requested-With": "XMLHttpRequest"
-    //   },
+    dispatch('formatToString', eventData);
+    // jeszcze URL
+    odata('Events').post(eventData).save(function (data) {
+      console.log("Working");
+    }, function (status) {
+      console.error(status);
+    });
 
-    //   // config: { headers: {'Content-Type': 'multipart/form-data' }}
-    // }).then(res => {
-    //   let c = res.config;
-    // }).catch(error => { 
-    //   console.log(error);
-    // })
      state.addEvent.color = state.priorityColor
      state.aEvents.push(eventData);
       
   },
   editEvent({commit, getters, dispatch}) {
-    let editedData = getters.addEvent;
+    let eventData = getters.addEvent;
     let aEvents = getters.events;
-    let pos = aEvents.findIndex(x => x.EventId === editedData.EventId);
-    aEvents[pos] = editedData;
-    dispatch('getEvents');
+    let pos = aEvents.findIndex(x => x.EventId === eventData.EventId);
+    //aEvents[pos] = eventData;
+    eventData.DateFrom = utils.formatDateForBackend(eventData.DateFrom);
+    eventData.DateTo = utils.formatDateForBackend(eventData.DateTo);
+    if(eventData.EventTime) {
+      eventData.EventTime = "PT" + eventData.EventTime.slice(0,2) + "H" + eventData.EventTime.slice(3,5) + "M00S";
+    }
+    //dispatch('getEvents');
+    dispatch('formatToString', eventData);
     commit('SET_EVENTS', aEvents);
-    axios({
-      method: 'PUT',
-      url: 'Events' + "('" + editedData.EventId + "')",
-      //  auth: {
-      //   username: 'psy',
-      //   password: 'ides01'
-      // }
-      // CreatedBy: editedData.CreatedBy,
-      // DateFrom: editedData.DateFrom, 
-      // EventPrivacy: editedData.EventPrivacy,
-      // EventId: editedData.EventId,
-      // Branch: editedData.Branch,
-      // Description: editedData.Description,
-      // Department: editedData.Department,
-      // EventName: editedData.EventName,
-      // DateTo: editedData.DateTo,
-      // Employee: editedData.Employee,
-      // EventTime: editedData.EventTime,
-      // Priority: editedData.Priority,
-      // EventType: editedData.EventType,
-      // auth: {
-      //   username: 'psy',
-      //   password: 'ides01'
-      // },
-      // headers: {
-      //   "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-      // }
-    }).then(res => {
-      // i co dalej
-      // let aPriority = res.data.d.results;
-      // dispatch('getEvents')
-      // commit('SET_PRIORITY', aPriority);
-    }).catch(error => { 
-      console.log(error);
-    })
-
+    let query = getters.getUrlQuery
+    const url = 'Events' + '(' + "EventId='"+ eventData.EventId + "')" + query
+    odata(url).put(eventData).save(function (data) {
+      //  tak miałam, zobaczę jak będą działać zapytania
+       // i co dalej
+    //   // let aPriority = res.data.d.results;
+    //   // dispatch('getEvents')
+    //   // commit('SET_PRIORITY', aPriority);
+      console.log("changed");
+    }, function (status) {
+      console.error(status);
+    });
   },
-  removeEvent({commit, state}) {
-    // let editedData = state.addEvent;
-    // let aEvents = state.aEvents;
-    // let pos = aEvents.findIndex(x => x.EventId === editedData.EventId);
-    // let pos2 = aEvents.find(x => x.EventId === editedData.EventId).foo;
-    axios({
-      method: 'DELETE',
-      url: 'Events' + "('" + '004' + "')",
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-      }
-    }).then(res => {
-      console.log(res)
-        // state.aEvents.splice(pos, 1);
-    }).catch(error => { 
-      console.log(error);
+  removeEvent({commit, state, dispatch}) {
+    let eventData = state.addEvent;
+    let aEvents = state.aEvents;
+    let query = getters.getUrlQuery
+    let pos = aEvents.findIndex(x => x.EventId === eventData.EventId);
+    const url = 'Events' + '(' + "EventId='"+ eventData.EventId + "')" + query;
+    dispatch('formatToString', eventData);
+    eventData.DateFrom = utils.formatDateForBackend(eventData.DateFrom);
+    eventData.DateTo = utils.formatDateForBackend(eventData.DateTo);
+    if(eventData.EventTime) {
+      eventData.EventTime = "PT" + eventData.EventTime.slice(0,2) + "H" + eventData.EventTime.slice(3,5) + "M00S";
+    }
+    odata(url).remove().save(function (data) {
+      aEvents.splice(pos, 1);
+      commit('SET_EVENTS', aEvents);
+    }, function (status) {
+      console.error(status);
     })
   },
   clearForm({commit}) {
@@ -328,7 +299,7 @@ clearFilters({commit}) {
   if(dataSet == 'ZGW_INTRANET_SRV.UserSkills') {
     commit('SET_USER_SKILLS', data[0]);
   }
- } 
+ }
 };
 
 const getters = {
