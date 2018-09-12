@@ -2,6 +2,7 @@
 <div class="plane-profile">
     <div class="profile-nav-and-content">
         <app-menu v-show="displayMenu"></app-menu>
+        <div class="modal-overlay" v-show="displayOverlay"></div>
         <!-- <leave-page-dialog v-if="showLeavePageDialog" @action-selected="leavePage" @close="showLeavePageDialog = false"></leave-page-dialog> -->
         <div class="profile-content">
             <div class="profile-header">
@@ -367,7 +368,8 @@ export default {
       loginLanguage: "getLoginLanguage",
       showSelectCv: "getShowSelectCvDialog",
       showPasswordDialog: "getShowSelectChangePasswordDialog",
-      displayMenu: "getShowMenu"
+      displayMenu: "getShowMenu",
+      displayOverlay: "getShowMenuOverlay"
     }),
     formatAddress() {
       const data = this.userData;
@@ -395,12 +397,8 @@ export default {
     //   const url = "https://nw5.local.pl:8050/Users(UserAlias='SJI',Language='PL')"
     // },
     showMenu(event) {
-      var x = window.matchMedia("(max-width: 40rem)")
-      if (x.matches && event.type === "resize") {
-        this.$store.commit("SET_DISPLAY_MENU", false)
-      } else {
-        this.$store.commit("SET_DISPLAY_MENU", true);
-      }
+      let obj = {window, event}
+      this.$store.dispatch("setSideMenu", obj);
     },
     onEdit() {
       this.showNoChangesAlert = false;

@@ -1,7 +1,8 @@
 <template>
   <div class="plane-component">
     <div class="component-nav-and-content">
-      <app-menu></app-menu>
+      <app-menu v-show="displayMenu"></app-menu>
+      <div class="modal-overlay" v-show="displayOverlay"></div>
       <div class="component-content">
         <div class="content-header">
           <div class="content-header-title-and-menu">
@@ -115,7 +116,9 @@ export default {
       setButton: 'returnCheckList',
       docListNew: 'docListNew',
       listForStatus: 'getListForStatus',
-      docListInfo: 'docListInfo'
+      docListInfo: 'docListInfo',
+      displayMenu: "getShowMenu",
+      displayMenuOverlay: "getShowMenuOverlay"
       // docStatusList: 'docStatusList',
       //  statusToDoc: 'getFullListOfDoc'
       }),

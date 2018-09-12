@@ -207,9 +207,9 @@
         border-radius: 5px;
     }
     .plane-nav {
-        min-height: 100vh;
+        /* min-height: 100vh; */
 /*        height: 100%;*/
-        height: auto;
+        /* height: auto; */
     }
 }
 
