@@ -41,11 +41,20 @@ export const createRateDate = function(rateDate) {
     let  clone = JSON.parse(
         JSON.stringify(data)
       );
-      
-      for (let key in clone){
-        if (clone.toLowerCase().includes("date")){
-          clone[key] = new Date(clone[key])
+if(clone.constructor === Array) {
+  for (let key in clone[0]){
+        for(let i = 0; i < clone.length; i++) { 
+            if (key.toLowerCase().includes("date")){
+               clone[i][key] = new Date(clone[i][key])
+            } 
         }
-      }
+  } 
+} else {
+  for (let key in clone){
+      if (key.toLowerCase().includes("date")){
+          clone[key] = new Date(clone[key])
+       }
+    }
+}
       return clone;
   } 
