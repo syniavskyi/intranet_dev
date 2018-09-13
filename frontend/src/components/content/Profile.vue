@@ -309,11 +309,10 @@ export default {
       // this.setCvLanguage(lang);
     }
   },
-  created() {
-    window.addEventListener("resize", this.showMenu)
-  },
-  destroyed() {
-    window.removeEventListener("resize", this.showMenu)
+  beforeCreate() {
+    if (this.$store.getters.isDataLoaded === false) {
+      this.$store.dispatch("loadData");
+    }
   },
   // mounted() {
   //   const sUserId = localStorage.getItem("id"),

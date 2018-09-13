@@ -123,14 +123,11 @@ export default {
     //   minLen: minLength(8)
     // }
   },
-  created() {
-    window.addEventListener("resize", this.showMenu)
-  },
-  destroyed() {
-    window.removeEventListener("resize", this.showMenu)
-  },
-  mounted() {
-    
+  beforeCreate() {
+    // this.$store.commit("DISPLAY_MENU", false);
+    if (this.$store.getters.isDataLoaded === false) {
+      this.$store.dispatch("loadData");
+    }
   },
   components: {
     "app-menu": Menu

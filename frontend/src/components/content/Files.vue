@@ -156,12 +156,6 @@ export default {
       listOfDoc: []
     }
   },
-  // created() {
-  //   window.addEventListener("resize", this.showMenu)
-  // },
-  // destroyed() {
-  //   window.removeEventListener("resize", this.showMenu)
-  // },
   computed: {
     ...mapGetters({
       displayMenu: 'getShowMenu',

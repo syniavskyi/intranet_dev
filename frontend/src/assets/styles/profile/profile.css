@@ -384,6 +384,7 @@
     align-self: center;
     justify-content: space-around;
     flex: 1;
+    width: 100%;
 }
 
 
@@ -1406,12 +1407,7 @@ max-width: max-content;
         flex-direction: row;
     }
 
-    .prof-inputs-div:nth-of-type(1) {
-        flex: 1.7;
-    }
-    .prof-inputs-div:nth-of-type(2) {
-        flex: 1;
-    }
+    
 }
 
 /* @media (min-width:0rem) and (max-width: 44rem) {
@@ -1457,6 +1453,12 @@ max-width: max-content;
     }
     .prof-row-inputs {
         flex-direction: row;
+    }
+    .prof-inputs-div:nth-of-type(1) {
+        flex: 1.7;
+    }
+    .prof-inputs-div:nth-of-type(2) {
+        flex: 1;
     }    
 }
 
