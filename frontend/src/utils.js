@@ -41,20 +41,47 @@ export const createClone = function (data) {
   let clone = JSON.parse(
     JSON.stringify(data)
   );
-  if (clone.constructor === Array) {
-    for (let key in clone[0]) {
-      for (let i = 0; i < clone.length; i++) {
-        if (key.toLowerCase().includes("date")) {
-          clone[i][key] = new Date(clone[i][key])
-        }
-      }
-    }
-  } else {
-    for (let key in clone) {
-      if (key.toLowerCase().includes("date")) {
-        clone[key] = new Date(clone[key])
-      }
-    }
-  }
   return clone;
+}
+
+export const setWorkExperience = function (date) {
+  let oDates = {
+    day: '',
+    month: '',
+    year: ''
+  }
+
+  if (date.years === 0) {
+    oDates.year = ''
+  } else if (date.years === 1) {
+    oDates.year = 'rok '
+  } else if (date.years > 1 && date.years <= 4) {
+    oDates.year = date.years + ' lata '
+  } else if (oDiff.years > 4) {
+    oDates.year = date.years + ' lat '
+  }
+
+  if (date.months === 0) {
+    oDates.month = ''
+  } else if (date.months === 1) {
+    oDates.month = 'miesiąc '
+  } else if (date.months > 1 && date.months <= 4) {
+    oDates.month = date.months + ' miesiące '
+  } else if (date.months > 4) {
+    oDates.month = date.months + ' miesięcy '
+  }
+
+  if (date.days === 0) {
+    oDates.day = ''
+  } else if (date.days === 1) {
+    oDates.day = date.days + ' dzień'
+  } else {
+    oDates.day = date.days + ' dni'
+  }
+
+  return oDates;
+}
+
+const actions = {
+
 }
