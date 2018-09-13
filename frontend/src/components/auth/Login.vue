@@ -60,7 +60,6 @@ import { mapGetters } from "vuex";
 import i18n from "../../lang/lang";
 
 export default {
-  name: "Login",
   data() {
     return {
       username: "",
@@ -89,26 +88,24 @@ export default {
   },
   methods: {
     onSubmit() {
-      
       this.isLoading = true;
-      if(this.SelectedLang === undefined) {
-          this.SelectedLang = "PL";
-      }
+      this.SelectedLang = this.SelectedLang === undefined ? "PL" : this.SelectedLang
+
       this.$store.dispatch("login", {
         username: this.username,
         password: this.password,
         language: this.selectedLang.toUpperCase()
-      });
-      this.isLoading = false;
+      }).then(
+        this.isLoading = false
+      );
 
-        this.$store.commit('SET_LOGIN_LANGUAGE', this.selectedLang.toUpperCase());
+      this.$store.commit('SET_LOGIN_LANGUAGE', this.selectedLang.toUpperCase());
     },
     switchForgotPassword() {
       this.showRemindPassword = !this.showRemindPassword;
     },
     switchPasswordVisibility() {
-      this.passwordFieldType =
-        this.passwordFieldType === "password" ? "text" : "password";
+      this.passwordFieldType = this.passwordFieldType === "password" ? "text" : "password";
       this.eyeType = this.eyeType === "eye" ? "eye-slash" : "eye";
     },
     onResetPassword() {
@@ -123,12 +120,9 @@ export default {
       loginError: "isLoginError",
       sendEmailSuccess: "isSendEmailSuccess",
       sendEmailError: "isSendEmailError",
-      newPAssword: "password",
+      newPassword: "password",
       languageList: "languageList"
     })
-  },
-  created() {
-    this.$store.dispatch("tryAutoLogin");
   }
 };
 </script>

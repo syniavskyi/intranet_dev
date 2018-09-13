@@ -6,15 +6,10 @@ const state = {
   email: '',
   mail: '',
   emailExists: false,
-  // dialog: false,
-  // dialogFalse: false
-  errorDialog: false
+  registrationError: false
 };
 
 const mutations = {
-  SET_SHOW_ERROR_DIALOG(state, data) {
-    state.errorDialog;
-  },
   ADD_EMAILS(state, data) {
     state.emails = data;
   },
@@ -24,14 +19,11 @@ const mutations = {
   EMAIL_EXISTS(state, data) {
     state.emailExists = data;
   },
-  OPEN_DIALOG(state, data) {
-    state.dialog = data;
-  },
-  OPEN_FAILED_DIALOG(state, data) {
-    state.dialogFalse = data;
-  },
   SET_MAIL(state, data) {
     state.mail = data;
+  },
+  SET_REGISTRATION_ERROR(state, isError){
+    state.registrationError = isError
   }
 };
 
@@ -95,10 +87,11 @@ const actions = {
       roles: [data.role],
       deps: [data.department]
     }).then(function (response) {
+      commit('SET_REGISTRATION_ERROR', false)
       // console.log(response);
     }).catch(function (error) {
+      commit('SET_REGISTRATION_ERROR', false)
       // console.log(error);
-      commit('OPEN_FAILED_DIALOG', true);
     })
   },
 };
@@ -113,14 +106,11 @@ const getters = {
   isEmail(state) {
     return state.emailExists;
   },
-  openDialog(state) {
-    return state.dialog;
-  },
   setMail(state) {
     return state.mail;
   },
-  openFailedDialog(state) {
-    return state.dialogFalse;
+  getRegistrationError(state){
+    return state.registrationError
   }
 };
 
