@@ -104,6 +104,25 @@ const actions = {
     dispatch,
     getters
   }, userData) {
+    // TEMPORARY
+    // if(userData === null) {
+    //   // let userData = {
+    //   //   lang: 'PL',
+    //   //   user: 'UIO'
+    //   // }
+    //   const userData = {};
+    //   userData.lang = 'PL'
+    //   userData.user = 'UIO'
+    // }
+    if(userData == null) {
+      userData.lang = 'PL'
+    }
+    // if(userData.lang === null) {
+    //   userData.lang = 'PL'
+    // }
+    // if(userData.lang === undefined) {
+    //   userData.lang = 'PL'
+    // }
     for (let i = 0; i < state.sapDomains.length; i++) {
       let domainData = {
         name: state.sapDomains[i],

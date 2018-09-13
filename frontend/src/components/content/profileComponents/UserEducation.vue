@@ -123,11 +123,6 @@ export default {
       invalidDates: false
     };
   },
-  beforeCreate() {
-    if (this.$store.getters.isDataLoaded === false) {
-      this.$store.dispatch("loadData");
-    }
-  },
   updated() {
     this.setEduCheckbox();
   },

@@ -314,12 +314,6 @@ export default {
       this.$store.dispatch("loadData");
     }
   },
-  // created() {
-  //   window.addEventListener("resize", this.showMenu)
-  // },
-  // destroyed() {
-  //   window.removeEventListener("resize", this.showMenu)
-  // },
   // mounted() {
   //   const sUserId = localStorage.getItem("id"),
   //               sLanguage = 'PL',

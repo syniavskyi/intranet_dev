@@ -185,11 +185,6 @@ export default {
         'delegation-table': DelegationTable,
         'confirm-dialog': Dialog
     },
-    beforeCreate() {
-        if (this.$store.getters.isDataLoaded === false) {
-            this.$store.dispatch('loadData', localStorage.getItem('token'))
-        }
-    },
     created(){
         const roles = this.$store.getters.getUserAuth
         for (let i=0; i<roles.length; i++) {

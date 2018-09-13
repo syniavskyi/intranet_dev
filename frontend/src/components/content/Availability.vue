@@ -217,12 +217,7 @@ export default {
         }
     },
     beforeCreate() {
-        this.showBranchSelect = (localStorage.getItem('role') === 'leader') ? false : true
-
-        if (this.$store.getters.isDataLoaded === false) {
-            this.$store.dispatch('loadData', localStorage.getItem('token'))
-        }
-
+        this.showBranchSelect = (localStorage.getItem('role') === 'leader') ? false : true;
     },
     watch: {
         selectedType(value) {
