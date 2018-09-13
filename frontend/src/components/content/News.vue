@@ -60,7 +60,12 @@
             </div>
             <div class="api">
                 <div class="content-event">
-                    <p>Events API</p>
+                    <p class="events-header">{{ $t("news.upcomingEvents") }}</p>
+                  <div v-for="(event, index) in events" :key='index' class="single-event"> 
+                      <div>  {{event.EventTypeName}} </div>
+                      <div>{{ event.EventName }}</div>
+                      <div>  {{setDateTo(event)}} </div>
+                 </div>
                 </div>
                 <div class="content-weather"  :class="today.isDay ? 'weatherDay' : 'weatherNight' ">
                     <div class="intro">
@@ -110,11 +115,12 @@
 </template>
 
 <script>
-import Menu from "../Menu.vue"
-import axios from "axios"
-import { mapGetters } from "vuex"
-import { mapActions } from "vuex"
-import i18n from "../../lang/lang"
+import Menu from "../Menu.vue";
+import axios from "axios";
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
+import i18n from "../../lang/lang";
+import moment from "moment";
 export default {
   data() {
     return {
@@ -142,11 +148,19 @@ export default {
         articlesJson: "articlesJson", 
         rticles: "articles",
         userAdverts: "userAdverts",
-        getShowMenu: "getShowMenu"}),
+        getShowMenu: "getShowMenu",
+        events: "events" }),
   },
   methods: {
     ...mapActions(["geoLoc", "getWeatherData", "getToday", "getNews", "xmlToJson", "getArticles"]),
-    }
+     setDateTo(event) {
+          if(event.DateTo <= event.DateFrom) {
+            return  moment(event.DateFrom).format("DD-MM-YYYY");
+          } else {
+            return moment(event.DateFrom).format("DD-MM-YYYY") + ' - ' + moment(event.DateTo).format("DD-MM-YYYY");
+          }
+    },
+   },
   }
 </script>
 

@@ -30,6 +30,15 @@ body {
     margin-bottom: 1rem;
 }
 
+.events-header {
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.single-event {
+    width: 30rem;
+    height: 4rem;
+}
 .content-weather {
     width: 100%;
     height: 50%;
