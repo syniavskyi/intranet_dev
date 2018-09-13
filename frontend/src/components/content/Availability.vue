@@ -23,7 +23,7 @@
                         <div class="availability-tile-header">
                             <div class="ava-tile-header-title">
                                 <h2 v-if="selectedUser === null">{{ $t("header.selectEmployee") }}</h2>
-                                <h2 class="ava-selected-user-h2" v-else-if="selectedUser !== null">{{ selectedUser.firstName }} {{ selectedUser.lastName }}</h2>
+                                <h2 class="ava-selected-user-h2" v-else-if="selectedUser !== null">{{ selectedUser.Fullname }}</h2>
                                 <div class="availability-tile-underscore"></div>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="ava-div-select-cool" v-if="selectedBranch != null">
                                         <select required class="ava-select-cool" v-model="selectedDepartment">
-                                              <option v-for="department in departmentList" :key="department.Key" :value="department.Value">{{ department.Value }}</option>
+                                              <option v-for="department in departmentList" :key="department.Key" :value="department.Key">{{ department.Value }}</option>
                                         </select>
                                         <label class="ava-select-label-cool">{{ $t("label.branch") }}</label>
                                     </div>
@@ -71,22 +71,25 @@
                                 <!-- <div class="calendar" v-if="selectedUser != null"> -->
                                 <!-- calendar for projects -->
                                 <div class="ava-calendar" v-if="selectedUser != null">
-                                    <v-calendar class="availability-calendar" v-if="selectedType === 'PR'" :theme-styles="themeStyles" :attributes="projectsAttr" mode='single' is-inline></v-calendar>
+                                    <p  v-if="selectedType === 'PR'">Zestawienie projektów</p>
+                                    <v-calendar class="availability-calendar" v-if="selectedType === 'PR'" :attributes="projectsAttr" mode='single' is-inline></v-calendar>
                                 </div>
                                 <!-- calendar for leaves -->
                                 <div class="ava-calendar" v-if="selectedUser != null">
-                                    <v-calendar class="availability-calendar"  v-if="selectedType !== 'PR'" :theme-styles="themeStyles" :attributes="leavesAttr" mode='single' is-inline></v-calendar>
+                                    <p  v-if="selectedType !== 'PR'">Zestawienie dyspozycyjności</p>
+                                    <v-calendar class="availability-calendar"  v-if="selectedType !== 'PR'" :attributes="leavesAttr" mode='single' is-inline></v-calendar>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                        <app-projects-tile v-if="selectedType === 'PR' && showContent == true"></app-projects-tile>
-                        <app-leaves-tile   :selected-type="selectedType"  v-if="selectedType !== 'PR' && showContent == true"></app-leaves-tile>
+                        <app-projects-tile :auth-type="authType" :selected-user="selectedUser.UserAlias" v-if="selectedType === 'PR' && showContent == true"></app-projects-tile>
+                        <app-leaves-tile   :auth-type="authType" :selected-user="selectedUser.UserAlias"
+                        :selected-type="selectedType"  v-if="selectedType !== 'PR' && showContent == true"></app-leaves-tile>
                </div>
                 <div class="availability-tiles-row">
-                    <app-projects-table :selected-status="selectedStatus" v-if="selectedType === 'PR' && showContent == true"></app-projects-table>
-                    <app-leaves-table :selected-type="selectedType" :selected-status="selectedStatus" v-if="selectedType !== 'PR' && showContent == true"></app-leaves-table>
+                    <app-projects-table :auth-type="authType" :selected-status="selectedStatus" v-if="selectedType === 'PR' && showContent == true"></app-projects-table>
+                    <app-leaves-table :auth-type="authType" :selected-type="selectedType" :selected-status="selectedStatus" v-if="selectedType !== 'PR' && showContent == true"></app-leaves-table>
                 </div>
             </div>
 
@@ -128,7 +131,8 @@ export default {
             selectedUser: null,
             showContent: false,
             selectedType: null,
-            selectedStatus: null
+            selectedStatus: null,
+            authType: null
         }
     },
     components: {
@@ -143,6 +147,7 @@ export default {
             departmentList: 'depList',
             branchList: 'branchList',
             usersList: 'usersList',
+            userData: 'getUserInfo',
             sectionsList: 'sectionsList',
             projectsList: 'projectsList',
             addingError: "getAddingError",
@@ -165,7 +170,7 @@ export default {
 
             for (let i = 0; i < usersList.length; i++) {
                 // usersList[i].SectionName === this.selectedBranch.toString() &&
-                if (usersList[i].DepartmentName === this.selectedDepartment) {
+                if (usersList[i].DepartmentId === this.selectedDepartment && usersList[i].BranchId === this.selectedBranch) {
                     filteredUsers.push(usersList[i])
                 }
             }
@@ -179,6 +184,7 @@ export default {
                     borderRadius: '0px',
                     height: '100%'
                 },
+                order: t.Order,
                 dates: {
                     start: t.DateStart,
                     end: t.DateEnd
@@ -203,21 +209,30 @@ export default {
                     end: t.EndDate
                 },
                 popover: {
-                    label: t.ProjectId + ' (' + t.Engag + '%)'
+                    label: t.ProjectName + ' (' + t.Engag + '%)'
                 },
                 customData: t
             }))
         },
-        themeStyles() {
-            return {
-                dayCell: {
-                    backgroundColor: '#cff09e',
-                }
+        // themeStyles() {
+        //     return {
+        //         dayCell: {
+        //             backgroundColor: '#cff09e',
+        //         }
+        //     }
+        // }
+    },
+    created() {
+        const roles = this.$store.getters.getUserAuth
+        for (let i=0; i<roles.length; i++) {
+            if (roles[i].Key === "ZDELEG" && roles[i].Value === "TEAM" && this.userData.DepartmentName !== ""){
+                this.authType = 'TEAM'
+            } else  if (roles[i].Key === "ZDELEG" && roles[i].Value === "*"){
+                this.authType = 'ALL'
+            } else {
+                this.authType = 'OWN'
             }
         }
-    },
-    beforeCreate() {
-        this.showBranchSelect = (localStorage.getItem('role') === 'leader') ? false : true;
     },
     watch: {
         selectedType(value) {

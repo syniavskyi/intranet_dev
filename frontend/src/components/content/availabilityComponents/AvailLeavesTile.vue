@@ -3,7 +3,7 @@
  <div class="availability-tile ava-tile-2">
                         <div class="availability-tile-header">
                             <div class="ava-tile-header-title">
-                                <h2>Dodaj wpis</h2>
+                                <h2>Dodaj wpis dla użytkownika {{formattedUsername}} </h2>
                                 <div class="availability-tile-underscore"></div>
                             </div>
                             <!-- <button class="ava-button ava-button-add" @click="showAddProjectDialog = true"> Dodaj projekt </button> -->
@@ -12,6 +12,7 @@
                             <div id="add-project-dialog">
                                 <div class="ava-add-1">
                                     <p v-if="newLeave.TypeId === null">Aby dodać wpis, Wybierz jego rodzaj po lewej stronie</p>
+                                    <p v-if="newLeave.TypeId !== null">Rodzaj wpisu: {{formattedType}}</p>
                                     <div class="ava-div-select-cool">
                                         <v-date-picker required class="ava-input-range-wide" popoverDirection="top" is-expanded mode="range" v-model="selectedDates" @change="checkFields">
                                             <input class="ava-input-range-wide" value="selectedDates"/>
@@ -45,7 +46,7 @@
 import { mapGetters } from 'vuex';
 let utils = require('../../../utils')
 export default {
-    props: ['selected-type'],
+    props: ['selected-type', 'selected-user', 'auth-type'],
     data() {
         return {
             selectedDates: null,
@@ -56,7 +57,25 @@ export default {
         ...mapGetters({
             newLeave: 'getNewLeaveForUser',
             availStatusList: 'getAvailStatus',
-        })
+            usersList: 'usersList',
+            availTypesList: 'getAvailType'
+        }),
+        formattedUsername() {
+            const userId = this.selectedUser
+            for (let i = 0; i < this.usersList.length; i++){
+                if (this.usersList[i].UserAlias === userId) {
+                     return this.usersList[i].Fullname
+                }
+            }
+        },
+        formattedType() {
+            const typeId = this.newLeave.TypeId
+            for (let i = 0; i < this.availTypesList.length; i++){
+                if (this.availTypesList[i].Key === typeId) {
+                     return this.availTypesList[i].Value
+                }
+            }
+        }
     },
     watch: {
         selectedDates(value){

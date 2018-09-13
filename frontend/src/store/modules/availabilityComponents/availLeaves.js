@@ -42,7 +42,8 @@ const actions = {
                 }
                 for (let i=0; i<userAvail.length; i++) {
                   let avail = userAvail[i]
-                  avail.Color = userAvail[i].TypeId === 'LE' ? '#EDA1A1' : '#fde692'
+                  avail.Color = userAvail[i].StatusId === 'PL' ? '#fde692' : '#cff09e'
+                  avail.Order = userAvail[i].StatusId === 'PL' ? 1 : 2
                   avail.EntryId = i
                   avail.DateStart = utils.dateStringToObj(avail.DateStart)
                   avail.DateEnd = utils.dateStringToObj(avail.DateEnd)

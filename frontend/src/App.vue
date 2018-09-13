@@ -17,6 +17,7 @@ export default {
   components: {
     'app-menu': Menu
   },
+
   created() {
     window.addEventListener("resize", this.showMenu)
   },

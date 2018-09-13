@@ -67,7 +67,7 @@ import {mapGetters, mapActions} from 'vuex'
 import moment from 'moment'
 let utils = require('../../../utils')
 export default {
-    props: ['selected-type', 'selected-status'],
+    props: ['selected-type', 'selected-status', 'auth-type'],
     data () {
         return {
             invalidDates: false,
@@ -119,7 +119,7 @@ export default {
         },
         filteredAvailTypes() {
             let aAvailTypes = this.availTypes,
-                aFilteredTypes = this.availTypes
+                aFilteredTypes = utils.createClone(this.availTypes)
 
             for(let i = 0; i < aAvailTypes.length; i++){
                 if (aAvailTypes[i].Key === 'PR') {
