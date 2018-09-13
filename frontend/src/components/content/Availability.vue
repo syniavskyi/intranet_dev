@@ -135,12 +135,6 @@ export default {
             authType: null
         }
     },
-    created() {
-        window.addEventListener("resize", this.showMenu)
-    },
-    destroyed() {
-        window.removeEventListener("resize", this.showMenu)
-    },
     components: {
         'app-menu': Menu,
         'app-projects-table': ProjectsTable,

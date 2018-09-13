@@ -19,8 +19,8 @@
                 <span class="cd-span"></span>
                 <label class="cd-label">Wpisz imię lub nazwisko</label>
               </div>
-              <div class="ava-div-select-cool">
-                <select required class="ava-select-cool" v-model="aFilters.department">
+              <div class="cd-for-select">
+                <select required class="cd-select" v-model="aFilters.department">
                   <option v-for="department in departmentList" :key="department.Key" :value="department.Value">{{ department.Value }}</option>
                 </select>
                 <label class="ava-select-label-cool"> wybierz oddział</label>
@@ -87,12 +87,8 @@ import { mapGetters } from 'vuex';
         'app-menu': Menu
     },
     created() {
-      window.addEventListener("resize", this.showMenu)
     // this.$store.dispatch('getPriority');
     // this.$store.dispatch('getEventType');
-    },
-    destroyed() {
-      window.removeEventListener("resize", this.showMenu)
     },
     beforeCreate() {
       if (this.$store.getters.isDataLoaded === false) {

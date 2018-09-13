@@ -2,7 +2,7 @@
     display: flex;
     background: white;
     align-self: center;
-    min-height: 8rem;
+    min-height: 10.5rem;
     width: 95%;
     align-items: center;
     justify-content: center;
@@ -11,18 +11,24 @@
     border-top-right-radius: 4px
 }
 
+
+
 .emp-filters {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 70%;
+    justify-content: space-around;
+    width: 100%;
     align-items: center;
+
 }
 
 .emp-section {
     display: flex;
     justify-content: space-around;
     width: 100%;
+    flex-direction: column;
+    align-items: center;
+    min-height: 7rem;
 }
 
 .emp-btn {
@@ -111,6 +117,18 @@
     font-size: .9rem;
 }
 
+@media (min-width: 50rem) {
+    .emp-tile {
+        min-height: 8rem;
+    }
+    .emp-section {
+        min-height: 4rem;
+    }
+    .emp-section {
+        flex-direction: row;
+    }
+}
+
 @media (min-width: 44rem) {
     .employees-content  {
         width: 80%;
@@ -118,6 +136,7 @@
     .employees-header-menu {
         display: none;
     }
+    
 }
 
 @media (min-width: 50rem) {
@@ -182,5 +201,11 @@
     }
     .emp-tbody-row:nth-of-type(even) {
         background: rgb(231, 231, 231);
+    }
+}
+
+@media (min-width: 62rem) {
+    .emp-filters {
+        width: 70%;
     }
 }

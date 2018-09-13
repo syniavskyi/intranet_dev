@@ -202,22 +202,15 @@ export default {
         }
     }
   },
-  beforeCreate() {
-    // if (this.$store.getters.isDataLoaded === false) {
-    //         this.$store.dispatch('loadData', localStorage.getItem('token'))
-    //     }
+  beforeCreate(){
     //  this.showBranchSelect = (localStorage.getItem('role') === 'leader') ? false : true;   
     //  this.$store.dispatch('getEvents');
   },
   created() {
     this.checkRole();
-    // window.addEventListener("resize", this.showMenu)
     // this.$store.dispatch('getPriority');
     // this.$store.dispatch('getEventType');
   },
-  // destroyed() {
-  //   window.removeEventListener("resize", this.showMenu)
-  // },
   computed: {
     ...mapGetters({
       departmentList: 'getTargetGroup',

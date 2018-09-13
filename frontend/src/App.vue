@@ -17,8 +17,23 @@ export default {
   components: {
     'app-menu': Menu
   },
+
+  created() {
+    window.addEventListener("resize", this.showMenu)
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.showMenu)
+  },
   mounted() {
-    
+    this.$nextTick(() => {
+      this.showMenu();
+    })
+  },
+  methods: {
+    showMenu(event) {
+      let obj = {window, event}
+      this.$store.dispatch("setSideMenu", obj);
+    }
   }
   // computed: {
   //   showMenu() {
