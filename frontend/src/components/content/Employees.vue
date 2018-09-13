@@ -76,7 +76,6 @@ import { mapGetters } from 'vuex';
   export default {
     data() {
       return {
-        userInfo: {},
         aFilters: {
             user: '',
             department: null
