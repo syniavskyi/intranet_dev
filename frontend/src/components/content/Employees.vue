@@ -77,23 +77,14 @@ import { mapGetters } from 'vuex';
     data() {
       return {
         userInfo: {},
-       aFilters: {
-          user: '',
-          department: null
-       }
+        aFilters: {
+            user: '',
+            department: null
+        }
       }
     },
     components: {
         'app-menu': Menu
-    },
-    created() {
-    // this.$store.dispatch('getPriority');
-    // this.$store.dispatch('getEventType');
-    },
-    beforeCreate() {
-      if (this.$store.getters.isDataLoaded === false) {
-            this.$store.dispatch('loadData', localStorage.getItem('token'))
-      }
     },
     computed: {
       ...mapGetters({usersList:"usersList", departmentList: 'depList', displayMenu: 'getShowMenu', displayOverlay: "getShowMenuOverlay"}),
@@ -103,7 +94,7 @@ import { mapGetters } from 'vuex';
             aFilters = this.aFilters;
         
         if (aFilters.user == ''  && aFilters.department === null) {
-          aFilteredUsers = this.usersList
+            aFilteredUsers = this.usersList
         } else {
           let fnFilter;
           if (aFilters.user) {

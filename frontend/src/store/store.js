@@ -5,7 +5,6 @@ import registration from './modules/registration'
 import dashboard from './modules/dashboard'
 import shared from './modules/shared'
 import profile from './modules/profile'
-import employees from './modules/employees'
 import calendar from './modules/calendar'
 import menu from './modules/menu'
 import availability from './modules/availability'
@@ -38,7 +37,6 @@ export default new Vuex.Store({
         dashboard,
         shared,
         profile,
-        employees,
         calendar,
         menu,
         availability,
