@@ -211,13 +211,9 @@ export default {
   },
   created() {
     this.checkRole();
-    // window.addEventListener("resize", this.showMenu)
     // this.$store.dispatch('getPriority');
     // this.$store.dispatch('getEventType');
   },
-  // destroyed() {
-  //   window.removeEventListener("resize", this.showMenu)
-  // },
   computed: {
     ...mapGetters({
       departmentList: 'getTargetGroup',

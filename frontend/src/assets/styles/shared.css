@@ -113,7 +113,7 @@
 }
 
 .plane-nav {
-    z-index: 2100;
+    z-index: 1600;
     /* display: none; */
     position: absolute;
     top: 0;
@@ -459,7 +459,7 @@ li p {
     transform: translate(-50%, -50%);
     max-width: 100%;
     max-height: 100%;
-    z-index: 1010;
+    z-index: 1700;
     background: white;
     border-radius: .5rem;
     box-shadow: 0 0 50px 1px #333;
@@ -507,7 +507,7 @@ li p {
 .modal-overlay {
     display: flex;
     position: fixed;
-    z-index: 1000;
+    z-index: 1500;
     top:0;
     left: 0;
     width: 100%;
@@ -728,18 +728,22 @@ input:required {
 
 /* media for dashboard, nav and others */
 
+@media (min-width: 40.1rem) {
+    .content-header-menu {
+        display: none;
+    }
+}
 @media (min-width: 40rem) {
     .plane-nav {
+        z-index: 1400;
         position: static;
         width: 20%;
         display: flex;
         min-width: 15.7rem;
     }
-
     .close-btn {
         visibility: hidden;
     }
-
     .plane-nav-and-content {
         display: flex;
         flex-direction: row;
@@ -810,9 +814,7 @@ input:required {
 }
 
 @media(min-width: 44rem) {
-    .content-header-menu {
-        display: none;
-    }
+    
     .component-content {
         width: 80%;
     }

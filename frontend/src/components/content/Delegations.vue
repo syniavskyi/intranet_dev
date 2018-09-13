@@ -191,7 +191,6 @@ export default {
         }
     },
     created(){
-        // window.addEventListener("resize", this.showMenu)
         const roles = this.$store.getters.getUserAuth
         for (let i=0; i<roles.length; i++) {
             if (roles[i].Key === "ZDELEG" && roles[i].Value === "TEAM" && this.userData.DepartmentName !== ""){
@@ -211,9 +210,6 @@ export default {
         //     this.delegationUsername = localStorage.getItem('id')
         // }
     },
-    // destroyed() {
-    //     window.removeEventListener("resize", this.showMenu)
-    // },
     computed: {
         ...mapGetters({
             userData: 'getUserInfo',
