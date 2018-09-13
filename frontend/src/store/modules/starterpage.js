@@ -6,29 +6,21 @@ const state = {
   docListNew: [],
   docListInfo: [],
   listForStatus: [],
-  docStatus: [],
-  userId: ''
 }
 
 const mutations = {
-  CHECK_LIST(state, data) {
+// check if all documents are filled
+  SET_BUTTON_STATE(state, data) {
     state.buttonState = data;
   },
+  // docs for new user
   SET_DOC_LIST_NEW(state, data) {
     state.docListNew = data;
   },
+  // informational documents
   SET_DOC_LIST_INFO(state, data) {
     state.docListInfo = data;
   },
-  // SET_LIST_FOR_STATUS(state, data) {
-  //   state.listForStatus = data;
-  // },
-  GET_DOC_STATUS(state, data) {
-    state.docStatus = data;
-  },
-  GET_USER_ID(state, data) {
-    state.userId = data;
-  }
 }
 
 const actions = {
@@ -41,26 +33,12 @@ const actions = {
       if (data[i].Status) {
         bState = false;
       } else {
-        return commit('CHECK_LIST', true)
+        return commit('SET_BUTTON_STATE', true)
       }
-      commit('CHECK_LIST', bState);
+      commit('SET_BUTTON_STATE', bState);
     }
   },
-  // nowe
-  // checkStatus({commit, getters}, files) {
-  //     let newUserFiles = getters.docListNew;
-  //     for(let i = 0; i < newUserFiles.length; i++) {
-  //       if(newUserFiles[i].Status === 'X') {
-  //         newUserFiles[i].Status = true;
-  //       }
-  //       else {
-  //         newUserFiles[i].Status = false;
-  //       }
-  //     }
-  //     commit('SET_NEW_USER_FILES_LIST', newUserFiles);
-  // },
   checkStatus({commit, getters}, files) {
-    // let newUserFiles = getters.docListNew;
     for(let i = 0; i < files.length; i++) {
       if(files[i].Status === 'X') {
         files[i].Status = true;
@@ -69,11 +47,10 @@ const actions = {
         files[i].Status = false;
       }
     }
-    // commit('SET_NEW_USER_FILES_LIST', files);
 },
-   // nowe
 getNewDocs({commit, getters, dispatch}) {
     let urlQuery = getters.getUrlQuery
+    // halo Marysia podpięłam tu, żeby za każdym razem się nie wylogowywać, nie wiedziałam czy wrzucić to do loadData, więc tak zostało
     let query = "?sap-user=psy&sap-password=ides01&sap-language=pl"
     let user = 'UIO'
     axios({
@@ -108,68 +85,21 @@ getNewDocs({commit, getters, dispatch}) {
       console.log(error);
     })
   },
-  getDocsStatus({
-    commit,
-    state
-  }) {
-    var URL = '/api/users/' + state.userId + '/userStarterPage';
-    axios.get(URL).then(res => {
-      const data = res.data,
-        aData = [];
 
-        for(let key in data) {
-          const docStatus = data[key];
-
-          aData.push(docStatus);
-        }
-        commit('GET_DOC_STATUS', aData);
-    })
-  },
-  saveDocs({commit, state, dispatch}, data) {
-    var URL = '/api/users/' + state.userId + '/userStarterPage/create';
-    axios.post(URL, {
-      userGroup: "WRK",
-      docId: data.data.id,
-      status: data.data.status
-    }).then(function(response){
-      console.log(response);
-      dispatch("getDocsStatus");
-    }).catch(function(error) {
-      console.log(error);
-    });
-  },
-  sentDocuments({commit, state}){
-    let formData = new FormData();
-      formData.append('id', state.userId);
-      axios({
-        method: 'post',
-        url: 'api/users/userStarterPage/disableStarterPage',
-        headers: { "Content-type": "multipart/form-data" },
-        data: formData
-    }).then(res => {
-        console.log(res)
-        router.replace('/dashboard')
-    }).catch(error => {
-        console.log(error)
-    })
-  },
 }
 
 const getters = {
-  returnCheckList(state) {
+  getButtonState(state) {
     return state.buttonState;
   },
-  docListNew(state) {
+  getDocListNew(state) {
     return state.docListNew;
   },
-  docListInfo(state) {
+  getDocListInfo(state) {
     return state.docListInfo;
   },
-  // getListForStatus(state) {
-  //   return state.listForStatus;
-  // },
-  docStatusList(state) {
-    return state.docStatus;
+  getListForStatus(state) {
+    return state.listForStatus;
   }
 }
 
