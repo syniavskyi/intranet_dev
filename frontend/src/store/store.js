@@ -13,6 +13,7 @@ import dataloading from './modules/dataloading'
 import starterpage from './modules/starterpage'
 import delegations from './modules/delegations'
 import accomodationCosts from './modules/delegationComponents/accomodationCosts'
+import delegationCosts from './modules/delegationComponents/delegationCosts'
 import otherCosts from './modules/delegationComponents/otherCosts'
 import travelCosts from './modules/delegationComponents/travelCosts'
 import advanceTable from './modules/delegationComponents/advanceTable'
@@ -46,6 +47,7 @@ export default new Vuex.Store({
         starterpage,
         delegations,
         accomodationCosts,
+        delegationCosts,
         otherCosts,
         travelCosts,
         advanceTable,
