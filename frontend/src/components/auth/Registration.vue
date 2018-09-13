@@ -38,8 +38,8 @@
             <label class="cd-slabel" for="role">{{ $t("label.role") }}</label>
           </div>
           <div class="cd-for-select">
-            <select required class="cd-select">
-              <option v-for="department in getDepartmentList" :value="depId = department.depId" :key="department.depId">{{ department.depName }}</option>
+            <select required class="cd-select" >
+                <option v-for="department in departmentList" :key="department.Key" :value="department.Key">{{ department.Value }}</option>
             </select>
             <label class="cd-slabel" for="role">{{ $t("label.department") }}</label>
           </div>
@@ -52,14 +52,14 @@
     </div>
 
         <!-- SUCCESS DIALOG -->
-        <transition name="slide-backdrop" v-if="closeSuccessDialog">
-          <div class="backdrop" v-if="closeSuccessDialog"></div>
+        <transition name="slide-backdrop" v-if="showSuccessDialog">
+          <div class="backdrop" v-if="showSuccessDialog"></div>
         </transition>
-        <transition name="slide" v-if="closeSuccessDialog">
-          <div class="modal" v-if="closeSuccessDialog">
+        <transition name="slide" v-if="showSuccessDialog">
+          <div class="modal" v-if="showSuccessDialog">
             <div class="modal-header">
               <h1 class="modal-title">{{ $t("header.accountCreated") }}</h1>
-              <button class="modal-exit" @click="closeDialog">&#10006;</button>
+              <button class="modal-exit" @click="showSuccessDialog = false">&#10006;</button>
             </div>
             <div class="modal-text">
               <p>{{ $t("message.newAccountPassword") }}</p>
@@ -68,14 +68,14 @@
         </transition>
         <!-- END OF SUCCESS DIALOG -->
         <!-- FAILED DIALOG -->
-        <transition name="slide-backdrop" v-if="openDialogFalse">
-          <div class="backdrop" v-if="openDialogFalse"></div>
+        <transition name="slide-backdrop" v-if="showFailDialog">
+          <div class="backdrop" v-if="showFailDialog"></div>
         </transition>
-        <transition name="slide" v-if="openDialogFalse">
-          <div class="modal" v-if="openDialogFalse">
+        <transition name="slide" v-if="showFailDialog">
+          <div class="modal" v-if="showFailDialog">
             <div class="modal-header">
               <h1 class="modal-title">Niepowodzenie podczas wysyłania wiadomości.</h1>
-              <button class="modal-exit" @click="closeDialog">&#10006;</button>
+              <button class="modal-exit" @click="showFailDialog = false">&#10006;</button>
             </div>
             <div class="modal-text">
               <p>{{ $t("message.newAccountPassword") }}</p>
@@ -105,7 +105,8 @@ export default {
       roleChosen: "",
       department: [],
       depId: "",
-      closeSuccessDialog: false,
+      showSuccessDialog: false,
+      showFailDialog: false,
       isLoading: false
     };
   },
@@ -123,14 +124,17 @@ export default {
     //   minLen: minLength(8)
     // }
   },
-  beforeCreate() {
-    // this.$store.commit("DISPLAY_MENU", false);
-    if (this.$store.getters.isDataLoaded === false) {
-      this.$store.dispatch("loadData");
-    }
-  },
   components: {
     "app-menu": Menu
+  },
+  watch: {
+    isError(value){
+      if (value){
+        this.showSuccessDialog
+      } else {
+        this.showFailDialog
+      }
+    }
   },
   methods: {
     showMenu(event) {
@@ -167,14 +171,12 @@ export default {
       });
       this.isLoading = false;
     },
-    closeDialog() {
-      this.closeSuccessDialog = !this.closeSuccessDialog;
-    }
   },
   computed: {
     ...mapGetters({
       displayMenu: "getShowMenu",
-      displayMenuOverlay: "getShowMenuOverlay"
+      displayMenuOverlay: "getShowMenuOverlay",
+      isError: 'getRegistrationError'
     }),
     getRoleList() {
       return this.$store.getters.roleList;
