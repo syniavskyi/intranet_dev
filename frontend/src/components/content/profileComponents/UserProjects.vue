@@ -167,11 +167,6 @@ updated() {
     save(index) {
       const dataToChange = this._beforeEditingProjects[index],
       newData = utils.createClone(this.userProjects[index])
-      // newData = this.userProjects[index];
-      // const aModules = dataToChange.Modules,
-      //       aIndustries = dataToChange.Industries;
-      // newData.Language ='PL';
-
       if (dataToChange) {
         newData.DateStartToChange = dataToChange.DateStart;
         newData.DateEndToChange = dataToChange.DateEnd;
@@ -180,9 +175,7 @@ updated() {
      } else {
         this.$store.dispatch('saveUserProjectsPosition', newData);
       }
-      this._beforeEditingProjects = utils.createClone(this.userProjects);
-      // this._beforeEditingProjects[index].Modules = aModules;
-      // this._beforeEditingProjects[index].Industries = aIndustries;
+      this._beforeEditingProjects = utils.createClone(this.userProjects);;
     },
     checkFields(index) {
       // if (this.userProjects.length > 0) {
@@ -285,7 +278,7 @@ updated() {
     },
     editProjects() {
       this.projectEditMode = true;
-      this._beforeEditingProjects = this.userProjects;
+      this._beforeEditingProjects = utils.createClone(this.userProjects);
       this.onHover(this.$el)
     },
     formatDate(date) {
