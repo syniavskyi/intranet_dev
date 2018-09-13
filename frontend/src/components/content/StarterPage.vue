@@ -110,27 +110,20 @@ export default {
   },
     computed: {
       ...mapGetters({
-      setButton: 'returnCheckList',
-      docListNew: 'docListNew',
+      setButton: 'getButtonState',
+      docListNew: 'getDocListNew',
       listForStatus: 'getListForStatus',
-      docListInfo: 'docListInfo',
+      docListInfo: 'getDocListInfo',
       displayMenu: "getShowMenu",
       displayMenuOverlay: "getShowMenuOverlay"
-      // docStatusList: 'docStatusList',
-      //  statusToDoc: 'getFullListOfDoc'
       }),
-    //   getFullListOfDoc() {
-    //     return this.setStatusToDoc();
-    // }
   },
   methods: {
      ...mapActions([
-       'getUserId',
-       'getNewDocs', // używam
+       'getNewDocs',
        'getInfoDocs',
        'getDocsStatus',
-       'checkList', // używam
-       'saveDocs',
+       'checkList',
        'checkFileFormat'
     ]),
     changeCheckbox(data) {
@@ -140,56 +133,14 @@ export default {
         data.Status = !data.Status;
       }
       this.checkList(this.listForStatus);
-      this.saveDocs(data)
+      // this.saveDocs(data)
       // this.$store.dispatch("saveDocs", {
       //   data
       // });
     },
       checkFileFormat(name) {
          return name.slice(name.lastIndexOf('.'));
-    // let docs = this.docList;
-    // for(let i = 0; i < docs.length; i++) {
-      //  return docs[i].Filename.slice(docs[i].Filename.lastIndexOf('.'));
-      //  docs[i].Filename = docs[i].Filename.slice(docs[i].Filename.lastIndexOf('.'));
-    // }
   }
-
-    // checkList(data) {
-    //   this.$store.dispatch("checkList", {
-    //     listOfDoc: data
-    //   })
-    // },
-
-    // getId() {
-    //   this.$store.dispatch("getUserId");
-    // },
-
-    // getDocList(){
-    //   this.$store.dispatch("getDocs");
-    // },
-
-    // getDocStatus(){
-    //   this.$store.dispatch("getDocsStatus");
-    // },
-
-    // setStatusToDoc() {
-    //   var docs = this.getDocs;
-    //   const status = this.getDocsListStatus;
-
-    //     for(let i = 0; i < docs.length; i++){
-    //       for(let j = 0; j < status.length; j++) {
-    //         if(docs[i].id == status[j].docId) {
-    //           docs[i]["status"] = status[j].status;
-    //         }
-    //       }
-    //     }
-    //     this.checkList(docs);
-    //     return this.listOfDoc = docs;
-    // },
-
-    // submitDocuments() {
-    //   this.$store.dispatch("sentDocuments");
-    // }
   }
 }
 </script>
