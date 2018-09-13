@@ -3,7 +3,7 @@
                     <div class="availability-tile ava-tile-2">
                         <div class="availability-tile-header">
                             <div class="ava-tile-header-title">
-                                <h2>{{ $t("header.addProject") }}</h2>
+                                <h2>{{ $t("header.addProject") }} dla użytkownika {{formattedUsername}}</h2>
                                 <div class="availability-tile-underscore"></div>
                             </div>
                             <!-- <button class="ava-button ava-button-add" @click="showAddProjectDialog = true"> Dodaj projekt </button> -->
@@ -64,6 +64,7 @@ import { mapGetters, mapActions } from 'vuex';
 let utils = require('../../../utils')
 
 export default {
+    props: ['selected-user'],
     data() {
         return {
             selectedDates: null,
@@ -81,7 +82,8 @@ export default {
             newProjectForUser: 'getNewProjectForUser',
             projectsList: 'projectsList',
             contractorsList: 'contractorsList',
-            availStatusList: 'getAvailStatus'
+            availStatusList: 'getAvailStatus',
+            usersList: 'usersList'
         }),
         filteredProjects() {
             const projectsList = this.projectsList
@@ -94,6 +96,14 @@ export default {
             }
             return filteredProjects
         },
+        formattedUsername() {
+            const userId = this.selectedUser
+            for (let i = 0; i < this.usersList.length; i++){
+                if (this.usersList[i].UserAlias === userId) {
+                     return this.usersList[i].Fullname
+                }
+            }
+        }
     },
     methods: {
         ...mapActions({

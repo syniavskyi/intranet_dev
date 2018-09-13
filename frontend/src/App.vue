@@ -17,6 +17,9 @@ export default {
   components: {
     'app-menu': Menu
   },
+  mounted() {
+    
+  }
   // computed: {
   //   showMenu() {
   //     return this.$store.getters.showMenu

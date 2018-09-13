@@ -23,7 +23,7 @@
                         <div class="availability-tile-header">
                             <div class="ava-tile-header-title">
                                 <h2 v-if="selectedUser === null">{{ $t("header.selectEmployee") }}</h2>
-                                <h2 class="ava-selected-user-h2" v-else-if="selectedUser !== null">{{ selectedUser.firstName }} {{ selectedUser.lastName }}</h2>
+                                <h2 class="ava-selected-user-h2" v-else-if="selectedUser !== null">{{ selectedUser.Fullname }}</h2>
                                 <div class="availability-tile-underscore"></div>
                             </div>
                         </div>
@@ -83,8 +83,8 @@
                         </div>
                     </div>
                     
-                        <app-projects-tile v-if="selectedType === 'PR' && showContent == true"></app-projects-tile>
-                        <app-leaves-tile   :selected-type="selectedType"  v-if="selectedType !== 'PR' && showContent == true"></app-leaves-tile>
+                        <app-projects-tile :selected-user="selectedUser.UserAlias" v-if="selectedType === 'PR' && showContent == true"></app-projects-tile>
+                        <app-leaves-tile   :selected-user="selectedUser.UserAlias" :selected-type="selectedType"  v-if="selectedType !== 'PR' && showContent == true"></app-leaves-tile>
                </div>
                 <div class="availability-tiles-row">
                     <app-projects-table :selected-status="selectedStatus" v-if="selectedType === 'PR' && showContent == true"></app-projects-table>
@@ -225,13 +225,19 @@ export default {
         //     }
         // }
     },
-    beforeCreate() {
-        this.showBranchSelect = (localStorage.getItem('role') === 'leader') ? false : true
-
-        if (this.$store.getters.isDataLoaded === false) {
-            this.$store.dispatch('loadData', localStorage.getItem('token'))
-        }
-
+    created() {
+        // const roles = this.$store.getters.getUserAuth
+        // for (let i=0; i<roles.length; i++) {
+        //     if (roles[i].Key === "ZDELEG" && roles[i].Value === "TEAM" && this.userData.DepartmentName !== ""){
+        //         this.showSelectForTeam = true
+        //         this.showUsername = false
+        //     } else  if (roles[i].Key === "ZDELEG" && roles[i].Value === "*"){
+        //         this.showUsername = false
+        //         this.showSelectForAllUsers = true
+        //     } else {
+        //         this.showUsername = true
+        //     }
+        // }
     },
     watch: {
         selectedType(value) {
