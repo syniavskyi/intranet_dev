@@ -100,9 +100,6 @@ export default {
   },
   beforeCreate() {
     // this.$store.commit('DISPLAY_MENU', false);
-    if (this.$store.getters.idDataLoaded === false) {
-      this.$store.dispatch('loadData', localStorage.getItem('token'))
-    }
   },
   created() {
     // this.getId();

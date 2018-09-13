@@ -134,7 +134,15 @@ export default {
     "app-menu": Menu
   },
   computed: {
-    ...mapGetters(["geoLocation2", "weatherData", "today", "articlesRaw", "articlesJson", "articles", "userAdverts", "getShowMenu"]),
+    ...mapGetters({
+        geoLocation2: "geoLocation2", 
+        weatherData: "weatherData", 
+        today: "today", 
+        articlesRaw: "articlesRaw", 
+        articlesJson: "articlesJson", 
+        rticles: "articles",
+        userAdverts: "userAdverts",
+        getShowMenu: "getShowMenu"}),
   },
   methods: {
     ...mapActions(["geoLoc", "getWeatherData", "getToday", "getNews", "xmlToJson", "getArticles"]),

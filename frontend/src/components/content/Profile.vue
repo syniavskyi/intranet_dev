@@ -309,11 +309,6 @@ export default {
       // this.setCvLanguage(lang);
     }
   },
-  beforeCreate() {
-    if (this.$store.getters.isDataLoaded === false) {
-      this.$store.dispatch("loadData");
-    }
-  },
   created() {
     window.addEventListener("resize", this.showMenu)
   },

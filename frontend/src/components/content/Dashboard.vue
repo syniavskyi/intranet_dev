@@ -76,9 +76,6 @@ import Menu from '../Menu.vue'
         // if (this.showMenu === false) {
         //     this.$store.commit('DISPLAY_MENU', true)
         // }
-        if (this.$store.getters.isDataLoaded === false) {
-            this.$store.dispatch('loadData', localStorage.getItem('token'))
-        }
     },
     // created() {
 

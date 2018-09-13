@@ -97,7 +97,6 @@ const actions = {
   //   }
   // },
   saveUserProjectsPosition({dispatch, getters,commit}, data) {
-    // data.UserId = 'UIO';
     data.UserAlias = 'UIO';
     data.DateStart = utils.formatDateForBackend(data.DateStart);
     data.DateEnd = utils.formatDateForBackend(data.DateEnd);
@@ -154,18 +153,14 @@ const actions = {
       }
     }
     if(industryString.includes('||')) {
-      object.Industries = industryString.slice(0, industryString.length-2);
       dataToSend.Industries = industryString.slice(0, industryString.length-2);
     } else {
-      object.Industries = industryString;
       dataToSend.Industries = industryString;
     }
     if(moduleString.includes('||')) {
-      object.Modules = moduleString.slice(0, moduleString.length-2);
       dataToSend.Modules = moduleString.slice(0, moduleString.length-2);
     }
     else {
-      object.Modules = moduleString;
       dataToSend.Modules = moduleString;
     }
   },
@@ -302,6 +297,7 @@ const actions = {
         adjustedProjects.Industries = [];
         adjustedProjects.Modules = [];
         for(let key in projectsKeys) {
+          if(projects[i][key]) {
             if(projects[i][key].includes('||')) {
                 while(projects[i][key].length > 1) {
                     index = projects[i][key].indexOf('||');
@@ -333,6 +329,7 @@ const actions = {
                 projects[i][key] = [];
             }
         }
+      }
         fullProjects[i] = adjustedProjects;
     }
     for(let i = 0; i < projects.length; i++) {
