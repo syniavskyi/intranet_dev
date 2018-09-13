@@ -3,9 +3,7 @@ import Vuex from 'vuex'
 import login from './modules/login'
 import registration from './modules/registration'
 import dashboard from './modules/dashboard'
-import shared from './modules/shared'
 import profile from './modules/profile'
-import employees from './modules/employees'
 import calendar from './modules/calendar'
 import menu from './modules/menu'
 import availability from './modules/availability'
@@ -13,6 +11,7 @@ import dataloading from './modules/dataloading'
 import starterpage from './modules/starterpage'
 import delegations from './modules/delegations'
 import accomodationCosts from './modules/delegationComponents/accomodationCosts'
+import delegationCosts from './modules/delegationComponents/delegationCosts'
 import otherCosts from './modules/delegationComponents/otherCosts'
 import travelCosts from './modules/delegationComponents/travelCosts'
 import advanceTable from './modules/delegationComponents/advanceTable'
@@ -35,9 +34,7 @@ export default new Vuex.Store({
         login,
         registration,
         dashboard,
-        shared,
         profile,
-        employees,
         calendar,
         menu,
         availability,
@@ -46,6 +43,7 @@ export default new Vuex.Store({
         starterpage,
         delegations,
         accomodationCosts,
+        delegationCosts,
         otherCosts,
         travelCosts,
         advanceTable,

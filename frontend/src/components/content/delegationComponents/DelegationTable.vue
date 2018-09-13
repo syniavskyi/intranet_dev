@@ -204,93 +204,93 @@
     </div>    
 </template>
 <script>
-import VueGoogleAutocomplete from 'vue-google-autocomplete'
-import moment from "moment"
-import {
-    mapGetters,
-    mapActions
-} from 'vuex'
+import VueGoogleAutocomplete from "vue-google-autocomplete";
+import moment from "moment";
+import { mapGetters, mapActions } from "vuex";
 export default {
-    computed: {
-        ...mapGetters({
-            departmentList: 'depList',
-            customCosts: 'getDelegationCostsList',
-            defaultCostsData: 'getDefaultCostsData',
-            fullExpences: 'getFullExpences',
-            currencyList: 'getCurrencyList',
-            newDelegation: 'getNewDelegation',
-        }),
-        delegationStartDate() {
-            if (this.newDelegation.dates) {
-                return moment(this.newDelegation.dates.start).format("DD.MM.YYYY")
-            } else {
-                return null
-            }
-        },
-        delegationEndDate() {
-            if (this.newDelegation.dates) {
-                return moment(this.newDelegation.dates.end).format("DD.MM.YYYY")
-            } else {
-                return null
-            }
-        }
+  computed: {
+    ...mapGetters({
+      departmentList: "depList",
+      customCosts: "getDelegationCostsList",
+      defaultCostsData: "getDefaultCostsData",
+      currencyList: "getCurrencyList",
+      newDelegation: "getNewDelegation"
+    }),
+    delegationStartDate() {
+      if (this.newDelegation.dates) {
+        return moment(this.newDelegation.dates.start).format("DD.MM.YYYY");
+      } else {
+        return null;
+      }
     },
-    updated() {
-        this.$nextTick(() => {this.calcHeight(this.$el.lastChild, this.$el.lastChild.firstChild).then(height => {
-                    this.$el.lastChild.style.height = height
-                    this.$el.lastChild.style.opacity = "1" 
-                })})  
-    },
-    mounted() {
-        this.$nextTick(function() {
-            window.addEventListener('resize', this.getWindowWidth);
-            this.getWindowWidth()
-        })
-    },
-    components: {VueGoogleAutocomplete },
-    methods: {
-        ...mapActions({
-            addRow: 'addDelegationRow',
-            removeRow: 'removeDelegationRow',
-            checkDelegationTable: 'checkDelegationTable',
-            countAllowance: 'countAllowance'
-        }),
-
-        toggleTile() {
-            let el = this.$el.lastChild,
-                elChild = el.firstChild
-            const name = {el, elChild}
-            this.$store.dispatch('toggleTile', name)
-        },
-
-        calcHeight(el, elChild) {
-            const name = {el, elChild}
-            let height = this.$store.dispatch('calcHeight', name)
-            return height
-        },
-
-        addRow() {
-            let el = this.$el.lastChild.style.height
-            !el || el ? el = "auto" : ""
-            this.$store.dispatch('addDelegationRow')    
-        },
-
-        removeRow() {
-            this.$el.lastChild.style.height = "auto"
-            this.$store.dispatch('removeDelegationRow')
-        },
-
-        getWindowWidth() {
-            this.windowWidth = document.documentElement.clientWidth
-            let el = this.$el
-            const name = {el}
-            this.$store.dispatch('checkWidthAndToggle', name)
-        }
-    },
-
-    beforeDestroy() {
-        window.removeEventListener('resize', this.getWindowWidth)
+    delegationEndDate() {
+      if (this.newDelegation.dates) {
+        return moment(this.newDelegation.dates.end).format("DD.MM.YYYY");
+      } else {
+        return null;
+      }
     }
-}
+  },
+  updated() {
+    this.$nextTick(() => {
+      this.calcHeight(this.$el.lastChild, this.$el.lastChild.firstChild).then(
+        height => {
+          this.$el.lastChild.style.height = height;
+          this.$el.lastChild.style.opacity = "1";
+        }
+      );
+    });
+  },
+  mounted() {
+    this.$nextTick(function() {
+      window.addEventListener("resize", this.getWindowWidth);
+      this.getWindowWidth();
+    });
+  },
+  components: { VueGoogleAutocomplete },
+  methods: {
+    ...mapActions({
+      addRow: "addDelegationRow",
+      removeRow: "removeDelegationRow",
+      checkDelegationTable: "checkDelegationTable",
+      countAllowance: "countAllowance"
+    }),
+
+    toggleTile() {
+      let el = this.$el.lastChild,
+        elChild = el.firstChild;
+      const name = { el, elChild };
+      this.$store.dispatch("toggleTile", name);
+    },
+
+    calcHeight(el, elChild) {
+      const name = { el, elChild };
+      let height = this.$store.dispatch("calcHeight", name);
+      return height;
+    },
+
+    addRow() {
+      let el = this.$el.lastChild.style.height;
+      !el || el ? (el = "auto") : "";
+      this.$store.dispatch("addDelegationRow");
+    },
+
+    removeRow() {
+      this.$el.lastChild.style.height = "auto";
+      this.$store.dispatch("removeDelegationRow");
+    },
+
+    getWindowWidth() {
+      this.windowWidth = document.documentElement.clientWidth;
+      let el = this.$el;
+      const name = { el };
+      this.$store.dispatch("checkWidthAndToggle", name);
+    }
+  },
+
+  beforeDestroy() {
+    window.removeEventListener("resize", this.getWindowWidth);
+  }
+};
 </script>
 

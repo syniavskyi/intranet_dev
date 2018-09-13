@@ -50,7 +50,7 @@ const actions = {
 },
 getNewDocs({commit, getters, dispatch}) {
     let urlQuery = getters.getUrlQuery
-    // halo Marysia podpięłam tu, żeby za każdym razem się nie wylogowywać, nie wiedziałam czy wrzucić to do loadData, więc tak zostało
+    // TEMPORARY, after testing change url to urlQuery
     let query = "?sap-user=psy&sap-password=ides01&sap-language=pl"
     let user = 'UIO'
     axios({
