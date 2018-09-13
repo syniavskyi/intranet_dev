@@ -55,8 +55,8 @@ const actions = {
             }
             for (let i=0; i<userProjects.length; i++) {
               let project = userProjects[i]
-              project.Color = project.Engag === 100 ? '#EDA1A1' : '#fde692'
-              project.Order = project.Engag === 100 ? 2 : 1
+              project.Color = project.StatusId === 'PL' ? '#fde692' : '#cff09e'
+              project.Order = project.StatusId === 'PL' ? 1 : 2
               project.EntryId = i
               project.StartDate = utils.dateStringToObj(project.StartDate)
               project.EndDate = utils.dateStringToObj(project.EndDate)

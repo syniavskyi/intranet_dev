@@ -2,7 +2,6 @@
     <div class="availability-tile" >
         <div class="availability-tile-header">
             <div class="ava-tile-header-title">
-                            <!-- <h2>{{ $t("header.addProject") }}</h2> -->
                 <h2>Zestawienie projektów</h2>
                 <div class="availability-tile-underscore"></div>
             </div>

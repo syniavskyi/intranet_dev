@@ -23,7 +23,7 @@
                 <select required class="ava-select-cool" v-model="aFilters.department">
                   <option v-for="department in departmentList" :key="department.Key" :value="department.Value">{{ department.Value }}</option>
                 </select>
-                <label class="ava-select-label-cool">Lub wybierz dział</label>
+                <label class="ava-select-label-cool"> wybierz oddział</label>
               </div>
             </div>
             <button class="func-btn emp-btn" @click="clearFilters">Wyczyść</button>
@@ -45,11 +45,11 @@
               </div>
               <div class="emp-tbody-item">
                 <div class="emp-tbody-item-title"> {{ $t("label.branch") }} </div>
-                <div class="emp-tbody-item-txt"> {{ user.DepartmentName }} </div>
+                <div class="emp-tbody-item-txt"> {{ user.BranchName }} </div>
               </div>
               <div class="emp-tbody-item">
                 <div class="emp-tbody-item-title">{{ $t("label.department") }} </div>
-                <div class="emp-tbody-item-txt"> {{ user.SectionName }} </div>
+                <div class="emp-tbody-item-txt"> {{ user.DepartmentName }} </div>
               </div>
               <div class="emp-tbody-item">
                 <div class="emp-tbody-item-title">{{ $t("label.phone") }} </div>

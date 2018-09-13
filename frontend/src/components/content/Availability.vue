@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="ava-div-select-cool" v-if="selectedBranch != null">
                                         <select required class="ava-select-cool" v-model="selectedDepartment">
-                                              <option v-for="department in departmentList" :key="department.Key" :value="department.Value">{{ department.Value }}</option>
+                                              <option v-for="department in departmentList" :key="department.Key" :value="department.Key">{{ department.Value }}</option>
                                         </select>
                                         <label class="ava-select-label-cool">{{ $t("label.branch") }}</label>
                                     </div>
@@ -71,11 +71,13 @@
                                 <!-- <div class="calendar" v-if="selectedUser != null"> -->
                                 <!-- calendar for projects -->
                                 <div class="ava-calendar" v-if="selectedUser != null">
-                                    <v-calendar class="availability-calendar" v-if="selectedType === 'PR'" :theme-styles="themeStyles" :attributes="projectsAttr" mode='single' is-inline></v-calendar>
+                                    <p  v-if="selectedType === 'PR'">Zestawienie projektów</p>
+                                    <v-calendar class="availability-calendar" v-if="selectedType === 'PR'" :attributes="projectsAttr" mode='single' is-inline></v-calendar>
                                 </div>
                                 <!-- calendar for leaves -->
                                 <div class="ava-calendar" v-if="selectedUser != null">
-                                    <v-calendar class="availability-calendar"  v-if="selectedType !== 'PR'" :theme-styles="themeStyles" :attributes="leavesAttr" mode='single' is-inline></v-calendar>
+                                    <p  v-if="selectedType !== 'PR'">Zestawienie dyspozycyjności</p>
+                                    <v-calendar class="availability-calendar"  v-if="selectedType !== 'PR'" :attributes="leavesAttr" mode='single' is-inline></v-calendar>
                                 </div>
                             </div>
                         </div>
@@ -171,7 +173,7 @@ export default {
 
             for (let i = 0; i < usersList.length; i++) {
                 // usersList[i].SectionName === this.selectedBranch.toString() &&
-                if (usersList[i].DepartmentName === this.selectedDepartment) {
+                if (usersList[i].DepartmentId === this.selectedDepartment && usersList[i].BranchId === this.selectedBranch) {
                     filteredUsers.push(usersList[i])
                 }
             }
@@ -185,6 +187,7 @@ export default {
                     borderRadius: '0px',
                     height: '100%'
                 },
+                order: t.Order,
                 dates: {
                     start: t.DateStart,
                     end: t.DateEnd
@@ -209,18 +212,18 @@ export default {
                     end: t.EndDate
                 },
                 popover: {
-                    label: t.ProjectId + ' (' + t.Engag + '%)'
+                    label: t.ProjectName + ' (' + t.Engag + '%)'
                 },
                 customData: t
             }))
         },
-        themeStyles() {
-            return {
-                dayCell: {
-                    backgroundColor: '#cff09e',
-                }
-            }
-        }
+        // themeStyles() {
+        //     return {
+        //         dayCell: {
+        //             backgroundColor: '#cff09e',
+        //         }
+        //     }
+        // }
     },
     beforeCreate() {
         this.showBranchSelect = (localStorage.getItem('role') === 'leader') ? false : true
