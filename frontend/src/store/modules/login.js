@@ -6,7 +6,9 @@ const state = {
   sendEmailSuccess: false,
   sendEmailError: false,
   username: null,
-  urlQuery: null
+  urlQuery: null,
+  password: null,
+  hashedPassword: null
 }
 
 const mutations = {
@@ -21,7 +23,13 @@ const mutations = {
   },
   SET_URL_QUERY(state, data) {
     state.urlQuery = data
-  }
+  },
+  SET_PASSWORD (state, data) {
+    state.password = data;
+  },
+  SET_HASHED_PASSWORD (state, password) {
+      state.hashedPassword = password
+  }    
 }
 
 const actions = {
@@ -72,6 +80,21 @@ const actions = {
       console.log(error)
     })
   },
+  generatePassword({commit, state}) {
+    const md5 = require('js-md5')
+
+    var nLength = 8,
+        sCharset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]\:;?><,./-=",
+        sRetVal = "";
+
+    for (var i = 0, n = sCharset.length; i < nLength; ++i) {
+        sRetVal += sCharset.charAt(Math.floor(Math.random() * n));
+    }
+
+    var hash = md5(sRetVal)
+    commit('SET_HASHED_PASSWORD', hash)
+    commit('SET_PASSWORD', sRetVal)
+  }
 }
 
 const getters = {
@@ -86,6 +109,12 @@ const getters = {
   },
   getUrlQuery(state){
     return state.urlQuery
+  },
+  password(state) {
+    return state.password;
+  },
+  hashedPassword(state) {
+      return state.hashedPassword;
   }
 }
 
