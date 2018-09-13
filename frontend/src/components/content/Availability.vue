@@ -83,12 +83,13 @@
                         </div>
                     </div>
                     
-                        <app-projects-tile :selected-user="selectedUser.UserAlias" v-if="selectedType === 'PR' && showContent == true"></app-projects-tile>
-                        <app-leaves-tile   :selected-user="selectedUser.UserAlias" :selected-type="selectedType"  v-if="selectedType !== 'PR' && showContent == true"></app-leaves-tile>
+                        <app-projects-tile :auth-type="authType" :selected-user="selectedUser.UserAlias" v-if="selectedType === 'PR' && showContent == true"></app-projects-tile>
+                        <app-leaves-tile   :auth-type="authType" :selected-user="selectedUser.UserAlias"
+                        :selected-type="selectedType"  v-if="selectedType !== 'PR' && showContent == true"></app-leaves-tile>
                </div>
                 <div class="availability-tiles-row">
-                    <app-projects-table :selected-status="selectedStatus" v-if="selectedType === 'PR' && showContent == true"></app-projects-table>
-                    <app-leaves-table :selected-type="selectedType" :selected-status="selectedStatus" v-if="selectedType !== 'PR' && showContent == true"></app-leaves-table>
+                    <app-projects-table :auth-type="authType" :selected-status="selectedStatus" v-if="selectedType === 'PR' && showContent == true"></app-projects-table>
+                    <app-leaves-table :auth-type="authType" :selected-type="selectedType" :selected-status="selectedStatus" v-if="selectedType !== 'PR' && showContent == true"></app-leaves-table>
                 </div>
             </div>
 
@@ -130,7 +131,8 @@ export default {
             selectedUser: null,
             showContent: false,
             selectedType: null,
-            selectedStatus: null
+            selectedStatus: null,
+            authType: null
         }
     },
     created() {
@@ -151,6 +153,7 @@ export default {
             departmentList: 'depList',
             branchList: 'branchList',
             usersList: 'usersList',
+            userData: 'getUserInfo',
             sectionsList: 'sectionsList',
             projectsList: 'projectsList',
             addingError: "getAddingError",
@@ -226,18 +229,16 @@ export default {
         // }
     },
     created() {
-        // const roles = this.$store.getters.getUserAuth
-        // for (let i=0; i<roles.length; i++) {
-        //     if (roles[i].Key === "ZDELEG" && roles[i].Value === "TEAM" && this.userData.DepartmentName !== ""){
-        //         this.showSelectForTeam = true
-        //         this.showUsername = false
-        //     } else  if (roles[i].Key === "ZDELEG" && roles[i].Value === "*"){
-        //         this.showUsername = false
-        //         this.showSelectForAllUsers = true
-        //     } else {
-        //         this.showUsername = true
-        //     }
-        // }
+        const roles = this.$store.getters.getUserAuth
+        for (let i=0; i<roles.length; i++) {
+            if (roles[i].Key === "ZDELEG" && roles[i].Value === "TEAM" && this.userData.DepartmentName !== ""){
+                this.authType = 'TEAM'
+            } else  if (roles[i].Key === "ZDELEG" && roles[i].Value === "*"){
+                this.authType = 'ALL'
+            } else {
+                this.authType = 'OWN'
+            }
+        }
     },
     watch: {
         selectedType(value) {

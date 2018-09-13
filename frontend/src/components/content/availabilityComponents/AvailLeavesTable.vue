@@ -67,7 +67,7 @@ import {mapGetters, mapActions} from 'vuex'
 import moment from 'moment'
 let utils = require('../../../utils')
 export default {
-    props: ['selected-type', 'selected-status'],
+    props: ['selected-type', 'selected-status', 'auth-type'],
     data () {
         return {
             invalidDates: false,

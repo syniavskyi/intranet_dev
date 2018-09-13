@@ -46,7 +46,7 @@
 import { mapGetters } from 'vuex';
 let utils = require('../../../utils')
 export default {
-    props: ['selected-type', 'selected-user'],
+    props: ['selected-type', 'selected-user', 'auth-type'],
     data() {
         return {
             selectedDates: null,

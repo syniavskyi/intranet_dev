@@ -70,6 +70,11 @@
                         <div class="ava-tbproj-ititle">Uwagi</div>
                         <div class="ava-tbproj-itxt"><textarea :disabled="!editMode" v-model="project.Description"></textarea></div>
                     </div>
+                    <div class="ava-tbs-item">
+                        <div class="ava-tbs-ititle">Opcje</div>
+                         <button v-if="editMode">Zapisz</button>
+                         <button v-if="editMode">Usuń</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -79,7 +84,7 @@
 import {mapGetters, mapActions} from 'vuex'
 import moment from 'moment'
 export default {
-    props: ['selected-type', 'selected-status'],
+    props: ['selected-type', 'selected-status', 'auth-type'],
     data () {
         return {
             invalidDates: false,
