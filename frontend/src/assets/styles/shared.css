@@ -489,7 +489,7 @@ li p {
     height: 75%;
     align-self: center;
     align-items: center;
-    width: 80%;
+    width: 100%;
     justify-content: space-around;
 }
 
@@ -575,6 +575,35 @@ input:required {
     box-shadow: rgb(167, 108, 0) 0 0  0;
     background: rgb(240, 156, 0);
 }
+
+.clear-btn,
+.oclear-btn {
+    background-color: white;
+    border-radius: 4px;
+    padding: .3rem .4rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.clear-btn {
+    border: 2px solid grey;
+    color: grey;
+}
+.clear-btn:hover {
+    color:white;
+    background-color: grey
+}
+
+.oclear-btn {
+    border: 2px solid orange;
+    color: orange;
+}
+.oclear-btn:hover {
+    background-color: orange;
+    color: white;
+}
+
+
 
 /* Functional Buttons (for Profile) */
 
