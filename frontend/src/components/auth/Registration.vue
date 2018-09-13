@@ -123,12 +123,6 @@ export default {
     //   minLen: minLength(8)
     // }
   },
-  beforeCreate() {
-    // this.$store.commit("DISPLAY_MENU", false);
-    if (this.$store.getters.isDataLoaded === false) {
-      this.$store.dispatch("loadData");
-    }
-  },
   created() {
     window.addEventListener("resize", this.showMenu)
   },

@@ -202,10 +202,7 @@ export default {
         }
     }
   },
-  beforeCreate() {
-    // if (this.$store.getters.isDataLoaded === false) {
-    //         this.$store.dispatch('loadData', localStorage.getItem('token'))
-    //     }
+  beforeCreate(){
     //  this.showBranchSelect = (localStorage.getItem('role') === 'leader') ? false : true;   
     //  this.$store.dispatch('getEvents');
   },

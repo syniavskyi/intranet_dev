@@ -94,11 +94,6 @@ import { mapGetters } from 'vuex';
     destroyed() {
       window.removeEventListener("resize", this.showMenu)
     },
-    beforeCreate() {
-      if (this.$store.getters.isDataLoaded === false) {
-            this.$store.dispatch('loadData', localStorage.getItem('token'))
-      }
-    },
     computed: {
       ...mapGetters({usersList:"usersList", departmentList: 'depList', displayMenu: 'getShowMenu', displayOverlay: "getShowMenuOverlay"}),
       filteredUsers:function(){
