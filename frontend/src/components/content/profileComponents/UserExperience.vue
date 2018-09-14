@@ -30,7 +30,7 @@
                 <p class="prof-date-label" v-if="!editMode"> {{ formatDate(experience.DateEnd) }} </p>
                 <div v-if="editMode" class="prof-input-xxs">
                   <v-date-picker class="prof-input-date" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateEnd">
-                         <!-- <v-date-picker class="prof-input-date" :min-date="experience.DateStart" :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateEnd"> -->
+                    <!-- <v-date-picker class="prof-input-date" :min-date="experience.DateStart" :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateEnd"> -->
                     <input value="experience.DateEnd" />
                   </v-date-picker>
                   <label v-if="editMode">Do</label>
@@ -75,7 +75,7 @@
 <script>
 import moment from "moment";
 import { mapGetters, mapActions, mapState } from "vuex";
-let utils = require('../../../utils');
+let utils = require("../../../utils");
 export default {
   data() {
     return {
@@ -109,7 +109,7 @@ export default {
     ...mapActions(["addUserExperience", "removeUserExperience"]),
     edit() {
       this.editMode = true;
-      this.onHover(this.$el)
+      this.onHover(this.$el);
       this._beforeEditingCache = utils.createClone(this.userExperience);
       var checkboxes = this.$el.querySelectorAll(".checkbox-wrap");
       for (var i = 0; i < checkboxes.length; i++) {
@@ -117,35 +117,39 @@ export default {
       }
     },
     onHover(el) {
-      const shadow = "0 0 20px orange"
+      const shadow = "0 0 20px orange";
       if (el.style) {
-        el.style.boxShadow = shadow
+        el.style.boxShadow = shadow;
       } else {
-        this.$el.style.boxShadow = shadow
+        this.$el.style.boxShadow = shadow;
       }
     },
     onHoverOut(el) {
-      const shadow = "0 0 10px grey"
+      const shadow = "0 0 10px grey";
       if (el.style) {
-        el.style.boxShadow = shadow
+        el.style.boxShadow = shadow;
       } else {
-        this.$el.style.boxShadow = shadow 
+        this.$el.style.boxShadow = shadow;
       }
     },
     checkFields(index) {
       if (this.userExperience.length > 0) {
         // for (let i = 0; i < this.userExperience.length; i++) {
-          if (
-            this.userExperience[index].Employer &&
-            this.userExperience[index].WorkPos &&
-            this.userExperience[index].DateStart &&
-            (this.userExperience[index].DateEnd !== null ||
-              this.userExperience[index].isCurrent)
-          ) {
-            document.getElementsByClassName("expButtons")[index].children[0].disabled = false;
-          } else {
-            document.getElementsByClassName("expButtons")[index].children[0].disabled = true;
-          }
+        if (
+          this.userExperience[index].Employer &&
+          this.userExperience[index].WorkPos &&
+          this.userExperience[index].DateStart &&
+          (this.userExperience[index].DateEnd !== null ||
+            this.userExperience[index].isCurrent)
+        ) {
+          document.getElementsByClassName("expButtons")[
+            index
+          ].children[0].disabled = false;
+        } else {
+          document.getElementsByClassName("expButtons")[
+            index
+          ].children[0].disabled = true;
+        }
         // }
       }
     },
@@ -153,7 +157,7 @@ export default {
       return index + "e";
     },
     cancel() {
-      this.onHoverOut(this.$el)
+      this.onHoverOut(this.$el);
       this.$store.commit("SET_EXPERIENCE_ERROR", false);
       this.$store.commit("SET_USER_EXPERIENCE", this._beforeEditingCache);
       this.editMode = false;
@@ -165,19 +169,19 @@ export default {
     save(index) {
       const dataToChange = this._beforeEditingCache[index],
         // newData = this.userExperience[index];
-       newData = utils.createClone(this.userExperience[index]);
+        newData = utils.createClone(this.userExperience[index]);
 
-      newData.Language = 'PL'
+      newData.Language = "PL";
 
       if (dataToChange) {
         newData.WorkPosToChange = dataToChange.WorkPos;
         newData.EmployerToChange = dataToChange.Employer;
-        newData.DateStartToChange = dataToChange.DateStart ;
+        newData.DateStartToChange = dataToChange.DateStart;
         this.$store.dispatch("updateUserExp", newData);
       } else {
         this.$store.dispatch("saveNewUserExp", newData);
       }
-     this._beforeEditingCache = utils.createClone(this.userExperience);
+      this._beforeEditingCache = utils.createClone(this.userExperience);
     },
     formatDate(date) {
       return date !== null && date !== undefined
@@ -214,11 +218,11 @@ export default {
       let exp = this.$store.getters.getUserExperience;
       let input;
 
-      for(let i = 0; i < exp.length; i++) {
-         if(exp[i].IsCurrent === true) {
-              input = document.getElementById(i + "e");
-              input.setAttribute("style", "display: none");
-          }
+      for (let i = 0; i < exp.length; i++) {
+        if (exp[i].IsCurrent === true) {
+          input = document.getElementById(i + "e");
+          input.setAttribute("style", "display: none");
+        }
       }
     }
   }
