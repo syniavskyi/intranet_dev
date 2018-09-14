@@ -112,8 +112,6 @@ export default {
             this.$store.commit('SET_SHOW_CV_DIALOG', false)
         },
         showCv(){   
-            /* Sylwia */
-            let lang = this.cvElements.language;    
             this.$store.commit('SET_CV_ELEMENTS', this.cvElements)
             localStorage.setItem('Object', JSON.stringify(this.cvElements));
             this.$router.push({name: 'CV'});

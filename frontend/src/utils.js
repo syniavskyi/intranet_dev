@@ -124,7 +124,6 @@ let formattedData = {};
       }
     }
   }
-};
 
 export const setWorkExperience = function(date) {
   let oDates = {

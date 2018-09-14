@@ -1,4 +1,5 @@
 import odata from 'odata';
+import axios from 'axios';
 let utils = require('../../../utils');
 
 const state = {
@@ -9,8 +10,8 @@ const state = {
         Extensions: [],
         AdditionalSkills: []
     },
-    userLanguages: [
-    ],
+    userLanguages: [],
+    fullLanguageList: []
 }
 
 const mutations = {
@@ -19,7 +20,10 @@ const mutations = {
     },
     SET_USER_LANGS(state,list) {
         state.userLanguages = list
-    }
+    },
+    SET_LANGUAGE_LIST(state, data) {
+        state.fullLanguageList = data;
+      }
 }
 
 const actions = {
@@ -109,7 +113,6 @@ const actions = {
         let newSkills =  JSON.parse(
              JSON.stringify(this.getters.getUserSkills)
            );
-        // dispatch('formatToString', newSkills);
         newSkills = utils.formatToString(newSkills)
 
         odata(url).post(newSkills).save(function (oData) {
@@ -136,7 +139,21 @@ const actions = {
         const langList = getters.getUserLanguages
         langList.splice(index, 1)
         commit('SET_USER_LANGS', langList)
-    }
+    },
+    getAllLanguages({commit, getters},) {
+        let urlQuery = getters.getUrlQuery
+        axios({
+          method: 'GET',
+          url: 'Languages' + urlQuery,
+          headers: {
+            "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+          }
+        }).then(res => {
+          commit('SET_LANGUAGE_LIST', res.data.d.results);
+        }).catch(error => { 
+          console.log(error)
+        })
+      }
 }
  
 const getters = {
@@ -145,7 +162,10 @@ const getters = {
     },
     getUserLanguages(state){
         return state.userLanguages
-    }
+    },
+    fullLanguageList(state) {
+        return state.fullLanguageList;
+    },
 }
 
 export default {
