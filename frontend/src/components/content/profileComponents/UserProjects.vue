@@ -128,7 +128,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import moment from "moment";
-let utils = require('../../../utils');
+let utils = require("../../../utils");
 
 export default {
   data() {
@@ -140,9 +140,9 @@ export default {
       _beforeEditingProjects: null
     };
   },
-updated() {
-  this.setProCheckbox();
-},
+  updated() {
+    this.setProCheckbox();
+  },
   computed: {
     ...mapGetters({
       showProjectError: "getShowProjectError",
@@ -166,39 +166,35 @@ updated() {
     },
     save(index) {
       const dataToChange = this._beforeEditingProjects[index],
-      newData = utils.createClone(this.userProjects[index])
+        newData = utils.createClone(this.userProjects[index]);
       if (dataToChange) {
         newData.DateStartToChange = dataToChange.DateStart;
         newData.DateEndToChange = dataToChange.DateEnd;
         newData.ProjectNameToChange = dataToChange.ProjectName;
-        this.$store.dispatch('updateUserProjectsPosition', newData);
-     } else {
-        this.$store.dispatch('saveUserProjectsPosition', newData);
+        this.$store.dispatch("updateUserProjectsPosition", newData);
+      } else {
+        this.$store.dispatch("saveUserProjectsPosition", newData);
       }
-      this._beforeEditingProjects = utils.createClone(this.userProjects);;
+      this._beforeEditingProjects = utils.createClone(this.userProjects);
     },
     checkFields(index) {
-      // if (this.userProjects.length > 0) {
-        // for (let i = 0; i < this.userProjects.length; i++) {
-          if (
-            this.userProjects[index].ProjectName &&
-            this.userProjects[index].ContractorName &&
-            this.userProjects[index].Industries.length !== 0 &&
-            this.userProjects[index].Modules.length !== 0 &&
-            this.userProjects[index].DateStart &&
-            this.userProjects[index].Description &&
-            (this.userProjects[index].DateEnd !== null ||
-              this.userProjects[index].IsCurrent)
-          ) {
-            document.getElementsByClassName(
-              "projSaveButton"
-            )[index].disabled = false;
-          } else {
-            document.getElementsByClassName(
-              "projSaveButton"
-            )[index].disabled = true;
-          // }
-        // }
+      if (
+        this.userProjects[index].ProjectName &&
+        this.userProjects[index].ContractorName &&
+        this.userProjects[index].Industries.length !== 0 &&
+        this.userProjects[index].Modules.length !== 0 &&
+        this.userProjects[index].DateStart &&
+        this.userProjects[index].Description &&
+        (this.userProjects[index].DateEnd !== null ||
+          this.userProjects[index].IsCurrent)
+      ) {
+        document.getElementsByClassName("projSaveButton")[
+          index
+        ].disabled = false;
+      } else {
+        document.getElementsByClassName("projSaveButton")[
+          index
+        ].disabled = true;
       }
     },
     // saveUserProject(index) {
@@ -208,19 +204,19 @@ updated() {
     //   );
     // },
     onHover(el) {
-      const shadow = "0 0 20px orange"
+      const shadow = "0 0 20px orange";
       if (el.style) {
-        el.style.boxShadow = shadow
+        el.style.boxShadow = shadow;
       } else {
-        this.$el.style.boxShadow = shadow
+        this.$el.style.boxShadow = shadow;
       }
     },
     onHoverOut(el) {
-      const shadow = "0 0 10px grey"
+      const shadow = "0 0 10px grey";
       if (el.style) {
-        el.style.boxShadow = shadow
+        el.style.boxShadow = shadow;
       } else {
-        this.$el.style.boxShadow = shadow 
+        this.$el.style.boxShadow = shadow;
       }
     },
     formatId(index) {
@@ -279,7 +275,7 @@ updated() {
     editProjects() {
       this.projectEditMode = true;
       this._beforeEditingProjects = utils.createClone(this.userProjects);
-      this.onHover(this.$el)
+      this.onHover(this.$el);
     },
     formatDate(date) {
       return date !== null && date !== undefined
@@ -313,14 +309,13 @@ updated() {
       let projects = this.$store.getters.getUserProjectsList;
       let input;
 
-      for(let i = 0; i < projects.length; i++) {
-         if(projects[i].IsCurrent === true) {
-              input = document.getElementById(i + "p");
-              input.setAttribute("style", "display: none");
-          }
-          else {
-            let checkBoxes = document.querySelectorAll("checkbox:not(:checked)")
-          }
+      for (let i = 0; i < projects.length; i++) {
+        if (projects[i].IsCurrent === true) {
+          input = document.getElementById(i + "p");
+          input.setAttribute("style", "display: none");
+        } else {
+          let checkBoxes = document.querySelectorAll("checkbox:not(:checked)");
+        }
       }
     }
   }
