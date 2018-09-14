@@ -58,9 +58,9 @@
                 <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="education.FieldOfStudy">
                   <option v-for="fieldOfStudy in fieldOfStudyDescList" :key="fieldOfStudy.SchoolId" :value="fieldOfStudy.SchoolId">{{fieldOfStudy.SchoolDescription}}</option>
                 </select>
-                <!-- :disabled="!editMode" -->            
+                <!-- :disabled="!editMode" -->
                 <span class="prof-div-bar"></span>
-                <label class="label-profile">{{ $t("label.fieldOfStudy") }}</label>       
+                <label class="label-profile">{{ $t("label.fieldOfStudy") }}</label>
               </div>
               <div class="prof-input-l">
                 <select required v-if="editMode" class="selectProfile selectEdit" v-model="education.University" @change="checkFields(index)">
@@ -101,9 +101,9 @@
             </div>
           </div>
           <div class="prof-row-btns eduButtons">
-              <button title="" :disabled="true" class="prof-row-btn" v-if="editMode" @click="save(index)">&#x2714;</button>
-              <button class="prof-row-dbtn" v-if="editMode" @click="remove(index)">X</button>
-            </div>
+            <button title="" :disabled="true" class="prof-row-btn" v-if="editMode" @click="save(index)">&#x2714;</button>
+            <button class="prof-row-dbtn" v-if="editMode" @click="remove(index)">X</button>
+          </div>
         </div>
       </div>
     </div>
@@ -114,7 +114,7 @@
 import moment from "moment";
 import { mapGetters, mapActions, mapState } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
-const utils = require('../../../utils');
+const utils = require("../../../utils");
 export default {
   data() {
     return {
@@ -145,8 +145,8 @@ export default {
       userEducation: "getUserEducation",
       studyTypes: "studyTypes",
       academicTitles: "academicTitles",
-      schoolDescList: "schoolDescList",
-      fieldOfStudyDescList: "fieldOfStudyDescList"
+      schoolDescList: "getSchoolDescList",
+      fieldOfStudyDescList: "getFieldOfStudyDescList"
     })
   },
   mounted() {
@@ -165,7 +165,7 @@ export default {
     ...mapActions(["addUserEduRow", "removeUserEducation"]),
     edit() {
       this.editMode = true;
-      this.onHover(this.$el)
+      this.onHover(this.$el);
       this._beforeEditingCache = utils.createClone(this.userEducation);
       var checkboxes = this.$el.querySelectorAll(".checkbox-wrap");
       for (var i = 0; i < checkboxes.length; i++) {
@@ -173,37 +173,41 @@ export default {
       }
     },
     onHover(el) {
-      const shadow = "0 0 20px orange"
+      const shadow = "0 0 20px orange";
       if (el.style) {
-        el.style.boxShadow = shadow
+        el.style.boxShadow = shadow;
       } else {
-        this.$el.style.boxShadow = shadow
+        this.$el.style.boxShadow = shadow;
       }
     },
     onHoverOut(el) {
-      const shadow = "0 0 10px grey"
+      const shadow = "0 0 10px grey";
       if (el.style) {
-        el.style.boxShadow = shadow
+        el.style.boxShadow = shadow;
       } else {
-        this.$el.style.boxShadow = shadow 
+        this.$el.style.boxShadow = shadow;
       }
     },
     checkFields(index) {
       if (this.userEducation.length > 0) {
         // for (let i = 0; i < this.userEducation.length; i++) {
-          if (
-            this.userEducation[index].FieldOfStudy &&
-            this.userEducation[index].University &&
-            this.userEducation[index].StudyType &&
-            this.userEducation[index].AcademicTitle &&
-            this.userEducation[index].DateStart &&
-            (this.userEducation[index].DateEnd !== null ||
-              this.userEducation[index].IsCurrent)
-          ) {
-            document.getElementsByClassName("eduButtons")[index].children[0].disabled = false;
-          } else {
-            document.getElementsByClassName("eduButtons")[index].children[0].disabled = true;
-          }
+        if (
+          this.userEducation[index].FieldOfStudy &&
+          this.userEducation[index].University &&
+          this.userEducation[index].StudyType &&
+          this.userEducation[index].AcademicTitle &&
+          this.userEducation[index].DateStart &&
+          (this.userEducation[index].DateEnd !== null ||
+            this.userEducation[index].IsCurrent)
+        ) {
+          document.getElementsByClassName("eduButtons")[
+            index
+          ].children[0].disabled = false;
+        } else {
+          document.getElementsByClassName("eduButtons")[
+            index
+          ].children[0].disabled = true;
+        }
         // }
       }
     },
@@ -220,21 +224,23 @@ export default {
     save(index) {
       const dataToChange = this._beforeEditingCache[index],
         // newData = this.userEducation[index];
-        newData = utils.createClone(this.userEducation[index])
+        newData = utils.createClone(this.userEducation[index]);
 
       if (dataToChange) {
-          newData.AcademicTitleToChange = dataToChange.AcademicTitle;
-          newData.FieldOfStudyToChange = dataToChange.FieldOfStudy;
-          newData.UniversityToChange = dataToChange.University;
-          this.$store.dispatch("editUserEducation", newData);
-        } else {
-          this.$store.dispatch("addUserEducation", newData);
-        }
-        // this._beforeEditingCache = this.userEducation;
-         this._beforeEditingCache = utils.createClone(this.userEducation);
+        newData.AcademicTitleToChange = dataToChange.AcademicTitle;
+        newData.FieldOfStudyToChange = dataToChange.FieldOfStudy;
+        newData.UniversityToChange = dataToChange.University;
+        this.$store.dispatch("editUserEducation", newData);
+      } else {
+        this.$store.dispatch("addUserEducation", newData);
+      }
+      // this._beforeEditingCache = this.userEducation;
+      this._beforeEditingCache = utils.createClone(this.userEducation);
     },
     formatDate(date) {
-      return date !== null && date !== undefined ? moment(date).format("DD.MM.YYYY") : "-";
+      return date !== null && date !== undefined
+        ? moment(date).format("DD.MM.YYYY")
+        : "-";
     },
     validateDates(index) {
       const startDate = this.userEducation[index].DateStart,
@@ -268,11 +274,11 @@ export default {
       let edu = this.$store.getters.getUserEducation;
       let input;
 
-      for(let i = 0; i < edu.length; i++) {
-         if(edu[i].IsCurrent === true) {
-              input = document.getElementById(i);
-              input.setAttribute("style", "display: none");
-          }
+      for (let i = 0; i < edu.length; i++) {
+        if (edu[i].IsCurrent === true) {
+          input = document.getElementById(i);
+          input.setAttribute("style", "display: none");
+        }
       }
     }
   }
