@@ -14,7 +14,7 @@
         <div class="emp-tile">
           <div class="emp-filters">
             <div class="emp-section">
-              <div class="cd-for-input"> 
+              <div class="cd-for-input">
                 <input required class="cd-input" v-model="aFilters.user"/>
                 <span class="cd-span"></span>
                 <label class="cd-label">Wpisz imię lub nazwisko</label>
@@ -31,11 +31,11 @@
         </div>
         <div class="employees-table">
           <div class="emp-thead">
-                <div class="emp-thead-item">{{ $t("label.fullName") }}</div>
-                <div class="emp-thead-item">{{ $t("label.branch") }}</div>
-                <div class="emp-thead-item">{{ $t("label.department") }}</div>
-                <div class="emp-thead-item">{{ $t("label.phone") }}</div>
-                <div class="emp-thead-item">{{ $t("label.email") }}</div>
+            <div class="emp-thead-item">{{ $t("label.fullName") }}</div>
+            <div class="emp-thead-item">{{ $t("label.branch") }}</div>
+            <div class="emp-thead-item">{{ $t("label.department") }}</div>
+            <div class="emp-thead-item">{{ $t("label.phone") }}</div>
+            <div class="emp-thead-item">{{ $t("label.email") }}</div>
           </div>
           <div class="emp-tbody">
             <div class="emp-tbody-row" v-for="user in filteredUsers" :key="user.PersonNumber">
@@ -62,67 +62,75 @@
             </div>
           </div>
         </div>
-      </div> 
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import i18n from '../../lang/lang'
-import Menu from '../Menu.vue'
-import { mapGetters } from 'vuex';
+import i18n from "../../lang/lang";
+import Menu from "../Menu.vue";
+import { mapGetters } from "vuex";
 
-  export default {
-    data() {
-      return {
-        aFilters: {
-            user: '',
-            department: null
+export default {
+  data() {
+    return {
+      aFilters: {
+        user: "",
+        department: null
+      }
+    };
+  },
+  components: {
+    "app-menu": Menu
+  },
+  computed: {
+    ...mapGetters({
+      usersList: "usersList",
+      departmentList: "depList",
+      displayMenu: "getShowMenu",
+      displayOverlay: "getShowMenuOverlay"
+    }),
+    filteredUsers: function() {
+      let self = this,
+        aFilteredUsers = this.usersList,
+        aFilters = this.aFilters;
+
+      if (aFilters.user == "" && aFilters.department === null) {
+        aFilteredUsers = this.usersList;
+      } else {
+        let fnFilter;
+        if (aFilters.user) {
+          aFilteredUsers = self.usersList.filter(function(user) {
+            return (
+              user.Fullname.toLowerCase().indexOf(
+                aFilters.user.toLowerCase()
+              ) >= 0
+            );
+          });
+        }
+        if (aFilters.department) {
+          fnFilter = function(oItem) {
+            return oItem.DepartmentName === aFilters.department;
+          };
+          aFilteredUsers = aFilteredUsers.filter(fnFilter);
         }
       }
+      return aFilteredUsers;
+    }
+  },
+  methods: {
+    clearFilters() {
+      this.aFilters = {};
     },
-    components: {
-        'app-menu': Menu
-    },
-    computed: {
-      ...mapGetters({usersList:"usersList", departmentList: 'depList', displayMenu: 'getShowMenu', displayOverlay: "getShowMenuOverlay"}),
-      filteredUsers:function(){
-        let self = this,
-            aFilteredUsers = this.usersList,
-            aFilters = this.aFilters;
-        
-        if (aFilters.user == ''  && aFilters.department === null) {
-            aFilteredUsers = this.usersList
-        } else {
-          let fnFilter;
-          if (aFilters.user) {
-            aFilteredUsers =  self.usersList.filter(function(user){ 
-                return user.Fullname.toLowerCase().indexOf(aFilters.user.toLowerCase())>=0;
-            });
-          } 
-          if (aFilters.department) {
-             fnFilter = function(oItem){
-                return oItem.DepartmentName === aFilters.department;
-              }
-              aFilteredUsers = aFilteredUsers.filter(fnFilter);
-          }
-        }
-        return aFilteredUsers;
-      }
-    },
-    methods: {
-      clearFilters() {
-        this.aFilters = {}
-      },
-      showMenu(event) {
-        let name = {window, event}
-        this.$store.dispatch("setSideMenu", name);
-      },
+    showMenu(event) {
+      let name = { window, event };
+      this.$store.dispatch("setSideMenu", name);
     }
   }
+};
 </script>
 
 <style>
-
 </style>

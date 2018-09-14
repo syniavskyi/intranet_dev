@@ -91,16 +91,16 @@ const actions = {
 };
 
 const getters = {
-  emails(state) {
+  getEmails(state) {
     return state.emails;
   },
-  prefixEmail(state) {
+  getPrefixEmail(state) {
     return state.email;
   },
-  isEmail(state) {
+  getEmail(state) {
     return state.emailExists;
   },
-  setMail(state) {
+  getMail(state) {
     return state.mail;
   },
   getRegistrationError(state) {
