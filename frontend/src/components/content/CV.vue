@@ -181,7 +181,8 @@ export default {
     this.$store.commit("SET_CV_ELEMENTS", retrievedObject);
       let userData = {
       user: 'UIO',
-      lang: retrievedObject.language
+      lang: retrievedObject.language,
+      changePage: false
       }
     if (this.$store.getters.isDataLoaded === false) {
       this.$store.dispatch("loadData", userData);

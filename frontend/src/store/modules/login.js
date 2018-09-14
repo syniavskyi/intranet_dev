@@ -53,7 +53,8 @@ const actions = {
 
       let userData = {
         user: authData.username,
-        lang: authData.language
+        lang: authData.language,
+        changePage: true
       } 
       dispatch('loadData', userData)
     }).catch(error => {

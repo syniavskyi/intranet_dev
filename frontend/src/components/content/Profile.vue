@@ -510,21 +510,17 @@ export default {
         }
       }
     },
-    // setCvLanguage(language) {
-    //   this.$store.dispatch("setCvLanguage", language);
-    // },
-    // setLanguage(language) {
-    //   this.$store.dispatch("setLanguage", language);
-    // },
     getNewData() {
       this.$store.commit("SET_LANG", this.selectedCvLang);
       let cvLang = this.selectedCvLang.toUpperCase();
       if (!cvLang) {
         let cvLang = loginLanguage.toUpperCase();
       }
-      let userData = {};
-      userData.user = "UIO";
-      userData.lang = cvLang;
+      let userData = {
+        user: "UIO",
+        lang: cvLang,
+        changePage: false
+      }
       this.$store.dispatch("loadData", userData);
     },
     onHover() {

@@ -96,7 +96,8 @@ const actions = {
     if(userData === null) {
       let userData = {
         lang: 'PL',
-        user: 'UIO'
+        user: 'UIO',
+        changePage: true
       }
     }
  
@@ -223,7 +224,8 @@ const actions = {
     if(userData === undefined) { // TEMPORARY
      let userData = {
         user: 'UIO',
-         lang: 'PL'
+        lang: 'PL',
+        changePage: true
       }
     }
     userData.user = 'UIO' // TEMPORARY
@@ -265,7 +267,7 @@ const actions = {
       
       commit('SET_DATA_LOADED', true)
 
-      dispatch('checkPageToDisplay')
+      dispatch('checkPageToDisplay', userData.changePage)
     }).catch(error => {
       console.log(error);
     })
@@ -323,8 +325,10 @@ const actions = {
       console.log(error)
     })
   },
-  checkPageToDisplay(){
-    router.replace('/news')
+  checkPageToDisplay({},changePage){
+    if(changePage) {
+      router.replace('/news')
+    }
   }
 
 };
