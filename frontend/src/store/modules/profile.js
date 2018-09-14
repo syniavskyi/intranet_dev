@@ -10,18 +10,12 @@ const state = {
   saveChangesSuccess: true,
   uploadPhotoError: false,
   uploadFileError: false,
-  languageList:[
-    {id: 'PL', name: 'Polski'},
-    {id: 'EN', name: 'Angielski'},
-    {id: 'DE', name: 'Niemiecki'}
-  ],
   cvLanguageList: [
     { id: 'en', description: i18n.t('select.cvLanguage.english') },
     { id: 'pl', description: i18n.t('select.cvLanguage.polish')  },
     { id: 'de', description: i18n.t('select.cvLanguage.german')  },
     { id: 'ru', description: i18n.t('select.cvLanguage.russian') }
-],
-userJobPositions: ["SAP Fiori Developer"],
+  ],
 showChangePasswordDialog: false
 };
 
@@ -37,9 +31,6 @@ const mutations = {
   },
   SET_FILE_ERROR(state, isError) {
     state.uploadFileError = isError;
-  },
-  SET_USER_JOB_POS(state,list){
-    state.userJobPositions = list;
   }
 };
 
@@ -49,12 +40,15 @@ const actions = {
   }, userData) {
     userData.Action = 'E'
     userData.Language = 'PL'
+
+    // Temporary, needed to be change to array.splice()
     delete userData.UserCvProjects
     delete userData.UserEducations
     delete userData.UserExperiences
     delete userData.imgUrl
     delete userData.UserSkills
     delete userData.UserLang
+
     userData.EmploymentDate = utils.formatDateForBackend(userData.EmploymentDate)
     
     const url = 'Users' + '(' + "UserAlias='"+ userData.UserAlias + "',Language='" + userData.Language +  "')"
@@ -115,12 +109,6 @@ const getters = {
   },
   isFileUploadError(state) {
     return state.isFileUploadError;
-  },
-  getLanguageList(state){
-    return state.languageList;
-  },
-  getUserJobPositions(state){
-    return state.userJobPositions;
   },
   getCvLanguageList(state){
     return state.cvLanguageList;

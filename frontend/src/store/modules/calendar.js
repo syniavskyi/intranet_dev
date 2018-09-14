@@ -1,12 +1,9 @@
 import axios from 'axios'
-import router from '@/router/index.js'
-import { stat } from 'fs';
-import jsontoxml from 'jsontoxml'
-import js2xml from 'js2xmlparser'
 import moment from 'moment'
-import dataloading from './dataloading';
-let utils = require('../../utils');
 import odata from 'odata';
+
+let utils = require('../../utils');
+
 
 const state = {
   priorityColor: '',
@@ -124,17 +121,9 @@ getEvents({commit, dispatch, getters}) {
 convertDate({getters, commit}) {
   let oEvents = getters.events;
   for(let i = 0; i<oEvents.length; i++) {
-      let milisc = parseInt(oEvents[i].DateFrom.slice(6, oEvents[i].DateFrom.length - 2));
-      oEvents[i].DateFrom = new Date(milisc);
-      let format = oEvents[i].EventTime.slice(2, 4) + oEvents[i].EventTime.slice(5, 7) + oEvents[i].EventTime.slice(8, 10);
-      oEvents[i].EventTime = moment(format, "hmm").format('HH:mm:ss');
-    if(oEvents[i].DateTo) {
-      let miliscTo = parseInt(oEvents[i].DateTo.slice(6, oEvents[i].DateTo.length - 2));
-      oEvents[i].DateTo = new Date(miliscTo);
-    } 
-    else {
-      oEvents[i].DateTo =  oEvents[i].DateFrom;
-    }
+      oEvents[i].DateFrom = utils.dateStringToObj(oEvents[i].DateFrom);
+      oEvents[i].DateTo = oEvents[i].DateTo ? utils.dateStringToObj(oEvents[i].DateTo) : oEvents[i].DateFrom
+      oEvents[i].EventTime = utils.formatTimeForCalendar(oEvents[i].EventTime);
   }
   commit('SET_EVENTS', oEvents);
 },
@@ -153,17 +142,15 @@ setColor({commit, getters}){
   },
   addNewEvent({getters, dispatch}) {
      const eventData = getters.addEvent
+     
      eventData.DateFrom = utils.formatDateForBackend(getters.getSelectedDate);
-     if(!eventData.DateTo) {
-      eventData.DateTo = eventData.DateFrom;
-    } else {
-      eventData.DateTo = utils.formatDateForBackend(eventData.DateTo);
-    }
-    eventData.EventTime = "PT" + eventData.EventTime.slice(0,2) + "H" + eventData.EventTime.slice(3,5) + "M00S";
+     eventData.DateTo = !eventData.DateTo ? eventData.DateFrom : utils.formatDateForBackend(eventData.DateTo)
+     eventData.EventTime = utils.formatTimeForBackend(eventData.EventTime);
+    
     dispatch('setColorPriority');
     dispatch('formatToString', eventData);
-    // jeszcze URL
-    odata('Events').post(eventData).save(function (data) {
+    
+    odata('Events' + getters.getUrlQuery).post(eventData).save(function (data) {
       console.log("Working");
     }, function (status) {
       console.error(status);
@@ -180,8 +167,9 @@ setColor({commit, getters}){
     //aEvents[pos] = eventData;
     eventData.DateFrom = utils.formatDateForBackend(eventData.DateFrom);
     eventData.DateTo = utils.formatDateForBackend(eventData.DateTo);
+
     if(eventData.EventTime) {
-      eventData.EventTime = "PT" + eventData.EventTime.slice(0,2) + "H" + eventData.EventTime.slice(3,5) + "M00S";
+      eventData.EventTime = utils.formatTimeForBackend(eventData.EventTime);
     }
     //dispatch('getEvents');
     dispatch('formatToString', eventData);
@@ -200,17 +188,12 @@ setColor({commit, getters}){
     });
   },
   removeEvent({commit, state, dispatch}) {
-    let eventData = state.addEvent;
-    let aEvents = state.aEvents;
-    let query = getters.getUrlQuery
-    let pos = aEvents.findIndex(x => x.EventId === eventData.EventId);
-    const url = 'Events' + '(' + "EventId='"+ eventData.EventId + "')" + query;
-    dispatch('formatToString', eventData);
-    eventData.DateFrom = utils.formatDateForBackend(eventData.DateFrom);
-    eventData.DateTo = utils.formatDateForBackend(eventData.DateTo);
-    if(eventData.EventTime) {
-      eventData.EventTime = "PT" + eventData.EventTime.slice(0,2) + "H" + eventData.EventTime.slice(3,5) + "M00S";
-    }
+    let eventData = state.addEvent,
+        aEvents = state.aEvents, 
+        query = getters.getUrlQuery,
+        pos = aEvents.findIndex(x => x.EventId === eventData.EventId),
+        url = 'Events' + '(' + "EventId='"+ eventData.EventId + "')" + query
+
     odata(url).remove().save(function (data) {
       aEvents.splice(pos, 1);
       commit('SET_EVENTS', aEvents);

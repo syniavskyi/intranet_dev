@@ -40,12 +40,7 @@ const actions = {
   },
   checkStatus({commit, getters}, files) {
     for(let i = 0; i < files.length; i++) {
-      if(files[i].Status === 'X') {
-        files[i].Status = true;
-      }
-      else {
-        files[i].Status = false;
-      }
+      files[i].Status = files[i].Status === 'X' ? true : false
     }
 },
 getNewDocs({commit, getters, dispatch}) {
