@@ -43,10 +43,10 @@
                         <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{userInfo.Email}}</p></td>
                       </tr>
                    </table>
-                   <table width="85%" v-for="langu in userLangs" :key="langu.id">
+                   <table width="85%" >
                         <tr>
                           <td style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.knowledgeOfForeignLanguages") }}</p></td>
-                          <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatLangName(langu.Language)}} - {{formatLangLevel(langu.LangLevel)}}</p></td>
+                          <td v-for="langu in userLangs" :key="langu.id" style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatLangName(langu.Language)}} - {{formatLangLevel(langu.LangLevel)}}</p></td>
                         </tr>
 
                      <!-- <tr>
@@ -86,8 +86,8 @@
                <!-- <td style="font-family: 'Arial'; background: #ccc; " width="20%">{{education.AcademicTitle}}</td> -->
              </tr>
              <tr>
-               <td style="font-family:'Arial';"><p style="margin:0; padding:0; margin-bottom:10px;" v-if="!education.IsCurrent">{{formatDate(education.DateStart)}} - {{formatDate(education.DateEnd)}}</p></td>
-              <td style="font-family:'Arial';" ><p style="margin:0; padding:0; margin-bottom:10px;" v-if="education.IsCurrent">{{formatDate(education.DateStart)}} - {{setIfCurrentDate(education.IsCurrent)}}</p></td>
+               <td style="font-family:'Arial';" v-if="!education.IsCurrent"><p style="margin:0; padding:0; margin-bottom:10px;" v-if="!education.IsCurrent">{{formatDate(education.DateStart)}} - {{formatDate(education.DateEnd)}}</p></td>
+               <td style="font-family:'Arial';" v-if="education.IsCurrent"><p style="margin:0; padding:0; margin-bottom:10px;" >{{formatDate(education.DateStart)}} - {{setIfCurrentDate(education.IsCurrent)}}</p></td>
                <!-- <td style="font-style: italic; font-size: 0.95rem; font-family: 'Arial'">{{education.StudyType}}</td> -->
              </tr>
              <tr>
@@ -103,8 +103,8 @@
                <td style="padding:0; font-family:'Arial'; font-size:0.9rem;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatPositionName(experience.WorkPos)}}</p></td>
              </tr>
              <tr>
-               <td style="border-spacing:0; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0; margin-bottom:10px;" v-if="!experience.IsCurrent">{{formatDate(experience.DateStart)}} - {{formatDate(experience.DateEnd)}}</p></td>
-                 <td style="font-family:'Arial';" ><p style="margin:0; padding:0; margin-bottom:10px;" v-if="experience.IsCurrent">{{formatDate(experience.DateStart)}} - {{setIfCurrentDate(experience.IsCurrent)}}</p></td>
+                <td style="border-spacing:0; font-family:'Arial';" v-if="!experience.IsCurrent"><p style="mso-cellspacing:0; margin:0; padding:0; margin-bottom:10px;" >{{formatDate(experience.DateStart)}} - {{formatDate(experience.DateEnd)}}</p></td>
+                <td style="font-family:'Arial';" v-if="experience.IsCurrent"><p style="margin:0; padding:0; margin-bottom:10px;" >{{formatDate(experience.DateStart)}} - {{setIfCurrentDate(experience.IsCurrent)}}</p></td>
              </tr>
              <tr>
                <!-- <td><p style="mso-cellspacing:0; margin:0; padding:0;">&nbsp;</p></td> -->
@@ -116,14 +116,16 @@
            <table align="center" width="98%" v-for="(project) in userProjects" :key="project.id">
              <tr>
                <!-- <td width="45%" style="font-weight:bold; font-family:'Arial';" v-if="!cvElements.contractor"><p style="mso-cellspacing:0; margin:0; padding:0;">Kontrahent nie</p> <p>Branża kontrahenta</p></td> -->
-               <td style="font-weight:bold; font-family:'Arial';" v-if="cvElements.contractor">{{project.ContractorName}} </td>
+               <td style="vertical-align: top; font-weight:bold; font-family:'Arial';" v-if="cvElements.contractor">{{project.ContractorName}} </td>
                <!-- <p v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p> -->
-               <td style="font-weight:bold; font-family:'Arial';"> {{ $t("label.industry") }} <p v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p></td>
-               <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.phone") }}<strong class v-for="sapModule in project.Modules" :key="sapModule.id">{{ sapModule.id }} </strong></p></td>
+               <!-- {{ $t("label.industry") }}  -->
+               <td style="vertical-align: top; font-weight:bold; font-family:'Arial';"> <p style="margin-top:0;" v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p></td>
+               <!-- {{ $t("label.phone") }} -->
+               <td style="vertical-align: top; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;"><strong class v-for="sapModule in project.Modules" :key="sapModule.id">{{ sapModule.id }} </strong></p></td>
              </tr>
              <tr>
-               <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;" v-if="!project.IsCurrent">{{formatDate(project.DateStart)}} - {{formatDate(project.DateEnd)}}</p></td>
-               <td style="font-family:'Arial';" ><p style="margin:0; padding:0; margin-bottom:10px;" v-if="project.IsCurrent">{{formatDate(project.DateStart)}} - {{setIfCurrentDate(project.IsCurrent)}}</p></td>
+               <td style="font-family:'Arial';" v-if="!project.IsCurrent"><p style="mso-cellspacing:0; margin:0; padding:0;" >{{formatDate(project.DateStart)}} - {{formatDate(project.DateEnd)}}</p></td>
+               <td style="font-family:'Arial';" v-if="project.IsCurrent"><p style="margin:0; padding:0; margin-bottom:10px;" >{{formatDate(project.DateStart)}} - {{setIfCurrentDate(project.IsCurrent)}}</p></td>
                <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0; margin-bottom: 10px;">{{project.Description}}</p></td>
              </tr>
              <tr>
