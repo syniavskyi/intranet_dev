@@ -104,26 +104,26 @@ export const formatToArray = function (data) {
 }  
 export const formatToString = function(data) {
 let formattedData = {};
-    for(let key in data) {
-      if(data[key]) {
-        if(data[key].constructor === Array) {
-          formattedData[key] = "";
-          for(let i = 0; i < data[key].length; i++) {
-                if(data[key].length <= 1) {
-                    formattedData[key] = data[key][i]
-                }
-                else {
-                    formattedData[key] += data[key][i] + '||';
-                }
-              } 
-           if(formattedData[key].includes('||')) {
-                formattedData[key] = formattedData[key].slice(0, formattedData[key].length-2);
-            }
-            data[key] = formattedData[key];
+  for(let key in data) {
+    if(data[key]) {
+      if(data[key].constructor === Array) {
+        formattedData[key] = "";
+        for(let i = 0; i < data[key].length; i++) {
+          if(data[key].length <= 1) {
+             formattedData[key] = data[key][i]
           }
+          else {
+            formattedData[key] += data[key][i] + '||';
+          }
+        } 
+        if(formattedData[key].includes('||')) {
+          formattedData[key] = formattedData[key].slice(0, formattedData[key].length-2);
+        }
+        data[key] = formattedData[key];
       }
     }
   }
+}
 
 export const setWorkExperience = function(date) {
   let oDates = {
