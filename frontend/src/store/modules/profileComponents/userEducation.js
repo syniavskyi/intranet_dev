@@ -6,7 +6,9 @@ let utils = require('../../../utils')
 
 const state = {
   userEducation: [],
-  showEducationError: false
+  showEducationError: false,
+  schoolDescList: [],
+  fieldOfStudyDescList: []
 }
 
 const mutations = {
@@ -15,7 +17,13 @@ const mutations = {
   },
   SET_EDUCATION_ERROR(state, isError) {
     state.showEducationError = isError
-  }
+  },
+  SET_SCHOOL_DESC_LIST(state, data) {
+    state.schoolDescList = data;
+  },
+  SET_FIELD_OF_STUDY_DESC_LIST(state, data) {
+    state.fieldOfStudyDescList = data;
+  },
 }
 
 const actions = {
@@ -87,12 +95,52 @@ const actions = {
     }, function (status) {
       console.error(status);
     });
+  }, getSchoolDesc({commit, getters}, lang) {
+    if(lang === undefined) {
+      lang = "PL"
+    }
+    let urlQuery = getters.getUrlQuery
+    axios({
+      method: 'GET',
+      url: "SchoolDesc" + urlQuery + "&$filter=Language eq " + "'" + lang + "'",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      }
+    }).then(res => {
+      commit('SET_SCHOOL_DESC_LIST', res.data.d.results);
+    }).catch(error => {
+      console.log(error)
+     })
   },
+  getFieldOfStudyDesc({commit, getters}, lang) {
+    if(lang === undefined) {
+      lang = "PL"
+    }
+    let urlQuery = getters.getUrlQuery
+    axios({
+      method: 'GET',
+      url: "FieldOfStudyDesc" + urlQuery + "&$filter=Language eq '" + lang + "'",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      }
+    }).then(res => {
+      commit('SET_FIELD_OF_STUDY_DESC_LIST', res.data.d.results);
+    }).catch(error => { 
+      console.log(error)
+    })
+  }
+
 }
 
 const getters = {
   getUserEducation(state) {
     return state.userEducation
+  },
+  schoolDescList(state) {
+    return state.schoolDescList;
+  },
+  fieldOfStudyDescList(state) {
+    return state.fieldOfStudyDescList;
   }
 }
 

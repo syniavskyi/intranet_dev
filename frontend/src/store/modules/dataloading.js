@@ -16,11 +16,8 @@ const state = {
   academicTitles: [],
   langLevels: [],
   userFiles: [],
-  fullLanguageList: [],
   workPositionList: [],
   sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_AVAIL_TYPE", "ZINTRANET_AVAIL_STATUS", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES", 'ZINTRANET_PRIORITY', 'ZINTRANET_EVENT_TYPE', 'ZINTRANET_EVENT_TYPE', 'ZINTRANET_TARGET_GROUP'],
-  schoolDescList: [],
-  fieldOfStudyDescList: [],
   sapModulesList: [],
   newUserFiles: [],
   UserRole: [],
@@ -62,17 +59,8 @@ const mutations = {
   SET_LANG_LEVELS(state, data) {
     state.langLevels = data
   },
-  SET_LANGUAGE_LIST(state, data) {
-    state.fullLanguageList = data;
-  },
   SET_WORK_POSITION_LIST(state, data) {
     state.workPositionList = data
-  },
-  SET_SCHOOL_DESC_LIST(state, data) {
-    state.schoolDescList = data;
-  },
-  SET_FIELD_OF_STUDY_DESC_LIST(state, data) {
-    state.fieldOfStudyDescList = data;
   },
   SET_SAP_MODULES_LIST(state, data) {
     state.sapModulesList = data;
@@ -320,38 +308,6 @@ const actions = {
       console.log(error)
      })
   },
-  getAllLanguages({commit, getters},) {
-    let urlQuery = getters.getUrlQuery
-    axios({
-      method: 'GET',
-      url: 'Languages' + urlQuery,
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-      }
-    }).then(res => {
-      commit('SET_LANGUAGE_LIST', res.data.d.results);
-    }).catch(error => { 
-      console.log(error)
-    })
-  },
-  getSchoolDesc({commit, getters}, lang) {
-    if(lang === undefined) {
-      lang = "PL"
-    }
-    let urlQuery = getters.getUrlQuery
-    axios({
-      method: 'GET',
-      url: "SchoolDesc" + urlQuery + "&$filter=Language eq " + "'" + lang + "'",
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-      }
-    }).then(res => {
-      commit('SET_SCHOOL_DESC_LIST', res.data.d.results);
-    }).catch(error => {
-      console.log(error)
-     })
-  },
-
   getUserFilesData({commit, getters}){
     let userId = localStorage.getItem('id')
     let urlQuery = getters.getUrlQuery
@@ -363,23 +319,6 @@ const actions = {
       }
     }).then(res => {
       commit('SET_USER_FILES_LIST', res.data.d.results);
-    }).catch(error => { 
-      console.log(error)
-    })
-  },
-  getFieldOfStudyDesc({commit, getters}, lang) {
-    if(lang === undefined) {
-      lang = "PL"
-    }
-    let urlQuery = getters.getUrlQuery
-    axios({
-      method: 'GET',
-      url: "FieldOfStudyDesc" + urlQuery + "&$filter=Language eq '" + lang + "'",
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-      }
-    }).then(res => {
-      commit('SET_FIELD_OF_STUDY_DESC_LIST', res.data.d.results);
     }).catch(error => { 
       console.log(error)
     })
@@ -424,17 +363,8 @@ const getters = {
   langLevels(state){
     return state.langLevels;
   },
-  fullLanguageList(state) {
-    return state.fullLanguageList;
-  },
   workPositions(state) {
     return state.workPositionList;
-  },
-  schoolDescList(state) {
-    return state.schoolDescList;
-  },
-  fieldOfStudyDescList(state) {
-    return state.fieldOfStudyDescList;
   },
   getModulesList(state) {
     return state.sapModulesList;
