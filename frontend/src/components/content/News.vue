@@ -149,7 +149,7 @@ export default {
         rticles: "articles",
         userAdverts: "userAdverts",
         getShowMenu: "getShowMenu",
-        events: "events" }),
+        events: "getEvents" }),
   },
   methods: {
     ...mapActions(["geoLoc", "getWeatherData", "getToday", "getNews", "xmlToJson", "getArticles"]),

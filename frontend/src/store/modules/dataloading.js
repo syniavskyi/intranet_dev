@@ -276,7 +276,8 @@ const actions = {
       commit('SET_USER_EXPERIENCE', oData.UserExperiences.results); //set user experience data for profile and cv
       
       commit('SET_USER_SKILLS', oData.UserSkills.results); //set user skills data for profile and cv
-      dispatch('formatToArray',  oData.UserSkills.results); 
+      let userSkills = utils.formatToArray(oData.UserSkills.results);
+      commit('SET_USER_SKILLS', userSkills[0]); 
 
       commit('SET_USER_PROJECTS_LIST', oData.UserCvProjects.results); //set user projects data for profile and cv
       dispatch('adjustProjects');

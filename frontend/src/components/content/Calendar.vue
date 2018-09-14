@@ -34,7 +34,7 @@
                         <div> {{ attr.customData.DateTo}} </div> 
                   </div>    
                   <div class="events-buttons">
-                      <button class="button edit-button" @click="editEvent(attr.customData, $t)">{{ $t("button.edit") }}</button>
+                      <button class="button edit-button" @click="editEventClick(attr.customData, $t)">{{ $t("button.edit") }}</button>
                       <button class="button edit-button" @click="deleteEvent(attr.customData, $t)">{{ $t("button.delete") }}</button>
                   </div>
                 </li>            
@@ -163,7 +163,8 @@ import moment from "moment";
 import { required } from "vuelidate/lib/validators";
 import i18n from "../../lang/lang";
 import Menu from '../Menu.vue'
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
+const utils = require('../../utils');
 
 export default {
   data() {
@@ -177,11 +178,6 @@ export default {
       selectedGroup: false,
       permition: false,
       checkedNames: '',
-      filters: {
-          branch: null,
-          department: null,
-          employee: null
-       },
        disabledButton: true,
        displayButton: true
     };
@@ -208,27 +204,25 @@ export default {
   },
   created() {
     this.checkRole();
-    // this.$store.dispatch('getPriority');
-    // this.$store.dispatch('getEventType');
   },
   computed: {
     ...mapGetters({
       departmentList: 'getTargetGroup',
       branchList: 'branchList',
-      eventTypes: 'eventTypes',
-      priorities: 'priorities',
-      events: 'events',
-      addEvent: 'addEvent',
+      eventTypes: 'getEventTypes',
+      priorities: 'getPriorities',
+      events: 'getEvents',
+      addEvent: 'getEventToChange',
       usersList: 'usersList',
       targetGroup: 'getTargetGroup',
       displayMenu: "getShowMenu",
-      displayOverlay: "getShowMenuOverlay"
+      displayOverlay: "getShowMenuOverlay",
+      filters: "getClearedFilters"
  }),
     filteredEvents() {
       let aEvents = this.events,
       aFilters = this.filters;
       let aFilteredEvents = [];
-
 
   if (aFilters.branch === null && aFilters.department === null && aFilters.employee === null) {
     return aEvents;
@@ -293,42 +287,50 @@ export default {
         'app-menu': Menu
   },
   methods: {
+    ...mapActions([ 
+      'clearForm',
+      'removeEvent',
+      'addNewEvent',
+      'clearFilters',
+      'editEvent',
+      'formatToArray'
+    ]),
+
     showMenu(event) {
       let obj = {window, event}
       this.$store.dispatch("setSideMenu", obj);
     },
     editForm() {
-        this.$store.getters.addEvent;
-        this.$store.dispatch('editEvent');
-        // this.filteredEvents.
-        this.performDialog();
+      this.editEvent();
+      this.performDialog();
     },
     dayClicked(day) {
       this.selectedDay = day;
     },
     openDialog() {
-      this.$store.dispatch('clearForm');
+      this.clearForm();
       this.performDialog();
       this.displayButton = true;
     },
     performDialog() {
       this.dialogEvent = !this.dialogEvent;
     },
-    editEvent(data) {
+    editEventClick(data) {
       this.performDialog();
       let editedData = data;
-      Object.assign(this.$store.getters.addEvent, editedData);
+      // this.$store.commit('SET_CLEARED_DATA', utils.createClone(editedData));
+      Object.assign(this.addEvent, editedData);
       this.disabledButton = false;
       this.displayButton = false;
     },
     deleteEvent(data) {
       let editedData = data;
-      Object.assign(this.$store.getters.addEvent, editedData);
-     this.$store.dispatch('removeEvent')
+      Object.assign(this.addEvent, editedData);
+      this.removeEvent();
     },
     addNewEvent() {
       this.$store.commit("SET_DATE_FROM", this.selectedValue);
-      this.$store.dispatch('addNewEvent');
+      this.addNewEvent();
       this.performDialog();
     },
     // permision to filter calendar
@@ -338,14 +340,10 @@ export default {
         this.permition = true;
       }
     },
-    clearFilters() {
-      this.$store.dispatch('clearFilters');
-      this.filters = this.$store.getters.clearedFilters;
-    },
     backToModal(){
       this.isSelected = !this.isSelected;
-      this.addEvent.Employee = '';
-      this.addEvent.TargetGroup = '';
+      this.addEvent.Employee = [];
+      this.addEvent.TargetGroup = [];
     }
   }
 };
