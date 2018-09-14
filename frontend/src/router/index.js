@@ -12,7 +12,6 @@ import Profile from '@/components/content/Profile'
 import Employees from '@/components/content/Employees'
 import Calendar from '@/components/content/Calendar'
 import Files from '@/components/content/Files'
-import Informations from '@/components/content/Informations'
 import Availability from '@/components/content/Availability'
 import StarterPage from '@/components/content/StarterPage'
 import CV from '@/components/content/CV'
@@ -57,12 +56,6 @@ export default new Router({
         path: '/employees',
         name: 'Employees',
         component: Employees,
-        beforeEnter: AuthGuard
-    },
-    {
-        path: '/informations',
-        name: 'Informations',
-        component: Informations,
         beforeEnter: AuthGuard
     },
     {

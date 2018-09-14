@@ -489,7 +489,7 @@ li p {
     height: 75%;
     align-self: center;
     align-items: center;
-    width: 80%;
+    width: 100%;
     justify-content: space-around;
 }
 
@@ -576,9 +576,38 @@ input:required {
     background: rgb(240, 156, 0);
 }
 
+.clear-btn,
+.oclear-btn {
+    background-color: white;
+    border-radius: 4px;
+    padding: .3rem .4rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.clear-btn {
+    border: 2px solid grey;
+    color: grey;
+}
+.clear-btn:hover {
+    color:white;
+    background-color: grey
+}
+
+.oclear-btn {
+    border: 2px solid orange;
+    color: orange;
+}
+.oclear-btn:hover {
+    background-color: orange;
+    color: white;
+}
+
+
+
 /* Functional Buttons (for Profile) */
 
-/* COOL DIV INPUT - start */
+/* COOL (CONTENT) DIV INPUT / SELECT / TEXTAREA - start */
 .cd-for-input-s,
 .cd-for-input,
 .cd-for-input-xxl,
@@ -617,6 +646,16 @@ input:required {
     text-indent: 0.5rem;
     border-bottom: 1px solid #757575;
     position: relative;
+}
+
+.cd-textarea {
+    max-width: 95%;
+    min-width: 94%;
+    min-height: 1.5rem;
+    padding: 0.3rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: 1px solid lightgrey;
 }
 
 .cd-select {
@@ -665,7 +704,9 @@ input:required {
 .cd-input:focus ~ label,
 .cd-input:valid ~ label,
 .cd-select:focus ~ label,
-.cd-select:valid ~ label {
+.cd-select:valid ~ label,
+.cd-textarea:focus ~ label,
+.cd-textarea:valid ~ label {
     top: -.65rem;
     font-size: .9rem;
     color: rgb(255, 145, 0);
@@ -700,7 +741,7 @@ input:required {
     width: 50%;
 }
 
-/* COOL DIV INPUT - end */
+/* COOL (CONTENT) DIV INPUT / SELECT / TEXTAREA  - end */
 
 /* background: linear-gradient(to right, #ffffff 0%,#e5e5e5 10%,#e5e5e5 90%,#ffffff 100%); */
 

@@ -105,24 +105,13 @@ const actions = {
     getters
   }, userData) {
     // TEMPORARY
-    // if(userData === null) {
-    //   // let userData = {
-    //   //   lang: 'PL',
-    //   //   user: 'UIO'
-    //   // }
-    //   const userData = {};
-    //   userData.lang = 'PL'
-    //   userData.user = 'UIO'
-    // }
-    if(userData == null) {
-      userData.lang = 'PL'
+    if(userData === null) {
+      let userData = {
+        lang: 'PL',
+        user: 'UIO'
+      }
     }
-    // if(userData.lang === null) {
-    //   userData.lang = 'PL'
-    // }
-    // if(userData.lang === undefined) {
-    //   userData.lang = 'PL'
-    // }
+ 
     for (let i = 0; i < state.sapDomains.length; i++) {
       let domainData = {
         name: state.sapDomains[i],
@@ -130,6 +119,7 @@ const actions = {
       };
       dispatch('getDomainValues', domainData)
     }
+
     dispatch('getContractorsList');
     dispatch('getIndustries', userData.lang);
     dispatch('getProjectsList');
@@ -137,11 +127,9 @@ const actions = {
     dispatch('getAllLanguages',);
     dispatch('getSchoolDesc', userData.lang);
     dispatch('getFieldOfStudyDesc', userData.lang);
-    dispatch('getUserData', userData);
     dispatch('getEvents')
-    // if (getters.isDataLoaded){
-    //   router.replace('/dashboard')
-    // }
+
+    dispatch('getUserData', userData);
   },
   getDomainValues({
     commit, getters
@@ -288,6 +276,8 @@ const actions = {
       commit('SET_NEW_USER_FILES_LIST', oData.UserFiles.results); //set list of files for starter page for new user
       
       commit('SET_DATA_LOADED', true)
+
+      dispatch('checkPageToDisplay')
     }).catch(error => {
       console.log(error);
     })
@@ -393,6 +383,9 @@ const actions = {
     }).catch(error => { 
       console.log(error)
     })
+  },
+  checkPageToDisplay(){
+    router.replace('/news')
   }
 
 };

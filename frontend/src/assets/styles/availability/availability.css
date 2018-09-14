@@ -150,8 +150,12 @@
 
 .ava-tile-1 {
     /* width: 50%; */
-    min-height: 20rem;
+    min-height: 22rem;
     /* height: 100%; */
+}
+
+.ava-tile-1 .availability-tile-content {
+    min-height: 24rem;
 }
 
 .ava-tile-2 {
@@ -165,6 +169,7 @@
     width: 100%;
     background: transparent;
     justify-content: space-between;
+    align-items: center;
     min-height: 3rem;
     height: 10%;
 }
@@ -208,6 +213,33 @@
     align-self: center;
     align-items: center;
     min-width: 15rem; 
+}
+.ava-select-reset {
+    position: absolute;
+    top: .45rem;
+    right: 1.8rem;
+    border: 0;
+    border-radius: 50%;
+    color: orange;
+    background: white;
+    transition: all .25s ease;
+}
+
+
+.ava-select-reset:hover {
+    background:orange;
+    color: white;
+}
+.ava-content-header {
+    display: flex;
+    justify-content: center;
+    color: grey;
+    font-size: 1.2rem;
+    /* margin-top: 0; */
+}
+
+.ava-tile-entry {
+    color: orange;
 }
 
 .ava-div-select,
@@ -447,9 +479,15 @@
     animation: slide-up 0.6s ease;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
+}
 
+.ava-add {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .ava-error {

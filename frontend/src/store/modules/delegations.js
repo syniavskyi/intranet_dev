@@ -5,7 +5,6 @@ import axios from 'axios'
 let utils = require('../../utils')
 
 const state = {
-  delegationCostsList: [],
   currencyList: [
     {id: 'PLN'},
     { id: 'EUR' },
@@ -51,9 +50,6 @@ const state = {
     allowanceDeduction: 0
   },
   newDelegationValidated: false,
-  delegationTableValidated: false,
-  defaultCostsData: {},
-  fullExpences: [],
   dailyAllowance: 30.00,
   NewDelegationNumber: null,
   showConfirmDelegation: false,
@@ -61,23 +57,11 @@ const state = {
 };
 
 const mutations = {
-  SET_DELEG_COST_LIST(state, list) {
-    state.delegationCostsList = list
-  },
-  SET_COST_TABLE_DATA(state, list) {
-    state.costTableData = list
-  },
   SET_TOTAL_COST_DATA(state, list) {
     state.totalCosts = list
   },
   SET_NEW_DELEGATION_VALIDATED(state, isValidated) {
     state.newDelegationValidated = isValidated
-  },
-  SET_DELEGATION_TABLE_VALIDATED(state, isValidated) {
-    state.newDelegationValidated = isValidated
-  },
-  SET_FULL_EXPENCES(state, list) {
-    state.fullExpences = list
   },
   SET_NEW_DELEGATION(state, delegation) {
     state.newDelegation = delegation
@@ -91,11 +75,8 @@ const mutations = {
   SET_SHOW_CONFIRM_DELEG(state, show) {
     state.showConfirmDelegation = show
   },
-  CREATE_DELEG_SUCCESS(state, isSuccess) {
+  SET_CREATE_DELEG_SUCCESS(state, isSuccess) {
     state.createDelegationSuccess = isSuccess
-  },
-  SET_DEFAULT_COST_DATA(state, data) {
-    state.defaultCostsData = data
   }
 };
 
@@ -114,84 +95,6 @@ const actions = {
       }
 
     }
-  },
-  checkDelegationTable({
-    getters,
-    commit,
-    dispatch
-  }) {
-    dispatch('prepareCostData')
-    const expences = getters.getFullExpences
-    for (let i = 0; i < expences.length; i++) {
-      let arrayItem = expences[i]
-      for (let key in arrayItem) {
-        if (!arrayItem[key] || arrayItem[key] === "__:__" || arrayItem[key] === "") {
-          commit('SET_DELEGATION_TABLE_VALIDATED', false)
-          return
-        } else {
-          commit('SET_DELEGATION_TABLE_VALIDATED', true)
-        }
-      }
-    }
-  },
-  addDelegationRow({
-    commit,
-    getters
-  }) {
-    const delegationCostsList = getters.getDelegationCostsList
-    delegationCostsList.push({
-      leavePlace: null,
-      leaveDate: null,
-      leaveHour: null,
-      arrivalPlace: null,
-      arrivalDate: null,
-      arrivalHour: null,
-      distance: null,
-      cost: null
-    })
-    commit('SET_DELEG_COST_LIST', delegationCostsList)
-    commit('SET_DELEGATION_TABLE_VALIDATED', false)
-  },
-  removeDelegationRow({
-    commit,
-    getters,
-    dispatch
-  }, index) {
-    const delegationCostsList = getters.getDelegationCostsList
-    delegationCostsList.splice(index, 1)
-    commit('SET_DELEG_COST_LIST', delegationCostsList)
-    dispatch('checkDelegationTable')
-  },
-  prepareCostData({
-    getters,
-    commit
-  }) {
-    const costs = [],
-      customCosts = getters.getDelegationCostsList,
-      defaultCostsData = getters.getDefaultCostsData,
-      newDelegation = getters.getNewDelegation
-    for (let i = 0; i < customCosts.length; i++) {
-      costs[i] = Object.assign({}, customCosts[i])
-    }
-    const firstDefaultCost = {
-      leavePlace: defaultCostsData.firstLeavePlace,
-      leaveDate: newDelegation.dates.start,
-      leaveHour: defaultCostsData.firstLeaveHour,
-      arrivalPlace: newDelegation.destination,
-      arrivalDate: newDelegation.dates.start,
-      arrivalHour: defaultCostsData.firstArrivalHour
-    }
-    const secondDefaultCost = {
-      leavePlace: newDelegation.destination,
-      leaveDate: newDelegation.dates.end,
-      leaveHour: defaultCostsData.secondLeaveHour,
-      arrivalPlace: defaultCostsData.secondArrivalPlace,
-      arrivalDate: newDelegation.dates.end,
-      arrivalHour: defaultCostsData.secondArrivalHour
-    }
-    costs.push(firstDefaultCost)
-    costs.push(secondDefaultCost)
-    commit('SET_FULL_EXPENCES', costs)
   },
   countAllowance({
     getters,
@@ -257,10 +160,6 @@ const actions = {
     height = height + 16 + "px"
     if (!element.el.style.height || element.el.style.height == "0px") {
         element.el.style.height = height
-        // element.el.addEventListener("transitionend", (e) => {
-        //   if (e.propertyName === "height")
-        //   element.el.style.overflow = "visible"  
-        // })
         element.el.style.overflow = "visible"
         element.el.style.opacity = "1"
     } else {
@@ -309,8 +208,7 @@ const actions = {
         }
       }
   },
-
-  countAllCosts({getters, commit, dispatch}){
+ countAllCosts({getters, commit, dispatch}){
     const accCosts = getters.getAccomodationCostData,
           otherCosts = getters.getOtherCostData,
           trvCosts = getters.getTravelCostData,
@@ -361,11 +259,11 @@ const actions = {
             "X-Requested-With": "XMLHttpRequest"
           }
         }).then(res => {
-          commit('CREATE_DELEG_SUCCESS',true)
+          commit('SET_CREATE_DELEG_SUCCESS',true)
           dispatch('clearDelegationForm')
         }).catch(error => { 
           console.log(error);
-          commit('CREATE_DELEG_SUCCESS',false)
+          commit('SET_CREATE_DELEG_SUCCESS',false)
         })
       
      },
@@ -446,7 +344,6 @@ const actions = {
       commit('SET_ADVANCE_DATA', advanceData)
       commit('SET_ADVANCE_VALIDATED', false)
 
-
       const otherCostData = [{
         docDate: null,
         company: null,
@@ -483,13 +380,11 @@ const actions = {
       }]
       commit('SET_COST_TRAVEL_DATA', costTravelData)
       commit('SET_TRV_COSTS_VALIDATED', false)
-
       commit('SET_DEFAULT_COST_DATA', {})
       commit('SET_DELEG_COST_LIST', [])
       commit('SET_DELEGATION_TABLE_VALIDATED', false) 
-      commit('SET_FULL_EXPENCES', [])
       commit('SET_NEW_DELEG_NO', null)
-      commit('CREATE_DELEG_SUCCESS', null)
+      commit('SET_CREATE_DELEG_SUCCESS', null)
      }
 
 
@@ -498,9 +393,6 @@ const actions = {
 
 
 const getters = {
-  getDelegationCostsList(state) {
-    return state.delegationCostsList
-  },
   getCurrencyList(state) {
     return state.currencyList
   },
@@ -510,20 +402,8 @@ const getters = {
   getTotalCosts(state) {
     return state.totalCosts
   },
-  getDelegationCostsList(state) {
-    return state.delegationCostsList
-  },
   getNewDelegation(state) {
     return state.newDelegation
-  },
-  getDelegationTableValidated(state) {
-    return state.delegationTableValidated
-  },
-  getDefaultCostsData(state) {
-    return state.defaultCostsData
-  },
-  getFullExpences(state) {
-    return state.fullExpences
   },
   getDailyAllowance(state) {
     return state.dailyAllowance
