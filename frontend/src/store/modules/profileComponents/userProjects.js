@@ -1,8 +1,7 @@
 import axios from 'axios'
-import router from '@/router/index.js'
 import moment from 'moment'
 import odata from 'odata'
-// import i18n from '../../lang/lang'
+
 let utils = require('../../../utils')
 
 const state = {
@@ -69,9 +68,9 @@ const actions = {
 
     let lang = 'PL';
     let user = 'UIO'
-    const projects  = getters.getUserProjectsList,
-    data = projects[index],
-    url = "UserCvProjects(UserAlias='" + user + "',DateStart=datetime'" + moment(data.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" +  moment(data.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" +  data.ProjectName + "',Language='" +  lang + "')";
+    const projects = getters.getUserProjectsList,
+      data = projects[index],
+      url = "UserCvProjects(UserAlias='" + user + "',DateStart=datetime'" + moment(data.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(data.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + data.ProjectName + "',Language='" + lang + "')";
 
     odata(url).remove().save(function (data) {
       projects.splice(index, 1);
@@ -96,7 +95,9 @@ const actions = {
   //     //commit ('SET_BEFORE_EDITING_PROJECTS', projects)
   //   }
   // },
-  saveUserProjectsPosition({dispatch, getters,commit}, data) {
+  saveUserProjectsPosition({
+    dispatch
+  }, data) {
     data.UserAlias = 'UIO';
     data.DateStart = utils.formatDateForBackend(data.DateStart);
     data.DateEnd = utils.formatDateForBackend(data.DateEnd);
@@ -106,23 +107,25 @@ const actions = {
     odata('UserCvProjects').post(data).save(function (data) {
       console.log("halohalo");
     }, function (status) {
-      console.error(status); 
+      console.error(status);
     });
   },
-  updateUserProjectsPosition({dispatch}, data) {
+  updateUserProjectsPosition({
+    dispatch
+  }, data) {
     const dataToSend = data;
     dataToSend.UserAlias = 'UIO';
     dataToSend.DateStart = utils.formatDateForBackend(dataToSend.DateStart);
     dataToSend.DateEnd = utils.formatDateForBackend(dataToSend.DateEnd);
-    dataToSend.IsCurrent = dataToSend.IsCurrent ? 'X' : '-' 
+    dataToSend.IsCurrent = dataToSend.IsCurrent ? 'X' : '-'
     dataToSend.DateStartToChange = utils.formatDateForBackend(dataToSend.DateStartToChange)
     dataToSend.DateEndToChange = utils.formatDateForBackend(dataToSend.DateEndToChange)
     dispatch('formatProjectToString', dataToSend)
-    const url = "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" +  moment(dataToSend.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" +  dataToSend.ProjectName + "',Language='" +  dataToSend.Language + "')";
+    const url = "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(dataToSend.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + dataToSend.ProjectName + "',Language='" + dataToSend.Language + "')";
     odata(url).put(dataToSend).save(function (oData) {
       console.log("zamianka");
     }, function (status) {
-      console.error(status); 
+      console.error(status);
     });
   },
   formatProjectToString({}, dataToSend) {
@@ -130,37 +133,35 @@ const actions = {
     object.Modules = dataToSend.Modules;
     object.Industries = dataToSend.Industries;
     let moduleString = '',
-    industryString = '';
+      industryString = '';
 
-    for(let key in object) {
-      for(let i = 0; i < object[key].length; i++) {
-          if(object[key].length <= 1 ) {
-              if(key == 'Modules'){
-                  moduleString = object[key][i].id;
-              } 
-              if(key == 'Industries') {
-                  industryString = object[key][i].id;
-              }
+    for (let key in object) {
+      for (let i = 0; i < object[key].length; i++) {
+        if (object[key].length <= 1) {
+          if (key == 'Modules') {
+            moduleString = object[key][i].id;
           }
-          else {
-              if(key == 'Modules'){
-                moduleString += object[key][i].id + '||';;
-              } 
-              if(key == 'Industries') {
-                industryString += object[key][i].id + '||';;
-              }
+          if (key == 'Industries') {
+            industryString = object[key][i].id;
           }
+        } else {
+          if (key == 'Modules') {
+            moduleString += object[key][i].id + '||';;
+          }
+          if (key == 'Industries') {
+            industryString += object[key][i].id + '||';;
+          }
+        }
       }
     }
-    if(industryString.includes('||')) {
-      dataToSend.Industries = industryString.slice(0, industryString.length-2);
+    if (industryString.includes('||')) {
+      dataToSend.Industries = industryString.slice(0, industryString.length - 2);
     } else {
       dataToSend.Industries = industryString;
     }
-    if(moduleString.includes('||')) {
-      dataToSend.Modules = moduleString.slice(0, moduleString.length-2);
-    }
-    else {
+    if (moduleString.includes('||')) {
+      dataToSend.Modules = moduleString.slice(0, moduleString.length - 2);
+    } else {
       dataToSend.Modules = moduleString;
     }
   },
@@ -226,12 +227,11 @@ const actions = {
   addIndustry({
     commit,
     getters,
-    dispatch
   }, data) {
     const projectsList = getters.getUserProjectsList,
       industries = projectsList[data.index].Industries;
     let obj,
-    industryList = this.getters.getIndustryList;
+      industryList = this.getters.getIndustryList;
 
     if (industries.length !== 0) {
       for (let i = 0; i < industries.length; i++) {
@@ -256,19 +256,25 @@ const actions = {
       // dispatch('adjustProjects');
     }
   },
-  removeIndustry({commit, getters}, data) {
+  removeIndustry({
+    commit,
+    getters
+  }, data) {
     const projectsList = getters.getUserProjectsList,
-    industries = projectsList[data.index].Industries
+      industries = projectsList[data.index].Industries
     for (let i = 0; i < industries.length; i++) {
       if (industries[i].id === data.industryId) {
         industries.splice(i, 1)
       }
     }
     commit('SET_USER_PROJECTS_LIST', projectsList)
-    
+
   },
-  getIndustries({commit, getters}, lang) {
-    if(lang === undefined) {
+  getIndustries({
+    commit,
+    getters
+  }, lang) {
+    if (lang === undefined) {
       lang = "PL"
     }
     let urlQuery = getters.getUrlQuery
@@ -281,77 +287,92 @@ const actions = {
     }).then(res => {
       console.log(res.data.d.results);
       commit('SET_INDUSTRY_DESC_LIST', res.data.d.results);
-    }).catch(error => { })
+    }).catch(error => {})
   },
-  adjustProjects({commit, dispatch, getters}) {
+  adjustProjects({
+    commit,
+    dispatch
+  }) {
     let projects = this.getters.getUserProjectsList;
-    let fullProjects= [];
+    let fullProjects = [];
     const projectsKeys = {
       Industries: [],
       Modules: []
     }
     let index;
 
-    for(let i = 0; i < projects.length; i++) {
+    for (let i = 0; i < projects.length; i++) {
       let adjustedProjects = new Object();
-        adjustedProjects.Industries = [];
-        adjustedProjects.Modules = [];
-        for(let key in projectsKeys) {
-          if(projects[i][key]) {
-            if(projects[i][key].includes('||')) {
-                while(projects[i][key].length > 1) {
-                    index = projects[i][key].indexOf('||');
-                    if(index > 0) {
-                      let object = new Object();
-                        object.id = projects[i][key].slice(0, index);
-                        dispatch('checkProjectKey', {key, object})
-                          object = this.getters.getObject;
-                        adjustedProjects[key].push(object);
-                        index += 2;
-                        projects[i][key] = projects[i][key].substr(index, projects[i][key].length)
-                    } 
-                    else {
-                      let object = new Object();
-                      object.id = projects[i][key];
-                      dispatch('checkProjectKey', {key, object});
-                      object = this.getters.getObject;
-                        adjustedProjects[key].push(object);
-                        projects[i][key] = [];
-                    }
-                } 
-            }  
-            else {
-              let object = new Object();
-              object.id = projects[i][key];
-              dispatch('checkProjectKey', {key, object});
-              object = this.getters.getObject;
+      adjustedProjects.Industries = [];
+      adjustedProjects.Modules = [];
+      for (let key in projectsKeys) {
+        if (projects[i][key]) {
+          if (projects[i][key].includes('||')) {
+            while (projects[i][key].length > 1) {
+              index = projects[i][key].indexOf('||');
+              if (index > 0) {
+                let object = new Object();
+                object.id = projects[i][key].slice(0, index);
+                dispatch('checkProjectKey', {
+                  key,
+                  object
+                })
+                object = this.getters.getObject;
+                adjustedProjects[key].push(object);
+                index += 2;
+                projects[i][key] = projects[i][key].substr(index, projects[i][key].length)
+              } else {
+                let object = new Object();
+                object.id = projects[i][key];
+                dispatch('checkProjectKey', {
+                  key,
+                  object
+                });
+                object = this.getters.getObject;
                 adjustedProjects[key].push(object);
                 projects[i][key] = [];
+              }
             }
+          } else {
+            let object = new Object();
+            object.id = projects[i][key];
+            dispatch('checkProjectKey', {
+              key,
+              object
+            });
+            object = this.getters.getObject;
+            adjustedProjects[key].push(object);
+            projects[i][key] = [];
+          }
         }
       }
-        fullProjects[i] = adjustedProjects;
+      fullProjects[i] = adjustedProjects;
     }
-    for(let i = 0; i < projects.length; i++) {
-          projects[i].Industries = fullProjects[i].Industries;
-          projects[i].Modules = fullProjects[i].Modules;
-    } 
-    commit('SET_USER_PROJECTS_LIST', projects); 
+    for (let i = 0; i < projects.length; i++) {
+      projects[i].Industries = fullProjects[i].Industries;
+      projects[i].Modules = fullProjects[i].Modules;
+    }
+    commit('SET_USER_PROJECTS_LIST', projects);
   },
-  checkProjectKey({commit}, {key, object} ) {
+  checkProjectKey({
+    commit
+  }, {
+    key,
+    object
+  }) {
     let modulesList = this.getters.getModulesList;
     let industryList = this.getters.getIndustryList;
     let obj;
-  
-    if([key] == "Industries") {
+
+    if ([key] == "Industries") {
       obj = industryList.find(o => o.IndustryId === object.id)
       object.name = obj.IndustryName;
     }
-    if([key] == "Modules") {
+    if ([key] == "Modules") {
       obj = modulesList.find(o => o.Key === object.id)
       object.name = obj.Value;
-    } 
-    commit('SET_OBJECT', object); 
+    }
+    commit('SET_OBJECT', object);
   },
 }
 
@@ -368,7 +389,7 @@ const getters = {
   getModuleExist(state) {
     return state.ifModuleExist
   },
-  getIndustryExist(state){
+  getIndustryExist(state) {
     return state.ifIndustryExist
   },
   getErrorProjectNo(state) {
