@@ -3,7 +3,7 @@
     <div class="component-nav-and-content">
       <app-menu v-show="displayMenu"></app-menu>
       <div class="modal-overlay" v-show="displayMenuOverlay"></div>
-      <div class="component-content"> 
+      <div class="component-content">
         <div class="content-header">
           <div class="content-header-title-and-menu">
             <!-- <img @click="showMenu" src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu"> -->
@@ -21,7 +21,7 @@
             <div class="cd-for-input-s">
               <!-- <div class="input-with-checkbox"> -->
               <input required class="cd-input" :disabled="isEmail" @blur="$v.fullNameToEmail.$touch()" :value="fullNameToEmail" @change="checkEmail($event.target.value)">
-              <div class="checkbox-absolute">              
+              <div class="checkbox-absolute">
                 <div class="checkbox-wrap">
                   <input class="checkbox" :checked="isEmail" type="checkbox" disabled>
                   <div class="checkbox-in"></div>
@@ -167,35 +167,44 @@ export default {
     ...mapGetters({
       displayMenu: "getShowMenu",
       displayMenuOverlay: "getShowMenuOverlay",
-      isError: "getRegistrationError"
+      isError: "getRegistrationError",
+      getRoleList: "roleList",
+      getDepartmentList: "depList",
+      fullNameToEmail: "getPrefixEmail",
+      hashedPassword: "hashedPassword",
+      setPassword: "password",
+      isEmail: "getEmail",
+      openDialog: "openDialog",
+      setMail: "getMail",
+      openDialogFalse: "openFailedDialog"
     }),
-    getRoleList() {
-      return this.$store.getters.roleList;
-    },
-    getDepartmentList() {
-      return this.$store.getters.depList;
-    },
-    fullNameToEmail() {
-      return this.$store.getters.prefixEmail;
-    },
-    hashedPassword() {
-      return this.$store.getters.hashedPassword;
-    },
-    setPassword() {
-      return this.$store.getters.password;
-    },
-    isEmail() {
-      return this.$store.getters.isEmail;
-    },
-    openDialog() {
-      return this.$store.getters.openDialog;
-    },
-    setMail() {
-      return this.$store.getters.setMail;
-    },
-    openDialogFalse() {
-      return this.$store.getters.openFailedDialog;
-    }
+    // getRoleList() {
+    //   return this.$store.getters.roleList;
+    // },
+    // getDepartmentList() {
+    //   return this.$store.getters.depList;
+    // },
+    // fullNameToEmail() {
+    //   return this.$store.getters.getPrefixEmail;
+    // },
+    // hashedPassword() {
+    //   return this.$store.getters.hashedPassword;
+    // },
+    // setPassword() {
+    //   return this.$store.getters.password;
+    // },
+    // isEmail() {
+    //   return this.$store.getters.getEmail;
+    // },
+    // openDialog() {
+    //   return this.$store.getters.openDialog;
+    // },
+    // setMail() {
+    //   return this.$store.getters.getMail;
+    // },
+    // openDialogFalse() {
+    //   return this.$store.getters.openFailedDialog;
+    // }
   }
 };
 </script>
