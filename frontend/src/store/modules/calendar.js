@@ -27,7 +27,6 @@ const state = {
     department: null,
     employee: null
   },
-  // event: {},
   aEvents: [],
   aPriority: [],
   aEventType: [],
@@ -53,7 +52,7 @@ const mutations = {
   SET_DATE_FROM(state, data) {
     state.selectedDate = data;
   },
-  CLEAR_DATA(state, data) {
+  SET_CLEARED_DATA(state, data) {
     state.addEvent = data;
   },
   SET_CLEARED_FILTERS(state, data) {
@@ -64,7 +63,7 @@ const mutations = {
 const actions = {
   setColorPriority({getters, commit}) {
     let color = '';
-    let prior = getters.addEvent.Priority;
+    let prior = getters.getEventToChange.Priority;
 
     switch(prior) {
       case 'L':
@@ -81,25 +80,6 @@ const actions = {
     }
     commit('SET_COLOR_PRIORITY', color);
   },
-//   getEvent({commit}) {
-//     axios({
-//       method: 'GET',
-//       url: 'Events' + '(' + "'006'" + ')',
-//       auth: {
-//         username: 'psy',
-//         password: 'ides01'
-//       },
-//       headers: {
-//         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-//       }
-//     }).then(res => {
-//       let oEvent = res.data.d.results;
-//       oEvent.EventTime = oEvent.slice(2, 4) + ':' + oEvent.slice(5, 7) + ':' + oEvent.slice(8, 10)
-//       commit('SET_EVENT', oEvent);
-//     }).catch(error => { 
-//       console.log(error);
-//      })
-// },
 getEvents({commit, dispatch, getters}) {
   let urlQuery = getters.getUrlQuery
     axios({
@@ -111,7 +91,7 @@ getEvents({commit, dispatch, getters}) {
     }).then(res => {
       let oEvents = res.data.d.results;
       commit('SET_EVENTS', oEvents);
-      dispatch('formatToArray', oEvents);
+      oEvents = utils.formatToArray(oEvents)
       dispatch('convertDate');
       dispatch('setColor')
     }).catch(error => { 
@@ -119,7 +99,7 @@ getEvents({commit, dispatch, getters}) {
     })
 },
 convertDate({getters, commit}) {
-  let oEvents = getters.events;
+  let oEvents = getters.getEvents;
   for(let i = 0; i<oEvents.length; i++) {
       oEvents[i].DateFrom = utils.dateStringToObj(oEvents[i].DateFrom);
       oEvents[i].DateTo = oEvents[i].DateTo ? utils.dateStringToObj(oEvents[i].DateTo) : oEvents[i].DateFrom
@@ -128,7 +108,7 @@ convertDate({getters, commit}) {
   commit('SET_EVENTS', oEvents);
 },
 setColor({commit, getters}){
-     const aEvents = getters.events;
+     const aEvents = getters.getEvents;
      for(let i = 0; i<aEvents.length; i++) {
         if(aEvents[i].Priority == "L") {
             aEvents[i].color = '#fde997';
@@ -141,16 +121,18 @@ setColor({commit, getters}){
      commit('SET_EVENTS', aEvents);
   },
   addNewEvent({getters, dispatch}) {
-     const eventData = getters.addEvent
-     
+    //  const eventData = getters.getEventToChange;
+
+    //  this.$store.commit('SET_CLEARED_DATA', utils.createClone(editedData))
+      let eventData = utils.createClone(editedData);
      eventData.DateFrom = utils.formatDateForBackend(getters.getSelectedDate);
      eventData.DateTo = !eventData.DateTo ? eventData.DateFrom : utils.formatDateForBackend(eventData.DateTo)
      eventData.EventTime = utils.formatTimeForBackend(eventData.EventTime);
     
     dispatch('setColorPriority');
-    dispatch('formatToString', eventData);
-    
-    odata('Events' + getters.getUrlQuery).post(eventData).save(function (data) {
+    eventData = utils.formatToString(eventData);
+    // jeszcze URL
+    odata('Events').post(eventData).save(function (data) {
       console.log("Working");
     }, function (status) {
       console.error(status);
@@ -161,8 +143,11 @@ setColor({commit, getters}){
       
   },
   editEvent({commit, getters, dispatch}) {
-    let eventData = getters.addEvent;
-    let aEvents = getters.events;
+    // let eventData = getters.getEventToChange;
+
+    let eventData = utils.createClone(getters.getEventToChange);
+
+    let aEvents = getters.getEvents;
     let pos = aEvents.findIndex(x => x.EventId === eventData.EventId);
     //aEvents[pos] = eventData;
     eventData.DateFrom = utils.formatDateForBackend(eventData.DateFrom);
@@ -172,7 +157,7 @@ setColor({commit, getters}){
       eventData.EventTime = utils.formatTimeForBackend(eventData.EventTime);
     }
     //dispatch('getEvents');
-    dispatch('formatToString', eventData);
+    eventData = utils.formatToString(eventData);
     commit('SET_EVENTS', aEvents);
     let query = getters.getUrlQuery
     const url = 'Events' + '(' + "EventId='"+ eventData.EventId + "')" + query
@@ -214,7 +199,7 @@ setColor({commit, getters}){
           EventPrivacy: null,
           color: null
          };
-  commit('CLEAR_DATA', clearForm);
+  commit('SET_CLEARED_DATA', clearForm);
   },
 clearFilters({commit}) {
   let aFilters = {
@@ -224,87 +209,25 @@ clearFilters({commit}) {
     }
    commit('SET_CLEARED_FILTERS', aFilters);
   },
-  formatToString({commit}, data) {
-    let formattedData = {};
-    for(let key in data) {
-      if(data[key]) {
-        if(data[key].constructor === Array) {
-          formattedData[key] = "";
-          for(let i = 0; i < data[key].length; i++) {
-                if(data[key].length <= 1) {
-                    formattedData[key] = data[key][i]
-                }
-                else {
-                    formattedData[key] += data[key][i] + '||';
-                }
-              } 
-           if(formattedData[key].includes('||')) {
-                formattedData[key] = formattedData[key].slice(0, formattedData[key].length-2);
-            }
-            data[key] = formattedData[key];
-          }
-      }
-    }
- },
- formatToArray({commit}, data) {
-  let dataSet = data[0].__metadata.type;
-  let index, string;
-  let array = [];
-
-  for(let i = 0; i < data.length; i++) {
-    delete data[i].__metadata;
-    for(let key in data[i]) { 
-      if(data[i][key].includes('||')) {
-        while(data[i][key].length > 1) {
-          index = data[i][key].indexOf('||');
-          if(index > 0) {
-              string = data[i][key].slice(0, index);
-              array.push(string);
-              index += 2;
-              data[i][key] = data[i][key].substr(index, data[i][key].length);
-          } 
-          else {
-              array.push(data[i][key]);
-               data[i][key] = "";
-          }
-        }
-         data[i][key] = array;
-         array = [];
-      } else {
-           if(dataSet == 'ZGW_INTRANET_SRV.UserSkills' && key != "UserAlias" && key != "Language") {
-              array.push(data[i][key]);
-              data[i][key] = array;
-              array = [];
-      }
-      }
-    }
-  }  
-  if(dataSet == 'ZGW_INTRANET_SRV.UserSkills') {
-    commit('SET_USER_SKILLS', data[0]);
-  }
- }
 };
 
 const getters = {
   priorityColor() {
     return state.priorityColor;
   },  
-  event(state) {
-    return state.event;
-},
-  events(state) { 
+ getEvents(state) { 
     return state.aEvents;
  },
- priorities(state) {
+ getPriorities(state) {
    return state.aPriority;
  },
- eventTypes(state) {
+ getEventTypes(state) {
    return state.aEventType;
  },
- addEvent(state) {
+ getEventToChange(state) {
    return state.addEvent;
  },
- clearedFilters(state) {
+ getClearedFilters(state) {
    return state.clearedFilters;
  },
  getSelectedDate(state){

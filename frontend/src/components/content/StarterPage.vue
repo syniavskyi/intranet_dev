@@ -102,11 +102,8 @@ export default {
     // this.$store.commit('DISPLAY_MENU', false);
   },
   created() {
-    // this.getId();
     this.getNewDocs();
     this.getInfoDocs();
-    // this.getDocStatus();
-    // this.setStatusToDoc();
   },
     computed: {
       ...mapGetters({
