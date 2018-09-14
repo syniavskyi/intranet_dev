@@ -353,7 +353,6 @@ export default {
       userData: "getUserInfo",
       saveChangesSuccess: "isSaveChangesSuccess",
       photoUploadError: "isSavePhotoError",
-      userPositions: "getUserJobPositions",
       cvLanguageList: "getCvLanguageList",
       loginLanguage: "getLoginLanguage",
       showSelectCv: "getShowSelectCvDialog",

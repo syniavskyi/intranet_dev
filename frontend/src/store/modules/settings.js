@@ -19,6 +19,8 @@ const mutations = {
     SET_LOGIN_LANGUAGE(state, language) {
         state.loginLanguage = language;
     }
+    // login language is not changing after logging into application, but 
+    // set_lang mutation is changing language in which app is curretly displayed
 }
 
 const actions = {
