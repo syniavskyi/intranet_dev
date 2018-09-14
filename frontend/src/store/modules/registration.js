@@ -1,5 +1,4 @@
 import axios from 'axios'
-import router from '@/router/index.js'
 
 const state = {
   emails: [],
@@ -10,19 +9,19 @@ const state = {
 };
 
 const mutations = {
-  ADD_EMAILS(state, data) {
+  SET_EMAILS(state, data) {
     state.emails = data;
   },
-  ADD_PREFIX_EMAIL(state, data) {
+  SET_PREFIX_EMAIL(state, data) {
     state.email = data;
   },
-  EMAIL_EXISTS(state, data) {
+  SET_EMAIL_EXISTS(state, data) {
     state.emailExists = data;
   },
   SET_MAIL(state, data) {
     state.mail = data;
   },
-  SET_REGISTRATION_ERROR(state, isError){
+  SET_REGISTRATION_ERROR(state, isError) {
     state.registrationError = isError
   }
 };
@@ -31,7 +30,6 @@ const actions = {
   checkEmail({
     commit,
     state,
-    dispatch
   }, props) {
     axios.get('/api/emailList').then(res => {
       const data = res.data,
@@ -43,7 +41,7 @@ const actions = {
         email.email = data[key].email;
         aData.push(email.email);
       }
-      commit('ADD_EMAILS', aData);
+      commit('SET_EMAILS', aData);
       if (state.emails.length > 0) {
         var bIsEmail;
 
@@ -56,13 +54,12 @@ const actions = {
             commit('SET_MAIL', props.mail);
           }
         }
-        commit('EMAIL_EXISTS', bIsEmail);
+        commit('SET_EMAIL_EXISTS', bIsEmail);
       }
     });
   },
   fullNameToEmail({
-    commit,
-    state
+    commit
   }, data) {
     var sEmail = data.name.replace(" ", ".").toLowerCase(),
       sDomain = "@btech.pl",
@@ -70,7 +67,7 @@ const actions = {
 
     data.name === "" ? (sDomain = "") : (sReturnEmail = sEmail + sDomain);
     data.email = sReturnEmail
-    commit('ADD_PREFIX_EMAIL', data.email);
+    commit('SET_PREFIX_EMAIL', data.email);
   },
   submitRegistration({
     commit
@@ -78,7 +75,6 @@ const actions = {
     data.openDialog = true;
     commit('OPEN_DIALOG', data.openDialog);
     data.role = 'ROLE_' + data.role.toUpperCase();
-    // console.log(data);
     axios.post('/api/register', {
       username: data.name,
       password: data.password,
@@ -88,10 +84,8 @@ const actions = {
       deps: [data.department]
     }).then(function (response) {
       commit('SET_REGISTRATION_ERROR', false)
-      // console.log(response);
     }).catch(function (error) {
       commit('SET_REGISTRATION_ERROR', false)
-      // console.log(error);
     })
   },
 };
@@ -109,7 +103,7 @@ const getters = {
   setMail(state) {
     return state.mail;
   },
-  getRegistrationError(state){
+  getRegistrationError(state) {
     return state.registrationError
   }
 };
