@@ -9,7 +9,7 @@
              <button class="profile-edit-btn" v-if="!editMode"  @click="edit">{{ $t("button.edit") }}</button>
              <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-txt">{{ $t("button.finishEdit") }}</span><span class="prof-btn-icon">&#10004;</span></button>
         </div>
-        <p v-if="noAvailEntries">Brak wpisów dla podanych kryteriów</p>
+        <p class="ava-content-header" v-if="noAvailEntries">Brak wpisów dla podanych kryteriów</p>
         <div class="availability-tile-content" v-if="!noAvailEntries">
             <div class="ava-table-s" v-for="(avail, index) in filteredUserAvail" :key="index">
                 <div class="ava-thead-s">

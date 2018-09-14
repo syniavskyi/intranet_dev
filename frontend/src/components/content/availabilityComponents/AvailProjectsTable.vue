@@ -8,7 +8,7 @@
             <button class="profile-edit-btn" v-if="!editMode"  @click="edit">{{ $t("button.edit") }}</button>
              <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-txt">{{ $t("button.finishEdit") }}</span><span class="prof-btn-icon">&#10004;</span></button>
         </div>
-        <p v-if="noAvailEntries">Brak wpisów dla podanych kryteriów</p>
+        <p class="ava-content-header" v-if="noAvailEntries">Brak wpisów dla podanych kryteriów</p>
         <div v-if="!noAvailEntries" class="availability-tile-content">
             <div class="ava-proj-table">
                 <div class="ava-proj-thead">
@@ -68,7 +68,9 @@
                     </div>
                     <div class="ava-tbproj-item">
                         <div class="ava-tbproj-ititle">Uwagi</div>
-                        <div class="ava-tbproj-itxt"><textarea :disabled="!editMode" v-model="project.Description"></textarea></div>
+                        <div class="ava-tbproj-itxt">
+                            <textarea :disabled="!editMode" v-model="project.Description"></textarea>
+                        </div>
                     </div>
                     <div class="ava-tbs-item">
                         <div class="ava-tbs-ititle">Opcje</div>

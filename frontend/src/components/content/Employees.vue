@@ -23,7 +23,7 @@
                 <select required class="cd-select" v-model="aFilters.department">
                   <option v-for="department in departmentList" :key="department.Key" :value="department.Value">{{ department.Value }}</option>
                 </select>
-                <label class="ava-select-label-cool"> wybierz oddział</label>
+                <label class="ava-select-label-cool">albo wybierz oddział</label>
               </div>
             </div>
             <button class="func-btn emp-btn" @click="clearFilters">Wyczyść</button>

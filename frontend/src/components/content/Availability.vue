@@ -51,55 +51,46 @@
                                     <div class="ava-div-select-cool" v-if="selectedUser != null">
                                         <select required class="ava-select-cool" v-model="selectedType">
                                             <option v-for="type in availTypesList" :value="type.Key" :key="type.Key">{{type.Value}}</option>
-                                            
                                             <!-- <option v-for="branch in branchList" :key="branch.branchId" :value="selectedBranch = branch.branchId">{{ branch.branchName }}</option> -->
                                         </select>
+                                        <button class="ava-select-reset" title="resetuj" v-if="selectedType" @click="selectedType = null">&#10006;</button>
                                         <label class="ava-select-label-cool">Rodzaj wpisu</label>
-                                        <button v-if="selectedType" @click="selectedType = null">X</button>
                                     </div>
                                     <div class="ava-div-select-cool" v-if="selectedUser != null">
                                         <select required class="ava-select-cool" v-model="selectedStatus">
                                             <option v-for="status in availStatusList" :key="status.Key" :value="status.Key">{{ status.Value }}</option>
                                              <!-- <option v-for="branch in branchList" :key="branch.branchId" :value="selectedBranch = branch.branchId">{{ branch.branchName }}</option> -->
                                         </select>
+                                        <button class="ava-select-reset" title="resetuj" v-if="selectedStatus" @click="selectedStatus = null">&#10006;</button>
                                         <label class="ava-select-label-cool">Status</label>
-                                        <button v-if="selectedStatus" @click="selectedStatus = null">X</button>
                                     </div>
                                     <button class="ava-button ava-button-edit" v-if="selectedUser != null" @click="showContent = true">Wyświetl</button>
                                 </div>
-
                                 <!-- <div class="calendar" v-if="selectedUser != null"> -->
                                 <!-- calendar for projects -->
                                 <div class="ava-calendar" v-if="selectedUser != null">
-                                    <p  v-if="selectedType === 'PR'">Zestawienie projektów</p>
+                                    <p class="ava-content-header" v-if="selectedType === 'PR'">Zestawienie projektów</p>
                                     <v-calendar class="availability-calendar" v-if="selectedType === 'PR'" :attributes="projectsAttr" mode='single' is-inline></v-calendar>
                                 </div>
                                 <!-- calendar for leaves -->
                                 <div class="ava-calendar" v-if="selectedUser != null">
-                                    <p  v-if="selectedType !== 'PR'">Zestawienie dyspozycyjności</p>
+                                    <p class="ava-content-header" v-if="selectedType !== 'PR'">Zestawienie dyspozycyjności</p>
                                     <v-calendar class="availability-calendar"  v-if="selectedType !== 'PR'" :attributes="leavesAttr" mode='single' is-inline></v-calendar>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                        <app-projects-tile :auth-type="authType" :selected-user="selectedUser.UserAlias" v-if="selectedType === 'PR' && showContent == true"></app-projects-tile>
-                        <app-leaves-tile   :auth-type="authType" :selected-user="selectedUser.UserAlias"
-                        :selected-type="selectedType"  v-if="selectedType !== 'PR' && showContent == true"></app-leaves-tile>
+                    <app-projects-tile :auth-type="authType" :selected-user="selectedUser.UserAlias" v-if="selectedType === 'PR' && showContent == true"></app-projects-tile>
+                    <app-leaves-tile   :auth-type="authType" :selected-user="selectedUser.UserAlias" :selected-type="selectedType"  v-if="selectedType !== 'PR' && showContent == true"></app-leaves-tile>
                </div>
                 <div class="availability-tiles-row">
                     <app-projects-table :auth-type="authType" :selected-status="selectedStatus" v-if="selectedType === 'PR' && showContent == true"></app-projects-table>
                     <app-leaves-table :auth-type="authType" :selected-type="selectedType" :selected-status="selectedStatus" v-if="selectedType !== 'PR' && showContent == true"></app-leaves-table>
                 </div>
             </div>
-
             <!-- for adding other entry -->
-
-            
         </div>
-
     </div>
-
 </div>
 </template>
 
