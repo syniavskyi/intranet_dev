@@ -351,8 +351,8 @@ export default {
   computed: {
     ...mapGetters({
       userData: "getUserInfo",
-      saveChangesSuccess: "isSaveChangesSuccess",
-      photoUploadError: "isSavePhotoError",
+      saveChangesSuccess: "getSaveChangesSuccess",
+      photoUploadError: "getSavePhotoError",
       cvLanguageList: "getCvLanguageList",
       loginLanguage: "getLoginLanguage",
       showSelectCv: "getShowSelectCvDialog",
