@@ -17,32 +17,32 @@
         <div class="prof-skills-inputs">
           <div class="prof-input-xl">
             <!-- languages -->
-              <label class="label-skills">{{ $t("label.foreignLanguages") }}</label>
-              <button class="prof-skills-btn" @click="addLanguageSkillsRow" v-if="editMode">+</button>
-              <div class="prof-div-skills" v-for="(lang, index) in userLangs" :id="index" :key="index">
-                <div class="prof-div-slang">
-                  <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.Language" @change="checkFields">
-                    <option v-for="fullLang in fullLanguageList" :value="fullLang.Language" :key="fullLang.Language">{{fullLang.LangName}}</option>
-                  </select>
-                  <select v-if="!editMode" class="selectProfileSkills selectDisabled" v-model="lang.Language">
-                    <option v-for="fullLang in fullLanguageList" :value="fullLang.Language" :key="fullLang.Language">{{fullLang.LangName}}</option>
-                  </select>
-                  <label class="label-select-profile">{{ $t("label.language") }}</label>
-                </div>
-                <div class="prof-div-slang">
-                  <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.LangLevel" @change="checkFields">
-                    <option v-for="level in langLevels" :value="level.Key" :key="level.Key">{{level.Value}}</option>
-                  </select>
-                  <select v-if="!editMode" class="selectProfileSkills selectDisabled" v-model="lang.LangLevel">
-                    <option v-for="level in langLevels" :value="level.Key" :key="level.Key">{{level.Value}}</option>
-                  </select>
-                  <label class="label-select-profile">{{ $t("label.level") }}</label>
-                </div>
-                <div class="prof-skills-btns">
-                  <button class="prof-skills-delete" @click="removeLanguageSkillsRow(index)" v-if="editMode">Usuń</button>
-                  <button class="prof-skills-save saveLangBtn" :disabled="true" @click="saveLang" v-if="editMode">{{ $t("button.save") }}</button>
-                </div>
+            <label class="label-skills">{{ $t("label.foreignLanguages") }}</label>
+            <button class="prof-skills-btn" @click="addLanguageSkillsRow" v-if="editMode">+</button>
+            <div class="prof-div-skills" v-for="(lang, index) in userLangs" :id="index" :key="index">
+              <div class="prof-div-slang">
+                <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.Language" @change="checkFields">
+                  <option v-for="fullLang in fullLanguageList" :value="fullLang.Language" :key="fullLang.Language">{{fullLang.LangName}}</option>
+                </select>
+                <select v-if="!editMode" class="selectProfileSkills selectDisabled" v-model="lang.Language">
+                  <option v-for="fullLang in fullLanguageList" :value="fullLang.Language" :key="fullLang.Language">{{fullLang.LangName}}</option>
+                </select>
+                <label class="label-select-profile">{{ $t("label.language") }}</label>
               </div>
+              <div class="prof-div-slang">
+                <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.LangLevel" @change="checkFields">
+                  <option v-for="level in langLevels" :value="level.Key" :key="level.Key">{{level.Value}}</option>
+                </select>
+                <select v-if="!editMode" class="selectProfileSkills selectDisabled" v-model="lang.LangLevel">
+                  <option v-for="level in langLevels" :value="level.Key" :key="level.Key">{{level.Value}}</option>
+                </select>
+                <label class="label-select-profile">{{ $t("label.level") }}</label>
+              </div>
+              <div class="prof-skills-btns">
+                <button class="prof-skills-delete" @click="removeLanguageSkillsRow(index)" v-if="editMode">Usuń</button>
+                <button class="prof-skills-save saveLangBtn" :disabled="true" @click="saveLang" v-if="editMode">{{ $t("button.save") }}</button>
+              </div>
+            </div>
           </div>
           <div class="prof-input-xl">
             <!-- Sap modules -->
@@ -105,7 +105,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-let utils = require('../../../utils');
+let utils = require("../../../utils");
 export default {
   data() {
     return {
@@ -125,7 +125,7 @@ export default {
       modulesList: "getModulesList",
       userLangs: "getUserLanguages",
       langLevels: "langLevels",
-      fullLanguageList: "fullLanguageList"
+      fullLanguageList: "getFullLanguageList"
     })
   },
   methods: {
@@ -136,35 +136,35 @@ export default {
       "removeLanguageSkillsRow"
     ]),
     onHover(el) {
-      const shadow = "0 0 20px orange"
+      const shadow = "0 0 20px orange";
       if (el.style) {
-        el.style.boxShadow = shadow
+        el.style.boxShadow = shadow;
       } else {
-        this.$el.style.boxShadow = shadow
+        this.$el.style.boxShadow = shadow;
       }
     },
     onHoverOut(el) {
-      const shadow = "0 0 10px grey"
+      const shadow = "0 0 10px grey";
       if (el.style) {
-        el.style.boxShadow = shadow
+        el.style.boxShadow = shadow;
       } else {
-        this.$el.style.boxShadow = shadow 
+        this.$el.style.boxShadow = shadow;
       }
     },
     edit() {
       this.editMode = true;
-      this.onHover(this.$el)
+      this.onHover(this.$el);
       this._beforeEditingCacheSkills = utils.createClone(this.userSkills);
       this._beforeEditingCacheLangs = utils.createClone(this.userLangs);
     },
     cancel() {
-      this.onHoverOut(this.$el)
+      this.onHoverOut(this.$el);
       this.$store.commit("SET_USER_SKILLS", this._beforeEditingCacheSkills);
       this.$store.commit("SET_USER_LANGS", this._beforeEditingCacheLangs);
       this.editMode = false;
     },
     save() {
-      this.onHoverOut(this.$el)
+      this.onHoverOut(this.$el);
       let data = this.userSkills;
       this.$store.dispatch("saveUserSkills", data);
       this._beforeEditingCacheSkills = utils.createClone(this.userSkills);
