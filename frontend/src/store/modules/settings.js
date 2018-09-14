@@ -36,7 +36,7 @@ const actions = {
 }
 
 const getters = {
-    languageList(state) {
+    getLanguageList(state) {
         return state.languageList;
     },
     getLoginLanguage(state) {
