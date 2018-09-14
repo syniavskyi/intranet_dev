@@ -1,264 +1,263 @@
 <template>
-<div class="plane-profile">
+  <div class="plane-profile">
     <div class="profile-nav-and-content">
-        <app-menu v-show="displayMenu"></app-menu>
-        <div class="modal-overlay" v-show="displayOverlay"></div>
-        <!-- <leave-page-dialog v-if="showLeavePageDialog" @action-selected="leavePage" @close="showLeavePageDialog = false"></leave-page-dialog> -->
-        <div class="profile-content">
-            <div class="profile-header">
-                <div class="profile-header-title-and-menu">
-                    <!-- <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="profile-header-menu"> -->
-                    <div @click="showMenu" class="content-header-menu">&#9776;</div>
-                    <p class="profile-header-title">{{ $t("header.profile") }}</p>
-                </div>
-                <div v-if="!editMode" class="prof-input-lang"> 
-                    <select required class="selectLang" v-model="selectedCvLang" @change="getNewData">
-                        <option v-for="language in cvLanguageList" :key="language.id" :value="language.id">{{ language.description }}</option>
-                    </select>
-                    <label class="label-select-lang">{{ $t("label.language") }}</label>
-                </div>
-                <button class="profile-header-button" @mouseout="onHoverOut" @mouseover="onHover" v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
-                <div v-if="editMode" class="header-button-save-reject">
-                    <p class="profile-error profile-error-data" v-if="!saveChangesSuccess">{{ $t("message.saveChangesError") }}</p>
-                    <button class="border-btn save-btn" @click="onSaveChanges" :disabled="disableSaveBtn">{{ $t("button.saveChanges") }}</button>
-                    <button class="border-btn reject-btn" @click="onCancelEdit">{{ $t("button.cancel") }}</button>
-                </div>
-            </div>
-            <h3 class="prof-user-header-name">{{userData.Fullname}}</h3>
-            <div class="profile-tiles">
-              <div class="profile-tiles-row-wrap">
-                <div class="profile-tiles-row">
-                    <div class="profile-tile-1-3 profile-main-edit">
-                        <div class="profile-tile-header">
-                            <h2 class="prof-tile-h2">{{ $t("header.contact") }}</h2>
-                            <div class="tile-underscore"></div>
-                        </div>
-                        <div class="profile-tile-content">
-                            <!-- <div class="profile-tile-inputs-section profile-inputs-sections-1"> -->
-                                <div class="profile-tile-inputs">
-                                    <div class="prof-input">
-                                        <!-- <input required v-if="editMode" class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.address"> -->
-                                        <!-- <input required v-if="editMode" @input="checkFormFields" class="inputProfile inputEdit" v-model="userData.address"> -->
-                                        <div class="prof-input-adr" v-if="editMode">
-                                            <div class="prof-input-uno">
-                                                <input required v-model="userData.Street"/>
-                                                <span class="prof-div-bar"></span>
-                                                <label class="prof-ainput-lbl">{{ $t("label.Street") }}</label>
-                                            </div>
-                                            <div class="prof-input-uno">
-                                                <input required v-model="userData.BuildingNumber"/>
-                                                <span class="prof-div-bar"></span>
-                                                <label class="prof-ainput-lbl">{{ $t("label.buildingNumber") }}</label>
-                                            </div>
-                                            <div class="prof-input-uno">
-                                                <input required v-model="userData.ApartmentNumber">
-                                                <span class="prof-div-bar"></span>
-                                                <label class="prof-ainput-lbl">{{ $t("label.apartmentNumber") }}</label>
-                                            </div>
-                                            <div class="prof-input-uno">
-                                                <vue-google-autocomplete required types="geocode" id="autocomplete" placeholder="" onfocus="value = ''" @input="userData.City = value" :value="selectedCity"  @change="checkFormFields"></vue-google-autocomplete>
-                                                <span class="prof-div-bar"></span>
-                                                <label class="prof-ainput-lbl">{{ $t("label.city") }}</label>
-                                            </div>
-                                            <div class="prof-input-uno">
-                                                <input required v-model="userData.PostalCode">
-                                                <span class="prof-div-bar"></span>
-                                                <label class="prof-ainput-lbl">{{ $t("label.postalCode") }}</label>
-                                            </div>
-                                        </div>
-                                        <p v-if="!editMode" disabled class="inputProfile inputDisabled">{{formatAddress}}</p>
-                                        <!-- <label class="label-profile">{{ $t("label.address") }}</label> -->
-                                    </div>
-                                    <div class="prof-input">
-                                        <!-- <input required class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()"> -->
-                                        <input required v-if="editMode" class="inputEdit inputProfile" @input="checkFormFields"  v-model="userData.Email" @blur="$v.userData.Email.$touch()">
-                                        <input v-if="!editMode" disabled type="text" class="inputDisabled inputProfile " v-model="userData.Email">
-                                        <span class="prof-div-bar"></span>
-                                        <label class="label-profile">{{ $t("label.email") }}</label>
-                                        <!-- <div class="error-wrapper">
-                                            <p class="profile-error profile-error-email" v-if="$v.userData.email.$invalid">{{ $t("message.emailValidation") }}</p>
-                                        </div> -->
-                                        <p class="prof-error" v-if="$v.userData.Email.$invalid">{{ $t("message.emailValidation") }}</p>
-                                    </div>
-                                    <div class="prof-input">
-                                        <!-- <input class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.phone" @input="phoneValidation"> -->
-                                        <input required v-if="editMode" class="inputEdit inputProfile" v-model="userData.Telephone" @input="phoneValidation">
-                                        <input v-if="!editMode" disabled class="inputDisabled inputProfile" v-model="userData.Telephone">
-                                        <span class="prof-div-bar"></span>
-                                        <label class="label-profile">{{ $t("label.phone") }}</label>
-                                        <!-- <div class="error-wrapper">
-                                            <p class="profile-error profile-error-phone" v-if="invalidPhone">{{ $t("message.phoneValidation") }}</p>
-                                        </div> -->
-                                        <p class="prof-error" v-if="invalidPhone">{{ $t("message.phoneValidation") }}</p>
-                                    </div>
-                                </div>
-                            <!-- </div> -->
-                        </div>
-                    </div>
-                    <div class="profile-tile-1-3 profile-main-edit">
-                        <div class="profile-tile-header">
-                            <h2 class="prof-tile-h2">Komunikatory</h2>
-                            <div class="tile-underscore"></div>
-                        </div>
-                        <div class="profile-tile-content">
-                            <div class="profile-tile-inputs">
-                                <div class="prof-input-m">
-                                    <!-- <input class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.skype"> -->
-                                    <input required v-if="editMode" class="inputProfile inputEdit" @input="checkFormFields" v-model="userData.SkypeId">
-                                    <input v-if="!editMode" disabled class="inputProfile inputDisabled" v-model="userData.SkypeId">
-                                    <span class="prof-div-bar"></span>
-                                    <label class="label-profile">{{ $t("label.skype") }}</label>
-                                    <img class="prof-comm-img" src="../../assets/images/comm/grey/skype.png"/>
-                                </div>
-                                <div class="prof-input-m">
-                                    <!-- <input class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.slack"> -->
-                                    <input required v-if="editMode" class="inputProfile inputEdit" @input="checkFormFields" v-model="userData.SlackId">
-                                    <input disabled v-if="!editMode" class="inputProfile inputDisabled" v-model="userData.SlackId">
-                                    <span class="prof-div-bar"></span>
-                                    <label class="label-profile">{{ $t("label.slack") }}</label>
-                                    <img class="prof-comm-img" src="../../assets/images/comm/grey/slack.png"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="profile-tile-1-3-emp">
-                        <div class="profile-tile-header">
-                            <!-- <div class="tile-underscore"></div> -->
-                        </div>
-                        <div class="profile-tile-content">
-                            <div class="profile-user-header">
-                                <div class="profile-user-img">
-                                    <img class="img-user-class" id="userProfilePhoto" :src="setImageSrc()" width="150px">
-                                    <!-- <img class="img-user-class" id="userProfilePhoto" src="nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileType='USER-PHOTO',Language='PL',UserAlias='UIO')/$value" width="150px"> -->
-                                    <!-- <img class="img-user-class" id="userProfilePhoto" :src="userData.imgUrl" width="150px"> -->
-                                    <p class="profile-error profile-error-image" v-if="photoUploadError">{{ $t("message.photoUploadError") }}</p>
-                                    <label for="change-user-image" class="profile-edit-btn">{{ $t("button.changePhoto") }}
-                                        <input accept="image/*" style="width: 1rem;" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="profile-tiles-row">
-                    <div class="profile-tile-1-2 profile-main-edit">
-                        <div class="profile-tile-header">
-                            <div class="profile-tile-header-row">
-                                <h2 class="prof-tile-h2">{{ $t("header.employee") }}</h2>
-                                <button @click="showChangePassword" class="func-btn">
-                                  <span class="prof-btn-txt">zmień hasło</span>
-                                  <span class="prof-btn-icon">&#x1f513;</span>
-                                </button>
-                            </div>
-                            <div class="tile-underscore"></div>
-                        </div>
-                        <div class="profile-tile-content">
-                            <div class="profile-tile-inputs-section">
-                                <div class="profile-tile-inputs">
-                                    <div class="prof-input-s">
-                                        <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.branch"> -->
-                                        <input disabled class="inputDisabled inputProfile" v-model="userData.DepartmentName">
-                                        <label class="label-profile">{{ $t("label.department") }}</label>
-                                    </div>
-                                    <div class="prof-input-s">
-                                        <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.section"> -->
-                                        <input disabled class="inputProfile inputDisabled" v-model="userData.SectionName">
-                                        <label class="label-profile">{{ $t("label.branch") }}</label>
-                                    </div>
-                                    <div class="prof-input-s">
-                                        <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.position"> -->
-                                        <input disabled class="inputProfile inputDisabled" v-model="userData.JobPosition">
-                                        <label class="label-profile">{{ $t("label.position") }}</label>
-                                    </div>
-                                    <!-- dodawanie nowej pozycji przez BO lub Management -->
-                                    <div v-if="editMode" class="prof-input-s">
-                                        <input disabled v-if="!editMode" class="inputProfile inputDisabled" v-model="newPosition"/>
-                                        <input v-on:keyup.enter="addNewPositionForUser" required v-if="editMode" class="inputProfile inputEditPos" v-model="newPosition"/>
-                                        <span class="prof-div-bar"></span>
-                                        <label class="label-profile">Position</label>
-                                        <button class="prof-div-pos-btn" @click="addNewPositionForUser">+</button>
-                                        <button class="prof-div-pos-elem" v-for="position in userPositions" :key="position" @click="removeUserPosition(position)">{{position}}</button>
-                                    </div>
-                                    <div class="prof-input-s">
-                                        <input v-if="editMode" required class="inputProfile inputEdit" @input="checkFormFields" v-model="userData.CurrentProject">
-                                        <input disabled v-if="!editMode" class="inputDisabled inputProfile" v-model="userData.CurrentProject">
-                                        <span class="prof-div-bar"></span>
-                                        <label class="label-profile">{{ $t("label.project") }}</label>
-                                    </div>
-                                </div>
-                                <div class="profile-tile-inputs">
-                                    <div class="prof-input-s">
-                                        <!-- <select v-model="userData.state" @change="checkFormFields" class="selectProfile" :class="editMode ? 'selectEdit' : 'selectDisabled'" :disabled="!editMode"> -->
-                                        <select required v-if="editMode" v-model="userData.WorkTime" @change="checkFormFields" class="selectProfile selectEdit" >
-                                            <option value="Full">{{ $t("label.fulltime") }}</option>
-                                            <option value="1/2">1/2</option>
-                                            <option value="1/3">1/3</option>
-                                            <option value="2/3">2/3</option>
-                                            <option value="1/4">1/4</option>
-                                            <option value="3/4">3/4</option>
-                                            <option value="1/5">1/5</option>
-                                            <option value="2/5">2/5</option>
-                                            <option value="3/5">3/5</option>
-                                            <option value="4/5">4/5</option>
-                                        </select>
-                                        <!-- <p v-if="!editMode" class="inputDisabled">{{ userData.state }}</p> -->
-                                        <select disabled v-if="!editMode" v-model="userData.WorkTime" @change="checkFormFields" class="selectProfile selectDisabled"></select>
-                                        <label class="label-profile">{{ $t("label.worktime") }}</label>
-                                    </div>
-                                    <div class="prof-input-s">
-                                        <!-- <masked-input mask="11.11.1111" @input="dateValidation" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.employmentDate" /> -->
-                                        <!-- <masked-input required v-if="editMode" mask="11.11.1111" @input="dateValidation" class="inputProfile inputEdit" v-model="userData.EmploymentDate" /> -->
-                                        <input :value="formatDate" disabled class="inputProfile inputDisabled" v-if="!editMode">
-                                        <v-date-picker v-if="editMode" class="delegations-input-date inputDisabled" v-model="userData.EmploymentDate" :max-date="new Date()">
-                                            <input value="userData.employmentDate"/>
-                                        </v-date-picker>
-                                        <!-- <input required v-if="editMode" @input="dateValidation" class="inputProfile inputEdit" v-model="userData.EmploymentDate"> -->
-                                        <!-- <v-date-picker :max-date="new Date()" v-if="projectEditMode" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" is-expanded mode="single" v-model="userData.employmentDate">
-                                                <input value="userData.employmentDate" />
-                                            </v-date-picker> -->
-                                        <!-- <input disabled v-if="!editMode" class="inputProfile inputDisabled" v-model="userData.EmploymentDate"> -->
-                                        <!-- <v-date-picker disabled v-model="userData.EmploymentDate">
-                                            <input value="userData.EmploymentDate" />
-                                        </v-date-picker> -->
-                                        <span class="prof-div-bar"></span>
-                                        <label class="label-profile">{{ $t("label.employmentDate") }}</label>
-                                        <!-- <div class="error-wrapper">
-                                            <p class="profile-error profile-error-date" v-if="invalidDate">{{ $t("message.dateValidation") }}</p>
-                                        </div> -->
-                                        <p class="prof-error" v-if="invalidDate">{{ $t("message.dateValidation") }}</p>
-                                    </div>
-                                    <div class="prof-input-s">
-                                        <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.seniority"> -->
-                                        <input required v-if="editMode" :disabled="true" class="inputDisabled inputProfile" v-model="userData.WorkExperience">
-                                        <!-- <p v-if="!editMode" class="inputDisabled">{{userData.WorkExperience}}</p> -->
-                                        <input disabled class="inputProfile inputDisabled" v-if="!editMode">
-                                        <label class="label-profile">{{ $t("label.workExperience") }}</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <user-cv-tile></user-cv-tile>
-                </div>
-                </div>
-                <user-education-component></user-education-component>
-                <user-experience-component></user-experience-component>
-                <user-projects-component></user-projects-component>
-                <user-skills-component></user-skills-component>
-                <select-cv-content v-show="showSelectCv"></select-cv-content>
-                <div v-show="showSelectCv" class="modal-overlay"></div>  
-                <change-user-password v-show="showPasswordDialog"></change-user-password>  
-
-            </div>
+      <app-menu v-show="displayMenu"></app-menu>
+      <div class="modal-overlay" v-show="displayOverlay"></div>
+      <!-- <leave-page-dialog v-if="showLeavePageDialog" @action-selected="leavePage" @close="showLeavePageDialog = false"></leave-page-dialog> -->
+      <div class="profile-content">
+        <div class="profile-header">
+          <div class="profile-header-title-and-menu">
+          <!-- <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="profile-header-menu"> -->
+            <div @click="showMenu" class="content-header-menu">&#9776;</div>
+            <p class="profile-header-title">{{ $t("header.profile") }}</p>
+          </div>
+          <div v-if="!editMode" class="prof-input-lang">
+            <select required class="selectLang" v-model="selectedCvLang" @change="getNewData">
+              <option v-for="language in cvLanguageList" :key="language.id" :value="language.id">{{ language.description }}</option>
+            </select>
+            <label class="label-select-lang">{{ $t("label.language") }}</label>
+          </div>
+          <button class="profile-header-button" @mouseout="onHoverOut" @mouseover="onHover" v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
+          <div v-if="editMode" class="header-button-save-reject">
+            <p class="profile-error profile-error-data" v-if="!saveChangesSuccess">{{ $t("message.saveChangesError") }}</p>
+            <button class="border-btn save-btn" @click="onSaveChanges" :disabled="disableSaveBtn">{{ $t("button.saveChanges") }}</button>
+            <button class="border-btn reject-btn" @click="onCancelEdit">{{ $t("button.cancel") }}</button>
+          </div>
         </div>
+        <h3 class="prof-user-header-name">{{userData.Fullname}}</h3>
+        <div class="profile-tiles">
+          <div class="profile-tiles-row-wrap">
+            <div class="profile-tiles-row">
+              <div class="profile-tile-1-3 profile-main-edit">
+                <div class="profile-tile-header">
+                  <h2 class="prof-tile-h2">{{ $t("header.contact") }}</h2>
+                  <div class="tile-underscore"></div>
+                </div>
+                <div class="profile-tile-content">
+                  <!-- <div class="profile-tile-inputs-section profile-inputs-sections-1"> -->
+                  <div class="profile-tile-inputs">
+                    <div class="prof-input">
+                      <!-- <input required v-if="editMode" class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.address"> -->
+                      <!-- <input required v-if="editMode" @input="checkFormFields" class="inputProfile inputEdit" v-model="userData.address"> -->
+                      <div class="prof-input-adr" v-if="editMode">
+                        <div class="prof-input-uno">
+                          <input required v-model="userData.Street"/>
+                          <span class="prof-div-bar"></span>
+                          <label class="prof-ainput-lbl">{{ $t("label.Street") }}</label>
+                        </div>
+                        <div class="prof-input-uno">
+                          <input required v-model="userData.BuildingNumber"/>
+                          <span class="prof-div-bar"></span>
+                          <label class="prof-ainput-lbl">{{ $t("label.buildingNumber") }}</label>
+                        </div>
+                        <div class="prof-input-uno">
+                          <input required v-model="userData.ApartmentNumber">
+                          <span class="prof-div-bar"></span>
+                          <label class="prof-ainput-lbl">{{ $t("label.apartmentNumber") }}</label>
+                        </div>
+                        <div class="prof-input-uno">
+                          <vue-google-autocomplete required types="geocode" id="autocomplete" placeholder="" onfocus="value = ''" @input="userData.City = value" :value="selectedCity"  @change="checkFormFields"></vue-google-autocomplete>
+                          <span class="prof-div-bar"></span>
+                          <label class="prof-ainput-lbl">{{ $t("label.city") }}</label>
+                        </div>
+                        <div class="prof-input-uno">
+                          <input required v-model="userData.PostalCode">
+                          <span class="prof-div-bar"></span>
+                          <label class="prof-ainput-lbl">{{ $t("label.postalCode") }}</label>
+                        </div>
+                      </div>
+                      <p v-if="!editMode" disabled class="inputProfile inputDisabled">{{formatAddress}}</p>
+                      <!-- <label class="label-profile">{{ $t("label.address") }}</label> -->
+                    </div>
+                    <div class="prof-input">
+                      <!-- <input required class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()"> -->
+                      <input required v-if="editMode" class="inputEdit inputProfile" @input="checkFormFields"  v-model="userData.Email" @blur="$v.userData.Email.$touch()">
+                      <input v-if="!editMode" disabled type="text" class="inputDisabled inputProfile " v-model="userData.Email">
+                      <span class="prof-div-bar"></span>
+                      <label class="label-profile">{{ $t("label.email") }}</label>
+                      <!-- <div class="error-wrapper">
+                        <p class="profile-error profile-error-email" v-if="$v.userData.email.$invalid">{{ $t("message.emailValidation") }}</p>
+                      </div> -->
+                      <p class="prof-error" v-if="$v.userData.Email.$invalid">{{ $t("message.emailValidation") }}</p>
+                    </div>
+                    <div class="prof-input">
+                      <!-- <input class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.phone" @input="phoneValidation"> -->
+                      <input required v-if="editMode" class="inputEdit inputProfile" v-model="userData.Telephone" @input="phoneValidation">
+                      <input v-if="!editMode" disabled class="inputDisabled inputProfile" v-model="userData.Telephone">
+                      <span class="prof-div-bar"></span>
+                      <label class="label-profile">{{ $t("label.phone") }}</label>
+                      <!-- <div class="error-wrapper">
+                        <p class="profile-error profile-error-phone" v-if="invalidPhone">{{ $t("message.phoneValidation") }}</p>
+                      </div> -->
+                      <p class="prof-error" v-if="invalidPhone">{{ $t("message.phoneValidation") }}</p>
+                    </div>
+                  </div>
+                  <!-- </div> -->
+                </div>
+              </div>
+              <div class="profile-tile-1-3 profile-main-edit">
+                <div class="profile-tile-header">
+                  <h2 class="prof-tile-h2">Komunikatory</h2>
+                  <div class="tile-underscore"></div>
+                </div>
+                <div class="profile-tile-content">
+                  <div class="profile-tile-inputs">
+                    <div class="prof-input-m">
+                      <!-- <input class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.skype"> -->
+                      <input required v-if="editMode" class="inputProfile inputEdit" @input="checkFormFields" v-model="userData.SkypeId">
+                      <input v-if="!editMode" disabled class="inputProfile inputDisabled" v-model="userData.SkypeId">
+                      <span class="prof-div-bar"></span>
+                      <label class="label-profile">{{ $t("label.skype") }}</label>
+                      <img class="prof-comm-img" src="../../assets/images/comm/grey/skype.png"/>
+                    </div>
+                    <div class="prof-input-m">
+                      <!-- <input class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.slack"> -->
+                      <input required v-if="editMode" class="inputProfile inputEdit" @input="checkFormFields" v-model="userData.SlackId">
+                      <input disabled v-if="!editMode" class="inputProfile inputDisabled" v-model="userData.SlackId">
+                      <span class="prof-div-bar"></span>
+                      <label class="label-profile">{{ $t("label.slack") }}</label>
+                      <img class="prof-comm-img" src="../../assets/images/comm/grey/slack.png"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="profile-tile-1-3-emp">
+                <div class="profile-tile-header">
+                  <!-- <div class="tile-underscore"></div> -->
+                </div>
+                <div class="profile-tile-content">
+                  <div class="profile-user-header">
+                    <div class="profile-user-img">
+                      <img class="img-user-class" id="userProfilePhoto" :src="setImageSrc()" width="150px">
+                      <!-- <img class="img-user-class" id="userProfilePhoto" src="nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileType='USER-PHOTO',Language='PL',UserAlias='UIO')/$value" width="150px"> -->
+                      <!-- <img class="img-user-class" id="userProfilePhoto" :src="userData.imgUrl" width="150px"> -->
+                      <p class="profile-error profile-error-image" v-if="photoUploadError">{{ $t("message.photoUploadError") }}</p>
+                      <label for="change-user-image" class="profile-edit-btn">{{ $t("button.changePhoto") }}
+                        <input accept="image/*" style="width: 1rem;" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="profile-tiles-row">
+              <div class="profile-tile-1-2 profile-main-edit">
+                <div class="profile-tile-header">
+                  <div class="profile-tile-header-row">
+                    <h2 class="prof-tile-h2">{{ $t("header.employee") }}</h2>
+                    <button @click="showChangePassword" class="func-btn">
+                      <span class="prof-btn-txt">zmień hasło</span>
+                      <span class="prof-btn-icon">&#x1f513;</span>
+                    </button>
+                  </div>
+                  <div class="tile-underscore"></div>
+                </div>
+                <div class="profile-tile-content">
+                  <div class="profile-tile-inputs-section">
+                    <div class="profile-tile-inputs">
+                      <div class="prof-input-s">
+                        <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.branch"> -->
+                        <input disabled class="inputDisabled inputProfile" v-model="userData.DepartmentName">
+                        <label class="label-profile">{{ $t("label.department") }}</label>
+                      </div>
+                      <div class="prof-input-s">
+                        <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.section"> -->
+                        <input disabled class="inputProfile inputDisabled" v-model="userData.SectionName">
+                        <label class="label-profile">{{ $t("label.branch") }}</label>
+                      </div>
+                      <div class="prof-input-s">
+                        <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.position"> -->
+                        <input disabled class="inputProfile inputDisabled" v-model="userData.JobPosition">
+                        <label class="label-profile">{{ $t("label.position") }}</label>
+                      </div>
+                      <!-- dodawanie nowej pozycji przez BO lub Management -->
+                      <div v-if="editMode" class="prof-input-s">
+                        <input disabled v-if="!editMode" class="inputProfile inputDisabled" v-model="newPosition"/>
+                        <input v-on:keyup.enter="addNewPositionForUser" required v-if="editMode" class="inputProfile inputEditPos" v-model="newPosition"/>
+                        <span class="prof-div-bar"></span>
+                        <label class="label-profile">Position</label>
+                        <button class="prof-div-pos-btn" @click="addNewPositionForUser">+</button>
+                        <button class="prof-div-pos-elem" v-for="position in userPositions" :key="position" @click="removeUserPosition(position)">{{position}}</button>
+                      </div>
+                      <div class="prof-input-s">
+                        <input v-if="editMode" required class="inputProfile inputEdit" @input="checkFormFields" v-model="userData.CurrentProject">
+                        <input disabled v-if="!editMode" class="inputDisabled inputProfile" v-model="userData.CurrentProject">
+                        <span class="prof-div-bar"></span>
+                        <label class="label-profile">{{ $t("label.project") }}</label>
+                      </div>
+                    </div>
+                    <div class="profile-tile-inputs">
+                      <div class="prof-input-s">
+                      <!-- <select v-model="userData.state" @change="checkFormFields" class="selectProfile" :class="editMode ? 'selectEdit' : 'selectDisabled'" :disabled="!editMode"> -->
+                      <select required v-if="editMode" v-model="userData.WorkTime" @change="checkFormFields" class="selectProfile selectEdit" >
+                        <option value="Full">{{ $t("label.fulltime") }}</option>
+                        <option value="1/2">1/2</option>
+                        <option value="1/3">1/3</option>
+                        <option value="2/3">2/3</option>
+                        <option value="1/4">1/4</option>
+                        <option value="3/4">3/4</option>
+                        <option value="1/5">1/5</option>
+                        <option value="2/5">2/5</option>
+                        <option value="3/5">3/5</option>
+                        <option value="4/5">4/5</option>
+                      </select>
+                      <!-- <p v-if="!editMode" class="inputDisabled">{{ userData.state }}</p> -->
+                      <select disabled v-if="!editMode" v-model="userData.WorkTime" @change="checkFormFields" class="selectProfile selectDisabled"></select>
+                      <label class="label-profile">{{ $t("label.worktime") }}</label>
+                    </div>
+                    <div class="prof-input-s">
+                      <!-- <masked-input mask="11.11.1111" @input="dateValidation" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.employmentDate" /> -->
+                      <!-- <masked-input required v-if="editMode" mask="11.11.1111" @input="dateValidation" class="inputProfile inputEdit" v-model="userData.EmploymentDate" /> -->
+                      <input :value="formatDate" disabled class="inputProfile inputDisabled" v-if="!editMode">
+                      <v-date-picker v-if="editMode" class="delegations-input-date inputDisabled" v-model="userData.EmploymentDate" :max-date="new Date()">
+                        <input value="userData.employmentDate"/>
+                      </v-date-picker>
+                      <!-- <input required v-if="editMode" @input="dateValidation" class="inputProfile inputEdit" v-model="userData.EmploymentDate"> -->
+                      <!-- <v-date-picker :max-date="new Date()" v-if="projectEditMode" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" is-expanded mode="single" v-model="userData.employmentDate">
+                        <input value="userData.employmentDate" />
+                      </v-date-picker> -->
+                      <!-- <input disabled v-if="!editMode" class="inputProfile inputDisabled" v-model="userData.EmploymentDate"> -->
+                      <!-- <v-date-picker disabled v-model="userData.EmploymentDate">
+                        <input value="userData.EmploymentDate" />
+                      </v-date-picker> -->
+                      <span class="prof-div-bar"></span>
+                      <label class="label-profile">{{ $t("label.employmentDate") }}</label>
+                      <!-- <div class="error-wrapper">
+                        <p class="profile-error profile-error-date" v-if="invalidDate">{{ $t("message.dateValidation") }}</p>
+                      </div> -->
+                      <p class="prof-error" v-if="invalidDate">{{ $t("message.dateValidation") }}</p>
+                    </div>
+                    <div class="prof-input-s">
+                      <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.seniority"> -->
+                      <input required v-if="editMode" :disabled="true" class="inputDisabled inputProfile" :value="setFormatedDate">
+                      <!-- <p v-if="!editMode" class="inputDisabled">{{userData.WorkExperience}}</p> -->
+                      <input disabled class="inputProfile inputDisabled" v-if="!editMode" :value="setFormatedDate">
+                      <label class="label-profile">{{ $t("label.workExperience") }}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <user-cv-tile></user-cv-tile>
+          </div>
+        </div>
+        <user-education-component></user-education-component>
+        <user-experience-component></user-experience-component>
+        <user-projects-component></user-projects-component>
+        <user-skills-component></user-skills-component>
+        <select-cv-content v-show="showSelectCv"></select-cv-content>
+        <div v-show="showSelectCv" class="modal-overlay"></div>
+          <change-user-password v-show="showPasswordDialog"></change-user-password>
+        </div>
+      </div>
     </div>
-</div>
-
+  </div>
 </template>
 
 <script>
 import moment from "moment";
 import MaskedInput from "vue-masked-input";
+require("moment-precise-range-plugin");
 
 import { required, email } from "vuelidate/lib/validators";
 import htmlDocx from "html-docx-js/dist/html-docx";
@@ -274,8 +273,10 @@ import UserExperience from "./profileComponents/UserExperience";
 import UserSkills from "./profileComponents/UserSkills";
 import SelectCvContent from "./profileComponents/SelectCvContent";
 import UserCvTile from "./profileComponents/UserCvTile";
-import ChangePasswordDialog from "./profileComponents/ChangePasswordDialog"; 
+import ChangePasswordDialog from "./profileComponents/ChangePasswordDialog";
 import i18n from "../../lang/lang";
+const utils = require("../../utils");
+
 export default {
   data() {
     return {
@@ -331,7 +332,7 @@ export default {
     if (lang == "") {
       lang = "pl";
     }
-    this.$store.commit('SET_LANG', lang);
+    this.$store.commit("SET_LANG", lang);
     next();
   },
   components: {
@@ -376,6 +377,16 @@ export default {
         ? moment(date).format("DD.MM.YYYY")
         : "-";
     },
+    setFormatedDate() {
+      let oCalculateDifference = moment.preciseDiff(
+          this.userData.EmploymentDate,
+          new Date(),
+          true
+        ),
+        oFormatedDate = utils.setWorkExperience(oCalculateDifference);
+
+      return oFormatedDate.year + oFormatedDate.month + oFormatedDate.day;
+    }
   },
   // beforeRouteLeave (to, from , next) {
   // this.showLeavePageDialog = true
@@ -386,7 +397,7 @@ export default {
     //   const url = "https://nw5.local.pl:8050/Users(UserAlias='SJI',Language='PL')"
     // },
     showMenu(event) {
-      let obj = {window, event}
+      let obj = { window, event };
       this.$store.dispatch("setSideMenu", obj);
     },
     onEdit() {
@@ -395,13 +406,8 @@ export default {
       this._beforeEditingCache = Object.assign({}, this.userData);
     },
     showChangePassword() {
-      this.$store.commit('SET_SHOW_CHANGE_PASSWORD_DIALOG', true)
+      this.$store.commit("SET_SHOW_CHANGE_PASSWORD_DIALOG", true);
     },
-    // formatDate(date) {
-    //   return date !== null && date !== undefined
-    //     ? moment(date).format("DD.MM.YYYY")
-    //     : "-";
-    // },
     onCancelEdit() {
       Object.assign(this.userData, this._beforeEditingCache);
       this._beforeEditingCache = null;
@@ -511,14 +517,14 @@ export default {
     //   this.$store.dispatch("setLanguage", language);
     // },
     getNewData() {
-      this.$store.commit('SET_LANG', this.selectedCvLang);
+      this.$store.commit("SET_LANG", this.selectedCvLang);
       let cvLang = this.selectedCvLang.toUpperCase();
-      if(!cvLang) {
+      if (!cvLang) {
         let cvLang = loginLanguage.toUpperCase();
       }
       let userData = {};
-        userData.user = "UIO";
-        userData.lang = cvLang;
+      userData.user = "UIO";
+      userData.lang = cvLang;
       this.$store.dispatch("loadData", userData);
     },
     onHover() {
