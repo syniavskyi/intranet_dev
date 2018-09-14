@@ -1,6 +1,4 @@
 import axios from 'axios'
-import router from '@/router/index.js'
-import moment from "moment";
 import odata from 'odata'
 let utils = require('../../../utils')
 
@@ -29,7 +27,6 @@ const mutations = {
 const actions = {
   addUserEduRow({
     getters,
-    commit
   }) {
     const userEdu = getters.getUserEducation
     userEdu.push({
@@ -55,15 +52,15 @@ const actions = {
     const lang = 'PL'
     const userEdu = getters.getUserEducation,
       data = userEdu[index],
-      url = 'UsersEducation' + '(' + "UserAlias='UIO'," + "University='" + data.University + "',AcademicTitle='" + data.AcademicTitle + "',FieldOfStudy='" + data.FieldOfStudy + "',Language='"+ lang +  "')"
+      url = 'UsersEducation' + '(' + "UserAlias='UIO'," + "University='" + data.University + "',AcademicTitle='" + data.AcademicTitle + "',FieldOfStudy='" + data.FieldOfStudy + "',Language='" + lang + "')"
 
-      data.Language = 'PL'
-      odata(url).remove().save(function (data) {
-        console.log("removed");
-        userEdu.splice(index, 1)
-      }, function (status) {
-        console.error(status);
-      });
+    data.Language = 'PL'
+    odata(url).remove().save(function (data) {
+      console.log("removed");
+      userEdu.splice(index, 1)
+    }, function (status) {
+      console.error(status);
+    });
   },
   editUserEducation({
     getters
@@ -74,13 +71,12 @@ const actions = {
     data.DateEnd = utils.formatDateForBackend(data.DateEnd)
     data.IsCurrent = data.IsCurrent ? 'X' : '-'
     let query = getters.getUrlQuery
-    const url = 'UsersEducation' + '(' + "UserAlias='"+ data.UserAlias + "',University='" + data.UniversityToChange + "',AcademicTitle='" + data.AcademicTitleToChange + "',FieldOfStudy='" + data.FieldOfStudyToChange + "',Language='"+ data.Language + "')" + query
+    const url = 'UsersEducation' + '(' + "UserAlias='" + data.UserAlias + "',University='" + data.UniversityToChange + "',AcademicTitle='" + data.AcademicTitleToChange + "',FieldOfStudy='" + data.FieldOfStudyToChange + "',Language='" + data.Language + "')" + query
     odata(url).put(data).save(function (data) {
       console.log("changed");
     }, function (status) {
       console.error(status);
     });
-
   },
   addUserEducation({
     getters
@@ -95,8 +91,12 @@ const actions = {
     }, function (status) {
       console.error(status);
     });
-  }, getSchoolDesc({commit, getters}, lang) {
-    if(lang === undefined) {
+  },
+  getSchoolDesc({
+    commit,
+    getters
+  }, lang) {
+    if (lang === undefined) {
       lang = "PL"
     }
     let urlQuery = getters.getUrlQuery
@@ -110,10 +110,13 @@ const actions = {
       commit('SET_SCHOOL_DESC_LIST', res.data.d.results);
     }).catch(error => {
       console.log(error)
-     })
+    })
   },
-  getFieldOfStudyDesc({commit, getters}, lang) {
-    if(lang === undefined) {
+  getFieldOfStudyDesc({
+    commit,
+    getters
+  }, lang) {
+    if (lang === undefined) {
       lang = "PL"
     }
     let urlQuery = getters.getUrlQuery
@@ -125,21 +128,20 @@ const actions = {
       }
     }).then(res => {
       commit('SET_FIELD_OF_STUDY_DESC_LIST', res.data.d.results);
-    }).catch(error => { 
+    }).catch(error => {
       console.log(error)
     })
   }
-
 }
 
 const getters = {
   getUserEducation(state) {
     return state.userEducation
   },
-  schoolDescList(state) {
+  getSchoolDescList(state) {
     return state.schoolDescList;
   },
-  fieldOfStudyDescList(state) {
+  getFieldOfStudyDescList(state) {
     return state.fieldOfStudyDescList;
   }
 }
