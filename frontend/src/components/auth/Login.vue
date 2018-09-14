@@ -121,7 +121,7 @@ export default {
       sendEmailSuccess: "isSendEmailSuccess",
       sendEmailError: "isSendEmailError",
       newPassword: "password",
-      languageList: "languageList"
+      languageList: "getLanguageList"
     })
   }
 };

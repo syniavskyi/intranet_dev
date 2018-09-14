@@ -323,10 +323,10 @@ export default {
       userInfo: "getUserInfo",
       userLangs: "getUserLanguages",
       userSkills: "getUserSkills",
-      schoolDesc: 'schoolDescList',
-      fieldOfStudyDesc: 'fieldOfStudyDescList',
+      schoolDesc: 'getSchoolDescList',
+      fieldOfStudyDesc: 'getFieldOfStudyDescList',
       workPositions: 'workPositions',
-      fullLanguageList: 'fullLanguageList',
+      fullLanguageList: 'getFullLanguageList',
       langLevels: 'langLevels'
 
     })
