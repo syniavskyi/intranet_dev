@@ -1,4 +1,5 @@
 import odata from 'odata';
+let utils = require('../../../utils');
 
 const state = {
     userSkills: {
@@ -108,7 +109,8 @@ const actions = {
         let newSkills =  JSON.parse(
              JSON.stringify(this.getters.getUserSkills)
            );
-        dispatch('formatToString', newSkills);
+        // dispatch('formatToString', newSkills);
+        newSkills = utils.formatToString(newSkills)
 
         odata(url).post(newSkills).save(function (oData) {
             console.log("skile");
