@@ -159,7 +159,8 @@
         "addProjectError": "Project has not been added",
         "editProjectError": "Project has not been edited",
         "removeProjectError": "Project has not been removed",
-        "projectExistError": "This project is already assigned to this user"
+        "projectExistError": "This project is already assigned to this user",
+        "errorSendingMessage": "Failed when sending a message."
     },
     "select": {
         "language": {

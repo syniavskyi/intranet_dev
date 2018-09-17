@@ -73,7 +73,7 @@
       <transition name="slide" v-if="showFailDialog">
         <div class="modal" v-if="showFailDialog">
           <div class="modal-header">
-            <h1 class="modal-title">Niepowodzenie podczas wysyłania wiadomości.</h1>
+            <h1 class="modal-title">{{ $t("message.errorSendingMessage") }}</h1>
             <button class="modal-exit" @click="showFailDialog = false">&#10006;</button>
           </div>
           <div class="modal-text">

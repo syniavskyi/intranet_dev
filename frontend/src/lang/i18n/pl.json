@@ -141,7 +141,6 @@
         "education": "Wykształcenie",
         "skills": "Umiejętności",
         "registration": "Rejestracja"
-        
     },
     "message": {
         "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",
@@ -159,7 +158,8 @@
         "addProjectError": "Niepowodzenie podczas dodawania projektu",
         "editProjectError": "Niepowodzenie podczas edycji projektu",
         "removeProjectError": "Niepowodzenie podczas usuwania projektu",
-        "projectExistError": " Taki projekt już jest przypisany "
+        "projectExistError": " Taki projekt już jest przypisany ",
+        "errorSendingMessage": "Niepowodzenie podczas wysyłania wiadomości."
     },
     "select": {
         "language": {
