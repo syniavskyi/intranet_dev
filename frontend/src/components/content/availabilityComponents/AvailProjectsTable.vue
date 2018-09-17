@@ -30,7 +30,7 @@
                         <select v-if="!editMode" class="selectProfile selectDisabled" v-model="project.ProjectId">
                             <option v-for="proj in allProjects" :key="proj.ProjectId" :value="proj.ProjectId">{{proj.ProjectName}}</option>
                         </select>
-                        <select v-if="editMode" class="selectProfile selectEdit" v-model="project.ProjectId">
+                        <select v-if="editMode" class="selectProfile selectEdit" v-model="project.ProjectId" @change="checkFields(index)">
                             <option v-for="proj in allProjects" :key="proj.ProjectId" :value="proj.ProjectId">{{proj.ProjectName}}</option>
                         </select>
                     </div>
@@ -38,7 +38,7 @@
                         <div class="ava-tbproj-ititle">Obłożenie</div>
                         <p v-if="!editMode">{{project.Engag}}</p>
                         <div v-if="editMode">
-                            <input required class="ava-input-range-perc" v-model="project.Engag" @input="validateNewEngag(index)" type="number" min="0" max="100" /><span class="ava-perc-span">%</span>
+                            <input required class="ava-input-range-perc" v-model="project.Engag" @input="validateNewEngag(index)" type="number" min="0" max="100"/><span class="ava-perc-span">%</span>
                             <span class="ava-div-bar"></span>
                             <label class="ava-input-label-cool">{{ $t("label.engag") }}</label>
                         </div>
@@ -72,9 +72,9 @@
                             <textarea :disabled="!editMode" v-model="project.Description"></textarea>
                         </div>
                     </div>
-                    <div class="ava-tbs-item">
+                    <div class="ava-tbs-item eduButtonsProj">
                         <div class="ava-tbs-ititle">Opcje</div>
-                         <button v-if="editMode">Zapisz</button>
+                         <button v-if="editMode" :disabled="true">Zapisz</button>
                          <button v-if="editMode">Usuń</button>
                     </div>
                 </div>
@@ -83,8 +83,9 @@
     </div>                
 </template>
 <script>
-import {mapGetters, mapActions} from 'vuex'
-import moment from 'moment'
+import {mapGetters, mapActions} from 'vuex';
+import moment from 'moment';
+let utils = require('../../../utils');
 export default {
     props: ['selected-type', 'selected-status', 'auth-type'],
     data () {
@@ -127,7 +128,7 @@ export default {
         ...mapActions(["removeUserProject"]),
          edit() {
             this.editMode = true;
-            this._beforeEditingCache = JSON.parse(JSON.stringify(this.userProjects));
+            this._beforeEditingCache = utils.createClone(this.userProjects);
         },
         remove(index) {
             this._beforeEditingCache.splice(index, 1);
@@ -138,8 +139,8 @@ export default {
             this.editMode = false;
         },
         validateDates(index) {
-           const startDate = this.userProjects[index].DateStart,
-                endDate = this.userProjects[index].DateEnd
+           const startDate = this.userProjects[index].StartDate,
+                endDate = this.userProjects[index].EndDate
 
             if (endDate && startDate) {
                 const formatStartDate = moment(startDate).format("YYYY-MM-DD"),
@@ -147,6 +148,7 @@ export default {
 
                 this.invalidDates = formatStartDate  > formatEndDate ? true : false;
             }
+            this.checkFields(index);
         },
         formatDate(date) {
             return date !== null && date !== undefined
@@ -157,6 +159,7 @@ export default {
             let project = this.userProjects[index]
             if (project.Engag < 0) project.Engag = null;
             if (project.Engag > 100) project.Engag = 100;
+            this.checkFields(index);
         },
         formattedProjectType() {
             for(let i = 0; i < this.availTypes.length; i++) {
@@ -165,6 +168,18 @@ export default {
                 }
             }
         },
+        checkFields(index) {
+            if(this.filteredUserProjects.length > 0) {
+               if(this.filteredUserProjects[index].ProjectId &&
+                 this.filteredUserProjects[index].StartDate &&
+                 this.filteredUserProjects[index].EndDate &&
+                 this.filteredUserProjects[index].Engag) {
+                     document.getElementsByClassName("eduButtonsProj")[index].children[1].disabled = false;
+               }    else {
+                    document.getElementsByClassName("eduButtonsProj")[index].children[1].disabled = true;
+               }
+            }    
+        }
     }
 }
 </script>
