@@ -25,7 +25,7 @@
                          <select v-if="!editMode" class="selectProfile selectDisabled" v-model="avail.TypeId">
                             <option v-for="type in availTypes" :key="type.Key" :value="type.Key">{{type.Value}}</option>
                         </select>
-                        <select v-if="editMode" class="selectProfile selectEdit" v-model="avail.TypeId">
+                        <select v-if="editMode" class="selectProfile selectEdit" v-model="avail.TypeId" @change="checkFields(index)">
                             <option v-for="type in filteredAvailTypes" :key="type.Key" :value="type.Key">{{type.Value}}</option>
                         </select>
                     </div>
@@ -33,29 +33,29 @@
                         <div class="ava-tbs-ititle">Od</div>
                         <p class="prof-date-label" v-if="!editMode"> {{ formatDate(avail.DateStart) }} </p>
                         <v-date-picker v-if="editMode" class="prof-input-date" popoverDirection="top" @input="validateDates(index)" is-expanded mode="single" v-model="avail.DateStart">
-                            <input value="avail.DateStart" />
+                            <input value="avail.DateStart" @change="checkFields(index)"/>
                         </v-date-picker>
                     </div>
                     <div class="ava-tbs-item">
                         <div class="ava-tbs-ititle">Do</div>
                         <p class="prof-date-label" v-if="!editMode"> {{ formatDate(avail.DateEnd) }} </p>
-                        <v-date-picker v-if="editMode" class="prof-input-date" popoverDirection="top" @input="validateDates(index)" is-expanded mode="single" v-model="avail.DateEnd">
-                            <input value="avail.DateEnd" />
+                        <v-date-picker v-if="editMode" class="prof-input-date" popoverDirection="top" @input="validateDates(index)" is-expanded mode="single" v-model="avail.DateEnd" @change="checkFields(index)">
+                            <input value="avail.DateEnd"/>
                         </v-date-picker>
                     </div>
                     <div class="ava-tbs-item">
                         <div class="ava-tbs-ititle">Status</div>
-                        <select v-if="editMode" class="selectProfile selectEdit" v-model="avail.StatusId">
+                        <select v-if="editMode" class="selectProfile selectEdit" v-model="avail.StatusId" @change="checkFields(index)">
                             <option v-for="status in availStatus" :key="status.Key" :value="status.Key">{{status.Value}}</option>
                         </select>
                          <select v-if="!editMode" class="selectProfile selectDisabled" v-model="avail.StatusId">
                             <option v-for="status in availStatus" :key="status.Key" :value="status.Key">{{status.Value}}</option>
                         </select>
                     </div>
-                    <div class="ava-tbs-item">
-                        <div class="ava-tbs-ititle">Opcje</div>
-                         <button v-if="editMode">Zapisz</button>
-                         <button v-if="editMode">Usuń</button>
+                    <div class="ava-tbs-item eduButtonsAvail">
+                        <div class="ava-tbs-ititle"> Opcje </div>
+                            <button v-if="editMode" :disabled="true">Zapisz</button>
+                            <button v-if="editMode">Usuń</button>
                     </div>
                 </div>
             </div>
@@ -153,12 +153,24 @@ export default {
 
                 this.invalidDates = formatStartDate  > formatEndDate ? true : false;
             }
+            this.checkFields(index);
         },
         formatDate(date) {
             return date !== null && date !== undefined
             ? moment(date).format("DD.MM.YYYY")
             : "-";
         },
+        checkFields(index) {
+            if(this.filteredUserAvail.length > 0) {
+               if(this.filteredUserAvail[index].TypeName &&
+                 this.filteredUserAvail[index].DateStart &&
+                 this.filteredUserAvail[index].DateEnd) {
+                     document.getElementsByClassName("eduButtonsAvail")[index].children[1].disabled = false;
+               }    else {
+                    document.getElementsByClassName("eduButtonsAvail")[index].children[1].disabled = true;
+               }
+            }    
+        }
     }
 }
 </script>
