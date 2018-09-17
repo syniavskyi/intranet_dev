@@ -127,9 +127,6 @@
     font-size: 1.8rem;
     margin: 0 .5rem;
 }
-.starter-page-item:hover .starter-page-checkbox {
-    height: 3rem;
-}
 
 .starter-page-item:hover .starter-list-item-popover {
     display: flex;
@@ -148,7 +145,7 @@
     color: white;
     font-size: .8rem;
     top: -3.7rem;
-    /* left: 0%; */
+    /* left: 0%; */ 
     left: 53%;
     transform: translateX(-55%);
     -webkit-transform: translateX(-55%);
@@ -174,7 +171,6 @@
 
 .starter-page-checkbox {
     display: flex;
-    height: 2rem;
     justify-content: center;
     align-items: center;
     margin-right: .5rem;

@@ -22,10 +22,10 @@
                     <div class="starter-page-list-item-btns">
                       <a class="starter-page-file-btn" :href="list.link">&#x21e3;</a>
                       <div v-if="checkFileFormat(list.Filename) == '.pdf'">
-                         <p class="starter-page-pdf"> {{  checkFileFormat(list.Filename)}}</p>
+                        <p class="starter-page-pdf">{{checkFileFormat(list.Filename)}}</p>
                       </div>
                       <div v-if="checkFileFormat(list.Filename) == '.doc'"> 
-                          <p class="starter-page-docx">{{checkFileFormat(list.Filename)}} </p> 
+                        <p class="starter-page-docx">{{checkFileFormat(list.Filename)}}</p> 
                       </div>
                     </div>
                     <div class="starter-page-list-item-wrapper">
@@ -34,10 +34,10 @@
                         <p class="starter-list-item-popover">{{ list.FileId }}</p>
                       </div>
                     </div>
-                    <!-- <div class="checkbox-wrap starter-page-checkbox"> -->
+                    <label class="checkbox-wrap starter-page-checkbox">
                       <input class="starter-page-checkbox" :checked="list.Status" @change="changeCheckbox(list)" type="checkbox">
-                      <!-- <div @change="changeCheckbox(list)" class="checkbox-in"></div> -->
-                    <!-- </div> -->
+                      <div class="checkbox-in"></div>
+                    </label>
                   </li>
                 </ul>
                 <div class="starter-page-list-bottom">
@@ -55,11 +55,11 @@
                   <li class="starter-page-item" v-for="list in docListInfo" :key="list.FileId">
                     <div class="starter-page-list-item-btns">
                       <a class="starter-page-file-btn" :href="list.link">&#x21e3;</a>
-                     <div v-if="checkFileFormat(list.Filename) == '.pdf'">
-                         <p class="starter-page-pdf"> {{  checkFileFormat(list.Filename)}}</p>
+                      <div v-if="checkFileFormat(list.Filename) == '.pdf'">
+                        <p class="starter-page-pdf"> {{  checkFileFormat(list.Filename)}}</p>
                       </div>
                       <div v-if="checkFileFormat(list.Filename) == '.doc'"> 
-                          <p class="starter-page-docx">{{checkFileFormat(list.Filename)}} </p> 
+                        <p class="starter-page-docx">{{checkFileFormat(list.Filename)}} </p> 
                       </div>
                     </div>
                     <div class="starter-page-list-item-wrapper">
@@ -68,12 +68,15 @@
                         <p class="starter-list-item-popover">{{ list.Filename }}</p>
                       </div>
                     </div>
-                    <input class="starter-page-checkbox" :checked="list.Status" @change="changeCheckbox(list)" type="checkbox">
+                    <label class="checkbox-wrap starter-page-checkbox">
+                      <input :checked="list.Status" @change="changeCheckbox(list)" type="checkbox">
+                      <div class="checkbox-in"></div>
+                    </label>
                   </li>
                 </ul>
                 <div class="starter-page-list-bottom">
                   <!-- <button class="starter-page-docs-btn button" :disabled="setButton" @click="submitDocuments">{{ $t("button.documentComplete") }}</button> -->
-                     <button class="starter-page-docs-btn button">{{ $t("button.documentComplete") }}</button>
+                  <button class="starter-page-docs-btn button">{{ $t("button.documentComplete") }}</button>
                 </div>
               </div>
             </div>
@@ -98,9 +101,6 @@ export default {
   components: {
     'app-menu': Menu
   },
-  beforeCreate() {
-    // this.$store.commit('DISPLAY_MENU', false);
-  },
   created() {
     this.getNewDocs();
     this.getInfoDocs();
@@ -112,7 +112,7 @@ export default {
       listForStatus: 'getListForStatus',
       docListInfo: 'getDocListInfo',
       displayMenu: "getShowMenu",
-      displayMenuOverlay: "getShowMenuOverlay"
+      displayOverlay: "getShowMenuOverlay"
       }),
   },
   methods: {
@@ -135,9 +135,9 @@ export default {
       //   data
       // });
     },
-      checkFileFormat(name) {
-         return name.slice(name.lastIndexOf('.'));
-  }
+    checkFileFormat(name) {
+      return name.slice(name.lastIndexOf('.'));
+    }
   }
 }
 </script>
