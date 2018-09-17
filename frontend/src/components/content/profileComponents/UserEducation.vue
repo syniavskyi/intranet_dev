@@ -123,23 +123,9 @@ export default {
       invalidDates: false
     };
   },
-  updated() {
+  mounted: function() {
     this.setEduCheckbox();
   },
-  // updated() {
-  //   if (this.$el) {
-  //     var list = this.$el.querySelectorAll("input[type='checkbox']")
-  //     for (var i=0;i < list.length; i++) {
-  //       var endDate = list[i].parentElement.parentElement.children[2],
-  //       checkboxWrap = list[i].parentElement.parentElement.children[3];
-  //       if (list[i].checked) {
-  //         endDate.setAttribute("style", "display: none;")
-  //       } else {
-  //         checkboxWrap.setAttribute("style", "display: none;")
-  //       }
-  //     }
-  //   }
-  // },
   computed: {
     ...mapGetters({
       userEducation: "getUserEducation",
@@ -148,18 +134,6 @@ export default {
       schoolDescList: "getSchoolDescList",
       fieldOfStudyDescList: "getFieldOfStudyDescList"
     })
-  },
-  mounted() {
-    // var list = this.$el.querySelectorAll("input[type='checkbox']");
-    // for (var i = 0; i < list.length; i++) {
-    //   var endDate = list[i].parentElement.parentElement.children[2],
-    //     checkboxWrap = list[i].parentElement.parentElement.children[3];
-    //   if (list[i].checked) {
-    //     endDate.setAttribute("style", "display: none;");
-    //   } else {
-    //     checkboxWrap.setAttribute("style", "display: none;");
-    //   }
-    // }
   },
   methods: {
     ...mapActions(["addUserEduRow", "removeUserEducation"]),
@@ -173,20 +147,10 @@ export default {
       }
     },
     onHover(el) {
-      const shadow = "0 0 20px orange";
-      if (el.style) {
-        el.style.boxShadow = shadow;
-      } else {
-        this.$el.style.boxShadow = shadow;
-      }
+      this.$store.dispatch("onLightUp", el.style ? el : this.$el)
     },
     onHoverOut(el) {
-      const shadow = "0 0 10px grey";
-      if (el.style) {
-        el.style.boxShadow = shadow;
-      } else {
-        this.$el.style.boxShadow = shadow;
-      }
+      this.$store.dispatch("onLightOut", el.style ? el : this.$el)
     },
     checkFields(index) {
       if (this.userEducation.length > 0) {
@@ -261,11 +225,9 @@ export default {
         input = document.getElementById(index);
 
       if (isCurrent) {
-        // input.setAttribute("style", "opacity: 0");
         input.setAttribute("style", "display: none;");
         this.userEducation[index].DateEnd = null;
       } else {
-        // input.setAttribute("style", "opacity: 1");
         input.setAttribute("style", "display: flex;");
       }
       this.checkFields(index);

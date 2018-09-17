@@ -551,7 +551,7 @@ input:required {
     box-shadow: none;
 }
 
-/* Functional Buttons (for Profile) */
+/* Functional Buttons */
 .func-btn {
     display: flex;
     align-items: center;
@@ -602,12 +602,10 @@ input:required {
     background-color: orange;
     color: white;
 }
-
-
-
-/* Functional Buttons (for Profile) */
+/* Functional Buttons */
 
 /* COOL (CONTENT) DIV INPUT / SELECT / TEXTAREA - start */
+.cd-for-input-xs,
 .cd-for-input-s,
 .cd-for-input,
 .cd-for-input-xxl,
@@ -615,6 +613,13 @@ input:required {
     display: flex;
     position: relative;
     flex-direction: column;
+}
+
+.cd-for-input-xs {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 8.6rem;
 }
 
 .cd-for-input-s{
@@ -656,6 +661,10 @@ input:required {
     font-size: 1rem;
     border-radius: 4px;
     border: 1px solid lightgrey;
+}
+
+.cd-textarea:disabled {
+    background-color: transparent;
 }
 
 .cd-select {
@@ -736,8 +745,9 @@ input:required {
     right:50%; 
 }
 
-.cd-input:focus ~ span:before, .cd-input:focus ~ span:after,
-.cd-input:valid ~ span:before, .cd-input:valid ~ span:after {
+ .cd-input:focus ~ span:before, .cd-input:focus ~ span:after /*,
+.cd-input:valid ~ span:before, .cd-input:valid ~ span:after */
+ {
     width: 50%;
 }
 

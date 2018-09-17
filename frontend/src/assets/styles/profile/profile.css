@@ -529,6 +529,7 @@
 .prof-input-ss {
     width: 15rem;
 }
+.prof-input-ss {width: 100%;}
 
 .prof-input-xl {
     width: 20rem;
@@ -1120,7 +1121,7 @@ max-width: max-content;
 .selectDisabled {
     border: 1px solid transparent;
     height: 2.3rem;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     background-image: none;
 }
 .inputEdit:hover,
@@ -1196,7 +1197,11 @@ max-width: max-content;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
+.table-p {
+    color: grey;
+    padding: 0;
+    margin: 0;
+}
 .profile-table-select-contractor {
     width: 12rem;
 }

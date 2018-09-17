@@ -136,20 +136,10 @@ export default {
       "removeLanguageSkillsRow"
     ]),
     onHover(el) {
-      const shadow = "0 0 20px orange";
-      if (el.style) {
-        el.style.boxShadow = shadow;
-      } else {
-        this.$el.style.boxShadow = shadow;
-      }
+      this.$store.dispatch("onLightUp", el.style ? el : this.$el)
     },
     onHoverOut(el) {
-      const shadow = "0 0 10px grey";
-      if (el.style) {
-        el.style.boxShadow = shadow;
-      } else {
-        this.$el.style.boxShadow = shadow;
-      }
+      this.$store.dispatch("onLightOut", el.style ? el : this.$el)
     },
     edit() {
       this.editMode = true;

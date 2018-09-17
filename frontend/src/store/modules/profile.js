@@ -97,17 +97,86 @@ const actions = {
     getters
   }, userData) {
     let urlQuery = getters.getUrlQuery
-    userData.Action = 'C'
-    const url = 'Users' + '(' + "UserAlias='" + userData.UserAlias + "',Language='" + userData.Language + "')" + urlQuery
-    odata(url).put(userData).save(function (data) {
-      console.log("changed");
-    }, function (status) {
-      console.error(status);
-    });
+    userData.Action = ''
+    const url = 'http://nw5.local.pl:8050/sap/opu/odata/SAP/ZGW_INTRANET_SRV/Users' + '(' + "UserAlias='" + userData.UserAlias + "',Language='" + userData.Language + "')" + urlQuery
+    
+    /* TEST */
+    var xml = new XMLHttpRequest()
+    var parser = new DOMParser()
+    
+    var params =  '<?xml version="1.0" encoding="utf-8"?>' +
+      '<entry xml:base="http://nw5.local.pl:8050/sap/opu/odata/SAP/ZGW_INTRANET_SRV/" xmlns="http://www.w3.org/2005/Atom" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">'+
+      "<id>http://nw5.local.pl:8050/sap/opu/odata/SAP/ZGW_INTRANET_SRV/Users(UserAlias='UIO',Language='')</id>" +
+      "<title type='text'>Users(UserAlias='UIO',Language='')</title>" +
+      "<updated>2018-09-17T08:20:36Z</updated>" +
+      '<category term="ZGW_INTRANET_SRV.User" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme"/>' +
+      '<content type="application/xml">' +
+      '<m:properties>' +
+      '<d:BranchId/>' +
+      '<d:JobPosition/>' +
+      '<d:BranchName/>' + 
+      '<d:JobPositionKey/>' +
+      '<d:NewPassword/>' +
+      '<d:DateBirth m:null="true"/>' +
+      '<d:PostalCode/>' +
+      '<d:UserAlias>UIO</d:UserAlias>' +
+      '<d:Action/>' +
+      '<d:Fullname/>' +
+      '<d:Lastname/>' +
+       '<d:Role/>' +
+       '<d:Street/>' +
+       '<d:BuildingNumber/>' +
+       '<d:ApartmentNumber/>' +
+       '<d:Email/>' +
+       '<d:Telephone/>' +
+       '<d:SkypeId/>' +
+       '<d:SlackId/>' +
+       '<d:DepartmentId/>' +
+       '<d:DepartmentName/>' +
+       '<d:SectionId/>' +
+       '<d:SectionName/>' +
+       '<d:CurrentProject/>' +
+       '<d:WorkTime/>' +
+       '<d:EmploymentDate m:null="true"/>' +
+       '<d:Language/>' +
+       '<d:AddrNo/>'+
+       '<d:City/>' +
+       '<d:PersonNumber/>' +
+       '<d:Firstname/>' +
+       '<d:Password/>' +
+      '</m:properties>' +
+     '</content>'+
+    '</entry>'
+    
+    xml.open("PUT", url, true);
+    xml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    // xml.withCredentials = false;
+    // xml.setRequestHeader( 'Access-Control-Allow-Origin', '*');
+    xml.onreadystatechange = function(evt) {
+      var that = this;
+    }
+    var params = parser.parseFromString(params,"text/xml");
+    xml.send(params);
+    /* TEST */
+
+    // odata(url).put(userData).save(function (data) {
+    //   console.log("changed");
+    // }, function (status) {
+    //   console.error(status);
+    // });
   },
 
-  onTileEdit({}, data) {
-
+  onLightUp({}, el) {
+    const shadow = "0 0 20px orange";
+      if (el.style) {
+        el.style.boxShadow = shadow;
+      }
+  },
+  onLightOut({}, el) {
+    const shadow = "0 0 10px grey";
+      if (el.style) {
+        el.style.boxShadow = shadow;
+      }
   }
 };
 
