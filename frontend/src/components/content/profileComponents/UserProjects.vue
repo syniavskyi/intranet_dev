@@ -107,7 +107,8 @@
             <div class="prof-tbody-item">
               <div class="prof-tbody-item-title">{{ $t("table.Descr") }} </div>
               <div class="prof-tbody-item-txt">
-                <textarea :disabled="!projectEditMode" @input="checkFields(index)" class="profile-table-textarea" v-model="userProjects[index].Description" />
+                <!-- class="profile-table-textarea" -->
+                <textarea class="cd-textarea" :disabled="!projectEditMode" @input="checkFields(index)" v-model="userProjects[index].Description" />
               </div>
             </div>
             <div class="prof-tbody-item">
@@ -140,7 +141,7 @@ export default {
       _beforeEditingProjects: null
     };
   },
-  updated() {
+  mounted() {
     this.setProCheckbox();
   },
   computed: {
@@ -204,20 +205,10 @@ export default {
     //   );
     // },
     onHover(el) {
-      const shadow = "0 0 20px orange";
-      if (el.style) {
-        el.style.boxShadow = shadow;
-      } else {
-        this.$el.style.boxShadow = shadow;
-      }
+      this.$store.dispatch("onLightUp", el.style ? el : this.$el)
     },
     onHoverOut(el) {
-      const shadow = "0 0 10px grey";
-      if (el.style) {
-        el.style.boxShadow = shadow;
-      } else {
-        this.$el.style.boxShadow = shadow;
-      }
+      this.$store.dispatch("onLightOut", el.style ? el : this.$el)
     },
     formatId(index) {
       return index + "p";

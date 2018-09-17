@@ -90,7 +90,7 @@ export default {
       workPositions: "workPositions"
     })
   },
-  updated() {
+  mounted() {
     this.setExpCheckbox();
   },
   // updated() {
@@ -117,20 +117,10 @@ export default {
       }
     },
     onHover(el) {
-      const shadow = "0 0 20px orange";
-      if (el.style) {
-        el.style.boxShadow = shadow;
-      } else {
-        this.$el.style.boxShadow = shadow;
-      }
+      this.$store.dispatch("onLightUp", el.style ? el : this.$el)
     },
     onHoverOut(el) {
-      const shadow = "0 0 10px grey";
-      if (el.style) {
-        el.style.boxShadow = shadow;
-      } else {
-        this.$el.style.boxShadow = shadow;
-      }
+      this.$store.dispatch("onLightOut", el.style ? el : this.$el)
     },
     checkFields(index) {
       if (this.userExperience.length > 0) {

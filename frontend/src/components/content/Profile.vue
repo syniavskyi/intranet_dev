@@ -621,6 +621,7 @@ input:focus {
   font-size: 0.75rem;
   /* transform: rotate(-90deg); */
   transition: all 0.5s ease;
+  overflow: hidden;
   color: #999;
   /* left: -.8rem; */
   top: 0.6rem;
@@ -642,11 +643,6 @@ input:focus {
 
 .inputDisabled {
   text-align: center;
-}
-
-.table-p {
-  padding: 0;
-  margin: 0;
 }
 
 @keyframes slide-down {
