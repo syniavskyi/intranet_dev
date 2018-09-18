@@ -169,8 +169,23 @@ export default {
             }
         },
         checkFields(index) {
+            let bEnd, bStart, bType, bStatus, bEngag, bChanged;
+
+             bEnd = this._beforeEditingCache[index].EndDate.getTime() !== this.userProjects[index].EndDate.getTime(),
+             bStart = this._beforeEditingCache[index].StartDate.getTime() !== this.userProjects[index].StartDate.getTime(),
+             bType = this._beforeEditingCache[index].ProjectId !== this.userProjects[index].ProjectId,
+             bStatus = this._beforeEditingCache[index].StatusId !== this.userProjects[index].StatusId,
+             bEngag = this._beforeEditingCache[index].Engag !== this.userProjects[index].Engag;
+
+        if(bEnd || bStart || bType || bStatus || bEngag) {
+            bChanged = true;
+        } else {
+            bChanged = false;
+        }
+
             if(this.filteredUserProjects.length > 0) {
-               if(this.filteredUserProjects[index].ProjectId &&
+               if( bChanged &&
+                 this.filteredUserProjects[index].ProjectId &&
                  this.filteredUserProjects[index].StartDate &&
                  this.filteredUserProjects[index].EndDate &&
                  this.filteredUserProjects[index].Engag) {
