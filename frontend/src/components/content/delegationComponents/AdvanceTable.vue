@@ -20,9 +20,9 @@
                     <div class="del-tbody-2" v-for="(advance, index) in advanceData" :key="index">
                         <div class="del-tbody2-item-adv">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.advanceDate") }}</div>
-                            <div class="del-tbody2-item-txt">
-                                <v-date-picker class="delegations-tinput-date" mode="single" @input="getAdvanceRate(index)" v-model="advance.date">
-                                    <input value="otherCosts[index].docDate" />
+                            <div class="del-tbody2-item-txt" @mouseover="setOverflow" @mouseout="outOverflow">
+                                <v-date-picker  class="delegations-tinput-date" mode="single" @input="getAdvanceRate(index)" v-model="advance.date">
+                                    <input  value="otherCosts[index].docDate" />
                                 </v-date-picker>
                             </div>
                             <div class="del-tfoot2">&nbsp;</div>
@@ -112,20 +112,25 @@ export default {
             'removeAdvanceRow',
             'getAdvanceRate'
         ]),
-
+        /* Adding and hiding overflow of tile content to display datepicker  */
+        setOverflow() {
+            this.$store.dispatch("setVisibleOverflow", this.$el)
+        },
+        outOverflow() {
+            this.$store.dispatch("setHiddenOverflow", this.$el)
+        },
+        /* Accordion tiles showing and hiding content when clicking on tile header */
         toggleTile() {
             let el = this.$el.lastChild,
                 elChild = el.firstChild
            const name = {el, elChild}
            this.$store.dispatch('toggleTile', name)
         },
-
         calcHeight(el, elChild) {
             const name = {el, elChild}
             let height = this.$store.dispatch('calcHeight', name)
             return height
         },
-
         addAdvanceRow() {
             let el = this.$el.lastChild.style.height
             !el || el ? el = "auto" : ""

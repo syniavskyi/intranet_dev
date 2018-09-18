@@ -139,7 +139,6 @@ const actions = {
       newDelegation.totalAllowance = allowance
       dispatch('checkNewDelegation')
     }
-
   },
   toggleTile({}, element) {
     let height;
@@ -160,7 +159,7 @@ const actions = {
     height = height + 16 + "px"
     if (!element.el.style.height || element.el.style.height == "0px") {
         element.el.style.height = height
-        element.el.style.overflow = "visible"
+        // element.el.style.overflow = "visible"
         element.el.style.opacity = "1"
     } else {
         element.el.style.height = "0px"
@@ -168,7 +167,16 @@ const actions = {
         element.el.style.opacity = "0";
     }
   },
-
+  setHiddenOverflow({}, el) {
+    if (el.lastChild.style) {
+      el.lastChild.style.overflow = 'hidden'
+    }
+  },
+  setVisibleOverflow({}, el) {
+    if (el.lastChild.style) {
+      el.lastChild.style.overflow = 'visible'
+    }
+  },
   calcHeight({}, element) {
     let height;
     if (element.elChild.className === "delegations-table-wrapper") {

@@ -1086,6 +1086,7 @@
 .del-table-footer {
     display: none; 
     min-height: 3rem;
+    z-index: 100;
 }
 
 .del-tbody2-item:first-child .del-tbody2-item-title,
