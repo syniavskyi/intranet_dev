@@ -27,7 +27,7 @@
                     </div>
                     <div class="ava-tbproj-item">
                         <div class="ava-tbproj-ititle">Nazwa projektu</div>
-                        <select v-if="!editMode" class="selectProfile selectDisabled" v-model="project.ProjectId">
+                        <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="project.ProjectId">
                             <option v-for="proj in allProjects" :key="proj.ProjectId" :value="proj.ProjectId">{{proj.ProjectName}}</option>
                         </select>
                         <select v-if="editMode" class="selectProfile selectEdit" v-model="project.ProjectId" @change="checkFields(index)">
@@ -62,7 +62,7 @@
                         <select v-if="editMode" class="selectProfile selectEdit" v-model="project.StatusId">
                             <option v-for="status in availStatus" :key="status.Key" :value="status.Key">{{status.Value}}</option>
                         </select>
-                         <select v-if="!editMode" class="selectProfile selectDisabled" v-model="project.StatusId">
+                         <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="project.StatusId">
                             <option v-for="status in availStatus" :key="status.Key" :value="status.Key">{{status.Value}}</option>
                         </select>
                     </div>

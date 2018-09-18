@@ -22,7 +22,7 @@
                 <div class="ava-tbody-s">
                     <div class="ava-tbs-item">
                         <div class="ava-tbs-ititle">Rodzaj wpisu</div>
-                         <select v-if="!editMode" class="selectProfile selectDisabled" v-model="avail.TypeId">
+                         <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="avail.TypeId">
                             <option v-for="type in availTypes" :key="type.Key" :value="type.Key">{{type.Value}}</option>
                         </select>
                         <select v-if="editMode" class="selectProfile selectEdit" v-model="avail.TypeId" @change="checkFields(index)">
@@ -33,13 +33,13 @@
                         <div class="ava-tbs-ititle">Od</div>
                         <p class="prof-date-label" v-if="!editMode"> {{ formatDate(avail.DateStart) }} </p>
                         <v-date-picker v-if="editMode" class="prof-input-date" popoverDirection="top" @input="validateDates(index)" is-expanded mode="single" v-model="avail.DateStart">
-                            <input value="avail.DateStart" @change="checkFields(index)"/>
+                            <input value="avail.DateStart"/>
                         </v-date-picker>
                     </div>
                     <div class="ava-tbs-item">
                         <div class="ava-tbs-ititle">Do</div>
                         <p class="prof-date-label" v-if="!editMode"> {{ formatDate(avail.DateEnd) }} </p>
-                        <v-date-picker v-if="editMode" class="prof-input-date" popoverDirection="top" @input="validateDates(index)" is-expanded mode="single" v-model="avail.DateEnd" @change="checkFields(index)">
+                        <v-date-picker v-if="editMode" class="prof-input-date" popoverDirection="top" @input="validateDates(index)" is-expanded mode="single" v-model="avail.DateEnd">
                             <input value="avail.DateEnd"/>
                         </v-date-picker>
                     </div>
@@ -48,13 +48,13 @@
                         <select v-if="editMode" class="selectProfile selectEdit" v-model="avail.StatusId" @change="checkFields(index)">
                             <option v-for="status in availStatus" :key="status.Key" :value="status.Key">{{status.Value}}</option>
                         </select>
-                         <select v-if="!editMode" class="selectProfile selectDisabled" v-model="avail.StatusId">
+                         <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="avail.StatusId">
                             <option v-for="status in availStatus" :key="status.Key" :value="status.Key">{{status.Value}}</option>
                         </select>
                     </div>
                     <div class="ava-tbs-item eduButtonsAvail">
                         <div class="ava-tbs-ititle"> Opcje </div>
-                            <button v-if="editMode" :disabled="true">Zapisz</button>
+                            <button v-if="editMode" :disabled="true" @click="save(index)">Zapisz</button>
                             <button v-if="editMode">Usuń</button>
                     </div>
                 </div>
@@ -72,8 +72,8 @@ export default {
         return {
             invalidDates: false,
             editMode: false,
-            _beforeEditingCache: null
-                
+            _beforeEditingCache: null,
+            setFilterAllowed: true               
         }
     },
     computed: {
@@ -86,17 +86,31 @@ export default {
             let aFilteredAvail = this.userAvail,
                 sType = this.selectedType,
                 sStatus = this.selectedStatus,
+                checkFilter, 
                 fnFilter;
+                
+// checkFilter check if data are during editing and does not allow to filter by type
+                checkFilter = aFilteredAvail.find(o => o.Filter === true);
             
-           
            if(sType === null && sStatus === null){
                return aFilteredAvail
            } else {
-                if(sType && sStatus){ 
+               if(sType && sStatus && checkFilter){ 
+                    fnFilter = function(oItem){
+                        return oItem.TypeId === sType && oItem.StatusId === sStatus || oItem.Filter === true;
+                    }
+                }
+                else if(sType && sStatus){ 
                     fnFilter = function(oItem){
                         return oItem.TypeId === sType && oItem.StatusId === sStatus;
                     }
-                }else if (sType){
+                }
+                else if(sType && checkFilter) {
+                    fnFilter = function(oItem){
+                        return oItem.TypeId === sType || oItem.Filter === true;
+                    }
+                }
+                else if (sType){
                     fnFilter = function(oItem){
                         return oItem.TypeId === sType;
                     }
@@ -104,11 +118,11 @@ export default {
                     fnFilter = function(oItem){
                         return oItem.StatusId === sStatus;
                     }
-                }
-                aFilteredAvail = aFilteredAvail.filter(fnFilter)
+               }
+                aFilteredAvail = aFilteredAvail.filter(fnFilter);
+                
                 return aFilteredAvail
-            }
-            
+           }          
         },
         noAvailEntries() {
             if (this.filteredUserAvail.length === 0) {
@@ -161,15 +175,19 @@ export default {
             : "-";
         },
         checkFields(index) {
-            if(this.filteredUserAvail.length > 0) {
-               if(this.filteredUserAvail[index].TypeName &&
-                 this.filteredUserAvail[index].DateStart &&
-                 this.filteredUserAvail[index].DateEnd) {
+               if(this.userAvail[index].TypeName &&
+                 this.userAvail[index].DateStart &&
+                 this.userAvail[index].DateEnd &&
+                 this.userAvail[index].StatusId) {
                      document.getElementsByClassName("eduButtonsAvail")[index].children[1].disabled = false;
+                     this.userAvail[index].Filter = true;
                }    else {
                     document.getElementsByClassName("eduButtonsAvail")[index].children[1].disabled = true;
+                     this.userAvail[index].Filter = true;
                }
-            }    
+        },
+        save(index) {
+             this.userAvail[index].Filter = false;
         }
     }
 }
