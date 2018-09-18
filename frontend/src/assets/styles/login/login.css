@@ -47,6 +47,8 @@
     align-items: center;
     /* padding-left: 1rem; */
     align-self: center;
+    height: 50%;
+    justify-content: center;
     color: grey;
 }
 
@@ -190,21 +192,29 @@
     background-repeat: no-repeat;
     background-position: right;
 }
-.success-alert {
+.success-alert,
+.error-alert {
     display: flex;
     font-family: 'Raleway';
     order: 6;
-    background: rgba(118, 231, 143, 0.534);
     text-align: center;
     align-self: center;
-    color: darkslategrey;
     width: 90%;
     padding: 0.05rem;
     height: 3rem;
     border-radius: 3px;
     font-size: 0.8rem;
     align-items: center;
-    
+}
+
+.success-alert {
+    background: rgba(118, 231, 143, 0.534);
+    color: darkslategrey;
+}
+
+.error-alert {
+    background: rgba(231, 118, 118, 0.534);
+    color: rgb(165, 25, 25);
 }
 
 .login-button {

@@ -39,7 +39,7 @@
                             </div>
                             <div class="del-tbody2-item-scost">
                                 <div class="del-tbody2-item-title">{{ $t("table.delegations.docDate") }}</div>
-                                <div class="del-tbody2-item-txt">
+                                <div class="del-tbody2-item-txt" @mouseover="setOverflow" @mouseout="outOverflow">
                                     <v-date-picker popover-direction="top" :class="[{ 'delegations-tinput-date-disabled': hideAccFields(cost) },  'delegations-tinput-date']"  mode="single" @input="getAccCostRate(index)" v-model="cost.docDate">
                                         <input :disabled="hideAccFields(cost)" value="accomodationCosts[index].docDate" />
                                     </v-date-picker>
@@ -168,7 +168,14 @@ export default {
 
         }),
         hideAccFields: cost => { return (cost.flatRate == false) ? false : true }, 
-
+        /* Adding and hiding overflow of tile content to display datepicker  */
+        setOverflow() {
+            this.$store.dispatch("setVisibleOverflow", this.$el)
+        },
+        outOverflow() {
+            this.$store.dispatch("setHiddenOverflow", this.$el)
+        },
+        /* Accordion tiles showing and hiding content when clicking on tile header */
         toggleTile() {
             let el = this.$el.lastChild,
                 elChild = el.firstChild

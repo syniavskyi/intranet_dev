@@ -23,7 +23,7 @@
                     <div class="del-tbody-2" v-for="(cost, index) in otherCosts" :key="index">
                         <div class="del-tbody2-item-scost">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.docDate") }}</div>
-                            <div class="del-tbody2-item-txt">
+                            <div class="del-tbody2-item-txt" @mouseover="setOverflow" @mouseout="outOverflow">
                                 <v-date-picker popover-direction="top" class="delegations-tinput-date" mode="single" @change="getOtherCostRate(index)" v-model="cost.docDate">
                                     <input value="otherCosts[index].docDate" />
                                 </v-date-picker>
@@ -131,9 +131,10 @@ export default {
     },
     updated() {
         this.$nextTick(() => {this.calcHeight(this.$el.lastChild, this.$el.lastChild.firstChild).then(height => {
-                    this.$el.lastChild.style.height = height
-                    this.$el.lastChild.style.opacity = "1"
-                })})  
+                this.$el.lastChild.style.height = height
+                this.$el.lastChild.style.opacity = "1"
+            })
+        })  
     },
     mounted() {
         this.$nextTick(function() {
@@ -149,12 +150,19 @@ export default {
             updateOtherCosts: 'countOtherCosts',
             getOtherCostRate: 'getOtherCostRate'
         }),
-
+        /* Adding and hiding overflow of tile content to display datepicker  */
+        setOverflow() {
+            this.$store.dispatch("setVisibleOverflow", this.$el)
+        },
+        outOverflow() {
+            this.$store.dispatch("setHiddenOverflow", this.$el)
+        },
+        /* Accordion tiles showing and hiding content when clicking on tile header */
         toggleTile() {
             let el = this.$el.lastChild,
                 elChild = el.firstChild
-           const name = {el, elChild}
-           this.$store.dispatch('toggleTile', name)
+            const name = {el, elChild}
+            this.$store.dispatch('toggleTile', name)
         },
 
         calcHeight(el, elChild) {
@@ -168,12 +176,10 @@ export default {
             !el || el ? el = "auto" : ""
             this.$store.dispatch('addOtherCostRow')    
         },
-
         removeCostRow() {
             this.$el.lastChild.style.height = "auto"
             this.$store.dispatch('removeOtherCostRow')
         },
-
         getWindowWidth() {
             this.windowWidth = document.documentElement.clientWidth
             let el = this.$el
@@ -181,7 +187,6 @@ export default {
             this.$store.dispatch('checkWidthAndToggle', name)
         }
     },
-    
     beforeDestroy() {
         window.removeEventListener('resize', this.getWindowWidth)
     }

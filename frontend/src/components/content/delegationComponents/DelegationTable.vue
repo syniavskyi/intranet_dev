@@ -150,7 +150,7 @@
                             </div>
                             <div class="del-tbody-wrap">
                                 <div class="del-tbody-title">{{ $t("table.delegations.date") }}</div>
-                                <div class="del-tbody-item">
+                                <div class="del-tbody-item" @mouseover="setOverflow" @mouseout="outOverflow">
                                     <v-date-picker class="delegations-tinput-date" @input="checkDelegationTable" mode="single" v-model="customCosts[index].leaveDate">
                                         <input value="customCosts[index].leaveDate" />
                                     </v-date-picker>
@@ -159,7 +159,8 @@
                             <div class="del-tbody-wrap">
                                 <div class="del-tbody-title">{{ $t("table.delegations.time") }}</div>
                                 <div class="del-tbody-item">
-                                    <input class="delegations-tinput-time" type="time" v-model="customCosts[index].leaveHour" @change="checkDelegationTable" /> </div>
+                                    <input class="delegations-tinput-time" type="time" v-model="customCosts[index].leaveHour" @change="checkDelegationTable" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -178,7 +179,7 @@
                             </div>
                             <div class="del-tbody-wrap">
                                 <div class="del-tbody-title">{{ $t("table.delegations.date") }}</div>
-                                <div class="del-tbody-item">
+                                <div class="del-tbody-item" @mouseover="setOverflow" @mouseout="outOverflow">
                                     <v-date-picker class="delegations-tinput-date" @input="checkDelegationTable" mode="single" v-model="customCosts[index].arrivalDate">
                                         <input value="customCosts[index].arrivalDate" />
                                     </v-date-picker>
@@ -255,31 +256,34 @@ export default {
       checkDelegationTable: "checkDelegationTable",
       countAllowance: "countAllowance"
     }),
-
+    /* Adding and hiding overflow of tile content to display datepicker  */
+    setOverflow() {
+        this.$store.dispatch("setVisibleOverflow", this.$el)
+    },
+    outOverflow() {
+        this.$store.dispatch("setHiddenOverflow", this.$el)
+    },
+    /* Accordion tiles showing and hiding content when clicking on tile header */
     toggleTile() {
       let el = this.$el.lastChild,
         elChild = el.firstChild;
       const name = { el, elChild };
       this.$store.dispatch("toggleTile", name);
     },
-
     calcHeight(el, elChild) {
       const name = { el, elChild };
       let height = this.$store.dispatch("calcHeight", name);
       return height;
     },
-
     addRow() {
       let el = this.$el.lastChild.style.height;
       !el || el ? (el = "auto") : "";
       this.$store.dispatch("addDelegationRow");
     },
-
     removeRow() {
       this.$el.lastChild.style.height = "auto";
       this.$store.dispatch("removeDelegationRow");
     },
-
     getWindowWidth() {
       this.windowWidth = document.documentElement.clientWidth;
       let el = this.$el;
@@ -287,7 +291,6 @@ export default {
       this.$store.dispatch("checkWidthAndToggle", name);
     }
   },
-
   beforeDestroy() {
     window.removeEventListener("resize", this.getWindowWidth);
   }
