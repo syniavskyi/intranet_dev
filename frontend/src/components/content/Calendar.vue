@@ -265,6 +265,7 @@ export default {
   }   
           return aEvents;
     },
+    // calendar attributes
     attributes() {
       return this.filteredEvents.map(t => ({
         dot: {
@@ -300,6 +301,7 @@ export default {
       let obj = {window, event}
       this.$store.dispatch("setSideMenu", obj);
     },
+   // trigger function in js to adjust data for backend
     editForm() {
       this.editEvent();
       this.performDialog();
@@ -307,6 +309,7 @@ export default {
     dayClicked(day) {
       this.selectedDay = day;
     },
+    // modal for new event
     openDialog() {
       this.clearForm();
       this.performDialog();
@@ -315,6 +318,7 @@ export default {
     performDialog() {
       this.dialogEvent = !this.dialogEvent;
     },
+    //open modal and assign data in edited event
     editEventClick(data) {
       this.performDialog();
       let editedData = data;

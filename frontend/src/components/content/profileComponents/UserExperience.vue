@@ -122,9 +122,9 @@ export default {
     onHoverOut(el) {
       this.$store.dispatch("onLightOut", el.style ? el : this.$el)
     },
+    // validate fields and set button to disabled or not
     checkFields(index) {
       if (this.userExperience.length > 0) {
-        // for (let i = 0; i < this.userExperience.length; i++) {
         if (
           this.userExperience[index].Employer &&
           this.userExperience[index].WorkPos &&
@@ -140,12 +140,12 @@ export default {
             index
           ].children[0].disabled = true;
         }
-        // }
       }
     },
     formatId(index) {
       return index + "e";
     },
+    //undo changes
     cancel() {
       this.onHoverOut(this.$el);
       this.$store.commit("SET_EXPERIENCE_ERROR", false);
@@ -156,9 +156,9 @@ export default {
       this._beforeEditingCache.splice(index, 1);
       this.removeUserExperience(index);
     },
+    // check if new data should be updated or created
     save(index) {
       const dataToChange = this._beforeEditingCache[index],
-        // newData = this.userExperience[index];
         newData = utils.createClone(this.userExperience[index]);
 
       newData.Language = "PL";
@@ -191,6 +191,7 @@ export default {
       }
       this.checkFields(index);
     },
+    // hover EndDate if field IsCurrent is checked
     disableEndDateInput(value) {
       const isCurrent = value.target.checked,
         index = value.target.name,
@@ -204,6 +205,7 @@ export default {
       }
       this.checkFields(index);
     },
+    // set IsCurrent checkboxes checked
     setExpCheckbox(index) {
       let exp = this.$store.getters.getUserExperience;
       let input;

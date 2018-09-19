@@ -92,6 +92,7 @@ const actions = {
       console.error(status);
     });
   },
+  // get description for school from text table
   getSchoolDesc({
     commit,
     getters
@@ -112,6 +113,7 @@ const actions = {
       console.log(error)
     })
   },
+  // get description for field of study from text table
   getFieldOfStudyDesc({
     commit,
     getters

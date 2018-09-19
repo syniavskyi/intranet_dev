@@ -147,12 +147,14 @@ export default {
       this._beforeEditingCacheSkills = utils.createClone(this.userSkills);
       this._beforeEditingCacheLangs = utils.createClone(this.userLangs);
     },
+    // undo changes
     cancel() {
       this.onHoverOut(this.$el);
       this.$store.commit("SET_USER_SKILLS", this._beforeEditingCacheSkills);
       this.$store.commit("SET_USER_LANGS", this._beforeEditingCacheLangs);
       this.editMode = false;
     },
+    // check if new data should be updated or created
     save() {
       this.onHoverOut(this.$el);
       let data = this.userSkills;
@@ -161,6 +163,7 @@ export default {
       this._beforeEditingCacheLangs = utils.createClone(this.userLangs);
       this.editMode = false;
     },
+    // validate fields
     checkFields() {
       if (this.userLangs.length > 0) {
         for (let i = 0; i < this.userLangs.length; i++) {

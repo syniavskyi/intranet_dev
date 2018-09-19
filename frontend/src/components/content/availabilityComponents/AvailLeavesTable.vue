@@ -176,17 +176,20 @@ export default {
         },
         checkFields(index, entryId) {
          let bEnd, bStart, bType, bStatus, bChanged;
-
+// check if data was changed
              bEnd = this._beforeEditingCache[entryId].DateEnd.getTime() !== this.userAvail[entryId].DateEnd.getTime(),
              bStart = this._beforeEditingCache[entryId].DateStart.getTime() !== this.userAvail[entryId].DateStart.getTime(),
              bType = this._beforeEditingCache[entryId].TypeId !== this.userAvail[entryId].TypeId,
              bStatus = this._beforeEditingCache[entryId].StatusId !== this.userAvail[entryId].StatusId;
 
+// if data was changed set boolean variable to true
         if(bEnd || bStart || bType || bStatus) {
             bChanged = true;
         } else {
             bChanged = false;
         }
+// check if data are not empty and was changed and set button to disabled or not    
+// do not allow to filter when data are during changing 
          if( bChanged &&
              this.userAvail[entryId].TypeName &&
              this.userAvail[entryId].DateStart &&

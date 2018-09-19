@@ -23,7 +23,7 @@
                 <select required class="cd-select" v-model="aFilters.department">
                   <option v-for="department in departmentList" :key="department.Key" :value="department.Value">{{ department.Value }}</option>
                 </select>
-                <label class="ava-select-label-cool">{{ $t("label.oeSelectDep") }}</label>
+                <label class="ava-select-label-cool">{{ $t("label.orSelectDep") }}</label>
               </div>
             </div>
             <button class="func-btn emp-btn" @click="clearFilters">{{ $t("button.clear") }}</button>

@@ -81,7 +81,7 @@ const actions = {
     }
     commit('SET_USER_SKILLS', skillsList)
   },
-
+//add new skill
   addSkill({
     commit,
     getters
@@ -148,6 +148,7 @@ const actions = {
     langList.splice(index, 1)
     commit('SET_USER_LANGS', langList)
   },
+  // get list of languages
   getAllLanguages({
     commit,
     getters
