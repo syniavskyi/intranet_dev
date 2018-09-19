@@ -3,7 +3,7 @@
         <div class="delegations-tile-header">
             <div @click.self="toggleTile" class="delegations-tile-title">
                 {{ $t("header.otherCosts") }}
-                <button class="del-add-row" @click="addCostRow"> dodaj wiersz </button>
+                <button class="del-add-row" @click="addCostRow"> {{ $t("button.addRow") }} </button>
             </div>
             <div class="delegations-tile-underscore"></div>
         </div>
@@ -90,7 +90,7 @@
                         <div class="del-tbody2-item-scost">
                             <div class="del-tbody2-item-title"></div>
                             <div class="del-tbody2-item-txt">
-                                <button class="del-delete-row" @click="removeCostRow(index)">USUŃ</button>
+                                <button class="del-delete-row" @click="removeCostRow(index)">{{ $t("button.delete") }}</button>
                             </div>
                             <div class="del-tfoot2">&nbsp;</div>
                         </div>

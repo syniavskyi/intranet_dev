@@ -97,7 +97,7 @@
               </div>
               <div class="profile-tile-1-3 profile-main-edit">
                 <div class="profile-tile-header">
-                  <h2 class="prof-tile-h2">Komunikatory</h2>
+                  <h2 class="prof-tile-h2">{{ $t("header.communicators") }}</h2>
                   <div class="tile-underscore"></div>
                 </div>
                 <div class="profile-tile-content">
@@ -146,7 +146,7 @@
                   <div class="profile-tile-header-row">
                     <h2 class="prof-tile-h2">{{ $t("header.employee") }}</h2>
                     <button @click="showChangePassword" class="func-btn">
-                      <span class="prof-btn-txt">zmień hasło</span>
+                      <span class="prof-btn-txt">{{ $t("header.changePassword") }}</span>
                       <span class="prof-btn-icon">&#x1f513;</span>
                     </button>
                   </div>
@@ -175,7 +175,7 @@
                         <input disabled v-if="!editMode" class="inputProfile inputDisabled" v-model="newPosition"/>
                         <input v-on:keyup.enter="addNewPositionForUser" required v-if="editMode" class="inputProfile inputEditPos" v-model="newPosition"/>
                         <span class="prof-div-bar"></span>
-                        <label class="label-profile">Position</label>
+                        <label class="label-profile">{{ $t("label.position") }}</label>
                         <button class="prof-div-pos-btn" @click="addNewPositionForUser">+</button>
                         <button class="prof-div-pos-elem" v-for="position in userPositions" :key="position" @click="removeUserPosition(position)">{{position}}</button>
                       </div>

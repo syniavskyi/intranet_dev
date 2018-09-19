@@ -21,26 +21,26 @@
                                 <select required  class="delegations-select-cool" v-model="newDelegation.userId" @change="setUsername">
                                     <option v-for="user in usersList" :key="user.id" :value="user.id">{{ user.Fullname }}</option>
                                 </select> 
-                                <label class="delegations-label-cool-select">Wybierz pracownika</label>
+                                <label class="delegations-label-cool-select">{{ $t("label.selectEmployee") }}</label>
                             </div>
                              <div  v-if="showSelectForTeam" class="delegations-div-cool-head">
                                 <select required class="delegations-select-cool" v-model="newDelegation.userId" @change="setUsername">
                                     <option v-for="user in filteredTeamUsers" :key="user.UserAlias" :value="user.UserAlias">{{ user.Fullname }}</option>
                                 </select> 
-                                <label  class="delegations-label-cool-select">Wybierz członka zespołu</label>
+                                <label  class="delegations-label-cool-select">{{ $t("label.selectTeamMember") }}</label>
                             </div>
-                            <button class="del-generate-pdf" @click="generatePdf">GENERUJ PDF</button>
+                            <button class="del-generate-pdf" @click="generatePdf">{{ $t("header.generateCV") }}</button>
                         </div>
                         <div class="delegations-tile-underscore"></div>
                     </div>
                     <div class="delegations-tile-content delegations-tile-content-1">
                         <div class="del-inputs-sections">
-                            <div class="delegation-number">Numer Delegacji: <span>&nbsp; {{ delegationNumber }} </span> </div>
+                            <div class="delegation-number">{{ $t("label.delegationNo") }}: <span>&nbsp; {{ delegationNumber }} </span> </div>
                             <div class="delegations-inputs-section">
                                 <!-- <div class="delegations-div-unders">
                                     <div class="del-underscore">1</div>
                                 </div> -->
-                                <p class="del-inputs-header">Cel / Czas</p>
+                                <p class="del-inputs-header">{{ $t("label.target/time") }}</p>
                                 <div class="delegations-div-cool">
                                     <input required class="delegations-input-cool" ref="autocomplete" placeholder=""  onfocus="value = ''" v-model="newDelegation.destination" @input="checkNewDelegation" />
                                     <span class="delegations-div-bar"></span>
