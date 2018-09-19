@@ -8,49 +8,49 @@
           <div class="content-header-title-and-menu">
             <!-- <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu"> -->
             <div @click="showMenu" class="content-header-menu">&#9776;</div>
-            <p class="content-header-title">Dokumenty</p>
+            <p class="content-header-title">{{ $t("header.documents") }}</p>
           </div>
         </div>
         <div class="documents-page-tiles">
           <div class="documents-tiles-row">
             <input id="documents-row-1" class="documents-tiles-row-header-input" type="checkbox">
-            <label class="documents-tiles-row-header" for="documents-row-1">Dokumenty Kagrin</label>
+            <label class="documents-tiles-row-header" for="documents-row-1">{{ $t("label.kagrinDocs") }}</label>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3">
                 <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">Wniosek Urlopowy</p>
+                  <p class="documents-tile-header-title">{{ $t("label.holidayRequest") }}</p>
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">
                   <div class="documents-div">
                     <a class="doc-file-div">
                       <div class="doc-file-img doc-file-doc"></div>
-                      <div class="doc-file-desc">Wniosek urlopowy w DOC do uzupełnienia i podpisania</div>
+                      <div class="doc-file-desc">{{ $t("label.holidayRequestDoc") }}</div>
                     </a>
                   </div>
                 </div>
               </div>
               <div class="documents-tile documents-tile-1-3">
                 <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">Lista obecności</p>
+                  <p class="documents-tile-header-title">{{ $t("label.attendanceList") }}</p>
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">
                   <div class="documents-div">
                       <a class="doc-file-div">
                       <div class="doc-file-img doc-file-xls"></div>
-                      <div class="doc-file-desc">Lista obecności w XLS do wydrukowania i podpisania</div>
+                      <div class="doc-file-desc">{{ $t("label.attendanceListXLS") }}</div>
                     </a>
                     <a class="doc-file-div">
                       <div class="doc-file-img  doc-file-pdf"></div>
-                      <div class="doc-file-desc">List obecności w PDF do wydrukowania i podpisania</div>
+                      <div class="doc-file-desc">{{ $t("label.attendanceListPDF") }}</div>
                      </a>
                   </div>
                 </div>
               </div>
               <div class="documents-tile documents-tile-1-3">
                 <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">Wzory CV</p>
+                  <p class="documents-tile-header-title">{{ $t("label.cvTemplates") }}</p>
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">
@@ -60,7 +60,7 @@
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3">
                 <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">Dokumenty ważne</p>
+                  <p class="documents-tile-header-title">{{ $t("label.importantDocs") }}</p>
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">
@@ -68,7 +68,7 @@
               </div>
               <div class="documents-tile documents-tile-1-3">
                 <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">Dokumenty ważne</p>
+                  <p class="documents-tile-header-title">{{ $t("label.importantDocs") }}</p>
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">
@@ -78,11 +78,11 @@
           </div>
           <div class="documents-tiles-row">
             <input id="documents-row-2" class="documents-tiles-row-header-input" type="checkbox">
-            <label class="documents-tiles-row-header" for="documents-row-2">Dokumenty istotne</label>
+            <label class="documents-tiles-row-header" for="documents-row-2">{{ $t("label.criticalDocs") }}</label>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3">
                 <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">Dokumenty ważne</p>
+                  <p class="documents-tile-header-title">{{ $t("label.importantDocs") }}</p>
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">
@@ -90,7 +90,7 @@
               </div>
               <div class="documents-tile documents-tile-1-3">
                 <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">Wzory CV</p>
+                  <p class="documents-tile-header-title">{{ $t("label.cvTemplates") }}</p>
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">
@@ -98,7 +98,7 @@
               </div>
               <div class="documents-tile documents-tile-1-3">
                 <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">Dokumenty ważne</p>
+                  <p class="documents-tile-header-title">{{ $t("label.importantDocs") }}</p>
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">
@@ -108,11 +108,11 @@
           </div>
           <div class="documents-tiles-row">
             <input id="documents-row-3" class="documents-tiles-row-header-input" type="checkbox">
-            <label class="documents-tiles-row-header" for="documents-row-3">Dokumenty istotne</label>
+            <label class="documents-tiles-row-header" for="documents-row-3">{{ $t("label.criticalDocs") }}</label>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3">
                 <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">Dokumenty ważne</p>
+                  <p class="documents-tile-header-title">{{ $t("label.importantDocs") }}</p>
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">
@@ -121,7 +121,7 @@
               </div>
               <div class="documents-tile documents-tile-1-3">
                 <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">Wzory CV</p>
+                  <p class="documents-tile-header-title">{{ $t("label.cvTemplates") }}</p>
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">
@@ -131,7 +131,7 @@
               </div>
               <div class="documents-tile documents-tile-1-3">
                 <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">Dokumenty ważne</p>
+                  <p class="documents-tile-header-title">{{ $t("label.importantDocs") }}</p>
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">

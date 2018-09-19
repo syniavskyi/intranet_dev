@@ -23,7 +23,14 @@
         "clear": "Wyczyść",
         "addNewEntry": "Dodaj nowy wpis",
         "selectGroup": "Wybierz grupę",
-        "selectUser": "Wybierz użytkownika"
+        "selectUser": "Wybierz użytkownika",
+        "addRow": "Add row",
+        "send": "Wyślij",
+        "checkAll": "Zaznacz wszystkie",
+        "uncheckAll": "Odznacz wszystkie",
+        "seePreview": "Zobacz podgląd",
+        "close": "Close",
+        "format": "Format"
      },
     "label": {
         "nationality": "Narodowość",
@@ -107,7 +114,41 @@
         "degree": "Stopień",
         "dateOfBirth": "Data urodzenia",
         "knowledgeOfForeignLanguages": "Znajomość języków",
-        "sapModules": "Moduły SAP"
+        "sapModules": "Moduły SAP",
+        "oldPassword": "Stare hasło",
+        "newPassword": "Nowe hasło",
+        "confirmPassword": "Potiwerdź hasło",
+        "photo": "Zdjęcie",
+        "emailAdress": "Adres email",
+        "phoneNumber": "Numer telefonu",
+        "contractorName": "Nazwa kontrahenta",
+        "selectLanguage": "Wybierz język",
+        "selectFormat": "Wybierz format",
+        "selectPosition": "Wybierz pozycję",
+        "entity": "Podmiot",
+        "format": "Format",
+        "employer": "Pracodawca",
+        "jobPosition": "Stanowisko",
+        "eg": "np.",
+        "entryType": "Rodzaj wpisu",
+        "status": "Status",
+        "display": "Wyświetl",
+        "projectsOverview": "Zestawienie projektów",
+        "availabilityOverview": "Zestawienie dyspozycyjności",
+        "selectEmployee": "Wybierz pracownika",
+        "selectTeamMember": "Wybierz członka zespołu",
+        "target/time": "Cel / Czas",
+        "enterNameOrSurname": "Wpisz imię lub nazwisko",
+        "orSelectDep": "albo wybierz oddział",
+        "kagrinDocs": "Dokumenty Kagrin",
+        "holidayRequest": "Wniosek urlopowy",
+        "holidayRequestDoc": "Wniosek urlopowy w DOC do uzupełnienia i podpisania",
+        "attendanceList": "Lista obecności",
+        "attendanceListXLS": "Lista obecności w XLS do wydrukowania i podpisania",
+        "attendanceListPDF": "Lista obecności w PDF do wydrukwoania i podpisania",
+        "cvTemplates": "Wzory CV",
+        "importantDocs": "Dokumenty ważne",
+        "criticalDocs": "Dokumenty istotne"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",
@@ -140,7 +181,11 @@
         "advance": "Zaliczka",
         "education": "Wykształcenie",
         "skills": "Umiejętności",
-        "registration": "Rejestracja"
+        "registration": "Rejestracja",
+        "changePassword": "Zmień hasło",
+        "generateCV": "Generuj CV",
+        "employeesList": "Lista pracowników",
+        "communicators": "Komunikatory"
     },
     "message": {
         "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",
@@ -159,7 +204,11 @@
         "editProjectError": "Niepowodzenie podczas edycji projektu",
         "removeProjectError": "Niepowodzenie podczas usuwania projektu",
         "projectExistError": " Taki projekt już jest przypisany ",
-        "errorSendingMessage": "Niepowodzenie podczas wysyłania wiadomości."
+        "errorSendingMessage": "Niepowodzenie podczas wysyłania wiadomości.",
+        "incompleteData": "Dane wprowadzone w projekcie {errorProNo} są niekompletne. Uzupełnij wszystkie pola.",
+        "invalidDate": "W projekcie {invalid} data rozpoczęcia nie może być późniejsza niż data zakończenia.",
+        "successfullySaved": "Pomyślnie zapisano dane",
+        "successfullyRemovedProject": "Pomyślnie usunięto projekt"
     },
     "select": {
         "language": {

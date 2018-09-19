@@ -23,7 +23,14 @@
         "clear": "Clear",
         "addNewEntry": "Add new entry",
         "selectGroup": "Select group",
-        "selectUser": "SelectUser"
+        "selectUser": "SelectUser",
+        "addRow": "Add row",
+        "send": "Send",
+        "checkAll": "Check all",
+        "uncheckAll": "Uncheck all",
+        "seePreview": "See preview",
+        "close": "Close",
+        "format": "Format"
     },
     "label": {
         "nationality": "Nationality",
@@ -45,6 +52,7 @@
         "workExperience": "Work experience",
         "cv": "User's CV",
         "fulltime": "Fulltime",
+        "fullName": "Full name",
         "role": "Role",
         "eventTitle": "Event title",
         "eventTime": "Event time",
@@ -108,7 +116,42 @@
         "dateOfBirth": "Date of birth",
         "knowledgeOfForeignLanguages": "Knowledge of foreign languages",
         "sapModules": "SAP Modules",
-        "industry": "Industry"
+        "industry": "Industry",
+        "oldPassword": "Old password",
+        "newPassword": "New password",
+        "confirmPassword": "Confirm password",
+        "photo": "Photo",
+        "emailAdress": "Email adress",
+        "phoneNumber": "Phone number",
+        "contractorName": "Contractor name",
+        "selectLanguage": "Select language",
+        "selectFormat": "Select format",
+        "selectPosition": "Select position",
+        "entity": "Entity",
+        "format": "Format",
+        "employer": "Employer",
+        "jobPosition": "Job position",
+        "eg": "e.g",
+        "entryType": "Entry Type",
+        "status": "Status",
+        "display": "Display",
+        "projectsOverview": "Statement of projects",
+        "availabilityOverview": "Statement of availability",
+        "selectEmployee": "Select employee",
+        "selectTeamMember": "Select team member",
+        "target/time": "Target / Time",
+        "enterNameOrSurname": "Enter name or surname",
+        "orSelectDep": "or select Department",
+        "kagrinDocs": "Kagrin documents",
+        "holidayRequest": "Holiday request",
+        "holidayRequestDoc": "Holiday request in DOC format to be filled and signed",
+        "attendanceList": "Attendance list",
+        "attendanceListXLS": "Attendance list in XLS format to be printed and signed",
+        "attendanceListPDF": "Attendance list in PDF format to be printed and signed",
+        "cvTemplates": "CV templates",
+        "importantDocs": "Important documents",
+        "criticalDocs": "Critical Documents"
+
 
     },
     "header": {
@@ -141,7 +184,11 @@
         "advance": "Advance",
         "education": "Education",
         "skills": "Skills",
-        "registration": "Rejestracja"
+        "registration": "Rejestracja",
+        "changePassword": "Change password",
+        "generateCV": "Generate CV",
+        "employeesList": "Employees List",
+        "communicators": "Communicators"
     },
     "message": {
         "loginError": "Password or username are invalid.",
@@ -160,7 +207,11 @@
         "editProjectError": "Project has not been edited",
         "removeProjectError": "Project has not been removed",
         "projectExistError": "This project is already assigned to this user",
-        "errorSendingMessage": "Failed when sending a message."
+        "errorSendingMessage": "Failed when sending a message.",
+        "incompleteData": "Data entered in project {errorProNo} are uncompleted. Fill in the blanks.",
+        "invalidDate": "In project {invalid} start date cannot be later than end date.",
+        "successfullySaved": "Data saved successfully",
+        "successfullyRemovedProject": "Project removed successfully"
     },
     "select": {
         "language": {

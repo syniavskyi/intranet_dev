@@ -13,13 +13,23 @@
     </div>
     <!-- remove style after adding appropriate classes, it is only for testing purposes  -->
     <div class="profile-tile-content">
-      <p class="profile-error" name="error" v-if="showProjectError">Wprowadzone dane w projekcie {{ errorProjectNo }} są niekompletne. Uzupełnij wszystkie pola. </p>
+      <p class="profile-error" name="error" v-if="showProjectError"> 
+        <!-- SPI -->
+     Wprowadzone dane w projekcie {{ errorProjectNo }} są niekompletne. Uzupełnij wszystkie pola. 
+        <!-- {{ $t('message.incompleteData', ['{{ errorProjectNo }}']) }}
+        {{ $t('message.incompleteData',{ msg: '{{ errorProjectNo }}'  }  ) }}
+        {{ $t('message.incompleteData',{ '0': '{{ errorProjectNo }}'  }  ) }} -->
+        <i18n path="message.incompleteData" tag="p">
+          <span place="errorProNo"> {{ errorProjectNo }} </span>
+        </i18n>
+        <!--SPI-->
+        </p>
       <p class="profile-error" name="error" v-if="invalidDates">W projekcie {{invalidDatePos}} data rozpoczęcia nie może być późniejsza niż data zakończenia </p>
       <div class="profile-table-wrapper">
         <div class="profile-table">
           <div class="prof-thead">
           <!-- class="prof-thead-item" -->
-            <div class="prof-thead-item">Np.</div>
+            <div class="prof-thead-item">{{ $t("label.eg") }}</div>
             <div class="prof-thead-item">{{ $t("table.projectName") }}</div>
             <div class="prof-thead-item">{{ $t("table.contractor") }}</div>
             <div class="prof-thead-item">{{ $t("table.duration") }}</div>
@@ -32,7 +42,7 @@
             <div class="prof-tbody-row" v-for="(project, index) in userProjects" :key="index">
             <!-- class="prof-tbody-item" -->
               <div class="prof-tbody-item">
-                <div class="prof-tbody-item-title">Np.</div>
+                <div class="prof-tbody-item-title">{{ $t("label.eg") }}</div>
                 <!-- class="prof-tbody-item-txt" -->
                 <div class="prof-tbody-item-txt">
                   <p class="table-p">{{index + 1}}</p>
@@ -57,13 +67,13 @@
             <div class="prof-tbody-item">
               <div class="prof-tbody-item-title">{{ $t("table.duration") }} </div>
               <div class="prof-tbody-item-txt">
-                <p class="table-p">Rozpoczęcie</p>
+                <p class="table-p">{{ $t("label.startDate") }}</p>
                 <p class="table-p" v-if="!projectEditMode"> {{ formatDate(userProjects[index].DateStart) }} </p>
                <v-date-picker popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateStart">
                 <!-- <v-date-picker :max-date="userProjects[index].DateEnd === null ? new Date() : userProjects[index].DateEnd" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateStart"> -->
                   <input value="userProjects[index].DateStart" />
                 </v-date-picker>
-                <p class="table-p">Zakończenie</p>
+                <p class="table-p">{{ $t("label.endDate") }}</p>
                 <div name="endDateDiv" :id="formatId(index)">
                   <p class="table-p" v-if="!projectEditMode"> {{ formatDate(userProjects[index].DateEnd) }} </p>
                   <v-date-picker popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateEnd">
@@ -74,7 +84,7 @@
                 <label class="checkbox-wrap" >
                   <input class="checkbox-margin" :disabled="!projectEditMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="userProjects[index].IsCurrent" />
                   <div class="checkbox-in"></div>
-                  <p style="padding:0;margin:0;">Obecnie</p>
+                  <p style="padding:0;margin:0;">{{ $t("label.present") }}</p>
                 </label>
               </div>
             </div>
@@ -114,8 +124,8 @@
             <div class="prof-tbody-item">
               <div class="prof-tbody-item-title"> --- </div>
               <div class="prof-tbody-item-txt">
-                <button v-if="projectEditMode" class="prof-tbtn" @click="remove(index)">USUŃ</button>
-                <button v-if="projectEditMode" :disabled="true" class="prof-tbtn projSaveButton" @click="save(index)">ZAPISZ</button>
+                <button v-if="projectEditMode" class="prof-tbtn" @click="remove(index)">{{ $t("button.delete") }}</button>
+                <button v-if="projectEditMode" :disabled="true" class="prof-tbtn projSaveButton" @click="save(index)">{{ $t("button.save") }}</button>
               </div>
             </div>
             </div>

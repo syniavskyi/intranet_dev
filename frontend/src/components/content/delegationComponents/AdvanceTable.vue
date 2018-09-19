@@ -3,7 +3,7 @@
         <div  class="delegations-tile-header">
             <div @click.self="toggleTile" class="delegations-tile-title">
                 {{ $t("header.advance") }}
-                <button class="del-add-row" @click="addAdvanceRow"> dodaj wiersz </button>
+                <button class="del-add-row" @click="addAdvanceRow"> {{ $t("button.addRow") }} </button>
             </div>
             <div class="delegations-tile-underscore"></div>
         </div>
@@ -54,7 +54,7 @@
                         <div class="del-tbody2-item-adv">
                             <div class="del-tbody2-item-title"></div>
                             <div class="del-tbody2-item-txt">
-                                <button class="del-delete-row" @click="removeAdvanceRow(index)">USUŃ</button>
+                                <button class="del-delete-row" @click="removeAdvanceRow(index)">{{ $t("button.delete") }}</button>
                             </div>
                             <div class="del-tfoot2">&nbsp;</div>
                         </div>

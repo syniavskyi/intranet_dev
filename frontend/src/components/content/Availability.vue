@@ -9,11 +9,11 @@
                     <!-- <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu"> -->
                     <div @click="showMenu" class="content-header-menu">&#9776;</div>
                     <p class="content-header-title">{{ $t("header.availability") }}</p>
-                    <p @click="closeAlert" class="ava-error-header" v-if="saveSuccess">Pomyślnie zapisano dane</p>
+                    <p @click="closeAlert" class="ava-error-header" v-if="saveSuccess">{{ $t("message.successfullySaved") }}</p>
                     <p @click="closeAlert" v-if="editError">{{ $t("message.editProjectError") }}</p>
                     <p @click="closeAlert" v-if="removeError">{{ $t("message.removeProjectError") }}</p>
                     <p @click="closeAlert" v-if="addingError">{{ $t("message.addProjectError") }}</p>
-                    <p @click="closeAlert" class="ava-error-header" v-if="removeSuccess">Pomyślnie usunięto projekt</p>
+                    <p @click="closeAlert" class="ava-error-header" v-if="removeSuccess">{{ $t("message.successfullyRemovedProject") }}</p>
                     <!-- <button v-show="saveSuccess || editError|| removeError || addingError || removeSuccess" class="ava-button" @click="closeAlert">X</button> -->
                 </div>
             </div>
@@ -54,7 +54,7 @@
                                             <!-- <option v-for="branch in branchList" :key="branch.branchId" :value="selectedBranch = branch.branchId">{{ branch.branchName }}</option> -->
                                         </select>
                                         <button class="ava-select-reset" title="resetuj" v-if="selectedType" @click="selectedType = null">&#10006;</button>
-                                        <label class="ava-select-label-cool">Rodzaj wpisu</label>
+                                        <label class="ava-select-label-cool">{{ $t("label.entryType") }}</label>
                                     </div>
                                     <div class="ava-div-select-cool" v-if="selectedUser != null">
                                         <select required class="ava-select-cool" v-model="selectedStatus">
@@ -62,19 +62,19 @@
                                              <!-- <option v-for="branch in branchList" :key="branch.branchId" :value="selectedBranch = branch.branchId">{{ branch.branchName }}</option> -->
                                         </select>
                                         <button class="ava-select-reset" title="resetuj" v-if="selectedStatus" @click="selectedStatus = null">&#10006;</button>
-                                        <label class="ava-select-label-cool">Status</label>
+                                        <label class="ava-select-label-cool">{{ $t("label.status") }}</label>
                                     </div>
-                                    <button class="ava-button ava-button-edit" v-if="selectedUser != null" @click="showContent = true">Wyświetl</button>
+                                    <button class="ava-button ava-button-edit" v-if="selectedUser != null" @click="showContent = true">{{ $t("label.display") }}</button>
                                 </div>
                                 <!-- <div class="calendar" v-if="selectedUser != null"> -->
                                 <!-- calendar for projects -->
                                 <div class="ava-calendar" v-if="selectedUser != null">
-                                    <p class="ava-content-header" v-if="selectedType === 'PR'">Zestawienie projektów</p>
+                                    <p class="ava-content-header" v-if="selectedType === 'PR'">{{ $t("label.projectsOverview") }}</p>
                                     <v-calendar class="availability-calendar" v-if="selectedType === 'PR'" :attributes="projectsAttr" mode='single' is-inline></v-calendar>
                                 </div>
                                 <!-- calendar for leaves -->
                                 <div class="ava-calendar" v-if="selectedUser != null">
-                                    <p class="ava-content-header" v-if="selectedType !== 'PR'">Zestawienie dyspozycyjności</p>
+                                    <p class="ava-content-header" v-if="selectedType !== 'PR'">{{ $t("label.availabilityOverview") }}</p>
                                     <v-calendar class="availability-calendar"  v-if="selectedType !== 'PR'" :attributes="leavesAttr" mode='single' is-inline></v-calendar>
                                 </div>
                             </div>

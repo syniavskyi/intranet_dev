@@ -46,7 +46,7 @@
                             <v-date-picker popoverDirection="top" is-expanded mode="single" v-model="advert.ValidTo">
                                 <input value="advert.ValidTo"/>
                             </v-date-picker>
-                        <button @click="editAdvert(index)">edytuj</button> 
+                        <button @click="editAdvert(index)">{{ $t("button.edit") }}</button> 
                         <button @click="removeAdvert(index)">X</button>
                     </li>
                     <div class="controls">

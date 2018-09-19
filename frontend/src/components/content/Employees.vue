@@ -8,7 +8,7 @@
           <div class="content-header-title-and-menu">
             <!-- <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu"> -->
             <div @click="showMenu" class="content-header-menu">&#9776;</div>
-            <p class="content-header-title">Lista Pracowników</p>
+            <p class="content-header-title">{{ $t("header.employeesList") }}</p>
           </div>
         </div>
         <div class="emp-tile">
@@ -17,16 +17,16 @@
               <div class="cd-for-input">
                 <input required class="cd-input" v-model="aFilters.user"/>
                 <span class="cd-span"></span>
-                <label class="cd-label">Wpisz imię lub nazwisko</label>
+                <label class="cd-label">{{ $t("label.enterNameOrSurname") }}</label>
               </div>
               <div class="cd-for-select">
                 <select required class="cd-select" v-model="aFilters.department">
                   <option v-for="department in departmentList" :key="department.Key" :value="department.Value">{{ department.Value }}</option>
                 </select>
-                <label class="ava-select-label-cool">albo wybierz oddział</label>
+                <label class="ava-select-label-cool">{{ $t("label.oeSelectDep") }}</label>
               </div>
             </div>
-            <button class="func-btn emp-btn" @click="clearFilters">Wyczyść</button>
+            <button class="func-btn emp-btn" @click="clearFilters">{{ $t("button.clear") }}</button>
           </div>
         </div>
         <div class="employees-table">
