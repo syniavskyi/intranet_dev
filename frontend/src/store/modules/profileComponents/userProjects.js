@@ -80,21 +80,6 @@ const actions = {
     })
     // commit('SET_PROJECT_ERROR', false)
   },
-  // saveUserProjectsPosition({
-  //   dispatch,
-  //   getters,
-  //   commit
-  // }, index) {
-  //   const project = Object.assign({}, getters.getUserProjectsList[index])
-  //   project.userId = localStorage.getItem('id'),
-  //     project.index = index
-  //   dispatch('checkUserProjectsPosition', project)
-  //   if (getters.getErrorProjectNo !== project.index) {
-  //     // request to backend,
-  //     //projects are actual projects list after editing
-  //     //commit ('SET_BEFORE_EDITING_PROJECTS', projects)
-  //   }
-  // },
   saveUserProjectsPosition({
     dispatch
   }, data) {
@@ -128,6 +113,7 @@ const actions = {
       console.error(status);
     });
   },
+  // format project from array with objects to string
   formatProjectToString({}, dataToSend) {
     let object = {};
     object.Modules = dataToSend.Modules;
@@ -184,6 +170,7 @@ const actions = {
   //     }
   //   }
   // },
+  // add new sap module
   addModule({
     commit,
     getters
@@ -224,6 +211,7 @@ const actions = {
     }
     commit('SET_USER_PROJECTS_LIST', projectsList)
   },
+  //add new industry
   addIndustry({
     commit,
     getters,
@@ -270,6 +258,7 @@ const actions = {
     commit('SET_USER_PROJECTS_LIST', projectsList)
 
   },
+  // get industries name from text table
   getIndustries({
     commit,
     getters
@@ -289,6 +278,7 @@ const actions = {
       commit('SET_INDUSTRY_DESC_LIST', res.data.d.results);
     }).catch(error => {})
   },
+  // format project from string to array with objects, adding industry description 
   adjustProjects({
     commit,
     dispatch
@@ -354,6 +344,7 @@ const actions = {
     }
     commit('SET_USER_PROJECTS_LIST', projects);
   },
+  // find industry description, method for adjustProjects function
   checkProjectKey({
     commit
   }, {

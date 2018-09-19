@@ -61,6 +61,7 @@ const mutations = {
 }
 
 const actions = {
+  // set color for new event
   setColorPriority({getters, commit}) {
     let color = '';
     let prior = getters.getEventToChange.Priority;
@@ -107,6 +108,7 @@ convertDate({getters, commit}) {
   }
   commit('SET_EVENTS', oEvents);
 },
+// set colors for downloaded data 
 setColor({commit, getters}){
      const aEvents = getters.getEvents;
      for(let i = 0; i<aEvents.length; i++) {

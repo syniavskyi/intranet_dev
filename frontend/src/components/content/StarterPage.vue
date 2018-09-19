@@ -123,6 +123,7 @@ export default {
        'checkList',
        'checkFileFormat'
     ]),
+    // add css to checkbox
     changeCheckbox(data) {
       if(data.Status === undefined) {
         data["status"] = true;
@@ -135,6 +136,7 @@ export default {
       //   data
       // });
     },
+    // format file name to display file format
     checkFileFormat(name) {
       return name.slice(name.lastIndexOf('.'));
     }

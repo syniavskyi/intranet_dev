@@ -24,11 +24,11 @@ const mutations = {
 }
 
 const actions = {
+  // check if one of chheckboxes is not checked and set button to disabled
   checkList({
     commit
   }, data) {
     var bState = false;
-
     for (var i = 0; i < data.length; i++) {
       if (data[i].Status) {
         bState = false;
@@ -38,11 +38,13 @@ const actions = {
       commit('SET_BUTTON_STATE', bState);
     }
   },
+  // change Status from X/- to true/false
   checkStatus({commit, getters}, files) {
     for(let i = 0; i < files.length; i++) {
       files[i].Status = files[i].Status === 'X' ? true : false
     }
 },
+// get docs for new user
 getNewDocs({commit, getters, dispatch}) {
     let urlQuery = getters.getUrlQuery
     // TEMPORARY, after testing change url to urlQuery
@@ -62,6 +64,7 @@ getNewDocs({commit, getters, dispatch}) {
       console.log(error);
     })
   },
+  // get informational docs
   getInfoDocs({commit, getters, dispatch}) {
     let urlQuery = getters.getUrlQuery
     let query = "?sap-user=psy&sap-password=ides01&sap-language=pl"

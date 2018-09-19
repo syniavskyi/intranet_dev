@@ -327,6 +327,8 @@ export default {
 
   //         image.src = url
   // },
+
+  // set login language
   beforeRouteLeave(to, from, next) {
     let lang = this.loginLanguage.toLowerCase();
     if (lang == "") {
@@ -509,6 +511,7 @@ export default {
         }
       }
     },
+    // get data for selected language
     getNewData() {
       this.$store.commit("SET_LANG", this.selectedCvLang);
       let cvLang = this.selectedCvLang.toUpperCase();

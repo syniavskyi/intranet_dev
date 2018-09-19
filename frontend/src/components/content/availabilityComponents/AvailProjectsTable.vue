@@ -170,19 +170,20 @@ export default {
         },
         checkFields(index) {
             let bEnd, bStart, bType, bStatus, bEngag, bChanged;
-
+// check if data was changed
              bEnd = this._beforeEditingCache[index].EndDate.getTime() !== this.userProjects[index].EndDate.getTime(),
              bStart = this._beforeEditingCache[index].StartDate.getTime() !== this.userProjects[index].StartDate.getTime(),
              bType = this._beforeEditingCache[index].ProjectId !== this.userProjects[index].ProjectId,
              bStatus = this._beforeEditingCache[index].StatusId !== this.userProjects[index].StatusId,
              bEngag = this._beforeEditingCache[index].Engag !== this.userProjects[index].Engag;
 
+// if data was changed set boolean variable to true
         if(bEnd || bStart || bType || bStatus || bEngag) {
             bChanged = true;
         } else {
             bChanged = false;
         }
-
+// check if data are not empty and was changed and set button to disabled or not
             if(this.filteredUserProjects.length > 0) {
                if( bChanged &&
                  this.filteredUserProjects[index].ProjectId &&
