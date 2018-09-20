@@ -36,7 +36,7 @@ export const dateStringToObj = function(date) {
     return new Date(parseInt(date.substring(6, date.length - 2)));
   }
 };
-
+// create independent clone without date changing
 export const createClone = function(data) {
   let clone = JSON.parse(JSON.stringify(data));
   if (clone.constructor === Array) {
@@ -56,7 +56,7 @@ export const createClone = function(data) {
   }
   return clone;
 } 
-
+// format string to array
 export const formatToArray = function (data) {
   let dataSet;
    if(data[0].__metadata) {
@@ -102,6 +102,7 @@ export const formatToArray = function (data) {
     return data;
   }
 }  
+// format array to string, divedied by "||"
 export const formatToString = function(data) {
 let formattedData = {};
   for(let key in data) {
@@ -163,6 +164,7 @@ export const setWorkExperience = function(date) {
 
   return oDates;
 };
+// format time form backend type to HH:mm:ss
 export const formatTimeForCalendar = function(data) {
   let format = data.slice(2, 4) + data.slice(5, 7) + data.slice(8, 10); 
   return data = moment(format, "hmm").format('HH:mm:ss'); 

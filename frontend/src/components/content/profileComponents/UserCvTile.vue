@@ -3,7 +3,7 @@
         <div class="profile-tile-header">
             <div class="profile-tile-header-row">
                 <h2 class="prof-tile-h2">{{ $t("label.cv") }}</h2>
-                <button class="func-btn" @click="showSelectDialog">Generuj CV</button>
+                <button class="func-btn" @click="showSelectDialog">{{ $t("header.generateCV") }}</button>
             </div>
             <div class="tile-underscore"></div>
         </div>
@@ -20,7 +20,7 @@
                         <select class="selectProfile selectEdit" required v-model="selectedFormat" @change="setSelectedFormat">
                             <option v-for="format in formats" :key="format">{{format}}</option>
                         </select>
-                        <label class="label-profile">Format</label>
+                        <label class="label-profile">{{ $t("label.format") }}</label>
                     </div>
                     <div class="add-download" v-if="selectedFormat">
                         <p class="profile-error profile-error-upload-top" v-if="fileUploadError">{{ $t("message.fileUploadError") }}</p>

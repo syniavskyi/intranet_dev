@@ -152,9 +152,9 @@ export default {
     onHoverOut(el) {
       this.$store.dispatch("onLightOut", el.style ? el : this.$el)
     },
+    // validate fields and set button to disabled or not
     checkFields(index) {
       if (this.userEducation.length > 0) {
-        // for (let i = 0; i < this.userEducation.length; i++) {
         if (
           this.userEducation[index].FieldOfStudy &&
           this.userEducation[index].University &&
@@ -172,19 +172,20 @@ export default {
             index
           ].children[0].disabled = true;
         }
-        // }
       }
     },
     remove(index) {
       this._beforeEditingCache.splice(index, 1);
       this.removeUserEducation(index);
     },
+    //undo changes
     cancel() {
       this.onHoverOut(this.$el);
       this.$store.commit("SET_EDUCATION_ERROR", false);
       this.$store.commit("SET_USER_EDUCATION", this._beforeEditingCache);
       this.editMode = false;
     },
+     // check if new data should be updated or created
     save(index) {
       const dataToChange = this._beforeEditingCache[index],
         // newData = this.userEducation[index];
@@ -219,6 +220,7 @@ export default {
       }
       this.checkFields(index);
     },
+  // hover EndDate if field IsCurrent is checked
     disableEndDateInput(value) {
       const isCurrent = value.target.checked,
         index = value.target.name,
@@ -232,6 +234,7 @@ export default {
       }
       this.checkFields(index);
     },
+     // set IsCurrent checkboxes checked
     setEduCheckbox(index) {
       let edu = this.$store.getters.getUserEducation;
       let input;

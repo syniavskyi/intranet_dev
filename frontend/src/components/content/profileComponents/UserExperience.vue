@@ -5,7 +5,7 @@
         <h2 class="profile-tile-title">{{ $t("header.experience") }}</h2>
         <div class="profile-table-buttons">
           <button class="profile-edit-btn" v-if="!editMode" @mouseover="onHover" @mouseout="onHoverOut" @click="edit">{{ $t("button.edit") }}</button>
-          <button class="profile-edit-btn-e" v-if="editMode" @click="addUserExperience"><span class="prof-btn-txt">Dodaj nowy wpis</span><span class="prof-btn-icon">&plus;</span> </button>
+          <button class="profile-edit-btn-e" v-if="editMode" @click="addUserExperience"><span class="prof-btn-txt">{{ $t("button.addNewEntry") }}</span><span class="prof-btn-icon">&plus;</span> </button>
           <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-icon">&#10004;</span><span class="prof-btn-txt">{{ $t("button.finishEdit") }}</span></button>
         </div>
       </div>
@@ -23,7 +23,7 @@
                    <!-- <v-date-picker class="prof-input-date" :max-date="experience.DateEnd === null ? new Date() : experience.DateEnd" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateStart"> -->
                   <input value="experience.DateStart" />
                 </v-date-picker>
-                <label v-if="editMode">Od</label>
+                <label v-if="editMode">{{ $t("label.from") }}</label>
               </div>
               <span class="prof-span-0">&#8212;</span>
               <div name="endDateDiv" :id="formatId(index)">
@@ -33,13 +33,13 @@
                     <!-- <v-date-picker class="prof-input-date" :min-date="experience.DateStart" :max-date="new Date()" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateEnd"> -->
                     <input value="experience.DateEnd" />
                   </v-date-picker>
-                  <label v-if="editMode">Do</label>
+                  <label v-if="editMode">{{ $t("label.to") }}</label>
                 </div>
               </div>
               <label class="checkbox-wrap">
                 <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="experience.IsCurrent" />
                 <div class="checkbox-in"></div>
-                <p style="padding:0;margin:0;">Obecnie</p>
+                <p style="padding:0;margin:0;">{{ $t("label.present") }}</p>
               </label>
             </div>
           </div>
@@ -48,7 +48,7 @@
               <input required v-if="editMode" class="inputProfile inputEdit" v-model="experience.Employer" @input="checkFields(index)">
               <input disabled class="inputProfile inputDisabled" v-if="!editMode" v-model="experience.Employer"/>
               <span class="prof-div-bar"></span>
-              <label class="label-profile">Pracodawca</label>
+              <label class="label-profile">{{ $t("label.employer") }}</label>
             </div>
             <div class="prof-input-ss">
               <select required v-if="editMode" class="selectProfile selectEdit" @change="checkFields(index)" v-model="experience.WorkPos">
@@ -59,7 +59,7 @@
               </select>
               <!-- :disabled="!editMode" -->
               <span class="prof-div-bar"></span>
-              <label class="label-profile">Stanowisko</label>
+              <label class="label-profile">{{ $t("label.jobPosition") }}</label>
             </div>
           </div>
           <div class="prof-row-btns expButtons">
@@ -122,9 +122,9 @@ export default {
     onHoverOut(el) {
       this.$store.dispatch("onLightOut", el.style ? el : this.$el)
     },
+    // validate fields and set button to disabled or not
     checkFields(index) {
       if (this.userExperience.length > 0) {
-        // for (let i = 0; i < this.userExperience.length; i++) {
         if (
           this.userExperience[index].Employer &&
           this.userExperience[index].WorkPos &&
@@ -140,12 +140,12 @@ export default {
             index
           ].children[0].disabled = true;
         }
-        // }
       }
     },
     formatId(index) {
       return index + "e";
     },
+    //undo changes
     cancel() {
       this.onHoverOut(this.$el);
       this.$store.commit("SET_EXPERIENCE_ERROR", false);
@@ -156,9 +156,9 @@ export default {
       this._beforeEditingCache.splice(index, 1);
       this.removeUserExperience(index);
     },
+    // check if new data should be updated or created
     save(index) {
       const dataToChange = this._beforeEditingCache[index],
-        // newData = this.userExperience[index];
         newData = utils.createClone(this.userExperience[index]);
 
       newData.Language = "PL";
@@ -191,6 +191,7 @@ export default {
       }
       this.checkFields(index);
     },
+    // hover EndDate if field IsCurrent is checked
     disableEndDateInput(value) {
       const isCurrent = value.target.checked,
         index = value.target.name,
@@ -204,6 +205,7 @@ export default {
       }
       this.checkFields(index);
     },
+    // set IsCurrent checkboxes checked
     setExpCheckbox(index) {
       let exp = this.$store.getters.getUserExperience;
       let input;

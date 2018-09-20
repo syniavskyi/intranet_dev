@@ -3,28 +3,28 @@
         <div class="modal-overlay"></div>
         <div class="modal-new-s">
             <div class="modal-header-new">
-                <h1 class="modal-title-new">Zmień hasło</h1>
+                <h1 class="modal-title-new">{{ $t("header.changePassword") }}</h1>
                 <div @click="close" class="modal-exit-new">&#10006;</div>
             </div>
             <div class="modal-content-new">
                 <div class="cd-for-input">
                     <input required class="cd-input" id="oldPass">
                     <span class="cd-span"></span>
-                    <label class="cd-label">Stare hasło</label>
+                    <label class="cd-label">{{ $t("label.oldPassword") }}</label>
                 </div>
                 <div class="cd-for-input">
                     <input required class="cd-input" id="newPass">
                     <span class="cd-span"></span>
-                    <label class="cd-label">Nowe hasło</label>
+                    <label class="cd-label">{{ $t("label.newPassword") }}</label>
                 </div>
                 <div class="cd-for-input">
                     <input required class="cd-input" id="newPassConfirm">
                     <span class="cd-span"></span>
-                    <label class="cd-label">Potwierdź nowe hasło</label>
+                    <label class="cd-label">{{ $t("label.confirmPassword") }}</label>
                 </div>
                 <button class="button login-button" @click="onSubmit">
                     <span class="loading-icon"></span>
-                    <span class="span-arrow">Wyślij</span>
+                    <span class="span-arrow">{{ $t("button.send") }}</span>
                 </button>
             </div>
         </div>
