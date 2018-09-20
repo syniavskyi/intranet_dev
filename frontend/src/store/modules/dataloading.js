@@ -21,7 +21,7 @@ const state = {
   sapModulesList: [],
   newUserFiles: [],
   UserRole: [],
-  userAdverts: [{Id: '001', Message: 'Wiadomość1', ValidTo: new Date()}, {Id:'002', Message: 'Wiadomość2', ValidTo: new Date()}],
+  userAdverts: [{Id: '001', Message: 'Wiadomość1', ValidTo: new Date().toDateString()}, {Id:'002', Message: 'Wiadomość2', ValidTo: new Date().toDateString()}, {Id:'003', Message: 'Wiadomość3', ValidTo: new Date().toDateString()}],
   userAuth: [],
   availStatus: [],
   availType: [],

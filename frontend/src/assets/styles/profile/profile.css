@@ -450,12 +450,6 @@
     align-items: center;
 }
 
-.tile-underscore {
-    width: 5rem;
-    height: 0.5rem;
-    background: orange;
-}
-
 .profile-tile-inputs-section {
     display: flex;
     flex-direction: column;

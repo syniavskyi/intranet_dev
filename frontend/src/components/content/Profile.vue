@@ -247,7 +247,7 @@
         <user-skills-component></user-skills-component>
         <select-cv-content v-show="showSelectCv"></select-cv-content>
         <div v-show="showSelectCv" class="modal-overlay"></div>
-          <change-user-password v-show="showPasswordDialog"></change-user-password>
+        <change-user-password v-show="showPasswordDialog"></change-user-password>
         </div>
       </div>
     </div>

@@ -568,6 +568,8 @@ input:required {
     #a76c00 3px 3px 0;
     transition: all 0.25s ease;
     cursor: pointer;
+    max-height: 2rem;
+    margin-top:.5rem;
 }
 
 .func-btn:hover {
@@ -604,7 +606,7 @@ input:required {
 }
 /* Functional Buttons */
 
-/* COOL (CONTENT) DIV INPUT / SELECT / TEXTAREA - start */
+/* COOL (CONTENT) DIV INPUT / SELECT / TEXTAREA / DATEPICKER - start */
 .cd-for-input-xs,
 .cd-for-input-s,
 .cd-for-input,
@@ -751,7 +753,81 @@ input:required {
     width: 50%;
 }
 
+.cd-range,
+.cd-range input {
+    font-size: 1rem;
+    width: 100%;
+    width: 8rem;
+}
+
+.cd-range,
+.cd-range input {
+    border: 1px solid lightgrey;
+    text-align: center;
+    border-radius: 4px;
+    height: 1.9rem;
+}
+
 /* COOL (CONTENT) DIV INPUT / SELECT / TEXTAREA  - end */
+
+/* MESSAGE TOAST */
+.toast {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    font-size: .9rem;
+    bottom: 3rem;
+    text-align: center;
+    left: 45%;
+    display: flex;
+    max-width: 10rem;
+    flex-wrap: wrap;
+    color: white;
+    background: rgba(0, 0, 0, 0.507);
+    padding: 0.5rem 0.6rem;
+    border-radius: 4px;
+    animation: slide-in-up 0.3s;
+    word-break: break-word;
+    box-shadow: 0 0 8px #333;
+    z-index: 1450;
+}
+/* MESSAGE TOAST */
+
+/* tile head */
+.tile-head {
+    display: flex;
+    flex-direction: column;
+    min-height: 3.4rem;
+    height: 10%;
+}
+
+.tile-head-title {
+    display: flex;
+    font-weight: 500;
+    color: #333;
+    margin: 0rem;
+    padding: 0.5rem 1rem;
+}
+
+.tile-head-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tile-underscore {
+    width: 5rem;
+    height: 0.5rem;
+    background: orange;
+}
+
+.tile-content {
+    display: flex;
+    height: 90%;
+    align-self: center;
+    width: 100%;
+    justify-content: center;
+}
+/* tile head */
 
 /* background: linear-gradient(to right, #ffffff 0%,#e5e5e5 10%,#e5e5e5 90%,#ffffff 100%); */
 
@@ -766,6 +842,17 @@ input:required {
     }
   }
 
+  @keyframes slide-in-up {
+      from {
+          transform: translateY(150px);
+          opacity: 0;
+      }
+      to {
+          transform: translateY(0);
+          opacity: 1;
+      }
+  }
+
   @keyframes slide-out {
     from {
       transform: translateY(0);
@@ -775,6 +862,16 @@ input:required {
       transform: translateY(-30px);
       opacity: 0;
     }
+  }
+  @keyframes slide-to-left {
+      from {
+          transform: translateX(-100px);
+          opacity:0;
+      }
+      to {
+          transform:translateX(0);
+          opacity: 1;
+      }
   }
 
 /* media for dashboard, nav and others */
