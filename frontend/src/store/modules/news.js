@@ -25,7 +25,8 @@ const state = {
     },
     news: null,
     newsJson: {},
-    articles: []
+    articles: [],
+    showNewMessageDialog: false
 }
 
 const mutations = {
@@ -46,6 +47,9 @@ const mutations = {
     },
     ADD_ARTICLES(state, data) {
         state.articles = data
+    },
+    SET_SHOW_NEW_MESSAGE_DIALOG(state, show) {
+        state.showNewMessageDialog = show
     }
 }
 
@@ -228,7 +232,10 @@ const getters = {
      },
      articles: state => {
          return state.articles
-     }
+     },
+    getShowNewMessageDialog() {
+        return state.showNewMessageDialog
+    }
 }
 
 export default {

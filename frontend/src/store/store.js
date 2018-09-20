@@ -23,6 +23,7 @@ import userSkills from './modules/profileComponents/userSkills'
 import availLeaves from './modules/availabilityComponents/availLeaves'
 import availProjects from './modules/availabilityComponents/availProjects'
 import cv from './modules/cv'
+import toast from './modules/toast'
 
 import settings from './modules/settings'
 
@@ -54,6 +55,7 @@ export default new Vuex.Store({
         userSkills,
         availLeaves,
         availProjects,
-        cv
+        cv,
+        toast
     }
 });
