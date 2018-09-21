@@ -30,7 +30,8 @@
         "uncheckAll": "Uncheck all",
         "seePreview": "See preview",
         "close": "Close",
-        "format": "Format"
+        "format": "Format",
+        "generatePDF": "Generate PDF"
     },
     "label": {
         "nationality": "Nationality",
