@@ -13,18 +13,12 @@
     </div>
     <!-- remove style after adding appropriate classes, it is only for testing purposes  -->
     <div class="profile-tile-content">
-      <p class="profile-error" name="error" v-if="showProjectError"> 
-        <!-- SPI -->
-     Wprowadzone dane w projekcie {{ errorProjectNo }} są niekompletne. Uzupełnij wszystkie pola. 
-        <!-- {{ $t('message.incompleteData', ['{{ errorProjectNo }}']) }}
-        {{ $t('message.incompleteData',{ msg: '{{ errorProjectNo }}'  }  ) }}
-        {{ $t('message.incompleteData',{ '0': '{{ errorProjectNo }}'  }  ) }} -->
-        <i18n path="message.incompleteData" tag="p">
+        <i18n path="message.incompleteData" tag="p" class="profile-error" name="error" v-if="showProjectError">
           <span place="errorProNo"> {{ errorProjectNo }} </span>
         </i18n>
-        <!--SPI-->
-        </p>
-      <p class="profile-error" name="error" v-if="invalidDates">W projekcie {{invalidDatePos}} data rozpoczęcia nie może być późniejsza niż data zakończenia </p>
+      <i18n path="message.invalidDate" tag="p" class="profile-error" name="error" v-if="invalidDates">
+          <span place="invalid"> {{invalidDatePos}} </span>
+        </i18n>
       <div class="profile-table-wrapper">
         <div class="profile-table">
           <div class="prof-thead">

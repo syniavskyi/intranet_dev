@@ -2,7 +2,9 @@
     <div class="availability-tile ava-tile-2">
         <div class="availability-tile-header">
             <div class="ava-tile-header-title">
-                <h2>Dodaj wpis dla użytkownika {{formattedUsername}} </h2>
+                <i18n path="message.addEntryforUser" tag="h2">
+                    <span place="user"> {{formattedUsername}} </span>
+                 </i18n>
                 <div class="availability-tile-underscore"></div>
             </div>
         <!-- <button class="ava-button ava-button-add" @click="showAddProjectDialog = true"> Dodaj projekt </button> -->
@@ -10,8 +12,8 @@
         <div class="availability-tile-content">
             <div id="add-project-dialog">
                 <div class="ava-add">
-                    <p class="ava-content-header" v-if="newLeave.TypeId === null">Aby dodać wpis, Wybierz jego rodzaj po lewej stronie</p>
-                    <p class="ava-content-header" v-if="newLeave.TypeId !== null">Rodzaj wpisu: 
+                    <p class="ava-content-header" v-if="newLeave.TypeId === null">{{ $t("message.selectTypeToAddEntry") }}</p>
+                    <p class="ava-content-header" v-if="newLeave.TypeId !== null">{{ $t("label.entryType") }}: 
                         <span class="ava-tile-entry">&nbsp;{{formattedType}}</span>
                     </p>
                     <div class="ava-div-select-cool">
@@ -25,17 +27,17 @@
                             <option v-for="status in availStatusList" :key="status.Key" :value="status.Key">{{ status.Value }}</option>
                             <!-- <option v-for="branch in branchList" :key="branch.branchId" :value="selectedBranch = branch.branchId">{{ branch.branchName }}</option> -->
                         </select>
-                        <label class="ava-select-label-cool">Status</label>
+                        <label class="ava-select-label-cool">{{ $t("label.status") }}</label>
                     </div>
                 </div>
                 <div class="ava-add">
                     <div class="ava-div-input-cool" v-if="newLeave.TypeId == 'OT'">
                         <textarea class="ava-textarea" required maxlength="50" @change="checkFields"/>
-                    <label class="ava-select-label-cool">Uwagi</label>
+                    <label class="ava-select-label-cool">{{ $t("label.remarks") }}</label>
                     </div>
                     <div class="ava-div-buttons">
                         <button class="ava-button" >{{ $t("button.cancel") }}</button>
-                        <button :disabled="disableAddNew" class="ava-button ava-button-edit" @click="addNewLeave" >Dodaj wpis</button>
+                        <button :disabled="disableAddNew" class="ava-button ava-button-edit" @click="addNewLeave" >{{ $t("button.addNewEntry") }}</button>
                     </div>
                 </div>
             </div>

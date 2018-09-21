@@ -3,25 +3,25 @@
         <div class="availability-tile-header">
             <div class="ava-tile-header-title">
                             <!-- <h2>{{ $t("header.addProject") }}</h2> -->
-                <h2>Zestawienie dyspozycyjności</h2>
+                <h2>{{ $t("label.availabilityOverview") }}</h2>
                 <div class="availability-tile-underscore"></div>
             </div>
              <button class="profile-edit-btn" v-if="!editMode"  @click="edit">{{ $t("button.edit") }}</button>
              <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-txt">{{ $t("button.finishEdit") }}</span><span class="prof-btn-icon">&#10004;</span></button>
         </div>
-        <p class="ava-content-header" v-if="noAvailEntries">Brak wpisów dla podanych kryteriów</p>
+        <p class="ava-content-header" v-if="noAvailEntries">{{ $t("message.noEntriesForParameters") }}</p>
         <div class="availability-tile-content" v-if="!noAvailEntries">
             <div class="ava-table-s" v-for="(avail, index) in filteredUserAvail" :key="index">
                 <div class="ava-thead-s">
-                    <div class="ava-ths-item">Rodzaj wpisu</div>
-                    <div class="ava-ths-item">Od</div>
-                    <div class="ava-ths-item">Do</div>
-                    <div class="ava-ths-item">Status</div>
-                    <div class="ava-ths-item">Opcje</div>
+                    <div class="ava-ths-item">{{ $t("label.entryType") }}</div>
+                    <div class="ava-ths-item">{{ $t("label.from") }}</div>
+                    <div class="ava-ths-item">{{ $t("label.to") }}</div>
+                    <div class="ava-ths-item">{{ $t("label.status") }}</div>
+                    <div class="ava-ths-item">{{ $t("label.options") }}</div>
                 </div>
                 <div class="ava-tbody-s">
                     <div class="ava-tbs-item">
-                        <div class="ava-tbs-ititle">Rodzaj wpisu</div>
+                        <div class="ava-tbs-ititle">{{ $t("label.entryType") }}</div>
                          <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="avail.TypeId">
                             <option v-for="type in availTypes" :key="type.Key" :value="type.Key">{{type.Value}}</option>
                         </select>
@@ -30,21 +30,21 @@
                         </select>
                     </div>
                     <div class="ava-tbs-item">
-                        <div class="ava-tbs-ititle">Od</div>
+                        <div class="ava-tbs-ititle">{{ $t("label.from") }}</div>
                         <p class="prof-date-label" v-if="!editMode"> {{ formatDate(avail.DateStart) }} </p>
                         <v-date-picker v-if="editMode" class="prof-input-date" popoverDirection="top" @input="validateDates(index, avail.EntryId)" is-expanded mode="single" v-model="avail.DateStart">
                             <input value="avail.DateStart"/>
                         </v-date-picker>
                     </div>
                     <div class="ava-tbs-item">
-                        <div class="ava-tbs-ititle">Do</div>
+                        <div class="ava-tbs-ititle">{{ $t("label.to") }}</div>
                         <p class="prof-date-label" v-if="!editMode"> {{ formatDate(avail.DateEnd) }} </p>
                         <v-date-picker v-if="editMode" class="prof-input-date" popoverDirection="top" @input="validateDates(index, avail.EntryId)" is-expanded mode="single" v-model="avail.DateEnd">
                             <input value="avail.DateEnd"/>
                         </v-date-picker>
                     </div>
                     <div class="ava-tbs-item">
-                        <div class="ava-tbs-ititle">Status</div>
+                        <div class="ava-tbs-ititle">{{ $t("button.status") }}</div>
                         <select v-if="editMode" class="selectProfile selectEdit" v-model="avail.StatusId" @change="checkFields(index, avail.EntryId)">
                             <option v-for="status in availStatus" :key="status.Key" :value="status.Key">{{status.Value}}</option>
                         </select>
@@ -53,9 +53,9 @@
                         </select>
                     </div>
                     <div class="ava-tbs-item eduButtonsAvail">
-                        <div class="ava-tbs-ititle"> Opcje </div>
-                            <button v-if="editMode" :disabled="true" @click="save(avail.EntryId)">Zapisz</button>
-                            <button v-if="editMode">Usuń</button>
+                        <div class="ava-tbs-ititle"> {{ $t("label.options") }} </div>
+                            <button v-if="editMode" :disabled="true" @click="save(avail.EntryId)">{{ $t("button.save") }}</button>
+                            <button v-if="editMode">{{ $t("button.delete") }}</button>
                     </div>
                 </div>
             </div>

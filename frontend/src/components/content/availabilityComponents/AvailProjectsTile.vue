@@ -3,7 +3,9 @@
     <div class="availability-tile ava-tile-2">
         <div class="availability-tile-header">
             <div class="ava-tile-header-title">
-                <h2>{{ $t("header.addProject") }} dla użytkownika {{formattedUsername}}</h2>
+                <i18n path="message.addProjectforUser" tag="h2">
+                    <span place="user"> {{formattedUsername}} </span>
+                    </i18n>
                 <div class="availability-tile-underscore"></div>
             </div>
             <!-- <button class="ava-button ava-button-add" @click="showAddProjectDialog = true"> Dodaj projekt </button> -->
@@ -43,11 +45,11 @@
                             <option v-for="status in availStatusList" :key="status.Key" :value="status.Key">{{ status.Value }}</option>
                             <!-- <option v-for="branch in branchList" :key="branch.branchId" :value="selectedBranch = branch.branchId">{{ branch.branchName }}</option> -->
                         </select>
-                        <label class="ava-select-label-cool">Status</label>
+                        <label class="ava-select-label-cool">{{ $t("label.status") }}</label>
                     </div>
                     <div class="cd-for-input">
                         <textarea class="cd-textarea" required maxlength="50" @input="validateNewProject" v-model="newProjectForUser.Description" />
-                        <label class="cd-slabel">Uwagi</label>
+                        <label class="cd-slabel">{{ $t("label.remarks") }}</label>
                     </div>
                     <div class="ava-div-buttons">
                         <button class="ava-button" @click="onCancelCreate">{{ $t("button.cancel") }}</button>
