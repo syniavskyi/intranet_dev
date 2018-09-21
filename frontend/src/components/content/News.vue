@@ -138,6 +138,9 @@ export default {
         this.getToday()
         // this.getNews()
     },
+    destroyed() {
+        clearInterval(this.interval);
+    },
     components: {
         "app-menu": Menu,
         "toast": Toast,
