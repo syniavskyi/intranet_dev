@@ -29,14 +29,13 @@ const mutations = {
   },
   SET_HASHED_PASSWORD (state, password) {
       state.hashedPassword = password
-  }    
+  }
 }
 
 const actions = {
   login({
     commit,
-    dispatch,
-    getters
+    dispatch
   }, authData) {
     let url = '?sap-user=' + authData.username + '&sap-password=' + authData.password + '&sap-language=' +authData.language
 
@@ -55,7 +54,7 @@ const actions = {
         user: authData.username,
         lang: authData.language,
         changePage: true
-      } 
+      }
       dispatch('loadData', userData)
     }).catch(error => {
       console.log(error)
@@ -63,9 +62,7 @@ const actions = {
     })
   },
   sendEmailWithPass({
-    commit,
-    dispatch,
-    getters
+    commit
   }, email) {
     axios({
       method: 'post',
