@@ -231,32 +231,32 @@ export default {
     let fnFilter;
           if (aFilters.department && aFilters.branch && aFilters.employee){
               fnFilter = function(oItem){
-              return oItem.Department === aFilters.department && oItem.Branch === aFilters.branch && oItem.Employee === aFilters.employee;
+              return oItem.Department.includes(aFilters.department) && oItem.Branch.includes(aFilters.branch) && oItem.Employee.includes(aFilters.employee);
               }
           } 
           else if (aFilters.department && aFilters.branch) {
               fnFilter = function(oItem){
-            return oItem.Department === aFilters.department && oItem.Branch === aFilters.branch;
+            return oItem.Department.includes(aFilters.department) && oItem.Branch.includes(aFilters.branch);
               }
           }   
           else if (aFilters.branch && aFilters.employee) {
              fnFilter = function(oItem){
-              return oItem.Branch === aFilters.branch && oItem.Employee === aFilters.employee;
+              return oItem.Branch.includes(aFilters.branch) && oItem.Employee.includes(aFilters.employee);
               }
           }
           else if (aFilters.branch) {
               fnFilter = function(oItem){
-              return oItem.Branch === aFilters.branch;
+              return oItem.Branch.includes(aFilters.branch);
               }
           }
           else if (aFilters.department) {
              fnFilter = function(oItem){
-              return oItem.Department === aFilters.department;
+              return oItem.Department.includes(aFilters.department);
               }
           }
           else if (aFilters.employee) {
              fnFilter = function(oItem){
-              return oItem.Employee === aFilters.employee;
+              return oItem.Employee.includes(aFilters.employee);
               }
           }
       if(fnFilter){
