@@ -156,14 +156,14 @@
                   <div class="profile-tile-inputs-section">
                     <div class="profile-tile-inputs">
                       <div class="prof-input-s">
+                         <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.section"> -->
+                        <input disabled class="inputProfile inputDisabled" v-model="userData.SectionName">
+                        <label class="label-profile">{{ $t("label.branch") }}</label>
+                      </div>
+                      <div class="prof-input-s">
                         <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.branch"> -->
                         <input disabled class="inputDisabled inputProfile" v-model="userData.DepartmentName">
                         <label class="label-profile">{{ $t("label.department") }}</label>
-                      </div>
-                      <div class="prof-input-s">
-                        <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.section"> -->
-                        <input disabled class="inputProfile inputDisabled" v-model="userData.SectionName">
-                        <label class="label-profile">{{ $t("label.branch") }}</label>
                       </div>
                       <div class="prof-input-s">
                         <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.position"> -->
