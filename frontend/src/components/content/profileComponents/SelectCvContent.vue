@@ -50,7 +50,7 @@
                     <div class="cv-modal-div-s">
                         <!-- <p>Wybierz język</p> -->
                         <select required class="cv-modal-select" v-model="cvElements.language">
-                            <option v-for="language in languageList" :key="language.id" :value="language.id"> {{language.name}}</option>
+                            <option v-for="language in languageList" :key="language.id" :value="language.id"> {{language.description}}</option>
                         </select>
                         <label class="cv-modal-label">{{ $t("label.selectLanguage") }}</label>
                     </div>
@@ -65,7 +65,7 @@
                     <div class="cv-modal-div-l">
                         <!-- <p>Wybierz pozycję</p> -->
                         <select required class="cv-modal-select" v-model="cvElements.position">
-                            <option v-for="position in userPositions" :key="position" :value="position"> {{position}}</option>
+                            <!-- <option v-for="position in userPositions" :key="position" :value="position"> {{position}}</option> -->
                         </select>
                         <label class="cv-modal-label">{{ $t("label.selectPosition") }}</label>
                     </div>
@@ -98,7 +98,7 @@ export default {
       cvElements: "getCvElements",
       languageList: "getLanguageList",
       industryList: "getIndustryList",
-      userPositions: "getUserJobPositions"
+      // userPositions: "getUserJobPositions"
     })
   },
   methods: {
