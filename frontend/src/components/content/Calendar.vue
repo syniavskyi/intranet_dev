@@ -301,7 +301,7 @@ export default {
       let obj = {window, event}
       this.$store.dispatch("setSideMenu", obj);
     },
-   // trigger function in js to adjust data for backend
+   // trigger function from js to adjust data for backend
     editForm() {
       this.editEvent();
       this.performDialog();
