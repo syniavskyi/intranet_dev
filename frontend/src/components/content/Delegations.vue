@@ -40,7 +40,7 @@
                                 <!-- <div class="delegations-div-unders">
                                     <div class="del-underscore">1</div>
                                 </div> -->
-                                <p class="del-inputs-header">{{ $t("label.target/time") }}</p>
+                                <p class="del-inputs-header">{{ $t("label.targetTime") }}</p>
                                 <div class="delegations-div-cool">
                                     <input required class="delegations-input-cool" ref="autocomplete" placeholder=""  onfocus="value = ''" v-model="newDelegation.destination" @input="checkNewDelegation" />
                                     <span class="delegations-div-bar"></span>

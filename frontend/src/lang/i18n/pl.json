@@ -137,7 +137,7 @@
         "availabilityOverview": "Zestawienie dyspozycyjności",
         "selectEmployee": "Wybierz pracownika",
         "selectTeamMember": "Wybierz członka zespołu",
-        "target/time": "Cel / Czas",
+        "targetTime": "Cel / Czas",
         "enterNameOrSurname": "Wpisz imię lub nazwisko",
         "orSelectDep": "albo wybierz oddział",
         "kagrinDocs": "Dokumenty Kagrin",
@@ -148,7 +148,10 @@
         "attendanceListPDF": "Lista obecności w PDF do wydrukwoania i podpisania",
         "cvTemplates": "Wzory CV",
         "importantDocs": "Dokumenty ważne",
-        "criticalDocs": "Dokumenty istotne"
+        "criticalDocs": "Dokumenty istotne",
+        "options": "Opcje",
+        "projectName": "Nazwa projektu",
+        "remarks": "Uwagi"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",
@@ -208,7 +211,11 @@
         "incompleteData": "Dane wprowadzone w projekcie {errorProNo} są niekompletne. Uzupełnij wszystkie pola.",
         "invalidDate": "W projekcie {invalid} data rozpoczęcia nie może być późniejsza niż data zakończenia.",
         "successfullySaved": "Pomyślnie zapisano dane",
-        "successfullyRemovedProject": "Pomyślnie usunięto projekt"
+        "successfullyRemovedProject": "Pomyślnie usunięto projekt",
+        "noEntriesForParameters": "Brak wpisów dla podanych kryteriów",
+        "selectTypeToAddEntry": "Aby dodać wpis, Wybierz jego rodzaj po lewej stronie",
+        "addEntryforUser": "Dodaj wpis dla użytkownika {user}",
+        "addProjectforUser": "Dodaj projekt dla użytkownika {user}"
     },
     "select": {
         "language": {
