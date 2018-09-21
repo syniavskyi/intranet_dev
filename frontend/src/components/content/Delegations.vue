@@ -29,7 +29,7 @@
                                 </select> 
                                 <label  class="delegations-label-cool-select">{{ $t("label.selectTeamMember") }}</label>
                             </div>
-                            <button class="del-generate-pdf" @click="generatePdf">{{ $t("header.generateCV") }}</button>
+                            <button class="del-generate-pdf" @click="generatePdf">{{ $t("button.generatePDF") }}</button>
                         </div>
                         <div class="delegations-tile-underscore"></div>
                     </div>

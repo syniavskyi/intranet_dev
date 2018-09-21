@@ -24,13 +24,14 @@
         "addNewEntry": "Dodaj nowy wpis",
         "selectGroup": "Wybierz grupę",
         "selectUser": "Wybierz użytkownika",
-        "addRow": "Add row",
+        "addRow": "Dodaj wiersz",
         "send": "Wyślij",
         "checkAll": "Zaznacz wszystkie",
         "uncheckAll": "Odznacz wszystkie",
         "seePreview": "Zobacz podgląd",
         "close": "Close",
-        "format": "Format"
+        "format": "Format",
+        "generatePDF": "Generuj PDF"
      },
     "label": {
         "nationality": "Narodowość",
