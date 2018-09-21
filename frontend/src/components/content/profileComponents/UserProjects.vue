@@ -157,7 +157,7 @@ export default {
   computed: {
     ...mapGetters({
       showProjectError: "getShowProjectError",
-      contractorsList: "contractorsList",
+      contractorsList: "getContractorsList",
       industryList: "getIndustryList",
       modulesList: "getModulesList",
       userProjects: "getUserProjectsList",

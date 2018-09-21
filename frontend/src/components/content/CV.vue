@@ -327,7 +327,7 @@ export default {
       userSkills: "getUserSkills",
       schoolDesc: 'getSchoolDescList',
       fieldOfStudyDesc: 'getFieldOfStudyDescList',
-      workPositions: 'workPositions',
+      workPositions: 'getWorkPositions',
       fullLanguageList: 'getFullLanguageList',
       langLevels: 'langLevels'
 

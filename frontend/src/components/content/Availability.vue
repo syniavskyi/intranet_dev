@@ -135,8 +135,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            departmentList: 'depList',
-            branchList: 'branchList',
+            departmentList: 'getDepartmentList',
+            branchList: 'getBranchList',
             usersList: 'usersList',
             userData: 'getUserInfo',
             sectionsList: 'sectionsList',

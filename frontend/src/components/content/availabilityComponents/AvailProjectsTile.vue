@@ -80,7 +80,7 @@ export default {
         ...mapGetters({
             newProjectForUser: 'getNewProjectForUser',
             projectsList: 'projectsList',
-            contractorsList: 'contractorsList',
+            contractorsList: 'getContractorsList',
             availStatusList: 'getAvailStatus',
             usersList: 'usersList'
         }),

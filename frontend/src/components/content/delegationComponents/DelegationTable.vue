@@ -211,7 +211,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
     ...mapGetters({
-      departmentList: "depList",
+      departmentList: "getDepartmentList",
       customCosts: "getDelegationCostsList",
       defaultCostsData: "getDefaultCostsData",
       currencyList: "getCurrencyList",

@@ -88,7 +88,7 @@ export default {
   computed: {
     ...mapGetters({
       usersList: "usersList",
-      departmentList: "depList",
+      departmentList: "getDepartmentList",
       displayMenu: "getShowMenu",
       displayOverlay: "getShowMenuOverlay"
     }),

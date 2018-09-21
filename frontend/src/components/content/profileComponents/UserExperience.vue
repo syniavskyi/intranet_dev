@@ -87,7 +87,7 @@ export default {
   computed: {
     ...mapGetters({
       userExperience: "getUserExperience",
-      workPositions: "workPositions"
+      workPositions: "getWorkPositions"
     })
   },
   mounted() {

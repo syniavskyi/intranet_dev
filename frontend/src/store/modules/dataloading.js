@@ -334,10 +334,10 @@ const actions = {
 };
 
 const getters = {
-  depList(state) {
+  getDepartmentList(state) {
     return state.departmentList;
   },
-  branchList(state) {
+  getBranchList(state) {
     return state.branches;
   },
   projectsList(state) {
@@ -346,7 +346,7 @@ const getters = {
   usersList(state) {
     return state.userList;
   },
-  contractorsList(state) {
+  getContractorsList(state) {
     return state.contractorsList;
   },
   isDataLoaded(state) {
@@ -355,19 +355,16 @@ const getters = {
   getUserInfo(state) {
     return state.userInfo;
   },
-  studyTypes(state) {
+  getStudyTypes(state) {
     return state.studyTypes;
   },
-  academicTitles(state) {
+  getAcademicTitles(state) {
     return state.academicTitles;
   },
-  langLevels(state) {
+  getLangLevels(state) {
     return state.langLevels
   },
-  langLevels(state){
-    return state.langLevels;
-  },
-  workPositions(state) {
+  getWorkPositions(state) {
     return state.workPositionList;
   },
   getModulesList(state) {

@@ -129,8 +129,8 @@ export default {
   computed: {
     ...mapGetters({
       userEducation: "getUserEducation",
-      studyTypes: "studyTypes",
-      academicTitles: "academicTitles",
+      studyTypes: "getStudyTypes",
+      academicTitles: "getAcademicTitles",
       schoolDescList: "getSchoolDescList",
       fieldOfStudyDescList: "getFieldOfStudyDescList"
     })
