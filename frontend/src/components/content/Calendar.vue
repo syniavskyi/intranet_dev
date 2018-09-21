@@ -208,7 +208,7 @@ export default {
   computed: {
     ...mapGetters({
       departmentList: 'getTargetGroup',
-      branchList: 'branchList',
+      branchList: 'getBranchList',
       eventTypes: 'getEventTypes',
       priorities: 'getPriorities',
       events: 'getEvents',

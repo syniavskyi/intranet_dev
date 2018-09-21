@@ -21,11 +21,11 @@
             <button class="prof-skills-btn" @click="addLanguageSkillsRow" v-if="editMode">+</button>
             <div class="prof-div-skills" v-for="(lang, index) in userLangs" :id="index" :key="index">
               <div class="prof-div-slang">
-                <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.Language" @change="checkFields">
-                  <option v-for="fullLang in fullLanguageList" :value="fullLang.Language" :key="fullLang.Language">{{fullLang.LangName}}</option>
+                <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.LanguageId" @change="checkFields">
+                  <option v-for="fullLang in fullLanguageList" :value="fullLang.LanguageId" :key="fullLang.LanguageId">{{fullLang.LangName}}</option>
                 </select>
-                <select v-if="!editMode" class="selectProfileSkills selectDisabled" v-model="lang.Language">
-                  <option v-for="fullLang in fullLanguageList" :value="fullLang.Language" :key="fullLang.Language">{{fullLang.LangName}}</option>
+                <select v-if="!editMode" class="selectProfileSkills selectDisabled" v-model="lang.LanguageId">
+                  <option v-for="fullLang in fullLanguageList" :value="fullLang.LanguageId" :key="fullLang.LanguageId">{{fullLang.LangName}}</option>
                 </select>
                 <label class="label-select-profile">{{ $t("label.language") }}</label>
               </div>
@@ -124,7 +124,7 @@ export default {
       userSkills: "getUserSkills",
       modulesList: "getModulesList",
       userLangs: "getUserLanguages",
-      langLevels: "langLevels",
+      langLevels: "getLangLevels",
       fullLanguageList: "getFullLanguageList"
     })
   },

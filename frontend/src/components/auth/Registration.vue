@@ -169,7 +169,7 @@ export default {
       displayMenuOverlay: "getShowMenuOverlay",
       isError: "getRegistrationError",
       getRoleList: "roleList",
-      getDepartmentList: "depList",
+      departmentList: "getDepartmentList",
       fullNameToEmail: "getPrefixEmail",
       hashedPassword: "hashedPassword",
       setPassword: "password",
