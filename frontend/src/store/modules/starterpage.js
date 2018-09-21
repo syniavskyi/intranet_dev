@@ -39,7 +39,7 @@ const actions = {
     }
   },
   // change Status from X/- to true/false
-  checkStatus({commit, getters}, files) {
+  checkStatus({}, files) {
     for(let i = 0; i < files.length; i++) {
       files[i].Status = files[i].Status === 'X' ? true : false
     }
@@ -60,6 +60,7 @@ getNewDocs({commit, getters, dispatch}) {
       let oAttachments = res.data.d.results;
       commit('SET_DOC_LIST_NEW', oAttachments);
       dispatch('checkStatus', oAttachments);
+      // dispatch('generateLinks', oAttachments);
     }).catch(error => {
       console.log(error);
     })
@@ -79,10 +80,18 @@ getNewDocs({commit, getters, dispatch}) {
       let oAttachments = res.data.d.results;
       commit('SET_DOC_LIST_INFO', oAttachments);
       dispatch('checkStatus', oAttachments);
+      // dispatch('generateLinks', oAttachments);
     }).catch(error => {
       console.log(error);
     })
   },
+  // generateLinks({}, files){
+  //   for(let i = 0; i < files.length; i++) {
+  //    let url = "http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/Attachments(FileId='" + files[i].FileId + "',Language='" +
+  //     'PL' + "',UserAlias='" + '' + "')/$value";
+  //     files[i].Link = url;
+  //   }
+  // }
 
 }
 

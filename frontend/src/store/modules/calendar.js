@@ -197,7 +197,8 @@ setColor({commit, getters}){
           Description: null,
           Priority: null,
           EventType: null,
-          TargetGroup: null,
+          TargetGroup: [],
+          Employee: [],
           EventPrivacy: null,
           color: null
          };

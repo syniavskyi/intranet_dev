@@ -43,7 +43,7 @@
                         <div class="prof-input-uno">
                           <input required v-model="userData.Street"/>
                           <span class="prof-div-bar"></span>
-                          <label class="prof-ainput-lbl">{{ $t("label.Street") }}</label>
+                          <label class="prof-ainput-lbl">{{ $t("label.street") }}</label>
                         </div>
                         <div class="prof-input-uno">
                           <input required v-model="userData.BuildingNumber"/>
