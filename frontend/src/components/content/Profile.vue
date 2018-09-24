@@ -384,7 +384,7 @@ export default {
           new Date(),
           true
         ),
-        oFormatedDate = utils.setWorkExperience(oCalculateDifference);
+        oFormatedDate = utils.setWorkExperience(oCalculateDifference, this.selectedCvLang);
 
       return oFormatedDate.year + oFormatedDate.month + oFormatedDate.day;
     }

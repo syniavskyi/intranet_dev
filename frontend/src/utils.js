@@ -1,6 +1,6 @@
 import moment from "moment";
 
-export const createRateDate = function(rateDate) {
+export const createRateDate = function (rateDate) {
   let day = parseFloat(moment(rateDate).format("D")),
     month = parseFloat(moment(rateDate).format("M")),
     dayOfWeek = parseFloat(moment(rateDate).weekday());
@@ -27,17 +27,17 @@ export const createRateDate = function(rateDate) {
   return rateDate;
 };
 
-export const formatDateForBackend = function(date) {
+export const formatDateForBackend = function (date) {
   return "/Date(" + new Date(date).getTime().toString() + ")/";
 };
 
-export const dateStringToObj = function(date) {
+export const dateStringToObj = function (date) {
   if (date !== null) {
     return new Date(parseInt(date.substring(6, date.length - 2)));
   }
 };
 // create independent clone without date changing
-export const createClone = function(data) {
+export const createClone = function (data) {
   let clone = JSON.parse(JSON.stringify(data));
   if (clone.constructor === Array) {
     for (let key in clone[0]) {
@@ -55,70 +55,68 @@ export const createClone = function(data) {
     }
   }
   return clone;
-} 
+}
 // format string to array
 export const formatToArray = function (data) {
   let dataSet;
-   if(data[0].__metadata) {
+  if (data[0].__metadata) {
     dataSet = data[0].__metadata.type;
-   }
+  }
   let index, string;
   let array = [];
 
-  for(let i = 0; i < data.length; i++) {
-    if(data[i].__metadata) {
-    delete data[i].__metadata;
-  //  let pos = data[i].findIndex(x => x[i] == '__metadata');
-  //  data[i].splice(pos, 1);
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].__metadata) {
+      delete data[i].__metadata;
+      //  let pos = data[i].findIndex(x => x[i] == '__metadata');
+      //  data[i].splice(pos, 1);
     }
-    for(let key in data[i]) { 
-      if(data[i][key].includes('||')) {
-        while(data[i][key].length > 1) {
+    for (let key in data[i]) {
+      if (data[i][key].includes('||')) {
+        while (data[i][key].length > 1) {
           index = data[i][key].indexOf('||');
-          if(index > 0) {
-              string = data[i][key].slice(0, index);
-              array.push(string);
-              index += 2;
-              data[i][key] = data[i][key].substr(index, data[i][key].length);
-          } 
-          else {
-              array.push(data[i][key]);
-               data[i][key] = "";
+          if (index > 0) {
+            string = data[i][key].slice(0, index);
+            array.push(string);
+            index += 2;
+            data[i][key] = data[i][key].substr(index, data[i][key].length);
+          } else {
+            array.push(data[i][key]);
+            data[i][key] = "";
           }
         }
-         data[i][key] = array;
-         array = [];
+        data[i][key] = array;
+        array = [];
       } else {
-           if(dataSet == 'ZGW_INTRANET_SRV.UserSkills' && key != "UserAlias" 
-           || dataSet == 'ZGW_INTRANET_SRV.UserSkills' && key != "Language" 
-           || dataSet == 'ZGW_INTRANET_SRV.Event' && key == 'Employee'
-           || dataSet == 'ZGW_INTRANET_SRV.Event' && key == 'TargetGroup') {
-              array.push(data[i][key]);
-              data[i][key] = array;
-              array = [];
-      }
+        if (dataSet == 'ZGW_INTRANET_SRV.UserSkills' && key != "UserAlias" ||
+          dataSet == 'ZGW_INTRANET_SRV.UserSkills' && key != "Language" ||
+          dataSet == 'ZGW_INTRANET_SRV.Event' && key == 'Employee' ||
+          dataSet == 'ZGW_INTRANET_SRV.Event' && key == 'TargetGroup') {
+          array.push(data[i][key]);
+          data[i][key] = array;
+          array = [];
+        }
       }
     }
     return data;
   }
-}  
+}
 // format array to string, divedied by "||"
-export const formatToString = function(data) {
-let formattedData = {};
-  for(let key in data) {
-    if(data[key]) {
-      if(data[key].constructor === Array) {
+export const formatToString = function (data) {
+  let formattedData = {};
+  for (let key in data) {
+    if (data[key]) {
+      if (data[key].constructor === Array) {
         formattedData[key] = "";
-        for(let i = 0; i < data[key].length; i++) {
-          if(data[key].length <= 1) {
-             formattedData[key] = data[key][i]
-          }
-          else {
+        for (let i = 0; i < data[key].length; i++) {
+          if (data[key].length <= 1) {
+            formattedData[key] = data[key][i]
+          } else {
             formattedData[key] += data[key][i] + '||';
           }
-        } 
-        if(formattedData[key].includes('||')) {
-          formattedData[key] = formattedData[key].slice(0, formattedData[key].length-2);
+        }
+        if (formattedData[key].includes('||')) {
+          formattedData[key] = formattedData[key].slice(0, formattedData[key].length - 2);
         }
         data[key] = formattedData[key];
       }
@@ -127,7 +125,7 @@ let formattedData = {};
   return data;
 }
 
-export const setWorkExperience = function(date) {
+export const setWorkExperiencePL = function (date) {
   let oDates = {
     day: "",
     month: "",
@@ -163,13 +161,65 @@ export const setWorkExperience = function(date) {
   }
 
   return oDates;
+}
+
+export const setWorkExperienceEN = function (date) {
+  let oDates = {
+    day: "",
+    month: "",
+    year: ""
+  }
+
+  if(date.years === 0) {
+    oDates.year = ""
+  } else if(date.years === 1) {
+    oDates.year = date.years + " year "
+  } else if(date.years > 1) {
+    oDates.year = date.years + " years ";
+  }
+
+  if(date.months === 0) {
+    oDates.month = ""
+  } else if(date.months === 1) {
+    oDates.month = date.months + " month "
+  } else if(date.months > 1) {
+    oDates.month = date.months + " months "
+  }
+
+  if(date.days === 0) {
+    oDates.day = ""
+  } else if(date.days === 1) {
+    oDates.day = date.days + " day "
+  } else if(date.days > 1) {
+    oDates.day = date.days + " days"
+  }
+
+  return oDates;
+}
+
+export const setWorkExperience = function (date, lang) {
+  let sFormattedDate;
+  if (lang === "pl") {
+    sFormattedDate = this.setWorkExperiencePL(date);
+  } else if (lang === "en") {
+    sFormattedDate = this.setWorkExperienceEN(date);
+  }
+
+  return sFormattedDate;
 };
+
 // format time from backend type to HH:mm:ss
 export const formatTimeForCalendar = function(data) {
   let format = data.slice(2, 4) + data.slice(5, 7) + data.slice(8, 10); 
   return data = moment(format, "hmm").format('HH:mm:ss'); 
+
+// format time form backend type to HH:mm:ss
+export const formatTimeForCalendar = function (data) {
+  let format = data.slice(2, 4) + data.slice(5, 7) + data.slice(8, 10);
+  return data = moment(format, "hmm").format('HH:mm:ss');
+
 }
-export const formatTimeForBackend = function(data) {
-  return "PT" + data.slice(0,2) + "H" + data.slice(3,5) + "M00S";
+export const formatTimeForBackend = function (data) {
+  return "PT" + data.slice(0, 2) + "H" + data.slice(3, 5) + "M00S";
 }
 const actions = {};
