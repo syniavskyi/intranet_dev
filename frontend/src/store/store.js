@@ -24,6 +24,7 @@ import availLeaves from './modules/availabilityComponents/availLeaves'
 import availProjects from './modules/availabilityComponents/availProjects'
 import cv from './modules/cv'
 import toast from './modules/toast'
+import loader from './modules/loader'
 
 import settings from './modules/settings'
 
@@ -56,6 +57,7 @@ export default new Vuex.Store({
         availLeaves,
         availProjects,
         cv,
-        toast
+        toast,
+        loader
     }
 });

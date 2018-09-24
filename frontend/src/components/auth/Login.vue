@@ -50,6 +50,7 @@
         </button>
       </div>
     </div>
+    <loader v-if="showLoader"></loader>
   </div>
 </template>
 
@@ -58,6 +59,7 @@ import { required, minLength, email } from "vuelidate/lib/validators";
 import Icon from "vue-awesome/components/Icon";
 import { mapGetters } from "vuex";
 import i18n from "../../lang/lang";
+import Loader from "../dialogs/loader"
 
 export default {
   data() {
@@ -80,7 +82,10 @@ export default {
   beforeCreate() {
 
   },
-  components: { Icon },
+  components: { 
+    Icon,
+    Loader
+  },
   validations: {
     password: { required, minLen: minLength(6) },
     username: { required },
@@ -89,6 +94,7 @@ export default {
   methods: {
     onSubmit() {
       this.isLoading = true;
+      this.$store.commit("SET_DISPLAY_LOADER", true)
       this.SelectedLang = this.SelectedLang === undefined ? "PL" : this.SelectedLang
 
       this.$store.dispatch("login", {
@@ -121,7 +127,8 @@ export default {
       sendEmailSuccess: "isSendEmailSuccess",
       sendEmailError: "isSendEmailError",
       newPassword: "password",
-      languageList: "getLanguageList"
+      languageList: "getLanguageList",
+      showLoader: "getDisplayLoader"
     })
   }
 };

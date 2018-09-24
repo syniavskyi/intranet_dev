@@ -59,6 +59,7 @@ const actions = {
     }).catch(error => {
       console.log(error)
       commit('SET_LOGIN_ERROR', true)
+      commit('SET_DISPLAY_LOADER', false)
     })
   },
   sendEmailWithPass({
