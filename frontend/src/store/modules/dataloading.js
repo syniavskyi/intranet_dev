@@ -17,7 +17,7 @@ const state = {
   langLevels: [],
   userFiles: [],
   workPositionList: [],
-  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_AVAIL_TYPE", "ZINTRANET_AVAIL_STATUS", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES", 'ZINTRANET_PRIORITY', 'ZINTRANET_EVENT_TYPE', 'ZINTRANET_EVENT_TYPE', 'ZINTRANET_TARGET_GROUP'],
+  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_AVAIL_TYPE", "ZINTRANET_AVAIL_STATUS", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES", 'ZINTRANET_PRIORITY', 'ZINTRANET_EVENT_TYPE', 'ZINTRANET_EVENT_TYPE', 'ZINTRANET_TARGET_GROUP', 'ZINTRANET_ROLES'],
   sapModulesList: [],
   newUserFiles: [],
   UserRole: [],
@@ -25,7 +25,8 @@ const state = {
   userAuth: [],
   availStatus: [],
   availType: [],
-  targetGroup: []
+  targetGroup: [],
+  roles: []
 };
 
 const mutations = {
@@ -82,6 +83,9 @@ const mutations = {
   },
   SET_TARGET_GROUP(state, data) {
     state.targetGroup = data;
+  },
+  SET_ROLES(state, data) {
+    state.roles = data;
   }
 };
 
@@ -170,6 +174,9 @@ const actions = {
       } else if (domainData.name == 'ZINTRANET_TARGET_GROUP') {
         const aTargetGroup = res.data.d.results;
         commit('SET_TARGET_GROUP', aTargetGroup);
+      } else if (domainData.name == 'ZINTRANET_ROLES') {
+        const aRoles = res.data.d.results;
+        commit('SET_ROLES', aRoles); 
       }
     }).catch(error => {
       console.log(error);
@@ -380,16 +387,19 @@ const getters = {
     return state.userAdverts;
   },
   getUserAuth(state){
-    return state.userAuth
+    return state.userAuth;
   },
   getAvailStatus(state){
-    return state.availStatus
+    return state.availStatus;
   },
   getAvailType(state) {
-    return state.availType
+    return state.availType;
   },
   getTargetGroup(state) {
     return state.targetGroup;
+  }, 
+  getRoleList(state) {
+    return state.roles;
   }
 };
 

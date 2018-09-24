@@ -164,7 +164,7 @@ export const setWorkExperience = function(date) {
 
   return oDates;
 };
-// format time form backend type to HH:mm:ss
+// format time from backend type to HH:mm:ss
 export const formatTimeForCalendar = function(data) {
   let format = data.slice(2, 4) + data.slice(5, 7) + data.slice(8, 10); 
   return data = moment(format, "hmm").format('HH:mm:ss'); 
