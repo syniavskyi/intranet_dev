@@ -189,7 +189,7 @@ export const setWorkExperienceEN = function (date) {
   if(date.days === 0) {
     oDates.day = ""
   } else if(date.days === 1) {
-    oDates.day = date.days + " day "
+    oDates.day = date.days + " day"
   } else if(date.days > 1) {
     oDates.day = date.days + " days"
   }
@@ -212,14 +212,10 @@ export const setWorkExperience = function (date, lang) {
 export const formatTimeForCalendar = function(data) {
   let format = data.slice(2, 4) + data.slice(5, 7) + data.slice(8, 10); 
   return data = moment(format, "hmm").format('HH:mm:ss'); 
-
-// format time form backend type to HH:mm:ss
-export const formatTimeForCalendar = function (data) {
-  let format = data.slice(2, 4) + data.slice(5, 7) + data.slice(8, 10);
-  return data = moment(format, "hmm").format('HH:mm:ss');
-
 }
+
 export const formatTimeForBackend = function (data) {
   return "PT" + data.slice(0, 2) + "H" + data.slice(3, 5) + "M00S";
 }
+
 const actions = {};
