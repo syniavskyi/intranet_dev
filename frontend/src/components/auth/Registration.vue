@@ -33,7 +33,7 @@
             </div>
             <div class="cd-for-select">
               <select required class="cd-select">
-                <option v-for="role in getRoleList" :value="roleChosen = role" :key="role.roleId">{{ role }}</option>
+                <option v-for="role in roleList" :value="role.Key" :key="role.Key">{{ role.Value }}</option>
               </select>
               <label class="cd-slabel" for="role">{{ $t("label.role") }}</label>
             </div>
@@ -168,7 +168,7 @@ export default {
       displayMenu: "getShowMenu",
       displayMenuOverlay: "getShowMenuOverlay",
       isError: "getRegistrationError",
-      getRoleList: "roleList",
+      roleList: "getRoleList",
       departmentList: "getDepartmentList",
       fullNameToEmail: "getPrefixEmail",
       hashedPassword: "hashedPassword",

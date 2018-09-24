@@ -207,10 +207,17 @@ export const setWorkExperience = function (date, lang) {
 
   return sFormattedDate;
 };
+
+// format time from backend type to HH:mm:ss
+export const formatTimeForCalendar = function(data) {
+  let format = data.slice(2, 4) + data.slice(5, 7) + data.slice(8, 10); 
+  return data = moment(format, "hmm").format('HH:mm:ss'); 
+
 // format time form backend type to HH:mm:ss
 export const formatTimeForCalendar = function (data) {
   let format = data.slice(2, 4) + data.slice(5, 7) + data.slice(8, 10);
   return data = moment(format, "hmm").format('HH:mm:ss');
+
 }
 export const formatTimeForBackend = function (data) {
   return "PT" + data.slice(0, 2) + "H" + data.slice(3, 5) + "M00S";

@@ -23,15 +23,19 @@
                 <button @click="openDialog" class="button modal-button add-button">{{ $t("button.add") }}</button>
               </div>
               <ul class="ul-event">
-                <li v-for='attr in selectedDay.attributes' :key='attr.customData.EventId' class="delegations-inputs-section">
+                <li v-for='attr in selectedDay.attributes' :key='attr.customData.EventId' class="delegations-inputs-section li-event">
+                            <div class="low-prio-event" v-if="attr.customData.Priority=='L'"> </div>
+                            <div class="medium-prio-event" v-if="attr.customData.Priority=='M'"> </div>
+                            <div class="high-prio-event" v-if="attr.customData.Priority=='H'"> </div>
                   <div class="event-attr">
-                        <div class="event-attr-header"> <p> {{ attr.customData.EventName }} </p> </div>
+                    <div class="event-time">
+                        <div> godz.{{ formatTime(attr.customData.EventTime)}} </div>
+                        <div> {{ formatDate(attr.customData) }} </div> 
+                     </div>   
+                        <div class="event-attr-header">  {{ attr.customData.EventName }} </div>
                         <div> {{ attr.customData.Description}} </div>
-                        <div> {{ attr.customData.EventTime}} </div>
                         <div> {{ attr.customData.EventTypeName }} </div> 
-                        <div> {{ attr.customData.EventPrivacy }} </div> 
-                        <div> {{ attr.customData.Priority }} </div> 
-                        <div> {{ attr.customData.DateTo}} </div> 
+                        <div> {{ attr.customData.EventPrivacy }} </div>
                   </div>    
                   <div class="events-buttons">
                       <button class="button edit-button" @click="editEventClick(attr.customData, $t)">{{ $t("button.edit") }}</button>
@@ -348,6 +352,16 @@ export default {
       this.isSelected = !this.isSelected;
       this.addEvent.Employee = [];
       this.addEvent.TargetGroup = [];
+    },
+    formatDate(event) {
+       if(event.DateTo <= event.DateFrom) {
+            return  moment(event.DateFrom).format("DD.MM");
+       } else {
+            return moment(event.DateFrom).format("DD.MM") + ' - ' + moment(event.DateTo).format("DD.MM");
+        }
+    },
+    formatTime(time) {
+      return time.slice(0,5);
     }
   }
 };

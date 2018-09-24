@@ -294,6 +294,8 @@ marginForm button {
     display: flex;
     justify-content: space-around;
     width: 40%;
+    margin: 0;
+    padding: 0;
 }
 
 .selected-day {
@@ -308,11 +310,48 @@ marginForm button {
     display: flex;
     flex-direction: row;
     align-items: center;
-    color: #600201;
+    color: #1d0b0b;
 }
 .li-event {
     margin-top: 0;
-    border-right: 1px solid black;
+    border-right: .5px solid black; 
+    padding-bottom: .4rem;
+    padding-top: 0;
+    width: 16rem;
+    height: 9.5rem;
+    margin: .5rem;
+    display: flex;
+    justify-content: space-between;
+}
+.low-prio-event {
+    width: 16rem;
+    height: .1rem;
+    background-color:#fde997;
+    padding-bottom: .1rem;
+}
+
+.medium-prio-event {
+    width: 16rem;
+    height: .1rem;
+    background-color:#fc9354;
+    padding-bottom: .1rem;
+}
+
+.high-prio-event {
+    width: 16rem;
+    height: .1rem;
+    background-color:#ff6666;
+    padding-bottom: .1rem;
+}
+.event-attr-header {
+    font-size: 20px;
+    /* color: #ccc; */
+    color: #380303;
+    font-weight: 480;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
 }
 
 .event-attr-header p{
@@ -323,7 +362,10 @@ marginForm button {
     font-weight: 480;
     display: flex;
     justify-content: center;
-
+}
+.event-time {
+    display: flex;
+    justify-content: space-between;
 }
 
 @media (min-width: 44rem) {
