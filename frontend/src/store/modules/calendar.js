@@ -4,7 +4,6 @@ import odata from 'odata';
 
 let utils = require('../../utils');
 
-
 const state = {
   priorityColor: '',
   selectedDate: null,
@@ -115,7 +114,7 @@ setColor({commit, getters}){
         if(aEvents[i].Priority == "L") {
             aEvents[i].color = '#fde997';
           } else if (aEvents[i].Priority == "M") {
-            aEvents[i].color =='#fc9354';
+            aEvents[i].color ='#fc9354';
           } else {
              aEvents[i].color = '#ff6666';
           }

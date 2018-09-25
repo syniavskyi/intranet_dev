@@ -80,7 +80,9 @@ export default {
   beforeCreate() {
 
   },
-  components: { Icon },
+  components: { 
+    Icon
+  },
   validations: {
     password: { required, minLen: minLength(6) },
     username: { required },
@@ -89,6 +91,7 @@ export default {
   methods: {
     onSubmit() {
       this.isLoading = true;
+      this.$store.commit("SET_DISPLAY_LOADER", true)
       this.SelectedLang = this.SelectedLang === undefined ? "PL" : this.SelectedLang
 
       this.$store.dispatch("login", {

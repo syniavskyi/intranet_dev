@@ -130,6 +130,7 @@ export default {
         this.$nextTick(()=> { 
             this.runCarosuel(this.slideIndex)
             this.interval = setInterval(() => {this.slideIndex+=1; this.runCarosuel(this.slideIndex)}, 4000) }) 
+            this.$store.commit("SET_DISPLAY_LOADER", false)
     },
     beforeCreate() {
         this.$store.dispatch("geoLoc");
