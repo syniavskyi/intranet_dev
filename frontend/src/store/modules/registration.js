@@ -18,11 +18,8 @@ const actions = {
   }, data) {
     data.openDialog = true;
     commit('OPEN_DIALOG', data.openDialog);
-    data.role = 'ROLE_' + data.role.toUpperCase();
     axios.post('/api/register', {
       username: data.name,
-      password: data.password,
-      passwordConfirmation: data.password,
       email: data.mail,
       roles: [data.role],
       deps: [data.department]
