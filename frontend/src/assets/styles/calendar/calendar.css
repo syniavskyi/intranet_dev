@@ -17,19 +17,25 @@
     align-self: center;
     margin-top: 2%;
 }
+.calendar {
+    width: 17.5rem;
+    height: 17rem;
+}
 
 .calendar-tiles {
     display: flex;
-    height: 95%;
-    width: 100%;
     justify-content: center;
+}
+.calendar-in-row {
+    display: flex;
+    flex-direction: row;
 }
 
 .calendar-tile {
     display: flex;
     background: white;
-    width: 95%;
-    height: 95%;
+    width: 70rem;
+    height: auto;
     border-radius: 4px;
     box-shadow: 0 0 10px grey;
     flex-direction: column;
@@ -123,8 +129,14 @@
 }
 .filters {
     font-family: inherit;
-    width: 40%;
-    padding-right: 1rem;
+    /* width: 40%; */
+    /* padding-right: 1rem; */
+    background: white;
+}
+.filters select,
+.filters label{
+    margin-left: 1rem;
+    margin-top: .4rem;
 }
 .calendar-modal-date,
 .calendar-modal-date input {
@@ -281,7 +293,6 @@ marginForm button {
     border: 0;
     border-radius: 20%;
     transition: all .3s ease;
-    background: #110101;
     font-size: .8rem;
     font-weight: 200;
 }
@@ -298,11 +309,6 @@ marginForm button {
     padding: 0;
 }
 
-.selected-day {
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-}
 .event-attr {
     width: 15rem;
 }
@@ -311,6 +317,7 @@ marginForm button {
     flex-direction: row;
     align-items: center;
     color: #1d0b0b;
+    flex-wrap: wrap;
 }
 .li-event {
     margin-top: 0;
@@ -405,7 +412,7 @@ marginForm button {
         flex-direction: row;
     }
     .filters {
-        align-self: center;
-        width: auto;
+        /* align-self: center; */
+        width: 16rem;
     }
 }
