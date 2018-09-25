@@ -10,13 +10,42 @@
               <div @click="showMenu" class="content-header-menu">&#9776;</div>
               <p class="content-header-title">{{ $t("header.calendar") }}</p>
             </div>
-        </div>
+        </div> 
         <div class="calendar-tiles">
-          <div class="calendar-tile">
+
+
+          <div class="calendar-in-row">
+
+          <div style="display: flex; flex-direction:column">
             <div class="calendar">
                   <v-date-picker mode='single' :min-date="new Date()" v-model="selectedValue" :attributes="attributes" is-inline @dayclick='dayClicked'>
                   </v-date-picker>
-            </div>       
+            </div>
+            <div class="filters" v-if="permition">
+                <div class="ava-div-select-cool">
+                    <select required class="ava-select-cool" v-model="filters.branch">        
+                         <option v-for="branch in branchList" :key="branch.Key" :value="branch.Key">{{ branch.Value }}</option>
+                   </select>
+                     <label class="ava-select-label-cool">{{ $t("label.branch") }}</label>
+                </div>
+                <div class="ava-div-select-cool">
+                    <select required class="ava-select-cool" v-model="filters.department">
+                        <option v-for="department in departmentList" :key="department.Key" :value="department.Key">{{ department.Value }}</option>
+                    </select>
+                      <label class="ava-select-label-cool">{{ $t("label.department") }}</label>
+                </div>
+                <div class="ava-div-select-cool">
+                    <select required class="ava-select-cool" v-model="filters.employee">
+                         <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias">
+                                {{ user.Fullname }}
+                         </option>
+                    </select>
+                    <label class="ava-select-label-cool">{{ $t("label.employee") }}</label>
+                    <button @click="clearFilters">{{ $t("button.clear") }}</button>
+                </div>
+         </div>
+          </div>
+          <div class="calendar-tile">
             <div v-if='selectedDay' class='selected-day'>
               <div class="add-event-header">
                 <h3>{{ selectedDay.date.toLocaleDateString() }}</h3>
@@ -45,7 +74,7 @@
               </ul>
             </div>
           <!-- to    </div> -->
-             <div class="filters" v-if="permition">
+             <!-- <div class="filters" v-if="permition">
                 <div class="ava-div-select-cool">
                     <select required class="ava-select-cool" v-model="filters.branch">        
                          <option v-for="branch in branchList" :key="branch.Key" :value="branch.Key">{{ branch.Value }}</option>
@@ -67,7 +96,7 @@
                     <label class="ava-select-label-cool">{{ $t("label.employee") }}</label>
                     <button @click="clearFilters">{{ $t("button.clear") }}</button>
                 </div>
-             </div>
+             </div> -->
             <!-- Modal for add event -->
                 <div class="backdrop" v-if="dialogEvent"></div>
                 <div class="modal-new-m " v-if="dialogEvent">
@@ -156,6 +185,14 @@
   </div>
             <!-- End modal for add event -->
             </div>
+
+</div> 
+<!-- koniec rowa -->
+
+
+          
+
+
         </div>
       </div>
     </div>
@@ -359,7 +396,8 @@ export default {
        } else {
             return moment(event.DateFrom).format("DD.MM") + ' - ' + moment(event.DateTo).format("DD.MM");
         }
-    },
+    }
+    ,
     formatTime(time) {
       return time.slice(0,5);
     }
