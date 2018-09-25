@@ -26,7 +26,8 @@ const state = {
   availStatus: [],
   availType: [],
   targetGroup: [],
-  roles: []
+  roles: [],
+  userPhotoUrl: null
 };
 
 const mutations = {
@@ -89,6 +90,9 @@ const mutations = {
   },
   SET_ROLES(state, data) {
     state.roles = data;
+  },
+  SET_USER_PHOTO_URL(state, url){
+    state.userPhotoUrl = url
   }
 };
 
@@ -256,7 +260,7 @@ const actions = {
       
       dispatch('formatUserData', res.data.d); // format dates for date pickers and "is current" fields
       dispatch('getUserFilesData') // get data about all user files (cv, photos, documents etc.)
-      
+      dispatch('loadUserPhoto', userData) //load user's photo for menu and profile
       let oData = getters.getUserInfo;
             
       commit('SET_USER_AUTH', oData.UserAuth.results) //set user authorization data
@@ -335,6 +339,22 @@ const actions = {
     }).catch(error => { 
       console.log(error)
     })
+  },
+  loadUserPhoto({commit}, userData){
+    const sUserId   = userData.user,
+          sLanguage = 'PL',
+          sFileType = "USER-PHOTO";
+
+    const url =
+    " http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" +
+    sFileType +
+    "',Language='" +
+    sLanguage +
+    "',UserAlias='" +
+    sUserId +
+    "')/$value";
+
+    commit('SET_USER_PHOTO_URL', url)
   },
   checkPageToDisplay({},changePage){
     if(changePage) {
@@ -422,6 +442,9 @@ const getters = {
   }, 
   getRoleList(state) {
     return state.roles;
+  },
+  getUserPhotoUrl(state){
+    return state.userPhotoUrl
   }
 };
 

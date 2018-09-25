@@ -128,7 +128,7 @@
                 <div class="profile-tile-content">
                   <div class="profile-user-header">
                     <div class="profile-user-img">
-                      <img class="img-user-class" id="userProfilePhoto" :src="setImageSrc()" width="150px">
+                      <img class="img-user-class" id="userProfilePhoto" :src="userPhotoUrl" width="150px">
                       <!-- <img class="img-user-class" id="userProfilePhoto" src="nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileType='USER-PHOTO',Language='PL',UserAlias='UIO')/$value" width="150px"> -->
                       <!-- <img class="img-user-class" id="userProfilePhoto" :src="userData.imgUrl" width="150px"> -->
                       <p class="profile-error profile-error-image" v-if="photoUploadError">{{ $t("message.photoUploadError") }}</p>
@@ -360,7 +360,8 @@ export default {
       showSelectCv: "getShowSelectCvDialog",
       showPasswordDialog: "getShowSelectChangePasswordDialog",
       displayMenu: "getShowMenu",
-      displayOverlay: "getShowMenuOverlay"
+      displayOverlay: "getShowMenuOverlay",
+      userPhotoUrl: 'getUserPhotoUrl'
     }),
     formatAddress() {
       const data = this.userData;
@@ -453,13 +454,13 @@ export default {
       this.$store.dispatch("submitPhoto", data);
     },
     setImageSrc() {
-      // e.g. AttachmentMedias(FileType='CV',Language='PL',UserAlias='MHA')/$value
+      // e.g. AttachmentMedias(FileId='CV',Language='PL',UserAlias='MHA')/$value
       const sUserId = localStorage.getItem("id"),
         sLanguage = "PL",
         sFileType = "USER-PHOTO";
 
       const url =
-        "https://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileType='" +
+        "http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" +
         sFileType +
         "',Language='" +
         sLanguage +
