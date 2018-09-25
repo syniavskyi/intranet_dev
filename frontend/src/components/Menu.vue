@@ -9,7 +9,7 @@
             <button @click="closeMenu" class="close-btn">&#10006;</button>
         </div>
         <div class="nav-user">
-            <!-- <img class="nav-user-img" width="130px" :src="userData.image"> -->
+            <img class="nav-user-img" width="130px" :src="userPhotoUrl">
         </div>
         <nav class="nav">
             <ul class="nav-list">
@@ -102,7 +102,11 @@
 import { mapGetters } from 'vuex'
 const utils = require("../utils")
 export default {
- 
+    computed: {
+       ...mapGetters({
+        userPhotoUrl: 'getUserPhotoUrl'
+      })
+    },
     methods: {
         logout() {
             this.$store.dispatch('logout')
