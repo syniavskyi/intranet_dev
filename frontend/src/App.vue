@@ -2,7 +2,7 @@
   <!-- <div id="app"> -->
   <div class="display-row">
     <!-- <app-menu v-show="showMenu"/> -->
-    
+    <loader v-if="showLoader"></loader>
       <!-- <transition name="slide-top" mode="out-in"> -->
          <router-view/>
       <!-- </transition> -->
@@ -12,10 +12,13 @@
 
 <script>
 import Menu from './components/Menu.vue'
+import Loader from './components/dialogs/Loader.vue'
+import { mapGetters } from 'vuex';
 export default {
   name: 'App',
   components: {
-    'app-menu': Menu
+    'app-menu': Menu,
+    'loader': Loader
   },
 
   created() {
@@ -34,12 +37,12 @@ export default {
       let obj = {window, event}
       this.$store.dispatch("setSideMenu", obj);
     }
+  },
+  computed: {
+    ...mapGetters({
+      showLoader: 'getDisplayLoader'
+    })
   }
-  // computed: {
-  //   showMenu() {
-  //     return this.$store.getters.showMenu
-  //   }
-  // }
 
 }
 </script>
