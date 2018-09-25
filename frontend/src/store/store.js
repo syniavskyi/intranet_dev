@@ -26,6 +26,8 @@ import cv from './modules/cv'
 import toast from './modules/toast'
 import loader from './modules/loader'
 
+import files from './modules/files'
+
 import settings from './modules/settings'
 
 Vue.use(Vuex);
@@ -58,6 +60,7 @@ export default new Vuex.Store({
         availProjects,
         cv,
         toast,
-        loader
+        loader,
+        files
     }
 });

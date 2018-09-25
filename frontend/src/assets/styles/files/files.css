@@ -60,11 +60,15 @@
 }
 #documents-row-1:checked ~ .documents-tiles-row-content,
 #documents-row-3:checked ~ .documents-tiles-row-content,
+#documents-row-4:checked ~ .documents-tiles-row-content,
+#documents-row-5:checked ~ .documents-tiles-row-content,
 #documents-row-2:checked ~ .documents-tiles-row-content{
    max-height: 45rem;
 }
 #documents-row-1:checked ~ .documents-tiles-row-header:after,
 #documents-row-3:checked ~ .documents-tiles-row-header:after,
+#documents-row-4:checked ~ .documents-tiles-row-header:after,
+#documents-row-5:checked ~ .documents-tiles-row-header:after,
 #documents-row-2:checked ~ .documents-tiles-row-header:after {
     transform: rotate(0deg);
     top: .5rem;
