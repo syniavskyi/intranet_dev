@@ -22,10 +22,10 @@
                         </div>
                         <div class="tile-content tile-ncnt">
                             <div class="advItem" v-for="(advert, index) in userAdverts" :key="advert.Id" :id="advert.Id">  
-                                <textarea class="n-textarea" disabled v-model="advert.Message"/> 
-                                <v-date-picker class="cd-range" popoverDirection="bottom" is-expanded mode="single" v-model="advert.ValidTo"  :min-date="new Date()">
+                                <textarea class="n-textarea" disabled :value="advert.Message"/> 
+                                <v-date-picker class="cd-range" popoverDirection="bottom" is-expanded mode="single" :value="advert.ValidTo"  :min-date="new Date()">
                                     <!-- <input class="cd-range" v-model="advert.ValidTo" value="advert.ValidTo"/> -->
-                                    <input v-model="advert.ValidTo" value="advert.ValidTo"/>
+                                    <input :value="advert.ValidTo"/>
                                 </v-date-picker>
                                 <div class="advBtns">
                                     <button class="clear-btn" @click="editAdvert(index)">edytuj</button> 
@@ -34,7 +34,7 @@
                                 <button @click="nextSlide(-1)" class="advLeft">&#8249;</button>
                                 <button @click="nextSlide(1)" class="advRight">&#8250;</button>
                             </div>
-                            <button class="oclear-btn btn-s" @click="startStopSlider">{{stop}}</button>
+                            <button class="oclear-btn btn-s" @click="startStopSlider">{{sliderBtn}}</button>
                             <!-- <div class="advControls">
                                 <a class="control-button">•</a>
                                 <a class="control-button">•</a>
@@ -50,10 +50,12 @@
                                 </div>
                                 <div class="tile-underscore"/>
                             </div>
-                            <div v-for="(event, index) in events" :key='index' class="single-event"> 
-                                <div>{{event.EventTypeName}} </div>
-                                <div>{{ event.EventName }}</div>
-                                <div>{{setDateTo(event)}} </div>
+                            <div class="tile-content">
+                                <div v-for="(event, index) in events" :key='index' class="single-event"> 
+                                    <div class="event-date">{{setDateTo(event)}} </div>
+                                    <div class="event-title">{{ event.EventName }}</div>
+                                    <div class="event-type">{{event.EventTypeName}} </div>
+                                </div>
                             </div>
                         </div>
                         <div class="content-weather"  :class="today.isDay ? 'weatherDay' : 'weatherNight' ">
@@ -110,6 +112,7 @@ import Menu from "../Menu.vue";
 import axios from "axios";
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
+import { mapState } from "vuex";
 import i18n from "../../lang/lang";
 import moment from "moment";
 import Toast from "../dialogs/Toast"
@@ -118,30 +121,35 @@ export default {
     data() {
         return {
             newAdvert: null,
-            slideIndex: 1,
-            repeatSlider: true,
-            interval: "",
-            stop: "Zatrzymaj slider",
-            start: "Uruchom slider",
-            sliderToast: "Zatrzymano slider"
+            // interval: "",
+            // stop: "Zatrzymaj slider",
+            // start: "Uruchom slider",
+            // sliderToast: "Zatrzymano slider"
         }
     },
     mounted() {
         this.$nextTick(()=> { 
-            this.runCarosuel(this.slideIndex)
-            this.interval = setInterval(() => {this.slideIndex+=1; this.runCarosuel(this.slideIndex)}, 4000) }) 
             this.$store.commit("SET_DISPLAY_LOADER", false)
+            var slides = document.getElementsByClassName("advItem");
+
+            if (this.advertData && slides) {
+                this.$store.dispatch("runCarosuel", this.slideIndex)
+                this.$store.dispatch("setSliderInterval")
+            }  
+        })
     },
     beforeCreate() {
         this.$store.dispatch("geoLoc");
-        this.$store.dispatch("getNews")
+        this.$store.dispatch("getNews");
     },
     created() {
         this.getToday()
         // this.getNews()
+        
     },
     destroyed() {
         clearInterval(this.interval);
+        this.$store.commit("SET_SLIDE_INTERVAL")
     },
     components: {
         "app-menu": Menu,
@@ -162,7 +170,11 @@ export default {
             events: "getEvents",
             showToast: "getDisplayToast",
             showNewMessage: "getShowNewMessageDialog",
-            userAdverts: "getAdverts" }),
+            userAdverts: "getAdverts",
+            slideIndex: "getSliderIndex",
+            sliderBtn: "getSliderBtnTxt",
+            sliderToast: "getToastText",
+            advertData: "getAdverts" }),
     },
     methods: {
         ...mapActions(["geoLoc", "getWeatherData", "getToday", "getNews", "xmlToJson", "getArticles"]),
@@ -182,33 +194,15 @@ export default {
         },
         /* Slides */
         nextSlide(n) {
-            this.runCarosuel(this.slideIndex += n)
+            this.$store.commit("SET_SLIDE_INDEX", this.slideIndex+=n)
+            this.$store.dispatch("runCarosuel", this.slideIndex )
         },
-        currentSlide(n) {
-            this.runCarosuel(this.slideIndex = n)
-        },
-        runCarosuel(n) {
-            var slides = document.getElementsByClassName("advItem");  
-            if (n > slides.length) { this.slideIndex = 1 }
-            if (n < 1) { this.slideIndex = slides.length } 
-            for (var i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none"; 
-            }  
-            slides[this.slideIndex - 1].style.display = "flex";
-        },
+        // currentSlide(n) {
+            // this.$store.dispatch("runCarosuel", n)
+            // this.runCarosuel(this.slideIndex = n)
+        // },
         startStopSlider(evt) {
-            // this.repeatSlider = false;
-            if (evt.target.innerText === this.start) { 
-                evt.target.innerText = this.stop
-                this.sliderToast = "Uruchomiono slider"
-                this.interval = setInterval(() => {this.slideIndex+=1; this.runCarosuel(this.slideIndex)}, 4000)
-            } else { 
-                evt.target.innerText = this.start
-                this.sliderToast = "Zatrzymano slider"
-                clearInterval(this.interval)
-            }
-            
-            this.$store.dispatch("displayToast");
+            this.$store.dispatch("startStopSlider", evt)
         }
     }
 }
