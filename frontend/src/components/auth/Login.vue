@@ -50,7 +50,6 @@
         </button>
       </div>
     </div>
-    <loader v-if="showLoader"></loader>
   </div>
 </template>
 
@@ -59,7 +58,6 @@ import { required, minLength, email } from "vuelidate/lib/validators";
 import Icon from "vue-awesome/components/Icon";
 import { mapGetters } from "vuex";
 import i18n from "../../lang/lang";
-import Loader from "../dialogs/loader"
 
 export default {
   data() {
@@ -83,8 +81,7 @@ export default {
 
   },
   components: { 
-    Icon,
-    Loader
+    Icon
   },
   validations: {
     password: { required, minLen: minLength(6) },
@@ -127,8 +124,7 @@ export default {
       sendEmailSuccess: "isSendEmailSuccess",
       sendEmailError: "isSendEmailError",
       newPassword: "password",
-      languageList: "getLanguageList",
-      showLoader: "getDisplayLoader"
+      languageList: "getLanguageList"
     })
   }
 };
