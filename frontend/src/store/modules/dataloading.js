@@ -15,7 +15,6 @@ const state = {
   studyTypes: [],
   academicTitles: [],
   langLevels: [],
-  userFiles: [],
   workPositionList: [],
   sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_AVAIL_TYPE", "ZINTRANET_AVAIL_STATUS", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES", 'ZINTRANET_PRIORITY', 'ZINTRANET_EVENT_TYPE', 'ZINTRANET_EVENT_TYPE', 'ZINTRANET_TARGET_GROUP', 'ZINTRANET_ROLES'],
   sapModulesList: [],
@@ -67,9 +66,7 @@ const mutations = {
   SET_SAP_MODULES_LIST(state, data) {
     state.sapModulesList = data;
   },
-  SET_USER_FILES_LIST(state, data){
-    state.userFiles = data
-  },
+
   SET_NEW_USER_FILES_LIST(state, data) {
     state.newUserFiles = data;
   },
@@ -112,6 +109,10 @@ const actions = {
       }
     }
  
+    for (let i = 0; i < getters.getFileTypes.length; i++) {
+      dispatch('getDocuments', getters.getFileTypes[i])
+    }
+
     for (let i = 0; i < state.sapDomains.length; i++) {
       let domainData = {
         name: state.sapDomains[i],
@@ -119,7 +120,6 @@ const actions = {
       };
       dispatch('getDomainValues', domainData)
     }
-
     dispatch('getContractorsList');
     dispatch('getIndustries', userData.lang);
     dispatch('getProjectsList');
@@ -325,21 +325,7 @@ const actions = {
       console.log(error)
      })
   },
-  getUserFilesData({commit, getters}){
-    let userId = localStorage.getItem('id')
-    let urlQuery = getters.getUrlQuery
-    axios({
-      method: 'GET',
-      url: "Attachments" + urlQuery +  "&$filter=UserAlias eq " + "'" + userId + "'",
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-      }
-    }).then(res => {
-      commit('SET_USER_FILES_LIST', res.data.d.results);
-    }).catch(error => { 
-      console.log(error)
-    })
-  },
+
   loadUserPhoto({commit}, userData){
     const sUserId   = userData.user,
           sLanguage = 'PL',
@@ -415,9 +401,7 @@ const getters = {
   getModulesList(state) {
     return state.sapModulesList;
   },
-  getUserFiles(state) {
-    return state.userFiles;
-  },
+
   getNewUserFilesList(state) {
     return state.newUserFiles;
   },

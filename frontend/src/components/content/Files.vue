@@ -12,133 +12,118 @@
           </div>
         </div>
         <div class="documents-page-tiles">
+
           <div class="documents-tiles-row">
             <input id="documents-row-1" class="documents-tiles-row-header-input" type="checkbox">
-            <label class="documents-tiles-row-header" for="documents-row-1">{{ $t("label.kagrinDocs") }}</label>
+            <label class="documents-tiles-row-header" for="documents-row-1">Dokumenty</label>
             <div class="documents-tiles-row-content">
-              <div class="documents-tile documents-tile-1-3">
+              <div class="documents-tile documents-tile-1-3" v-for="doc in docFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">{{ $t("label.holidayRequest") }}</p>
+                  <p class="documents-tile-header-title">{{ doc.Filename }}</p>
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">
                   <div class="documents-div">
-                    <a class="doc-file-div">
-                      <div class="doc-file-img doc-file-doc"></div>
-                      <div class="doc-file-desc">{{ $t("label.holidayRequestDoc") }}</div>
+                    <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank">
+                      <div class="doc-file-img doc-file-pdf" v-if="checkFileFormat(doc.Filename) == '.pdf'"></div>
+                      <div class="doc-file-img doc-file-doc" v-if="checkFileFormat(doc.Filename) == '.docx' || checkFileFormat(doc.Filename) == '.doc'"></div>
+                      <div class="doc-file-desc">{{ doc.Filename }}</div>
                     </a>
                   </div>
-                </div>
-              </div>
-              <div class="documents-tile documents-tile-1-3">
-                <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">{{ $t("label.attendanceList") }}</p>
-                  <div class="documents-tile-underscore"></div>
-                </div>
-                <div class="documents-tile-content">
-                  <div class="documents-div">
-                      <a class="doc-file-div">
-                      <div class="doc-file-img doc-file-xls"></div>
-                      <div class="doc-file-desc">{{ $t("label.attendanceListXLS") }}</div>
-                    </a>
-                    <a class="doc-file-div">
-                      <div class="doc-file-img  doc-file-pdf"></div>
-                      <div class="doc-file-desc">{{ $t("label.attendanceListPDF") }}</div>
-                     </a>
-                  </div>
-                </div>
-              </div>
-              <div class="documents-tile documents-tile-1-3">
-                <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">{{ $t("label.cvTemplates") }}</p>
-                  <div class="documents-tile-underscore"></div>
-                </div>
-                <div class="documents-tile-content">
-                </div>
-              </div>
-            </div>
-            <div class="documents-tiles-row-content">
-              <div class="documents-tile documents-tile-1-3">
-                <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">{{ $t("label.importantDocs") }}</p>
-                  <div class="documents-tile-underscore"></div>
-                </div>
-                <div class="documents-tile-content">
-                </div>
-              </div>
-              <div class="documents-tile documents-tile-1-3">
-                <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">{{ $t("label.importantDocs") }}</p>
-                  <div class="documents-tile-underscore"></div>
-                </div>
-                <div class="documents-tile-content">
                 </div>
               </div>
             </div>
           </div>
+
           <div class="documents-tiles-row">
             <input id="documents-row-2" class="documents-tiles-row-header-input" type="checkbox">
-            <label class="documents-tiles-row-header" for="documents-row-2">{{ $t("label.criticalDocs") }}</label>
+            <label class="documents-tiles-row-header" for="documents-row-2">Namiary na systemy</label>
             <div class="documents-tiles-row-content">
-              <div class="documents-tile documents-tile-1-3">
+              <div class="documents-tile documents-tile-1-3" v-for="doc in systemFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">{{ $t("label.importantDocs") }}</p>
+                  <p class="documents-tile-header-title">{{ doc.Filename }}</p>
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">
-                </div>
-              </div>
-              <div class="documents-tile documents-tile-1-3">
-                <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">{{ $t("label.cvTemplates") }}</p>
-                  <div class="documents-tile-underscore"></div>
-                </div>
-                <div class="documents-tile-content">
-                </div>
-              </div>
-              <div class="documents-tile documents-tile-1-3">
-                <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">{{ $t("label.importantDocs") }}</p>
-                  <div class="documents-tile-underscore"></div>
-                </div>
-                <div class="documents-tile-content">
+                  <div class="documents-div">
+                    <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank">
+                      <div class="doc-file-img doc-file-pdf" v-if="checkFileFormat(doc.Filename) == '.pdf'"></div>
+                      <div class="doc-file-img doc-file-doc" v-if="checkFileFormat(doc.Filename) == '.docx' || checkFileFormat(doc.Filename) == '.doc'"></div>
+                      <div class="doc-file-desc">{{ doc.Filename }}</div>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
           <div class="documents-tiles-row">
             <input id="documents-row-3" class="documents-tiles-row-header-input" type="checkbox">
-            <label class="documents-tiles-row-header" for="documents-row-3">{{ $t("label.criticalDocs") }}</label>
+            <label class="documents-tiles-row-header" for="documents-row-3">Biuro</label>
             <div class="documents-tiles-row-content">
-              <div class="documents-tile documents-tile-1-3">
+              <div class="documents-tile documents-tile-1-3" v-for="doc in officeFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">{{ $t("label.importantDocs") }}</p>
+                  <p class="documents-tile-header-title">{{ doc.Filename }}</p>
                   <div class="documents-tile-underscore"></div>
                 </div>
                 <div class="documents-tile-content">
-                  <h1 class="documents-tile-text">Jakiś content</h1>
-                </div>
-              </div>
-              <div class="documents-tile documents-tile-1-3">
-                <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">{{ $t("label.cvTemplates") }}</p>
-                  <div class="documents-tile-underscore"></div>
-                </div>
-                <div class="documents-tile-content">
-                  <h1>asdadsada</h1>
-                  <h2>asadsad</h2>
-                </div>
-              </div>
-              <div class="documents-tile documents-tile-1-3">
-                <div class="documents-tile-header">
-                  <p class="documents-tile-header-title">{{ $t("label.importantDocs") }}</p>
-                  <div class="documents-tile-underscore"></div>
-                </div>
-                <div class="documents-tile-content">
+                 <div class="documents-div">
+                    <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank">
+                      <div class="doc-file-img doc-file-pdf" v-if="checkFileFormat(doc.Filename) == '.pdf'"></div>
+                      <div class="doc-file-img doc-file-doc" v-if="checkFileFormat(doc.Filename) == '.docx' || checkFileFormat(doc.Filename) == '.doc'"></div>
+                      <div class="doc-file-desc">{{ doc.Filename }}</div>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <div class="documents-tiles-row">
+            <input id="documents-row-4" class="documents-tiles-row-header-input" type="checkbox">
+            <label class="documents-tiles-row-header" for="documents-row-4">Informacje</label>
+            <div class="documents-tiles-row-content">
+              <div class="documents-tile documents-tile-1-3" v-for="doc in infoFiles" :key="doc.FileId">
+                <div class="documents-tile-header">
+                  <p class="documents-tile-header-title">{{ doc.Filename }}</p>
+                  <div class="documents-tile-underscore"></div>
+                </div>
+                <div class="documents-tile-content">
+                 <div class="documents-div">
+                    <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank">
+                      <div class="doc-file-img doc-file-pdf" v-if="checkFileFormat(doc.Filename) == '.pdf'"></div>
+                      <div class="doc-file-img doc-file-doc" v-if="checkFileFormat(doc.Filename) == '.docx' || checkFileFormat(doc.Filename) == '.doc'"></div>
+                      <div class="doc-file-desc">{{ doc.Filename }}</div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="documents-tiles-row">
+            <input id="documents-row-5" class="documents-tiles-row-header-input" type="checkbox">
+            <label class="documents-tiles-row-header" for="documents-row-5">Instrukcje</label>
+            <div class="documents-tiles-row-content">
+              <div class="documents-tile documents-tile-1-3" v-for="doc in instrFiles" :key="doc.FileId">
+                <div class="documents-tile-header">
+                  <p class="documents-tile-header-title">{{ doc.Filename }}</p>
+                  <div class="documents-tile-underscore"></div>
+                </div>
+                <div class="documents-tile-content">
+                 <div class="documents-div">
+                    <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank">
+                      <div class="doc-file-img doc-file-pdf" v-if="checkFileFormat(doc.Filename) == '.pdf'"></div>
+                      <div class="doc-file-img doc-file-doc" v-if="checkFileFormat(doc.Filename) == '.docx' || checkFileFormat(doc.Filename) == '.doc'"></div>
+                      <div class="doc-file-desc">{{ doc.Filename }}</div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
         </div>
       </div>
     </div>
@@ -151,13 +136,13 @@ import i18n from '../../lang/lang'
 import { mapGetters } from 'vuex';
 
 export default {
-  data() {
-    return {
-      listOfDoc: []
-    }
-  },
   computed: {
     ...mapGetters({
+      infoFiles:'getInfoFiles',
+      docFiles: 'getDocumentFiles',
+      instrFiles: 'getInstructionFiles',
+      officeFiles: 'getOfficeFiles',
+      systemFiles: 'getSystemFiles',
       displayMenu: 'getShowMenu',
       displayOverlay: 'getShowMenuOverlay'
     })
@@ -167,6 +152,14 @@ export default {
       let obj = {window, event}
       this.$store.dispatch("setSideMenu", obj);
     },
+    checkFileFormat(name) {
+      return name.slice(name.lastIndexOf('.'));
+    },
+    generateLink(file){
+     let url = "http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" + file + "',Language='" +
+      'PL' + "',UserAlias='" + '' + "')/$value";
+      return url;
+   }
   },
   components: {
     'app-menu': Menu
