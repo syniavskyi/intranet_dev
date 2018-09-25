@@ -23,9 +23,10 @@
                         <div class="tile-content tile-ncnt">
                             <div class="advItem" v-for="(advert, index) in userAdverts" :key="advert.Id" :id="advert.Id">  
                                 <textarea class="n-textarea" disabled v-model="advert.Message"/> 
-                                <!-- <v-date-picker class="cd-range" popoverDirection="bottom" is-expanded mode="single" v-model="advert.ValidTo"> -->
-                                    <input class="cd-range" v-model="advert.ValidTo" value="advert.ValidTo"/>
-                                <!-- </v-date-picker> -->
+                                <v-date-picker class="cd-range" popoverDirection="bottom" is-expanded mode="single" v-model="advert.ValidTo"  :min-date="new Date()">
+                                    <!-- <input class="cd-range" v-model="advert.ValidTo" value="advert.ValidTo"/> -->
+                                    <input v-model="advert.ValidTo" value="advert.ValidTo"/>
+                                </v-date-picker>
                                 <div class="advBtns">
                                     <button class="clear-btn" @click="editAdvert(index)">edytuj</button> 
                                     <button class="oclear-btn" @click="removeAdvert(index)">X</button>
@@ -159,7 +160,8 @@ export default {
             displayOverlay: "getShowMenuOverlay",
             events: "getEvents",
             showToast: "getDisplayToast",
-            showNewMessage: "getShowNewMessageDialog" }),
+            showNewMessage: "getShowNewMessageDialog",
+            userAdverts: "getAdverts" }),
     },
     methods: {
         ...mapActions(["geoLoc", "getWeatherData", "getToday", "getNews", "xmlToJson", "getArticles"]),

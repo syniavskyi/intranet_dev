@@ -21,7 +21,7 @@ const state = {
   sapModulesList: [],
   newUserFiles: [],
   UserRole: [],
-  userAdverts: [{Id: '001', Message: 'Wiadomość1', ValidTo: new Date().toDateString()}, {Id:'002', Message: 'Wiadomość2', ValidTo: new Date().toDateString()}, {Id:'003', Message: 'Wiadomość3', ValidTo: new Date().toDateString()}],
+  adverts: [],
   userAuth: [],
   availStatus: [],
   availType: [],
@@ -82,6 +82,9 @@ const mutations = {
   },
   SET_TARGET_GROUP(state, data) {
     state.targetGroup = data;
+  },
+  SET_ADVERTS(state, data){
+    state.adverts = data;
   }
 };
 
@@ -119,6 +122,7 @@ const actions = {
     dispatch('getEvents')
 
     dispatch('getUserData', userData);
+    dispatch('getAdverts');
   },
   getDomainValues({
     commit, getters
@@ -329,6 +333,20 @@ const actions = {
     if(changePage) {
       router.replace('/news')
     }
+  },
+  getAdverts({commit, getters}){
+    let urlQuery = getters.getUrlQuery
+    axios({
+      method: 'GET',
+      url: "Adverts" + urlQuery,
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+      }
+    }).then(res => {
+      commit('SET_ADVERTS', res.data.d.results);
+    }).catch(error => { 
+      console.log(error)
+    })
   }
 
 };
@@ -376,9 +394,9 @@ const getters = {
   getNewUserFilesList(state) {
     return state.newUserFiles;
   },
-  userAdverts(state) {
-    return state.userAdverts;
-  },
+  // userAdverts(state) {
+  //   return state.userAdverts;
+  // },
   getUserAuth(state){
     return state.userAuth
   },
@@ -390,6 +408,9 @@ const getters = {
   },
   getTargetGroup(state) {
     return state.targetGroup;
+  },
+  getAdverts(state){
+    return state.adverts;
   }
 };
 
