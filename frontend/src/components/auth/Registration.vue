@@ -24,16 +24,23 @@
               <label for="email" class="cd-label">{{ $t("label.email") }}</label>
             </div>
             <div class="cd-for-select">
-              <select required class="cd-select">
+              <select required class="cd-select" v-model="role">
                 <option v-for="role in roleList" :value="role.Key" :key="role.Key">{{ role.Value }}</option>
               </select>
               <label class="cd-slabel" for="role">{{ $t("label.role") }}</label>
             </div>
             <div class="cd-for-select">
-              <select required class="cd-select" >
+              <select required class="cd-select" v-model="department">
+                <!-- v-model="department" -->
                 <option v-for="department in departmentList" :key="department.Key" :value="department.Key">{{ department.Value }}</option>
               </select>
               <label class="cd-slabel" for="role">{{ $t("label.department") }}</label>
+            </div>
+            <div class="cd-for-select">
+              <select required class="cd-select" v-model="mailLang">
+                <option v-for="language in cvLanguageList" :key="language.id" :value="language.id">{{ language.description }}</option>
+              </select>
+              <label class="cd-slabel" for="role">{{ $t("label.language") }}</label>
             </div>
             <button class="button" :disabled="$v.$invalid" @click="submit">
               <span class="loading-icon"><img  src="../../assets/images/loading-white.png" v-show="isLoading"></span>
@@ -90,13 +97,12 @@ export default {
     return {
       fullName: "",
       mail: "",
-      role: [],
-      roleChosen: "",
-      department: [],
-      depId: "",
+      role: "",
+      department: "",
       showSuccessDialog: false,
       showFailDialog: false,
-      isLoading: false
+      isLoading: false,
+      mailLang: ""
     };
   },
   validations: {
@@ -105,6 +111,15 @@ export default {
       email
     },
     fullName: {
+      required
+    },
+    department: {
+      required
+    },
+    role: {
+      required
+    },
+    mailLang: {
       required
     }
   },
@@ -127,14 +142,13 @@ export default {
     },
     submit() {
       this.isLoading = true;
-      this.$store.dispatch("generatePassword");
       this.$store.dispatch("submitRegistration", {
         name: this.fullName,
         email: this.mail,
-        // password: this.setPassword,
-        department: this.depId,
-        role: this.roleChosen,
-        openDialog: this.closeSuccessDialog
+        department: this.department,
+        role: this.role,
+        openDialog: this.closeSuccessDialog,
+        mailLang: this.mailLang
       });
       this.isLoading = false;
     }
@@ -147,7 +161,8 @@ export default {
       roleList: "getRoleList",
       departmentList: "getDepartmentList",
       openDialog: "openDialog",
-      openDialogFalse: "openFailedDialog"
+      openDialogFalse: "openFailedDialog",
+      cvLanguageList: "getCvLanguageList"
     })
   }
 };
