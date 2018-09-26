@@ -57,7 +57,7 @@
          </div>
           </div>
           <div class="calendar-tile">
-            <div v-if='selectedDay' class='selected-day'>
+            <div v-if='selectedDay' class="selectedDay">
               <div class="add-event-header">
                 <h3>{{ selectedDay.date.toLocaleDateString() }}</h3>
                 <button @click="openDialog" class="button modal-button add-button">{{ $t("button.add") }}</button>
@@ -200,7 +200,7 @@ export default {
     return {
       selectedValue: null,
       selectedDay: null,
-      selectedDay2: null,
+      // selectedDay2: null,
       dialogEvent: false,
       isSelected: false,
       selectedUser: false,

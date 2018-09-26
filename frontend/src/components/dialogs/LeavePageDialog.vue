@@ -1,9 +1,9 @@
 <template>
     <div>
-        <h1>Potwierdź opuszczanie strony</h1>
-        <p>Wprowadzone dane nie zostaną zapisane. Czy na pewno chcesz opuścić stronę?</p>
-        <button @click="setSelectedAction('leave')">TAK</button>
-        <button @click="$emit('close')">Anuluj</button>
+        <h1>{{ $t("message.confirmPageLeaving") }}</h1>
+        <p>{{ $t("message.unsavedData") }}</p>
+        <button @click="setSelectedAction('leave')">{{ $t("button.yes") }}</button>
+        <button @click="$emit('close')">{{ $t("button.close") }}</button>
     </div>
 </template>
 <script>

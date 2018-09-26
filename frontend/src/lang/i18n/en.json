@@ -31,7 +31,8 @@
         "seePreview": "See preview",
         "close": "Close",
         "format": "Format",
-        "generatePDF": "Generate PDF"
+        "generatePDF": "Generate PDF",
+        "yes": "Yes"
     },
     "label": {
         "nationality": "Nationality",
@@ -154,7 +155,9 @@
         "criticalDocs": "Critical Documents",
         "options": "Options",
         "projectName": "Project name",
-        "remarks": "Remarks"
+        "remarks": "Remarks",
+        "newMessage": "New message",
+        "addNewMessage": "Add new message"
 
     },
     "header": {
@@ -191,7 +194,8 @@
         "changePassword": "Change password",
         "generateCV": "Generate CV",
         "employeesList": "Employees List",
-        "communicators": "Communicators"
+        "communicators": "Communicators",
+        "delegationConfirm": "Zatwierdzenie delegacji"
     },
     "message": {
         "loginError": "Password or username are invalid.",
@@ -218,7 +222,11 @@
         "noEntriesForParameters": "No entries for selected parameters",
         "selectTypeToAddEntry": "To add new entry, select its type on the left",
         "addEntryforUser": "Add entry for user {user}",
-        "addProjectforUser": "Add project for user {user}"
+        "addProjectforUser": "Add project for user {user}",
+        "confirmPageLeaving": "Confirm page leaving",
+        "unsavedData": "Entered data will not be saved. Are you sure you want to leave this page?",
+        "delegationConfirmQuestion": "Do you want to confirm delegation? Make sure that entered data are valid",
+        "failedToSaveDelegation": "Failed to save delegation"
     },
     "select": {
         "language": {
