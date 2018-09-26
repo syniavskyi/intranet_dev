@@ -224,12 +224,12 @@ export const checkRole = function(data) {
   const roles = data.roles;
   let obj;
 
-          obj = roles.find(o => o.Key == data.key && o.Value === "*");
+          obj = roles.find(o => o.Key == data.key && o.Value === "*" && o.UserAlias === data.userAlias);
               
           if(obj) {
            return '*';
           } else {
-              obj = roles.find(o => o.Key == data.key && o.Value === "TEAM" && data.dep !== "");
+              obj = roles.find(o => o.Key == data.key && o.Value === "TEAM" && data.dep !== "" && o.UserAlias === data.userAlias);
                   if(obj) {
                     return 'TEAM';
                   } else {

@@ -24,16 +24,16 @@
             <button class="border-btn reject-btn" @click="onCancelEdit">{{ $t("button.cancel") }}</button>
           </div>
         </div>
-        <div class="cd-for-select">
-          <select v-if="authType==='*'" v-model="selectedUser" @change="getNewData" required class="cd-select">
+        <div class="cd-for-select" v-if="authType==='*'">
+          <select v-model="selectedUser" @change="getNewData" required class="cd-select">
             <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias"> 
                 {{ user.Fullname }}   
             </option>
           </select>
           <label class="cd-slabel">{{ $t("label.selectEmployee") }}</label>
         </div>
-        <div class="cd-for-select">
-          <select v-if="authType==='TEAM'" v-model="selectedUser" @change="getNewData" required class="cd-select">
+        <div class="cd-for-select" v-if="authType==='TEAM'">
+          <select v-model="selectedUser" @change="getNewData" required class="cd-select">
             <option v-for="user in filteredTeamUsers" :value="user.UserAlias" :key="user.UserAlias"> 
                 {{ user.Fullname }}   
             </option>
@@ -353,7 +353,8 @@ export default {
      const data = {
             roles: this.$store.getters.getUserAuth,
             key: "ZPROF_ATCV",
-            dep: this.userData.DepartmentName
+            dep: this.userData.DepartmentName,
+            userAlias: this.$store.getters.getLoginAlias
         }
         this.authType = utils.checkRole(data);
   },
@@ -382,7 +383,7 @@ export default {
       displayMenu: "getShowMenu",
       displayOverlay: "getShowMenuOverlay",
       usersList: 'usersList',
-      userPhotoUrl: 'getUserPhotoUrl'
+      userPhotoUrl: 'getUserPhotoUrl',
     }),
     formatAddress() {
       const data = this.userData;

@@ -218,7 +218,8 @@ export default {
         const data = {
             roles: this.$store.getters.getUserAuth,
             key: "ZDYSP_CREA",
-            dep: this.userData.DepartmentName
+            dep: this.userData.DepartmentName,
+            userAlias: this.$store.getters.getLoginAlias
         }
         this.authType = utils.checkRole(data);
     },

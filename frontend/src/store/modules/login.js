@@ -28,7 +28,10 @@ const mutations = {
     state.password = data;
   },
   SET_HASHED_PASSWORD (state, password) {
-      state.hashedPassword = password
+      state.hashedPassword = password;
+  },
+  SET_LOGIN_ALIAS(state, data) {
+      state.username = data;
   }
 }
 
@@ -38,7 +41,7 @@ const actions = {
     dispatch
   }, authData) {
     let url = '?sap-user=' + authData.username + '&sap-password=' + authData.password + '&sap-language=' +authData.language
-
+    commit('SET_LOGIN_ALIAS', authData.username.toUpperCase());
     axios({
       method: 'get',
       url: url,
@@ -46,20 +49,20 @@ const actions = {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
     }).then(res => {
-      localStorage.setItem('authorized', true)
-      commit('SET_URL_QUERY', url)
-      commit('SET_LOGIN_ERROR', false)
+      localStorage.setItem('authorized', true);
+      commit('SET_URL_QUERY', url);
+      commit('SET_LOGIN_ERROR', false);
 
       let userData = {
         user: authData.username,
         lang: authData.language,
         changePage: true
       }
-      dispatch('loadData', userData)
+      dispatch('loadData', userData);
     }).catch(error => {
-      console.log(error)
-      commit('SET_LOGIN_ERROR', true)
-      commit('SET_DISPLAY_LOADER', false)
+      console.log(error);
+      commit('SET_LOGIN_ERROR', true);
+      commit('SET_DISPLAY_LOADER', false);
     })
   },
   sendEmailWithPass({
@@ -114,6 +117,9 @@ const getters = {
   },
   hashedPassword(state) {
       return state.hashedPassword;
+  },
+  getLoginAlias(state) {
+      return state.username;
   }
 }
 
