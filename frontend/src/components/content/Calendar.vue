@@ -21,7 +21,7 @@
                   <v-date-picker mode='single' :min-date="new Date()" v-model="selectedValue" :attributes="attributes" is-inline @dayclick='dayClicked'>
                   </v-date-picker>
             </div>
-            <div class="filters" v-if="permition">
+            <div class="filters" v-if="authType==='*'">
                 <div class="ava-div-select-cool">
                     <select required class="ava-select-cool" v-model="filters.branch">        
                          <option v-for="branch in branchList" :key="branch.Key" :value="branch.Key">{{ branch.Value }}</option>
@@ -37,6 +37,17 @@
                 <div class="ava-div-select-cool">
                     <select required class="ava-select-cool" v-model="filters.employee">
                          <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias">
+                                {{ user.Fullname }}
+                         </option>
+                    </select>
+                    <label class="ava-select-label-cool">{{ $t("label.employee") }}</label>
+                    <button @click="clearFilters">{{ $t("button.clear") }}</button>
+                </div>
+         </div>
+         <div class="filters" v-if="authType==='TEAM'">
+            <div class="ava-div-select-cool">
+                    <select required class="ava-select-cool" v-model="filters.employee">
+                         <option v-for="user in filteredTeamUsers" :value="user.UserAlias" :key="user.UserAlias">
                                 {{ user.Fullname }}
                          </option>
                     </select>
@@ -74,29 +85,6 @@
               </ul>
             </div>
           <!-- to    </div> -->
-             <!-- <div class="filters" v-if="permition">
-                <div class="ava-div-select-cool">
-                    <select required class="ava-select-cool" v-model="filters.branch">        
-                         <option v-for="branch in branchList" :key="branch.Key" :value="branch.Key">{{ branch.Value }}</option>
-                   </select>
-                     <label class="ava-select-label-cool">{{ $t("label.branch") }}</label>
-                </div>
-                <div class="ava-div-select-cool">
-                    <select required class="ava-select-cool" v-model="filters.department">
-                        <option v-for="department in departmentList" :key="department.Key" :value="department.Key">{{ department.Value }}</option>
-                    </select>
-                      <label class="ava-select-label-cool">{{ $t("label.department") }}</label>
-                </div>
-                <div class="ava-div-select-cool">
-                    <select required class="ava-select-cool" v-model="filters.employee">
-                         <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias">
-                                {{ user.Fullname }}
-                         </option>
-                    </select>
-                    <label class="ava-select-label-cool">{{ $t("label.employee") }}</label>
-                    <button @click="clearFilters">{{ $t("button.clear") }}</button>
-                </div>
-             </div> -->
             <!-- Modal for add event -->
                 <div class="backdrop" v-if="dialogEvent"></div>
                 <div class="modal-new-m " v-if="dialogEvent">
@@ -217,10 +205,10 @@ export default {
       isSelected: false,
       selectedUser: false,
       selectedGroup: false,
-      permition: false,
+      authType: '',
       checkedNames: '',
-       disabledButton: true,
-       displayButton: true
+      disabledButton: true,
+      displayButton: true
     };
   },
   validations: {
@@ -239,12 +227,13 @@ export default {
         }
     }
   },
-  beforeCreate(){
-    //  this.showBranchSelect = (localStorage.getItem('role') === 'leader') ? false : true;   
-    //  this.$store.dispatch('getEvents');
-  },
   created() {
-    this.checkRole();
+    const data = {
+            roles: this.$store.getters.getUserAuth,
+            key: "ZEVENT",
+            dep: this.userData.DepartmentName
+        }
+        this.authType = utils.checkRole(data);
   },
   computed: {
     ...mapGetters({
@@ -258,7 +247,8 @@ export default {
       targetGroup: 'getTargetGroup',
       displayMenu: "getShowMenu",
       displayOverlay: "getShowMenuOverlay",
-      filters: "getClearedFilters"
+      filters: "getClearedFilters",
+      userData: "getUserInfo"
  }),
     filteredEvents() {
       let aEvents = this.events,
@@ -306,6 +296,13 @@ export default {
   }   
           return aEvents;
     },
+    filteredTeamUsers(){
+           let aFilteredUsers = this.usersList,
+              sTeam = this.userData.DepartmentName
+
+             aFilteredUsers = aFilteredUsers.filter(function(oData){ return oData.DepartmentName === sTeam });
+            return aFilteredUsers
+        },
     // calendar attributes
     attributes() {
       return this.filteredEvents.map(t => ({
@@ -379,12 +376,6 @@ export default {
       this.performDialog();
     },
     // permision to filter calendar
-    checkRole() {
-      let role = 'BO';
-      if (role == 'BO' || role == 'Board'){
-        this.permition = true;
-      }
-    },
     backToModal(){
       this.isSelected = !this.isSelected;
       this.addEvent.Employee = [];

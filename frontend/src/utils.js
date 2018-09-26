@@ -58,6 +58,7 @@ export const createClone = function (data) {
 }
 // format string to array
 export const formatToArray = function (data) {
+  if(data.length != 0) {
   let dataSet;
   if (data[0].__metadata) {
     dataSet = data[0].__metadata.type;
@@ -99,6 +100,7 @@ export const formatToArray = function (data) {
       }
     }
     return data;
+  }
   }
 }
 // format array to string, divedied by "||"
@@ -218,4 +220,21 @@ export const formatTimeForBackend = function (data) {
   return "PT" + data.slice(0, 2) + "H" + data.slice(3, 5) + "M00S";
 }
 
+export const checkRole = function(data) {
+  const roles = data.roles;
+  let obj;
+
+          obj = roles.find(o => o.Key == data.key && o.Value === "*");
+              
+          if(obj) {
+           return '*';
+          } else {
+              obj = roles.find(o => o.Key == data.key && o.Value === "TEAM" && data.dep !== "");
+                  if(obj) {
+                    return 'TEAM';
+                  } else {
+                    return 'OWN';
+                  }
+          }
+        }
 const actions = {};

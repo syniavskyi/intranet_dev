@@ -25,10 +25,13 @@
 .calendar-tiles {
     display: flex;
     justify-content: center;
+    width: 100%;
+
 }
 .calendar-in-row {
     display: flex;
     flex-direction: row;
+    width: 95%;
 }
 
 .calendar-tile {
@@ -331,21 +334,21 @@ marginForm button {
     justify-content: space-between;
 }
 .low-prio-event {
-    width: 16rem;
+    width: 100%;
     height: .1rem;
     background-color:#fde997;
     padding-bottom: .1rem;
 }
 
 .medium-prio-event {
-    width: 16rem;
+    width: 100%;
     height: .1rem;
     background-color:#fc9354;
     padding-bottom: .1rem;
 }
 
 .high-prio-event {
-    width: 16rem;
+    width: 100%;
     height: .1rem;
     background-color:#ff6666;
     padding-bottom: .1rem;

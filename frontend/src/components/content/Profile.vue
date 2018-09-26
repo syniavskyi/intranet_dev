@@ -24,7 +24,17 @@
             <button class="border-btn reject-btn" @click="onCancelEdit">{{ $t("button.cancel") }}</button>
           </div>
         </div>
-        <h3 class="prof-user-header-name">{{userData.Fullname}}</h3>
+        <select v-if="authType==='*'" v-model="selectedUser" @change="getNewData">
+          <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias"> 
+              {{ user.Fullname }}   
+           </option>
+        </select>
+        <select v-if="authType==='TEAM'" v-model="selectedUser" @change="getNewData">
+          <option v-for="user in filteredTeamUsers" :value="user.UserAlias" :key="user.UserAlias"> 
+              {{ user.Fullname }}   
+           </option>
+        </select>
+        <h3 v-if="authType==='OWN'" class="prof-user-header-name">{{userData.Fullname}}</h3>
         <div class="profile-tiles">
           <div class="profile-tiles-row-wrap">
             <div class="profile-tiles-row">
@@ -293,7 +303,9 @@ export default {
       routeToGo: null,
       newPosition: null,
       selectedCity: null,
-      selectedCvLang: i18n.locale
+      selectedCvLang: i18n.locale,
+      authType: '',
+      selectedUser: ''
     };
   },
   validations: {
@@ -302,12 +314,6 @@ export default {
         required,
         email
       }
-    }
-  },
-  watch: {
-    selectedCvLang(lang) {
-      // this.$store.commit('SET_LANG', lang);
-      // this.setCvLanguage(lang);
     }
   },
   // mounted() {
@@ -337,6 +343,14 @@ export default {
     this.$store.commit("SET_LANG", lang);
     next();
   },
+  created() {
+     const data = {
+            roles: this.$store.getters.getUserAuth,
+            key: "ZPROF_ATCV",
+            dep: this.userData.DepartmentName
+        }
+        this.authType = utils.checkRole(data);
+  },
   components: {
     MaskedInput,
     "app-menu": Menu,
@@ -360,7 +374,8 @@ export default {
       showSelectCv: "getShowSelectCvDialog",
       showPasswordDialog: "getShowSelectChangePasswordDialog",
       displayMenu: "getShowMenu",
-      displayOverlay: "getShowMenuOverlay"
+      displayOverlay: "getShowMenuOverlay",
+      usersList: 'usersList'
     }),
     formatAddress() {
       const data = this.userData;
@@ -387,7 +402,14 @@ export default {
         oFormatedDate = utils.setWorkExperience(oCalculateDifference, this.selectedCvLang);
 
       return oFormatedDate.year + oFormatedDate.month + oFormatedDate.day;
-    }
+    },
+    filteredTeamUsers(){
+           let aFilteredUsers = this.usersList,
+              sTeam = this.userData.DepartmentName
+
+             aFilteredUsers = aFilteredUsers.filter(function(oData){ return oData.DepartmentName === sTeam });
+            return aFilteredUsers
+        }
   },
   // beforeRouteLeave (to, from , next) {
   // this.showLeavePageDialog = true
@@ -518,8 +540,11 @@ export default {
       if (!cvLang) {
         let cvLang = loginLanguage.toUpperCase();
       }
+
+      let halo = this.selectedUser;
       let userData = {
-        user: "UIO",
+        // user: "UIO",
+        user: this.selectedUser,
         lang: cvLang,
         changePage: false
       }

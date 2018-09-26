@@ -240,10 +240,9 @@ const actions = {
       }
     }
     userData.user = 'UIO' // TEMPORARY
-
-    axios({
+axios({
       method: 'GET',
-      url: 'Users' + '(UserAlias=' + "'" + userData.user + "'," +  "Language='" + userData.lang + "')"  + urlQuery +  '&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang,UserFiles,UserAuth',
+      url: 'Users' + '(UserAlias=' + "'" + userData.user.toUpperCase() + "'," +  "Language='" + userData.lang + "')"  + urlQuery +  '&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang,UserFiles,UserAuth',
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -266,7 +265,9 @@ const actions = {
       
       commit('SET_USER_SKILLS', oData.UserSkills.results); //set user skills data for profile and cv
       let userSkills = utils.formatToArray(oData.UserSkills.results);
-      commit('SET_USER_SKILLS', userSkills[0]); 
+      if(userSkills) {
+        commit('SET_USER_SKILLS', userSkills[0]);
+      }
 
       commit('SET_USER_PROJECTS_LIST', oData.UserCvProjects.results); //set user projects data for profile and cv
       dispatch('adjustProjects');
