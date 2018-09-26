@@ -329,7 +329,7 @@ export default {
       fieldOfStudyDesc: 'getFieldOfStudyDescList',
       workPositions: 'getWorkPositions',
       fullLanguageList: 'getFullLanguageList',
-      langLevels: 'angLevels'
+      langLevels: 'getLangLevels'
 
     })
   }
