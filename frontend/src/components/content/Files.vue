@@ -14,8 +14,8 @@
         <div class="documents-page-tiles">
 
           <div class="documents-tiles-row">
-            <input id="documents-row-1" class="documents-tiles-row-header-input" type="checkbox">
-            <label class="documents-tiles-row-header" for="documents-row-1">Dokumenty</label>
+            <!-- <input id="documents-row-1" class="documents-tiles-row-header-input" type="checkbox"> -->
+            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-1">Dokumenty</div>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3" v-for="doc in docFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
@@ -36,8 +36,8 @@
           </div>
 
           <div class="documents-tiles-row">
-            <input id="documents-row-2" class="documents-tiles-row-header-input" type="checkbox">
-            <label class="documents-tiles-row-header" for="documents-row-2">Namiary na systemy</label>
+            <!-- <input id="documents-row-2" class="documents-tiles-row-header-input" type="checkbox"> -->
+            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-2">Namiary na systemy</div>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3" v-for="doc in systemFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
@@ -58,8 +58,8 @@
           </div>
 
           <div class="documents-tiles-row">
-            <input id="documents-row-3" class="documents-tiles-row-header-input" type="checkbox">
-            <label class="documents-tiles-row-header" for="documents-row-3">Biuro</label>
+            <!-- <input id="documents-row-3" class="documents-tiles-row-header-input" type="checkbox"> -->
+            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-3">Biuro</div>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3" v-for="doc in officeFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
@@ -80,8 +80,8 @@
           </div>
 
           <div class="documents-tiles-row">
-            <input id="documents-row-4" class="documents-tiles-row-header-input" type="checkbox">
-            <label class="documents-tiles-row-header" for="documents-row-4">Informacje</label>
+            <!-- <input id="documents-row-4" class="documents-tiles-row-header-input" type="checkbox"> -->
+            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-4">Informacje</div>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3" v-for="doc in infoFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
@@ -103,7 +103,7 @@
 
           <div class="documents-tiles-row">
             <input id="documents-row-5" class="documents-tiles-row-header-input" type="checkbox">
-            <label class="documents-tiles-row-header" for="documents-row-5">Instrukcje</label>
+            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-5">Instrukcje</div>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3" v-for="doc in instrFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
@@ -147,6 +147,12 @@ export default {
       displayOverlay: 'getShowMenuOverlay'
     })
   },
+  mounted() {
+    
+    this.$nextTick(this.calcDocsHeight().then(height => {
+
+      }))
+  },
   methods: {
     showMenu(event) {
       let obj = {window, event}
@@ -159,7 +165,17 @@ export default {
      let url = "http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" + file + "',Language='" +
       'PL' + "',UserAlias='" + '' + "')/$value";
       return url;
-   }
+   },
+    toggleDocTile(evt) {
+      let el = evt.target.nextElementSibling,
+        elChild = evt.target.nextElementSibling;
+      const name = { el, elChild };
+      this.$store.dispatch("toggleDocTile", name);
+    },
+    calcDocsHeight(tiles) {
+      var tiles = document.getElementsByClassName("documents-tiles-row")
+      this.$store.dispatch("calcDocsHeight", tiles)
+    }
   },
   components: {
     'app-menu': Menu

@@ -70,7 +70,33 @@ const actions = {
         }).catch(error => {
           console.log(error);
         })
-      }
+    },
+    toggleDocTile({dispatch}, element) {
+        let height = 0, 
+            length = element.elChild.childNodes.length/3;
+        for (var i = 0; i < length; i++) {
+            height = height + element.elChild.childNodes[i].offsetHeight + 32
+        }
+        height = height + 16 + "px"
+        if (!element.el.style.height || element.el.style.height == "0px") {
+            element.el.style.height = height
+            // element.el.style.overflow = "visible"
+            element.el.style.opacity = "1"
+        } else {
+            element.el.style.height = "0px"
+            element.el.style.overflow = "hidden"
+            element.el.style.opacity = "0";
+        }
+    },
+    calcDocsHeight({dispatch}, tiles) {
+        let height = 0;
+        for (var i = 0; i < tiles.length; i++) {
+            height = tiles[i].firstElementChild.offsetHeight
+            tiles[i].lastElementChild.style.height = "0px"
+            
+        }
+
+    }
 }
 const getters = {
     getUserFiles(state) {
