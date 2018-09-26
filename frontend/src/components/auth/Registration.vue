@@ -6,7 +6,6 @@
       <div class="component-content">
         <div class="content-header">
           <div class="content-header-title-and-menu">
-            <!-- <img @click="showMenu" src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu"> -->
             <div @click="showMenu"  class="content-header-menu">&#9776;</div>
             <p class="content-header-title">{{ $t("header.registration") }}</p>
           </div>
@@ -14,20 +13,13 @@
         <div class="reg-tile">
           <div class="registration-credentials">
             <div class="cd-for-input">
-              <input required class="cd-input" type="text" name="fullName" @input="getFullNameToEmail()" v-model="fullName" @change="checkEmail()" @blur="$v.fullName.$touch()">
+              <input required type="text" class="cd-input" name="fullName" v-model="fullName">
               <span class="cd-span"></span>
               <label for="fullName" class="cd-label">{{ $t("label.fullName") }}</label>
             </div>
-            <div class="cd-for-input-s">
-              <!-- <div class="input-with-checkbox"> -->
-              <input required class="cd-input" :disabled="isEmail" @blur="$v.fullNameToEmail.$touch()" :value="fullNameToEmail" @change="checkEmail($event.target.value)">
-              <div class="checkbox-absolute">
-                <div class="checkbox-wrap">
-                  <input class="checkbox" :checked="isEmail" type="checkbox" disabled>
-                  <div class="checkbox-in"></div>
-                </div>
-              </div>
-              <!-- </div> -->
+            <!-- was class cd-for-input-s -->
+            <div class="cd-for-input">
+              <input required type="text" class="cd-input" v-model="mail">
               <span class="cd-span"></span>
               <label for="email" class="cd-label">{{ $t("label.email") }}</label>
             </div>
@@ -84,12 +76,11 @@
       <!-- END OF FAILED DIALOG -->
     </div>
   </div>
-  <!-- </div> -->
 </template>
 
 <script>
 import axios from "axios";
-import { required, minLength, email } from "vuelidate/lib/validators";
+import { required, email } from "vuelidate/lib/validators";
 import i18n from "../../lang/lang";
 import Menu from "../Menu.vue";
 import { mapGetters } from "vuex";
@@ -98,7 +89,6 @@ export default {
   data() {
     return {
       fullName: "",
-      email: "",
       mail: "",
       role: [],
       roleChosen: "",
@@ -110,7 +100,7 @@ export default {
     };
   },
   validations: {
-    fullNameToEmail: {
+    mail: {
       required,
       email
     },
@@ -135,27 +125,13 @@ export default {
       let obj = { window, event };
       this.$store.dispatch("setSideMenu", obj);
     },
-    checkEmail(value) {
-      this.mail = value;
-      this.$store.dispatch("checkEmail", {
-        fullNameToEmail: this.fullNameToEmail,
-        mail: this.mail
-      });
-    },
-    getFullNameToEmail() {
-      this.$store.dispatch("fullNameToEmail", {
-        name: this.fullName,
-        email: this.email,
-        isEmail: this.isEmail
-      });
-    },
     submit() {
       this.isLoading = true;
       this.$store.dispatch("generatePassword");
       this.$store.dispatch("submitRegistration", {
         name: this.fullName,
         email: this.mail,
-        password: this.setPassword,
+        // password: this.setPassword,
         department: this.depId,
         role: this.roleChosen,
         openDialog: this.closeSuccessDialog
@@ -170,41 +146,9 @@ export default {
       isError: "getRegistrationError",
       roleList: "getRoleList",
       departmentList: "getDepartmentList",
-      fullNameToEmail: "getPrefixEmail",
-      hashedPassword: "hashedPassword",
-      setPassword: "password",
-      isEmail: "getEmail",
       openDialog: "openDialog",
-      setMail: "getMail",
       openDialogFalse: "openFailedDialog"
-    }),
-    // getRoleList() {
-    //   return this.$store.getters.roleList;
-    // },
-    // getDepartmentList() {
-    //   return this.$store.getters.depList;
-    // },
-    // fullNameToEmail() {
-    //   return this.$store.getters.getPrefixEmail;
-    // },
-    // hashedPassword() {
-    //   return this.$store.getters.hashedPassword;
-    // },
-    // setPassword() {
-    //   return this.$store.getters.password;
-    // },
-    // isEmail() {
-    //   return this.$store.getters.getEmail;
-    // },
-    // openDialog() {
-    //   return this.$store.getters.openDialog;
-    // },
-    // setMail() {
-    //   return this.$store.getters.getMail;
-    // },
-    // openDialogFalse() {
-    //   return this.$store.getters.openFailedDialog;
-    // }
+    })
   }
 };
 </script>

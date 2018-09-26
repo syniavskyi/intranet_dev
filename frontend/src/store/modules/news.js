@@ -23,6 +23,14 @@ const state = {
         dayDesc: null,
         isDay: null,
     },
+    slider: {
+        slideIndex: 1,
+        interval: "",
+        start: "Uruchom slider",
+        stop: "Zatrzymaj slider",
+        btnTxt: "Zatrzymaj slider",
+        sliderToast: "Zatrzymano slider"
+    },
     news: null,
     newsJson: {},
     articles: [],
@@ -50,10 +58,44 @@ const mutations = {
     },
     SET_SHOW_NEW_MESSAGE_DIALOG(state, show) {
         state.showNewMessageDialog = show
+    },
+    SET_SLIDE_INDEX(state, index) {
+        state.slider.slideIndex = index
+    },
+    SET_SLIDE_INTERVAL(state) {
+        clearInterval(state.slider.interval)
+    },
+    SET_TOAST_TEXT(state, txt) {
+        state.slider.sliderToast = txt 
     }
 }
 
 const actions = {
+    setSliderInterval({dispatch}) {
+        state.slider.interval = setInterval(() => {state.slider.slideIndex+=1; dispatch("runCarosuel", state.slider.slideIndex)}, 4000) 
+    },
+    runCarosuel({dispatch, commit}, n) {
+        var slides = document.getElementsByClassName("advItem");  
+            if (n > slides.length) { commit("SET_SLIDE_INDEX", 1) }
+            if (n < 1) { commit("SET_SLIDE_INDEX", slides.length) } 
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none"; 
+            }  
+            slides[state.slider.slideIndex - 1].style.display = "flex";
+    },
+    startStopSlider({dispatch}, evt) {
+        // this.repeatSlider = false;
+        if (evt.target.innerText === state.slider.start) { 
+            evt.target.innerText = state.slider.stop
+            state.slider.sliderToast = "Uruchomiono slider"
+            state.slider.interval = setInterval(() => {state.slider.slideIndex+=1; dispatch("runCarosuel", state.slider.slideIndex)}, 4000)
+        } else { 
+            evt.target.innerText = state.slider.start
+            state.slider.sliderToast = "Zatrzymano slider"
+            clearInterval(state.slider.interval)
+        }
+        dispatch("displayToast");
+    },
     // take location
     geoLoc({commit, state, dispatch}) {
         var geoLocat = {}
@@ -235,6 +277,15 @@ const getters = {
      },
     getShowNewMessageDialog() {
         return state.showNewMessageDialog
+    },
+    getSliderIndex() {
+        return state.slider.slideIndex
+    },
+    getToastText() {
+        return state.slider.sliderToast
+    },
+    getSliderBtnTxt() {
+        return state.slider.btnTxt
     }
 }
 

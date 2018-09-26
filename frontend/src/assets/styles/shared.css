@@ -858,6 +858,10 @@ input:required {
     justify-content: space-between;
 }
 
+.tile-content {
+    display: flex;
+}
+
 .tile-underscore {
     width: 5rem;
     height: 0.5rem;

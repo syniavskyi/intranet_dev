@@ -15,7 +15,6 @@ const state = {
   studyTypes: [],
   academicTitles: [],
   langLevels: [],
-  userFiles: [],
   workPositionList: [],
   sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_AVAIL_TYPE", "ZINTRANET_AVAIL_STATUS", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES", 'ZINTRANET_PRIORITY', 'ZINTRANET_EVENT_TYPE', 'ZINTRANET_EVENT_TYPE', 'ZINTRANET_TARGET_GROUP', 'ZINTRANET_ROLES'],
   sapModulesList: [],
@@ -26,7 +25,8 @@ const state = {
   availStatus: [],
   availType: [],
   targetGroup: [],
-  roles: []
+  roles: [],
+  userPhotoUrl: null
 };
 
 const mutations = {
@@ -66,9 +66,7 @@ const mutations = {
   SET_SAP_MODULES_LIST(state, data) {
     state.sapModulesList = data;
   },
-  SET_USER_FILES_LIST(state, data){
-    state.userFiles = data
-  },
+
   SET_NEW_USER_FILES_LIST(state, data) {
     state.newUserFiles = data;
   },
@@ -89,6 +87,9 @@ const mutations = {
   },
   SET_ROLES(state, data) {
     state.roles = data;
+  },
+  SET_USER_PHOTO_URL(state, url){
+    state.userPhotoUrl = url
   }
 };
 
@@ -108,6 +109,10 @@ const actions = {
       }
     }
  
+    for (let i = 0; i < getters.getFileTypes.length; i++) {
+      dispatch('getDocuments', getters.getFileTypes[i])
+    }
+
     for (let i = 0; i < state.sapDomains.length; i++) {
       let domainData = {
         name: state.sapDomains[i],
@@ -115,7 +120,6 @@ const actions = {
       };
       dispatch('getDomainValues', domainData)
     }
-
     dispatch('getContractorsList');
     dispatch('getIndustries', userData.lang);
     dispatch('getProjectsList');
@@ -255,7 +259,7 @@ axios({
       
       dispatch('formatUserData', res.data.d); // format dates for date pickers and "is current" fields
       dispatch('getUserFilesData') // get data about all user files (cv, photos, documents etc.)
-      
+      dispatch('loadUserPhoto', userData) //load user's photo for menu and profile
       let oData = getters.getUserInfo;
             
       commit('SET_USER_AUTH', oData.UserAuth.results) //set user authorization data
@@ -322,20 +326,22 @@ axios({
       console.log(error)
      })
   },
-  getUserFilesData({commit, getters}){
-    let userId = localStorage.getItem('id')
-    let urlQuery = getters.getUrlQuery
-    axios({
-      method: 'GET',
-      url: "Attachments" + urlQuery +  "&$filter=UserAlias eq " + "'" + userId + "'",
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-      }
-    }).then(res => {
-      commit('SET_USER_FILES_LIST', res.data.d.results);
-    }).catch(error => { 
-      console.log(error)
-    })
+
+  loadUserPhoto({commit}, userData){
+    const sUserId   = userData.user,
+          sLanguage = 'PL',
+          sFileType = "USER-PHOTO";
+
+    const url =
+    " http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" +
+    sFileType +
+    "',Language='" +
+    sLanguage +
+    "',UserAlias='" +
+    sUserId +
+    "')/$value";
+
+    commit('SET_USER_PHOTO_URL', url)
   },
   checkPageToDisplay({},changePage){
     if(changePage) {
@@ -396,9 +402,7 @@ const getters = {
   getModulesList(state) {
     return state.sapModulesList;
   },
-  getUserFiles(state) {
-    return state.userFiles;
-  },
+
   getNewUserFilesList(state) {
     return state.newUserFiles;
   },
@@ -423,6 +427,9 @@ const getters = {
   }, 
   getRoleList(state) {
     return state.roles;
+  },
+  getUserPhotoUrl(state){
+    return state.userPhotoUrl
   }
 };
 
