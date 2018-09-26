@@ -3,7 +3,7 @@
         <div class="modal-overlay"></div>
         <div class="modal-new-s">
             <div class="modal-header-new">
-                <h1 class="modal-title-new">Dodaj nową wiadomość</h1>
+                <h1 class="modal-title-new">{{ $t("label.addNewMessage") }}</h1>
                 <div @click="close" class="modal-exit-new">&#10006;</div>
             </div>
             <div class="modal-content-new">
@@ -11,9 +11,9 @@
                     <div class="cd-for-input">
                         <textarea v-model="newAdvert" required class="cd-textarea ta-height"></textarea>
                         <span class="cd-span"></span>
-                        <label class="cd-label">Nowa wiadomość</label>
+                        <label class="cd-label">{{ $t("label.newMessage") }}</label>
                     </div>
-                    <button class="button">Dodaj</button>
+                    <button class="button">{{ $t("button.add") }}</button>
                 </div>
             </div>
         </div>

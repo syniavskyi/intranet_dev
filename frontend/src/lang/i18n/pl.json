@@ -31,7 +31,8 @@
         "seePreview": "Zobacz podgląd",
         "close": "Close",
         "format": "Format",
-        "generatePDF": "Generuj PDF"
+        "generatePDF": "Generuj PDF",
+        "yes": "Tak"
      },
     "label": {
         "nationality": "Narodowość",
@@ -152,7 +153,9 @@
         "criticalDocs": "Dokumenty istotne",
         "options": "Opcje",
         "projectName": "Nazwa projektu",
-        "remarks": "Uwagi"
+        "remarks": "Uwagi",
+        "newMessage": "Nowa wiadomość",
+        "addNewMessage": "Dodaj nową wiadomość"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",
@@ -189,7 +192,8 @@
         "changePassword": "Zmień hasło",
         "generateCV": "Generuj CV",
         "employeesList": "Lista pracowników",
-        "communicators": "Komunikatory"
+        "communicators": "Komunikatory",
+        "delegationConfirm": "Delegation confirm"
     },
     "message": {
         "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",
@@ -216,7 +220,11 @@
         "noEntriesForParameters": "Brak wpisów dla podanych kryteriów",
         "selectTypeToAddEntry": "Aby dodać wpis, Wybierz jego rodzaj po lewej stronie",
         "addEntryforUser": "Dodaj wpis dla użytkownika {user}",
-        "addProjectforUser": "Dodaj projekt dla użytkownika {user}"
+        "addProjectforUser": "Dodaj projekt dla użytkownika {user}",
+        "confirmPageLeaving": "Potwierdź opuszcenie strony",
+        "unsavedData": "Wprowadzone dane nie zostaną zapisane. Czy na pewno chcesz opuścić stronę?",
+        "delegationConfirmQuestion": "Czy chcesz zatwierdzić delegację? Upewnij się, że wprowadzone dane są prawidłowe.",
+        "failedToSaveDelegation": "Niepowodzenie podczas zapisu numeru delegacji"
     },
     "select": {
         "language": {
