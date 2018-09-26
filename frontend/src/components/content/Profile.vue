@@ -24,16 +24,22 @@
             <button class="border-btn reject-btn" @click="onCancelEdit">{{ $t("button.cancel") }}</button>
           </div>
         </div>
-        <select v-if="authType==='*'" v-model="selectedUser" @change="getNewData">
-          <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias"> 
-              {{ user.Fullname }}   
-           </option>
-        </select>
-        <select v-if="authType==='TEAM'" v-model="selectedUser" @change="getNewData">
-          <option v-for="user in filteredTeamUsers" :value="user.UserAlias" :key="user.UserAlias"> 
-              {{ user.Fullname }}   
-           </option>
-        </select>
+        <div class="cd-for-select">
+          <select v-if="authType==='*'" v-model="selectedUser" @change="getNewData" required class="cd-select">
+            <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias"> 
+                {{ user.Fullname }}   
+            </option>
+          </select>
+          <label class="cd-slabel">{{ $t("label.selectEmployee") }}</label>
+        </div>
+        <div class="cd-for-select">
+          <select v-if="authType==='TEAM'" v-model="selectedUser" @change="getNewData" required class="cd-select">
+            <option v-for="user in filteredTeamUsers" :value="user.UserAlias" :key="user.UserAlias"> 
+                {{ user.Fullname }}   
+            </option>
+          </select>
+          <label class="cd-slabel">{{ $t("label.selectTeamMember") }}</label>
+        </div>
         <h3 v-if="authType==='OWN'" class="prof-user-header-name">{{userData.Fullname}}</h3>
         <div class="profile-tiles">
           <div class="profile-tiles-row-wrap">

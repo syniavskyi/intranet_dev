@@ -44,7 +44,7 @@
                         </v-date-picker>
                     </div>
                     <div class="ava-tbs-item">
-                        <div class="ava-tbs-ititle">{{ $t("button.status") }}</div>
+                        <div class="ava-tbs-ititle">{{ $t("label.status") }}</div>
                         <select v-if="editMode" class="selectProfile selectEdit" v-model="avail.StatusId" @change="checkFields(index, avail.EntryId)">
                             <option v-for="status in availStatus" :key="status.Key" :value="status.Key">{{status.Value}}</option>
                         </select>

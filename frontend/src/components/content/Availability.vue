@@ -111,6 +111,7 @@ import ProjectsTable from './availabilityComponents/AvailProjectsTable'
 import LeavesTable from './availabilityComponents/AvailLeavesTable'
 import ProjectsTile from './availabilityComponents/AvailProjectsTile'
 import LeavesTile from './availabilityComponents/AvailLeavesTile'
+const utils = require("../../utils");
 
 export default {
     data() {
