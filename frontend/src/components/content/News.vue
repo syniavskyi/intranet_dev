@@ -54,10 +54,12 @@
                                 </div>
                                 <div class="tile-underscore"/>
                             </div>
-                            <div v-for="(event, index) in events" :key='index' class="single-event"> 
-                                <div>{{event.EventTypeName}} </div>
-                                <div>{{ event.EventName }}</div>
-                                <div>{{setDateTo(event)}} </div>
+                            <div class="tile-content">
+                                <div v-for="(event, index) in events" :key='index' class="single-event"> 
+                                    <div class="event-date">{{setDateTo(event)}}</div>
+                                    <div class="event-title">{{ event.EventName }}</div>
+                                    <div class="event-type">{{event.EventTypeName}}</div>
+                                </div>
                             </div>
                         </div>
                         <div class="content-weather"  :class="today.isDay ? 'weatherDay' : 'weatherNight' ">
