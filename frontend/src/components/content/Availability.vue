@@ -246,7 +246,7 @@ export default {
             this.$store.dispatch("setSideMenu", obj);
         },
         loadUserProjects(userId) {
-            // this.$store.commit('SET_DISPLAY_LOADER', true)
+            this.$store.commit('SET_DISPLAY_LOADER', true)
             this.$store.dispatch('getUserProjects', userId)
             this.$store.dispatch('getUserAvail', userId)
         }

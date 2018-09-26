@@ -28,6 +28,7 @@ const actions = {
                 dispatch('formatUserLeaves', res.data.d.results)
             }).catch(error => {
                 console.log(error)
+                commit('SET_DISPLAY_LOADER', false)
             });
     },
     formatUserLeaves({commit, getters}, userAvail){
@@ -49,6 +50,8 @@ const actions = {
                   avail.DateEnd = utils.dateStringToObj(avail.DateEnd)
                 }
                 commit('SET_USER_AVAIL', userAvail)
+                commit('SET_DISPLAY_LOADER', false)
+
         },
     removeUserAvail({commit, getters, dispatch}, data) {
     //     const URL = "/api/users/" + data.userId + "/userEngag/" + data.projectId + "/delete"

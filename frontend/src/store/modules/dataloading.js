@@ -326,11 +326,11 @@ const actions = {
      })
   },
 
-  loadUserPhoto({commit}, userData){
+  loadUserPhoto({commit, getters}, userData){
     const sUserId   = userData.user,
           sLanguage = 'PL',
-          sFileType = "USER-PHOTO";
-
+          sFileType = "USER-PHOTO",
+          urlQuery = getters.getUrlQuery
     const url =
     " http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" +
     sFileType +
@@ -338,7 +338,7 @@ const actions = {
     sLanguage +
     "',UserAlias='" +
     sUserId +
-    "')/$value";
+    "')/$value" + urlQuery;
 
     commit('SET_USER_PHOTO_URL', url)
   },
@@ -356,7 +356,13 @@ const actions = {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
     }).then(res => {
-      commit('SET_ADVERTS', res.data.d.results);
+      let oAdverts = res.data.d.results
+      for (let i = 0; i < oAdverts.length; i++) {
+        if (oAdverts[i].ValidTo){
+          oAdverts[i].ValidTo =  utils.dateStringToObj(oAdverts[i].ValidTo);
+        }
+      }
+      commit('SET_ADVERTS', oAdverts);
     }).catch(error => { 
       console.log(error)
     })
