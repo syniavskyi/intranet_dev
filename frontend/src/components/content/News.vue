@@ -36,7 +36,7 @@
                                     <button class="oclear-btn" @click="removeAdvert(index)">X</button>
                                 </div>
                                 <button v-show="isMoreThanOneAdvert" @click="nextSlide(-1)" class="advLeft">&#8249;</button>
-                                <button v-show="isMoreThanOneAdvert"@click="nextSlide(1)" class="advRight">&#8250;</button>
+                                <button v-show="isMoreThanOneAdvert" @click="nextSlide(1)" class="advRight">&#8250;</button>
                             </div>
                             <button class="oclear-btn btn-s" @click="startStopSlider">{{stop}}</button>
                             <!-- <div class="advControls">
