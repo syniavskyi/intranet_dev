@@ -13,7 +13,7 @@
                         <span class="cd-span"></span>
                         <label class="cd-label">Nowa wiadomość</label>
                     </div>
-                    <button class="button">Dodaj</button>
+                    <button :disabled="newAdvert === null || newAdvert === '' " class="button">Dodaj</button>
                 </div>
             </div>
         </div>
@@ -22,6 +22,11 @@
 
 <script>
 export default {
+    data() {
+        return {
+            newAdvert: null
+        }
+    },
     methods: {
         close() {
             this.$store.commit("SET_SHOW_NEW_MESSAGE_DIALOG", false)

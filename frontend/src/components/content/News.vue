@@ -21,22 +21,22 @@
                             <div class="tile-underscore"/>
                         </div>
                         <div class="tile-content tile-ncnt">
-                            <div class="advItem" v-for="(advert, index) in userAdverts" :key="advert.Id" :id="advert.Id">  
-                                <textarea :disabled="!editMode" class="n-textarea" v-model="advert.Message"/>
+                            <div class="advItem" v-for="(advert, index) in advertsList" :key="advert.Id" :id="advert.Id">  
+                                <textarea @input="validateAdvert(advert)" :disabled="!editMode" class="n-textarea" v-model="advert.Message"/>
                                 <p class="table-p">{{formatAuthorName(advert.CreatedBy)}}</p>
                                 <p class="table-p" v-if="!editMode"> Wiadomość aktualna do {{ formatDate(advert.ValidTo) }} </p> 
-                                <v-date-picker v-if="editMode" class="cd-range" popoverDirection="bottom" is-expanded mode="single" v-model="advert.ValidTo"  :min-date="new Date()">
+                                <v-date-picker @input="validateAdvert(advert)" v-if="editMode" class="cd-range" popoverDirection="bottom" is-expanded mode="single" v-model="advert.ValidTo"  :min-date="new Date()">
                                     <!-- <input class="cd-range" v-model="advert.ValidTo" value="advert.ValidTo"/> -->
                                     <input v-model="advert.ValidTo" value="advert.ValidTo"/>
                                 </v-date-picker>
                                 <div class="advBtns" v-if="checkAuthor(advert.CreatedBy)">
-                                    <button v-if="!editMode" class="clear-btn" @click="editAdvert(advert)">edytuj</button> 
-                                    <button v-if="editMode" class="clear-btn" @click="saveAdvert(advert)">zapisz</button> 
-                                    <button v-if="editMode" class="clear-btn" @click="cancelEditing(index)">anuluj</button> 
+                                    <button v-show="!editMode" class="clear-btn" @click="editAdvert(advert)">edytuj</button> 
+                                    <button v-show="editMode" class="clear-btn" @click="saveAdvert(advert)" :disabled="!isAdvertValid">zapisz</button> 
+                                    <button v-show="editMode" class="clear-btn" @click="cancelEditing(index)">anuluj</button> 
                                     <button class="oclear-btn" @click="removeAdvert(index)">X</button>
                                 </div>
-                                <button @click="nextSlide(-1)" class="advLeft">&#8249;</button>
-                                <button @click="nextSlide(1)" class="advRight">&#8250;</button>
+                                <button v-show="isMoreThanOneAdvert" @click="nextSlide(-1)" class="advLeft">&#8249;</button>
+                                <button v-show="isMoreThanOneAdvert"@click="nextSlide(1)" class="advRight">&#8250;</button>
                             </div>
                             <button class="oclear-btn btn-s" @click="startStopSlider">{{stop}}</button>
                             <!-- <div class="advControls">
@@ -132,14 +132,18 @@ export default {
             beforeEditingCache: null,
             stop: "Zatrzymaj slider",
             start: "Uruchom slider",
-            sliderToast: "Zatrzymano slider"
+            sliderToast: "Zatrzymano slider",
+            isAdvertValid: false,
+            isMoreThanOneAdvert: true
         }
     },
     mounted() {
         this.$nextTick(()=> { 
             this.runCarosuel(this.slideIndex)
-            this.interval = setInterval(() => {this.slideIndex+=1; this.runCarosuel(this.slideIndex)}, 4000) }) 
+            this.interval = setInterval(() => {this.slideIndex+=1; this.runCarosuel(this.slideIndex)}, 4000) 
+        }) 
             this.$store.commit("SET_DISPLAY_LOADER", false)
+            this.isMoreThanOneAdvert = this.advertsList.length > 1 ? true : false 
     },
     beforeCreate() {
         this.$store.dispatch("geoLoc");
@@ -165,13 +169,12 @@ export default {
             articlesRaw: "articlesRaw", 
             articlesJson: "articlesJson", 
             rticles: "articles",
-            userAdverts: "userAdverts",
             displayMenu: "getShowMenu",
             displayOverlay: "getShowMenuOverlay",
             events: "getEvents",
             showToast: "getDisplayToast",
             showNewMessage: "getShowNewMessageDialog",
-            userAdverts: "getAdverts",
+            advertsList: "getAdverts",
             usersList: "usersList"
         }),
     },
@@ -199,13 +202,16 @@ export default {
             this.editMode = false
         },
         removeAdvert(index){
-            this.userAdverts.splice(index, 1)
+            this.advertsList.splice(index, 1)
             this.editMode = false
         },
         cancelEditing(index) {
-            this.userAdverts[index] = this.beforeEditingCache
+            this.advertsList[index] = this.beforeEditingCache
             this.beforeEditingCache = {};
             this.editMode = false
+        },
+        validateAdvert(advert){
+            this.isAdvertValid = advert.Message === "" || advert.ValidTo === null ? false : true
         },
         formatDate(date) {
             return date !== null && date !== undefined
