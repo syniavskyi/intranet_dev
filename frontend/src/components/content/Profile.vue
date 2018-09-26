@@ -24,7 +24,23 @@
             <button class="border-btn reject-btn" @click="onCancelEdit">{{ $t("button.cancel") }}</button>
           </div>
         </div>
-        <h3 class="prof-user-header-name">{{userData.Fullname}}</h3>
+        <div class="cd-for-select">
+          <select v-if="authType==='*'" v-model="selectedUser" @change="getNewData" required class="cd-select">
+            <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias"> 
+                {{ user.Fullname }}   
+            </option>
+          </select>
+          <label class="cd-slabel">{{ $t("label.selectEmployee") }}</label>
+        </div>
+        <div class="cd-for-select">
+          <select v-if="authType==='TEAM'" v-model="selectedUser" @change="getNewData" required class="cd-select">
+            <option v-for="user in filteredTeamUsers" :value="user.UserAlias" :key="user.UserAlias"> 
+                {{ user.Fullname }}   
+            </option>
+          </select>
+          <label class="cd-slabel">{{ $t("label.selectTeamMember") }}</label>
+        </div>
+        <h3 v-if="authType==='OWN'" class="prof-user-header-name">{{userData.Fullname}}</h3>
         <div class="profile-tiles">
           <div class="profile-tiles-row-wrap">
             <div class="profile-tiles-row">
@@ -293,7 +309,9 @@ export default {
       routeToGo: null,
       newPosition: null,
       selectedCity: null,
-      selectedCvLang: i18n.locale
+      selectedCvLang: i18n.locale,
+      authType: '',
+      selectedUser: ''
     };
   },
   validations: {
@@ -302,12 +320,6 @@ export default {
         required,
         email
       }
-    }
-  },
-  watch: {
-    selectedCvLang(lang) {
-      // this.$store.commit('SET_LANG', lang);
-      // this.setCvLanguage(lang);
     }
   },
   // mounted() {
@@ -337,6 +349,14 @@ export default {
     this.$store.commit("SET_LANG", lang);
     next();
   },
+  created() {
+     const data = {
+            roles: this.$store.getters.getUserAuth,
+            key: "ZPROF_ATCV",
+            dep: this.userData.DepartmentName
+        }
+        this.authType = utils.checkRole(data);
+  },
   components: {
     MaskedInput,
     "app-menu": Menu,
@@ -361,6 +381,7 @@ export default {
       showPasswordDialog: "getShowSelectChangePasswordDialog",
       displayMenu: "getShowMenu",
       displayOverlay: "getShowMenuOverlay",
+      usersList: 'usersList',
       userPhotoUrl: 'getUserPhotoUrl'
     }),
     formatAddress() {
@@ -388,7 +409,14 @@ export default {
         oFormatedDate = utils.setWorkExperience(oCalculateDifference, this.selectedCvLang);
 
       return oFormatedDate.year + oFormatedDate.month + oFormatedDate.day;
-    }
+    },
+    filteredTeamUsers(){
+           let aFilteredUsers = this.usersList,
+              sTeam = this.userData.DepartmentName
+
+             aFilteredUsers = aFilteredUsers.filter(function(oData){ return oData.DepartmentName === sTeam });
+            return aFilteredUsers
+        }
   },
   // beforeRouteLeave (to, from , next) {
   // this.showLeavePageDialog = true
@@ -502,8 +530,11 @@ export default {
       if (!cvLang) {
         let cvLang = loginLanguage.toUpperCase();
       }
+
+      let halo = this.selectedUser;
       let userData = {
-        user: "UIO",
+        // user: "UIO",
+        user: this.selectedUser,
         lang: cvLang,
         changePage: false
       }

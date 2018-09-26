@@ -16,14 +16,14 @@
                 <div class="delegations-tile delegations-inputs">
                     <div class="delegations-tile-header">
                         <div class="delegations-tile-title"> 
-                            <p  v-if="showUsername">{{userData.Fullname}}</p>
-                            <div class="delegations-div-cool-head" v-if="showSelectForAllUsers">
+                            <p  v-if="authType==='OWN'">{{userData.Fullname}}</p>
+                            <div class="delegations-div-cool-head" v-if="authType==='*'">
                                 <select required  class="delegations-select-cool" v-model="newDelegation.userId" @change="setUsername">
                                     <option v-for="user in usersList" :key="user.id" :value="user.id">{{ user.Fullname }}</option>
                                 </select> 
                                 <label class="delegations-label-cool-select">{{ $t("label.selectEmployee") }}</label>
                             </div>
-                             <div  v-if="showSelectForTeam" class="delegations-div-cool-head">
+                             <div  v-if="authType==='TEAM'" class="delegations-div-cool-head">
                                 <select required class="delegations-select-cool" v-model="newDelegation.userId" @change="setUsername">
                                     <option v-for="user in filteredTeamUsers" :key="user.UserAlias" :value="user.UserAlias">{{ user.Fullname }}</option>
                                 </select> 
@@ -158,11 +158,9 @@ let utils = require('../../utils')
 export default {
     data() {
         return {
-            showUsername: true,
             delegationUsername: null,
             generatingPdfMode: false,
-            showSelectForTeam: false,
-            showSelectForAllUsers: false
+            authType: ''
         }
     },
     mounted() {
@@ -186,24 +184,12 @@ export default {
         'confirm-dialog': Dialog
     },
     created(){
-        const roles = this.$store.getters.getUserAuth
-        for (let i=0; i<roles.length; i++) {
-            if (roles[i].Key === "ZDELEG" && roles[i].Value === "TEAM" && this.userData.DepartmentName !== ""){
-                this.showSelectForTeam = true
-                this.showUsername = false
-            } else  if (roles[i].Key === "ZDELEG" && roles[i].Value === "*"){
-                this.showUsername = false
-                this.showSelectForAllUsers = true
-            } else {
-                this.showUsername = true
-            }
+        const data = {
+            roles: this.$store.getters.getUserAuth,
+            key: "ZDELEG",
+            dep: this.userData.DepartmentName
         }
-        // if (role === 'ROLE_ADMIN') {
-        //     this.showUsername = false
-        // } else {
-        //     this.newDelegation.userId = localStorage.getItem('id')
-        //     this.delegationUsername = localStorage.getItem('id')
-        // }
+        this.authType = utils.checkRole(data);
     },
     computed: {
         ...mapGetters({

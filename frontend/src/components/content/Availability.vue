@@ -111,6 +111,7 @@ import ProjectsTable from './availabilityComponents/AvailProjectsTable'
 import LeavesTable from './availabilityComponents/AvailLeavesTable'
 import ProjectsTile from './availabilityComponents/AvailProjectsTile'
 import LeavesTile from './availabilityComponents/AvailLeavesTile'
+const utils = require("../../utils");
 
 export default {
     data() {
@@ -214,16 +215,12 @@ export default {
         // }
     },
     created() {
-        const roles = this.$store.getters.getUserAuth
-        for (let i=0; i<roles.length; i++) {
-            if (roles[i].Key === "ZDELEG" && roles[i].Value === "TEAM" && this.userData.DepartmentName !== ""){
-                this.authType = 'TEAM'
-            } else  if (roles[i].Key === "ZDELEG" && roles[i].Value === "*"){
-                this.authType = 'ALL'
-            } else {
-                this.authType = 'OWN'
-            }
+        const data = {
+            roles: this.$store.getters.getUserAuth,
+            key: "ZDYSP_CREA",
+            dep: this.userData.DepartmentName
         }
+        this.authType = utils.checkRole(data);
     },
     watch: {
         selectedType(value) {

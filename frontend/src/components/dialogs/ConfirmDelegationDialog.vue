@@ -2,18 +2,17 @@
 <div>
     <div class="modal-new-s">
         <div class="modal-header-new">
-            <h1 class="modal-title-new">Zatwierdzenie delegacji</h1>
+            <h1 class="modal-title-new">{{ $t("header.delegationConfirm") }}</h1>
             <div @click="hideDialog" class="modal-exit-new">&#10006;</div>
         </div>
         <div class="modal-content-new">
             <div class="del-modal-section">
-                <h3 class="del-modal-h3" v-if="!isSuccess">Pomyślnie zapisano dane delegacji</h3>
-                <h2 class="del-modal-h2">Czy chcesz zatwierdzić delegację? Upewnij się, że wprowadzone dane są prawidłowe.</h2>
-                
-                <p v-if="isSuccess">Niepowodzenie podczas zapisu numeru delegacji</p>
+                <h3 class="del-modal-h3" v-if="!isSuccess">{{ $t("message.successfullySaved") }}</h3>
+                <h2 class="del-modal-h2">{{ $t("message.delegationConfirmQuestion") }}</h2>
+                <p v-if="isSuccess">{{ $t("message.failureDuringDelegationSaving") }}</p>
                 <div class="del-modal-btns">
-                    <button class="clear-btn" @click="saveDelegationNumber">Tak, zatwierdzam</button>
-                    <button class="oclear-btn" @click="hideDialog">Nie, chcę wprowadzić zmiany</button>
+                    <button class="clear-btn" @click="saveDelegationNumber">{{ $t("button.yes") }}</button>
+                    <button class="oclear-btn" @click="hideDialog">{{ $t("button.cancel") }}</button>
                 </div>
             </div>
         </div>
