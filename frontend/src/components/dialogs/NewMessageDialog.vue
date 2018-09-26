@@ -13,7 +13,7 @@
                         <span class="cd-span"></span>
                         <label class="cd-label">{{ $t("label.newMessage") }}</label>
                     </div>
-                    <button class="button">{{ $t("button.add") }}</button>
+                    <button :disabled="newAdvert === null || newAdvert === '' " class="button">{{ $t("button.add") }}</button>
                 </div>
             </div>
         </div>
@@ -22,6 +22,11 @@
 
 <script>
 export default {
+    data() {
+        return {
+            newAdvert: null
+        }
+    },
     methods: {
         close() {
             this.$store.commit("SET_SHOW_NEW_MESSAGE_DIALOG", false)

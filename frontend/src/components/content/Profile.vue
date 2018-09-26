@@ -481,23 +481,6 @@ export default {
       };
       this.$store.dispatch("submitPhoto", data);
     },
-    setImageSrc() {
-      // e.g. AttachmentMedias(FileId='CV',Language='PL',UserAlias='MHA')/$value
-      const sUserId = localStorage.getItem("id"),
-        sLanguage = "PL",
-        sFileType = "USER-PHOTO";
-
-      const url =
-        "http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" +
-        sFileType +
-        "',Language='" +
-        sLanguage +
-        "',UserAlias='" +
-        sUserId +
-        "')/$value";
-
-      return url;
-    },
     phoneValidation(value) {
       const regex = new RegExp("^(?=.*[0-9])[- +()0-9]+$");
       this.invalidPhone = regex.test(value.target.value) ? false : true;
