@@ -144,9 +144,7 @@
                 <div class="profile-tile-content">
                   <div class="profile-user-header">
                     <div class="profile-user-img">
-                      <img class="img-user-class" id="userProfilePhoto" :src="userPhotoUrl" width="150px">
-                      <!-- <img class="img-user-class" id="userProfilePhoto" src="nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileType='USER-PHOTO',Language='PL',UserAlias='UIO')/$value" width="150px"> -->
-                      <!-- <img class="img-user-class" id="userProfilePhoto" :src="userData.imgUrl" width="150px"> -->
+                      <img class="img-user-class" id="userProfilePhoto" :src="userPhoto" width="150px">
                       <p class="profile-error profile-error-image" v-if="photoUploadError">{{ $t("message.photoUploadError") }}</p>
                       <label for="change-user-image" class="profile-edit-btn">{{ $t("button.changePhoto") }}
                         <input accept="image/*" style="width: 1rem;" type="file" ref="photo" @change="handlePhotoUpload" id="change-user-image">
@@ -383,7 +381,7 @@ export default {
       displayMenu: "getShowMenu",
       displayOverlay: "getShowMenuOverlay",
       usersList: 'usersList',
-      userPhotoUrl: 'getUserPhotoUrl',
+      userPhoto: 'getUserPhotoUrl',
     }),
     formatAddress() {
       const data = this.userData;
