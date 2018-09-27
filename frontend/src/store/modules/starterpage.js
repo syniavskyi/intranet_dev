@@ -1,17 +1,17 @@
 import axios from 'axios'
-import router from '@/router/index.js'
 
 const state = {
-  buttonState: false,
+  buttonStateNew: true,
+  buttonStateInfo: true,
   docListNew: [],
   docListInfo: [],
   listForStatus: [],
 }
 
 const mutations = {
-// check if all documents are filled
-  SET_BUTTON_STATE(state, data) {
-    state.buttonState = data;
+  // check if all documents are filled
+  SET_BUTTON_STATE_NEW(state, data) {
+    state.buttonStateNew = data;
   },
   // docs for new user
   SET_DOC_LIST_NEW(state, data) {
@@ -21,11 +21,15 @@ const mutations = {
   SET_DOC_LIST_INFO(state, data) {
     state.docListInfo = data;
   },
+  //doc info for new user
+  SET_BUTTON_STATE_INFO(state, data) {
+    state.buttonStateInfo = data;
+  }
 }
 
 const actions = {
   // check if one of chheckboxes is not checked and set button to disabled
-  checkList({
+  checkListForNew({
     commit
   }, data) {
     var bState = false;
@@ -33,26 +37,44 @@ const actions = {
       if (data[i].Status) {
         bState = false;
       } else {
-        return commit('SET_BUTTON_STATE', true)
+        return commit('SET_BUTTON_STATE_NEW', true)
       }
-      commit('SET_BUTTON_STATE', bState);
+      commit('SET_BUTTON_STATE_NEW', bState);
+    }
+  },
+  //same as above
+  checkListForInfo({
+    commit
+  }, data) {
+    var bState = false;
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].Status) {
+        bState = false;
+      } else {
+        return commit('SET_BUTTON_STATE_INFO', true)
+      }
+      commit('SET_BUTTON_STATE_INFO', bState);
     }
   },
   // change Status from X/- to true/false
   checkStatus({}, files) {
-    for(let i = 0; i < files.length; i++) {
+    for (let i = 0; i < files.length; i++) {
       files[i].Status = files[i].Status === 'X' ? true : false
     }
-},
-// get docs for new user
-getNewDocs({commit, getters, dispatch}) {
+  },
+  // get docs for new user
+  getNewDocs({
+    commit,
+    getters,
+    dispatch
+  }) {
     let urlQuery = getters.getUrlQuery
     // TEMPORARY, after testing change url to urlQuery
     let query = "?sap-user=psy&sap-password=ides01&sap-language=pl"
     let user = 'UIO'
     axios({
       method: 'GET',
-      url: 'Attachments'  + query + "&$filter=FileId eq 'new' and UserAlias eq '" + user + "'",
+      url: 'Attachments' + query + "&$filter=FileId eq 'new' and UserAlias eq '" + user + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -65,13 +87,17 @@ getNewDocs({commit, getters, dispatch}) {
     })
   },
   // get informational docs
-  getInfoDocs({commit, getters, dispatch}) {
+  getInfoDocs({
+    commit,
+    getters,
+    dispatch
+  }) {
     let urlQuery = getters.getUrlQuery
     let query = "?sap-user=psy&sap-password=ides01&sap-language=pl"
     let user = 'UIO'
     axios({
       method: 'GET',
-      url: 'Attachments'  + query + "&$filter=FileId eq 'info' and UserAlias eq '" + user + "'",
+      url: 'Attachments' + query + "&$filter=FileId eq 'info' and UserAlias eq '" + user + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -86,8 +112,11 @@ getNewDocs({commit, getters, dispatch}) {
 }
 
 const getters = {
-  getButtonState(state) {
-    return state.buttonState;
+  getButtonStateNew(state) {
+    return state.buttonStateNew;
+  },
+  getButtonStateInfo(state) {
+    return state.buttonStateInfo
   },
   getDocListNew(state) {
     return state.docListNew;

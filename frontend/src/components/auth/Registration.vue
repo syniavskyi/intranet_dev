@@ -31,7 +31,6 @@
             </div>
             <div class="cd-for-select">
               <select required class="cd-select" v-model="department">
-                <!-- v-model="department" -->
                 <option v-for="department in departmentList" :key="department.Key" :value="department.Key">{{ department.Value }}</option>
               </select>
               <label class="cd-slabel" for="role">{{ $t("label.department") }}</label>
