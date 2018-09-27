@@ -32,7 +32,9 @@
         "close": "Close",
         "format": "Format",
         "generatePDF": "Generate PDF",
-        "yes": "Yes"
+        "yes": "Yes",
+        "confirm": "Confirm",
+        "reject": "Reject"
     },
     "label": {
         "nationality": "Nationality",

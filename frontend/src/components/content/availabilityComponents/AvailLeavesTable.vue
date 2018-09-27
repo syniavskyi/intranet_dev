@@ -22,39 +22,43 @@
                 <div class="ava-tbody-s">
                     <div class="ava-tbs-item">
                         <div class="ava-tbs-ititle">{{ $t("label.entryType") }}</div>
-                         <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="avail.TypeId">
+                         <select disabled v-if="!editMode || avail.StatusId === 'CO'" class="selectProfile selectDisabled" v-model="avail.TypeId">
                             <option v-for="type in availTypes" :key="type.Key" :value="type.Key">{{type.Value}}</option>
                         </select>
-                        <select v-if="editMode" class="selectProfile selectEdit" v-model="avail.TypeId" @change="checkFields(index, avail.EntryId)">
+                        <select v-if="editMode && avail.StatusId !== 'CO'" class="selectProfile selectEdit" v-model="avail.TypeId" @change="checkFields(index, avail.EntryId)">
                             <option v-for="type in filteredAvailTypes" :key="type.Key" :value="type.Key">{{type.Value}}</option>
                         </select>
                     </div>
                     <div class="ava-tbs-item">
                         <div class="ava-tbs-ititle">{{ $t("label.from") }}</div>
-                        <p class="prof-date-label" v-if="!editMode"> {{ formatDate(avail.DateStart) }} </p>
-                        <v-date-picker v-if="editMode" class="prof-input-date" popoverDirection="top" @input="validateDates(index, avail.EntryId)" is-expanded mode="single" v-model="avail.DateStart">
+                        <p class="prof-date-label" v-if="!editMode || avail.StatusId === 'CO'"> {{ formatDate(avail.DateStart) }} </p>
+                        <v-date-picker v-if="editMode && avail.StatusId !== 'CO'" class="prof-input-date" popoverDirection="top" @input="validateDates(index, avail.EntryId)" is-expanded mode="single" v-model="avail.DateStart">
                             <input value="avail.DateStart"/>
                         </v-date-picker>
                     </div>
                     <div class="ava-tbs-item">
                         <div class="ava-tbs-ititle">{{ $t("label.to") }}</div>
-                        <p class="prof-date-label" v-if="!editMode"> {{ formatDate(avail.DateEnd) }} </p>
-                        <v-date-picker v-if="editMode" class="prof-input-date" popoverDirection="top" @input="validateDates(index, avail.EntryId)" is-expanded mode="single" v-model="avail.DateEnd">
+                        <p class="prof-date-label" v-if="!editMode || avail.StatusId === 'CO'"> {{ formatDate(avail.DateEnd) }} </p>
+                        <v-date-picker v-if="editMode && avail.StatusId !== 'CO'" class="prof-input-date" popoverDirection="top" @input="validateDates(index, avail.EntryId)" is-expanded mode="single" v-model="avail.DateEnd">
                             <input value="avail.DateEnd"/>
                         </v-date-picker>
                     </div>
                     <div class="ava-tbs-item">
                         <div class="ava-tbs-ititle">{{ $t("label.status") }}</div>
-                        <select v-if="editMode" class="selectProfile selectEdit" v-model="avail.StatusId" @change="checkFields(index, avail.EntryId)">
+                        <select v-if="editMode && authType =='*'" class="selectProfile selectEdit" v-model="avail.StatusId" @change="checkFields(index, avail.EntryId)">
                             <option v-for="status in availStatus" :key="status.Key" :value="status.Key">{{status.Value}}</option>
                         </select>
-                         <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="avail.StatusId">
+                         <select v-else disabled class="selectProfile selectDisabled" v-model="avail.StatusId">
                             <option v-for="status in availStatus" :key="status.Key" :value="status.Key">{{status.Value}}</option>
                         </select>
                     </div>
-                    <div class="ava-tbs-item eduButtonsAvail">
+                    <div class="ava-tbs-item eduButtonsAvail" v-if="authType !== 'OWN' && newLeave.UserId !== loginAlias">
+                         <button v-show="editMode" :disabled="true" @click="confirm(index, avail.EntryId)">{{ $t("button.confirm") }}</button>
+                         <button v-show="editMode">{{ $t("button.reject") }}</button>
+                    </div>
+                    <div class="ava-tbs-item eduButtonsAvail" v-else>
                         <div class="ava-tbs-ititle"> {{ $t("label.options") }} </div>
-                            <button v-if="editMode" :disabled="true" @click="save(avail.EntryId)">{{ $t("button.save") }}</button>
+                            <button v-if="editMode" :disabled="true" @click="save(index, avail.EntryId)">{{ $t("button.save") }}</button>
                             <button v-if="editMode">{{ $t("button.delete") }}</button>
                     </div>
                 </div>
@@ -73,14 +77,16 @@ export default {
             invalidDates: false,
             editMode: false,
             _beforeEditingCache: null,
-            setFilterAllowed: true               
+            setFilterAllowed: true             
         }
     },
     computed: {
         ...mapGetters({
             userAvail: 'getUserAvail',
             availTypes: 'getAvailType',
-            availStatus: 'getAvailStatus'
+            availStatus: 'getAvailStatus',
+            loginAlias: "getLoginAlias",
+            newLeave: "getNewLeaveForUser"
         }),
         filteredUserAvail() {
             let aFilteredAvail = this.userAvail,
@@ -143,11 +149,17 @@ export default {
             }
         }
     },
+    watch: {
+         userAvail() {
+             this.editMode = false;
+         }
+    },
     methods: {
         ...mapActions(["removeUserAvail"]),
          edit() {
             this.editMode = true;
             this._beforeEditingCache = utils.createClone(this.userAvail);
+            this.checkDisabled();
         },
         remove(index) {
             this._beforeEditingCache.splice(index, 1);
@@ -202,8 +214,24 @@ export default {
                  this.userAvail[entryId].Filter = true;
             }
         },
-        save(entryId) {
+        save(index, entryId) {
              this.userAvail[entryId].Filter = false;
+             document.getElementsByClassName("eduButtonsAvail")[index].children[1].disabled = true;
+
+        },
+      // set button disabled  
+        checkDisabled() {
+            for(let i = 0; i < this.filteredUserAvail.length; i++) {
+                if (this.filteredUserAvail[i].StatusId === 'CO') {
+                    document.getElementsByClassName("eduButtonsAvail")[i].children[0].disabled = true;
+                }   else {
+                   document.getElementsByClassName("eduButtonsAvail")[i].children[0].disabled = false;
+                }
+            }
+        },
+        confirm(index, entryId) {
+          this.userAvail[entryId].StatusId = 'CO';
+          document.getElementsByClassName("eduButtonsAvail")[index].children[0].disabled = true;
         }
     }
 }
