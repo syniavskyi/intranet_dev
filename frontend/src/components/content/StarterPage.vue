@@ -24,8 +24,8 @@
                       <div v-if="checkFileFormat(list.Filename) == '.pdf'">
                         <p class="starter-page-pdf">{{checkFileFormat(list.Filename)}}</p>
                       </div>
-                      <div v-if="checkFileFormat(list.Filename) == '.doc'"> 
-                        <p class="starter-page-docx">{{checkFileFormat(list.Filename)}}</p> 
+                      <div v-if="checkFileFormat(list.Filename) == '.doc'">
+                        <p class="starter-page-docx">{{checkFileFormat(list.Filename)}}</p>
                       </div>
                     </div>
                     <div class="starter-page-list-item-wrapper">
@@ -35,14 +35,13 @@
                       </div>
                     </div>
                     <label class="checkbox-wrap starter-page-checkbox">
-                      <input class="starter-page-checkbox" :checked="list.Status" @change="changeCheckbox(list)" type="checkbox">
+                      <input class="starter-page-checkbox" :checked="list.Status" @change="changeCheckboxForNew(list)" type="checkbox">
                       <div class="checkbox-in"></div>
                     </label>
                   </li>
                 </ul>
                 <div class="starter-page-list-bottom">
-                  <button class="starter-page-docs-btn button" disabled="this.setButton">{{ $t("button.documentComplete") }}</button>
-                  <!-- <button class="starter-page-docs-btn button" :disabled="setButton" @click="submitDocuments">{{ $t("button.documentComplete") }}</button> -->
+                  <button class="starter-page-docs-btn button" :disabled="setButtonNew">{{ $t("button.documentComplete") }}</button>
                 </div>
               </div>
             </div>
@@ -58,8 +57,8 @@
                       <div v-if="checkFileFormat(list.Filename) == '.pdf'">
                         <p class="starter-page-pdf"> {{  checkFileFormat(list.Filename)}}</p>
                       </div>
-                      <div v-if="checkFileFormat(list.Filename) == '.doc'"> 
-                        <p class="starter-page-docx">{{checkFileFormat(list.Filename)}} </p> 
+                      <div v-if="checkFileFormat(list.Filename) == '.doc'">
+                        <p class="starter-page-docx">{{checkFileFormat(list.Filename)}} </p>
                       </div>
                     </div>
                     <div class="starter-page-list-item-wrapper">
@@ -69,14 +68,13 @@
                       </div>
                     </div>
                     <label class="checkbox-wrap starter-page-checkbox">
-                      <input :checked="list.Status" @change="changeCheckbox(list)" type="checkbox">
+                      <input :checked="list.Status" @change="changeCheckboxInfo(list)" type="checkbox">
                       <div class="checkbox-in"></div>
                     </label>
                   </li>
                 </ul>
                 <div class="starter-page-list-bottom">
-                  <!-- <button class="starter-page-docs-btn button" :disabled="setButton" @click="submitDocuments">{{ $t("button.documentComplete") }}</button> -->
-                  <button class="starter-page-docs-btn button">{{ $t("button.documentComplete") }}</button>
+                  <button class="starter-page-docs-btn button" :disabled="setButtonInfo">{{ $t("button.documentComplete") }}</button>
                 </div>
               </div>
             </div>
@@ -87,74 +85,86 @@
 </template>
 
 <script>
-import Menu from '../Menu.vue';
-import axios from 'axios';
-import i18n from '../../lang/lang';
+import Menu from "../Menu.vue";
+import axios from "axios";
+import i18n from "../../lang/lang";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
     return {
       listOfDoc: []
-    }
+    };
   },
   components: {
-    'app-menu': Menu
+    "app-menu": Menu
   },
   created() {
     this.getNewDocs();
     this.getInfoDocs();
   },
-    computed: {
-      ...mapGetters({
-      setButton: 'getButtonState',
-      docListNew: 'getDocListNew',
-      listForStatus: 'getListForStatus',
-      docListInfo: 'getDocListInfo',
+  computed: {
+    ...mapGetters({
+      setButtonNew: "getButtonStateNew",
+      setButtonInfo: "getButtonStateInfo",
+      docListNew: "getDocListNew",
+      listForStatus: "getListForStatus",
+      docListInfo: "getDocListInfo",
       displayMenu: "getShowMenu",
       displayOverlay: "getShowMenuOverlay"
-      }),
+    })
   },
   methods: {
-     ...mapActions([
-       'getNewDocs',
-       'getInfoDocs',
-       'getDocsStatus',
-       'checkList',
-       'checkFileFormat'
+    ...mapActions([
+      "getNewDocs",
+      "getInfoDocs",
+      "getDocsStatus",
+      "checkListForNew",
+      "checkListForInfo",
+      "checkFileFormat"
     ]),
     // add css to checkbox
-    changeCheckbox(data) {
-      if(data.Status === undefined) {
+    changeCheckboxForNew(data) {
+      if (data.Status === undefined) {
         data["status"] = true;
       } else {
         data.Status = !data.Status;
       }
-      this.checkList(this.listForStatus);
-      // this.saveDocs(data)
-      // this.$store.dispatch("saveDocs", {
-      //   data
-      // });
+      this.$store.dispatch("checkListForNew", this.docListNew);
+    },
+    changeCheckboxInfo(data) {
+      if (data.Status === undefined) {
+        data["status"] = true;
+      } else {
+        data.Status = !data.Status;
+      }
+      this.$store.dispatch("checkListForInfo", this.docListInfo);
     },
     // format file name to display file format
     checkFileFormat(name) {
-      return name.slice(name.lastIndexOf('.'));
+      return name.slice(name.lastIndexOf("."));
     },
-    generateLinks(file){
-     let url = "http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" + file + "',Language='" +
-      'PL' + "',UserAlias='" + '' + "')/$value";
+    generateLinks(file) {
+      let url =
+        "http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" +
+        file +
+        "',Language='" +
+        "PL" +
+        "',UserAlias='" +
+        "" +
+        "')/$value";
       return url;
-   }
+    }
   }
-}
+};
 </script>
 
 <style scoped>
-  .line-through {
-    text-decoration: line-through;
-    color: grey;
-  }
-  .none {
-    text-decoration: none;
-  }
+.line-through {
+  text-decoration: line-through;
+  color: grey;
+}
+.none {
+  text-decoration: none;
+}
 </style>
