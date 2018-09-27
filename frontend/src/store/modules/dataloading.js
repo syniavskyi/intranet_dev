@@ -341,7 +341,26 @@ axios({
     sUserId +
     "')/$value" + urlQuery;
 
-    commit('SET_USER_PHOTO_URL', url)
+    let image = new Image();
+
+    image.src = url;
+    image.crossOrigin = '*';
+    image.addEventListener("load", function () {
+      let imgCanvas = document.createElement("canvas"),
+          ctx = imgCanvas.getContext("2d");
+
+      imgCanvas.width = image.width;
+      imgCanvas.height = image.height;  
+     
+      ctx.drawImage(image, 0, 0, image.width, image.height);
+
+      let dataURL = imgCanvas.toDataURL("image/png");
+     
+      commit('SET_USER_PHOTO_URL', dataURL)
+
+        localStorage.setItem("image", dataURL)
+    }, false)
+
   },
   checkPageToDisplay({},changePage){
     if(changePage) {
