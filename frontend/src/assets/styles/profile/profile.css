@@ -693,6 +693,10 @@
     border-radius: 2px;
 }
 
+.profile-user-img > label {
+    margin:1rem 0;
+}
+
 .profile-user-header p {
     width: 2rem;
     font-size: 1rem;
