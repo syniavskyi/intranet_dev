@@ -187,32 +187,32 @@ export default {
             : "-";
         },
         checkFields(index, entryId) {
-         let bEnd, bStart, bType, bStatus, bChanged;
+         let bEnd, bStart, bType, bStatus, bChanged,
+         userEntryId = this.userAvail[entryId],
+         beforeEdit = this._beforeEditingCache[entryId]
+
 // check if data was changed
-             bEnd = this._beforeEditingCache[entryId].DateEnd.getTime() !== this.userAvail[entryId].DateEnd.getTime(),
-             bStart = this._beforeEditingCache[entryId].DateStart.getTime() !== this.userAvail[entryId].DateStart.getTime(),
-             bType = this._beforeEditingCache[entryId].TypeId !== this.userAvail[entryId].TypeId,
-             bStatus = this._beforeEditingCache[entryId].StatusId !== this.userAvail[entryId].StatusId;
+             bEnd = beforeEdit.DateEnd.getTime() !== userEntryId.DateEnd.getTime(),
+             bStart = beforeEdit.DateStart.getTime() !== userEntryId.DateStart.getTime(),
+             bType = beforeEdit.TypeId !== userEntryId.TypeId,
+             bStatus = beforeEdit.StatusId !== userEntryId.StatusId;
 
 // if data was changed set boolean variable to true
-        if(bEnd || bStart || bType || bStatus) {
-            bChanged = true;
-        } else {
-            bChanged = false;
-        }
+       bChanged = bEnd || bStart || bType || bStatus ? true : false
+
 // check if data are not empty and was changed and set button to disabled or not    
 // do not allow to filter when data are during changing 
          if( bChanged &&
-             this.userAvail[entryId].TypeName &&
-             this.userAvail[entryId].DateStart &&
-             this.userAvail[entryId].DateEnd &&
-             this.userAvail[entryId].StatusId) {
-                 document.getElementsByClassName("eduButtonsAvail")[index].children[1].disabled = false;
-                 this.userAvail[entryId].Filter = true;
+             userEntryId.TypeName &&
+             userEntryId.DateStart &&
+             userEntryId.DateEnd &&
+             userEntryId.StatusId) {
+                document.getElementsByClassName("eduButtonsAvail")[index].children[1].disabled = false;
             }    else {
-                 document.getElementsByClassName("eduButtonsAvail")[index].children[1].disabled = true;
-                 this.userAvail[entryId].Filter = true;
+                document.getElementsByClassName("eduButtonsAvail")[index].children[1].disabled = true;
             }
+
+            userEntryId.Filter = true;
         },
         save(index, entryId) {
              this.userAvail[entryId].Filter = false;

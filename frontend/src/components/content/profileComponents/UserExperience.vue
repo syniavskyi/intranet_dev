@@ -63,7 +63,7 @@
             </div>
           </div>
           <div class="prof-row-btns expButtons">
-            <button class="prof-row-btn" v-if="editMode" @click="save(index)">&#x2714;</button>
+            <button class="prof-row-btn" :disabled="true" v-if="editMode" @click="save(index)">&#x2714;</button>
             <button class="prof-row-dbtn" v-if="editMode" @click="remove(index)">X</button>
           </div>
         </div>
@@ -124,21 +124,34 @@ export default {
     },
     // validate fields and set button to disabled or not
     checkFields(index) {
+        let bChanged, bEmployer, bWorkPos, bDateStart, sProStart, sEditStart 
+            beforeEdit = this._beforeEditingCache[index],
+            userExp = this.userExperience[index];
+
+        bEmployer = beforeEdit.Employer !== userExp.Employer;
+        bWorkPos = beforeEdit.WorkPos !== userExp.WorkPos;
+
+        let a = beforeEdit.DateStart;
+          a = new Date(a.getFullYear(), a.getMonth(), a.getDay())
+        let b = userExp.DateStart;
+          b = new Date(b.getFullYear(), b.getMonth(), b.getDay())
+       
+       bDateStart = a.getTime() !== b.getTime();
+
+        bChanged = bEmployer || bWorkPos || bDateStart ? true : false;
+
       if (this.userExperience.length > 0) {
         if (
-          this.userExperience[index].Employer &&
-          this.userExperience[index].WorkPos &&
-          this.userExperience[index].DateStart &&
-          (this.userExperience[index].DateEnd !== null ||
-            this.userExperience[index].isCurrent)
+          bChanged &&
+          userExp.Employer &&
+          userExp.WorkPos &&
+          userExp.DateStart &&
+          (userExp.DateEnd !== null ||
+            userExp.isCurrent)
         ) {
-          document.getElementsByClassName("expButtons")[
-            index
-          ].children[0].disabled = false;
+          document.getElementsByClassName("expButtons")[index].children[0].disabled = false;
         } else {
-          document.getElementsByClassName("expButtons")[
-            index
-          ].children[0].disabled = true;
+          document.getElementsByClassName("expButtons")[index].children[0].disabled = true;
         }
       }
     },
