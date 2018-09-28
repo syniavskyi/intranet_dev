@@ -33,8 +33,8 @@ const actions = {
     commit
   }, data) {
     var bState = false;
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].Status) {
+    for (let newData of data) {
+      if (newData.Status) {
         bState = false;
       } else {
         return commit('SET_BUTTON_STATE_NEW', true)
@@ -47,8 +47,8 @@ const actions = {
     commit
   }, data) {
     var bState = false;
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].Status) {
+    for (let newData of data) {
+      if (newData.Status) {
         bState = false;
       } else {
         return commit('SET_BUTTON_STATE_INFO', true)
