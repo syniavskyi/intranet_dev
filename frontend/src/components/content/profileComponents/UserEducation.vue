@@ -154,25 +154,37 @@ export default {
     },
     // validate fields and set button to disabled or not
     checkFields(index) {
-      if (this.userEducation.length > 0) {
-        if (
-          this.userEducation[index].FieldOfStudy &&
-          this.userEducation[index].University &&
-          this.userEducation[index].StudyType &&
-          this.userEducation[index].AcademicTitle &&
-          this.userEducation[index].DateStart &&
-          (this.userEducation[index].DateEnd !== null ||
-            this.userEducation[index].IsCurrent)
-        ) {
-          document.getElementsByClassName("eduButtons")[
-            index
-          ].children[0].disabled = false;
-        } else {
-          document.getElementsByClassName("eduButtons")[
-            index
-          ].children[0].disabled = true;
-        }
-      }
+      let bChanged, bFieldOfStudy, bUniversity, bStudyType, bAcademicTitle, bDateStart,
+      beforeEdit = this._beforeEditingCache[index],
+      userEdu = this.userEducation[index]
+
+    bFieldOfStudy = beforeEdit.FieldOfStudy !== userEdu.FieldOfStudy;
+    bUniversity = beforeEdit.University !== userEdu.University;
+    bStudyType = beforeEdit.StudyType !== userEdu.StudyType;
+    bAcademicTitle = beforeEdit.AcademicTitle !== userEdu.AcademicTitle;
+    let a = beforeEdit.DateStart;
+          a = new Date(a.getFullYear(), a.getMonth(), a.getDay())
+      let b = userEdu.DateStart;
+          b = new Date(b.getFullYear(), b.getMonth(), b.getDay())
+    bDateStart = a.getTime() !== b.getTime();
+
+    bChanged = bFieldOfStudy || bUniversity || bStudyType || bAcademicTitle || bDateStart ? true : false ;
+
+    if (this.userEducation.length > 0) {
+            if (
+              userEdu.FieldOfStudy &&
+              userEdu.University &&
+              userEdu.StudyType &&
+              userEdu.AcademicTitle &&
+              userEdu.DateStart &&
+              bChanged &&
+              (userEdu.DateEnd !== null || userEdu.IsCurrent)
+            ) {
+              document.getElementsByClassName("eduButtons")[index].children[0].disabled = false;
+            }  else {
+              document.getElementsByClassName("eduButtons")[index].children[0].disabled = true;
+            }
+}
     },
     remove(index) {
       this._beforeEditingCache.splice(index, 1);

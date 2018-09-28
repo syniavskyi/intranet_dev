@@ -183,23 +183,54 @@ export default {
       this._beforeEditingProjects = utils.createClone(this.userProjects);
     },
     checkFields(index) {
+        let bChanged, bProjectName, bContractor, bIndustries, bModules, bDateStart, bDesc,
+        beforeEdit = this._beforeEditingProjects[index],
+        userPro = this.userProjects[index];
+        bProjectName = beforeEdit.ProjectName !== userPro.ProjectName;
+        bContractor = beforeEdit.Contractor !== userPro.Contractor;
+        if(beforeEdit.Industries.length !== userPro.Industries.length){
+           bIndustries = true;
+        } else {      
+            for(const item of beforeEdit.Industries) {
+              if(!userPro.Industries.find(o => o.id === item.id)) {
+                bIndustries = true;
+              }  
+            }
+        }
+        if(beforeEdit.Modules.length !== userPro.Modules.length) {
+          bModules = true;
+        } else {
+            for(const item of beforeEdit.Modules) {
+              if(!userPro.Modules.find(o => o.id === item.id)) {
+                bModules = true;
+              }  
+            }
+        }
+
+      let a = beforeEdit.DateStart;
+          a = new Date(a.getFullYear(), a.getMonth(), a.getDay())
+      let b = userPro.DateStart;
+          b = new Date(b.getFullYear(), b.getMonth(), b.getDay())
+
+        bDateStart = a.getTime() !== b.getTime();
+        bDesc = beforeEdit.Description !== userPro.Description;
+
+        bChanged = bProjectName || bContractor || bIndustries || bModules || bDateStart || bDesc ? true : false;
+
       if (
-        this.userProjects[index].ProjectName &&
-        this.userProjects[index].ContractorName &&
-        this.userProjects[index].Industries.length !== 0 &&
-        this.userProjects[index].Modules.length !== 0 &&
-        this.userProjects[index].DateStart &&
-        this.userProjects[index].Description &&
-        (this.userProjects[index].DateEnd !== null ||
-          this.userProjects[index].IsCurrent)
+        bChanged &&
+        userPro.ProjectName &&
+        userPro.ContractorName &&
+        userPro.Industries.length !== 0 &&
+        userPro.Modules.length !== 0 &&
+        userPro.DateStart &&
+        userPro.Description &&
+        (userPro.DateEnd !== null ||
+          userPro.IsCurrent)
       ) {
-        document.getElementsByClassName("projSaveButton")[
-          index
-        ].disabled = false;
+        document.getElementsByClassName("projSaveButton")[index].disabled = false;
       } else {
-        document.getElementsByClassName("projSaveButton")[
-          index
-        ].disabled = true;
+        document.getElementsByClassName("projSaveButton")[index].disabled = true;
       }
     },
     // saveUserProject(index) {
@@ -298,7 +329,7 @@ export default {
         this.invalidDatePos =
           formatStartDate > formatEndDate ? index + 1 : null;
       }
-      this.checkFields();
+      this.checkFields(index);
     },
     setProCheckbox() {
       let projects = this.$store.getters.getUserProjectsList;
