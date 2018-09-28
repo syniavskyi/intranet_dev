@@ -157,20 +157,16 @@ export default {
             userAvail: 'getUserAvail'
         }),
         filteredUsers() {
-            // const usersList = this.usersList
-            // let filteredUsers = []
-
-            // for (let i = 0; i < usersList.length; i++) {
-            //     // usersList[i].SectionName === this.selectedBranch.toString() &&
-            //     if (usersList[i].DepartmentId === this.selectedDepartment && usersList[i].BranchId === this.selectedBranch) {
-            //         filteredUsers.push(usersList[i])
-            //     }
-            // }
-            // return filteredUsers
             let aFilteredUsers = this.usersList,
-                sTeam = this.userData.DepartmentName
+                sTeam = this.userData.DepartmentName,
+                idTeam = this.userData.DepartmentId,
+                idBranch = this.userData.BranchId,
+                selectedDep = this.selectedDepartment,
+                selectedBranch = this.selectedBranch
 
-              aFilteredUsers = aFilteredUsers.filter(function(oData){ return oData.DepartmentName === sTeam });
+              aFilteredUsers = aFilteredUsers.filter(function(oData){ 
+                  return oData.DepartmentName === sTeam && idTeam === selectedDep && idBranch === selectedBranch;
+                  });
               return aFilteredUsers
         },
         leavesAttr() {
