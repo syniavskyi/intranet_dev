@@ -1,167 +1,164 @@
 <template>
 <div id="content">
-   <div class="Section1" >
-     <!-- header with name and position-->
-
-   <button @click="generate" v-if="showGenerateBtn" class="cv-modal-btn-bclear">Zatwierdź i generuj</button>
-   <!-- <div>
-   <button @click="generate" v-if="showGenerateBtn" class="profile-edit-experience-e">Zatwierdź i generuj</button>
-   <div>
-       <h1 style="text-align:right"  v-show="cvElements.name"> {{ userData.firstName }} {{ userData.lastName }} </h1>
-       <h3 style="text-align:right"> {{ userData.position }} </h3>
-   </div> -->
-   <table id="main-table" width="100%">
-     <tr>
-       <td>
-         <tr class="tr-header" align="right">
-           <h1  v-if="cvElements.name" style="font-family:'Arial'">{{userInfo.Fullname}}</h1>
-           <h2 style="font-family: 'Arial'">{{cvElements.position}}</h2>
-         </tr>
-       <!-- personal data -->
-             <h3 style="font-weight:bold; margin-bottom:10px; margin-top:10px; padding-bottom:5px; border-bottom:2px solid #E79600; text-transform:uppercase; font-family:'Arial';">Dane osobowe</h3>
-             <!-- <v:line  from="0,0" to="800,0" strokeweight="2pt"  xmlns:v="urn:schemas-microsoft-com:vml" strokecolor="blue"/> -->
-             <table width="100%">
-               <tr>
-                 <td>
-                   <table width="85%">
-                     <tr>
-                        <td width="65%" style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.nationality") }}</p></td>
-                        <td style="font-family: 'Arial'"><p style="mso-cellspacing:0; margin:0; padding:0;">Polska</p></td>
-                      </tr>
-                      <tr v-if="cvElements.date">
-                        <td style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.dateOfBirth") }}</p></td>
-                        <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ formatDate(userInfo.DateBirth)}}</p></td>
-                      </tr>
-                      <tr  v-if="cvElements.phone">
-                        <td style="font-weight: bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.phone") }}</p></td>
-                        <!-- <td>{{userData.phone}}</td> -->
-                        <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{userInfo.Telephone}}</p></td>
-                      </tr>
-                      <tr  v-if="cvElements.address">
-                        <td style="font-weight: bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.email") }}</p></td>
-                        <!-- <td>{{userData.email}}</td> -->
-                        <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{userInfo.Email}}</p></td>
-                      </tr>
-                   </table>
-                   <table width="85%" >
-                        <tr>
-                          <td style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.knowledgeOfForeignLanguages") }}</p></td>
-                          <td v-for="langu in userLangs" :key="langu.id" style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatLangName(langu.Language)}} - {{formatLangLevel(langu.LangLevel)}}</p></td>
-                        </tr>
-
-                     <!-- <tr>
-                       <td></td>
-                       <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Angielski - C1</p></td>
-                     </tr>
-                     <tr>
-                       <td></td>
-                       <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">Niemiecki - A1</p></td>
-                    <td>Niemiecki - A1</td>
-                     </tr> -->
-                   </table>
-                 </td>
-                 <td>
-                   <table width="15%">
-                     <tr>
-                       <td>
-                         <img  v-if="cvElements.photo" id="cv-img" class="img-user-class" src="../../assets/images/hd.jpg"  width="150px">
-                       </td>
-                     </tr>
-                   </table>
-                 </td>
-               </tr>
-               <tr>
-                 <td><p style="mso-cellspacing:0; margin:0; margin-bottom: 16px;"></p></td>
-               </tr>
-             </table>
-
+    <div class="Section1" >
+    <!-- header with name and position-->
+    <button @click="generate" v-if="showGenerateBtn" class="cv-modal-btn-bclear">Zatwierdź i generuj</button>
+      <table id="main-table" width="100%">
+        <tr>
+          <td>
+            <tr class="tr-header" align="right">
+              <h1  v-if="cvElements.name" style="font-family:'Arial'">{{userInfo.Fullname}}</h1>
+              <h2 style="font-family: 'Arial'">{{cvElements.position}}</h2>
+            </tr>
+        <!-- personal data -->
+          <h3 style="font-weight:bold; margin-bottom:10px; margin-top:10px; padding-bottom:5px; border-bottom:2px solid #E79600; text-transform:uppercase; font-family:'Arial';">Dane osobowe</h3>
+          <!-- <v:line  from="0,0" to="800,0" strokeweight="2pt"  xmlns:v="urn:schemas-microsoft-com:vml" strokecolor="blue"/> -->
+            <table width="100%">
+              <tr>
+                <td>
+                  <table width="500px">
+                    <tr>
+                      <!-- width="180px" -->
+                      <td v-if="cvElements.photo" width="45%" style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.nationality") }}</p></td>
+                      <td v-if="!cvElements.photo" width="45%" style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.nationality") }}</p></td>
+                      <td style="font-family: 'Arial'"><p style="mso-cellspacing:0; margin:0; padding:0;">Polska</p></td>
+                    </tr>
+                    <tr v-if="cvElements.date">
+                      <td  style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.dateOfBirth") }}</p></td>
+                      <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ formatDate(userInfo.DateBirth)}}</p></td>
+                    </tr>
+                    <tr v-if="cvElements.phone">
+                      <td  style="font-weight: bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.phone") }}</p></td>
+                      <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{userInfo.Telephone}}</p></td>
+                    </tr>
+                    <tr v-if="cvElements.address">
+                      <td  style="font-weight: bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.email") }}</p></td>
+                      <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{userInfo.Email}}</p></td>
+                    </tr>
+                    <tr>
+                      <!-- width="180px" -->
+                      <td valign="top" style="font-weight:bold; font-family:'Arial';">{{ $t("label.knowledgeOfForeignLanguages") }}
+                        <!-- <p style="mso-text-control: 'wrap'; mso-cellspacing:0; width: 80%; margin:0; padding:0;"></p> -->
+                        </td>
+                      <td style="font-family:'Arial';"><p v-for="langu in userLangs" :key="langu.id" style="mso-cellspacing:0; margin:0; padding:0;">{{formatLangName(langu.LanguageId)}} - {{formatLangLevel(langu.LangLevel)}}</p></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table v-if="cvElements.photo" width="15%">
+                    <tr>
+                      <td>
+                        <!-- v-if="cvElements.photo" -->
+                        <img  id="cv-img" class="img-user-class" src="../../assets/images/hd.jpg"  width="150px">
+                      </td>
+                    </tr>
+                  </table>
+                  <table v-if="!cvElements.photo" width="15%">
+                    <tr>
+                      <td>
+                        <!-- v-if="cvElements.photo" -->
+                        <!-- <img  id="cv-img" class="img-user-class" src="../../assets/images/hd.jpg"  width="150px"> -->
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td><p style="mso-cellspacing:0; margin:0; margin-bottom: 16px;"></p></td>
+              </tr>
+            </table>
          <!-- education -->
-           <h3 style="mso-cellspacing:0pt; margin-bottom:10px; margin-top:10px; padding-bottom:5px; font-family:'Arial'; font-weight:bold; border-bottom:2px solid #E79600; text-transform:uppercase; ">{{ $t("header.education") }}</h3>
-           <table align="center" cellspacing="0"  id="cv-education" width="98%" v-for="(education) in userEducation" :key="education.id">
-             <!-- style="border-spacing: 0;" cellpadding="0" -->
-             <tr>
-               <td style="font-weight:bold; font-family:'Arial';" width="45%"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatSchoolDsec(education.University)}}</p></td>
-               <!-- {{education.University}} -->
-               <td style="font-family:'Arial';" valign="top" ><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatFieldOfStudyDesc(education.FieldOfStudy)}}</p></td>
-               <!-- <td style="font-family: 'Arial'; background: #ccc; " width="20%">{{education.AcademicTitle}}</td> -->
-             </tr>
-             <tr>
-               <td style="font-family:'Arial';" v-if="!education.IsCurrent"><p style="margin:0; padding:0; margin-bottom:10px;" v-if="!education.IsCurrent">{{formatDate(education.DateStart)}} - {{formatDate(education.DateEnd)}}</p></td>
-               <td style="font-family:'Arial';" v-if="education.IsCurrent"><p style="margin:0; padding:0; margin-bottom:10px;" >{{formatDate(education.DateStart)}} - {{setIfCurrentDate(education.IsCurrent)}}</p></td>
-               <!-- <td style="font-style: italic; font-size: 0.95rem; font-family: 'Arial'">{{education.StudyType}}</td> -->
-             </tr>
-             <tr>
-               <!-- <td><p style="mso-cellspacing:0; margin:0; padding:0;">&nbsp;</p></td> -->
-             </tr>
-           </table>
-
+            <h3 style="mso-cellspacing:0pt; margin-bottom:10px; margin-top:10px; padding-bottom:5px; font-family:'Arial'; font-weight:bold; border-bottom:2px solid #E79600; text-transform:uppercase; ">{{ $t("header.education") }}</h3>
+            <table align="center" cellspacing="0"  id="cv-education" width="99%" v-for="(education) in userEducation" :key="education.id">
+              <tr>
+                <th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>
+              </tr>
+              <tr>
+                <td colspan="2" style="font-weight:bold; font-family:'Arial';" width="41%"><p style="width: 70%; mso-cellspacing:0; margin:0;margin-bottom:3px; padding:0;">{{formatSchoolDsec(education.University)}}</p></td>
+                <td colspan="10" style="font-family:'Arial';" valign="top" ><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatFieldOfStudyDesc(education.FieldOfStudy)}}</p></td>
+              </tr>
+              <tr >
+                <td style="font-family:'Arial';" v-if="!education.IsCurrent"><p style="margin:0; padding:0; margin-bottom:10px;" v-if="!education.IsCurrent">{{formatDate(education.DateStart)}} - {{formatDate(education.DateEnd)}}</p></td>
+                <td style="font-family:'Arial';" v-if="education.IsCurrent"><p style="margin:0; padding:0; margin-bottom:10px;" >{{formatDate(education.DateStart)}} - {{setIfCurrentDate(education.IsCurrent)}}</p></td>
+              </tr>
+              <tr>
+                <td></td>
+                <!-- <td><p style="mso-cellspacing:0; margin:0; padding:0;">&nbsp;</p></td> -->
+              </tr>
+            </table>
        <!-- experience -->
-           <h3 style="font-weight:bold; margin-bottom:10px; margin-top:10px; padding-bottom:5px; border-bottom:2px solid #E79600; text-transform:uppercase; font-family:'Arial';">{{ $t("header.experience") }}</h3>
-           <table align="center" class="border-collapse: collapse;"  width="98%" v-for="(experience) in userExperience" :key='experience.id'>
-             <tr>
-               <td style="padding:0; font-family:'Arial'; font-weight:bold;" width="45%"><p style="mso-cellspacing:0; margin:0; padding:0;"> {{experience.Employer}}</p></td>
-               <td style="padding:0; font-family:'Arial'; font-size:0.9rem;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatPositionName(experience.WorkPos)}}</p></td>
-             </tr>
-             <tr>
+            <h3 style="font-weight:bold; margin-bottom:10px; margin-top:10px; padding-bottom:5px; border-bottom:2px solid #E79600; text-transform:uppercase; font-family:'Arial';">{{ $t("header.experience") }}</h3>
+            <table align="center" class="border-collapse: collapse;"  width="99%" v-for="(experience) in userExperience" :key='experience.id'>
+              <tr>
+                <td style="padding:0; font-family:'Arial'; font-weight:bold;" width="41%"><p style="mso-cellspacing:0; margin:0; padding:0;"> {{experience.Employer}}</p></td>
+                <td style="padding:0; font-family:'Arial'; font-size:0.9rem;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{formatPositionName(experience.WorkPos)}}</p></td>
+              </tr>
+              <tr>
                 <td style="border-spacing:0; font-family:'Arial';" v-if="!experience.IsCurrent"><p style="mso-cellspacing:0; margin:0; padding:0; margin-bottom:10px;" >{{formatDate(experience.DateStart)}} - {{formatDate(experience.DateEnd)}}</p></td>
                 <td style="font-family:'Arial';" v-if="experience.IsCurrent"><p style="margin:0; padding:0; margin-bottom:10px;" >{{formatDate(experience.DateStart)}} - {{setIfCurrentDate(experience.IsCurrent)}}</p></td>
-             </tr>
-             <tr>
-               <!-- <td><p style="mso-cellspacing:0; margin:0; padding:0;">&nbsp;</p></td> -->
-             </tr>
-           </table>
-
-         <!-- projects -->
-           <h3 style="font-weight:bold; margin-bottom:10px; margin-top:10px; padding-bottom:5px; border-bottom: 2px solid #E79600; text-transform:uppercase; font-family:'Arial';">{{ $t("header.projects") }}</h3>
-           <table align="center" width="98%" v-for="(project) in userProjects" :key="project.id">
-             <tr>
-               <!-- <td width="45%" style="font-weight:bold; font-family:'Arial';" v-if="!cvElements.contractor"><p style="mso-cellspacing:0; margin:0; padding:0;">Kontrahent nie</p> <p>Branża kontrahenta</p></td> -->
-               <td style="vertical-align: top; font-weight:bold; font-family:'Arial';" v-if="cvElements.contractor">{{project.ContractorName}} </td>
-               <!-- <p v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p> -->
-               <!-- {{ $t("label.industry") }}  -->
-               <td style="vertical-align: top; font-weight:bold; font-family:'Arial';"> <p style="margin-top:0;" v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p></td>
-               <!-- {{ $t("label.phone") }} -->
-               <td style="vertical-align: top; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;"><strong class v-for="sapModule in project.Modules" :key="sapModule.id">{{ sapModule.id }} </strong></p></td>
-             </tr>
-             <tr>
-               <td style="font-family:'Arial';" v-if="!project.IsCurrent"><p style="mso-cellspacing:0; margin:0; padding:0;" >{{formatDate(project.DateStart)}} - {{formatDate(project.DateEnd)}}</p></td>
-               <td style="font-family:'Arial';" v-if="project.IsCurrent"><p style="margin:0; padding:0; margin-bottom:10px;" >{{formatDate(project.DateStart)}} - {{setIfCurrentDate(project.IsCurrent)}}</p></td>
-               <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0; margin-bottom: 10px;">{{project.Description}}</p></td>
-             </tr>
-             <tr>
-               <!-- <td><p style="mso-cellspacing:0; margin:0; padding:0;">&nbsp;</p></td> -->
-             </tr>
-           </table>
-
-           <!-- SAP experience -->
-           <h3 style="font-weight: bold; margin-bottom: 10px; margin-top:10px; padding-bottom:5px; border-bottom:2px solid #E79600; text-transform: uppercase; font-family: 'Arial';">{{ $t("label.sapModulesExp") }}</h3>
-           <table>
-             <tr>
-               <td width="46%" style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.sapModules") }}</p></td>
-               <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';" v-for="sapModule in userSkills.SapModules" :key="sapModule.id">{{sapModule}}</p></td>
-             </tr>
-             <tr>
-               <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.programmingLanguages") }}</p></td>
-               <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';"  v-for="programLang in userSkills.ProgramLang" :key="programLang.id">{{programLang}}</p></td>
-             </tr>
-             <tr>
-               <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.technologies") }}</p></td>
-               <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';" v-for="technology in userSkills.Technologies" :key="technology.id">{{technology}}</p></td>
-             </tr>
-             <tr>
-               <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.extensions") }}</p></td>
-               <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';" v-for="extension in userSkills.Extensions" :key="extension.id">{{extension}}</p></td>
-             </tr>
-             <tr>
-               <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.additionalSkills") }}</p></td>
-               <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';" v-for="additionalSkill in userSkills.AdiitionalSkills" :key="additionalSkill.id">{{additionalSkill}}</p></td>
-             </tr>
-           </table>
-       </td>
-     </tr>
-   </table>
-   </div>
- </div>
+              </tr>
+              <tr>
+                <!-- <td><p style="mso-cellspacing:0; margin:0; padding:0;">&nbsp;</p></td> -->
+              </tr>
+            </table>
+          <!-- projects -->
+            <h3 style="font-weight:bold; margin-bottom:10px; margin-top:10px; padding-bottom:5px; border-bottom: 2px solid #E79600; text-transform:uppercase; font-family:'Arial';">{{ $t("header.projects") }}</h3>
+            <table align="center" width="99%" v-for="(project) in userProjects" :key="project.id">
+              <tr>
+                <td style="width:30%; vertical-align: top;  font-family:'Arial';" v-if="cvElements.contractor">
+                  <p style="padding:0; margin:0;margin-bottom: 3px; font-weight:bold;">{{project.ContractorName}}</p>
+                  <p style="padding:0; margin:0;" v-if="!project.IsCurrent">{{formatDate(project.DateStart)}} - {{formatDate(project.DateEnd)}}</p>
+                  <p style="padding:0; margin:0;" v-if="project.IsCurrent">{{formatDate(project.DateStart)}} - {{setIfCurrentDate(project.IsCurrent)}}</p>
+                </td>
+                <td style="width:55%; vertical-align: top; font-family:'Arial';">
+                  <p style="margin:0; padding:0; margin-bottom:3px; width:90%; font-weight:bold;" v-for="industry in project.Industries" :key="industry.id">{{industry.name}}</p>
+                  <p style="mso-cellspacing:0; margin:0; padding:0; margin-bottom: 10px;">{{project.Description}}</p>
+                </td>
+                <td style="width:10%; max-width:10%; vertical-align: top; font-family:'Arial';">
+                  <p style="mso-cellspacing:0; margin:0; padding:0;" v-for="sapModule in project.Modules" :key="sapModule.id">
+                    {{ sapModule.id }}
+                    <!-- <strong >&nbsp;</strong> -->
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <!-- <td><p style="mso-cellspacing:0; margin:0; padding:0;">&nbsp;</p></td> -->
+              </tr>
+            </table>
+            <!-- SAP experience -->
+            <h3 style="font-weight: bold; margin-bottom: 10px; margin-top:10px; padding-bottom:5px; border-bottom:2px solid #E79600; text-transform: uppercase; font-family: 'Arial';">{{ $t("label.sapModulesExp") }}</h3>
+            <table>
+              <tr>
+                <td width="50%" style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.sapModules") }}</p></td>
+                <!-- <td style="mso-cellspacing:0; margin:0; padding:0; white-space: normal;"><p style="float: left; letter-spacing: -1px; mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';white-space: normal;" v-for="sapModule in userSkills.SapModules" :key="sapModule.id">{{sapModule}}</p></td> -->
+                <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';">{{fnLoop(userSkills.SapModules)}}</p></td>
+              </tr>
+              <tr>
+                <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.programmingLanguages") }}</p></td>
+                <!-- <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';"  v-for="programLang in userSkills.ProgramLang" :key="programLang.id">{{programLang}}</p></td> -->
+                <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';">{{fnLoop(userSkills.ProgramLang)}}</p></td>
+              </tr>
+              <tr>
+                <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.technologies") }}</p></td>
+                <!-- <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';" v-for="technology in userSkills.Technologies" :key="technology.id">{{technology}}</p></td> -->
+                <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';">{{fnLoop(userSkills.Technologies)}}</p></td>
+              </tr>
+              <tr>
+                <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.extensions") }}</p></td>
+                <!-- <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';" v-for="extension in userSkills.Extensions" :key="extension.id">{{extension}}</p></td> -->
+                <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';">{{fnLoop(userSkills.Extensions)}}</p></td>
+              </tr>
+              <tr>
+                <td style="font-family: 'Arial'; font-weight: bold;"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.additionalSkills") }}</p></td>
+                <!-- <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';" v-for="additionalSkill in userSkills.AdiitionalSkills" :key="additionalSkill.id">{{additionalSkill}}</p></td> -->
+                <td><p style="mso-cellspacing:0; margin:0; padding:0; font-family: 'Arial';">{{fnLoop(userSkills.AdiitionalSkills)}}</p></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -179,7 +176,7 @@ export default {
     };
   },
   beforeCreate() {
- const retrievedObject = JSON.parse(localStorage.getItem("Object"));
+    const retrievedObject = JSON.parse(localStorage.getItem("Object"));
     this.$store.commit("SET_CV_ELEMENTS", retrievedObject);
       let userData = {
       user: 'UIO',
@@ -192,9 +189,9 @@ export default {
      this.$i18n.locale  = retrievedObject.language.toLowerCase();
   },
   methods: {
-     ...mapActions([
+    ...mapActions([
        "getIndustries"
-     ]),
+    ]),
     generate() {
       if (this.cvElements.format == "PDF") {
         this.generatePdf();
@@ -202,20 +199,29 @@ export default {
         this.generateDocx();
       }
     },
+    fnLoop(skills) {
+      let skillStr = "", i;
+      if (skills) {
+        for (i of skills) {
+          skillStr += i + " "
+        }
+        return skillStr
+      } else return
+    },
     generatePdf() {
       // not working
-       const pdf = new jsPDF('p', 'pt', 'letter'),
-             source = document.getElementById("content")[0];
+      const pdf = new jsPDF('p', 'pt', 'letter'),
+            source = document.getElementById("content")[0];
 
-        pdf.addHTML(source).then(res => {
-            pdf.save('Test.pdf');
-        });
+      pdf.addHTML(source).then(res => {
+          pdf.save('Test.pdf');
+      });
         // pdf.fromHTML(source)
         // pdf.save('Test.pdf')
     },
     generateDocx() {
       this.showGenerateBtn = false;
-      this.convertImagesToBase64();
+      if (this.cvElements.photo) {this.convertImagesToBase64();}
       const preHtml = "<html xmlns:v='urn:schemas-microsoft-com:vml' xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns:m='http://schemas.microsoft.com/office/2004/12/omml' xmlns='http://www.w3.org/TR/REC-html40'> <head><meta http-equiv=Content-Type content='text/html; charset=utf-8'></head> <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml><![endif]--><body>",
         postHtml = "</body></html>";
       const content = preHtml + document.getElementById("content").innerHTML + postHtml;
@@ -288,7 +294,7 @@ export default {
     formatLangName(Lang) {
        if(this.fullLanguageList.length > 0) {
       let langNames = [];
-       langNames = this.fullLanguageList.find(o => o.Language === Lang);
+       langNames = this.fullLanguageList.find(o => o.LanguageId === Lang);
        return langNames.LangName;
        }
     }, 
