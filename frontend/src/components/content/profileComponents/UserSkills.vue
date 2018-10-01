@@ -194,7 +194,7 @@ export default {
          this.bDisabled = true;
        }
     },
-    checkModules(skillKey) {
+    checkSingleSkill(skillKey) {
       let beforeEdit = this._beforeEditingCacheSkills,
           userSkills = this.userSkills;
 
@@ -233,11 +233,11 @@ export default {
     addModule(value) {
       const moduleId = value.target.value;
       this.$store.dispatch("addModuleForSkills", moduleId);
-      this.checkModules('SapModules');
+      this.checkSingleSkill('SapModules');
     },
     removeModule(sapModule) {
       this.removeModuleForSkills(sapModule);
-      this.checkModules('SapModules');
+      this.checkSingleSkill('SapModules');
     },
     addProgramLang() {
       if (this.newProgramLang) {
@@ -248,7 +248,7 @@ export default {
         this.$store.dispatch("addSkill", data);
         this.newProgramLang = null;
       }
-      this.checkModules('ProgramLang');
+      this.checkSingleSkill('ProgramLang');
     },
     removeProgramLang(lang) {
       const data = {
@@ -256,7 +256,7 @@ export default {
         value: lang
       };
       this.$store.dispatch("removeSkill", data);
-      this.checkModules('ProgramLang');
+      this.checkSingleSkill('ProgramLang');
     },
     addTechnology() {
       if (this.newTechnology) {
@@ -267,7 +267,7 @@ export default {
         this.$store.dispatch("addSkill", data);
         this.newTechnology = null;
       }
-      this.checkModules('Technologies');
+      this.checkSingleSkill('Technologies');
     },
     removeTechnology(tech) {
       const data = {
@@ -275,7 +275,7 @@ export default {
         value: tech
       };
       this.$store.dispatch("removeSkill", data);
-      this.checkModules('Technologies');
+      this.checkSingleSkill('Technologies');
     },
     addExtension() {
       if (this.newExtension) {
@@ -286,7 +286,7 @@ export default {
         this.$store.dispatch("addSkill", data);
         this.newExtension = null;
       }
-      this.checkModules('Extensions');
+      this.checkSingleSkill('Extensions');
     },
     removeExtension(ext) {
       const data = {
@@ -294,7 +294,7 @@ export default {
         value: ext
       };
       this.$store.dispatch("removeSkill", data);
-      this.checkModules('Extensions');
+      this.checkSingleSkill('Extensions');
     },
     addAdditional() {
       if (this.newAdditional) {
@@ -305,7 +305,7 @@ export default {
         this.$store.dispatch("addSkill", data);
         this.newAdditional = null;
       }
-      this.checkModules('AdditionalSkills');
+      this.checkSingleSkill('AdditionalSkills');
     },
     removeAdditional(add) {
       const data = {
@@ -313,7 +313,7 @@ export default {
         value: add
       };
       this.$store.dispatch("removeSkill", data);
-      this.checkModules('AdditionalSkills');
+      this.checkSingleSkill('AdditionalSkills');
     }
   }
 };
