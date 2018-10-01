@@ -6,7 +6,7 @@
         <div class="profile-table-buttons">
           <button class="profile-edit-btn" v-if="!editMode" @mouseover="onHover" @mouseout="onHoverOut" @click="edit">{{ $t("button.edit") }}</button>
           <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-txt">{{ $t("button.cancel") }}</span><span class="prof-btn-icon">&plus;</span></button>
-          <button class="profile-edit-btn-e" v-if="editMode" @click="save()"><span class="prof-btn-txt">{{ $t("button.save") }}</span><span class="prof-btn-icon">&#10004;</span></button>
+          <button class="profile-edit-btn-e" :disabled="bDisabled" v-if="editMode" @click="save()"><span class="prof-btn-txt">{{ $t("button.save") }}</span><span class="prof-btn-icon">&#10004;</span></button>
         </div>
       </div>
       <div class="tile-underscore"></div>
@@ -21,7 +21,7 @@
             <button class="prof-skills-btn" @click="addLanguageSkillsRow" v-if="editMode">+</button>
             <div class="prof-div-skills" v-for="(lang, index) in userLangs" :id="index" :key="index">
               <div class="prof-div-slang">
-                <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.LanguageId" @change="checkFields">
+                <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.LanguageId" @change="checkFieldsLang(index)">
                   <option v-for="fullLang in fullLanguageList" :value="fullLang.LanguageId" :key="fullLang.LanguageId">{{fullLang.LangName}}</option>
                 </select>
                 <select v-if="!editMode" class="selectProfileSkills selectDisabled" v-model="lang.LanguageId">
@@ -30,7 +30,7 @@
                 <label class="label-select-profile">{{ $t("label.language") }}</label>
               </div>
               <div class="prof-div-slang">
-                <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.LangLevel" @change="checkFields">
+                <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.LangLevel" @change="checkFieldsLang(index)">
                   <option v-for="level in langLevels" :value="level.Key" :key="level.Key">{{level.Value}}</option>
                 </select>
                 <select v-if="!editMode" class="selectProfileSkills selectDisabled" v-model="lang.LangLevel">
@@ -39,7 +39,7 @@
                 <label class="label-select-profile">{{ $t("label.level") }}</label>
               </div>
               <div class="prof-skills-btns">
-                <button class="prof-skills-delete" @click="removeLanguageSkillsRow(index)" v-if="editMode">Usuń</button>
+                <button class="prof-skills-delete" @click="removeLanguageSkillsRow(index)" v-if="editMode">{{ $t("button.delete") }}</button>
                 <button class="prof-skills-save saveLangBtn" :disabled="true" @click="saveLang" v-if="editMode">{{ $t("button.save") }}</button>
               </div>
             </div>
@@ -52,7 +52,7 @@
             </select>
             <label :class="editMode ? 'label-select-profile' : 'label-skills'">{{ $t("label.sapModulesExp") }}</label>
             <div class="prof-skills-elems">
-              <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="sapModule in userSkills.SapModules" :key="sapModule"  @click="removeModuleForSkills(sapModule)">{{sapModule}}</button>
+              <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="sapModule in userSkills.SapModules" :key="sapModule"  @click="removeModule(sapModule)">{{sapModule}}</button>
             </div>
           </div>
           <div class="prof-input-xl">
@@ -116,7 +116,15 @@ export default {
       newProgramLang: null,
       newTechnology: null,
       newExtension: null,
-      newAdditional: null
+      newAdditional: null,
+      langBtn: true,
+      bSapModules: false,
+      bProgramLang: false,
+      bTechnologies: false,
+      bExtensions: false,
+      bAdditionalSkills: false,
+      bDisabled: true
+
     };
   },
   computed: {
@@ -164,16 +172,58 @@ export default {
       this.editMode = false;
     },
     // validate fields
-    checkFields() {
+    checkFieldsLangs(index) {
       if (this.userLangs.length > 0) {
-        for (let i = 0; i < this.userLangs.length; i++) {
-          if (this.userLangs[i].Language && this.userLangs[i].LangLevel) {
-            document.getElementsByClassName("saveLangBtn")[i].disabled = false;
+          if 
+          (this._beforeEditingCacheLangs[index].LanguageId !== this.userLangs[index].LanguageId ||
+           this._beforeEditingCacheLangs[index].LangLevel !== this.userLangs[index].LangLevel &&
+           this.userLangs[index].LanguageId &&
+           this.userLangs[index].LangLevel)
+          {
+            document.getElementsByClassName("saveLangBtn")[index].disabled = false;
           } else {
-            document.getElementsByClassName("saveLangBtn")[i].disabled = true;
+            document.getElementsByClassName("saveLangBtn")[index].disabled = true;
           }
-        }
       }
+    },
+    // check fields for skills
+    checkFieldsSkills(event) {
+       if(this.bSapModules || this.bProgramLangs || this.bTechnologies || this.bExtensions || this.bAdditionalSkills) {
+         this.bDisabled = false;
+       } else {
+         this.bDisabled = true;
+       }
+    },
+    checkModules(skillKey) {
+      let beforeEdit = this._beforeEditingCacheSkills,
+          userSkills = this.userSkills;
+
+      if(beforeEdit[skillKey].length !== userSkills[skillKey].length) { 
+         this.checkSkillKey(skillKey, true);
+        } else {
+            for(const item of beforeEdit[skillKey]) {
+              if(!userSkills[skillKey].find(o => o === item)) {
+                   this.checkSkillKey(skillKey, true);
+              } 
+              else {
+                    this.checkSkillKey(skillKey, false);
+              }
+            }
+        }
+        this.checkFieldsSkills()
+    },
+    checkSkillKey(skillKey, bBool){
+       if(skillKey === 'SapModules') {
+            this.bSapModules = bBool;
+          } else if (skillKey === 'AdditionalSkills') {
+            this.bAdditionals = bBool;
+          } else if (skillKey === 'Extensions') {
+            this.bExtensions = bBool;
+          } else if (skillKey === 'ProgramLang') {
+            this.bProgramms = bBool;
+          } else if (skillKey === 'Technologies') {
+            this.bTechno = bBool;
+          } 
     },
     saveLang() {
       this._beforeEditingCacheLangs = JSON.parse(
@@ -183,6 +233,11 @@ export default {
     addModule(value) {
       const moduleId = value.target.value;
       this.$store.dispatch("addModuleForSkills", moduleId);
+      this.checkModules('SapModules');
+    },
+    removeModule(sapModule) {
+      this.removeModuleForSkills(sapModule);
+      this.checkModules('SapModules');
     },
     addProgramLang() {
       if (this.newProgramLang) {
@@ -193,6 +248,7 @@ export default {
         this.$store.dispatch("addSkill", data);
         this.newProgramLang = null;
       }
+      this.checkModules('ProgramLang');
     },
     removeProgramLang(lang) {
       const data = {
@@ -200,6 +256,7 @@ export default {
         value: lang
       };
       this.$store.dispatch("removeSkill", data);
+      this.checkModules('ProgramLang');
     },
     addTechnology() {
       if (this.newTechnology) {
@@ -210,6 +267,7 @@ export default {
         this.$store.dispatch("addSkill", data);
         this.newTechnology = null;
       }
+      this.checkModules('Technologies');
     },
     removeTechnology(tech) {
       const data = {
@@ -217,6 +275,7 @@ export default {
         value: tech
       };
       this.$store.dispatch("removeSkill", data);
+      this.checkModules('Technologies');
     },
     addExtension() {
       if (this.newExtension) {
@@ -227,6 +286,7 @@ export default {
         this.$store.dispatch("addSkill", data);
         this.newExtension = null;
       }
+      this.checkModules('Extensions');
     },
     removeExtension(ext) {
       const data = {
@@ -234,6 +294,7 @@ export default {
         value: ext
       };
       this.$store.dispatch("removeSkill", data);
+      this.checkModules('Extensions');
     },
     addAdditional() {
       if (this.newAdditional) {
@@ -244,6 +305,7 @@ export default {
         this.$store.dispatch("addSkill", data);
         this.newAdditional = null;
       }
+      this.checkModules('AdditionalSkills');
     },
     removeAdditional(add) {
       const data = {
@@ -251,6 +313,7 @@ export default {
         value: add
       };
       this.$store.dispatch("removeSkill", data);
+      this.checkModules('AdditionalSkills');
     }
   }
 };

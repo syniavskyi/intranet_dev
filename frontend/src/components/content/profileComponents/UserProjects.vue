@@ -188,6 +188,7 @@ export default {
         userPro = this.userProjects[index];
         bProjectName = beforeEdit.ProjectName !== userPro.ProjectName;
         bContractor = beforeEdit.Contractor !== userPro.Contractor;
+        
         if(beforeEdit.Industries.length !== userPro.Industries.length){
            bIndustries = true;
         } else {      
