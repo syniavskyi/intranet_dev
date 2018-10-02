@@ -1,87 +1,87 @@
 <template>
-    <div class="modal-new">
-        <div class="modal-content">
-            <div class="cv-modal-header">
-                <h1 class="cv-modal-h1">{{ $t("header.generateCV") }}</h1>
-                <button class="cv-modal-close" @click="close">&#x2716;</button>
-            </div>
-            <div class="cv-modal-content">
-                <div class="cv-modal-tbuttons">
-                    <button class="cv-modal-btn-bclear" @click="selectAllCvElements">{{ $t("button.checkAll") }}</button>
-                    <button class="cv-modal-btn-bclear" @click="deselectAllCvElements">{{ $t("button.uncheckAll") }}</button>
-                </div>
-                <div class="cv-modal-middle">
-                    <div class="cv-modal-chkbxs">
-                        <label class="checkbox-wrap cv-chkbx">
-                            <input type="checkbox" name="name" v-model="cvElements.name">
-                            <div class="checkbox-in"></div>
-                            <p class="checkbox-label">{{ $t("label.fullName") }}</p>
-                        </label>
-                        <label class="checkbox-wrap cv-chkbx">
-                            <input type="checkbox" name="photo" v-model="cvElements.photo">
-                            <div class="checkbox-in"></div>
-                            <p class="checkbox-label">{{ $t("label.photo") }}</p>
-                        </label>
-                        <label class="checkbox-wrap cv-chkbx">
-                            <input type="checkbox" name="address" v-model="cvElements.address">
-                            <div class="checkbox-in"></div>
-                            <p class="checkbox-label">{{ $t("label.emailAdress") }}</p>
-                        </label>
-                    </div>
-                    <div class="cv-modal-chkbxs">
-                        <label class="checkbox-wrap cv-chkbx">
-                            <input type="checkbox" name="phone" v-model="cvElements.phone">
-                            <div class="checkbox-in"></div>
-                            <p class="checkbox-label">{{ $t("label.phoneNumber") }}</p>
-                        </label>
-                        <label class="checkbox-wrap cv-chkbx">
-                            <input type="checkbox" name="date" v-model="cvElements.date">
-                            <div class="checkbox-in"></div>
-                            <p class="checkbox-label">{{ $t("label.dateOfBirth") }}</p>
-                        </label>
-                        <label class="checkbox-wrap cv-chkbx">
-                            <input type="checkbox" name="date" v-model="cvElements.contractor">
-                            <div class="checkbox-in"></div>
-                            <p class="checkbox-label">{{ $t("label.contractorName") }}</p>
-                        </label>
-                    </div>
-                </div>
-                <div class="cv-modal-selects">
-                    <div class="cv-modal-div-s">
-                        <!-- <p>Wybierz język</p> -->
-                        <select required class="cv-modal-select" v-model="cvElements.language">
-                            <option v-for="language in languageList" :key="language.id" :value="language.id"> {{language.description}}</option>
-                        </select>
-                        <label class="cv-modal-label">{{ $t("label.selectLanguage") }}</label>
-                    </div>
-                    <div class="cv-modal-div">
-                        <!-- <p>Wybierz format</p> -->
-                        <select required class="cv-modal-select" v-model="cvElements.format">
-                            <option value="DOCX"> DOCX </option>
-                            <option value="PDF"> PDF </option>
-                        </select>
-                        <label class="cv-modal-label">{{ $t("label.selectFormat") }}</label>
-                    </div>
-                    <div class="cv-modal-div-l">
-                        <!-- <p>Wybierz pozycję</p> -->
-                        <select required class="cv-modal-select" v-model="cvElements.position">
-                            <!-- <option v-for="position in userPositions" :key="position" :value="position"> {{position}}</option> -->
-                        </select>
-                        <label class="cv-modal-label">{{ $t("label.selectPosition") }}</label>
-                    </div>
-                    <div class="cv-modal-div-s">
-                        <input required class="cv-modal-input">
-                        <span class="imodal-div-bar"></span>
-                        <label class="cv-modal-label">{{ $t("label.entity") }}</label>
-                    </div>
-                </div>
-            </div>
-            <div class="cv-modal-bbuttons">
-                <button class="cv-modal-btn" @click="showCv">{{ $t("button.seePreview") }}</button>
-                <button class="cv-modal-btn-clear" @click="close">{{ $t("button.close") }}</button>
-            </div>
+  <div class="modal-new">
+    <div class="modal-content">
+      <div class="cv-modal-header">
+        <h1 class="cv-modal-h1">{{ $t("header.generateCV") }}</h1>
+        <button class="cv-modal-close" @click="close">&#x2716;</button>
+      </div>
+      <div class="cv-modal-content">
+        <div class="cv-modal-tbuttons">
+          <button class="cv-modal-btn-bclear" @click="selectAllCvElements">{{ $t("button.checkAll") }}</button>
+          <button class="cv-modal-btn-bclear" @click="deselectAllCvElements">{{ $t("button.uncheckAll") }}</button>
         </div>
+        <div class="cv-modal-middle">
+          <div class="cv-modal-chkbxs">
+            <label class="checkbox-wrap cv-chkbx">
+              <input type="checkbox" name="name" v-model="cvElements.name">
+              <div class="checkbox-in"></div>
+              <p class="checkbox-label">{{ $t("label.fullName") }}</p>
+            </label>
+            <label class="checkbox-wrap cv-chkbx">
+              <input type="checkbox" name="photo" v-model="cvElements.photo">
+              <div class="checkbox-in"></div>
+              <p class="checkbox-label">{{ $t("label.photo") }}</p>
+            </label>
+            <label class="checkbox-wrap cv-chkbx">
+              <input type="checkbox" name="address" v-model="cvElements.address">
+              <div class="checkbox-in"></div>
+              <p class="checkbox-label">{{ $t("label.emailAdress") }}</p>
+            </label>
+          </div>
+          <div class="cv-modal-chkbxs">
+            <label class="checkbox-wrap cv-chkbx">
+              <input type="checkbox" name="phone" v-model="cvElements.phone">
+              <div class="checkbox-in"></div>
+              <p class="checkbox-label">{{ $t("label.phoneNumber") }}</p>
+            </label>
+            <label class="checkbox-wrap cv-chkbx">
+              <input type="checkbox" name="date" v-model="cvElements.date">
+              <div class="checkbox-in"></div>
+              <p class="checkbox-label">{{ $t("label.dateOfBirth") }}</p>
+            </label>
+            <label class="checkbox-wrap cv-chkbx">
+              <input type="checkbox" name="date" v-model="cvElements.contractor">
+              <div class="checkbox-in"></div>
+              <p class="checkbox-label">{{ $t("label.contractorName") }}</p>
+            </label>
+          </div>
+        </div>
+        <div class="cv-modal-selects">
+          <div class="cv-modal-div-s">
+          <!-- <p>Wybierz język</p> -->
+            <select required class="cv-modal-select" v-model="cvElements.language">
+              <option v-for="language in languageList" :key="language.id" :value="language.id"> {{language.description}}</option>
+            </select>
+            <label class="cv-modal-label">{{ $t("label.selectLanguage") }}</label>
+          </div>
+          <div class="cv-modal-div">
+            <!-- <p>Wybierz format</p> -->
+            <select required class="cv-modal-select" v-model="cvElements.format">
+              <option value="DOCX"> DOCX </option>
+              <option value="PDF"> PDF </option>
+            </select>
+            <label class="cv-modal-label">{{ $t("label.selectFormat") }}</label>
+          </div>
+          <div class="cv-modal-div-l">
+            <!-- <p>Wybierz pozycję</p> -->
+            <select required class="cv-modal-select" v-model="cvElements.position">
+              <!-- <option v-for="position in userPositions" :key="position" :value="position"> {{position}}</option> -->
+            </select>
+            <label class="cv-modal-label">{{ $t("label.selectPosition") }}</label>
+          </div>
+          <div class="cv-modal-div-s">
+            <input required class="cv-modal-input">
+            <span class="imodal-div-bar"></span>
+            <label class="cv-modal-label">{{ $t("label.entity") }}</label>
+          </div>
+        </div>
+      </div>
+      <div class="cv-modal-bbuttons">
+        <button class="cv-modal-btn" @click="showCv">{{ $t("button.seePreview") }}</button>
+        <button class="cv-modal-btn-clear" @click="close">{{ $t("button.close") }}</button>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -97,7 +97,7 @@ export default {
     ...mapGetters({
       cvElements: "getCvElements",
       languageList: "getLanguageList",
-      industryList: "getIndustryList",
+      industryList: "getIndustryList"
       // userPositions: "getUserJobPositions"
     })
   },

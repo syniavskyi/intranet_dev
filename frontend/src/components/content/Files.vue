@@ -4,7 +4,7 @@
       <app-menu v-show="displayMenu"></app-menu>
       <div class="modal-overlay" v-show="displayOverlay"></div>
       <div class="component-content">
-        <div class="content-header"> 
+        <div class="content-header">
           <div class="content-header-title-and-menu">
             <!-- <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu"> -->
             <div @click="showMenu" class="content-header-menu">&#9776;</div>
@@ -34,7 +34,6 @@
               </div>
             </div>
           </div>
-
           <div class="documents-tiles-row">
             <!-- <input id="documents-row-2" class="documents-tiles-row-header-input" type="checkbox"> -->
             <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-2">Namiary na systemy</div>
@@ -56,7 +55,6 @@
               </div>
             </div>
           </div>
-
           <div class="documents-tiles-row">
             <!-- <input id="documents-row-3" class="documents-tiles-row-header-input" type="checkbox"> -->
             <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-3">Biuro</div>
@@ -78,7 +76,6 @@
               </div>
             </div>
           </div>
-
           <div class="documents-tiles-row">
             <!-- <input id="documents-row-4" class="documents-tiles-row-header-input" type="checkbox"> -->
             <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-4">Informacje</div>
@@ -100,7 +97,6 @@
               </div>
             </div>
           </div>
-
           <div class="documents-tiles-row">
             <input id="documents-row-5" class="documents-tiles-row-header-input" type="checkbox">
             <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-5">Instrukcje</div>
@@ -122,50 +118,51 @@
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import Menu from '../Menu.vue'
-import axios from 'axios'
-import i18n from '../../lang/lang'
-import { mapGetters } from 'vuex';
+import Menu from "../Menu.vue";
+import axios from "axios";
+import i18n from "../../lang/lang";
+import { mapGetters } from "vuex";
 
 export default {
   computed: {
     ...mapGetters({
-      infoFiles:'getInfoFiles',
-      docFiles: 'getDocumentFiles',
-      instrFiles: 'getInstructionFiles',
-      officeFiles: 'getOfficeFiles',
-      systemFiles: 'getSystemFiles',
-      displayMenu: 'getShowMenu',
-      displayOverlay: 'getShowMenuOverlay'
+      infoFiles: "getInfoFiles",
+      docFiles: "getDocumentFiles",
+      instrFiles: "getInstructionFiles",
+      officeFiles: "getOfficeFiles",
+      systemFiles: "getSystemFiles",
+      displayMenu: "getShowMenu",
+      displayOverlay: "getShowMenuOverlay"
     })
   },
   mounted() {
-    
-    this.$nextTick(this.calcDocsHeight().then(height => {
-
-      }))
+    this.$nextTick(this.calcDocsHeight().then(height => {}));
   },
   methods: {
     showMenu(event) {
-      let obj = {window, event}
+      let obj = { window, event };
       this.$store.dispatch("setSideMenu", obj);
     },
     checkFileFormat(name) {
-      return name.slice(name.lastIndexOf('.'));
+      return name.slice(name.lastIndexOf("."));
     },
-    generateLink(file){
-     let url = "http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" + file + "',Language='" +
-      'PL' + "',UserAlias='" + '' + "')/$value";
+    generateLink(file) {
+      let url =
+        "http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" +
+        file +
+        "',Language='" +
+        "PL" +
+        "',UserAlias='" +
+        "" +
+        "')/$value";
       return url;
-   },
+    },
     toggleDocTile(evt) {
       let el = evt.target.nextElementSibling,
         elChild = evt.target.nextElementSibling;
@@ -173,14 +170,14 @@ export default {
       this.$store.dispatch("toggleDocTile", name);
     },
     calcDocsHeight(tiles) {
-      var tiles = document.getElementsByClassName("documents-tiles-row")
-      this.$store.dispatch("calcDocsHeight", tiles)
+      var tiles = document.getElementsByClassName("documents-tiles-row");
+      this.$store.dispatch("calcDocsHeight", tiles);
     }
   },
   components: {
-    'app-menu': Menu
+    "app-menu": Menu
   }
-}
+};
 </script>
 <style>
 </style>

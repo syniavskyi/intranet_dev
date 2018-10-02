@@ -183,40 +183,54 @@ export default {
       this._beforeEditingProjects = utils.createClone(this.userProjects);
     },
     checkFields(index) {
-        let bChanged, bProjectName, bContractor, bIndustries, bModules, bDateStart, bDesc,
+      let bChanged,
+        bProjectName,
+        bContractor,
+        bIndustries,
+        bModules,
+        bDateStart,
+        bDesc,
         beforeEdit = this._beforeEditingProjects[index],
         userPro = this.userProjects[index];
-        bProjectName = beforeEdit.ProjectName !== userPro.ProjectName;
-        bContractor = beforeEdit.Contractor !== userPro.Contractor;
-        
-        if(beforeEdit.Industries.length !== userPro.Industries.length){
-           bIndustries = true;
-        } else {      
-            for(const item of beforeEdit.Industries) {
-              if(!userPro.Industries.find(o => o.id === item.id)) {
-                bIndustries = true;
-              }  
-            }
+      bProjectName = beforeEdit.ProjectName !== userPro.ProjectName;
+      bContractor = beforeEdit.Contractor !== userPro.Contractor;
+
+      if (beforeEdit.Industries.length !== userPro.Industries.length) {
+        bIndustries = true;
+      } else {
+        for (const item of beforeEdit.Industries) {
+          if (!userPro.Industries.find(o => o.id === item.id)) {
+            bIndustries = true;
+          }
         }
-        if(beforeEdit.Modules.length !== userPro.Modules.length) {
-          bModules = true;
-        } else {
-            for(const item of beforeEdit.Modules) {
-              if(!userPro.Modules.find(o => o.id === item.id)) {
-                bModules = true;
-              }  
-            }
+      }
+      if (beforeEdit.Modules.length !== userPro.Modules.length) {
+        bModules = true;
+      } else {
+        for (const item of beforeEdit.Modules) {
+          if (!userPro.Modules.find(o => o.id === item.id)) {
+            bModules = true;
+          }
         }
+      }
 
       let a = beforeEdit.DateStart;
-          a = new Date(a.getFullYear(), a.getMonth(), a.getDay())
+      a = new Date(a.getFullYear(), a.getMonth(), a.getDay());
       let b = userPro.DateStart;
-          b = new Date(b.getFullYear(), b.getMonth(), b.getDay())
+      b = new Date(b.getFullYear(), b.getMonth(), b.getDay());
 
-        bDateStart = a.getTime() !== b.getTime();
-        bDesc = beforeEdit.Description !== userPro.Description;
+      bDateStart = a.getTime() !== b.getTime();
+      bDesc = beforeEdit.Description !== userPro.Description;
 
-        bChanged = bProjectName || bContractor || bIndustries || bModules || bDateStart || bDesc ? true : false;
+      bChanged =
+        bProjectName ||
+        bContractor ||
+        bIndustries ||
+        bModules ||
+        bDateStart ||
+        bDesc
+          ? true
+          : false;
 
       if (
         bChanged &&
@@ -226,12 +240,15 @@ export default {
         userPro.Modules.length !== 0 &&
         userPro.DateStart &&
         userPro.Description &&
-        (userPro.DateEnd !== null ||
-          userPro.IsCurrent)
+        (userPro.DateEnd !== null || userPro.IsCurrent)
       ) {
-        document.getElementsByClassName("projSaveButton")[index].disabled = false;
+        document.getElementsByClassName("projSaveButton")[
+          index
+        ].disabled = false;
       } else {
-        document.getElementsByClassName("projSaveButton")[index].disabled = true;
+        document.getElementsByClassName("projSaveButton")[
+          index
+        ].disabled = true;
       }
     },
     // saveUserProject(index) {
@@ -241,10 +258,10 @@ export default {
     //   );
     // },
     onHover(el) {
-      this.$store.dispatch("onLightUp", el.style ? el : this.$el)
+      this.$store.dispatch("onLightUp", el.style ? el : this.$el);
     },
     onHoverOut(el) {
-      this.$store.dispatch("onLightOut", el.style ? el : this.$el)
+      this.$store.dispatch("onLightOut", el.style ? el : this.$el);
     },
     formatId(index) {
       return index + "p";
@@ -309,7 +326,6 @@ export default {
         ? moment(date).format("DD.MM.YYYY")
         : "-";
     },
-
     formatIndustryName(id) {
       for (let i = 0; i < this.industryList.length; i++) {
         if (id === this.industryList[i].id) {
@@ -336,9 +352,9 @@ export default {
       let projects = this.$store.getters.getUserProjectsList;
       let input;
 
-      for (let i = 0; i < projects.length; i++) {
-        if (projects[i].IsCurrent === true) {
-          input = document.getElementById(i + "p");
+      for (let index in projects){
+        if (projects[index].IsCurrent === true) {
+          input = document.getElementById(index + "p");
           input.setAttribute("style", "display: none");
         } else {
           let checkBoxes = document.querySelectorAll("checkbox:not(:checked)");

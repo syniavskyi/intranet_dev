@@ -58,8 +58,8 @@ const actions = {
   },
   // change Status from X/- to true/false
   checkStatus({}, files) {
-    for (let i = 0; i < files.length; i++) {
-      files[i].Status = files[i].Status === 'X' ? true : false
+    for(let index in files) {
+      files[index].Status = files[index].Status === 'X' ? true : false
     }
   },
   // get docs for new user

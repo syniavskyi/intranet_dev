@@ -77,10 +77,7 @@ export default {
       this.setLanguage(newVal);
     }
   },
-  beforeCreate() {
-
-  },
-  components: { 
+  components: {
     Icon
   },
   validations: {
@@ -91,24 +88,26 @@ export default {
   methods: {
     onSubmit() {
       this.isLoading = true;
-      this.$store.commit("SET_DISPLAY_LOADER", true)
-      this.SelectedLang = this.SelectedLang === undefined ? "PL" : this.SelectedLang
+      this.$store.commit("SET_DISPLAY_LOADER", true);
+      this.SelectedLang =
+        this.SelectedLang === undefined ? "PL" : this.SelectedLang;
 
-      this.$store.dispatch("login", {
-        username: this.username,
-        password: this.password,
-        language: this.selectedLang.toUpperCase()
-      }).then(
-        this.isLoading = false
-      );
+      this.$store
+        .dispatch("login", {
+          username: this.username,
+          password: this.password,
+          language: this.selectedLang.toUpperCase()
+        })
+        .then((this.isLoading = false));
 
-      this.$store.commit('SET_LOGIN_LANGUAGE', this.selectedLang.toUpperCase());
+      this.$store.commit("SET_LOGIN_LANGUAGE", this.selectedLang.toUpperCase());
     },
     switchForgotPassword() {
       this.showRemindPassword = !this.showRemindPassword;
     },
     switchPasswordVisibility() {
-      this.passwordFieldType = this.passwordFieldType === "password" ? "text" : "password";
+      this.passwordFieldType =
+        this.passwordFieldType === "password" ? "text" : "password";
       this.eyeType = this.eyeType === "eye" ? "eye-slash" : "eye";
     },
     onResetPassword() {

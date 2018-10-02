@@ -33,32 +33,28 @@
 
 <script>
 import i18n from "../../../lang/lang";
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 export default {
-    data() {
-        return {
-        
-        }
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters({
+      userData: "getUserInfo"
+    })
+  },
+  methods: {
+    close() {
+      this.$store.commit("SET_SHOW_CHANGE_PASSWORD_DIALOG", false);
     },
-    computed: {
-        ...mapGetters({
-            userData: "getUserInfo",
-        })
-    },
-    methods: {
-        close() {
-            this.$store.commit('SET_SHOW_CHANGE_PASSWORD_DIALOG', false)
-        },
-
-        onSubmit() {
-        let userData = this.userData;
-        userData.UserAlias = "SJI"
-        userData.Password = document.getElementById("oldPass").value;
-        userData.NewPassword = document.getElementById("newPass").value;
-           this.$store.dispatch("submitPassword", userData)
-        }
-
+    onSubmit() {
+      let userData = this.userData;
+      userData.UserAlias = "SJI";
+      userData.Password = document.getElementById("oldPass").value;
+      userData.NewPassword = document.getElementById("newPass").value;
+      this.$store.dispatch("submitPassword", userData);
     }
-}
+  }
+};
 </script>
 
