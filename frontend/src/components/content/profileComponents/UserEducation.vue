@@ -147,44 +147,60 @@ export default {
       }
     },
     onHover(el) {
-      this.$store.dispatch("onLightUp", el.style ? el : this.$el)
+      this.$store.dispatch("onLightUp", el.style ? el : this.$el);
     },
     onHoverOut(el) {
-      this.$store.dispatch("onLightOut", el.style ? el : this.$el)
+      this.$store.dispatch("onLightOut", el.style ? el : this.$el);
     },
     // validate fields and set button to disabled or not
     checkFields(index) {
-      let bChanged, bFieldOfStudy, bUniversity, bStudyType, bAcademicTitle, bDateStart,
-      beforeEdit = this._beforeEditingCache[index],
-      userEdu = this.userEducation[index]
+      let bChanged,
+        bFieldOfStudy,
+        bUniversity,
+        bStudyType,
+        bAcademicTitle,
+        bDateStart,
+        beforeEdit = this._beforeEditingCache[index],
+        userEdu = this.userEducation[index];
 
-    bFieldOfStudy = beforeEdit.FieldOfStudy !== userEdu.FieldOfStudy;
-    bUniversity = beforeEdit.University !== userEdu.University;
-    bStudyType = beforeEdit.StudyType !== userEdu.StudyType;
-    bAcademicTitle = beforeEdit.AcademicTitle !== userEdu.AcademicTitle;
-    let a = beforeEdit.DateStart;
-          a = new Date(a.getFullYear(), a.getMonth(), a.getDay())
+      bFieldOfStudy = beforeEdit.FieldOfStudy !== userEdu.FieldOfStudy;
+      bUniversity = beforeEdit.University !== userEdu.University;
+      bStudyType = beforeEdit.StudyType !== userEdu.StudyType;
+      bAcademicTitle = beforeEdit.AcademicTitle !== userEdu.AcademicTitle;
+      let a = beforeEdit.DateStart;
+      a = new Date(a.getFullYear(), a.getMonth(), a.getDay());
       let b = userEdu.DateStart;
-          b = new Date(b.getFullYear(), b.getMonth(), b.getDay())
-    bDateStart = a.getTime() !== b.getTime();
+      b = new Date(b.getFullYear(), b.getMonth(), b.getDay());
+      bDateStart = a.getTime() !== b.getTime();
 
-    bChanged = bFieldOfStudy || bUniversity || bStudyType || bAcademicTitle || bDateStart ? true : false ;
+      bChanged =
+        bFieldOfStudy ||
+        bUniversity ||
+        bStudyType ||
+        bAcademicTitle ||
+        bDateStart
+          ? true
+          : false;
 
-    if (this.userEducation.length > 0) {
-            if (
-              userEdu.FieldOfStudy &&
-              userEdu.University &&
-              userEdu.StudyType &&
-              userEdu.AcademicTitle &&
-              userEdu.DateStart &&
-              bChanged &&
-              (userEdu.DateEnd !== null || userEdu.IsCurrent)
-            ) {
-              document.getElementsByClassName("eduButtons")[index].children[0].disabled = false;
-            }  else {
-              document.getElementsByClassName("eduButtons")[index].children[0].disabled = true;
-            }
-}
+      if (this.userEducation.length > 0) {
+        if (
+          userEdu.FieldOfStudy &&
+          userEdu.University &&
+          userEdu.StudyType &&
+          userEdu.AcademicTitle &&
+          userEdu.DateStart &&
+          bChanged &&
+          (userEdu.DateEnd !== null || userEdu.IsCurrent)
+        ) {
+          document.getElementsByClassName("eduButtons")[
+            index
+          ].children[0].disabled = false;
+        } else {
+          document.getElementsByClassName("eduButtons")[
+            index
+          ].children[0].disabled = true;
+        }
+      }
     },
     remove(index) {
       this._beforeEditingCache.splice(index, 1);
@@ -197,7 +213,7 @@ export default {
       this.$store.commit("SET_USER_EDUCATION", this._beforeEditingCache);
       this.editMode = false;
     },
-     // check if new data should be updated or created
+    // check if new data should be updated or created
     save(index) {
       const dataToChange = this._beforeEditingCache[index],
         // newData = this.userEducation[index];
@@ -232,7 +248,7 @@ export default {
       }
       this.checkFields(index);
     },
-  // hover EndDate if field IsCurrent is checked
+    // hover EndDate if field IsCurrent is checked
     disableEndDateInput(value) {
       const isCurrent = value.target.checked,
         index = value.target.name,
@@ -246,7 +262,7 @@ export default {
       }
       this.checkFields(index);
     },
-     // set IsCurrent checkboxes checked
+    // set IsCurrent checkboxes checked
     setEduCheckbox(index) {
       let edu = this.$store.getters.getUserEducation;
       let input;

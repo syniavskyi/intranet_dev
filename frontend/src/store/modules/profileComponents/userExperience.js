@@ -9,7 +9,7 @@ const state = {
 }
 
 const mutations = {
-  SET_USER_EXPERIENCE(state, list, moment) {
+  SET_USER_EXPERIENCE(state, list) {
     state.userExperience = list
   },
   SET_EXPERIENCE_ERROR(state, isError) {

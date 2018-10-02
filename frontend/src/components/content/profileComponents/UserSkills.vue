@@ -124,7 +124,6 @@ export default {
       bExtensions: false,
       bAdditionalSkills: false,
       bDisabled: true
-
     };
   },
   computed: {
@@ -144,10 +143,10 @@ export default {
       "removeLanguageSkillsRow"
     ]),
     onHover(el) {
-      this.$store.dispatch("onLightUp", el.style ? el : this.$el)
+      this.$store.dispatch("onLightUp", el.style ? el : this.$el);
     },
     onHoverOut(el) {
-      this.$store.dispatch("onLightOut", el.style ? el : this.$el)
+      this.$store.dispatch("onLightOut", el.style ? el : this.$el);
     },
     edit() {
       this.editMode = true;
@@ -174,56 +173,65 @@ export default {
     // validate fields
     checkFieldsLangs(index) {
       if (this.userLangs.length > 0) {
-          if 
-          (this._beforeEditingCacheLangs[index].LanguageId !== this.userLangs[index].LanguageId ||
-           this._beforeEditingCacheLangs[index].LangLevel !== this.userLangs[index].LangLevel &&
-           this.userLangs[index].LanguageId &&
-           this.userLangs[index].LangLevel)
-          {
-            document.getElementsByClassName("saveLangBtn")[index].disabled = false;
-          } else {
-            document.getElementsByClassName("saveLangBtn")[index].disabled = true;
-          }
+        if (
+          this._beforeEditingCacheLangs[index].LanguageId !==
+            this.userLangs[index].LanguageId ||
+          (this._beforeEditingCacheLangs[index].LangLevel !==
+            this.userLangs[index].LangLevel &&
+            this.userLangs[index].LanguageId &&
+            this.userLangs[index].LangLevel)
+        ) {
+          document.getElementsByClassName("saveLangBtn")[
+            index
+          ].disabled = false;
+        } else {
+          document.getElementsByClassName("saveLangBtn")[index].disabled = true;
+        }
       }
     },
     // check fields for skills
     checkFieldsSkills(event) {
-       if(this.bSapModules || this.bProgramLangs || this.bTechnologies || this.bExtensions || this.bAdditionalSkills) {
-         this.bDisabled = false;
-       } else {
-         this.bDisabled = true;
-       }
+      if (
+        this.bSapModules ||
+        this.bProgramLangs ||
+        this.bTechnologies ||
+        this.bExtensions ||
+        this.bAdditionalSkills
+      ) {
+        this.bDisabled = false;
+      } else {
+        this.bDisabled = true;
+      }
     },
     checkSingleSkill(skillKey) {
       let beforeEdit = this._beforeEditingCacheSkills,
-          userSkills = this.userSkills;
+        userSkills = this.userSkills;
 
-      if(beforeEdit[skillKey].length !== userSkills[skillKey].length) { 
-         this.checkSkillKey(skillKey, true);
-        } else {
-            for(const item of beforeEdit[skillKey]) {
-              if(!userSkills[skillKey].find(o => o === item)) {
-                   this.checkSkillKey(skillKey, true);
-              } 
-              else {
-                    this.checkSkillKey(skillKey, false);
-              }
-            }
+      if (beforeEdit[skillKey].length !== userSkills[skillKey].length) {
+        this.checkSkillKey(skillKey, true);
+      } else {
+        for (const item of beforeEdit[skillKey]) {
+          if (!userSkills[skillKey].find(o => o === item)) {
+            this.checkSkillKey(skillKey, true);
+          } else {
+            this.checkSkillKey(skillKey, false);
+          }
         }
-        this.checkFieldsSkills()
+      }
+      this.checkFieldsSkills();
     },
-    checkSkillKey(skillKey, bBool){
-       if(skillKey === 'SapModules') {
-            this.bSapModules = bBool;
-          } else if (skillKey === 'AdditionalSkills') {
-            this.bAdditionals = bBool;
-          } else if (skillKey === 'Extensions') {
-            this.bExtensions = bBool;
-          } else if (skillKey === 'ProgramLang') {
-            this.bProgramms = bBool;
-          } else if (skillKey === 'Technologies') {
-            this.bTechno = bBool;
-          } 
+    checkSkillKey(skillKey, bBool) {
+      if (skillKey === "SapModules") {
+        this.bSapModules = bBool;
+      } else if (skillKey === "AdditionalSkills") {
+        this.bAdditionals = bBool;
+      } else if (skillKey === "Extensions") {
+        this.bExtensions = bBool;
+      } else if (skillKey === "ProgramLang") {
+        this.bProgramms = bBool;
+      } else if (skillKey === "Technologies") {
+        this.bTechno = bBool;
+      }
     },
     saveLang() {
       this._beforeEditingCacheLangs = JSON.parse(
@@ -233,11 +241,11 @@ export default {
     addModule(value) {
       const moduleId = value.target.value;
       this.$store.dispatch("addModuleForSkills", moduleId);
-      this.checkSingleSkill('SapModules');
+      this.checkSingleSkill("SapModules");
     },
     removeModule(sapModule) {
       this.removeModuleForSkills(sapModule);
-      this.checkSingleSkill('SapModules');
+      this.checkSingleSkill("SapModules");
     },
     addProgramLang() {
       if (this.newProgramLang) {
@@ -248,7 +256,7 @@ export default {
         this.$store.dispatch("addSkill", data);
         this.newProgramLang = null;
       }
-      this.checkSingleSkill('ProgramLang');
+      this.checkSingleSkill("ProgramLang");
     },
     removeProgramLang(lang) {
       const data = {
@@ -256,7 +264,7 @@ export default {
         value: lang
       };
       this.$store.dispatch("removeSkill", data);
-      this.checkSingleSkill('ProgramLang');
+      this.checkSingleSkill("ProgramLang");
     },
     addTechnology() {
       if (this.newTechnology) {
@@ -267,7 +275,7 @@ export default {
         this.$store.dispatch("addSkill", data);
         this.newTechnology = null;
       }
-      this.checkSingleSkill('Technologies');
+      this.checkSingleSkill("Technologies");
     },
     removeTechnology(tech) {
       const data = {
@@ -275,7 +283,7 @@ export default {
         value: tech
       };
       this.$store.dispatch("removeSkill", data);
-      this.checkSingleSkill('Technologies');
+      this.checkSingleSkill("Technologies");
     },
     addExtension() {
       if (this.newExtension) {
@@ -286,7 +294,7 @@ export default {
         this.$store.dispatch("addSkill", data);
         this.newExtension = null;
       }
-      this.checkSingleSkill('Extensions');
+      this.checkSingleSkill("Extensions");
     },
     removeExtension(ext) {
       const data = {
@@ -294,7 +302,7 @@ export default {
         value: ext
       };
       this.$store.dispatch("removeSkill", data);
-      this.checkSingleSkill('Extensions');
+      this.checkSingleSkill("Extensions");
     },
     addAdditional() {
       if (this.newAdditional) {
@@ -305,7 +313,7 @@ export default {
         this.$store.dispatch("addSkill", data);
         this.newAdditional = null;
       }
-      this.checkSingleSkill('AdditionalSkills');
+      this.checkSingleSkill("AdditionalSkills");
     },
     removeAdditional(add) {
       const data = {
@@ -313,7 +321,7 @@ export default {
         value: add
       };
       this.$store.dispatch("removeSkill", data);
-      this.checkSingleSkill('AdditionalSkills');
+      this.checkSingleSkill("AdditionalSkills");
     }
   }
 };

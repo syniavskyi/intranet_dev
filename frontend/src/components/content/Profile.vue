@@ -26,8 +26,8 @@
         </div>
         <div class="cd-for-select" v-if="authType==='*'">
           <select v-model="selectedUser" @change="getNewData" required class="cd-select">
-            <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias"> 
-                {{ user.Fullname }}   
+            <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias">
+                {{ user.Fullname }}
             </option>
           </select>
           <label class="cd-slabel">{{ $t("label.selectEmployee") }}</label>
@@ -35,7 +35,7 @@
         <div class="cd-for-select" v-if="authType==='TEAM'">
           <select v-model="selectedUser" @change="getNewData" required class="cd-select">
             <option v-for="user in filteredTeamUsers" :value="user.UserAlias" :key="user.UserAlias"> 
-                {{ user.Fullname }}   
+                {{ user.Fullname }}
             </option>
           </select>
           <label class="cd-slabel">{{ $t("label.selectTeamMember") }}</label>
@@ -308,8 +308,8 @@ export default {
       newPosition: null,
       selectedCity: null,
       selectedCvLang: i18n.locale,
-      authType: '',
-      selectedUser: ''
+      authType: "",
+      selectedUser: ""
     };
   },
   validations: {
@@ -348,13 +348,13 @@ export default {
     next();
   },
   created() {
-     const data = {
-            roles: this.$store.getters.getUserAuth,
-            key: "ZPROF_ATCV",
-            dep: this.userData.DepartmentName,
-            userAlias: this.$store.getters.getLoginAlias
-        }
-        this.authType = utils.checkRole(data);
+    const data = {
+      roles: this.$store.getters.getUserAuth,
+      key: "ZPROF_ATCV",
+      dep: this.userData.DepartmentName,
+      userAlias: this.$store.getters.getLoginAlias
+    };
+    this.authType = utils.checkRole(data);
   },
   components: {
     MaskedInput,
@@ -380,8 +380,8 @@ export default {
       showPasswordDialog: "getShowSelectChangePasswordDialog",
       displayMenu: "getShowMenu",
       displayOverlay: "getShowMenuOverlay",
-      usersList: 'usersList',
-      userPhoto: 'getUserPhotoUrl',
+      usersList: "usersList",
+      userPhoto: "getUserPhotoUrl"
     }),
     formatAddress() {
       const data = this.userData;
@@ -405,17 +405,22 @@ export default {
           new Date(),
           true
         ),
-        oFormatedDate = utils.setWorkExperience(oCalculateDifference, this.selectedCvLang);
+        oFormatedDate = utils.setWorkExperience(
+          oCalculateDifference,
+          this.selectedCvLang
+        );
 
       return oFormatedDate.year + oFormatedDate.month + oFormatedDate.day;
     },
-    filteredTeamUsers(){
-           let aFilteredUsers = this.usersList,
-              sTeam = this.userData.DepartmentName
+    filteredTeamUsers() {
+      let aFilteredUsers = this.usersList,
+        sTeam = this.userData.DepartmentName;
 
-             aFilteredUsers = aFilteredUsers.filter(function(oData){ return oData.DepartmentName === sTeam });
-            return aFilteredUsers
-        }
+      aFilteredUsers = aFilteredUsers.filter(function(oData) {
+        return oData.DepartmentName === sTeam;
+      });
+      return aFilteredUsers;
+    }
   },
   // beforeRouteLeave (to, from , next) {
   // this.showLeavePageDialog = true
@@ -536,7 +541,7 @@ export default {
         user: this.selectedUser,
         lang: cvLang,
         changePage: false
-      }
+      };
       this.$store.dispatch("loadData", userData);
     },
     onHover() {

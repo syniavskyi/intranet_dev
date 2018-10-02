@@ -1,5 +1,4 @@
 import axios from 'axios'
-import router from '@/router/index.js'
 
 const state = {
   loginError: false,
@@ -25,16 +24,16 @@ const mutations = {
   SET_URL_QUERY(state, data) {
     state.urlQuery = data
   },
-  SET_PASSWORD (state, data) {
+  SET_PASSWORD(state, data) {
     state.password = data;
   },
-  SET_HASHED_PASSWORD (state, password) {
-      state.hashedPassword = password;
+  SET_HASHED_PASSWORD(state, password) {
+    state.hashedPassword = password;
   },
   SET_LOGIN_ALIAS(state, data) {
-      state.username = data;
+    state.username = data;
   },
-  SET_TOKEN(state, data){
+  SET_TOKEN(state, data) {
     state.token = data;
   }
 }
@@ -44,14 +43,14 @@ const actions = {
     commit,
     dispatch
   }, authData) {
-    let url = '?sap-user=' + authData.username + '&sap-password=' + authData.password + '&sap-language=' +authData.language
+    let url = '?sap-user=' + authData.username + '&sap-password=' + authData.password + '&sap-language=' + authData.language
     commit('SET_LOGIN_ALIAS', authData.username.toUpperCase());
     axios({
       method: 'get',
       url: url,
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-        "X-CSRF-Token" : "Fetch"
+        "X-CSRF-Token": "Fetch"
       }
     }).then(res => {
       localStorage.setItem('authorized', true);
@@ -89,15 +88,17 @@ const actions = {
       console.log(error)
     })
   },
-  generatePassword({commit, state}) {
+  generatePassword({
+    commit
+  }) {
     const md5 = require('js-md5')
 
     var nLength = 8,
-        sCharset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]\:;?><,./-=",
-        sRetVal = "";
+      sCharset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]\:;?><,./-=",
+      sRetVal = "";
 
     for (var i = 0, n = sCharset.length; i < nLength; ++i) {
-        sRetVal += sCharset.charAt(Math.floor(Math.random() * n));
+      sRetVal += sCharset.charAt(Math.floor(Math.random() * n));
     }
 
     var hash = md5(sRetVal)
@@ -116,17 +117,17 @@ const getters = {
   isSendEmailError(state) {
     return state.sendEmailError
   },
-  getUrlQuery(state){
+  getUrlQuery(state) {
     return state.urlQuery
   },
   password(state) {
     return state.password;
   },
   hashedPassword(state) {
-      return state.hashedPassword;
+    return state.hashedPassword;
   },
   getLoginAlias(state) {
-      return state.username;
+    return state.username;
   },
   getToken(state) {
     return state.token;
@@ -139,5 +140,3 @@ export default {
   actions,
   getters
 }
-
-

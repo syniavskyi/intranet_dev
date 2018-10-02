@@ -7,7 +7,6 @@ const state = {
   departmentList: [],
   branches: [],
   userList: [],
-  sectionsList: [],
   projectsList: [],
   contractorsList: [],
   isLoaded: false,
@@ -19,7 +18,6 @@ const state = {
   sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_AVAIL_TYPE", "ZINTRANET_AVAIL_STATUS", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES", 'ZINTRANET_PRIORITY', 'ZINTRANET_EVENT_TYPE', 'ZINTRANET_EVENT_TYPE', 'ZINTRANET_TARGET_GROUP', 'ZINTRANET_ROLES'],
   sapModulesList: [],
   newUserFiles: [],
-  UserRole: [],
   adverts: [],
   userAuth: [],
   availStatus: [],
@@ -66,49 +64,47 @@ const mutations = {
   SET_SAP_MODULES_LIST(state, data) {
     state.sapModulesList = data;
   },
-
   SET_NEW_USER_FILES_LIST(state, data) {
     state.newUserFiles = data;
   },
   SET_USER_AUTH(state, data) {
     state.userAuth = data;
   },
-  SET_AVAIL_STATUS(state, data){
+  SET_AVAIL_STATUS(state, data) {
     state.availStatus = data
   },
-  SET_AVAIL_TYPE(state, data){
+  SET_AVAIL_TYPE(state, data) {
     state.availType = data
   },
   SET_TARGET_GROUP(state, data) {
     state.targetGroup = data;
   },
-  SET_ADVERTS(state, data){
+  SET_ADVERTS(state, data) {
     state.adverts = data;
   },
   SET_ROLES(state, data) {
     state.roles = data;
   },
-  SET_USER_PHOTO_URL(state, url){
+  SET_USER_PHOTO_URL(state, url) {
     state.userPhotoUrl = url
   }
 };
 
 const actions = {
   loadData({
-    commit,
     state,
     dispatch,
     getters
   }, userData) {
     // TEMPORARY
-    if(userData === null) {
+    if (userData === null) {
       let userData = {
         lang: 'PL',
         user: 'UIO',
         changePage: true
       }
     }
- 
+
     for (let i = 0; i < getters.getFileTypes.length; i++) {
       dispatch('getDocuments', getters.getFileTypes[i])
     }
@@ -124,7 +120,7 @@ const actions = {
     dispatch('getIndustries', userData.lang);
     dispatch('getProjectsList');
     dispatch('getUsersLists');
-    dispatch('getAllLanguages',);
+    dispatch('getAllLanguages', );
     dispatch('getSchoolDesc', userData.lang);
     dispatch('getFieldOfStudyDesc', userData.lang);
     dispatch('getEvents')
@@ -133,15 +129,16 @@ const actions = {
     dispatch('getAdverts');
   },
   getDomainValues({
-    commit, getters
+    commit,
+    getters
   }, domainData) {
     let urlQuery = getters.getUrlQuery
-    if(domainData.lang === undefined) {
+    if (domainData.lang === undefined) {
       domainData.lang = "PL"
     }
     axios({
       method: 'GET',
-      url: "Dictionaries" + urlQuery  + "&$filter=Name eq '" + domainData.name + "' and Language eq '" + domainData.lang + "'",
+      url: "Dictionaries" + urlQuery + "&$filter=Name eq '" + domainData.name + "' and Language eq '" + domainData.lang + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -173,10 +170,10 @@ const actions = {
       } else if (domainData.name == 'ZINTRANET_EVENT_TYPE') {
         const aEventType = res.data.d.results;
         commit('SET_EVENT_TYPE', aEventType);
-      } else if (domainData.name == 'ZINTRANET_AVAIL_STATUS'){
+      } else if (domainData.name == 'ZINTRANET_AVAIL_STATUS') {
         const aStatus = res.data.d.results;
         commit('SET_AVAIL_STATUS', aStatus);
-      } else if (domainData.name == 'ZINTRANET_AVAIL_TYPE'){
+      } else if (domainData.name == 'ZINTRANET_AVAIL_TYPE') {
         const aType = res.data.d.results;
         commit('SET_AVAIL_TYPE', aType);
       } else if (domainData.name == 'ZINTRANET_TARGET_GROUP') {
@@ -184,43 +181,42 @@ const actions = {
         commit('SET_TARGET_GROUP', aTargetGroup);
       } else if (domainData.name == 'ZINTRANET_ROLES') {
         const aRoles = res.data.d.results;
-        commit('SET_ROLES', aRoles); 
+        commit('SET_ROLES', aRoles);
       }
     }).catch(error => {
       console.log(error);
     })
   },
   getProjectsList({
-    commit, getters
+    commit,
+    getters
   }) {
     let urlQuery = getters.getUrlQuery
     axios({
       method: 'GET',
-      url: 'Projects'  + urlQuery,
+      url: 'Projects' + urlQuery,
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
     }).then(res => {
       let oProjects = res.data.d.results;
-      // console.log(res.data.d);
       commit('SET_PROJECTS_LIST', oProjects);
     }).catch(error => {
       console.log(error);
     })
   },
   getContractorsList({
-    commit, getters
+    commit,
+    getters
   }) {
     let urlQuery = getters.getUrlQuery
     axios({
       method: 'GET',
-      url: 'Contractors'  + urlQuery,
-
+      url: 'Contractors' + urlQuery,
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
     }).then(res => {
-
       let oContractors = res.data.d.results;
 
       commit('SET_CONTRACTORS_LIST', oContractors);
@@ -231,45 +227,45 @@ const actions = {
   // (UserAlias='UIO',Language='PL')
   // url: 'Users' + '(UserAlias=' + "'UIO'" + ',' + 'Language=' + "'PL'" + ')' + '?$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang',
   getUserData({
-    commit, getters,
+    commit,
+    getters,
     dispatch
   }, userData) {
     let urlQuery = getters.getUrlQuery
 
-    if(userData === undefined) { // TEMPORARY
-     let userData = {
+    if (userData === undefined) { // TEMPORARY
+      let userData = {
         user: 'UIO',
         lang: 'PL',
         changePage: true
       }
     }
     userData.user = 'UIO' // TEMPORARY
-axios({
+    axios({
       method: 'GET',
-      url: 'Users' + '(UserAlias=' + "'" + userData.user.toUpperCase() + "'," +  "Language='" + userData.lang + "')"  + urlQuery +  '&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang,UserFiles,UserAuth',
+      url: 'Users' + '(UserAlias=' + "'" + userData.user.toUpperCase() + "'," + "Language='" + userData.lang + "')" + urlQuery + '&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang,UserFiles,UserAuth',
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
     }).then(res => {
-      
       let sUserId = 'UIO' // TEMPORARY
-      
-      // let sUserId = res.data.d.UserAlias 
+
+      // let sUserId = res.data.d.UserAlias
       localStorage.setItem('id', sUserId);
-      
+
       dispatch('formatUserData', res.data.d); // format dates for date pickers and "is current" fields
       dispatch('getUserFilesData') // get data about all user files (cv, photos, documents etc.)
       dispatch('loadUserPhoto', userData) //load user's photo for menu and profile
       let oData = getters.getUserInfo;
-            
+
       commit('SET_USER_AUTH', oData.UserAuth.results) //set user authorization data
-      
+
       commit('SET_USER_EDUCATION', oData.UserEducations.results); //set user education data for profile and cv
       commit('SET_USER_EXPERIENCE', oData.UserExperiences.results); //set user experience data for profile and cv
-      
+
       commit('SET_USER_SKILLS', oData.UserSkills.results); //set user skills data for profile and cv
       let userSkills = utils.formatToArray(oData.UserSkills.results);
-      if(userSkills) {
+      if (userSkills) {
         commit('SET_USER_SKILLS', userSkills[0]);
       }
 
@@ -280,7 +276,7 @@ axios({
       // dispatch('adjustLang');
 
       commit('SET_NEW_USER_FILES_LIST', oData.UserFiles.results); //set list of files for starter page for new user
-      
+
       commit('SET_DATA_LOADED', true)
 
       dispatch('checkPageToDisplay', userData.changePage)
@@ -292,26 +288,28 @@ axios({
     commit
   }, data) {
     if (data) {
-        data.EmploymentDate = utils.dateStringToObj(data.EmploymentDate)
+      data.EmploymentDate = utils.dateStringToObj(data.EmploymentDate)
       for (let key in data) {
-        if (key === "UserCvProjects" || key === "UserEducations" || key === "UserExperiences"){
+        if (key === "UserCvProjects" || key === "UserEducations" || key === "UserExperiences") {
           let obj = data[key].results;
-          for (let i = 0; i < obj.length; i++) {
-            if (obj[i].DateStart){
-              obj[i].DateStart =  utils.dateStringToObj(obj[i].DateStart);
+          // for (let i = 0; i < obj.length; i++) {
+          for (let index in obj) {
+            if (obj[index].DateStart) {
+              obj[index].DateStart = utils.dateStringToObj(obj[index].DateStart);
             }
-            if (obj[i].DateEnd){
-              obj[i].DateEnd =  utils.dateStringToObj(obj[i].DateEnd);
+            if (obj[index].DateEnd) {
+              obj[index].DateEnd = utils.dateStringToObj(obj[index].DateEnd);
             }
-            obj[i].IsCurrent = obj[i].IsCurrent === 'X' ? true : false
+            obj[index].IsCurrent = obj[index].IsCurrent === 'X' ? true : false
           }
         }
-     }
+      }
       commit('SET_USER_INFO', data);
     }
   },
   getUsersLists({
-    commit,getters
+    commit,
+    getters
   }) {
     let urlQuery = getters.getUrlQuery
     axios({
@@ -324,22 +322,25 @@ axios({
       commit('GET_USER_LIST', res.data.d.results);
     }).catch(error => {
       console.log(error)
-     })
+    })
   },
 
-  loadUserPhoto({commit, getters}, userData){
-    const sUserId   = userData.user,
-          sLanguage = 'PL',
-          sFileType = "USER-PHOTO",
-          urlQuery = getters.getUrlQuery
+  loadUserPhoto({
+    commit,
+    getters
+  }, userData) {
+    const sUserId = userData.user,
+      sLanguage = 'PL',
+      sFileType = "USER-PHOTO",
+      urlQuery = getters.getUrlQuery
     const url =
-    " http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" +
-    sFileType +
-    "',Language='" +
-    sLanguage +
-    "',UserAlias='" +
-    sUserId +
-    "')/$value" + urlQuery;
+      " http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" +
+      sFileType +
+      "',Language='" +
+      sLanguage +
+      "',UserAlias='" +
+      sUserId +
+      "')/$value" + urlQuery;
 
     let image = new Image();
 
@@ -347,27 +348,30 @@ axios({
     image.crossOrigin = '*';
     image.addEventListener("load", function () {
       let imgCanvas = document.createElement("canvas"),
-          ctx = imgCanvas.getContext("2d");
+        ctx = imgCanvas.getContext("2d");
 
       imgCanvas.width = image.width;
-      imgCanvas.height = image.height;  
-     
+      imgCanvas.height = image.height;
+
       ctx.drawImage(image, 0, 0, image.width, image.height);
 
       let dataURL = imgCanvas.toDataURL("image/png");
-     
+
       commit('SET_USER_PHOTO_URL', dataURL)
 
-        localStorage.setItem("image", dataURL)
+      localStorage.setItem("image", dataURL)
     }, false)
 
   },
-  checkPageToDisplay({},changePage){
-    if(changePage) {
+  checkPageToDisplay({}, changePage) {
+    if (changePage) {
       router.replace('/news')
     }
   },
-  getAdverts({commit, getters}){
+  getAdverts({
+    commit,
+    getters
+  }) {
     let urlQuery = getters.getUrlQuery
     axios({
       method: 'GET',
@@ -377,17 +381,17 @@ axios({
       }
     }).then(res => {
       let oAdverts = res.data.d.results
-      for (let i = 0; i < oAdverts.length; i++) {
-        if (oAdverts[i].ValidTo){
-          oAdverts[i].ValidTo =  utils.dateStringToObj(oAdverts[i].ValidTo);
+      // for (let i = 0; i < oAdverts.length; i++) {
+      for (let index in oAdverts) {
+        if (oAdverts[index].ValidTo) {
+          oAdverts[index].ValidTo = utils.dateStringToObj(oAdverts[index].ValidTo);
         }
       }
       commit('SET_ADVERTS', oAdverts);
-    }).catch(error => { 
+    }).catch(error => {
       console.log(error)
     })
   }
-
 };
 
 const getters = {
@@ -434,10 +438,10 @@ const getters = {
   // userAdverts(state) {
   //   return state.userAdverts;
   // },
-  getUserAuth(state){
+  getUserAuth(state) {
     return state.userAuth;
   },
-  getAvailStatus(state){
+  getAvailStatus(state) {
     return state.availStatus;
   },
   getAvailType(state) {
@@ -445,15 +449,14 @@ const getters = {
   },
   getTargetGroup(state) {
     return state.targetGroup;
-
   },
-  getAdverts(state){
+  getAdverts(state) {
     return state.adverts;
-  }, 
+  },
   getRoleList(state) {
     return state.roles;
   },
-  getUserPhotoUrl(state){
+  getUserPhotoUrl(state) {
     return state.userPhotoUrl
   }
 };

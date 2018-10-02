@@ -37,8 +37,8 @@ const actions = {
     let moduleExist = null
 
     if (modules.length !== 0) {
-      for (let i = 0; i < modules.length; i++) {
-        if (modules[i] === moduleId) {
+      for(let items of modules){
+        if (items === moduleId) {
           moduleExist = true
           return
         } else {
@@ -81,7 +81,7 @@ const actions = {
     }
     commit('SET_USER_SKILLS', skillsList)
   },
-//add new skill
+  //add new skill
   addSkill({
     commit,
     getters
@@ -92,8 +92,8 @@ const actions = {
     let ifExist = null
 
     if (list.length !== 0) {
-      for (let i = 0; i < list.length; i++) {
-        if (list[i] === skill.value || /^\s*$/.test(skill.value)) {
+      for(let items of list){
+        if (items === skill.value || /^\s*$/.test(skill.value)) {
           ifExist = true
           return
         } else {
