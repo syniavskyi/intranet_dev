@@ -8,7 +8,8 @@ const state = {
   username: null,
   urlQuery: null,
   password: null,
-  hashedPassword: null
+  hashedPassword: null,
+  token: ''
 }
 
 const mutations = {
@@ -32,6 +33,9 @@ const mutations = {
   },
   SET_LOGIN_ALIAS(state, data) {
       state.username = data;
+  },
+  SET_TOKEN(state, data){
+    state.token = data;
   }
 }
 
@@ -46,12 +50,15 @@ const actions = {
       method: 'get',
       url: url,
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+        "X-CSRF-Token" : "Fetch"
       }
     }).then(res => {
       localStorage.setItem('authorized', true);
       commit('SET_URL_QUERY', url);
       commit('SET_LOGIN_ERROR', false);
+      let sToken = res.request.getResponseHeader('x-csrf-token');
+      commit('SET_TOKEN', sToken);
 
       let userData = {
         user: authData.username,
@@ -120,6 +127,9 @@ const getters = {
   },
   getLoginAlias(state) {
       return state.username;
+  },
+  getToken(state) {
+    return state.token;
   }
 }
 
