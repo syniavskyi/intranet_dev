@@ -29,10 +29,10 @@
                                     <!-- <input class="cd-range" v-model="advert.ValidTo" value="advert.ValidTo"/> -->
                                     <input v-model="advert.ValidTo" value="advert.ValidTo"/>
                                 </v-date-picker>
-                                <div class="advBtns" v-if="checkAuthor(advert.CreatedBy)">
-                                    <button v-show="!editMode" class="clear-btn" @click="editAdvert(advert)">edytuj</button>
-                                    <button v-show="editMode" class="clear-btn" @click="saveAdvert(advert)" :disabled="!isAdvertValid">zapisz</button>
-                                    <button v-show="editMode" class="clear-btn" @click="cancelEditing(index)">anuluj</button>
+                                <div class="advBtns" >
+                                    <button  class="clear-btn" @click="editAdvert(advert)">edytuj</button>
+                                    <button  class="clear-btn" @click="saveAdvert(advert)" :disabled="!isAdvertValid">zapisz</button>
+                                    <button  class="clear-btn" @click="cancelEditing(index)">anuluj</button>
                                     <button class="oclear-btn" @click="removeAdvert(index)">X</button>
                                 </div>
                                 <button v-show="isMoreThanOneAdvert" @click="nextSlide(-1)" class="advLeft">&#8249;</button>
@@ -150,12 +150,12 @@ export default {
     this.$store.commit("SET_DISPLAY_LOADER", false);
     this.isMoreThanOneAdvert = this.advertsList.length > 1 ? true : false;
   },
-  beforeCreate() {
-    this.$store.dispatch("geoLoc");
-    this.$store.dispatch("getNews");
-  },
+  // beforeCreate() {
+  //   this.$store.dispatch("geoLoc");
+  //   this.$store.dispatch("getNews");
+  // },
   created() {
-    this.getToday();
+    // this.getToday();
     // this.getNews()
   },
   destroyed() {
@@ -190,7 +190,8 @@ export default {
       "getToday",
       "getNews",
       "xmlToJson",
-      "getArticles"
+      "getArticles",
+      "updateAdvert"
     ]),
     setDateTo(event) {
       if (event.DateTo <= event.DateFrom) {
@@ -216,6 +217,8 @@ export default {
     },
     saveAdvert(index) {
       this.editMode = false;
+      this.$store.dispatch("updateAdvert", index)
+      // this.updateAdvert();
     },
     removeAdvert(index) {
       this.advertsList.splice(index, 1);

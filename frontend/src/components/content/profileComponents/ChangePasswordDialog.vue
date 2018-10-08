@@ -44,8 +44,13 @@ export default {
     })
   },
   methods: {
-    close() {
-      this.$store.commit("SET_SHOW_CHANGE_PASSWORD_DIALOG", false);
+    close(evt) {
+        let el = evt.target.parentElement.parentElement;
+            el.classList.add("animate-modal-close")
+
+
+        setTimeout(() => {this.$store.commit("SET_SHOW_CHANGE_PASSWORD_DIALOG", false)
+                          el.classList.remove("animate-modal-close")  }, 550);
     },
     onSubmit() {
       let userData = this.userData;
