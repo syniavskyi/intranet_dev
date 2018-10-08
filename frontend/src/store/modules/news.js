@@ -83,6 +83,34 @@ const actions = {
             }  
             slides[state.slider.slideIndex - 1].style.display = "flex";
     },
+    updateAdvert({commit, state, dispatch, getters}, index){
+        // let data = getters.getAdverts[0]
+        let data = index;
+        let query = getters.getUrlQuery
+        const url = 'Adverts' + '(' + "AdvertId='" + data.AdvertId + "')" + query;
+        data.ValidTo = '2019-01-13T00:00:00';//utils.formatDateForBackend(data.ValidTo);
+        // data.Message = "Agnieszce coś się udało."
+        let sToken = getters.getToken;
+        axios.defaults.withCredentials = true
+        let cookie = getters.getCookie;
+        axios({
+            url: url,
+            method: 'put',
+            data: data,
+            headers: {
+                // "Content-Type": "application/x-www-form-urlencoded",//"application/atom+xml; type=entry; charset=utf-8",
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+                "Cache-Control": "no-cache",
+                "x-csrf-token": sToken,
+                "Cookie": cookie
+            }
+          }).then(res => {
+              console.log(res)
+            }).catch(error => {
+              console.log(error);
+          })
+    },
     startStopSlider({dispatch}, evt) {
         // this.repeatSlider = false;
         if (evt.target.innerText === state.slider.start) { 

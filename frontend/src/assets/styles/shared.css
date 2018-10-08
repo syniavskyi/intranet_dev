@@ -877,6 +877,24 @@ input:required {
 }
 /* tile head */
 
+.animate-modal-close {
+    animation: modal-trans;
+    animation-duration: .55s;
+}
+
+@keyframes modal-trans {
+    from {
+        /* scale(1) translate(-50%, -50%)  */
+        transform: rotate3d(0);
+        opacity: 1;
+    }
+    to {
+        /* scale(0) translate(-500%, -500%)  */
+        transform: rotate3d(.8, .8, .8, 240deg);
+        opacity: 0;
+    }
+}
+
 /* background: linear-gradient(to right, #ffffff 0%,#e5e5e5 10%,#e5e5e5 90%,#ffffff 100%); */
 
   @keyframes slide-in {

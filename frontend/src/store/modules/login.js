@@ -8,7 +8,8 @@ const state = {
   urlQuery: null,
   password: null,
   hashedPassword: null,
-  token: ''
+  token: '',
+  cookie: ''
 }
 
 const mutations = {
@@ -35,6 +36,9 @@ const mutations = {
   },
   SET_TOKEN(state, data) {
     state.token = data;
+  },
+  SET_COOKIE(state, data) {
+    state.cookie = data;
   }
 }
 
@@ -50,7 +54,10 @@ const actions = {
       url: url,
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-        "X-CSRF-Token": "Fetch"
+        "X-CSRF-Token": "Fetch",
+        "X-Requested-With": "XMLHttpRequest",
+        // "Cache-Control": "max-age=3600"
+        "Cache-Control": "no-cache"
       }
     }).then(res => {
       localStorage.setItem('authorized', true);
@@ -58,6 +65,8 @@ const actions = {
       commit('SET_LOGIN_ERROR', false);
       let sToken = res.request.getResponseHeader('x-csrf-token');
       commit('SET_TOKEN', sToken);
+      commit('SET_COOKIE', res.request.getResponseHeader("Cookie"))
+      document.cookie = res.request.getResponseHeader("Cookie")
 
       let userData = {
         user: authData.username,
@@ -131,6 +140,9 @@ const getters = {
   },
   getToken(state) {
     return state.token;
+  },
+  getCookie(state) {
+    return state.cookie;
   }
 }
 
