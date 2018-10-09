@@ -93,9 +93,11 @@ const actions = {
       method: 'PUT',
       data: data,
       headers: {
-        "Content-type": "application/atom+xml; type=entry; charset=utf-8",
+        // "Content-type": "application/atom+xml; type=entry; charset=utf-8",
+        "Content-Type": "application/json",
         "X-Requested-With": "XMLHttpRequest",
-        "x-csrf-token": getters.getToken
+        "x-csrf-token": getters.getToken,
+        "Cookie": cookie
       }
     }).then(res => {
       console.log(res)

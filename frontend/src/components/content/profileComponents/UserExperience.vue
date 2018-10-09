@@ -124,9 +124,9 @@ export default {
     },
     // validate fields and set button to disabled or not
     checkFields(index) {
-      let bChanged, bEmployer, bWorkPos, bDateStart, sProStart, sEditStart;
-      (beforeEdit = this._beforeEditingCache[index]),
-        (userExp = this.userExperience[index]);
+      let bChanged, bEmployer, bWorkPos, bDateStart, sProStart, sEditStart,
+          beforeEdit = this._beforeEditingCache[index],
+          userExp = this.userExperience[index];
 
       bEmployer = beforeEdit.Employer !== userExp.Employer;
       bWorkPos = beforeEdit.WorkPos !== userExp.WorkPos;

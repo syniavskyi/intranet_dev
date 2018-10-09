@@ -54,7 +54,7 @@ export default {
     },
     onSubmit() {
       let userData = this.userData;
-      userData.UserAlias = "SJI";
+    //   userData.UserAlias = "SJI";
       userData.Password = document.getElementById("oldPass").value;
       userData.NewPassword = document.getElementById("newPass").value;
       this.$store.dispatch("submitPassword", userData);

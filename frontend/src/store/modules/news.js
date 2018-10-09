@@ -93,6 +93,7 @@ const actions = {
         let sToken = getters.getToken;
         axios.defaults.withCredentials = true
         let cookie = getters.getCookie;
+        
         axios({
             url: url,
             method: 'put',
