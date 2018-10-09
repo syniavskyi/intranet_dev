@@ -95,23 +95,46 @@ const actions = {
       console.error(status);
     });
   },
-  updateUserProjectsPosition({
+  updateUserProjectsPosition({getters,
     dispatch
   }, data) {
     const dataToSend = data;
-    dataToSend.UserAlias = 'UIO';
+    dataToSend.UserAlias = 'DJA';
     dataToSend.DateStart = utils.formatDateForBackend(dataToSend.DateStart);
     dataToSend.DateEnd = utils.formatDateForBackend(dataToSend.DateEnd);
     dataToSend.IsCurrent = dataToSend.IsCurrent ? 'X' : '-'
     dataToSend.DateStartToChange = utils.formatDateForBackend(dataToSend.DateStartToChange)
     dataToSend.DateEndToChange = utils.formatDateForBackend(dataToSend.DateEndToChange)
     dispatch('formatProjectToString', dataToSend)
-    const url = "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(dataToSend.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + dataToSend.ProjectName + "',Language='" + dataToSend.Language + "')";
-    odata(url).put(dataToSend).save(function (oData) {
-      console.log("zamianka");
-    }, function (status) {
-      console.error(status);
-    });
+    let query = getters.getUrlQuery
+    // dataToSend.ProjectName
+    let url = "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(dataToSend.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + 'D%C5%82uga%20nazwa%20projektu' + "',Language='" + dataToSend.Language + "')" + query;;
+    // odata(url).put(dataToSend).save(function (oData) {
+    //   console.log("zamianka");
+    // }, function (status) {
+    //   console.error(status);
+    // });
+    url = encodeURIComponent(url)
+    let sToken = getters.getToken;
+    let cookie = getters.getCookie;
+    axios.defaults.withCredentials = true;
+    axios({
+      url: url,
+      method: 'put',
+      data: dataToSend,
+      headers: {
+          // "Content-Type": "application/x-www-form-urlencoded",//"application/atom+xml; type=entry; charset=utf-8",
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+          "Cache-Control": "no-cache",
+          "x-csrf-token": sToken,
+          "Cookie": cookie
+      }
+    }).then(res => {
+        console.log(res)
+      }).catch(error => {
+        console.log(error);
+    })
   },
   // format project from array with objects to string
   formatProjectToString({}, dataToSend) {

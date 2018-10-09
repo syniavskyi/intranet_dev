@@ -66,7 +66,7 @@ const actions = {
       let sToken = res.request.getResponseHeader('x-csrf-token');
       commit('SET_TOKEN', sToken);
       commit('SET_COOKIE', res.request.getResponseHeader("Cookie"))
-      document.cookie = res.request.getResponseHeader("Cookie")
+      // document.cookie = res.request.getResponseHeader("Cookie")
 
       let userData = {
         user: authData.username,
