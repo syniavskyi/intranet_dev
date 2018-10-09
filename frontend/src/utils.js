@@ -140,7 +140,7 @@ export const setWorkExperiencePL = function (date) {
     oDates.year = "rok ";
   } else if (date.years > 1 && date.years <= 4) {
     oDates.year = date.years + " lata ";
-  } else if (oDiff.years > 4) {
+  } else if (date.years > 4) {
     oDates.year = date.years + " lat ";
   }
 
