@@ -192,9 +192,9 @@ export default {
         bDesc,
         beforeEdit = this._beforeEditingProjects[index],
         userPro = this.userProjects[index];
+        if(beforeEdit) {
       bProjectName = beforeEdit.ProjectName !== userPro.ProjectName;
       bContractor = beforeEdit.Contractor !== userPro.Contractor;
-
       if (beforeEdit.Industries.length !== userPro.Industries.length) {
         bIndustries = true;
       } else {
@@ -231,7 +231,9 @@ export default {
         bDesc
           ? true
           : false;
-
+        } else {
+          bChanged = true;
+        }
       if (
         bChanged &&
         userPro.ProjectName &&

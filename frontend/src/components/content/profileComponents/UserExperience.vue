@@ -127,18 +127,20 @@ export default {
       let bChanged, bEmployer, bWorkPos, bDateStart, sProStart, sEditStart,
           beforeEdit = this._beforeEditingCache[index],
           userExp = this.userExperience[index];
+      if(beforeEdit) {
+         bEmployer = beforeEdit.Employer !== userExp.Employer;
+         bWorkPos = beforeEdit.WorkPos !== userExp.WorkPos;
+         let a = beforeEdit.DateStart;
+         a = new Date(a.getFullYear(), a.getMonth(), a.getDay());
+         let b = userExp.DateStart;
+         b = new Date(b.getFullYear(), b.getMonth(), b.getDay());
 
-      bEmployer = beforeEdit.Employer !== userExp.Employer;
-      bWorkPos = beforeEdit.WorkPos !== userExp.WorkPos;
+        bDateStart = a.getTime() !== b.getTime();
 
-      let a = beforeEdit.DateStart;
-      a = new Date(a.getFullYear(), a.getMonth(), a.getDay());
-      let b = userExp.DateStart;
-      b = new Date(b.getFullYear(), b.getMonth(), b.getDay());
-
-      bDateStart = a.getTime() !== b.getTime();
-
-      bChanged = bEmployer || bWorkPos || bDateStart ? true : false;
+        bChanged = bEmployer || bWorkPos || bDateStart ? true : false;
+      } else {
+        bChanged  = true;
+      }
 
       if (this.userExperience.length > 0) {
         if (
