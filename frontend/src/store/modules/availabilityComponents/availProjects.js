@@ -81,6 +81,27 @@ const actions = {
     //    });
     },
     addUserProject({commit, getters, dispatch}) {
+      let data  = getters.getNewProjectForUser,
+           url = 'UserProjects',
+           sToken = getters.getToken,
+          cookie = getters.getCookie;
+
+      axios({
+        url: url,
+        method: 'post',
+        data: data,
+        headers: {
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "Cache-Control": "no-cache",
+            "x-csrf-token": sToken,
+            "Cookie": cookie
+        }
+      }).then(res => {
+          console.log(res)
+        }).catch(error => {
+          console.log(error);
+      })
         // const newProjectData = getters.getNewProjectForUser
         // if (newProjectData.dates === undefined) {
         //     const dates = {

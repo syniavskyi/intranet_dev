@@ -45,7 +45,7 @@
     </div>    
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 let utils = require('../../../utils')
 export default {
     props: ['selected-type', 'selected-user', 'auth-type'],
@@ -93,6 +93,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions({addNewLeave: 'addUserLeave'}),
         checkFields() {
             let obj = this.newLeave
             for (let key in obj) {
@@ -104,9 +105,7 @@ export default {
                 }
             }
         },
-        addNewLeave() {
-            console.log(this.newLeave)
-        }
+        
     }
 };
 </script>
