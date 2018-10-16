@@ -91,7 +91,7 @@ const actions = {
         data.ValidTo = '2019-01-13T00:00:00';//utils.formatDateForBackend(data.ValidTo);
         // data.Message = "Agnieszce coś się udało."
         let sToken = getters.getToken;
-        axios.defaults.withCredentials = true
+        // axios.defaults.withCredentials = true
         let cookie = getters.getCookie;
         
         axios({

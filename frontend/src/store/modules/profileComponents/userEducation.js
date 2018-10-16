@@ -72,11 +72,24 @@ const actions = {
     data.IsCurrent = data.IsCurrent ? 'X' : '-'
     let query = getters.getUrlQuery
     const url = 'UsersEducation' + '(' + "UserAlias='" + data.UserAlias + "',University='" + data.UniversityToChange + "',AcademicTitle='" + data.AcademicTitleToChange + "',FieldOfStudy='" + data.FieldOfStudyToChange + "',Language='" + data.Language + "')" + query
-    odata(url).put(data).save(function (data) {
-      console.log("changed");
-    }, function (status) {
-      console.error(status);
-    });
+    let sToken = getters.getToken;
+    let cookie = getters.getCookie;
+    axios({
+      url: url,
+      method: 'put',
+      data: data,
+      headers: {
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+          "Cache-Control": "no-cache",
+          "x-csrf-token": sToken,
+          "Cookie": cookie
+      }
+    }).then(res => {
+        console.log(res)
+      }).catch(error => {
+        console.log(error);
+    })
   },
   addUserEducation({
     getters
@@ -86,30 +99,25 @@ const actions = {
     data.DateStart = utils.formatDateForBackend(data.DateStart)
     data.DateEnd = utils.formatDateForBackend(data.DateEnd)
     data.IsCurrent = data.IsCurrent ? 'X' : '-'
-    let url = 'UsersEducation' + '(' + "UserAlias='" + data.UserAlias + "',University='" + data.UniversityToChange + "',AcademicTitle='" + data.AcademicTitleToChange + "',FieldOfStudy='" + data.FieldOfStudyToChange + "',Language='" + data.Language + "')" + query
-
+    let url = 'UsersEducation';
+    let sToken = getters.getToken;
+    let cookie = getters.getCookie;
     axios({
       url: url,
-      method: 'PUT',
+      method: 'post',
       data: data,
       headers: {
-        // "Content-type": "application/atom+xml; type=entry; charset=utf-8",
-        "Content-Type": "application/json",
-        "X-Requested-With": "XMLHttpRequest",
-        "x-csrf-token": getters.getToken,
-        "Cookie": cookie
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+          "Cache-Control": "no-cache",
+          "x-csrf-token": sToken,
+          "Cookie": cookie
       }
     }).then(res => {
-      console.log(res)
-    }).catch(error => {
-      console.log(error);
+        console.log(res)
+      }).catch(error => {
+        console.log(error);
     })
-
-    // odata('UsersEducation').post(data).save(function (data) {
-    //   console.log("Working");
-    // }, function (status) {
-    //   console.error(status);
-    // });
   },
   // get description for school from text table
   getSchoolDesc({

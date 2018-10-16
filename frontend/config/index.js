@@ -10,11 +10,17 @@ module.exports = {
         // Paths
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
-        proxyTable: {
-            // proxy all webpack dev-server requests starting with /api to our Spring Boot backend (localhost:8088)
-            '/api': {
-                target: 'http://localhost:8088',
-                changeOrigin: true
+        proxyOptions: {
+            target: 'https://nw5.local.pl:1443',    // target host
+            changeOrigin: true,                     // needed for virtual hosted sites   
+            secure: false,                          // not SSL
+            pathRewrite: {
+                '^/api' : ''                        // rewrite path (sent to back-end)
+            },
+            router: {
+                // override target 'localhost:8080' to 'https://nw5.local.pl:1443'
+                'localhost:8080' : 'https://nw5.local.pl:1443',
+                'http://localhost:8080' : 'https://nw5.local.pl:1443'
             }
         },
         // Various Dev Server settings

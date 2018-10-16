@@ -162,7 +162,7 @@ export default {
         bDateStart,
         beforeEdit = this._beforeEditingCache[index],
         userEdu = this.userEducation[index];
-
+    if(beforeEdit) {
       bFieldOfStudy = beforeEdit.FieldOfStudy !== userEdu.FieldOfStudy;
       bUniversity = beforeEdit.University !== userEdu.University;
       bStudyType = beforeEdit.StudyType !== userEdu.StudyType;
@@ -172,7 +172,9 @@ export default {
       let b = userEdu.DateStart;
       b = new Date(b.getFullYear(), b.getMonth(), b.getDay());
       bDateStart = a.getTime() !== b.getTime();
-
+}   else {
+     bChanged = true;
+  }
       bChanged =
         bFieldOfStudy ||
         bUniversity ||

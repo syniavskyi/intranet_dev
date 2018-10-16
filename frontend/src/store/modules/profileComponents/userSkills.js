@@ -123,11 +123,37 @@ const actions = {
     );
     newSkills = utils.formatToString(newSkills)
 
-    odata(url).post(newSkills).save(function (oData) {
-      console.log("skile");
-    }, function (status) {
-      console.error(status);
-    });
+
+
+    let sToken = getters.getToken;
+    // axios.defaults.withCredentials = true
+    let cookie = getters.getCookie;
+    
+    axios({
+        url: url,
+        method: 'post',
+        data: newSkills,
+        headers: {
+            // "Content-Type": "application/x-www-form-urlencoded",//"application/atom+xml; type=entry; charset=utf-8",
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "Cache-Control": "no-cache",
+            "x-csrf-token": sToken,
+            "Cookie": cookie
+        }
+      }).then(res => {
+          console.log(res)
+        }).catch(error => {
+          console.log(error);
+      })
+
+
+
+    // odata(url).post(newSkills).save(function (oData) {
+    //   console.log("skile");
+    // }, function (status) {
+    //   console.error(status);
+    // });
   },
   addLanguageSkillsRow({
     commit,
