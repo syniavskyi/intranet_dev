@@ -59,7 +59,7 @@
                     <div class="ava-tbs-item eduButtonsAvail" v-else>
                         <div class="ava-tbs-ititle"> {{ $t("label.options") }} </div>
                             <button v-if="editMode" :disabled="true" @click="save(index, avail.EntryId)">{{ $t("button.save") }}</button>
-                            <button v-if="editMode">{{ $t("button.delete") }}</button>
+                            <button v-if="editMode" @click="remove">{{ $t("button.delete") }}</button>
                     </div>
                 </div>
             </div>

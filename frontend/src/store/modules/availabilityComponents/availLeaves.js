@@ -53,22 +53,45 @@ const actions = {
                 commit('SET_DISPLAY_LOADER', false)
 
         },
-    removeUserAvail({commit, getters, dispatch}, data) {
-    //     const URL = "/api/users/" + data.userId + "/userEngag/" + data.projectId + "/delete"
-    //     axios.delete(URL).then(res => {
-    //         console.log(res)
-    //         dispatch('getUserProjects', data.userId)
-    //         dispatch('hideAllMessages')
-    //         commit('SET_REMOVE_ERROR', false)
-    //         commit('SET_REMOVE_SUCCESS', true)
-    //         commit('SET_PROJECT_TO_EDIT', {})
-    //     }).catch(error => {
-    //         dispatch('hideAllMessages')
-    //         commit('SET_REMOVE_ERROR', true)
-    //         commit('SET_REMOVE_SUCCESS', false)
-    //        console.log(error)
-    //    });
+    removeUserAvail({commit, getters, dispatch}, index) {
+        let data = getters.getUserAvail[index]
+        const URL = "UserAvailabilities(TypeId='" + data.TypeId + "',UserId='" + data.UserId + "',DateStart=datetime'" + moment(data.DateStart).format("YYYY-MM-DD") + "T00:00:00',DateEnd=datetime'"+ moment(data.DateEnd).format("YYYY-MM-DD") + "T00:00:00')"
+        axios.delete(URL).then(res => {
+            console.log(res)
+            dispatch('getUserProjects', data.userId)
+            dispatch('hideAllMessages')
+            commit('SET_REMOVE_ERROR', false)
+            commit('SET_REMOVE_SUCCESS', true)
+        }).catch(error => {
+            dispatch('hideAllMessages')
+            commit('SET_REMOVE_ERROR', true)
+            commit('SET_REMOVE_SUCCESS', false)
+           console.log(error)
+       });
     },
+    addUserLeave({commit, getters, dispatch}) {
+        let data  = getters.getNewLeaveForUser,
+             url = 'UserAvailabilities',
+             sToken = getters.getToken,
+            cookie = getters.getCookie;
+  
+        axios({
+          url: url,
+          method: 'post',
+          data: data,
+          headers: {
+              "Content-Type": "application/json",
+              "X-Requested-With": "XMLHttpRequest",
+              "Cache-Control": "no-cache",
+              "x-csrf-token": sToken,
+              "Cookie": cookie
+          }
+        }).then(res => {
+            console.log(res)
+          }).catch(error => {
+            console.log(error);
+        })
+    }
 };
 
 const getters = {
