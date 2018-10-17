@@ -71,7 +71,7 @@ const actions = {
     data.DateEnd = utils.formatDateForBackend(data.DateEnd)
     data.IsCurrent = data.IsCurrent ? 'X' : '-'
     let query = getters.getUrlQuery
-    const url = 'UsersEducation' + '(' + "UserAlias='" + data.UserAlias + "',University='" + data.UniversityToChange + "',AcademicTitle='" + data.AcademicTitleToChange + "',FieldOfStudy='" + data.FieldOfStudyToChange + "',Language='" + data.Language + "')" + query
+    const url = 'UsersEducation' + '(' + "UserAlias='" + data.UserAlias + "',University='" + data.UniversityToChange + "',AcademicTitle='" + data.AcademicTitleToChange + "',FieldOfStudy='" + data.FieldOfStudyToChange + "',Language='" + data.Language + "')"
     let sToken = getters.getToken;
     let cookie = getters.getCookie;
     axios({

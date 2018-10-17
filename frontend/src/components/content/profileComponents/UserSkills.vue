@@ -21,7 +21,7 @@
             <button class="prof-skills-btn" @click="addLanguageSkillsRow" v-if="editMode">+</button>
             <div class="prof-div-skills" v-for="(lang, index) in userLangs" :id="index" :key="index">
               <div class="prof-div-slang">
-                <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.LanguageId" @change="checkFieldsLang(index)">
+                <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.LanguageId" @change="checkFieldsLangs(index)" :id="index"> 
                   <option v-for="fullLang in fullLanguageList" :value="fullLang.LanguageId" :key="fullLang.LanguageId">{{fullLang.LangName}}</option>
                 </select>
                 <select v-if="!editMode" class="selectProfileSkills selectDisabled" v-model="lang.LanguageId">
@@ -30,7 +30,7 @@
                 <label class="label-select-profile">{{ $t("label.language") }}</label>
               </div>
               <div class="prof-div-slang">
-                <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.LangLevel" @change="checkFieldsLang(index)">
+                <select v-if="editMode" class="selectProfileSkills selectEdit" v-model="lang.LangLevel" @change="checkFieldsLangs(index)" :id="index">
                   <option v-for="level in langLevels" :value="level.Key" :key="level.Key">{{level.Value}}</option>
                 </select>
                 <select v-if="!editMode" class="selectProfileSkills selectDisabled" v-model="lang.LangLevel">
@@ -40,7 +40,7 @@
               </div>
               <div class="prof-skills-btns">
                 <button class="prof-skills-delete" @click="removeLanguageSkillsRow(index)" v-if="editMode">{{ $t("button.delete") }}</button>
-                <button class="prof-skills-save saveLangBtn" :disabled="true" @click="saveLang" v-if="editMode">{{ $t("button.save") }}</button>
+                <button class="prof-skills-save saveLangBtn" :disabled="true" @click="saveLang(index)" v-if="editMode">{{ $t("button.save") }}</button>
               </div>
             </div>
           </div>
@@ -172,8 +172,8 @@ export default {
     },
     // validate fields
     checkFieldsLangs(index) {
-      if (this.userLangs.length > 0) {
-        if (
+      // if (this._beforeEditingCacheLangs[index]!==undefined) {
+        if (this._beforeEditingCacheLangs[index]===undefined ||
           this._beforeEditingCacheLangs[index].LanguageId !==
             this.userLangs[index].LanguageId ||
           (this._beforeEditingCacheLangs[index].LangLevel !==
@@ -187,7 +187,7 @@ export default {
         } else {
           document.getElementsByClassName("saveLangBtn")[index].disabled = true;
         }
-      }
+      // }  
     },
     // check fields for skills
     checkFieldsSkills(event) {
@@ -233,10 +233,15 @@ export default {
         this.bTechno = bBool;
       }
     },
-    saveLang() {
-      this._beforeEditingCacheLangs = JSON.parse(
-        JSON.stringify(this.userLangs)
-      );
+    saveLang(index) {
+     const dataToChange = this._beforeEditingCacheLangs[index];
+     const newData = utils.createClone(this.userLangs[index]);
+      if(dataToChange) {
+        this.$store.dispatch('updateUserLangs', newData);
+      } else {
+        this.$store.dispatch('saveUserLangs', newData);
+      }
+      this._beforeEditingCacheLangs = utils.createClone(this.userLangs);
     },
     addModule(value) {
       const moduleId = value.target.value;

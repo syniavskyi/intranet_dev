@@ -136,60 +136,77 @@ const actions = {
   addNewEvent({
     getters,
     dispatch
-  }) {
-    //  const eventData = getters.getEventToChange;
-
-    //  this.$store.commit('SET_CLEARED_DATA', utils.createClone(editedData))
-    let eventData = utils.createClone(editedData);
-    eventData.DateFrom = utils.formatDateForBackend(getters.getSelectedDate);
-    eventData.DateTo = !eventData.DateTo ? eventData.DateFrom : utils.formatDateForBackend(eventData.DateTo)
-    eventData.EventTime = utils.formatTimeForBackend(eventData.EventTime);
-
-    dispatch('setColorPriority');
+  }, data) {
+    data.DateFrom = getters.getSelectedDate;
+    data.DateTo = !data.DateTo ? data.DateFrom : data.DateTo;
+    let eventData = utils.createClone(data);
+    eventData.DateFrom = utils.formatDateForBackend(data.DateFrom);
+    eventData.DateTo = !eventData.DateTo ? eventData.DateFrom : utils.formatDateForBackend(eventData.DateTo);
+    if(eventData.EventTime){
+      eventData.EventTime = utils.formatTimeForBackend(eventData.EventTime);
+    }
     eventData = utils.formatToString(eventData);
-    // jeszcze URL
-    odata('Events').post(eventData).save(function (data) {
-      console.log("Working");
-    }, function (status) {
-      console.error(status);
-    });
-
+    delete eventData.color;
+    let sToken = getters.getToken;
+    let cookie = getters.getCookie;
+    let url = 'Events';
+    axios({
+      url: url,
+      method: 'post',
+      data: eventData,
+      headers: {
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+          "Cache-Control": "no-cache",
+          "x-csrf-token": sToken,
+          "Cookie": cookie
+      }
+    }).then(res => {
+        console.log(res)
+      }).catch(error => {
+        console.log(error);
+    })
+    dispatch('setColorPriority');
     state.addEvent.color = state.priorityColor
-    state.aEvents.push(eventData);
+    state.aEvents.push(data);
 
   },
   editEvent({
     commit,
     getters
-  }) {
-    // let eventData = getters.getEventToChange;
-
-    let eventData = utils.createClone(getters.getEventToChange);
-
-    let aEvents = getters.getEvents;
-    let pos = aEvents.findIndex(x => x.EventId === eventData.EventId);
-    //aEvents[pos] = eventData;
-    eventData.DateFrom = utils.formatDateForBackend(eventData.DateFrom);
-    eventData.DateTo = utils.formatDateForBackend(eventData.DateTo);
-
-    if (eventData.EventTime) {
+  },data) {
+    let eventData = utils.createClone(data);
+    eventData.DateFrom = utils.formatDateForBackend(data.DateFrom);
+    eventData.DateTo = !eventData.DateTo ? eventData.DateFrom : utils.formatDateForBackend(eventData.DateTo);
+    if(eventData.EventTime){
       eventData.EventTime = utils.formatTimeForBackend(eventData.EventTime);
     }
-    //dispatch('getEvents');
     eventData = utils.formatToString(eventData);
-    commit('SET_EVENTS', aEvents);
-    let query = getters.getUrlQuery
-    const url = 'Events' + '(' + "EventId='" + eventData.EventId + "')" + query
-    odata(url).put(eventData).save(function (data) {
-      //  tak miałam, zobaczę jak będą działać zapytania
-      // i co dalej
-      //   // let aPriority = res.data.d.results;
-      //   // dispatch('getEvents')
-      //   // commit('SET_PRIORITY', aPriority);
-      console.log("changed");
-    }, function (status) {
-      console.error(status);
-    });
+    delete eventData.color;
+    const url = 'Events' + '(' + "EventId='" + eventData.EventId + "')";
+      let sToken = getters.getToken;
+      let cookie = getters.getCookie;
+      axios({
+        url: url,
+        method: 'put',
+        data: eventData,
+        headers: {
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "Cache-Control": "no-cache",
+            "x-csrf-token": sToken,
+            "Cookie": cookie
+        }
+      }).then(res => {
+          console.log(res);
+          let aEvents = getters.getEvents;
+          let pos = aEvents.findIndex(x => x.EventId === eventData.EventId);
+          commit('SET_CLEARED_DATA', eventData);
+          aEvents[pos] = data;
+          commit('SET_EVENTS', aEvents);
+        }).catch(error => {
+          console.log(error);
+      })
   },
   removeEvent({
     commit,

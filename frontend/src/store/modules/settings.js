@@ -13,12 +13,14 @@ const state = {
       description: i18n.t('select.language.polish')
     }
   ],
-  loginLanguage: ''
+  loginLanguage: '',
+  selectedCvLang: ''
 }
 
 const mutations = {
   SET_LANG(state, language) {
     app.$i18n.locale = language;
+    state.selectedCvLang = language;
   },
   SET_LANG_LIST(state, list) {
     state.languageList = list;
@@ -56,6 +58,9 @@ const getters = {
   },
   getLoginLanguage(state) {
     return state.loginLanguage;
+  },
+  getSelectedCvLang(state) {
+    return state.selectedCvLang;
   }
 }
 
