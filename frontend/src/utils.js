@@ -237,4 +237,9 @@ export const checkRole = function(data) {
                   }
           }
         }
+ export const dateToValid = function(beforeData, newData) {
+   let a = new Date(beforeData.getFullYear(), beforeData.getMonth(), beforeData.getDay());
+   let b = new Date(newData.getFullYear(), newData.getMonth(), newData.getDay());
+   return a.getTime() !== b.getTime();
+ } 
 const actions = {};
