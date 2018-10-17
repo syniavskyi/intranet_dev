@@ -160,6 +160,9 @@ export default {
         bStudyType,
         bAcademicTitle,
         bDateStart,
+        bDateEnd,
+        bCurrent,
+        bDateChange,
         beforeEdit = this._beforeEditingCache[index],
         userEdu = this.userEducation[index];
     if(beforeEdit) {
@@ -167,11 +170,12 @@ export default {
       bUniversity = beforeEdit.University !== userEdu.University;
       bStudyType = beforeEdit.StudyType !== userEdu.StudyType;
       bAcademicTitle = beforeEdit.AcademicTitle !== userEdu.AcademicTitle;
-      let a = beforeEdit.DateStart;
-      a = new Date(a.getFullYear(), a.getMonth(), a.getDay());
-      let b = userEdu.DateStart;
-      b = new Date(b.getFullYear(), b.getMonth(), b.getDay());
-      bDateStart = a.getTime() !== b.getTime();
+      bDateStart = utils.dateToValid(beforeEdit.DateStart, userEdu.DateStart);
+      bCurrent = beforeEdit.IsCurrent !== userEdu.IsCurrent;
+      if(userEdu.DateEnd) {
+          bDateEnd = utils.dateToValid(beforeEdit.DateEnd, userEdu.DateEnd);
+      }
+      bDateChange = bCurrent || bDateEnd;
 }   else {
      bChanged = true;
   }
@@ -180,7 +184,8 @@ export default {
         bUniversity ||
         bStudyType ||
         bAcademicTitle ||
-        bDateStart
+        bDateStart ||
+        bDateChange
           ? true
           : false;
 

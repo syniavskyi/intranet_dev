@@ -189,6 +189,9 @@ export default {
         bIndustries,
         bModules,
         bDateStart,
+        bDateEnd,
+        bCurrent,
+        bDateChange,
         bDesc,
         beforeEdit = this._beforeEditingProjects[index],
         userPro = this.userProjects[index];
@@ -213,35 +216,35 @@ export default {
           }
         }
       }
-
-      let a = beforeEdit.DateStart;
-      a = new Date(a.getFullYear(), a.getMonth(), a.getDay());
-      let b = userPro.DateStart;
-      b = new Date(b.getFullYear(), b.getMonth(), b.getDay());
-
-      bDateStart = a.getTime() !== b.getTime();
+      bDateStart = utils.dateToValid(beforeEdit.DateStart, userPro.DateStart);
+      bCurrent = beforeEdit.IsCurrent !== userPro.IsCurrent;
+      if(userPro.DateEnd) {
+          bDateEnd = utils.dateToValid(beforeEdit.DateEnd, userPro.DateEnd);
+      }
+      bDateChange = bCurrent || bDateEnd;
       bDesc = beforeEdit.Description !== userPro.Description;
-
+     } else {
+          bChanged = true;
+        }
       bChanged =
         bProjectName ||
         bContractor ||
         bIndustries ||
         bModules ||
         bDateStart ||
+        bDateChange ||
         bDesc
           ? true
           : false;
-        } else {
-          bChanged = true;
-        }
+        
       if (
-        bChanged &&
         userPro.ProjectName &&
         userPro.ContractorName &&
         userPro.Industries.length !== 0 &&
         userPro.Modules.length !== 0 &&
         userPro.DateStart &&
         userPro.Description &&
+        bChanged &&
         (userPro.DateEnd !== null || userPro.IsCurrent)
       ) {
         document.getElementsByClassName("projSaveButton")[
@@ -311,6 +314,7 @@ export default {
       } else {
         input.setAttribute("style", "display: flex");
       }
+      this.checkFields(index);
     },
     finishEditing() {
       this.onHoverOut(this.$el);
