@@ -125,6 +125,14 @@ const actions = {
         }
         dispatch("displayToast");
     },
+    removeAdvert({commit, getters, dispatch}, advertId) {
+        const URL = 'Adverts' + '(' + "AdvertId='" + advertId + "')"
+        axios.delete(URL).then(res => {
+            console.log(res)
+        }).catch(error => {
+           console.log(error)
+       });
+    },
     // take location
     geoLoc({commit, state, dispatch}) {
         var geoLocat = {}
