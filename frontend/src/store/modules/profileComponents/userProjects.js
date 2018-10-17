@@ -81,49 +81,53 @@ const actions = {
     // commit('SET_PROJECT_ERROR', false)
   },
   saveUserProjectsPosition({
-    dispatch
+    dispatch, getters
   }, data) {
     data.UserAlias = 'UIO';
     data.DateStart = utils.formatDateForBackend(data.DateStart);
     data.DateEnd = utils.formatDateForBackend(data.DateEnd);
-    dispatch('formatToString', data);
+    dispatch('formatProjectToString', data);
     data.IsCurrent = data.IsCurrent ? 'X' : '-';
-    dispatch('adjustProjects')
-    odata('UserCvProjects').post(data).save(function (data) {
-      console.log("halohalo");
-    }, function (status) {
-      console.error(status);
-    });
+    let sToken = getters.getToken;
+    let cookie = getters.getCookie;
+    let url = 'UserCvProjects';
+    axios({
+      url: url,
+      method: 'post',
+      data: data,
+      headers: {
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+          "Cache-Control": "no-cache",
+          "x-csrf-token": sToken,
+          "Cookie": cookie
+      }
+    }).then(res => {
+        console.log(res)
+      }).catch(error => {
+        console.log(error);
+    })
   },
   updateUserProjectsPosition({getters,
     dispatch
   }, data) {
     const dataToSend = data;
-    dataToSend.UserAlias = 'DJA';
+    dataToSend.UserAlias = 'UIO';
     dataToSend.DateStart = utils.formatDateForBackend(dataToSend.DateStart);
     dataToSend.DateEnd = utils.formatDateForBackend(dataToSend.DateEnd);
-    dataToSend.IsCurrent = dataToSend.IsCurrent ? 'X' : '-'
-    dataToSend.DateStartToChange = utils.formatDateForBackend(dataToSend.DateStartToChange)
-    dataToSend.DateEndToChange = utils.formatDateForBackend(dataToSend.DateEndToChange)
-    dispatch('formatProjectToString', dataToSend)
-    let query = getters.getUrlQuery
-    // dataToSend.ProjectName
-    let url = "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(dataToSend.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + 'D%C5%82uga%20nazwa%20projektu' + "',Language='" + dataToSend.Language + "')" + query;;
-    // odata(url).put(dataToSend).save(function (oData) {
-    //   console.log("zamianka");
-    // }, function (status) {
-    //   console.error(status);
-    // });
-    url = encodeURIComponent(url)
+    dataToSend.IsCurrent = dataToSend.IsCurrent ? 'X' : '-';
+    dataToSend.DateStartToChange = utils.formatDateForBackend(dataToSend.DateStartToChange);
+    dataToSend.DateEndToChange = utils.formatDateForBackend(dataToSend.DateEndToChange);
+    dispatch('formatProjectToString', dataToSend);
+    let query = getters.getUrlQuery;
+    let url = "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(dataToSend.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + 'D%C5%82uga%20nazwa%20projektu' + "',Language='" + dataToSend.Language + "')" + query;
     let sToken = getters.getToken;
     let cookie = getters.getCookie;
-    axios.defaults.withCredentials = true;
     axios({
       url: url,
       method: 'put',
       data: dataToSend,
       headers: {
-          // "Content-Type": "application/x-www-form-urlencoded",//"application/atom+xml; type=entry; charset=utf-8",
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",

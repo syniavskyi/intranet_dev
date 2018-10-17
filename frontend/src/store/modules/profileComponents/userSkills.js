@@ -111,30 +111,18 @@ const actions = {
   },
   saveUserSkills({
     getters
-  }, data) {
-    let urlQuery = getters.getUrlQuery;
-    let data2 = {
-      UserAlias: 'UIO',
-      Language: 'PL'
-    }
-    let url = 'UserSkills' + urlQuery + "(UserAlias='" + data2.UserAlias + "',Language='" + data2.Language + "')";
-    let newSkills = JSON.parse(
-      JSON.stringify(this.getters.getUserSkills)
-    );
-    newSkills = utils.formatToString(newSkills)
-
-
-
+  }) {
+    let newSkills = utils.createClone(this.getters.getUserSkills);
+    newSkills = utils.formatToString(newSkills);
+    newSkills.Language = getters.getSelectedCvLang.toUpperCase();
+    let url = "UserSkills(UserAlias='" + newSkills.UserAlias + "',Language='" + newSkills.Language + "')";
     let sToken = getters.getToken;
-    // axios.defaults.withCredentials = true
-    let cookie = getters.getCookie;
-    
+    let cookie = getters.getCookie; 
     axios({
         url: url,
-        method: 'post',
+        method: 'put',
         data: newSkills,
         headers: {
-            // "Content-Type": "application/x-www-form-urlencoded",//"application/atom+xml; type=entry; charset=utf-8",
             "Content-Type": "application/json",
             "X-Requested-With": "XMLHttpRequest",
             "Cache-Control": "no-cache",
@@ -146,14 +134,56 @@ const actions = {
         }).catch(error => {
           console.log(error);
       })
-
-
-
-    // odata(url).post(newSkills).save(function (oData) {
-    //   console.log("skile");
-    // }, function (status) {
-    //   console.error(status);
-    // });
+  },
+  saveUserLangs({getters}, data) {
+    let sToken = getters.getToken;
+    let cookie = getters.getCookie;
+    data.Lang = getters.getSelectedCvLang;
+    data.UserId = 'UIO';
+    let url = 'UserLang';
+    axios({
+      url: url,
+      method: 'post',
+      data: data,
+      headers: {
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+          "Cache-Control": "no-cache",
+          "x-csrf-token": sToken,
+          "Cookie": cookie
+      }
+    }).then(res => {
+        console.log(res)
+      }).catch(error => {
+        console.log(error);
+    })
+  },
+  updateUserLangs({getters}, data){
+    let sToken = getters.getToken;
+    let cookie = getters.getCookie;
+    let query = getters.getUrlQuery;
+    if(getters.getSelectedCvLang) {
+      data.Lang = getters.getSelectedCvLang.toUpperCase();
+    } else {
+      data.Lang = getters.getLoginLanguage;
+    }
+    let url = "UserLang(UserId='" + data.UserId + "',Lang='" + data.Lang + ",LanguageId='" + data.LanguageId + "')";
+    axios({
+      url: url,
+      method: 'put',
+      data: data,
+      headers: {
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+          "Cache-Control": "no-cache",
+          "x-csrf-token": sToken,
+          "Cookie": cookie
+      }
+    }).then(res => {
+        console.log(res)
+      }).catch(error => {
+        console.log(error);
+    })
   },
   addLanguageSkillsRow({
     commit,
@@ -161,8 +191,8 @@ const actions = {
   }) {
     const langList = getters.getUserLanguages
     langList.push({
-      language: null,
-      langLevel: null
+      LanguageId: null,
+      LangLevel: null
     })
     commit('SET_USER_LANGS', langList)
   },

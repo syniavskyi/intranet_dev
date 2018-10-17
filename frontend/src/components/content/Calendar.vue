@@ -162,8 +162,8 @@
                     </div>
                   </div>
                   <div class="form-buttons">
-                    <button class="button modal-button" :disabled="$v.$invalid" type="button" @click="addNewEvent" v-if="displayButton"><span class="span-arrow">{{ $t("button.addEvent") }}</span></button>
-                    <button class="button modal-button" :disabled="disabledButton" @click="editForm">{{ $t("button.edit") }}</button>
+                    <button class="button modal-button" :disabled="$v.$invalid" type="button" @click="addNewEventBtn(addEvent)" v-if="displayButton"><span class="span-arrow">{{ $t("button.addEvent") }}</span></button>
+                    <button class="button modal-button" :disabled="disabledButton" @click="editForm(addEvent)">{{ $t("button.edit") }}</button>
                   </div>
                 </div>
               </div>
@@ -190,7 +190,6 @@ export default {
     return {
       selectedValue: null,
       selectedDay: null,
-      // selectedDay2: null,
       dialogEvent: false,
       isSelected: false,
       selectedUser: false,
@@ -342,9 +341,10 @@ export default {
       this.$store.dispatch("setSideMenu", obj);
     },
     // trigger function from js to adjust data for backend
-    editForm() {
-      this.editEvent();
-      this.performDialog();
+    editForm(data) {
+      this.editEvent(data);
+      this.editEventClick(data);
+      this.selectedDay["attributes"][0].customData = data;
     },
     dayClicked(day) {
       this.selectedDay = day;
@@ -372,9 +372,9 @@ export default {
       Object.assign(this.addEvent, editedData);
       this.removeEvent();
     },
-    addNewEvent() {
+    addNewEventBtn(data) {
       this.$store.commit("SET_DATE_FROM", this.selectedValue);
-      this.addNewEvent();
+      this.addNewEvent(data);
       this.performDialog();
     },
     // permision to filter calendar
