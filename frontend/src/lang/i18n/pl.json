@@ -195,7 +195,8 @@
         "generateCV": "Generuj CV",
         "employeesList": "Lista pracowników",
         "communicators": "Komunikatory",
-        "delegationConfirm": "Delegation confirm"
+        "delegationConfirm": "Zatwierdzenie delegacji",
+        "userRegisteredTitle": "Konto zostało utworzone"
     },
     "message": {
         "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",
@@ -226,7 +227,8 @@
         "confirmPageLeaving": "Potwierdź opuszcenie strony",
         "unsavedData": "Wprowadzone dane nie zostaną zapisane. Czy na pewno chcesz opuścić stronę?",
         "delegationConfirmQuestion": "Czy chcesz zatwierdzić delegację? Upewnij się, że wprowadzone dane są prawidłowe.",
-        "failedToSaveDelegation": "Niepowodzenie podczas zapisu numeru delegacji"
+        "failedToSaveDelegation": "Niepowodzenie podczas zapisu numeru delegacji",
+        "userRegistered": "Utworzono konto dla {fullname}. Wiadomość z loginem oraz hasłem została wysłana na adres: {email}."
     },
     "select": {
         "language": {

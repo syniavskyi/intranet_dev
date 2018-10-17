@@ -1,0 +1,25 @@
+<template>
+    <div @click="closeConfirmDialog">
+        <div class="modal-overlay"/>
+        <div class="modal-new-s" @click.stop>
+            <div class="modal-header-new">
+                <h1 class="modal-title-new"><slot name="modal-title"></slot></h1>
+                <div @click="closeConfirmDialog" class="modal-exit-new">&#10006;</div>
+            </div>
+            <div class="modal-content-new">
+                <div class="del-modal-section">
+                    <slot name="modal-text"></slot>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+export default {
+    methods: {
+        closeConfirmDialog() {
+            this.$store.commit("SET_DIALOG_CONFIRM", false);
+        }
+    }
+}
+</script>

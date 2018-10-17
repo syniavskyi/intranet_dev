@@ -197,7 +197,8 @@
         "generateCV": "Generate CV",
         "employeesList": "Employees List",
         "communicators": "Communicators",
-        "delegationConfirm": "Zatwierdzenie delegacji"
+        "delegationConfirm": "Delegation confirm",
+        "userRegisteredTitle": "Account created"
     },
     "message": {
         "loginError": "Password or username are invalid.",
@@ -228,7 +229,8 @@
         "confirmPageLeaving": "Confirm page leaving",
         "unsavedData": "Entered data will not be saved. Are you sure you want to leave this page?",
         "delegationConfirmQuestion": "Do you want to confirm delegation? Make sure that entered data are valid",
-        "failedToSaveDelegation": "Failed to save delegation"
+        "failedToSaveDelegation": "Failed to save delegation",
+        "userRegistered": "Account created for {fullname}. Message with login and password was sent to {email}."
     },
     "select": {
         "language": {

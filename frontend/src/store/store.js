@@ -25,6 +25,7 @@ import availProjects from './modules/availabilityComponents/availProjects'
 import cv from './modules/cv'
 import toast from './modules/toast'
 import loader from './modules/loader'
+import confirmDialog from './modules/confirmdialog'
 
 import files from './modules/files'
 
@@ -60,6 +61,7 @@ export default new Vuex.Store({
         availProjects,
         cv,
         toast,
+        confirmDialog,
         loader,
         files
     }
