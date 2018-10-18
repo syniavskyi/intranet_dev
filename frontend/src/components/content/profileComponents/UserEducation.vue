@@ -19,9 +19,7 @@
             <div :class="editMode ? 'prof-row-dates-left' : 'prof-row-dates-left-s'">
               <p class="prof-date-label" v-if="!editMode"> {{ formatDate(education.DateStart) }} </p>
               <div v-if="editMode" class="prof-input-xxs">
-                <!-- :max-date="new Date()" -->
-                <v-date-picker class="prof-input-date" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateStart">
-                   <!-- <v-date-picker class="prof-input-date" :max-date="education.DateEnd === null ? new Date() : education.DateEnd" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateStart"> -->
+                <v-date-picker class="prof-input-date" popoverDirection="top" v-if="editMode" :max-date="education.IsCurrent ? new Date() : education.DateEnd" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateStart">
                   <input value="education.DateStart" >
                 </v-date-picker>
                 <label v-if="editMode">{{ $t("label.from") }}</label>
@@ -31,8 +29,7 @@
               <div name="endDateDiv" :id="index">
                 <p class="prof-date-label" v-if="!editMode"> {{ formatDate(education.DateEnd) }} </p>
                 <div v-if="editMode" class="prof-input-xxs">
-                  <v-date-picker class="prof-input-date" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateEnd">
-                  <!-- <v-date-picker class="prof-input-date" popoverDirection="top" :min-date="education.DateStart" :max-date="new Date()" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="education.DateEnd"> -->
+                  <v-date-picker class="prof-input-date" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" :min-date="education.DateStart" v-model="education.DateEnd">
                     <input value="education.DateEnd" />
                   </v-date-picker>
                   <label>{{ $t("label.to") }}</label>
