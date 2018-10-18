@@ -172,7 +172,6 @@
         "contact": "Dane kontaktowe",
         "employee": "Dane pracownika",
         "userRegister": "Rejestracja użytkownika",
-        "accountCreated": "Utworzono Konto!",
         "addNewEvent": "Dodaj nowe wydarzenie",
         "availability": "Dyspozycyjność",
         "starterPage": "Strona Startowa",
@@ -196,7 +195,8 @@
         "employeesList": "Lista pracowników",
         "communicators": "Komunikatory",
         "delegationConfirm": "Zatwierdzenie delegacji",
-        "userRegisteredTitle": "Konto zostało utworzone"
+        "userRegisteredTitle": "Konto zostało utworzone",
+        "userNotRegisteredTitle": "Konto nie zostało utworzone"
     },
     "message": {
         "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",
@@ -208,14 +208,12 @@
         "noChanges": "Nie wprowadzono zmian",
         "dateValidation": "Data posiada nieprawidłowy format",
         "hourValidation": "Wprowadzona godzina posiada nieprawidłowy format",
-        "newAccountPassword": "Utworzono nowe konto. Na maila wysłano hasło do konta.",
         "fileUploadError": "Niepowodzenie podczas zapisu pliku.",
         "photoUploadError": "Niepowodzenie podczas zapisu zdjęcia.",
         "addProjectError": "Niepowodzenie podczas dodawania projektu",
         "editProjectError": "Niepowodzenie podczas edycji projektu",
         "removeProjectError": "Niepowodzenie podczas usuwania projektu",
         "projectExistError": " Taki projekt już jest przypisany ",
-        "errorSendingMessage": "Niepowodzenie podczas wysyłania wiadomości.",
         "incompleteData": "Dane wprowadzone w projekcie {errorProNo} są niekompletne. Uzupełnij wszystkie pola.",
         "invalidDate": "W projekcie {invalid} data rozpoczęcia nie może być późniejsza niż data zakończenia.",
         "successfullySaved": "Pomyślnie zapisano dane",
@@ -228,7 +226,8 @@
         "unsavedData": "Wprowadzone dane nie zostaną zapisane. Czy na pewno chcesz opuścić stronę?",
         "delegationConfirmQuestion": "Czy chcesz zatwierdzić delegację? Upewnij się, że wprowadzone dane są prawidłowe.",
         "failedToSaveDelegation": "Niepowodzenie podczas zapisu numeru delegacji",
-        "userRegistered": "Utworzono konto dla {fullname}. Wiadomość z loginem oraz hasłem została wysłana na adres: {email}."
+        "userRegistered": "Utworzono konto dla {fullname}. Wiadomość z loginem oraz hasłem została wysłana na adres: {email}.",
+        "userNotregistered": "Konto dla {fullname} nie zostało utworzone"
     },
     "select": {
         "language": {
