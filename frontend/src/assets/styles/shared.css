@@ -452,7 +452,8 @@ li p {
 /*     DIALOG  /   MODAL - start       */
 .modal-new,
 .modal-new-m,
-.modal-new-s {
+.modal-new-s,
+.modal-new-xs {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -478,6 +479,11 @@ li p {
     height: 400px;
 }
 
+.modal-new-xs {
+    width: 550px;
+    height: 200px;
+}
+
 .modal-new-m {
     width: 800px;
     height: 600px;
@@ -486,7 +492,7 @@ li p {
 .modal-content-new {
     display: flex;
     flex-direction: column;
-    height: 75%;
+    height: 70%;
     align-self: center;
     align-items: center;
     width: 100%;
@@ -520,10 +526,11 @@ li p {
     justify-content: space-between;
     align-items: center;
     font-family: 'Lato';
+    height: 30%;
 }
 
 .modal-title-new {
-    margin-left: 1rem;
+    margin: 0 1rem;
 }
 
 .modal-exit-new {

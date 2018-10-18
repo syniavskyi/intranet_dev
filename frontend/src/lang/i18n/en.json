@@ -175,7 +175,6 @@
         "contact": "Contact details",
         "employee": "Personal details",
         "userRegister": "User register",
-        "accountCreated": "Account Created!",
         "addNewEvent": "Add new event",
         "availability": "Availability",
         "starterPage": "Starter Page",
@@ -198,7 +197,8 @@
         "employeesList": "Employees List",
         "communicators": "Communicators",
         "delegationConfirm": "Delegation confirm",
-        "userRegisteredTitle": "Account created"
+        "userRegisteredTitle": "Account created",
+        "userNotRegisteredTitle": "Account not created"
     },
     "message": {
         "loginError": "Password or username are invalid.",
@@ -210,14 +210,12 @@
         "noChanges": "No changes were made",
         "dateValidation": "Date has incorrect format.",
         "hourValidation": "Time has incorrect format.",
-        "newAccountPassword": "A new account has been created. An account password was sent to the mail",
         "fileUploadError": "File has not been saved.",
         "photoUploadError": "Photo has not been saved.",
         "addProjectError": "Project has not been added",
         "editProjectError": "Project has not been edited",
         "removeProjectError": "Project has not been removed",
         "projectExistError": "This project is already assigned to this user",
-        "errorSendingMessage": "Failed when sending a message.",
         "incompleteData": "Data entered in project {errorProNo} are uncompleted. Fill in the blanks.",
         "invalidDate": "In project {invalid} start date cannot be later than end date.",
         "successfullySaved": "Data saved successfully",
@@ -230,7 +228,8 @@
         "unsavedData": "Entered data will not be saved. Are you sure you want to leave this page?",
         "delegationConfirmQuestion": "Do you want to confirm delegation? Make sure that entered data are valid",
         "failedToSaveDelegation": "Failed to save delegation",
-        "userRegistered": "Account created for {fullname}. Message with login and password was sent to {email}."
+        "userRegistered": "Account created for {fullname}. Message with login and password was sent to {email}.",
+        "userNotregistered": "Account creation failed for {fullname}"
     },
     "select": {
         "language": {
