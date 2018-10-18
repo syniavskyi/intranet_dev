@@ -167,7 +167,7 @@ const actions = {
     } else {
       data.Lang = getters.getLoginLanguage;
     }
-    let url = "UserLang(UserId='" + data.UserId + "',Lang='" + data.Lang + ",LanguageId='" + data.LanguageId + "')";
+    let url = "UserLang(UserId='" + data.UserId + "',Lang='" + data.Lang + "',LanguageId='" + data.LanguageId + "')";
     axios({
       url: url,
       method: 'put',

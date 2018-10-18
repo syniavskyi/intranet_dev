@@ -119,7 +119,7 @@ export default {
       newAdditional: null,
       langBtn: true,
       bSapModules: false,
-      bProgramLang: false,
+      bProgramLangs: false,
       bTechnologies: false,
       bExtensions: false,
       bAdditionalSkills: false,
@@ -224,13 +224,13 @@ export default {
       if (skillKey === "SapModules") {
         this.bSapModules = bBool;
       } else if (skillKey === "AdditionalSkills") {
-        this.bAdditionals = bBool;
+        this.bAdditionalSkills = bBool;
       } else if (skillKey === "Extensions") {
         this.bExtensions = bBool;
       } else if (skillKey === "ProgramLang") {
         this.bProgramms = bBool;
       } else if (skillKey === "Technologies") {
-        this.bTechno = bBool;
+        this.bTechnologies = bBool;
       }
     },
     saveLang(index) {
