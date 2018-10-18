@@ -150,13 +150,13 @@ export default {
     this.$store.commit("SET_DISPLAY_LOADER", false);
     this.isMoreThanOneAdvert = this.advertsList.length > 1 ? true : false;
   },
-  // beforeCreate() {
-  //   this.$store.dispatch("geoLoc");
-  //   this.$store.dispatch("getNews");
-  // },
+  beforeCreate() {
+    this.$store.dispatch("geoLoc");
+    // this.$store.dispatch("getNews");
+  },
   created() {
-    // this.getToday();
-    // this.getNews()
+    this.getToday();
+    this.getNews()
   },
   destroyed() {
     clearInterval(this.interval);

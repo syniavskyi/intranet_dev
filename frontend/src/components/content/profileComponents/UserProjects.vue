@@ -63,15 +63,13 @@
               <div class="prof-tbody-item-txt">
                 <p class="table-p">{{ $t("label.startDate") }}</p>
                 <p class="table-p" v-if="!projectEditMode"> {{ formatDate(userProjects[index].DateStart) }} </p>
-               <v-date-picker popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateStart">
-                <!-- <v-date-picker :max-date="userProjects[index].DateEnd === null ? new Date() : userProjects[index].DateEnd" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateStart"> -->
+               <v-date-picker popoverDirection="top" :max-date="project.IsCurrent ? new Date() : project.DateEnd" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateStart">
                   <input value="userProjects[index].DateStart" />
                 </v-date-picker>
                 <p class="table-p">{{ $t("label.endDate") }}</p>
                 <div name="endDateDiv" :id="formatId(index)">
                   <p class="table-p" v-if="!projectEditMode"> {{ formatDate(userProjects[index].DateEnd) }} </p>
-                  <v-date-picker popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateEnd">
-                      <!-- <v-date-picker :max-date="new Date()" :min-date="userProjects[index].DateStart" popoverDirection="top" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateEnd"> -->
+                  <v-date-picker popoverDirection="top" :max-date="new Date()" :min-date="project.DateStart" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateEnd">
                     <input value="userProjects[index].DateEnd"/>
                   </v-date-picker>
                 </div>
