@@ -71,7 +71,7 @@
 import axios from "axios";
 import i18n from "../../lang/lang";
 import Menu from "../Menu.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
@@ -84,6 +84,9 @@ export default {
   },
   components: {
     "app-menu": Menu
+  },
+  created: function() {
+    this.getUsersLists();
   },
   computed: {
     ...mapGetters({
@@ -121,6 +124,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      getUsersLists: "getUsersLists"
+    }),
     clearFilters() {
       this.aFilters = {};
     },
