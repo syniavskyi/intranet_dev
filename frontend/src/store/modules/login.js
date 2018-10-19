@@ -142,7 +142,12 @@ const getters = {
     return state.token;
   },
   getCookie(state) {
-    return state.cookie;
+    if(state.cookie){
+      return state.cookie;
+    } else {
+      return document.cookie;
+    }
+    
   }
 }
 

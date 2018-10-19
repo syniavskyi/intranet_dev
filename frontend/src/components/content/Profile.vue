@@ -309,7 +309,7 @@ export default {
       selectedCity: null,
       selectedCvLang: i18n.locale,
       authType: "",
-      selectedUser: ""
+      selectedUser: this.$store.getters.getLoginAlias
     };
   },
   validations: {
@@ -348,6 +348,7 @@ export default {
     next();
   },
   created() {
+    // this.getUserData(userData);
     const data = {
       roles: this.$store.getters.getUserAuth,
       key: "ZPROF_ATCV",
@@ -427,9 +428,9 @@ export default {
   //     this.routeToGo = to.name
   // },
   methods: {
-    // onResetPassword() {
-    //   const url = "https://nw5.local.pl:8050/Users(UserAlias='SJI',Language='PL')"
-    // },
+    ...mapActions({
+      getUserData: "getUserData"
+    }),
     showMenu(event) {
       let obj = { window, event };
       this.$store.dispatch("setSideMenu", obj);
@@ -535,9 +536,7 @@ export default {
         let cvLang = loginLanguage.toUpperCase();
       }
 
-      let halo = this.selectedUser;
       let userData = {
-        // user: "UIO",
         user: this.selectedUser,
         lang: cvLang,
         changePage: false

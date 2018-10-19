@@ -96,14 +96,6 @@ const actions = {
     dispatch,
     getters
   }, userData) {
-    // TEMPORARY
-    if (userData === null) {
-      let userData = {
-        lang: 'PL',
-        user: 'UIO',
-        changePage: true
-      }
-    }
 
     for (let i = 0; i < getters.getFileTypes.length; i++) {
       dispatch('getDocuments', getters.getFileTypes[i])
@@ -124,9 +116,15 @@ const actions = {
     dispatch('getSchoolDesc', userData.lang);
     dispatch('getFieldOfStudyDesc', userData.lang);
     dispatch('getEvents')
-
     dispatch('getUserData', userData);
     dispatch('getAdverts');
+  },
+  loadUserData({
+    state,
+    dispatch,
+    getters
+    }, userData){
+
   },
   getDomainValues({
     commit,
@@ -224,8 +222,7 @@ const actions = {
       console.log(error);
     })
   },
-  // (UserAlias='UIO',Language='PL')
-  // url: 'Users' + '(UserAlias=' + "'UIO'" + ',' + 'Language=' + "'PL'" + ')' + '?$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang',
+ 
   getUserData({
     commit,
     getters,
@@ -233,24 +230,18 @@ const actions = {
   }, userData) {
     let urlQuery = getters.getUrlQuery
 
-    if (userData === undefined) { // TEMPORARY
-      let userData = {
-        user: 'UIO',
-        lang: 'PL',
-        changePage: true
-      }
-    }
-    userData.user = 'UIO' // TEMPORARY
+    let sCookie = getters.getCookie;
+    commit("SET_DISPLAY_LOADER", true);
     axios({
       method: 'GET',
-      url: 'Users' + '(UserAlias=' + "'" + userData.user.toUpperCase() + "'," + "Language='" + userData.lang + "')" + urlQuery + '&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang,UserFiles,UserAuth',
+      url: 'Users' + '(UserAlias=' + "'" + userData.user.toUpperCase() + "'," + "Language='" + userData.lang + "')" + '?&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang,UserFiles,UserAuth',
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+        "Cookie": sCookie
       }
     }).then(res => {
-      let sUserId = 'UIO' // TEMPORARY
-
-      // let sUserId = res.data.d.UserAlias
+      commit("SET_DISPLAY_LOADER", false);
+      let sUserId = res.data.d.UserAlias;
       localStorage.setItem('id', sUserId);
 
       dispatch('formatUserData', res.data.d); // format dates for date pickers and "is current" fields
@@ -281,6 +272,7 @@ const actions = {
 
       dispatch('checkPageToDisplay', userData.changePage)
     }).catch(error => {
+      commit("SET_DISPLAY_LOADER", false);
       console.log(error);
     })
   },
@@ -311,12 +303,14 @@ const actions = {
     commit,
     getters
   }) {
-    let urlQuery = getters.getUrlQuery
+    // let urlQuery = getters.getUrlQuery
+    let sCookie = document.cookie;
     axios({
       method: 'GET',
-      url: 'Users' + urlQuery,
+      url: 'Users',// + urlQuery,
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+        "Cookie": sCookie
       }
     }).then(res => {
       commit('GET_USER_LIST', res.data.d.results);

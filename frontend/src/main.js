@@ -61,8 +61,6 @@ odata().config({
     format: 'json',
     version: 3, 
     autoFormat: false
-    // username: 'psy',
-    // password: 'ides01'
 })
 
 export const app = new Vue({

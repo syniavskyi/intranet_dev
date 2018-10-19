@@ -28,7 +28,11 @@ export const createRateDate = function (rateDate) {
 };
 
 export const formatDateForBackend = function (date) {
-  return "/Date(" + new Date(date).getTime().toString() + ")/";
+  if(date){
+    return "/Date(" + new Date(date).getTime().toString() + ")/";
+  } else {
+    return null;
+  }
 };
 
 export const dateStringToObj = function (date) {

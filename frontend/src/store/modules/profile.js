@@ -45,27 +45,47 @@ const mutations = {
 
 const actions = {
   saveUserData({
-    commit
+    commit, getters
   }, userData) {
     userData.Action = 'E'
     userData.Language = 'PL'
 
     // Temporary, needed to be change to array.splice()
-    delete userData.UserCvProjects
-    delete userData.UserEducations
-    delete userData.UserExperiences
-    delete userData.imgUrl
-    delete userData.UserSkills
-    delete userData.UserLang
+    delete userData.UserCvProjects;
+    delete userData.UserEducations;
+    delete userData.UserExperiences;
+    delete userData.imgUrl;
+    delete userData.UserSkills;
+    delete userData.UserLang;
+    delete userData.UserAuth;
+    delete userData.UserFiles;
 
-    userData.EmploymentDate = utils.formatDateForBackend(userData.EmploymentDate)
+    userData.EmploymentDate = utils.formatDateForBackend(userData.EmploymentDate);
 
     const url = 'Users' + '(' + "UserAlias='" + userData.UserAlias + "',Language='" + userData.Language + "')"
-    odata(url).put(userData).save(function (data) {
-      console.log("changed");
-    }, function (status) {
-      console.error(status);
-    });
+    // odata(url).put(userData).save(function (data) {
+    //   console.log("changed");
+    // }, function (status) {
+    //   console.error(status);
+    // });
+    let sToken = getters.getToken;
+    let sCookie = getters.getCookie;
+    axios({
+      method: 'PUT',
+      url: url,
+      data: userData,
+      headers: {
+        "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+          "Cache-Control": "no-cache",
+          "x-csrf-token": sToken,
+          "Cookie": sCookie
+      }
+    }).then(res => {
+
+    }).catch(error => { 
+
+    }) 
     commit('SET_USER_INFO', userData);
   },
   submitPhoto({
