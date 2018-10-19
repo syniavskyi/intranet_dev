@@ -121,7 +121,8 @@ export default {
       "getDocsStatus",
       "checkListForNew",
       "checkListForInfo",
-      "checkFileFormat"
+      "checkFileFormat",
+      "editSingleNewDoc"
     ]),
     // add css to checkbox
     changeCheckboxForNew(data) {
@@ -130,7 +131,8 @@ export default {
       } else {
         data.Status = !data.Status;
       }
-      this.$store.dispatch("checkListForNew", this.docListNew);
+      this.editSingleNewDoc(data);
+      this.checkListForNew(this.docListNew);
     },
     changeCheckboxInfo(data) {
       if (data.Status === undefined) {
@@ -138,7 +140,8 @@ export default {
       } else {
         data.Status = !data.Status;
       }
-      this.$store.dispatch("checkListForInfo", this.docListInfo);
+      this.editSingleNewDoc(data);
+      this.checkListForInfo(this.docListInfo);
     },
     // format file name to display file format
     checkFileFormat(name) {

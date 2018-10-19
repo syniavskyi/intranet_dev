@@ -161,7 +161,6 @@ const actions = {
   updateUserLangs({getters}, data){
     let sToken = getters.getToken;
     let cookie = getters.getCookie;
-    let query = getters.getUrlQuery;
     if(getters.getSelectedCvLang) {
       data.Lang = getters.getSelectedCvLang.toUpperCase();
     } else {

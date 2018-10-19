@@ -51,7 +51,7 @@ const actions = {
       if (newData.Status) {
         bState = false;
       } else {
-        return commit('SET_BUTTON_STATE_INFO', true)
+        return commit('SET_BUTTON_STATE_INFO', true);
       }
       commit('SET_BUTTON_STATE_INFO', bState);
     }
@@ -107,6 +107,35 @@ const actions = {
       dispatch('checkStatus', oAttachments);
     }).catch(error => {
       console.log(error);
+    })
+  },
+  editSingleNewDoc({getters}, data) {
+    let sToken = getters.getToken;
+    let cookie = getters.getCookie;
+    const editData = {
+      FileId: data.FileId,
+      // Language: getters.getLoginLanguage,
+      // UserAlias: getters.getLoginAlias,
+      Language: 'PL',
+      UserAlias: 'UIO',
+      Status: data.Status ? 'X' : '-'
+    }
+    let url = "UserFiles(UserAlias='" + editData.UserAlias + "',Language='" + editData.Language + "',FileId='" + editData.FileId + "')";
+    axios({
+      url: url,
+      method: 'put',
+      data: editData,
+      headers: {
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+          "Cache-Control": "no-cache",
+          "x-csrf-token": sToken,
+          "Cookie": cookie
+      }
+    }).then(res => {
+        console.log(res)
+      }).catch(error => {
+        console.log(error);
     })
   }
 }
