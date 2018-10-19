@@ -133,7 +133,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["addUserEduRow", "removeUserEducation"]),
+    ...mapActions(["addUserEduRow", "editUserEducation"]),
     edit() {
       this.editMode = true;
       this.onHover(this.$el);
@@ -173,9 +173,6 @@ export default {
           bDateEnd = utils.dateToValid(beforeEdit.DateEnd, userEdu.DateEnd);
       }
       bDateChange = bCurrent || bDateEnd;
-}   else {
-     bChanged = true;
-  }
       bChanged =
         bFieldOfStudy ||
         bUniversity ||
@@ -185,7 +182,10 @@ export default {
         bDateChange
           ? true
           : false;
-
+          
+      }   else {
+            bChanged = true;
+      }
       if (this.userEducation.length > 0) {
         if (
           userEdu.FieldOfStudy &&
@@ -207,8 +207,10 @@ export default {
       }
     },
     remove(index) {
+      let newData = utils.createClone(this.userEducation[index]);
+      newData.Action = 'D';
+      this.editUserEducation(newData);
       this._beforeEditingCache.splice(index, 1);
-      this.removeUserEducation(index);
     },
     //undo changes
     cancel() {
@@ -220,18 +222,16 @@ export default {
     // check if new data should be updated or created
     save(index) {
       const dataToChange = this._beforeEditingCache[index],
-        // newData = this.userEducation[index];
         newData = utils.createClone(this.userEducation[index]);
-
+        newData.Action = 'U';
       if (dataToChange) {
         newData.AcademicTitleToChange = dataToChange.AcademicTitle;
         newData.FieldOfStudyToChange = dataToChange.FieldOfStudy;
         newData.UniversityToChange = dataToChange.University;
-        this.$store.dispatch("editUserEducation", newData);
+        this.editUserEducation(newData);
       } else {
         this.$store.dispatch("addUserEducation", newData);
       }
-      // this._beforeEditingCache = this.userEducation;
       this._beforeEditingCache = utils.createClone(this.userEducation);
     },
     formatDate(date) {

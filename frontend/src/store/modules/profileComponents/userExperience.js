@@ -38,36 +38,36 @@ const actions = {
       Language: null
     })
   },
-  removeUserExperience({
-    getters
-  }, index) {
-    const userExp = getters.getUserExperience,
-      data = userExp[index]
+  // removeUserExperience({
+  //   getters
+  // }, index) {
+  //   const userExp = getters.getUserExperience,
+  //     data = userExp[index]
 
-    data.Language = 'PL'
-    data.UserAlias = 'UIO'
+  //   data.Language = 'PL'
+  //   data.UserAlias = 'UIO'
 
-    const url = 'UserExperiences' + '(' + "UserAlias='" + data.UserAlias + "',Language='" + data.Language + "',WorkPos='" + data.WorkPos + "',Employer='" + data.Employer + "',DateStart=datetime'" + moment(data.DateStart).format("YYYY-MM-DD") + "T00:00:00')"
+  //   const url = 'UserExperiences' + '(' + "UserAlias='" + data.UserAlias + "',Language='" + data.Language + "',WorkPos='" + data.WorkPos + "',Employer='" + data.Employer + "',DateStart=datetime'" + moment(data.DateStart).format("YYYY-MM-DD") + "T00:00:00')"
 
-    let sToken = getters.getToken;
-    let cookie = getters.getCookie;
-    axios({
-      url: url,
-      method: 'put',
-      data: data,
-      headers: {
-          "Content-Type": "application/json",
-          "X-Requested-With": "XMLHttpRequest",
-          "Cache-Control": "no-cache",
-          "x-csrf-token": sToken,
-          "Cookie": cookie
-      }
-    }).then(res => {
-        console.log(res)
-      }).catch(error => {
-        console.log(error);
-    })
-  },
+  //   let sToken = getters.getToken;
+  //   let cookie = getters.getCookie;
+  //   axios({
+  //     url: url,
+  //     method: 'put',
+  //     data: data,
+  //     headers: {
+  //         "Content-Type": "application/json",
+  //         "X-Requested-With": "XMLHttpRequest",
+  //         "Cache-Control": "no-cache",
+  //         "x-csrf-token": sToken,
+  //         "Cookie": cookie
+  //     }
+  //   }).then(res => {
+  //       console.log(res)
+  //     }).catch(error => {
+  //       console.log(error);
+  //   })
+  // },
   saveNewUserExp({
     getters
   }, data) {
@@ -104,13 +104,14 @@ const actions = {
     data.DateStart = utils.formatDateForBackend(data.DateStart);
     data.DateEnd = utils.formatDateForBackend(data.DateEnd);
     data.IsCurrent = data.IsCurrent ? 'X' : '-';
-    const url = 'UserExperiences' + '(' + "UserAlias='" + data.UserAlias + "',WorkPos='" + data.WorkPosToChange + "',Employer='" + data.EmployerToChange + "',Language='" + data.Language + "',DateStart=datetime'" + moment(data.DateStartToChange).format("YYYY-MM-DD") + "T00:00:00')";
+    const urlU = 'UserExperiences' + '(' + "UserAlias='" + data.UserAlias + "',WorkPos='" + data.WorkPosToChange + "',Employer='" + data.EmployerToChange + "',Language='" + data.Language + "',DateStart=datetime'" + moment(data.DateStartToChange).format("YYYY-MM-DD") + "T00:00:00')";
+    const urlD = 'UserExperiences' + '(' + "UserAlias='" + data.UserAlias + "',Language='" + data.Language + "',WorkPos='" + data.WorkPos + "',Employer='" + data.Employer + "',DateStart=datetime'" + moment(data.DateStart).format("YYYY-MM-DD") + "T00:00:00')"
     data.DateStartToChange = utils.formatDateForBackend(data.DateStartToChange);
     data.DateEndToChange = utils.formatDateForBackend(data.DateEndToChange);
     let sToken = getters.getToken;
     let cookie = getters.getCookie;
     axios({
-      url: url,
+      url: data.Action === 'U' ? urlU : urlD,
       method: 'put',
       data: data,
       headers: {

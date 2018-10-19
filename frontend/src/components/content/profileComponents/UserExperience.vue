@@ -169,15 +169,16 @@ export default {
     },
     remove(index) {
       this._beforeEditingCache.splice(index, 1);
-      this.removeUserExperience(index);
+      let newData = utils.createClone(this.userExperience[index]);
+      newData.Action = 'D';
+      this.updateUserExperience(newData);
     },
     // check if new data should be updated or created
     save(index) {
       const dataToChange = this._beforeEditingCache[index],
-        newData = utils.createClone(this.userExperience[index]);
-
+      newData = utils.createClone(this.userExperience[index]);
       newData.Language = "PL";
-
+      newData.Action = 'U';
       if (dataToChange) {
         newData.WorkPosToChange = dataToChange.WorkPos;
         newData.EmployerToChange = dataToChange.Employer;

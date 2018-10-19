@@ -46,36 +46,20 @@ const actions = {
       Language: 'PL'
     })
   },
-  removeUserEducation({
-    getters
-  }, index) {
-    const lang = 'PL'
-    const userEdu = getters.getUserEducation,
-      data = userEdu[index],
-      url = 'UsersEducation' + '(' + "UserAlias='UIO'," + "University='" + data.University + "',AcademicTitle='" + data.AcademicTitle + "',FieldOfStudy='" + data.FieldOfStudy + "',Language='" + lang + "')"
-
-    data.Language = 'PL'
-    odata(url).remove().save(function (data) {
-      console.log("removed");
-      userEdu.splice(index, 1)
-    }, function (status) {
-      console.error(status);
-    });
-  },
   editUserEducation({
     getters
   }, data) {
-    data.UserAlias = 'UIO'
-    data.Language = 'PL'
-    data.DateStart = utils.formatDateForBackend(data.DateStart)
-    data.DateEnd = utils.formatDateForBackend(data.DateEnd)
-    data.IsCurrent = data.IsCurrent ? 'X' : '-'
-    let query = getters.getUrlQuery
-    const url = 'UsersEducation' + '(' + "UserAlias='" + data.UserAlias + "',University='" + data.UniversityToChange + "',AcademicTitle='" + data.AcademicTitleToChange + "',FieldOfStudy='" + data.FieldOfStudyToChange + "',Language='" + data.Language + "')"
+    data.UserAlias = 'UIO';
+    data.Language = 'PL';
+    data.DateStart = utils.formatDateForBackend(data.DateStart);
+    data.DateEnd = utils.formatDateForBackend(data.DateEnd);
+    data.IsCurrent = data.IsCurrent ? 'X' : '-';
+    const urlU = 'UsersEducation' + '(' + "UserAlias='" + data.UserAlias + "',University='" + data.UniversityToChange + "',AcademicTitle='" + data.AcademicTitleToChange + "',FieldOfStudy='" + data.FieldOfStudyToChange + "',Language='" + data.Language + "')",
+    urlD = 'UsersEducation' + '(' + "UserAlias='" + data.UserAlias + "',University='" + data.University + "',AcademicTitle='" + data.AcademicTitle + "',FieldOfStudy='" + data.FieldOfStudy + "',Language='" + data.Language + "')"
     let sToken = getters.getToken;
     let cookie = getters.getCookie;
     axios({
-      url: url,
+      url: data.Action === 'D' ? urlD : urlU,
       method: 'put',
       data: data,
       headers: {
