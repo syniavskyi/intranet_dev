@@ -61,35 +61,17 @@ const actions = {
     commit('SET_USER_PROJECTS_LIST', projectsList)
     commit('SET_PROJECT_ERROR', false)
   },
-  removeUserProjectsRow({
-    commit,
-    getters
-  }, index) {
-
-    let lang = 'PL';
-    let user = 'UIO'
-    const projects = getters.getUserProjectsList,
-      data = projects[index],
-      url = "UserCvProjects(UserAlias='" + user + "',DateStart=datetime'" + moment(data.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(data.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + data.ProjectName + "',Language='" + lang + "')";
-
-    odata(url).remove().save(function (data) {
-      projects.splice(index, 1);
-      commit('SET_USER_PROJECTS_LIST', projects);
-    }, function (status) {
-      console.error(status);
-    })
-    // commit('SET_PROJECT_ERROR', false)
-  },
   saveUserProjectsPosition({
     dispatch, getters
   }, data) {
-    data.UserAlias = 'UIO';
+    getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = getters.getLoginAlias;
     data.DateStart = utils.formatDateForBackend(data.DateStart);
     data.DateEnd = utils.formatDateForBackend(data.DateEnd);
     dispatch('formatProjectToString', data);
     data.IsCurrent = data.IsCurrent ? 'X' : '-';
     let sToken = getters.getToken;
     let cookie = getters.getCookie;
+    delete data.User;
     let url = 'UserCvProjects';
     axios({
       url: url,
@@ -112,19 +94,21 @@ const actions = {
     dispatch
   }, data) {
     const dataToSend = data;
-    dataToSend.UserAlias = 'UIO';
+    getters.getSelectedForCvUser ? dataToSend.UserAlias = getters.getSelectedForCvUser : dataToSend.UserAlias = getters.getLoginAlias;
     dataToSend.DateStart = utils.formatDateForBackend(dataToSend.DateStart);
     dataToSend.DateEnd = utils.formatDateForBackend(dataToSend.DateEnd);
     dataToSend.IsCurrent = dataToSend.IsCurrent ? 'X' : '-';
     dataToSend.DateStartToChange = utils.formatDateForBackend(dataToSend.DateStartToChange);
     dataToSend.DateEndToChange = utils.formatDateForBackend(dataToSend.DateEndToChange);
+    delete dataToSend.User;
     dispatch('formatProjectToString', dataToSend);
-    let query = getters.getUrlQuery;
-    let url = "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(dataToSend.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + 'D%C5%82uga%20nazwa%20projektu' + "',Language='" + dataToSend.Language + "')" + query;
+    // let urlU = "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(dataToSend.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + 'D%C5%82uga%20nazwa%20projektu' + "',Language='" + dataToSend.Language + "')";
+    let urlD = "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(dataToSend.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + dataToSend.ProjectName + "',Language='" + dataToSend.Language + "')";
+    let urlU = "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStartToChange).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(dataToSend.DateEndToChange).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + dataToSend.ProjectName + "',Language='" + dataToSend.Language + "')";
     let sToken = getters.getToken;
     let cookie = getters.getCookie;
     axios({
-      url: url,
+      url: dataToSend.Action === 'D' ? urlD : urlU,
       method: 'put',
       data: dataToSend,
       headers: {

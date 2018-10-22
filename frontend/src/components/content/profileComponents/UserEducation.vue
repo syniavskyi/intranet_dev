@@ -133,7 +133,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["addUserEduRow", "editUserEducation"]),
+    ...mapActions(["addUserEduRow", "editUserEducation", "addUserEducation"]),
     edit() {
       this.editMode = true;
       this.onHover(this.$el);
@@ -210,8 +210,9 @@ export default {
       let newData = utils.createClone(this.userEducation[index]);
       newData.Action = 'D';
       this.editUserEducation(newData);
-      this._beforeEditingCache.splice(index, 1);
-    },
+      this.userEducation.splice(index, 1);
+      this._beforeEditingCache = utils.createClone(this.userEducation)
+      },
     //undo changes
     cancel() {
       this.onHoverOut(this.$el);
@@ -230,7 +231,7 @@ export default {
         newData.UniversityToChange = dataToChange.University;
         this.editUserEducation(newData);
       } else {
-        this.$store.dispatch("addUserEducation", newData);
+        this.addUserEducation(newData);
       }
       this._beforeEditingCache = utils.createClone(this.userEducation);
     },

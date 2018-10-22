@@ -39,7 +39,7 @@
                 <label class="label-select-profile">{{ $t("label.level") }}</label>
               </div>
               <div class="prof-skills-btns">
-                <button class="prof-skills-delete" @click="removeLanguageSkillsRow(index)" v-if="editMode">{{ $t("button.delete") }}</button>
+                <button class="prof-skills-delete" @click="remove(index)" v-if="editMode">{{ $t("button.delete") }}</button>
                 <button class="prof-skills-save saveLangBtn" :disabled="true" @click="saveLang(index)" v-if="editMode">{{ $t("button.save") }}</button>
               </div>
             </div>
@@ -140,7 +140,11 @@ export default {
       "removeModuleForSkills",
       "removeSkill",
       "addLanguageSkillsRow",
-      "removeLanguageSkillsRow"
+      "updateUserLangs",
+      "saveUserSkills",
+      "saveUserLangs",
+      "addSkill",
+      "removeSkill"
     ]),
     onHover(el) {
       this.$store.dispatch("onLightUp", el.style ? el : this.$el);
@@ -154,6 +158,13 @@ export default {
       this._beforeEditingCacheSkills = utils.createClone(this.userSkills);
       this._beforeEditingCacheLangs = utils.createClone(this.userLangs);
     },
+    remove(index) {
+      let newData = utils.createClone(this.userLangs[index]);
+      newData.Action = 'D';
+      this.updateUserLangs(newData);
+      this.userLangs.splice(index, 1);
+      this._beforeEditingCacheLangs = utils.createClone(this.userLangs)
+    },
     // undo changes
     cancel() {
       this.onHoverOut(this.$el);
@@ -164,8 +175,8 @@ export default {
     // check if new data should be updated or created
     save() {
       this.onHoverOut(this.$el);
-      let data = this.userSkills;
-      this.$store.dispatch("saveUserSkills", data);
+      let data = utils.createClone(this.userSkills);
+      this.saveUserSkills(data);
       this._beforeEditingCacheSkills = utils.createClone(this.userSkills);
       this._beforeEditingCacheLangs = utils.createClone(this.userLangs);
       this.editMode = false;
@@ -206,8 +217,8 @@ export default {
     checkSingleSkill(skillKey) {
       let beforeEdit = this._beforeEditingCacheSkills,
         userSkills = this.userSkills;
-
-      if (beforeEdit[skillKey].length !== userSkills[skillKey].length) {
+    if(beforeEdit[skillKey]) {
+        if (beforeEdit[skillKey].length !== userSkills[skillKey].length) {
         this.checkSkillKey(skillKey, true);
       } else {
         for (const item of beforeEdit[skillKey]) {
@@ -218,6 +229,10 @@ export default {
           }
         }
       }
+    } else {
+      this.checkSkillKey(skillKey, true);
+    }
+      
       this.checkFieldsSkills();
     },
     checkSkillKey(skillKey, bBool) {
@@ -228,7 +243,7 @@ export default {
       } else if (skillKey === "Extensions") {
         this.bExtensions = bBool;
       } else if (skillKey === "ProgramLang") {
-        this.bProgramms = bBool;
+        this.bProgramLangs = bBool;
       } else if (skillKey === "Technologies") {
         this.bTechnologies = bBool;
       }
@@ -236,10 +251,12 @@ export default {
     saveLang(index) {
      const dataToChange = this._beforeEditingCacheLangs[index];
      const newData = utils.createClone(this.userLangs[index]);
+     newData.Action = 'U';
       if(dataToChange) {
-        this.$store.dispatch('updateUserLangs', newData);
+        newData.LanguageToChange = dataToChange.LanguageId;
+        this.updateUserLangs(newData);
       } else {
-        this.$store.dispatch('saveUserLangs', newData);
+        this.saveUserLangs(newData);
       }
       this._beforeEditingCacheLangs = utils.createClone(this.userLangs);
     },
@@ -258,7 +275,7 @@ export default {
           name: "ProgramLang",
           value: this.newProgramLang
         };
-        this.$store.dispatch("addSkill", data);
+        this.addSkill(data);
         this.newProgramLang = null;
       }
       this.checkSingleSkill("ProgramLang");
@@ -268,7 +285,7 @@ export default {
         name: "ProgramLang",
         value: lang
       };
-      this.$store.dispatch("removeSkill", data);
+      this.removeSkill(data);
       this.checkSingleSkill("ProgramLang");
     },
     addTechnology() {
@@ -277,7 +294,7 @@ export default {
           name: "Technologies",
           value: this.newTechnology
         };
-        this.$store.dispatch("addSkill", data);
+        this.addSkill(data);
         this.newTechnology = null;
       }
       this.checkSingleSkill("Technologies");
@@ -287,7 +304,7 @@ export default {
         name: "Technologies",
         value: tech
       };
-      this.$store.dispatch("removeSkill", data);
+      this.removeSkill(data);
       this.checkSingleSkill("Technologies");
     },
     addExtension() {
@@ -296,7 +313,7 @@ export default {
           name: "Extensions",
           value: this.newExtension
         };
-        this.$store.dispatch("addSkill", data);
+        this.addSkill(data);
         this.newExtension = null;
       }
       this.checkSingleSkill("Extensions");
@@ -306,7 +323,7 @@ export default {
         name: "Extensions",
         value: ext
       };
-      this.$store.dispatch("removeSkill", data);
+      this.removeSkill(data);
       this.checkSingleSkill("Extensions");
     },
     addAdditional() {
@@ -315,7 +332,7 @@ export default {
           name: "AdditionalSkills",
           value: this.newAdditional
         };
-        this.$store.dispatch("addSkill", data);
+        this.addSkill(data);
         this.newAdditional = null;
       }
       this.checkSingleSkill("AdditionalSkills");
@@ -325,7 +342,7 @@ export default {
         name: "AdditionalSkills",
         value: add
       };
-      this.$store.dispatch("removeSkill", data);
+      this.removeSkill(data);
       this.checkSingleSkill("AdditionalSkills");
     }
   }

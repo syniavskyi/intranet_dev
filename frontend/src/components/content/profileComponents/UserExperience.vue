@@ -91,20 +91,8 @@ export default {
   mounted() {
     this.setExpCheckbox();
   },
-  // updated() {
-  //   var list = this.$el.querySelectorAll("input[type='checkbox']")
-  //   for (var i=0;i < list.length; i++) {
-  //     var endDate = list[i].parentElement.parentElement.children[2],
-  //     checkboxWrap = list[i].parentElement.parentElement.children[3];
-  //     if (list[i].checked) {
-  //       endDate.setAttribute("style", "display: none;")
-  //     } else {
-  //       checkboxWrap.setAttribute("style", "display: none;")
-  //     }
-  //   }
-  // },
   methods: {
-    ...mapActions(["addUserExperience", "removeUserExperience"]),
+    ...mapActions(["addUserExperience", "updateUserExp", "saveNewUserExp"]),
     edit() {
       this.editMode = true;
       this.onHover(this.$el);
@@ -168,10 +156,11 @@ export default {
       this.editMode = false;
     },
     remove(index) {
-      this._beforeEditingCache.splice(index, 1);
       let newData = utils.createClone(this.userExperience[index]);
       newData.Action = 'D';
-      this.updateUserExperience(newData);
+      this.updateUserExp(newData);
+      this.userExperience.splice(index, 1);
+      this._beforeEditingCache = utils.createClone(this.userExperience);
     },
     // check if new data should be updated or created
     save(index) {
@@ -183,9 +172,9 @@ export default {
         newData.WorkPosToChange = dataToChange.WorkPos;
         newData.EmployerToChange = dataToChange.Employer;
         newData.DateStartToChange = dataToChange.DateStart;
-        this.$store.dispatch("updateUserExp", newData);
+        this.updateUserExp(newData);
       } else {
-        this.$store.dispatch("saveNewUserExp", newData);
+        this.saveNewUserExp(newData);
       }
       this._beforeEditingCache = utils.createClone(this.userExperience);
     },

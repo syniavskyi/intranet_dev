@@ -24,7 +24,8 @@ const state = {
   availType: [],
   targetGroup: [],
   roles: [],
-  userPhotoUrl: null
+  userPhotoUrl: null,
+  selectedForCvUser: ''
 };
 
 const mutations = {
@@ -87,6 +88,9 @@ const mutations = {
   },
   SET_USER_PHOTO_URL(state, url) {
     state.userPhotoUrl = url
+  },
+  SET_SELECTED_FOR_CV_USER(state, data) {
+    state.selectedForCvUser = data;
   }
 };
 
@@ -257,7 +261,21 @@ const actions = {
       commit('SET_USER_SKILLS', oData.UserSkills.results); //set user skills data for profile and cv
       let userSkills = utils.formatToArray(oData.UserSkills.results);
       if (userSkills) {
+        for(let key in userSkills[0]) {
+          if (userSkills[0][key][0] === "") {
+            userSkills[0][key] = [];
+          }
+        }
         commit('SET_USER_SKILLS', userSkills[0]);
+      }  else {
+          userSkills = {
+            SapModules: [],
+            ProgramLang: [],
+            Technologies: [],
+            Extensions: [],
+            AdditionalSkills: []
+          }
+          commit('SET_USER_SKILLS', userSkills);
       }
 
       commit('SET_USER_PROJECTS_LIST', oData.UserCvProjects.results); //set user projects data for profile and cv
@@ -452,6 +470,9 @@ const getters = {
   },
   getUserPhotoUrl(state) {
     return state.userPhotoUrl
+  },
+  getSelectedForCvUser(state) {
+    return state.selectedForCvUser;
   }
 };
 

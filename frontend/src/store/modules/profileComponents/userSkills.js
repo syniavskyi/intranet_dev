@@ -31,27 +31,26 @@ const actions = {
     commit,
     getters
   }, moduleId) {
-    const skillsList = getters.getUserSkills,
-      modules = skillsList.SapModules
-
-    let moduleExist = null
-
+    let skillsList = getters.getUserSkills,
+    modules = skillsList.SapModules;
+    let moduleExist = null;
+    
     if (modules.length !== 0) {
       for(let items of modules){
         if (items === moduleId) {
-          moduleExist = true
-          return
+          moduleExist = true;
+          return;
         } else {
-          moduleExist = false
+          moduleExist = false;
         }
       }
     } else {
-      moduleExist = false
+      moduleExist = false;
     }
 
     if (moduleExist === false) {
-      skillsList.SapModules.push(moduleId)
-      commit('SET_USER_SKILLS', skillsList)
+      skillsList.SapModules.push(moduleId);
+      commit('SET_USER_SKILLS', skillsList);
     }
   },
   removeModuleForSkills({
@@ -111,10 +110,10 @@ const actions = {
   },
   saveUserSkills({
     getters
-  }) {
-    let newSkills = utils.createClone(this.getters.getUserSkills);
+  }, newSkills) {
     newSkills = utils.formatToString(newSkills);
-    newSkills.Language = getters.getSelectedCvLang.toUpperCase();
+    getters.getSelectedCvLang ?  newSkills.Language = getters.getSelectedCvLang.toUpperCase() : newSkills.Language = getters.getLoginLanguage;
+    getters.getSelectedForCvUser ? newSkills.UserAlias = getters.getSelectedForCvUser : newSkills.UserAlias = getters.getLoginAlias;
     let url = "UserSkills(UserAlias='" + newSkills.UserAlias + "',Language='" + newSkills.Language + "')";
     let sToken = getters.getToken;
     let cookie = getters.getCookie; 
@@ -138,8 +137,8 @@ const actions = {
   saveUserLangs({getters}, data) {
     let sToken = getters.getToken;
     let cookie = getters.getCookie;
-    data.Lang = getters.getSelectedCvLang;
-    data.UserId = 'UIO';
+    getters.getSelectedCvLang ? data.Lang = getters.getSelectedCvLang.toUpperCase() : data.Lang = getters.getLoginLanguage;
+    getters.getSelectedForCvUser ? data.UserId = getters.getSelectedForCvUser : data.UserId = getters.getLoginAlias;
     let url = 'UserLang';
     axios({
       url: url,
@@ -161,14 +160,12 @@ const actions = {
   updateUserLangs({getters}, data){
     let sToken = getters.getToken;
     let cookie = getters.getCookie;
-    if(getters.getSelectedCvLang) {
-      data.Lang = getters.getSelectedCvLang.toUpperCase();
-    } else {
-      data.Lang = getters.getLoginLanguage;
-    }
-    let url = "UserLang(UserId='" + data.UserId + "',Lang='" + data.Lang + "',LanguageId='" + data.LanguageId + "')";
+    getters.getSelectedCvLang ?  data.Lang = getters.getSelectedCvLang.toUpperCase() : data.Lang = getters.getLoginLanguage;
+    getters.getSelectedForCvUser ? data.UserId = getters.getSelectedForCvUser : data.UserId = getters.getLoginAlias;
+    let urlD = "UserLang(UserId='" + data.UserId + "',Lang='" + data.Lang + "',LanguageId='" + data.LanguageId + "')";
+    let urlU = "UserLang(UserId='" + data.UserId + "',Lang='" + data.Lang + "',LanguageId='" + data.LanguageToChange + "')";
     axios({
-      url: url,
+      url: data.Action === 'D' ? urlD : urlU,
       method: 'put',
       data: data,
       headers: {

@@ -535,7 +535,7 @@ export default {
       if (!cvLang) {
         let cvLang = loginLanguage.toUpperCase();
       }
-
+      this.$store.commit("SET_SELECTED_FOR_CV_USER", this.selectedUser);
       let userData = {
         user: this.selectedUser,
         lang: cvLang,
