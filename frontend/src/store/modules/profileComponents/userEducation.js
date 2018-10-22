@@ -49,8 +49,8 @@ const actions = {
   editUserEducation({
     getters
   }, data) {
-    data.UserAlias = 'UIO';
-    data.Language = 'PL';
+    getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = getters.getLoginAlias;
+    getters.getSelectedCvLang ?  data.Language = getters.getSelectedCvLang.toUpperCase() : data.Language = getters.getLoginLanguage;
     data.DateStart = utils.formatDateForBackend(data.DateStart);
     data.DateEnd = utils.formatDateForBackend(data.DateEnd);
     data.IsCurrent = data.IsCurrent ? 'X' : '-';
@@ -78,8 +78,8 @@ const actions = {
   addUserEducation({
     getters
   }, data) {
-    data.UserAlias = 'UIO'
-    data.Language = 'PL'
+    getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = getters.getLoginAlias;
+    getters.getSelectedCvLang ?  data.Language = getters.getSelectedCvLang.toUpperCase() : data.Language = getters.getLoginLanguage;
     data.DateStart = utils.formatDateForBackend(data.DateStart)
     data.DateEnd = utils.formatDateForBackend(data.DateEnd)
     data.IsCurrent = data.IsCurrent ? 'X' : '-'

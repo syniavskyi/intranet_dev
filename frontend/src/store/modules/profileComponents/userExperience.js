@@ -38,44 +38,15 @@ const actions = {
       Language: null
     })
   },
-  // removeUserExperience({
-  //   getters
-  // }, index) {
-  //   const userExp = getters.getUserExperience,
-  //     data = userExp[index]
-
-  //   data.Language = 'PL'
-  //   data.UserAlias = 'UIO'
-
-  //   const url = 'UserExperiences' + '(' + "UserAlias='" + data.UserAlias + "',Language='" + data.Language + "',WorkPos='" + data.WorkPos + "',Employer='" + data.Employer + "',DateStart=datetime'" + moment(data.DateStart).format("YYYY-MM-DD") + "T00:00:00')"
-
-  //   let sToken = getters.getToken;
-  //   let cookie = getters.getCookie;
-  //   axios({
-  //     url: url,
-  //     method: 'put',
-  //     data: data,
-  //     headers: {
-  //         "Content-Type": "application/json",
-  //         "X-Requested-With": "XMLHttpRequest",
-  //         "Cache-Control": "no-cache",
-  //         "x-csrf-token": sToken,
-  //         "Cookie": cookie
-  //     }
-  //   }).then(res => {
-  //       console.log(res)
-  //     }).catch(error => {
-  //       console.log(error);
-  //   })
-  // },
   saveNewUserExp({
     getters
   }, data) {
-    data.UserAlias = 'UIO'
-    data.DateStart = utils.formatDateForBackend(data.DateStart)
-    data.DateEnd = utils.formatDateForBackend(data.DateEnd)
+    getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = getters.getLoginAlias;
+    data.DateStart = utils.formatDateForBackend(data.DateStart);
+    data.DateEnd = utils.formatDateForBackend(data.DateEnd);
     data.DateEndToChange = null;
     data.DateStartToChange = null;
+    delete data.Action;
     data.IsCurrent = data.IsCurrent ? 'X' : '-'
     let url = 'UserExperiences';
     let sToken = getters.getToken;
@@ -100,7 +71,7 @@ const actions = {
   updateUserExp({
     getters
   }, data) {
-    data.UserAlias = 'UIO';
+    getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = getters.getLoginAlias;
     data.DateStart = utils.formatDateForBackend(data.DateStart);
     data.DateEnd = utils.formatDateForBackend(data.DateEnd);
     data.IsCurrent = data.IsCurrent ? 'X' : '-';

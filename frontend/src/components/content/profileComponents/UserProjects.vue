@@ -160,16 +160,19 @@ export default {
   methods: {
     ...mapActions({
       addRow: "addUserProjectsRow",
-      removeRow: "removeUserProjectsRow",
       adjustProjects: "adjustProject"
     }),
     remove(index) {
-      this.removeRow(index);
-      this._beforeEditingProjects.splice(index, 1);
+      let newData = utils.createClone(this.userProjects[index]);
+      newData.Action = 'D';
+      this.$store.dispatch("updateUserProjectsPosition", newData);
+      this.userProjects.splice(index, 1);
+      this._beforeEditingProjects = utils.createClone(this.userProjects);
     },
     save(index) {
       const dataToChange = this._beforeEditingProjects[index],
         newData = utils.createClone(this.userProjects[index]);
+        newData.Action ='U';
       if (dataToChange) {
         newData.DateStartToChange = dataToChange.DateStart;
         newData.DateEndToChange = dataToChange.DateEnd;
@@ -221,9 +224,6 @@ export default {
       }
       bDateChange = bCurrent || bDateEnd;
       bDesc = beforeEdit.Description !== userPro.Description;
-     } else {
-          bChanged = true;
-        }
       bChanged =
         bProjectName ||
         bContractor ||
@@ -234,7 +234,9 @@ export default {
         bDesc
           ? true
           : false;
-        
+        } else {
+          bChanged = true;
+        }
       if (
         userPro.ProjectName &&
         userPro.ContractorName &&
