@@ -140,8 +140,8 @@ const actions = {
         } 
         if(!geoLocat.lat || !geoLocat.Len) {
    // set Wrocław to default localisation
-        geoLocat.lat = 51
-        geoLocat.len = 16
+        geoLocat.lat = 51.1;
+        geoLocat.len = 17.03;
         commit('SET_LOCATION', geoLocat);
         dispatch("getWeatherData");
         }

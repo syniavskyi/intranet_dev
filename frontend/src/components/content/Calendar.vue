@@ -329,7 +329,6 @@ export default {
   methods: {
     ...mapActions([
       "clearForm",
-      "removeEvent",
       "addNewEvent",
       "clearFilters",
       "editEvent",
@@ -342,9 +341,11 @@ export default {
     },
     // trigger function from js to adjust data for backend
     editForm(data) {
+      data.Action = 'U';
       this.editEvent(data);
       this.editEventClick(data);
-      this.selectedDay["attributes"][0].customData = data;
+      let pos = this.selectedDay["attributes"].findIndex(x => x.customData.EventId === data.EventId);
+      this.selectedDay["attributes"][pos].customData = data;
     },
     dayClicked(day) {
       this.selectedDay = day;
@@ -369,13 +370,18 @@ export default {
     },
     deleteEvent(data) {
       let editedData = data;
+      editedData.Action = 'D'
       Object.assign(this.addEvent, editedData);
-      this.removeEvent();
+      this.editEvent(editedData);
+      let pos = this.selectedDay["attributes"].findIndex(x => x.customData.EventId === data.EventId);
+      this.selectedDay["attributes"].splice(pos, 1)
     },
     addNewEventBtn(data) {
       this.$store.commit("SET_DATE_FROM", this.selectedValue);
       this.addNewEvent(data);
       this.performDialog();
+      let pos = this.selectedDay.attributes.length;
+      this.selectedDay.attributes[pos] = { customData: { data }};
     },
     // permision to filter calendar
     backToModal() {

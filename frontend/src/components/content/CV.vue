@@ -179,10 +179,10 @@ export default {
     const retrievedObject = JSON.parse(localStorage.getItem("Object"));
     this.$store.commit("SET_CV_ELEMENTS", retrievedObject);
       let userData = {
-      user: 'UIO',
       lang: retrievedObject.language,
       changePage: false
       }
+       this.$store.getters.getSelectedForCvUser ? userData.user = this.$store.gettersgetters.getSelectedForCvUser : userData.user = this.$store.gettersgetters.getLoginAlias;
     if (this.$store.getters.isDataLoaded === false) {
       this.$store.dispatch("loadData", userData);
     }
