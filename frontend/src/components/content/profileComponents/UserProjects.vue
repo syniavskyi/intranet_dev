@@ -182,6 +182,9 @@ export default {
         this.$store.dispatch("saveUserProjectsPosition", newData);
       }
       this._beforeEditingProjects = utils.createClone(this.userProjects);
+      document.getElementsByClassName("projSaveButton")[
+          index
+        ].disabled = true;
     },
     checkFields(index) {
       let bChanged,
@@ -256,12 +259,6 @@ export default {
         ].disabled = true;
       }
     },
-    // saveUserProject(index) {
-    //   this.$store.dispatch("saveUserProjectsPosition", index);
-    //   this._beforeEditingProjects = JSON.parse(
-    //     JSON.stringify(this.userProjects)
-    //   );
-    // },
     onHover(el) {
       this.$store.dispatch("onLightUp", el.style ? el : this.$el);
     },

@@ -234,6 +234,9 @@ export default {
         this.addUserEducation(newData);
       }
       this._beforeEditingCache = utils.createClone(this.userEducation);
+       document.getElementsByClassName("eduButtons")[
+            index
+          ].children[0].disabled = true;
     },
     formatDate(date) {
       return date !== null && date !== undefined

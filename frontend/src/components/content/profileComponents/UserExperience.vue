@@ -177,7 +177,10 @@ export default {
         this.saveNewUserExp(newData);
       }
       this._beforeEditingCache = utils.createClone(this.userExperience);
-    },
+      document.getElementsByClassName("expButtons")[
+            index
+          ].children[0].disabled = true;
+        },
     formatDate(date) {
       return date !== null && date !== undefined
         ? moment(date).format("DD.MM.YYYY")
