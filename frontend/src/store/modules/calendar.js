@@ -163,6 +163,7 @@ const actions = {
       }
     }).then(res => {
         console.log(res)
+        data.EventId = res.data.d.EventId;
       }).catch(error => {
         console.log(error);
     })
@@ -201,30 +202,17 @@ const actions = {
           console.log(res);
           let aEvents = getters.getEvents;
           let pos = aEvents.findIndex(x => x.EventId === eventData.EventId);
+         if (data.Action === 'U') {
           commit('SET_CLEARED_DATA', eventData);
           aEvents[pos] = data;
+         } else {
+          aEvents.splice(pos, 1);
+          commit('SET_EVENTS', aEvents);
+         }        
           commit('SET_EVENTS', aEvents);
         }).catch(error => {
           console.log(error);
       })
-  },
-  removeEvent({
-    commit,
-    state,
-    dispatch
-  }) {
-    let eventData = state.addEvent,
-      aEvents = state.aEvents,
-      query = getters.getUrlQuery,
-      pos = aEvents.findIndex(x => x.EventId === eventData.EventId),
-      url = 'Events' + '(' + "EventId='" + eventData.EventId + "')" + query
-
-    odata(url).remove().save(function (data) {
-      aEvents.splice(pos, 1);
-      commit('SET_EVENTS', aEvents);
-    }, function (status) {
-      console.error(status);
-    })
   },
   clearForm({
     commit
