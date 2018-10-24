@@ -113,7 +113,6 @@
 
 <script>
 import Menu from "../Menu.vue";
-import axios from "axios";
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 import i18n from "../../lang/lang";

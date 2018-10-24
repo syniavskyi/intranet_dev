@@ -112,17 +112,18 @@ const actions = {
       lang = "PL"
     }
     let urlQuery = getters.getUrlQuery
-    axios({
+    return axios({
       method: 'GET',
       url: "SchoolDesc" + urlQuery + "&$filter=Language eq " + "'" + lang + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
-    }).then(res => {
-      commit('SET_SCHOOL_DESC_LIST', res.data.d.results);
-    }).catch(error => {
-      console.log(error)
     })
+    // .then(res => {
+    //   commit('SET_SCHOOL_DESC_LIST', res.data.d.results);
+    // }).catch(error => {
+    //   console.log(error)
+    // })
   },
   // get description for field of study from text table
   getFieldOfStudyDesc({
@@ -133,17 +134,18 @@ const actions = {
       lang = "PL"
     }
     let urlQuery = getters.getUrlQuery
-    axios({
+    return axios({
       method: 'GET',
       url: "FieldOfStudyDesc" + urlQuery + "&$filter=Language eq '" + lang + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
-    }).then(res => {
-      commit('SET_FIELD_OF_STUDY_DESC_LIST', res.data.d.results);
-    }).catch(error => {
-      console.log(error)
     })
+    // .then(res => {
+    //   commit('SET_FIELD_OF_STUDY_DESC_LIST', res.data.d.results);
+    // }).catch(error => {
+    //   console.log(error)
+    // })
   }
 }
 

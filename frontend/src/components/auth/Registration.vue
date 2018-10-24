@@ -69,7 +69,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { required, email } from "vuelidate/lib/validators";
 import i18n from "../../lang/lang";
 import Menu from "../Menu.vue";

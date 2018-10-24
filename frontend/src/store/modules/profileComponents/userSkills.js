@@ -206,17 +206,18 @@ const actions = {
     getters
   }, ) {
     let urlQuery = getters.getUrlQuery
-    axios({
+    return axios({
       method: 'GET',
       url: 'Languages' + urlQuery,
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
-    }).then(res => {
-      commit('SET_LANGUAGE_LIST', res.data.d.results);
-    }).catch(error => {
-      console.log(error)
     })
+    // .then(res => {
+    //   commit('SET_LANGUAGE_LIST', res.data.d.results);
+    // }).catch(error => {
+    //   console.log(error)
+    // })
   }
 }
 

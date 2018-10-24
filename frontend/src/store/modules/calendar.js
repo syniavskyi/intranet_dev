@@ -88,21 +88,22 @@ const actions = {
     getters
   }) {
     let urlQuery = getters.getUrlQuery
-    axios({
+    return axios({
       method: 'GET',
       url: 'Events' + urlQuery,
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
-    }).then(res => {
-      let oEvents = res.data.d.results;
-      commit('SET_EVENTS', oEvents);
-      oEvents = utils.formatToArray(oEvents)
-      dispatch('convertDate');
-      dispatch('setColor')
-    }).catch(error => {
-      console.log(error);
     })
+    // .then(res => {
+    //   let oEvents = res.data.d.results;
+    //   commit('SET_EVENTS', oEvents);
+    //   oEvents = utils.formatToArray(oEvents)
+    //   dispatch('convertDate');
+    //   dispatch('setColor')
+    // }).catch(error => {
+    //   console.log(error);
+    // })
   },
   convertDate({
     getters,

@@ -68,7 +68,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import i18n from "../../lang/lang";
 import Menu from "../Menu.vue";
 import { mapGetters, mapActions } from "vuex";

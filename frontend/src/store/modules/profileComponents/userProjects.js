@@ -278,16 +278,18 @@ const actions = {
       lang = "PL"
     }
     let urlQuery = getters.getUrlQuery
-    axios({
+    return axios({
       method: 'GET',
-      url: "Industries" + urlQuery + "&$filter=Lang eq '" + lang + "'",
+      url: "Industries" + "?$filter=Lang eq '" + lang + "'",
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+        "Cookie": getters.getCookie
       }
-    }).then(res => {
-      console.log(res.data.d.results);
-      commit('SET_INDUSTRY_DESC_LIST', res.data.d.results);
-    }).catch(error => {})
+    })
+    // .then(res => {
+    //   console.log(res.data.d.results);
+    //   commit('SET_INDUSTRY_DESC_LIST', res.data.d.results);
+    // }).catch(error => {})
   },
   // format project from string to array with objects, adding industry description 
   adjustProjects({
