@@ -381,7 +381,7 @@ export default {
       this.addNewEvent(data);
       this.performDialog();
       let pos = this.selectedDay.attributes.length;
-      this.selectedDay.attributes[pos] = { customData: { data }};
+      // this.selectedDay.attributes[pos] = { customData: { data }};
     },
     // permision to filter calendar
     backToModal() {

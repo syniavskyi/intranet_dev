@@ -55,7 +55,7 @@
                                 <div class="tile-underscore"/>
                             </div>
                             <div class="tile-content">
-                                <div v-for="(event, index) in events" :key='index' class="single-event">
+                                <div v-for="(event, index) in eventsSrt" :key='index' class="single-event">
                                     <div class="event-date">{{setDateTo(event)}}</div>
                                     <div class="event-title">{{ event.EventName }}</div>
                                     <div class="event-type">{{event.EventTypeName}}</div>
@@ -180,7 +180,22 @@ export default {
       showNewMessage: "getShowNewMessageDialog",
       advertsList: "getAdverts",
       usersList: "usersList"
-    })
+    }),
+    eventsSrt: function() {
+     this.events.sort((a,b) => (a.DateFrom > b.DateFrom) ? 1 : ((b.DateFrom > a.DateFrom) ? -1 : 0)); 
+
+    let addDays = function(date, days) {
+        let result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+          }
+
+    let filteredEvents = this.events.filter(function(oItem){
+        return oItem.DateFrom > new Date() && oItem.DateFrom < addDays(new Date(), 7);
+      });
+
+  return filteredEvents;
+    }
   },
   methods: {
     ...mapActions([
