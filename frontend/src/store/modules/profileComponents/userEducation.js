@@ -1,5 +1,4 @@
 import axios from 'axios'
-import odata from 'odata'
 let utils = require('../../../utils')
 
 const state = {
@@ -111,19 +110,14 @@ const actions = {
     if (lang === undefined) {
       lang = "PL"
     }
-    let urlQuery = getters.getUrlQuery
     return axios({
       method: 'GET',
-      url: "SchoolDesc" + urlQuery + "&$filter=Language eq " + "'" + lang + "'",
+      url: `SchoolDesc?$filter=Language eq '${lang}'`,
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+        "Cookie": getters.getCookie
       }
     })
-    // .then(res => {
-    //   commit('SET_SCHOOL_DESC_LIST', res.data.d.results);
-    // }).catch(error => {
-    //   console.log(error)
-    // })
   },
   // get description for field of study from text table
   getFieldOfStudyDesc({
@@ -133,19 +127,14 @@ const actions = {
     if (lang === undefined) {
       lang = "PL"
     }
-    let urlQuery = getters.getUrlQuery
     return axios({
       method: 'GET',
-      url: "FieldOfStudyDesc" + urlQuery + "&$filter=Language eq '" + lang + "'",
+      url: `FieldOfStudyDesc?$filter=Language eq '${lang}'`, 
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+        "Cookie": getters.getCookie
       }
     })
-    // .then(res => {
-    //   commit('SET_FIELD_OF_STUDY_DESC_LIST', res.data.d.results);
-    // }).catch(error => {
-    //   console.log(error)
-    // })
   }
 }
 

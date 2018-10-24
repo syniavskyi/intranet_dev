@@ -4,14 +4,12 @@ const actions = {
   submitRegistration({
     commit, getters
   }, data) {
-    let url = 'Users'
     let sToken = getters.getToken;
-    let cookie = getters.getCookie;
     data.Action = "R";
     commit("SET_DIALOG_CONFIRM", true);
     commit("SET_DISPLAY_LOADER", true);
     axios({
-      url: url,
+      url: 'Users',
       data: data,
       method: 'post',
       headers: {
@@ -19,7 +17,7 @@ const actions = {
         "X-Requested-With": "XMLHttpRequest",
         "Cache-Control": "no-cache",
         "x-csrf-token": sToken,
-        "Cookie": cookie
+        "Cookie": getters.getCookie
       }
     }).then(res => {
       commit("SET_DISPLAY_LOADER", false);

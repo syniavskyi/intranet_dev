@@ -68,15 +68,12 @@ const actions = {
     getters,
     dispatch
   }) {
-    let urlQuery = getters.getUrlQuery
-    // TEMPORARY, after testing change url to urlQuery
-    let query = "?sap-user=psy&sap-password=ides01&sap-language=pl"
-    let user = 'UIO'
     axios({
       method: 'GET',
-      url: 'Attachments' + query + "&$filter=FileId eq 'new' and UserAlias eq '" + user + "'",
+      url: 'Attachments' + "?$filter=FileId eq 'new' and UserAlias eq '" + user + "'",
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+        "Cookie": getters.getCookie
       }
     }).then(res => {
       let oAttachments = res.data.d.results;

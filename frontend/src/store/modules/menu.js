@@ -32,9 +32,11 @@ const actions = {
               }).catch(error => {
                 console.log(error)
             })
-            localStorage.setItem('authorized', false)
+            localStorage.setItem('authorized', "false")
             router.replace('/');
         }).catch(error => {
+            localStorage.setItem('authorized', "false");
+            router.replace('/');
             console.log(error)
         })
     },
