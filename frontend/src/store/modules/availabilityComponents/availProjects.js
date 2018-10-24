@@ -1,4 +1,5 @@
 import axios from 'axios'
+import moment from 'moment'
 let utils = require('../../../utils')
 
 const state = {
@@ -63,29 +64,28 @@ const actions = {
             }
             commit('SET_USER_AVAIL_PROJECTS', userProjects)
     },
-        
     removeUserProject({commit, getters, dispatch}, data) {
-    //     const URL = "/api/users/" + data.userId + "/userEngag/" + data.projectId + "/delete"
-    //     axios.delete(URL).then(res => {
-    //         console.log(res)
-    //         dispatch('getUserProjects', data.userId)
-    //         dispatch('hideAllMessages')
-    //         commit('SET_REMOVE_ERROR', false)
-    //         commit('SET_REMOVE_SUCCESS', true)
-    //         commit('SET_PROJECT_TO_EDIT', {})
-    //     }).catch(error => {
-    //         dispatch('hideAllMessages')
-    //         commit('SET_REMOVE_ERROR', true)
-    //         commit('SET_REMOVE_SUCCESS', false)
-    //        console.log(error)
-    //    });
-    },
+      const URL = "UserAvailabilities(ProjectId='" + data.ProjectId + "',UserAlias='" + data.UserId + "',DateStart=datetime'" + moment(data.DateStart).format("YYYY-MM-DD") + "T00:00:00',DateEnd=datetime'"+ moment(data.DateEnd).format("YYYY-MM-DD") + "T00:00:00')"
+      axios.delete(URL).then(res => {
+          console.log(res)
+          dispatch('getUserProjects', data.userId)
+          dispatch('hideAllMessages')
+          commit('SET_REMOVE_ERROR', false)
+          commit('SET_REMOVE_SUCCESS', true)
+      }).catch(error => {
+          dispatch('hideAllMessages')
+          commit('SET_REMOVE_ERROR', true)
+          commit('SET_REMOVE_SUCCESS', false)
+         console.log(error)
+     });
+  },
     addUserProject({commit, getters, dispatch}) {
       let data  = getters.getNewProjectForUser,
            url = 'UserProjects',
            sToken = getters.getToken,
           cookie = getters.getCookie;
 
+      data.Engag = parseInt(data.Engag)
       axios({
         url: url,
         method: 'post',

@@ -33,7 +33,7 @@
                                     <button  class="clear-btn" @click="editAdvert(advert)">edytuj</button>
                                     <button  class="clear-btn" @click="saveAdvert(advert)" :disabled="!isAdvertValid">zapisz</button>
                                     <button  class="clear-btn" @click="cancelEditing(index)">anuluj</button>
-                                    <button class="oclear-btn" @click="removeAdvert(index)">X</button>
+                                    <button class="oclear-btn" @click="removeAdvert(advert.AdvertId)">X</button>
                                 </div>
                                 <button v-show="isMoreThanOneAdvert" @click="nextSlide(-1)" class="advLeft">&#8249;</button>
                                 <button v-show="isMoreThanOneAdvert" @click="nextSlide(1)" class="advRight">&#8250;</button>
@@ -220,9 +220,10 @@ export default {
       this.$store.dispatch("updateAdvert", index)
       // this.updateAdvert();
     },
-    removeAdvert(index) {
-      this.advertsList.splice(index, 1);
-      this.editMode = false;
+    removeAdvert(advertId) {
+      this.$store.dispatch('removeAdvert', advertId)
+      // this.advertsList.splice(index, 1);
+       this.editMode = false;
     },
     cancelEditing(index) {
       this.advertsList[index] = this.beforeEditingCache;

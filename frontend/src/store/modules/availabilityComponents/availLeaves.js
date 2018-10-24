@@ -1,4 +1,5 @@
 import axios from 'axios'
+import moment from 'moment'
 let utils = require('../../../utils')
 
 const state = {
@@ -53,8 +54,7 @@ const actions = {
                 commit('SET_DISPLAY_LOADER', false)
 
         },
-    removeUserAvail({commit, getters, dispatch}, index) {
-        let data = getters.getUserAvail[index]
+    removeUserAvail({commit, getters, dispatch}, data) {
         const URL = "UserAvailabilities(TypeId='" + data.TypeId + "',UserId='" + data.UserId + "',DateStart=datetime'" + moment(data.DateStart).format("YYYY-MM-DD") + "T00:00:00',DateEnd=datetime'"+ moment(data.DateEnd).format("YYYY-MM-DD") + "T00:00:00')"
         axios.delete(URL).then(res => {
             console.log(res)
