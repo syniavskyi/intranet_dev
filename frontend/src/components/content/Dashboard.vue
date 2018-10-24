@@ -55,7 +55,6 @@
 
    import router from '@/router/index.js'
 import { mapGetters } from 'vuex';
-import axios from 'axios'
 import Menu from '../Menu.vue'
 
 	export default {

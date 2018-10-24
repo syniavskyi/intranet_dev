@@ -36,7 +36,7 @@ export const formatDateForBackend = function (date) {
 };
 
 export const dateStringToObj = function (date) {
-  if (date !== null) {
+  if (date && date !== null) {
     return new Date(parseInt(date.substring(6, date.length - 2)));
   }
 };

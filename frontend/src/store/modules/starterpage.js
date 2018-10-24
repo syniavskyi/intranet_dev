@@ -91,23 +91,15 @@ const actions = {
     commit,
     getters,
     dispatch
-  }) {
-    let urlQuery = getters.getUrlQuery
-    let query = "?sap-user=psy&sap-password=ides01&sap-language=pl"
-    let user = 'UIO'
-    axios({
-      method: 'GET',
-      url: 'Attachments' + query + "&$filter=FileId eq 'info' and UserAlias eq '" + user + "'",
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-      }
-    }).then(res => {
-      let oAttachments = res.data.d.results;
-      commit('SET_DOC_LIST_INFO', oAttachments);
-      dispatch('checkStatus', oAttachments);
-    }).catch(error => {
-      console.log(error);
-    })
+  }, userData) {
+    return axios({
+              method: 'GET',
+              url: 'Attachments' +  "?$filter=FileId eq 'info' and UserAlias eq '" + userData.user + "'",
+              headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+                "Cookie": getters.getCookie
+              }
+            });
   },
   editSingleNewDoc({getters}, data) {
     let sToken = getters.getToken;
