@@ -50,7 +50,6 @@ const actions = {
     data.IsCurrent = data.IsCurrent ? 'X' : '-'
     let url = 'UserExperiences';
     let sToken = getters.getToken;
-    let cookie = getters.getCookie;
     axios({
       url: url,
       method: 'post',
@@ -60,7 +59,7 @@ const actions = {
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
           "x-csrf-token": sToken,
-          "Cookie": cookie
+          "Cookie": getters.getCookie
       }
     }).then(res => {
         console.log(res)
@@ -80,7 +79,6 @@ const actions = {
     data.DateStartToChange = utils.formatDateForBackend(data.DateStartToChange);
     data.DateEndToChange = utils.formatDateForBackend(data.DateEndToChange);
     let sToken = getters.getToken;
-    let cookie = getters.getCookie;
     axios({
       url: data.Action === 'U' ? urlU : urlD,
       method: 'put',
@@ -90,7 +88,7 @@ const actions = {
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
           "x-csrf-token": sToken,
-          "Cookie": cookie
+          "Cookie": getters.getCookie
       }
     }).then(res => {
         console.log(res)

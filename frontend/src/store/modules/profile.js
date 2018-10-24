@@ -62,14 +62,8 @@ const actions = {
 
     userData.EmploymentDate = utils.formatDateForBackend(userData.EmploymentDate);
 
-    const url = 'Users' + '(' + "UserAlias='" + userData.UserAlias + "',Language='" + userData.Language + "')"
-    // odata(url).put(userData).save(function (data) {
-    //   console.log("changed");
-    // }, function (status) {
-    //   console.error(status);
-    // });
+    const url = `Users(UserAlias='${userData.UserAlias}',Language='${userData.Language}')`;
     let sToken = getters.getToken;
-    let sCookie = getters.getCookie;
     axios({
       method: 'PUT',
       url: url,
@@ -79,7 +73,7 @@ const actions = {
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
           "x-csrf-token": sToken,
-          "Cookie": sCookie
+          "Cookie": getters.getCookieurl
       }
     }).then(res => {
 
@@ -121,7 +115,6 @@ const actions = {
     const url = 'http://nw5.local.pl:8050/sap/opu/odata/SAP/ZGW_INTRANET_SRV/Users' + '(' + "UserAlias='" + userData.UserAlias + "',Language='" + userData.Language + "')" + urlQuery
     let sToken = getters.getToken;
     axios.defaults.withCredentials = true
-    let cookie = getters.getCookie; 
     delete userData.UserSkills
     delete userData.UserLang
     delete userData.UserFiles
@@ -139,7 +132,7 @@ const actions = {
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
           "x-csrf-token": sToken,
-          "Cookie": cookie
+          "Cookie": getters.getCookie
       }
     }).then(res => {
         console.log(res)

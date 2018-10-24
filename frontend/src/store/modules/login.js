@@ -47,7 +47,7 @@ const actions = {
     commit,
     dispatch
   }, authData) {
-    let url = '?sap-user=' + authData.username + '&sap-password=' + authData.password + '&sap-language=' + authData.language
+    let url = `?sap-user=${authData.username}&sap-password=${authData.password}&sap-language=${authData.language}`;
     commit('SET_LOGIN_ALIAS', authData.username.toUpperCase());
     axios({
       method: 'get',
@@ -56,7 +56,6 @@ const actions = {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
         "X-CSRF-Token": "Fetch",
         "X-Requested-With": "XMLHttpRequest",
-        // "Cache-Control": "max-age=3600"
         "Cache-Control": "no-cache"
       }
     }).then(res => {
@@ -66,7 +65,6 @@ const actions = {
       let sToken = res.request.getResponseHeader('x-csrf-token');
       commit('SET_TOKEN', sToken);
       commit('SET_COOKIE', res.request.getResponseHeader("Cookie"))
-      // document.cookie = res.request.getResponseHeader("Cookie")
 
       let userData = {
         user: authData.username,

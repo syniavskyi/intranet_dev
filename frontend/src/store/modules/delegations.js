@@ -234,14 +234,13 @@ const actions = {
       totalCostsInCurr.amount =  totalCostsInCurr.travel + totalCostsInCurr.accomodation + totalCostsInCurr.others - allDeduction
     },
     getDelegationNumber({commit, getters}, data) {
-      
-      let urlQuery = getters.getUrlQuery
-      let url = "Delegations(DelegDate=" + data.DelegDate + ",UserId='" + data.UserAlias + "')" +urlQuery
+      let url = "Delegations(DelegDate=" + data.DelegDate + ",UserId='" + data.UserAlias + "')"
       axios({
         method: 'GET',
         url: url,
         headers: {
-          "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+          "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+          "Cookie": getters.getCookie
         }
       }).then(res => {
         commit('SET_NEW_DELEG_NO', res.data.d.DelegNo)

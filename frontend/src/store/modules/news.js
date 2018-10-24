@@ -2,6 +2,8 @@ import axios from 'axios'
 import router from '@/router/index.js'
 import i18n from '../../lang/lang'
 
+let utils = require('../../utils')
+
 const state = {
     geoLoca: {
         lat: null,
@@ -84,16 +86,10 @@ const actions = {
             slides[state.slider.slideIndex - 1].style.display = "flex";
     },
     updateAdvert({commit, state, dispatch, getters}, index){
-        // let data = getters.getAdverts[0]
         let data = index;
-        let query = getters.getUrlQuery
-        const url = 'Adverts' + '(' + "AdvertId='" + data.AdvertId + "')" + query;
-        data.ValidTo = '2019-01-13T00:00:00';//utils.formatDateForBackend(data.ValidTo);
-        // data.Message = "Agnieszce coś się udało."
+        const url = `Adverts(AdvertId='${data.AdvertId}')`;
         let sToken = getters.getToken;
-        // axios.defaults.withCredentials = true
-        let cookie = getters.getCookie;
-        
+        data.ValidTo = utils.formatDateForBackend(data.ValidTo);
         axios({
             url: url,
             method: 'put',
@@ -104,7 +100,7 @@ const actions = {
                 "X-Requested-With": "XMLHttpRequest",
                 "Cache-Control": "no-cache",
                 "x-csrf-token": sToken,
-                "Cookie": cookie
+                "Cookie": getters.getCookie
             }
           }).then(res => {
               console.log(res)

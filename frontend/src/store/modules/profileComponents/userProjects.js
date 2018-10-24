@@ -70,7 +70,6 @@ const actions = {
     dispatch('formatProjectToString', data);
     data.IsCurrent = data.IsCurrent ? 'X' : '-';
     let sToken = getters.getToken;
-    let cookie = getters.getCookie;
     delete data.User;
     let url = 'UserCvProjects';
     axios({
@@ -82,7 +81,7 @@ const actions = {
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
           "x-csrf-token": sToken,
-          "Cookie": cookie
+          "Cookie": getters.getCookie
       }
     }).then(res => {
         console.log(res)
@@ -106,7 +105,6 @@ const actions = {
     let urlD = "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(dataToSend.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + dataToSend.ProjectName + "',Language='" + dataToSend.Language + "')";
     let urlU = "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStartToChange).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(dataToSend.DateEndToChange).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + dataToSend.ProjectName + "',Language='" + dataToSend.Language + "')";
     let sToken = getters.getToken;
-    let cookie = getters.getCookie;
     axios({
       url: dataToSend.Action === 'D' ? urlD : urlU,
       method: 'put',
@@ -116,7 +114,7 @@ const actions = {
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
           "x-csrf-token": sToken,
-          "Cookie": cookie
+          "Cookie": getters.getCookie
       }
     }).then(res => {
         console.log(res)
@@ -277,19 +275,14 @@ const actions = {
     if (lang === undefined) {
       lang = "PL"
     }
-    let urlQuery = getters.getUrlQuery
     return axios({
       method: 'GET',
-      url: "Industries" + "?$filter=Lang eq '" + lang + "'",
+      url: `Industries?$filter=Lang eq '${lang}'`, 
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
         "Cookie": getters.getCookie
       }
     })
-    // .then(res => {
-    //   console.log(res.data.d.results);
-    //   commit('SET_INDUSTRY_DESC_LIST', res.data.d.results);
-    // }).catch(error => {})
   },
   // format project from string to array with objects, adding industry description 
   adjustProjects({

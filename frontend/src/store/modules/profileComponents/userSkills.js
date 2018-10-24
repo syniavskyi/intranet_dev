@@ -159,7 +159,6 @@ const actions = {
   },
   updateUserLangs({getters}, data){
     let sToken = getters.getToken;
-    let cookie = getters.getCookie;
     getters.getSelectedCvLang ?  data.Lang = getters.getSelectedCvLang.toUpperCase() : data.Lang = getters.getLoginLanguage;
     getters.getSelectedForCvUser ? data.UserId = getters.getSelectedForCvUser : data.UserId = getters.getLoginAlias;
     let urlD = "UserLang(UserId='" + data.UserId + "',Lang='" + data.Lang + "',LanguageId='" + data.LanguageId + "')";
@@ -173,7 +172,7 @@ const actions = {
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
           "x-csrf-token": sToken,
-          "Cookie": cookie
+          "Cookie": getters.getCookie
       }
     }).then(res => {
         console.log(res)
@@ -205,19 +204,14 @@ const actions = {
     commit,
     getters
   }, ) {
-    let urlQuery = getters.getUrlQuery
     return axios({
       method: 'GET',
-      url: 'Languages' + urlQuery,
+      url: 'Languages',
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+        "Cookie": getters.getCookie
       }
     })
-    // .then(res => {
-    //   commit('SET_LANGUAGE_LIST', res.data.d.results);
-    // }).catch(error => {
-    //   console.log(error)
-    // })
   }
 }
 
