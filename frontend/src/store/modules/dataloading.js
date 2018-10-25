@@ -26,8 +26,9 @@ const state = {
   roles: [],
   userPhotoUrl: null,
   selectedForCvUser: '',
-  promiseListNews: ["Adverts", "Events", "UserData", "Contractors", "Industries", "Projects", "UserList", "Languages", "SchoolDesc", "FieldOfStudy", "Domains", "StarterDocs"],
-  promiseList: []
+  promiseListToRead: [],//["Domains", "Industries", "Adverts", "Events", "UserData", "Contractors",  "Projects", "UserList", "Languages", "SchoolDesc", "FieldOfStudy", "StarterDocs"],
+  promiseList: [],
+  goFromCv: false //default
 };
 
 const mutations = {
@@ -96,6 +97,12 @@ const mutations = {
   },
   SET_PROMISE_LIST(state, data){
     state.promiseList = data;
+  },
+  SET_PROMISE_TO_READ(state, data){
+    state.promiseListToRead = data;
+  },
+  SET_GO_FROM_CV(state, isFromCv){
+    state.goFromCv = isFromCv;
   }
 };
 
@@ -103,11 +110,13 @@ const actions = {
   loadData({
     state,
     dispatch,
-    getters
+    getters,
+    commit
   }, userData) {
-   dispatch("setPromises", userData); // prepare promises to read data
-   let aPromises = getters.getPromiseList; 
+   let aPromises; // prepare promises to read data
 
+   dispatch("setPromises", userData); 
+   aPromises = getters.getPromiseList;
     axios.all(aPromises).then(res => {
       dispatch("setDataInResponse", { res, userData }); 
     }).catch(error => {
@@ -122,7 +131,6 @@ const actions = {
     commit,
     getters
   }, domainData) {
-    let urlQuery = getters.getUrlQuery
     if (domainData.lang === undefined) {
       domainData.lang = "PL"
     }
@@ -152,10 +160,9 @@ const actions = {
     commit,
     getters
   }) {
-    let urlQuery = getters.getUrlQuery
     return axios({
       method: 'GET',
-      url: 'Contractors' + urlQuery,
+      url: 'Contractors',
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -171,9 +178,17 @@ const actions = {
 
     let sCookie = getters.getCookie;
     commit("SET_DISPLAY_LOADER", true);
+    let sUserAlias = userData.user || localStorage.getItem("id"),
+        sLang = userData.lang || localStorage.getItem("lang");
+    if(!sUserAlias){
+      sUserAlias = userData.user;
+    } 
+    if(!sLang){
+      sLang = userData.lang;
+    }
     return axios({
       method: 'GET',
-      url: 'Users' + '(UserAlias=' + "'" + userData.user.toUpperCase() + "'," + "Language='" + userData.lang + "')" + '?&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang,UserFiles,UserAuth',
+      url: 'Users' + '(UserAlias=' + "'" + sUserAlias.toUpperCase() + "'," + "Language='" + sLang + "')" + '?&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang,UserFiles,UserAuth',
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
         "Cookie": sCookie
@@ -322,28 +337,17 @@ const actions = {
     let urlQuery = getters.getUrlQuery
     return axios({
       method: 'GET',
-      url: "Adverts" + urlQuery,
+      url: "Adverts",
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+        "Cookie": getters.getCookie
       }
     })
-    // .then(res => {
-    //   let oAdverts = res.data.d.results
-    //   // for (let i = 0; i < oAdverts.length; i++) {
-    //   for (let index in oAdverts) {
-    //     if (oAdverts[index].ValidTo) {
-    //       oAdverts[index].ValidTo = utils.dateStringToObj(oAdverts[index].ValidTo);
-    //     }
-    //   };
-    //   commit('SET_ADVERTS', oAdverts);
-    // }).catch(error => {
-    //   console.log(error)
-    // });
   },
 
   setPromises({dispatch,commit}, userData){
     var aPromises = [],
-        aPromiseList = state.promiseListNews;
+        aPromiseList = state.promiseListToRead;
     for(let i = 0; i < aPromiseList.length; i++){
       let sPromiseName = aPromiseList[i];
       switch(sPromiseName){
@@ -364,7 +368,7 @@ const actions = {
           aPromises.push(contractorPromise);
           break;
         case "Industries":
-          const industriesPromise = dispatch('getIndustries', userData.lang).then(res => ( { res: res, promise: "Industries"}));
+          const industriesPromise = dispatch('getIndustries', userData).then(res => ( { res: res, promise: "Industries"}));
           aPromises.push(industriesPromise);
           break;
         case "Projects":
@@ -376,11 +380,11 @@ const actions = {
           aPromises.push(userListPromise);
           break;
         case "Languages":
-          const languagesPromise = dispatch('getAllLanguages').then(res => ( { res: res, promise: "Languages"}));
+          const languagesPromise = dispatch('getAllLanguages', userData).then(res => ( { res: res, promise: "Languages"}));
           aPromises.push(languagesPromise);
           break;
         case "SchoolDesc":
-          const schoolDescPromise = dispatch('getSchoolDesc').then(res => ( { res: res, promise: "SchoolDesc"}));
+          const schoolDescPromise = dispatch('getSchoolDesc', userData.cvLang).then(res => ( { res: res, promise: "SchoolDesc"}));
           aPromises.push(schoolDescPromise);
           break;
         case "FieldOfStudy":
@@ -538,7 +542,7 @@ const actions = {
   setUserData({dispatch, commit, getters}, response, userData){
     commit("SET_DISPLAY_LOADER", false);
       let sUserId = response.data.d.UserAlias;
-      localStorage.setItem('id', sUserId);
+      let sLang = response.data.d.Language;
 
       dispatch('formatUserData', response.data.d); // format dates for date pickers and "is current" fields
       dispatch('getUserFilesData') // get data about all user files (cv, photos, documents etc.)
@@ -654,6 +658,12 @@ const getters = {
   },
   getPromiseList(state){
     return state.promiseList;
+  },
+  getPromisesToRead(state){
+    return state.promiseListToRead;
+  },
+  getGoFromCv(state){
+    return state.goFromCv;
   }
 };
 

@@ -87,23 +87,14 @@ const actions = {
     dispatch,
     getters
   }) {
-    let urlQuery = getters.getUrlQuery
     return axios({
       method: 'GET',
-      url: 'Events' + urlQuery,
+      url: 'Events',
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+        "Cookie": getters.getCookie
       }
     })
-    // .then(res => {
-    //   let oEvents = res.data.d.results;
-    //   commit('SET_EVENTS', oEvents);
-    //   oEvents = utils.formatToArray(oEvents)
-    //   dispatch('convertDate');
-    //   dispatch('setColor')
-    // }).catch(error => {
-    //   console.log(error);
-    // })
   },
   convertDate({
     getters,

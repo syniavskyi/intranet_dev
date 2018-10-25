@@ -14,7 +14,8 @@ const state = {
         position: null
     },
     cvFormats: ["DOCX", "DOC", "PDF"],
-    showSelectCvDialog: false
+    showSelectCvDialog: false,
+    dataToRead: ["Domains", "Industries", "Contractors", "Projects", "Languages", "SchoolDesc", "FieldOfStudy"]
 };
 
 const mutations = {
@@ -118,9 +119,6 @@ const actions = {
           }, function (status) {
             console.error(status); 
           });
-      },
-      loadDataForCv({commit, dispatch}, data) {
-
       }
     
 };
@@ -134,7 +132,10 @@ const getters = {
     },
     getShowSelectCvDialog(state){
         return state.showSelectCvDialog
-      }
+    },
+    getCvToRead(state){
+      return state.dataToRead;
+    }
 };
 
 export default {

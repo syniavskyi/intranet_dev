@@ -35,11 +35,10 @@ const actions = {
     commit,
     getters
   }) {
-    let userId = localStorage.getItem('id')
-    let urlQuery = getters.getUrlQuery
+    let userId = localStorage.getItem('id');
     axios({
       method: 'GET',
-      url: "Attachments" + urlQuery + "&$filter=UserAlias eq " + "'" + userId + "'",
+      url: "Attachments" + "?$filter=UserAlias eq " + "'" + userId + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }

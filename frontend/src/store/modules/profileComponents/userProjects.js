@@ -271,9 +271,10 @@ const actions = {
   getIndustries({
     commit,
     getters
-  }, lang) {
-    if (lang === undefined) {
-      lang = "PL"
+  }, userData) {
+    let lang = userData.cvLang;
+    if (userData.cvLang === undefined) {
+      lang = "PL";
     }
     return axios({
       method: 'GET',

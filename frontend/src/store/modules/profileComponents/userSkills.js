@@ -203,10 +203,11 @@ const actions = {
   getAllLanguages({
     commit,
     getters
-  }, ) {
+  }, userData) {
+
     return axios({
       method: 'GET',
-      url: 'Languages',
+      url: `Languages?$filter=LanguageId eq '${userData.cvLang}'`,
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
         "Cookie": getters.getCookie
