@@ -53,8 +53,8 @@ const actions = {
     data.DateStart = utils.formatDateForBackend(data.DateStart);
     data.DateEnd = utils.formatDateForBackend(data.DateEnd);
     data.IsCurrent = data.IsCurrent ? 'X' : '-';
-    const urlU = 'UsersEducation' + '(' + "UserAlias='" + data.UserAlias + "',University='" + data.UniversityToChange + "',AcademicTitle='" + data.AcademicTitleToChange + "',FieldOfStudy='" + data.FieldOfStudyToChange + "',Language='" + data.Language + "')",
-    urlD = 'UsersEducation' + '(' + "UserAlias='" + data.UserAlias + "',University='" + data.University + "',AcademicTitle='" + data.AcademicTitle + "',FieldOfStudy='" + data.FieldOfStudy + "',Language='" + data.Language + "')"
+    const urlU = "UsersEducation(UserAlias='" + data.UserAlias + "',University='" + data.UniversityToChange + "',AcademicTitle='" + data.AcademicTitleToChange + "',FieldOfStudy='" + data.FieldOfStudyToChange + "',Language='" + data.Language + "')",
+    urlD = "UsersEducation(UserAlias='" + data.UserAlias + "',University='" + data.University + "',AcademicTitle='" + data.AcademicTitle + "',FieldOfStudy='" + data.FieldOfStudy + "',Language='" + data.Language + "')"
     let sToken = getters.getToken;
     let cookie = getters.getCookie;
     axios({

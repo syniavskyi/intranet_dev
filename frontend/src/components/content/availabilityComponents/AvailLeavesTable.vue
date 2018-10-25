@@ -58,7 +58,7 @@
                     </div>
                     <div class="ava-tbs-item eduButtonsAvail" v-else>
                         <div class="ava-tbs-ititle"> {{ $t("label.options") }} </div>
-                            <button v-if="editMode" :disabled="true" @click="save(index, avail.EntryId)">{{ $t("button.save") }}</button>
+                            <button v-if="editMode" :disabled="true" @click="save(index, avail)">{{ $t("button.save") }}</button>
                             <button v-if="editMode" @click="remove(avail)">{{ $t("button.delete") }}</button>
                     </div>
                 </div>
@@ -155,14 +155,16 @@ export default {
          }
     },
     methods: {
-        ...mapActions(["removeUserAvail"]),
+        ...mapActions(["removeUserAvail", "updateUserAvail"]),
          edit() {
             this.editMode = true;
             this._beforeEditingCache = utils.createClone(this.userAvail);
             this.checkDisabled();
         },
-        remove(avail) {
+        remove(data) {
             // this._beforeEditingCache.splice(index, 1);
+            let avail = utils.createClone(data);
+            avail.Action = 'D';
             this.removeUserAvail(avail);
         },
         cancel() {
@@ -201,7 +203,7 @@ export default {
        bChanged = bEnd || bStart || bType || bStatus ? true : false
 
 // check if data are not empty and was changed and set button to disabled or not    
-// do not allow to filter when data are during changing 
+// do not allow to filter by type when data are during changing 
          if( bChanged &&
              userEntryId.TypeName &&
              userEntryId.DateStart &&
@@ -214,9 +216,14 @@ export default {
 
             userEntryId.Filter = true;
         },
-        save(index, entryId) {
-             this.userAvail[entryId].Filter = false;
+        save(index, data) {
+             this.userAvail[data.EntryId].Filter = false;
              document.getElementsByClassName("eduButtonsAvail")[index].children[1].disabled = true;
+             let avail = utils.createClone(data);
+             avail.Action = 'U';
+            //  avail.DateStartToChange = this._beforeEditingCache.DateStart;
+            //  avail.DateEndToChange = this._beforeEditingCache.DateEnd;
+             this.updateUserAvail(avail);
 
         },
       // set button disabled  

@@ -52,7 +52,7 @@ export default {
     data() {
         return {
             selectedDates: null,
-            disableAddNew: true
+            disableAddNew: true   
         }
     },
     computed: {

@@ -157,7 +157,8 @@
         "projectName": "Nazwa projektu",
         "remarks": "Uwagi",
         "newMessage": "Nowa wiadomość",
-        "addNewMessage": "Dodaj nową wiadomość"
+        "addNewMessage": "Dodaj nową wiadomość",
+        "emptyUsers": "Lista użytkowników jest pusta jak kapusta albo nie masz pozwolenia do białego"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",
