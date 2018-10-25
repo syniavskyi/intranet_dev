@@ -158,8 +158,8 @@
         "projectName": "Project name",
         "remarks": "Remarks",
         "newMessage": "New message",
-        "addNewMessage": "Add new message"
-
+        "addNewMessage": "Add new message",
+        "emptyUsers": "List of users is empty or you do not have permission to see them"
     },
     "header": {
         "login": "Log in to Intranet",

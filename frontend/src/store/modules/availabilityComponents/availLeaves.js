@@ -22,7 +22,6 @@ const mutations = {
 const actions = {
     getUserAvail({commit, dispatch, getters}, userId) {
         //get user availability for calendar and editing availability 
-            userId= 'UIO'
             let urlQuery = getters.getUrlQuery
             const URL = "UserAvailabilities" + urlQuery + "&$filter=UserId eq '" + userId + "'"
              axios.get(URL).then(res => {
@@ -87,11 +86,40 @@ const actions = {
               "Cookie": cookie
           }
         }).then(res => {
-            console.log(res)
+            console.log(res);
+            getters.getUserAvail.push(data);
           }).catch(error => {
             console.log(error);
         })
-    }
+    },
+    updateUserAvail({commit, getters, dispatch}, data) {
+        let sToken = getters.getToken;
+        data.DateStart = utils.formatDateForBackend(data.DateStart);
+        data.DateEnd = utils.formatDateForBackend(data.DateEnd);
+        // data.DateStartToChange = utils.formatDateForBackend(data.DateStartToChange);
+        // data.DateEndToChange = utils.formatDateForBackend(data.DateEndToChange);
+        delete data.Color;
+        delete data.EntryId;
+        delete data.Order;
+        let urlU = "UserAvailabilities(UserId='" + data.UserId + "',TypeId='" + data.TypeId + "',DateStart='" + data.DateStart + "',DateEnd='" + data.Date + "')",
+        urlD = "UserAvailabilities(UserId='" + data.UserId + "',TypeId='" + data.TypeId + "',DateStart='" + data.DateStart + "',DateEnd='" + data.DateEnd + "')"
+        axios({
+        url: data.Action === 'D' ? urlD : urlU,
+        method: 'put',
+        data: data,
+        headers: {
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "Cache-Control": "no-cache",
+            "x-csrf-token": sToken,
+            "Cookie": getters.getCookie
+        }
+        }).then(res => {
+            console.log(res)
+        }).catch(error => {
+            console.log(error);
+        })
+        }
 };
 
 const getters = {

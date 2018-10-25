@@ -26,7 +26,7 @@ const state = {
   roles: [],
   userPhotoUrl: null,
   selectedForCvUser: '',
-  promiseListNews: ["Adverts", "Events", "UserData", "Contractors", "Industries", "Projects", "UserList", "Languages", "SchoolDesc", "FieldOfStudy", "Domains", "StarterDocs"],
+  promiseListNews: ["Domains", "Industries", "Adverts", "Events", "UserData", "Contractors", "Projects", "UserList", "Languages", "SchoolDesc", "FieldOfStudy", "StarterDocs"],
   promiseList: []
 };
 
