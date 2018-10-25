@@ -9,7 +9,8 @@ const state = {
   password: null,
   hashedPassword: null,
   token: '',
-  cookie: ''
+  cookie: '',
+  dataToRead: ["Adverts", "Events"]
 }
 
 const mutations = {
@@ -45,7 +46,8 @@ const mutations = {
 const actions = {
   login({
     commit,
-    dispatch
+    dispatch,
+    getters
   }, authData) {
     let url = `?sap-user=${authData.username}&sap-password=${authData.password}&sap-language=${authData.language}`;
     commit('SET_LOGIN_ALIAS', authData.username.toUpperCase());
@@ -60,17 +62,21 @@ const actions = {
       }
     }).then(res => {
       localStorage.setItem('authorized', true);
+      localStorage.setItem('id', authData.username.toUpperCase());
+      localStorage.setItem('lang', authData.language.toUpperCase());
       commit('SET_URL_QUERY', url);
       commit('SET_LOGIN_ERROR', false);
       let sToken = res.request.getResponseHeader('x-csrf-token');
       commit('SET_TOKEN', sToken);
-      commit('SET_COOKIE', res.request.getResponseHeader("Cookie"))
+      commit('SET_COOKIE', res.request.getResponseHeader("Cookie"));
+
+      commit('SET_PROMISE_TO_READ', getters.getDataToRead );
 
       let userData = {
-        user: authData.username,
-        lang: authData.language,
-        changePage: true
-      }
+          user: authData.username,
+          lang: authData.language,
+          changePage: true
+      };
       dispatch('loadData', userData);
     }).catch(error => {
       console.log(error);
@@ -145,7 +151,9 @@ const getters = {
     } else {
       return document.cookie;
     }
-    
+  },
+  getDataToRead(state){
+    return state.dataToRead;
   }
 }
 

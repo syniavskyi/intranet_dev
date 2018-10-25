@@ -6,11 +6,11 @@ import pl from './i18n/pl.json'
 
 Vue.use(VueI18n)
 
-var userLang = navigator.language || navigator.userLanguage; 
-var locale = userLang.slice(0, 2)
+var userLang = localStorage.getItem('lang') || navigator.language || navigator.userLanguage; 
+var locale = userLang.slice(0, 2).toLowerCase();
 
 if (locale !== 'pl' && locale !== 'en') {
-    locale = 'en'
+    locale = 'en';
 }
 
 const messages = {

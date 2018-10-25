@@ -11,7 +11,7 @@
               <h2 style="font-family: 'Arial'">{{cvElements.position}}</h2>
             </tr>
         <!-- personal data -->
-          <h3 style="font-weight:bold; margin-bottom:10px; margin-top:10px; padding-bottom:5px; border-bottom:2px solid #E79600; text-transform:uppercase; font-family:'Arial';">Dane osobowe</h3>
+          <h3 style="font-weight:bold; margin-bottom:10px; margin-top:10px; padding-bottom:5px; border-bottom:2px solid #E79600; text-transform:uppercase; font-family:'Arial';">{{ $t("header.personalData") }} </h3>
           <!-- <v:line  from="0,0" to="800,0" strokeweight="2pt"  xmlns:v="urn:schemas-microsoft-com:vml" strokecolor="blue"/> -->
             <table width="100%">
               <tr>
@@ -175,17 +175,28 @@ export default {
       showGenerateBtn: true
     };
   },
-  beforeCreate() {
-    const retrievedObject = JSON.parse(localStorage.getItem("Object"));
-    this.$store.commit("SET_CV_ELEMENTS", retrievedObject);
-      let userData = {
-      lang: retrievedObject.language.toUpperCase(),
-      changePage: false
-      }
-       this.$store.getters.getSelectedForCvUser ? userData.user = this.$store.getters.getSelectedForCvUser : userData.user = this.$store.getters.getLoginAlias;
-    if (this.$store.getters.isDataLoaded === false) {
-      this.$store.dispatch("loadData", userData);
+  beforeRouteLeave(to, from, next) {
+    if(to.name === "Profile"){
+      this.$store.commit("SET_GO_FROM_CV", true);
     }
+    next();
+  },
+  beforeCreate() {
+    let oStore = this.$store;
+    const retrievedObject = JSON.parse(localStorage.getItem("Object"));
+    oStore.commit("SET_CV_ELEMENTS", retrievedObject);
+      let userData = {
+        lang: retrievedObject.language.toUpperCase(),
+        cvLang: retrievedObject.language,
+        changePage: false
+      }
+      
+      oStore.getters.getSelectedForCvUser ? userData.user = oStore.getters.getSelectedForCvUser : userData.user = oStore.getters.getLoginAlias;
+      oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getCvToRead);
+      
+    //if(oStore.getters.isDataLoaded === false){
+      oStore.dispatch("loadData", userData);
+    //}
      this.$i18n.locale  = retrievedObject.language.toLowerCase();
   },
   methods: {

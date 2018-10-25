@@ -25,7 +25,8 @@ const state = {
       description: i18n.t('select.cvLanguage.russian')
     }
   ],
-  showChangePasswordDialog: false
+  showChangePasswordDialog: false,
+  dataToRead: ["Domains", "UserData", "UserList", "Industries", "Contractors", "Projects", "Languages", "SchoolDesc", "FieldOfStudy"]
 };
 
 const mutations = {
@@ -171,6 +172,9 @@ const getters = {
   },
   getShowSelectChangePasswordDialog(state) {
     return state.showChangePasswordDialog
+  },
+  getProfileToRead(state){
+    return state.dataToRead;
   }
 };
 

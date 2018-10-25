@@ -309,7 +309,7 @@ export default {
       selectedCity: null,
       selectedCvLang: i18n.locale,
       authType: "",
-      selectedUser: this.$store.getters.getLoginAlias
+      selectedUser: this.$store.getters.getLoginAlias || localStorage.getItem("id")
     };
   },
   validations: {
@@ -338,6 +338,7 @@ export default {
   //         image.src = url
   // },
 
+
   // set login language
   beforeRouteLeave(to, from, next) {
     let lang = this.loginLanguage.toLowerCase();
@@ -347,15 +348,34 @@ export default {
     this.$store.commit("SET_LANG", lang);
     next();
   },
+
+  
   created() {
     // this.getUserData(userData);
+    let oStore = this.$store,
+        sUserAlias = oStore.getters.getLoginAlias || localStorage.getItem("id"),
+        sLang = localStorage.getItem("lang");
+    oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getProfileToRead);
+    
     const data = {
-      roles: this.$store.getters.getUserAuth,
+      roles: oStore.getters.getUserAuth,
       key: "ZPROF_ATCV",
       dep: this.userData.DepartmentName,
-      userAlias: this.$store.getters.getLoginAlias
+      userAlias: sUserAlias
     };
-    this.authType = utils.checkRole(data);
+    this.authType = "*";//utils.checkRole(data); TEMP
+    if(oStore.getters.getCookie){
+      if(oStore.getters.getGoFromCv && oStore.getters.getRoleList.length > 0){ // if go from CV - do not read data
+        oStore.commit("SET_GO_FROM_CV", false);
+      } else { //else get actuall data
+        let userData = {
+          user: sUserAlias,
+          lang: sLang,
+          cvLang: this.selectedCvLang.toUpperCase()
+        }     
+        oStore.dispatch('loadData', userData);
+      }
+    }
   },
   components: {
     MaskedInput,
@@ -429,7 +449,8 @@ export default {
   // },
   methods: {
     ...mapActions({
-      getUserData: "getUserData"
+      getUserData: "getUserData",
+      getGoFromCv: "getGoFromCv"
     }),
     showMenu(event) {
       let obj = { window, event };
@@ -532,6 +553,7 @@ export default {
     getNewData() {
       this.$store.commit("SET_LANG", this.selectedCvLang);
       let cvLang = this.selectedCvLang.toUpperCase();
+      localStorage.setItem("lang", this.selectedCvLang);
       if (!cvLang) {
         let cvLang = loginLanguage.toUpperCase();
       }
@@ -539,6 +561,7 @@ export default {
       let userData = {
         user: this.selectedUser,
         lang: cvLang,
+        cvLang: cvLang,
         changePage: false
       };
       this.$store.dispatch("loadData", userData);
