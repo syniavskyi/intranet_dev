@@ -22,7 +22,6 @@ const mutations = {
 const actions = {
     getUserAvail({commit, dispatch, getters}, userId) {
         //get user availability for calendar and editing availability 
-            userId= 'UIO'
             let urlQuery = getters.getUrlQuery
             const URL = "UserAvailabilities" + urlQuery + "&$filter=UserId eq '" + userId + "'"
              axios.get(URL).then(res => {
@@ -55,25 +54,44 @@ const actions = {
 
         },
     removeUserAvail({commit, getters, dispatch}, data) {
-        const URL = "UserAvailabilities(TypeId='" + data.TypeId + "',UserId='" + data.UserId + "',DateStart=datetime'" + moment(data.DateStart).format("YYYY-MM-DD") + "T00:00:00',DateEnd=datetime'"+ moment(data.DateEnd).format("YYYY-MM-DD") + "T00:00:00')"
-        axios.delete(URL).then(res => {
-            console.log(res)
-            dispatch('getUserProjects', data.userId)
+    let sToken = getters.getToken;    
+        let url = "UserAvailabilities(UserId='" + data.UserId + "',TypeId='" + data.TypeId + "',DateStart=datetime'" + moment(data.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(data.DateEnd).format("YYYY-MM-DD") + "T00:00:00')";
+        axios({
+        url: url,
+        method: 'delete',
+        headers: {
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "Cache-Control": "no-cache",
+            "x-csrf-token": sToken,
+            "Cookie": getters.getCookie
+        }
+        }).then(res => {
+            console.log(res);
+            // dispatch('getUserProjects', data.userId)
             dispatch('hideAllMessages')
             commit('SET_REMOVE_ERROR', false)
             commit('SET_REMOVE_SUCCESS', true)
         }).catch(error => {
-            dispatch('hideAllMessages')
+            console.log(error);
+            dispatch('hideAllMessages');
             commit('SET_REMOVE_ERROR', true)
             commit('SET_REMOVE_SUCCESS', false)
-           console.log(error)
-       });
+        })
     },
     addUserLeave({commit, getters, dispatch}) {
-        let data  = getters.getNewLeaveForUser,
+        let data  = JSON.parse(JSON.stringify(getters.getNewLeaveForUser)),
              url = 'UserAvailabilities',
              sToken = getters.getToken,
             cookie = getters.getCookie;
+            // data.DateStart = utils.formatDateForBackend(data.DateStart);
+            // data.DateEnd = utils.formatDateForBackend(data.DateEnd);
+            // data.DateStartToChange = utils.formatDateForBackend(data.DateStartToChange);
+            // data.DateEndToChange = utils.formatDateForBackend(data.DateEndToChange);
+            // delete data.Color;
+            // delete data.EntryId;
+            // delete data.Order;
+            // delete data.TypeName;
   
         axios({
           url: url,
@@ -87,11 +105,41 @@ const actions = {
               "Cookie": cookie
           }
         }).then(res => {
-            console.log(res)
+            console.log(res);
+            getters.getUserAvail.push(data);
           }).catch(error => {
             console.log(error);
         })
-    }
+    },
+    updateUserAvail({commit, getters, dispatch}, data) {
+        let sToken = getters.getToken;
+        data.DateStart = utils.formatDateForBackend(data.DateStart);
+        data.DateEnd = utils.formatDateForBackend(data.DateEnd);
+        data.DateStartToChange = utils.formatDateForBackend(data.DateStartToChange);
+        data.DateEndToChange = utils.formatDateForBackend(data.DateEndToChange);
+        delete data.Color;
+        delete data.EntryId;
+        delete data.Order;
+        delete data.TypeName;
+        // let urlD = "UserAvailabilities(UserId='" + data.UserId + "',TypeId='" + data.TypeId + "',DateStart=datetime'" + moment(data.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(data.DateEnd).format("YYYY-MM-DD") + "T00:00:00')",
+        url = "UserAvailabilities(UserId='" + data.UserId + "',TypeId='" + data.TypeId + "',DateStart=datetime'" + moment(data.DateStartToChange).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(data.DateEndToChange).format("YYYY-MM-DD") + "T00:00:00')"
+        axios({
+        url: url,
+        method: 'put',
+        data: data,
+        headers: {
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "Cache-Control": "no-cache",
+            "x-csrf-token": sToken,
+            "Cookie": getters.getCookie
+        }
+        }).then(res => {
+            console.log(res)
+        }).catch(error => {
+            console.log(error);
+        })
+        }
 };
 
 const getters = {

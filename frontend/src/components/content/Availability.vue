@@ -47,6 +47,7 @@
                                             <option v-for="user in filteredUsers" :value="user" :key="user.UserAlias">{{ user.Fullname }}</option>
                                         </select>
                                         <label class="ava-select-label-cool">{{ $t("label.employee") }}</label>
+                                        <label class="prof-error" v-if="filteredUsers.length === 0">{{ $t("label.emptyUsers") }}</label>
                                     </div>
                                     <div class="ava-div-select-cool" v-if="selectedUser != null">
                                         <select required class="ava-select-cool" v-model="selectedType">
@@ -163,7 +164,7 @@ export default {
                 idBranch = this.userData.BranchId,
                 selectedDep = this.selectedDepartment,
                 selectedBranch = this.selectedBranch
-
+                idBranch = 'WRO'; //TEMPORARY
               aFilteredUsers = aFilteredUsers.filter(function(oData){ 
                   return oData.DepartmentName === sTeam && idTeam === selectedDep && idBranch === selectedBranch;
                   });

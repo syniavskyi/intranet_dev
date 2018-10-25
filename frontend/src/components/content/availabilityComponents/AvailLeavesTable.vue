@@ -58,8 +58,8 @@
                     </div>
                     <div class="ava-tbs-item eduButtonsAvail" v-else>
                         <div class="ava-tbs-ititle"> {{ $t("label.options") }} </div>
-                            <button v-if="editMode" :disabled="true" @click="save(index, avail.EntryId)">{{ $t("button.save") }}</button>
-                            <button v-if="editMode" @click="remove(avail)">{{ $t("button.delete") }}</button>
+                            <button v-if="editMode" :disabled="true" @click="save(index, avail)">{{ $t("button.save") }}</button>
+                            <button v-if="editMode" @click="remove(index, avail)">{{ $t("button.delete") }}</button>
                     </div>
                 </div>
             </div>
@@ -155,15 +155,17 @@ export default {
          }
     },
     methods: {
-        ...mapActions(["removeUserAvail"]),
+        ...mapActions(["removeUserAvail", "updateUserAvail"]),
          edit() {
             this.editMode = true;
             this._beforeEditingCache = utils.createClone(this.userAvail);
             this.checkDisabled();
         },
-        remove(avail) {
-            // this._beforeEditingCache.splice(index, 1);
+        remove(index, data) {
+            let avail = utils.createClone(data);
             this.removeUserAvail(avail);
+            this.userAvail.splice(index, 1);
+            this._beforeEditingCache = this.userAvail;
         },
         cancel() {
             this.$store.commit("SET_USER_AVAIL", this._beforeEditingCache);
@@ -201,7 +203,7 @@ export default {
        bChanged = bEnd || bStart || bType || bStatus ? true : false
 
 // check if data are not empty and was changed and set button to disabled or not    
-// do not allow to filter when data are during changing 
+// do not allow to filter by type when data are during changing 
          if( bChanged &&
              userEntryId.TypeName &&
              userEntryId.DateStart &&
@@ -214,9 +216,13 @@ export default {
 
             userEntryId.Filter = true;
         },
-        save(index, entryId) {
-             this.userAvail[entryId].Filter = false;
+        save(index, data) {
+             this.userAvail[data.EntryId].Filter = false;
              document.getElementsByClassName("eduButtonsAvail")[index].children[1].disabled = true;
+             let avail = utils.createClone(data);
+             avail.DateStartToChange = this._beforeEditingCache[index].DateStart;
+             avail.DateEndToChange = this._beforeEditingCache[index].DateEnd;
+             this.updateUserAvail(avail);
 
         },
       // set button disabled  

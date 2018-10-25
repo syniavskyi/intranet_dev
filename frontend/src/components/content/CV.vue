@@ -186,15 +186,17 @@ export default {
     const retrievedObject = JSON.parse(localStorage.getItem("Object"));
     oStore.commit("SET_CV_ELEMENTS", retrievedObject);
       let userData = {
-      lang: retrievedObject.language,
-      cvLang: retrievedObject.language,
-      changePage: false
+        lang: retrievedObject.language.toUpperCase(),
+        cvLang: retrievedObject.language,
+        changePage: false
       }
-       oStore.getters.getSelectedForCvUser ? userData.user = this.$store.getters.getSelectedForCvUser : userData.user = this.$store.getters.getLoginAlias;
-    // if (this.$store.getters.isDataLoaded === false) {
-    oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getCvToRead);
-    oStore.dispatch("loadData", userData);
-    // }
+      
+      oStore.getters.getSelectedForCvUser ? userData.user = oStore.getters.getSelectedForCvUser : userData.user = oStore.getters.getLoginAlias;
+      oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getCvToRead);
+      
+    //if(oStore.getters.isDataLoaded === false){
+      oStore.dispatch("loadData", userData);
+    //}
      this.$i18n.locale  = retrievedObject.language.toLowerCase();
   },
   methods: {
