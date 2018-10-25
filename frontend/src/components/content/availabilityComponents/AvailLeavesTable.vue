@@ -59,7 +59,7 @@
                     <div class="ava-tbs-item eduButtonsAvail" v-else>
                         <div class="ava-tbs-ititle"> {{ $t("label.options") }} </div>
                             <button v-if="editMode" :disabled="true" @click="save(index, avail)">{{ $t("button.save") }}</button>
-                            <button v-if="editMode" @click="remove(avail)">{{ $t("button.delete") }}</button>
+                            <button v-if="editMode" @click="remove(index, avail)">{{ $t("button.delete") }}</button>
                     </div>
                 </div>
             </div>
@@ -161,11 +161,11 @@ export default {
             this._beforeEditingCache = utils.createClone(this.userAvail);
             this.checkDisabled();
         },
-        remove(data) {
-            // this._beforeEditingCache.splice(index, 1);
+        remove(index, data) {
             let avail = utils.createClone(data);
-            avail.Action = 'D';
             this.removeUserAvail(avail);
+            this.userAvail.splice(index, 1);
+            this._beforeEditingCache = this.userAvail;
         },
         cancel() {
             this.$store.commit("SET_USER_AVAIL", this._beforeEditingCache);
@@ -220,9 +220,8 @@ export default {
              this.userAvail[data.EntryId].Filter = false;
              document.getElementsByClassName("eduButtonsAvail")[index].children[1].disabled = true;
              let avail = utils.createClone(data);
-             avail.Action = 'U';
-            //  avail.DateStartToChange = this._beforeEditingCache.DateStart;
-            //  avail.DateEndToChange = this._beforeEditingCache.DateEnd;
+             avail.DateStartToChange = this._beforeEditingCache[index].DateStart;
+             avail.DateEndToChange = this._beforeEditingCache[index].DateEnd;
              this.updateUserAvail(avail);
 
         },
