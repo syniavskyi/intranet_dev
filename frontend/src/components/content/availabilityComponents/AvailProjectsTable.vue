@@ -27,7 +27,7 @@
                     </div>
                     <div class="ava-tbproj-item">
                         <div class="ava-tbproj-ititle">{{ $t("label.projectName") }}</div>
-                        <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="project.ProjectId">
+                        <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="project.ProjectId" >
                             <option v-for="proj in allProjects" :key="proj.ProjectId" :value="proj.ProjectId">{{proj.ProjectName}}</option>
                         </select>
                         <select v-if="editMode && authType !== 'OWN'" class="selectProfile selectEdit" v-model="project.ProjectId" @change="checkFields(index)">
@@ -58,23 +58,23 @@
                     </div>
                     <div class="ava-tbproj-item">
                         <div class="ava-tbproj-ititle">{{ $t("label.status") }}</div>
-                        <select v-if="editMode && authType !== 'OWN'" class="selectProfile selectEdit" v-model="project.StatusId">
+                        <select v-if="editMode && authType !== 'OWN'" class="selectProfile selectEdit" v-model="project.StatusId" @change="checkFields(index)">
                             <option v-for="status in availStatus" :key="status.Key" :value="status.Key">{{status.Value}}</option>
                         </select>
-                         <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="project.StatusId">
+                         <select disabled v-if="!editMode" class="selectProfile selectDisabled" v-model="project.StatusId" >
                             <option v-for="status in availStatus" :key="status.Key" :value="status.Key">{{status.Value}}</option>
                         </select>
                     </div>
                     <div class="ava-tbproj-item">
                         <div class="ava-tbproj-ititle">{{ $t("label.remarks") }}</div>
                         <div class="ava-tbproj-itxt">
-                            <textarea :disabled="!editMode" v-model="project.Description"></textarea>
+                            <textarea :disabled="!editMode" v-model="project.Description"  @input="checkFields(index)"></textarea>
                         </div>
                     </div>
                     <div class="ava-tbs-item eduButtonsProj">
                         <div class="ava-tbs-ititle">{{ $t("label.options") }}</div>
-                         <button v-if="editMode && authType !== 'OWN'" @click="save(index)" :disabled="true">{{ $t("button.save") }}</button>
-                         <button v-if="editMode && authType !== 'OWN'" @click="removeUserProject(project)">{{ $t("button.delete") }}</button>
+                         <button v-if="editMode && authType !== 'OWN'" @click="update(index)" :disabled="true">{{ $t("button.save") }}</button>
+                         <button v-if="editMode && authType !== 'OWN'" @click="remove(project)">{{ $t("button.delete") }}</button>
                     </div>
                 </div>
             </div>
@@ -124,14 +124,28 @@ export default {
         }
     },
     methods: {
-        ...mapActions(["removeUserProject"]),
+        ...mapActions(["updateUserProject", "removeUserProject"]),
          edit() {
             this.editMode = true;
             this._beforeEditingCache = utils.createClone(this.userProjects);
         },
-        remove(index) {
-            this._beforeEditingCache.splice(index, 1);
-            this.removeUserProject(index);
+        remove(project) {
+            // this._beforeEditingCache.splice(index, 1);
+            this.removeUserProject(project);
+            this._beforeEditingCache = utils.createClone(this.userProjects);
+        },
+        update(index) {
+            const dataToChange = this._beforeEditingCache[index],
+                newData = utils.createClone(this.userProjects[index]);
+                newData.Action ='U';
+            
+                newData.StartDateToChange = dataToChange.StartDate;
+                newData.EndDateToChange = dataToChange.EndDate;
+                newData.ProjectIdToChange = dataToChange.ProjectId;
+
+            this.updateUserProject(newData);
+            this._beforeEditingCache = utils.createClone(this.userProjects);
+            document.getElementsByClassName("eduButtonsProj")[index].children[1].disabled = true;
         },
         cancel() {
             this.$store.commit("SET_USER_AVAIL_PROJECTS", this._beforeEditingCache);
@@ -168,17 +182,18 @@ export default {
             }
         },
         checkFields(index) {
-            let bEnd, bStart, bType, bStatus, bEngag, bChanged,
+            let bEnd, bStart, bType, bStatus, bEngag, bChanged, bDesc,
             beforeEdit = this._beforeEditingCache[index];
 // check if data was changed
              bEnd = beforeEdit.EndDate.getTime() !== this.userProjects[index].EndDate.getTime(),
              bStart = beforeEdit.StartDate.getTime() !== this.userProjects[index].StartDate.getTime(),
              bType = beforeEdit.ProjectId !== this.userProjects[index].ProjectId,
              bStatus = beforeEdit.StatusId !== this.userProjects[index].StatusId,
-             bEngag = beforeEdit.Engag !== this.userProjects[index].Engag;
+             bEngag = beforeEdit.Engag !== this.userProjects[index].Engag,
+             bDesc = beforeEdit.Description !== this.userProjects[index].Description;
 
 // if data was changed set boolean variable to true
-        bChanged = bEnd || bStart || bType || bStatus || bEngag ? true : false;
+        bChanged = bEnd || bStart || bType || bStatus || bEngag || bDesc ? true : false;
         
 // check if data are not empty and was changed and set button to disabled or not
             if(this.filteredUserProjects.length > 0) {
@@ -193,9 +208,7 @@ export default {
                }
             }    
         },
-        save(index) {
-            document.getElementsByClassName("eduButtonsProj")[index].children[1].disabled = true;
-        }
+
     }
 }
 </script>

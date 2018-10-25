@@ -108,9 +108,12 @@ export default {
     },
     methods: {
         ...mapActions({
-            addNewProjectForUser: 'addUserProject',
             validateNewProject: 'validateNewProject'
         }),
+        addNewProjectForUser(){
+            this.$store.dispatch('addUserProject')
+            this.selectedDates = null
+        },
         removeSelectedProject() {
             const userId = this.newProjectForUser.UserAlias,
                   contractorId = this.newProjectForUser.ContractorId,
