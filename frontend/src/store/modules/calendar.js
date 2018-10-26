@@ -28,7 +28,8 @@ const state = {
   aEvents: [],
   aPriority: [],
   aEventType: [],
-  editedData: {}
+  editedData: {},
+  dataToRead: ["Domains", "Industries", "UserData", "UserList", "Events"]
 };
 
 const mutations = {
@@ -257,6 +258,9 @@ const getters = {
   },
   getSelectedDate(state) {
     return state.selectedDate
+  },
+  getEventsToRead(state){
+    return state.dataToRead;
   }
 };
 

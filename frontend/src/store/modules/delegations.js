@@ -53,7 +53,8 @@ const state = {
   dailyAllowance: 30.00,
   NewDelegationNumber: null,
   showConfirmDelegation: false,
-  createDelegationSuccess: null
+  createDelegationSuccess: null,
+  dataToRead: ["Domains", "UserData"]
 };
 
 const mutations = {
@@ -432,6 +433,9 @@ const getters = {
   },
   getCreateDelegSuccess(state){
     return state.createDelegationSuccess
+  },
+  getDelegationToRead(state){
+    return state.dataToRead;
   }
 };
 

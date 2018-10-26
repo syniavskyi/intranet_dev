@@ -15,7 +15,7 @@ const state = {
     },
     cvFormats: ["DOCX", "DOC", "PDF"],
     showSelectCvDialog: false,
-    dataToRead: ["Domains", "Industries", "Contractors", "Projects", "Languages", "SchoolDesc", "FieldOfStudy"]
+    dataToRead: ["Domains", "Industries", "UserData", "Contractors", "Projects", "Languages", "SchoolDesc", "FieldOfStudy"]
 };
 
 const mutations = {

@@ -26,7 +26,7 @@ const state = {
   roles: [],
   userPhotoUrl: null,
   selectedForCvUser: '',
-  promiseListToRead: [],//["Domains", "Industries", "Adverts", "Events", "UserData", "Contractors",  "Projects", "UserList", "Languages", "SchoolDesc", "FieldOfStudy", "StarterDocs"],
+  promiseListToRead: [],
   promiseList: [],
   goFromCv: false //default
 };
@@ -125,6 +125,29 @@ const actions = {
     // for (let i = 0; i < getters.getFileTypes.length; i++) {
     //   dispatch('getDocuments', getters.getFileTypes[i])
     // }
+  },
+
+  getData({getters, dispatch}, passedData){
+    let passedUserId, passedLang, bChangePage;
+    let aDataToRead = getters.getPromisesToRead; // get list of data to read
+    if(passedData){
+      passedUserId = passedData.user;
+      passedLang = passedData.lang;
+      bChangePage = passedData.changePage
+    }
+    let userData = {
+      user: passedUserId || localStorage.getItem("id"),
+      lang: passedLang || localStorage.getItem("lang"),
+      cvLang: getters.getSelectedCvLang || "PL",
+      changePage: bChangePage || false
+    };
+    // check if data for domain in selected languages is already read and if token is needed
+    if(getters.getRoleList.length === 0){
+      
+    }
+    
+
+    dispatch("loadData", userData);
   },
 
   getNewToken(){

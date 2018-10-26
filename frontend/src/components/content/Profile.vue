@@ -359,12 +359,12 @@ export default {
       if(oStore.getters.getGoFromCv && oStore.getters.getRoleList.length > 0){ // if go from CV - do not read data
         oStore.commit("SET_GO_FROM_CV", false);
       } else { //else get actuall data
-        let userData = {
-          user: sUserAlias,
-          lang: sLang,
-          cvLang: this.selectedCvLang.toUpperCase()
-        }     
-        oStore.dispatch('loadData', userData);
+        // let userData = {
+        //   user: sUserAlias,
+        //   lang: sLang,
+        //   cvLang: this.selectedCvLang.toUpperCase()
+        // }     
+        oStore.dispatch('getData', null);
       }
     }
   },
@@ -571,7 +571,8 @@ export default {
         cvLang: cvLang,
         changePage: false
       };
-      this.$store.dispatch("loadData", userData);
+      // this.$store.dispatch("loadData", userData);
+      this.$store.dispatch('getData', userData);
     },
     onHover() {
       let mainEdits = document.querySelectorAll(".profile-main-edit");

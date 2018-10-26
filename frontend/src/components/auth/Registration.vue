@@ -88,6 +88,12 @@ export default {
       isLoading: false
     };
   },
+  created() {
+    let oStore = this.$store;
+      oStore.commit('SET_PROMISE_TO_READ', this.$store.getters.getRegistrationToRead);
+      oStore.dispatch('getData', null);
+      
+  },
   validations: {
     Email: {
       required,

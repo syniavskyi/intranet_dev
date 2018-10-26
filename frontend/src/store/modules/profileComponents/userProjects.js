@@ -296,55 +296,100 @@ const actions = {
       Industries: [],
       Modules: []
     }
-    let index;
+    let index, object, adjustedProjects;
 
-    for (let i = 0; i < projects.length; i++) {
-      let adjustedProjects = new Object();
-      adjustedProjects.Industries = [];
-      adjustedProjects.Modules = [];
+    for(let i = 0; i < projects.length; i++){
+      adjustedProjects = {
+        Industries: [],
+        Modules: []
+      };
+      // go through all projects
       for (let key in projectsKeys) {
         if (projects[i][key]) {
           if (projects[i][key].includes('||')) {
-            while (projects[i][key].length > 1) {
+            do {
               index = projects[i][key].indexOf('||');
               if (index > 0) {
-                let object = new Object();
-                object.id = projects[i][key].slice(0, index);
-                dispatch('checkProjectKey', {
-                  key,
-                  object
-                })
-                object = this.getters.getObject;
+                object = {
+                  id: projects[i][key].slice(0, index)
+                }
+                dispatch('checkProjectKey', {key, object });
                 adjustedProjects[key].push(object);
                 index += 2;
-                projects[i][key] = projects[i][key].substr(index, projects[i][key].length)
+                projects[i][key] = projects[i][key].substr(index, projects[i][key].length);
               } else {
-                let object = new Object();
-                object.id = projects[i][key];
-                dispatch('checkProjectKey', {
-                  key,
-                  object
-                });
+                object = { id: projects[i][key] };
+                dispatch('checkProjectKey', { key, object });
                 object = this.getters.getObject;
                 adjustedProjects[key].push(object);
                 projects[i][key] = [];
               }
             }
-          } else {
-            let object = new Object();
-            object.id = projects[i][key];
-            dispatch('checkProjectKey', {
-              key,
-              object
-            });
+            while(projects[i][key].length > 1);
+          }
+          else {
+            object = {
+              id: projects[i][key]
+            }
+            dispatch('checkProjectKey', { key, object });
             object = this.getters.getObject;
             adjustedProjects[key].push(object);
             projects[i][key] = [];
           }
         }
       }
+
       fullProjects[i] = adjustedProjects;
     }
+
+    // for (let i = 0; i < projects.length; i++) {
+    //   let adjustedProjects = new Object();
+    //   adjustedProjects.Industries = [];
+    //   adjustedProjects.Modules = [];
+    //   for (let key in projectsKeys) {
+    //     if (projects[i][key]) {
+    //       if (projects[i][key].includes('||')) {
+    //         while (projects[i][key].length > 1) {
+    //           index = projects[i][key].indexOf('||');
+    //           if (index > 0) {
+    //             let object = new Object();
+    //             object.id = projects[i][key].slice(0, index);
+    //             dispatch('checkProjectKey', {
+    //               key,
+    //               object
+    //             })
+    //             object = this.getters.getObject;
+    //             adjustedProjects[key].push(object);
+    //             index += 2;
+    //             projects[i][key] = projects[i][key].substr(index, projects[i][key].length)
+    //           } else {
+    //             let object = new Object();
+    //             object.id = projects[i][key];
+    //             dispatch('checkProjectKey', {
+    //               key,
+    //               object
+    //             });
+    //             object = this.getters.getObject;
+    //             adjustedProjects[key].push(object);
+    //             projects[i][key] = [];
+    //           }
+    //         }
+    //       } else {
+    //         let object = new Object();
+    //         object.id = projects[i][key];
+    //         dispatch('checkProjectKey', {
+    //           key,
+    //           object
+    //         });
+    //         object = this.getters.getObject;
+    //         adjustedProjects[key].push(object);
+    //         projects[i][key] = [];
+    //       }
+    //     }
+    //   }
+    //   fullProjects[i] = adjustedProjects;
+    // }
+
     for (let i = 0; i < projects.length; i++) {
       projects[i].Industries = fullProjects[i].Industries;
       projects[i].Modules = fullProjects[i].Modules;

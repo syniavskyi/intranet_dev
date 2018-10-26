@@ -7,7 +7,8 @@ const state = {
     addingError: false,
     saveDataSuccess: false,
     removeSuccess: false,
-    removeError: false
+    removeError: false,
+    dataToRead: ["Domains", "UserData", "UserList", "Projects", "Contractors"]
 };
 
 const mutations = {
@@ -82,6 +83,9 @@ const getters = {
     getRemoveSuccess(state){
         return state.removeSuccess
     },
+    getAvailabilityToRead(state){
+        return state.dataToRead;
+    }
 
 
 
