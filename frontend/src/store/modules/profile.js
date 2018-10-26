@@ -27,7 +27,7 @@ const state = {
   ],
   showChangePasswordDialog: false,
   permissionToEdit: false,
-  dataToRead: ["NewToken", "Domains", "UserData", "UserList", "Industries", "Contractors", "Projects", "Languages", "SchoolDesc", "FieldOfStudy"]
+  dataToRead: ["NewToken", "Domains", "Industries", "UserData", "UserList", "Contractors", "Projects", "Languages", "SchoolDesc", "FieldOfStudy"]
 };
 
 const mutations = {

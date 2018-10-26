@@ -36,6 +36,7 @@ const actions = {
             router.replace('/');
         }).catch(error => {
             localStorage.setItem('authorized', "false");
+            commit('CLEAR_AUTH_DATA');
             router.replace('/');
             console.log(error)
         })
