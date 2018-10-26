@@ -85,7 +85,9 @@ export default {
     "app-menu": Menu
   },
   created: function() {
-    this.getUsersLists();
+    let oStore = this.$store;
+      oStore.commit('SET_PROMISE_TO_READ', ["Domains", "Industries", "UserData", "UserList"]);
+      oStore.dispatch('getData', null);
   },
   computed: {
     ...mapGetters({

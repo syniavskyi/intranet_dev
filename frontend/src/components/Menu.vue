@@ -14,18 +14,18 @@
         <nav class="nav">
             <ul class="nav-list">
                 <li>
-                    <router-link class="nav-router-link" to="/profile">
-                        <button @click="closeMenu" class="nav-item">
-                            <img class="nav-item-img" src="../assets/images/nav3/grey_616161/account-g-24.png">
-                            <p>{{ $t("header.profile") }}</p>
-                        </button>
-                    </router-link>
-                </li>
-                <li>
                     <router-link class="nav-router-link" to="/news">
                         <button @click="closeMenu" class="nav-item">
                             <img class="nav-item-img" src="../assets/images/nav3/grey_616161/home-g-24.png">
                             <p>{{ $t("header.home") }}</p>
+                        </button>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link class="nav-router-link" to="/profile">
+                        <button @click="closeMenu" class="nav-item">
+                            <img class="nav-item-img" src="../assets/images/nav3/grey_616161/account-g-24.png">
+                            <p>{{ $t("header.profile") }}</p>
                         </button>
                     </router-link>
                 </li>

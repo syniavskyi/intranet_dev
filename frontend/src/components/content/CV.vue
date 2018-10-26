@@ -164,7 +164,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import moment from "moment";
-import jsPDF from "jsPdf";
+// import jsPDF from "jsPdf";
 import jszip from "jszip";
 import htmlDocx from "html-docx-js/dist/html-docx";
 import { saveAs } from "file-saver";
@@ -219,17 +219,17 @@ export default {
         return skillStr
       } else return
     },
-    generatePdf() {
-      // not working
-      const pdf = new jsPDF('p', 'pt', 'letter'),
-            source = document.getElementById("content")[0];
+    // generatePdf() {
+    //   // not working
+    //   const pdf = new jsPDF('p', 'pt', 'letter'),
+    //         source = document.getElementById("content")[0];
 
-      pdf.addHTML(source).then(res => {
-          pdf.save('Test.pdf');
-      });
-        // pdf.fromHTML(source)
-        // pdf.save('Test.pdf')
-    },
+    //   pdf.addHTML(source).then(res => {
+    //       pdf.save('Test.pdf');
+    //   });
+    //     // pdf.fromHTML(source)
+    //     // pdf.save('Test.pdf')
+    // },
     generateDocx() {
       this.showGenerateBtn = false;
       if (this.cvElements.photo) {this.convertImagesToBase64();}

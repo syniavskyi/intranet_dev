@@ -155,7 +155,9 @@ export default {
   },
   created() {
     this.getToday();
-    this.getNews()
+    this.getNews();
+    // this.$store.commit('SET_PROMISE_TO_READ', this.$store.getters.getNewsToRead);
+    // this.$store.dispatch('getData', null);
   },
   destroyed() {
     clearInterval(this.interval);

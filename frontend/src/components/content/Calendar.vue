@@ -217,6 +217,9 @@ export default {
     }
   },
   created() {
+    let oStore = this.$store;
+      oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getEventsToRead);
+      oStore.dispatch('getData', null);
     const data = {
       roles: this.$store.getters.getUserAuth,
       key: "ZEVENT",

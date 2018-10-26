@@ -36,7 +36,8 @@ const state = {
     news: null,
     newsJson: {},
     articles: [],
-    showNewMessageDialog: false
+    showNewMessageDialog: false,
+    dataToRead: ["UserData", "Events", "Adverts"]
 }
 
 const mutations = {
@@ -320,6 +321,9 @@ const getters = {
     },
     getSliderBtnTxt() {
         return state.slider.btnTxt
+    },
+    getNewsToRead(){
+        return state.dataToRead;
     }
 }
 

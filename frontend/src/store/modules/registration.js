@@ -1,5 +1,9 @@
 import axios from 'axios'
 
+const state = {
+  dataToRead: ["Domains", "UserData"]
+};
+
 const actions = {
   submitRegistration({
     commit, getters
@@ -32,6 +36,12 @@ const actions = {
     commit
   }){
     commit("SET_DIALOG_CONFIRM", true);
+  }
+};
+
+const getters = {
+  getRegistrationToRead(state){
+    return state.dataToRead;
   }
 };
 

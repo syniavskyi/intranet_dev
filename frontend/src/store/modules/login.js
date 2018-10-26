@@ -73,11 +73,11 @@ const actions = {
       commit('SET_PROMISE_TO_READ', getters.getDataToRead );
 
       let userData = {
-          user: authData.username,
-          lang: authData.language,
+          // user: authData.username,
+          // lang: authData.language,
           changePage: true
       };
-      dispatch('loadData', userData);
+      dispatch('getData', userData);
     }).catch(error => {
       console.log(error);
       commit('SET_LOGIN_ERROR', true);
