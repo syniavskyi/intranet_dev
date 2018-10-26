@@ -127,6 +127,19 @@ const actions = {
     // }
   },
 
+  getNewToken(){
+    return axios({
+      method: 'get',
+      url: '$metadata',
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+        "X-CSRF-Token": "Fetch",
+        "X-Requested-With": "XMLHttpRequest",
+        "Cache-Control": "no-cache"
+      }
+    });
+  },
+
   getDomainValues({
     commit,
     getters
@@ -395,6 +408,10 @@ const actions = {
           const starterDocsPromise = dispatch('getInfoDocs', userData).then(res => ( { res: res, promise: "StarterDocs" } ));
           aPromises.push(starterDocsPromise);
           break;
+        case "NewToken":
+          const newTokenPromise = dispatch('getNewToken').then(res => ( { res: res, promise: "NewToken" } ));
+          aPromises.push(newTokenPromise);
+          break;
         case "Domains":
           let domainPromise;
           for (let i = 0; i < state.sapDomains.length; i++) {
@@ -408,16 +425,22 @@ const actions = {
           break;
       }
     }
+
     commit("SET_PROMISE_LIST", aPromises);
   },
 
   setDataInResponse({dispatch,commit}, data){
     let response = data.res,
-        userData = data.userData;
+        userData = data.userData,
+        sPromiseName,
+        aResponse,
+        aResults;
     for(let j = 0; j < response.length; j++){
-      let sPromiseName = response[j].promise,
-          aResponse = response[j].res,
-          aResults = aResponse.data.d.results;
+          sPromiseName = response[j].promise;
+          aResponse = response[j].res;
+      if(aResponse.data.d){
+        aResults = aResponse.data.d.results;
+      }  
       switch(sPromiseName){
         case "Adverts":
           dispatch("setAdvertList", aResponse);
@@ -452,6 +475,10 @@ const actions = {
         case "StarterDocs":
           commit('SET_DOC_LIST_INFO', aResults);
           dispatch('checkStatus', aResults);
+          break;
+        case "NewToken":
+          let sToken = aResponse.request.getResponseHeader('x-csrf-token');
+          commit('SET_TOKEN', sToken);
           break;
         default:
           for(let k = 0; k < state.sapDomains.length; k++){

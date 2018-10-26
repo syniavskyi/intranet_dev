@@ -57,27 +57,27 @@
                       <!-- <input required v-if="editMode" @input="checkFormFields" class="inputProfile inputEdit" v-model="userData.address"> -->
                       <div class="prof-input-adr" v-if="editMode">
                         <div class="prof-input-uno">
-                          <input required v-model="userData.Street"/>
+                          <input required v-model="userData.Street" v-on:input="checkFormFields()" />
                           <span class="prof-div-bar"></span>
                           <label class="prof-ainput-lbl">{{ $t("label.street") }}</label>
                         </div>
                         <div class="prof-input-uno">
-                          <input required v-model="userData.BuildingNumber"/>
+                          <input required v-model="userData.BuildingNumber" v-on:input="checkFormFields()"/>
                           <span class="prof-div-bar"></span>
                           <label class="prof-ainput-lbl">{{ $t("label.buildingNumber") }}</label>
                         </div>
                         <div class="prof-input-uno">
-                          <input required v-model="userData.ApartmentNumber">
+                          <input required v-model="userData.ApartmentNumber" v-on:input="checkFormFields()">
                           <span class="prof-div-bar"></span>
                           <label class="prof-ainput-lbl">{{ $t("label.apartmentNumber") }}</label>
                         </div>
                         <div class="prof-input-uno">
-                          <vue-google-autocomplete required types="geocode" id="autocomplete" placeholder="" onfocus="value = ''" @input="userData.City = value" :value="selectedCity"  @change="checkFormFields"></vue-google-autocomplete>
+                          <vue-google-autocomplete required types="geocode" id="autocomplete" :country="['pl']" v-on:placechanged="setUserCity" placeholder="" @input="userData.City = value" :value="selectedCity"  @change="checkFormFields"></vue-google-autocomplete>
                           <span class="prof-div-bar"></span>
                           <label class="prof-ainput-lbl">{{ $t("label.city") }}</label>
                         </div>
                         <div class="prof-input-uno">
-                          <input required v-model="userData.PostalCode">
+                          <input required v-model="userData.PostalCode" v-on:input="checkFormFields()">
                           <span class="prof-div-bar"></span>
                           <label class="prof-ainput-lbl">{{ $t("label.postalCode") }}</label>
                         </div>
@@ -577,6 +577,9 @@ export default {
       for (let i = 0; i < mainEdits.length; i++) {
         mainEdits[i].style.boxShadow = "0 0 10px grey";
       }
+    },
+    setUserCity: function (addressData, placeResultData, id) {
+      this.userData.City = addressData.locality;
     }
     // leavePage() {
     //     if (this._beforeEditingProjects){
