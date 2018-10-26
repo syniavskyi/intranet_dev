@@ -24,7 +24,7 @@
             <button class="border-btn reject-btn" @click="onCancelEdit">{{ $t("button.cancel") }}</button>
           </div>
         </div>
-        <div class="cd-for-select" v-if="authType==='*'">
+        <div class="cd-for-select">
           <select v-model="selectedUser" @change="getNewData" required class="cd-select">
             <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias">
                 {{ user.Fullname }}
@@ -32,15 +32,6 @@
           </select>
           <label class="cd-slabel">{{ $t("label.selectEmployee") }}</label>
         </div>
-        <div class="cd-for-select" v-if="authType==='TEAM'">
-          <select v-model="selectedUser" @change="getNewData" required class="cd-select">
-            <option v-for="user in filteredTeamUsers" :value="user.UserAlias" :key="user.UserAlias"> 
-                {{ user.Fullname }}
-            </option>
-          </select>
-          <label class="cd-slabel">{{ $t("label.selectTeamMember") }}</label>
-        </div>
-        <h3 v-if="authType==='OWN'" class="prof-user-header-name">{{userData.Fullname}}</h3>
         <div class="profile-tiles">
           <div class="profile-tiles-row-wrap">
             <div class="profile-tiles-row">
@@ -159,7 +150,7 @@
                 <div class="profile-tile-header">
                   <div class="profile-tile-header-row">
                     <h2 class="prof-tile-h2">{{ $t("header.employee") }}</h2>
-                    <button @click="showChangePassword" class="func-btn">
+                    <button @click="showChangePassword" :disabled="permissionToEdit" class="func-btn">
                       <span class="prof-btn-txt">{{ $t("header.changePassword") }}</span>
                       <span class="prof-btn-icon">&#x1f513;</span>
                     </button>
@@ -402,7 +393,9 @@ export default {
       displayMenu: "getShowMenu",
       displayOverlay: "getShowMenuOverlay",
       usersList: "usersList",
-      userPhoto: "getUserPhotoUrl"
+      userPhoto: "getUserPhotoUrl",
+      loginAlias: "getLoginAlias",
+      permissionToEdit: "getPermissionToEdit"
     }),
     formatAddress() {
       const data = this.userData;
@@ -443,6 +436,20 @@ export default {
       return aFilteredUsers;
     }
   },
+  watch: {
+      selectedUser(value) {
+        if(this.authType === '*') {
+          this.$store.commit('SET_PERMISSION_TO_EDIT', false);
+        } else if(this.authType === 'TEAM' && this.filteredTeamUsers.find(o => o.UserAlias === this.selectedUser)) {
+          this.$store.commit('SET_PERMISSION_TO_EDIT', false);
+        } else if(this.selectedUser === this.loginAlias) {
+         this.$store.commit('SET_PERMISSION_TO_EDIT', false);
+        } else {
+         this.$store.commit('SET_PERMISSION_TO_EDIT', true);
+        }
+      }
+  },
+
   // beforeRouteLeave (to, from , next) {
   // this.showLeavePageDialog = true
   //     this.routeToGo = to.name
