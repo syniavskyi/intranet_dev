@@ -26,7 +26,7 @@ const state = {
     }
   ],
   showChangePasswordDialog: false,
-  dataToRead: ["Domains", "UserData", "UserList", "Industries", "Contractors", "Projects", "Languages", "SchoolDesc", "FieldOfStudy"]
+  dataToRead: ["NewToken", "Domains", "UserData", "UserList", "Industries", "Contractors", "Projects", "Languages", "SchoolDesc", "FieldOfStudy"]
 };
 
 const mutations = {
@@ -71,10 +71,10 @@ const actions = {
       data: userData,
       headers: {
         "Content-Type": "application/json",
-          "X-Requested-With": "XMLHttpRequest",
-          "Cache-Control": "no-cache",
-          "x-csrf-token": sToken,
-          "Cookie": getters.getCookieurl
+        "X-Requested-With": "XMLHttpRequest",
+        "Cache-Control": "no-cache",
+        "x-csrf-token": sToken,
+        "Cookie": getters.getCookie
       }
     }).then(res => {
 

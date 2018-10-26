@@ -17,12 +17,12 @@
               <tr>
                 <td>
                   <table width="500px">
-                    <tr>
+                    <!-- <tr> -->
                       <!-- width="180px" -->
-                      <td v-if="cvElements.photo" width="45%" style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.nationality") }}</p></td>
+                      <!-- <td v-if="cvElements.photo" width="45%" style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.nationality") }}</p></td>
                       <td v-if="!cvElements.photo" width="45%" style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.nationality") }}</p></td>
                       <td style="font-family: 'Arial'"><p style="mso-cellspacing:0; margin:0; padding:0;">Polska</p></td>
-                    </tr>
+                    </tr> -->
                     <tr v-if="cvElements.date">
                       <td  style="font-weight:bold; font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ $t("label.dateOfBirth") }}</p></td>
                       <td style="font-family:'Arial';"><p style="mso-cellspacing:0; margin:0; padding:0;">{{ formatDate(userInfo.DateBirth)}}</p></td>
