@@ -17,7 +17,10 @@
                         <span class="ava-tile-entry">&nbsp;{{formattedType}}</span>
                     </p>
                     <div class="ava-div-select-cool">
-                        <v-date-picker :min-date="new Date()" required class="ava-input-range-wide" popoverDirection="top" is-expanded mode="range" v-model="selectedDates" @change="checkFields">
+                        <v-date-picker v-if="authType === '*'" required class="ava-input-range-wide" popoverDirection="top" is-expanded mode="range" v-model="selectedDates" @change="checkFields">
+                            <input class="ava-input-range-wide" value="selectedDates"/>
+                        </v-date-picker>
+                        <v-date-picker  v-if="authType !== '*'" :min-date="new Date()" required class="ava-input-range-wide" popoverDirection="top" is-expanded mode="range" v-model="selectedDates" @change="checkFields">
                             <input class="ava-input-range-wide" value="selectedDates"/>
                         </v-date-picker>
                         <label class="ava-input-label-cool">{{ $t("label.dates") }}</label>
