@@ -68,7 +68,6 @@ const actions = {
         }
         }).then(res => {
             console.log(res);
-            // dispatch('getUserProjects', data.userId)
             dispatch('hideAllMessages')
             commit('SET_REMOVE_ERROR', false)
             commit('SET_REMOVE_SUCCESS', true)
@@ -84,15 +83,6 @@ const actions = {
              url = 'UserAvailabilities',
              sToken = getters.getToken,
             cookie = getters.getCookie;
-            // data.DateStart = utils.formatDateForBackend(data.DateStart);
-            // data.DateEnd = utils.formatDateForBackend(data.DateEnd);
-            // data.DateStartToChange = utils.formatDateForBackend(data.DateStartToChange);
-            // data.DateEndToChange = utils.formatDateForBackend(data.DateEndToChange);
-            // delete data.Color;
-            // delete data.EntryId;
-            // delete data.Order;
-            // delete data.TypeName;
-  
         axios({
           url: url,
           method: 'post',
