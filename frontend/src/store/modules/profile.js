@@ -26,6 +26,7 @@ const state = {
     }
   ],
   showChangePasswordDialog: false,
+  permissionToEdit: false,
   dataToRead: ["NewToken", "Domains", "UserData", "UserList", "Industries", "Contractors", "Projects", "Languages", "SchoolDesc", "FieldOfStudy"]
 };
 
@@ -41,6 +42,9 @@ const mutations = {
   },
   SET_FILE_ERROR(state, isError) {
     state.uploadFileError = isError;
+  },
+  SET_PERMISSION_TO_EDIT(state, data) {
+    state.permissionToEdit = data;
   }
 };
 
@@ -175,6 +179,9 @@ const getters = {
   },
   getProfileToRead(state){
     return state.dataToRead;
+  },
+  getPermissionToEdit(state) {
+    return state.permissionToEdit;
   }
 };
 
