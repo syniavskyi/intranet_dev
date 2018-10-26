@@ -17,15 +17,14 @@
                         <span class="ava-tile-entry">&nbsp;{{formattedType}}</span>
                     </p>
                     <div class="ava-div-select-cool">
-                        <v-date-picker required class="ava-input-range-wide" popoverDirection="top" is-expanded mode="range" v-model="selectedDates" @change="checkFields">
+                        <v-date-picker :min-date="new Date()" required class="ava-input-range-wide" popoverDirection="top" is-expanded mode="range" v-model="selectedDates" @change="checkFields">
                             <input class="ava-input-range-wide" value="selectedDates"/>
                         </v-date-picker>
                         <label class="ava-input-label-cool">{{ $t("label.dates") }}</label>
                     </div>
-                    <div class="ava-div-select-cool">
+                    <div class="ava-div-select-cool" v-if="authType === '*' || authType === 'TEAM' && selectedUser!==loginAlias">
                         <select required class="ava-select-cool" v-model="newLeave.StatusId" @change="checkFields">
                             <option v-for="status in availStatusList" :key="status.Key" :value="status.Key">{{ status.Value }}</option>
-                            <!-- <option v-for="branch in branchList" :key="branch.branchId" :value="selectedBranch = branch.branchId">{{ branch.branchName }}</option> -->
                         </select>
                         <label class="ava-select-label-cool">{{ $t("label.status") }}</label>
                     </div>
@@ -60,7 +59,8 @@ export default {
             newLeave: 'getNewLeaveForUser',
             availStatusList: 'getAvailStatus',
             usersList: 'usersList',
-            availTypesList: 'getAvailType'
+            availTypesList: 'getAvailType',
+            loginAlias: 'getLoginAlias'
         }),
         formattedUsername() {
             const userId = this.selectedUser
