@@ -6,7 +6,8 @@ const state = {
   officeFiles: [],
   informationFiles: [],
   instructionFiles: [],
-  fileTypes: ['INFO', 'DOC', 'OFF', 'SAPB', 'INST']
+  fileTypes: ['INFO', 'DOC', 'OFF', 'SAPB', 'INST'],
+  dataToRead: ["Documents"]
 }
 
 const mutations = {
@@ -52,29 +53,30 @@ const actions = {
     commit,
     getters
   }, fileType) {
-    let urlQuery = getters.getUrlQuery
-    axios({
+    return axios({
       method: 'GET',
-      url: 'Attachments' + urlQuery + "&$filter=FileId eq '" + fileType + "'",
+      url: 'Attachments' + "?$filter=FileId eq '" + fileType + "'",
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+        "Cookie": getters.getCookie
       }
-    }).then(res => {
-      let oFiles = res.data.d.results;
-      if (fileType === 'INFO') {
-        commit('SET_INFORMATION_FILES', oFiles)
-      } else if (fileType === 'DOC') {
-        commit('SET_DOCUMENT_FILES', oFiles)
-      } else if (fileType === 'OFF') {
-        commit('SET_OFFICE_FILES', oFiles)
-      } else if (fileType === 'SAPB') {
-        commit('SET_SYSTEM_FILES', oFiles)
-      } else if (fileType === 'INST') {
-        commit('SET_INSTRUCTION_FILES', oFiles)
-      }
-    }).catch(error => {
-      console.log(error);
     })
+    // .then(res => {
+    //   let oFiles = res.data.d.results;
+    //   if (fileType === 'INFO') {
+    //     commit('SET_INFORMATION_FILES', oFiles)
+    //   } else if (fileType === 'DOC') {
+    //     commit('SET_DOCUMENT_FILES', oFiles)
+    //   } else if (fileType === 'OFF') {
+    //     commit('SET_OFFICE_FILES', oFiles)
+    //   } else if (fileType === 'SAPB') {
+    //     commit('SET_SYSTEM_FILES', oFiles)
+    //   } else if (fileType === 'INST') {
+    //     commit('SET_INSTRUCTION_FILES', oFiles)
+    //   }
+    // }).catch(error => {
+    //   console.log(error);
+    // })
   },
   toggleDocTile({
     dispatch
@@ -126,6 +128,9 @@ const getters = {
   },
   getFileTypes(state) {
     return state.fileTypes
+  },
+  getFilesToRead(state){
+    return state.dataToRead;
   }
 }
 

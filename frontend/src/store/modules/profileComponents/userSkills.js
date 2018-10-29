@@ -112,8 +112,8 @@ const actions = {
     getters
   }, newSkills) {
     newSkills = utils.formatToString(newSkills);
-    getters.getSelectedCvLang ?  newSkills.Language = getters.getSelectedCvLang.toUpperCase() : newSkills.Language = getters.getLoginLanguage;
-    getters.getSelectedForCvUser ? newSkills.UserAlias = getters.getSelectedForCvUser : newSkills.UserAlias = getters.getLoginAlias;
+    getters.getSelectedCvLang ?  newSkills.Language = getters.getSelectedCvLang.toUpperCase() : newSkills.Language = localStorage.getItem("lang");
+    getters.getSelectedForCvUser ? newSkills.UserAlias = getters.getSelectedForCvUser : newSkills.UserAlias = localStorage.getItem("id");
     let url = "UserSkills(UserAlias='" + newSkills.UserAlias + "',Language='" + newSkills.Language + "')";
     let sToken = getters.getToken;
     let cookie = getters.getCookie; 
@@ -137,8 +137,8 @@ const actions = {
   saveUserLangs({getters}, data) {
     let sToken = getters.getToken;
     let cookie = getters.getCookie;
-    getters.getSelectedCvLang ? data.Lang = getters.getSelectedCvLang.toUpperCase() : data.Lang = getters.getLoginLanguage;
-    getters.getSelectedForCvUser ? data.UserId = getters.getSelectedForCvUser : data.UserId = getters.getLoginAlias;
+    getters.getSelectedCvLang ? data.Lang = getters.getSelectedCvLang.toUpperCase() : data.Lang = localStorage.getItem("lang");
+    getters.getSelectedForCvUser ? data.UserId = getters.getSelectedForCvUser : data.UserId = localStorage.getItem("id");
     let url = 'UserLang';
     axios({
       url: url,
@@ -159,10 +159,10 @@ const actions = {
   },
   updateUserLangs({getters}, data){
     let sToken = getters.getToken;
-    getters.getSelectedCvLang ?  data.Lang = getters.getSelectedCvLang.toUpperCase() : data.Lang = getters.getLoginLanguage;
-    getters.getSelectedForCvUser ? data.UserId = getters.getSelectedForCvUser : data.UserId = getters.getLoginAlias;
-    let urlD = "UserLang(UserId='" + data.UserId + "',Lang='" + data.Lang + "',LanguageId='" + data.LanguageId + "')";
-    let urlU = "UserLang(UserId='" + data.UserId + "',Lang='" + data.Lang + "',LanguageId='" + data.LanguageToChange + "')";
+    getters.getSelectedCvLang ?  data.Lang = getters.getSelectedCvLang.toUpperCase() : data.Lang = localStorage.getItem("lang");
+    getters.getSelectedForCvUser ? data.UserId = getters.getSelectedForCvUser : data.UserId = localStorage.getItem("id");
+    let urlD = `UserLang(UserId='${data.UserId}',Lang='${data.Lang}',LanguageId='${data.LanguageId}')`;
+    let urlU = `UserLang(UserId='${data.UserId}',Lang='${data.Lang}',LanguageId='${data.LanguageToChange}')`;
     axios({
       url: data.Action === 'D' ? urlD : urlU,
       method: 'put',

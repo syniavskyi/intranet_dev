@@ -41,7 +41,7 @@ const actions = {
   saveNewUserExp({
     getters
   }, data) {
-    getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = getters.getLoginAlias;
+    getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = localStorage.getItem("id");
     data.DateStart = utils.formatDateForBackend(data.DateStart);
     data.DateEnd = utils.formatDateForBackend(data.DateEnd);
     data.DateEndToChange = null;
@@ -70,7 +70,7 @@ const actions = {
   updateUserExp({
     getters
   }, data) {
-    getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = getters.getLoginAlias;
+    getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = localStorage.getItem("id");
     data.DateStart = utils.formatDateForBackend(data.DateStart);
     data.DateEnd = utils.formatDateForBackend(data.DateEnd);
     data.IsCurrent = data.IsCurrent ? 'X' : '-';

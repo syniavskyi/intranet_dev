@@ -15,7 +15,7 @@ const state = {
     },
     cvFormats: ["DOCX", "DOC", "PDF"],
     showSelectCvDialog: false,
-    dataToRead: ["Domains", "Industries", "UserData", "Contractors", "Projects", "Languages", "SchoolDesc", "FieldOfStudy"]
+    dataToRead: ["Domains", "Industries", "UserData", "UserList", "Contractors", "Projects", "Languages", "SchoolDesc", "FieldOfStudy"]
 };
 
 const mutations = {
@@ -24,6 +24,9 @@ const mutations = {
     },
     SET_SHOW_CV_DIALOG(state, show){
         state.showSelectCvDialog = show
+    },
+    SET_CV_DATA(state, data){
+        state.cvData = state;
     }
 };
 

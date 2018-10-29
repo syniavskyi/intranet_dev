@@ -104,6 +104,8 @@ export default {
       // userPositions: "getUserJobPositions"
     })
   },
+
+
   methods: {
     ...mapActions([
       "selectAllCvElements",

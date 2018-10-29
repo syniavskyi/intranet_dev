@@ -140,6 +140,11 @@ export default {
       displayOverlay: "getShowMenuOverlay"
     })
   },
+  created() {
+    let oStore = this.$store;
+        oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getFilesToRead);
+        oStore.dispatch('getData', null);
+  },
   mounted() {
     this.$nextTick(this.calcDocsHeight().then(height => {}));
   },
