@@ -48,8 +48,8 @@ const actions = {
   editUserEducation({
     getters
   }, data) {
-    getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = getters.getLoginAlias;
-    getters.getSelectedCvLang ?  data.Language = getters.getSelectedCvLang.toUpperCase() : data.Language = getters.getLoginLanguage;
+    getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = localStorage.getItem("id");
+    getters.getSelectedCvLang ?  data.Language = getters.getSelectedCvLang.toUpperCase() : data.Language = localStorage.getItem("lang");
     data.DateStart = utils.formatDateForBackend(data.DateStart);
     data.DateEnd = utils.formatDateForBackend(data.DateEnd);
     data.IsCurrent = data.IsCurrent ? 'X' : '-';
@@ -77,14 +77,12 @@ const actions = {
   addUserEducation({
     getters
   }, data) {
-    getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = getters.getLoginAlias;
-    getters.getSelectedCvLang ?  data.Language = getters.getSelectedCvLang.toUpperCase() : data.Language = getters.getLoginLanguage;
+    getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = localStorage.getItem("id");
+    getters.getSelectedCvLang ?  data.Language = getters.getSelectedCvLang.toUpperCase() : data.Language = localStorage.getItem("lang");
     data.DateStart = utils.formatDateForBackend(data.DateStart)
     data.DateEnd = utils.formatDateForBackend(data.DateEnd)
     data.IsCurrent = data.IsCurrent ? 'X' : '-'
     let url = 'UsersEducation';
-    let sToken = getters.getToken;
-    let cookie = getters.getCookie;
     axios({
       url: url,
       method: 'post',
@@ -93,8 +91,8 @@ const actions = {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
-          "x-csrf-token": sToken,
-          "Cookie": cookie
+          "x-csrf-token": getters.getToken,
+          "Cookie": getters.getCookie
       }
     }).then(res => {
         console.log(res)

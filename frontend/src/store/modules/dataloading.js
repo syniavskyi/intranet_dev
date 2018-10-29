@@ -103,6 +103,11 @@ const mutations = {
   },
   SET_GO_FROM_CV(state, isFromCv){
     state.goFromCv = isFromCv;
+  },
+  SET_TO_READ_EXCLUDED(state, data){
+    data = data.filter(oItem => oItem !== "Domains" && oItem !== "Industries" && oItem !== "SchoolDesc");
+    data.push("NewToken");
+    state.promiseListToRead = data;
   }
 };
 
@@ -122,14 +127,12 @@ const actions = {
     }).catch(error => {
       console.log(error);
     });
-    // for (let i = 0; i < getters.getFileTypes.length; i++) {
-    //   dispatch('getDocuments', getters.getFileTypes[i])
-    // }
   },
 
-  getData({getters, dispatch}, passedData){
-    let passedUserId, passedLang, bChangePage;
-    let aDataToRead = getters.getPromisesToRead; // get list of data to read
+  getData({getters, dispatch, commit}, passedData){
+    let passedUserId, passedLang, bChangePage,
+        aRoles = getters.getRoleList,
+        sFirsLang;
     if(passedData){
       passedUserId = passedData.user;
       passedLang = passedData.lang;
@@ -141,13 +144,16 @@ const actions = {
       cvLang: getters.getSelectedCvLang || "PL",
       changePage: bChangePage || false
     };
-    // check if data for domain in selected languages is already read and if token is needed
-    if(getters.getRoleList.length === 0){
-      
+    if(aRoles.length > 0){
+      sFirsLang = aRoles[0].Language.toUpperCase();
     }
-    
+    if(sFirsLang === userData.lang){
+      commit('SET_TO_READ_EXCLUDED', getters.getPromisesToRead);
+    }
 
     dispatch("loadData", userData);
+
+    
   },
 
   getNewToken(){
@@ -316,11 +322,6 @@ const actions = {
         "Cookie": sCookie
       }
     })
-    // .then(res => {
-    //   commit('GET_USER_LIST', res.data.d.results);
-    // }).catch(error => {
-    //   console.log(error)
-    // })
   },
 
   loadUserPhoto({
@@ -381,7 +382,7 @@ const actions = {
     })
   },
 
-  setPromises({dispatch,commit}, userData){
+  setPromises({dispatch, commit, getters}, userData){
     var aPromises = [],
         aPromiseList = state.promiseListToRead;
     for(let i = 0; i < aPromiseList.length; i++){
@@ -420,7 +421,7 @@ const actions = {
           aPromises.push(languagesPromise);
           break;
         case "SchoolDesc":
-          const schoolDescPromise = dispatch('getSchoolDesc', userData.cvLang).then(res => ( { res: res, promise: "SchoolDesc"}));
+          const schoolDescPromise = dispatch('getSchoolDesc', userData.lang).then(res => ( { res: res, promise: "SchoolDesc"}));
           aPromises.push(schoolDescPromise);
           break;
         case "FieldOfStudy":
@@ -446,13 +447,20 @@ const actions = {
             aPromises.push(domainPromise);
           }
           break;
+        case "Documents":
+          let documentPromise, fileType;
+          for (let i = 0; i < getters.getFileTypes.length; i++) {
+            fileType = getters.getFileTypes[i];
+            documentPromise = dispatch('getDocuments', fileType).then(res => ({ res: res, promise: fileType }));
+            aPromises.push(documentPromise);
+          }
+          break;
       }
     }
-
     commit("SET_PROMISE_LIST", aPromises);
   },
 
-  setDataInResponse({dispatch,commit}, data){
+  setDataInResponse({dispatch,commit,getters}, data){
     let response = data.res,
         userData = data.userData,
         sPromiseName,
@@ -504,13 +512,21 @@ const actions = {
           commit('SET_TOKEN', sToken);
           break;
         default:
+          let bEndFunction = false;
           for(let k = 0; k < state.sapDomains.length; k++){
-            let sDomainName = state.sapDomains[k],
-                bEndFunction = false;
+            let sDomainName = state.sapDomains[k];
             if(sDomainName === sPromiseName && !bEndFunction){
               dispatch("setDomains", { aResults, sDomainName });
               bEndFunction = true;
             }
+          }
+          for(let l = 0; l < getters.getFileTypes.length; l++){
+            let documentType = getters.getFileTypes[l];
+            if(documentType === sPromiseName && !bEndFunction){
+              dispatch("setDocumentList", { aResults, documentType })
+              bEndFunction = true;
+            }
+            
           }
           break;
       }
@@ -587,6 +603,31 @@ const actions = {
       commit(sCommitName, aResults);
     }
     
+  },
+
+  setDocumentList({commit}, passedData){
+    let sCommitName = "",
+        aResults = passedData.aResults,
+        fileType = passedData.documentType;
+
+      switch(fileType){
+        case 'INFO':
+          sCommitName = "SET_INFORMATION_FILES";
+          break;
+        case 'DOC':
+          sCommitName = "SET_DOCUMENT_FILES";
+          break;
+        case 'OFF':
+          sCommitName = "SET_OFFICE_FILES";
+          break;
+        case 'SAPB':
+          sCommitName = "SET_SYSTEM_FILES";
+          break;
+        case 'INST':
+          sCommitName = "SET_INSTRUCTION_FILES";
+          break;
+      }
+      commit(sCommitName, aResults);
   },
 
   setUserData({dispatch, commit, getters}, response, userData){

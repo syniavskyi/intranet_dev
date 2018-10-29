@@ -64,7 +64,7 @@ const actions = {
   saveUserProjectsPosition({
     dispatch, getters
   }, data) {
-    getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = getters.getLoginAlias;
+    getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = localStorage.getItem("id");
     data.DateStart = utils.formatDateForBackend(data.DateStart);
     data.DateEnd = utils.formatDateForBackend(data.DateEnd);
     dispatch('formatProjectToString', data);
@@ -93,7 +93,7 @@ const actions = {
     dispatch
   }, data) {
     const dataToSend = data;
-    getters.getSelectedForCvUser ? dataToSend.UserAlias = getters.getSelectedForCvUser : dataToSend.UserAlias = getters.getLoginAlias;
+    getters.getSelectedForCvUser ? dataToSend.UserAlias = getters.getSelectedForCvUser : dataToSend.UserAlias = localStorage.getItem("id");
     dataToSend.DateStart = utils.formatDateForBackend(dataToSend.DateStart);
     dataToSend.DateEnd = utils.formatDateForBackend(dataToSend.DateEnd);
     dataToSend.IsCurrent = dataToSend.IsCurrent ? 'X' : '-';
@@ -101,8 +101,8 @@ const actions = {
     dataToSend.DateEndToChange = utils.formatDateForBackend(dataToSend.DateEndToChange);
     delete dataToSend.User;
     dispatch('formatProjectToString', dataToSend);
-    // let urlU = "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(dataToSend.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + 'D%C5%82uga%20nazwa%20projektu' + "',Language='" + dataToSend.Language + "')";
-    let urlD = "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(dataToSend.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + dataToSend.ProjectName + "',Language='" + dataToSend.Language + "')";
+    let urlD = `UserCvProjects(UserAlias='${dataToSend.UserAlias}',DateStart=datetime'${moment(dataToSend.DateStart).format("YYYY-MM-DD")}T00:00:00',DateEnd=datetime'${moment(dataToSend.DateEnd).format("YYYY-MM-DD")}T00:00:00,ProjectName='${dataToSend.ProjectName},Language='${dataToSend.Language}')`;
+    // "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(dataToSend.DateEnd).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + dataToSend.ProjectName + "',Language='" + dataToSend.Language + "')";
     let urlU = "UserCvProjects(UserAlias='" + dataToSend.UserAlias + "',DateStart=datetime'" + moment(dataToSend.DateStartToChange).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(dataToSend.DateEndToChange).format("YYYY-MM-DD") + "T00:00:00" + "',ProjectName='" + dataToSend.ProjectName + "',Language='" + dataToSend.Language + "')";
     let sToken = getters.getToken;
     axios({
