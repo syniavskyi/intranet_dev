@@ -68,6 +68,7 @@ const actions = {
     getters,
     dispatch
   }) {
+    let user = localStorage.getItem("id");
     axios({
       method: 'GET',
       url: 'Attachments' + "?$filter=FileId eq 'new' and UserAlias eq '" + user + "'",
@@ -88,15 +89,22 @@ const actions = {
     commit,
     getters,
     dispatch
-  }, userData) {
-    return axios({
-              method: 'GET',
-              url: 'Attachments' +  "?$filter=FileId eq 'info' and UserAlias eq '" + userData.user + "'",
-              headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-                "Cookie": getters.getCookie
-              }
-            });
+  }) {
+    let user = localStorage.getItem("id");
+    axios({
+      method: 'GET',
+      url: 'Attachments' + "?$filter=FileId eq 'info' and UserAlias eq '" + user + "'",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+        "Cookie": getters.getCookie
+      }
+    }).then(res => {
+      let oAttachments = res.data.d.results;
+      commit('SET_DOC_LIST_INFO', oAttachments);
+      dispatch('checkStatus', oAttachments);
+    }).catch(error => {
+      console.log(error);
+    })
   },
   editSingleNewDoc({getters}, data) {
     let sToken = getters.getToken;
@@ -124,6 +132,46 @@ const actions = {
     }).then(res => {
         console.log(res)
       }).catch(error => {
+        console.log(error);
+    })
+  },
+  deleteNewFile({getters, dispatch}) {
+        let sToken = getters.getToken;
+        let user = localStorage.getItem("id");
+        let url = "UserFiles(UserAlias='" + user + "',Language='PL',FileId='NEW')";
+        axios({
+        url: url,
+        method: 'delete',
+        headers: {
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "Cache-Control": "no-cache",
+            "x-csrf-token": sToken,
+            "Cookie": getters.getCookie
+        }
+        }).then(res => {
+            console.log(res);
+        }).catch(error => {
+            console.log(error);
+        })
+  },
+  deleteInfoFile({getters, dispatch}) {
+    let user = localStorage.getItem("id");
+    let sToken = getters.getToken;
+    let url = "UserFiles(UserAlias='" + user + "',Language='PL',FileId='INFO')";
+    axios({
+    url: url,
+    method: 'delete',
+    headers: {
+        "Content-Type": "application/json",
+        "X-Requested-With": "XMLHttpRequest",
+        "Cache-Control": "no-cache",
+        "x-csrf-token": sToken,
+        "Cookie": getters.getCookie
+    }
+    }).then(res => {
+        console.log(res);
+    }).catch(error => {
         console.log(error);
     })
   }

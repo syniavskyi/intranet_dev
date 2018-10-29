@@ -128,7 +128,7 @@ export default {
         Email: this.Email,
         DepartmentId: this.DepartmentId,
         Role: this.Role,
-        Language: this.Language
+        Language: this.Language.toUpperCase()
       });
       this.isLoading = false;
     }

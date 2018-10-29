@@ -41,7 +41,7 @@
                   </li>
                 </ul>
                 <div class="starter-page-list-bottom">
-                  <button class="starter-page-docs-btn button" :disabled="setButtonNew">{{ $t("button.documentComplete") }}</button>
+                  <button class="starter-page-docs-btn button" :disabled="setButtonNew" @click="removeNewFile">{{ $t("button.documentComplete") }}</button>
                 </div>
               </div>
             </div>
@@ -74,7 +74,7 @@
                   </li>
                 </ul>
                 <div class="starter-page-list-bottom">
-                  <button class="starter-page-docs-btn button" :disabled="setButtonInfo">{{ $t("button.documentComplete") }}</button>
+                  <button class="starter-page-docs-btn button" :disabled="setButtonInfo" @click="removeInfoFile">{{ $t("button.documentComplete") }}</button>
                 </div>
               </div>
             </div>
@@ -121,7 +121,9 @@ export default {
       "checkListForNew",
       "checkListForInfo",
       "checkFileFormat",
-      "editSingleNewDoc"
+      "editSingleNewDoc",
+      "deleteNewFile",
+      "deleteInfoFile"
     ]),
     // add css to checkbox
     changeCheckboxForNew(data) {
@@ -156,6 +158,15 @@ export default {
         "" +
         "')/$value";
       return url;
+    },
+    removeNewFile() {
+      this.deleteNewFile();
+      this.$store.commit('SET_BUTTON_STATE_NEW', true);
+
+    },
+    removeInfoFile() {
+      this.deleteInfoFile();
+      this.$store.commit('SET_BUTTON_STATE_INFO', true);
     }
   }
 };
