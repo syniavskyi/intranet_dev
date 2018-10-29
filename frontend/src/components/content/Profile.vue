@@ -150,7 +150,7 @@
                 <div class="profile-tile-header">
                   <div class="profile-tile-header-row">
                     <h2 class="prof-tile-h2">{{ $t("header.employee") }}</h2>
-                    <button @click="showChangePassword" :disabled="permissionToEdit" class="func-btn">
+                    <button @click="showChangePassword" :disabled="selectedUser !== loginAlias" class="func-btn">
                       <span class="prof-btn-txt">{{ $t("header.changePassword") }}</span>
                       <span class="prof-btn-icon">&#x1f513;</span>
                     </button>
@@ -354,7 +354,7 @@ export default {
       dep: this.userData.DepartmentName,
       userAlias: sUserAlias
     };
-    this.authType = "*";//utils.checkRole(data); TEMP
+    this.authType = utils.checkRole(data);
     if(oStore.getters.getCookie){
       if(oStore.getters.getGoFromCv && oStore.getters.getRoleList.length > 0){ // if go from CV - do not read data
         oStore.commit("SET_GO_FROM_CV", false);

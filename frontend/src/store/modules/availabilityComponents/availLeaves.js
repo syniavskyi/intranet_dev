@@ -83,7 +83,6 @@ const actions = {
              url = 'UserAvailabilities',
              sToken = getters.getToken,
             cookie = getters.getCookie;
-            data.StatusId='PL';
         axios({
           url: url,
           method: 'post',
