@@ -122,6 +122,7 @@ const actions = {
 
    dispatch("setPromises", userData); 
    aPromises = getters.getPromiseList;
+   commit("SET_DISPLAY_LOADER", true);
     axios.all(aPromises).then(res => {
       dispatch("setDataInResponse", { res, userData }); 
     }).catch(error => {
@@ -150,7 +151,6 @@ const actions = {
     if(sFirsLang === userData.lang){
       commit('SET_TO_READ_EXCLUDED', getters.getPromisesToRead);
     }
-
     dispatch("loadData", userData);
 
     
@@ -219,7 +219,7 @@ const actions = {
     let urlQuery = getters.getUrlQuery
 
     let sCookie = getters.getCookie;
-    commit("SET_DISPLAY_LOADER", true);
+    
     let sUserAlias = userData.user || localStorage.getItem("id"),
         sLang = userData.lang || localStorage.getItem("lang");
     if(!sUserAlias){
@@ -237,7 +237,6 @@ const actions = {
       }
     })
     // .then(res => {
-      // commit("SET_DISPLAY_LOADER", false);
       // let sUserId = res.data.d.UserAlias;
       // localStorage.setItem('id', sUserId);
 
@@ -283,7 +282,6 @@ const actions = {
 
       // dispatch('checkPageToDisplay', userData.changePage)
     // }).catch(error => {
-    //   commit("SET_DISPLAY_LOADER", false);
     //   console.log(error);
     // })
   },
@@ -531,6 +529,7 @@ const actions = {
           break;
       }
     }
+    commit("SET_DISPLAY_LOADER", false);
     dispatch('checkPageToDisplay', userData.changePage);
   },
 
@@ -542,6 +541,7 @@ const actions = {
       }
     };
     commit('SET_ADVERTS', oAdverts);
+    commit('SET_SHOW_ADVERTS', true);
   },
 
   setEvents({commit, dispatch}, response){
@@ -631,7 +631,6 @@ const actions = {
   },
 
   setUserData({dispatch, commit, getters}, response, userData){
-    commit("SET_DISPLAY_LOADER", false);
       let sUserId = response.data.d.UserAlias;
       let sLang = response.data.d.Language;
 

@@ -37,7 +37,8 @@ const state = {
     newsJson: {},
     articles: [],
     showNewMessageDialog: false,
-    dataToRead: ["UserData", "Events", "Adverts"]
+    dataToRead: ["UserList", "NewToken", "Events", "Adverts", "Domains", "Industries", "UserData"],
+    showAdverts: false
 }
 
 const mutations = {
@@ -70,6 +71,9 @@ const mutations = {
     },
     SET_TOAST_TEXT(state, txt) {
         state.slider.sliderToast = txt 
+    },
+    SET_SHOW_ADVERTS(state, isShow){
+        state.showAdverts = isShow;
     }
 }
 
@@ -129,6 +133,27 @@ const actions = {
         }).catch(error => {
            console.log(error)
        });
+    },
+    addNewAdvert({getters}, data){
+        const url = 'Adverts';
+        data.ValidTo = utils.formatDateForBackend(data.ValidTo);
+        data.CreatedBy = localStorage.getItem("id");
+        axios({
+            url: url,
+            method: 'post',
+            data: data,
+            headers: {
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+                "Cache-Control": "no-cache",
+                "x-csrf-token": getters.getToken,
+                "Cookie": getters.getCookie
+            }
+          }).then(res => {
+              console.log(res);
+            }).catch(error => {
+              console.log(error);
+          })
     },
     // take location
     geoLoc({commit, state, dispatch}) {
@@ -324,6 +349,9 @@ const getters = {
     },
     getNewsToRead(){
         return state.dataToRead;
+    },
+    getShowAdverts(){
+        return state.showAdverts;
     }
 }
 

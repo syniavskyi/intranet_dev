@@ -20,11 +20,12 @@
                             </div>
                             <div class="tile-underscore"/>
                         </div>
+                        <loader v-if="showAdvertsLoader"></loader>
                         <div class="tile-content tile-ncnt">
                             <div class="advItem" v-for="(advert, index) in advertsList" :key="advert.Id" :id="advert.Id">
                                 <textarea @input="validateAdvert(advert)" :disabled="!editMode" class="n-textarea" v-model="advert.Message"/>
                                 <p class="table-p">{{formatAuthorName(advert.CreatedBy)}}</p>
-                                <p class="table-p" v-if="!editMode"> Wiadomość aktualna do {{ formatDate(advert.ValidTo) }} </p>
+                                <p class="table-p" v-if="!editMode">  {{ $t("label.messageValidTo") }} {{ formatDate(advert.ValidTo) }} </p>
                                 <v-date-picker @input="validateAdvert(advert)" v-if="editMode" class="cd-range" popoverDirection="bottom" is-expanded mode="single" v-model="advert.ValidTo"  :min-date="new Date()">
                                     <!-- <input class="cd-range" v-model="advert.ValidTo" value="advert.ValidTo"/> -->
                                     <input v-model="advert.ValidTo" value="advert.ValidTo"/>
@@ -119,6 +120,7 @@ import i18n from "../../lang/lang";
 import moment from "moment";
 import Toast from "../dialogs/Toast";
 import NewMessageDialog from "../dialogs/NewMessageDialog";
+import Loader from '../dialogs/Loader.vue';
 
 let utils = require("../../utils");
 
@@ -135,7 +137,9 @@ export default {
       start: "Uruchom slider",
       sliderToast: "Zatrzymano slider",
       isAdvertValid: false,
-      isMoreThanOneAdvert: true
+      isMoreThanOneAdvert: true,
+      advertLoaded: this.$store.getters.getShowAdverts,
+      loading: true
     };
   },
   mounted() {
@@ -144,10 +148,9 @@ export default {
       this.interval = setInterval(() => {
         this.slideIndex += 1;
         this.runCarosuel(this.slideIndex);
+        this.isMoreThanOneAdvert = this.advertsList.length > 1 ? true : false;
       }, 4000);
     });
-    this.$store.commit("SET_DISPLAY_LOADER", false);
-    this.isMoreThanOneAdvert = this.advertsList.length > 1 ? true : false;
   },
   beforeCreate() {
     this.$store.dispatch("geoLoc");
@@ -156,14 +159,16 @@ export default {
   created() {
     this.getToday();
     this.getNews();
-    // this.$store.commit('SET_PROMISE_TO_READ', this.$store.getters.getNewsToRead);
-    // this.$store.dispatch('getData', null);
+    this.$store.commit('SET_PROMISE_TO_READ', this.$store.getters.getNewsToRead);
+    this.$store.dispatch('getData', null);
+    this.$store.commit('SET_ADVERTS_LOADER', true);
   },
   destroyed() {
     clearInterval(this.interval);
   },
   components: {
     "app-menu": Menu,
+    "loader": Loader,
     toast: Toast,
     "new-message": NewMessageDialog
   },
@@ -181,7 +186,9 @@ export default {
       showToast: "getDisplayToast",
       showNewMessage: "getShowNewMessageDialog",
       advertsList: "getAdverts",
-      usersList: "usersList"
+      usersList: "usersList",
+      getShowAdverts: "getShowAdverts",
+      showAdvertsLoader: "getAdvertsLoader"
     }),
     eventsSrt: function() {
      this.events.sort((a,b) => (a.DateFrom > b.DateFrom) ? 1 : ((b.DateFrom > a.DateFrom) ? -1 : 0)); 
@@ -276,6 +283,7 @@ export default {
     },
     runCarosuel(n) {
       var slides = document.getElementsByClassName("advItem");
+
       if (n > slides.length) {
         this.slideIndex = 1;
       }
@@ -285,7 +293,10 @@ export default {
       for (var i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
       }
-      slides[this.slideIndex - 1].style.display = "flex";
+      if(slides.length > 0){
+        this.$store.commit('SET_ADVERTS_LOADER', false);
+        slides[this.slideIndex - 1].style.display = "flex";
+      }
     },
     startStopSlider(evt) {
       // this.repeatSlider = false;

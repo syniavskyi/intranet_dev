@@ -159,7 +159,8 @@
         "remarks": "Remarks",
         "newMessage": "New message",
         "addNewMessage": "Add new message",
-        "emptyUsers": "List of users is empty or you do not have permission to see them"
+        "emptyUsers": "List of users is empty or you do not have permission to see them",
+        "messageValidTo": "Message valid to"
     },
     "header": {
         "login": "Log in to Intranet",
