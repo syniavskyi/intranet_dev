@@ -54,7 +54,7 @@ export default {
     data() {
         return {
             selectedDates: null,
-            disableAddNew: true   
+            disableAddNew: true
         }
     },
     computed: {
@@ -77,34 +77,38 @@ export default {
             const typeId = this.newLeave.TypeId
             for (let i = 0; i < this.availTypesList.length; i++){
                 if (this.availTypesList[i].Key === typeId) {
-                     return this.availTypesList[i].Value
+                     return this.availTypesList[i].Value;
                 }
             }
         }
     },
     watch: {
         selectedDates(value){
-            this.newLeave.DateStart = utils.formatDateForBackend(value.start)
-            this.newLeave.DateEnd = utils.formatDateForBackend(value.end)
+            this.newLeave.DateStart = utils.formatDateForBackend(value.start);
+            this.newLeave.DateEnd = utils.formatDateForBackend(value.end);
+            this.checkFields();
         },
         selectedType(value){
             if (value){
-                this.checkFields()
+                this.checkFields();
             } else {
-                this.disableAddNew = true
+                this.disableAddNew = true;
             }
         }
     },
     methods: {
         ...mapActions({addNewLeave: 'addUserLeave'}),
         checkFields() {
-            let obj = this.newLeave
+            let obj = this.newLeave;
+            if(this.selectedUser === this.loginAlias && this.authType !== '*') {
+                obj.StatusId = 'PL';
+            }
             for (let key in obj) {
                 if (!obj[key]){
-                    this.disableAddNew = true
-                    return
+                    this.disableAddNew = true;
+                    return;
                 } else {
-                    this.disableAddNew = false
+                    this.disableAddNew = false;
                 }
             }
         },
