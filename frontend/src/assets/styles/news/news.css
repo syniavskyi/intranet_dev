@@ -38,7 +38,7 @@ body {
 }
 
 .advItem {
-    display: flex;
+    display: none;
     position: relative;
     flex-direction: column;
     background: white;

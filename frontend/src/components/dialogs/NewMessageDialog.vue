@@ -9,11 +9,15 @@
             <div class="modal-content-new">
                 <div class="m-wrap">
                     <div class="cd-for-input">
-                        <textarea v-model="newAdvert" required class="cd-textarea ta-height"></textarea>
+                        <textarea v-model="newAdvert.Message" required class="cd-textarea ta-height"></textarea>
                         <span class="cd-span"></span>
                         <label class="cd-label">{{ $t("label.newMessage") }}</label>
                     </div>
-                    <button :disabled="newAdvert === null || newAdvert === '' " class="button">{{ $t("button.add") }}</button>
+                    <p class="table-p"> {{ $t("label.messageValidTo") }} </p>
+                    <v-date-picker class="cd-range" popoverDirection="bottom" is-expanded mode="single" v-model="newAdvert.ValidTo"  :min-date="new Date()">
+                        <input required v-model="newAdvert.ValidTo" value="newAdvert.ValidTo"/>
+                    </v-date-picker>
+                    <button :disabled="!newAdvert.Message || !newAdvert.ValidTo || newAdvert.Message === '' " @click="addNewAdvert(newAdvert)" class="button">{{ $t("button.add") }}</button>
                 </div>
             </div>
         </div>
@@ -21,15 +25,30 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+import i18n from "../../lang/lang";
+import moment from "moment";
+
 export default {
     data() {
         return {
-            newAdvert: null
-        }
+            newAdvert: {
+                Message: null,
+                ValidTo: null
+            }
+        } 
     },
     methods: {
+      ...mapActions([
+      "addNewAdvert"
+        ]),
         close() {
             this.$store.commit("SET_SHOW_NEW_MESSAGE_DIALOG", false)
+        },
+        formatDate(date) {
+         return date !== null && date !== undefined
+        ? moment(date).format("DD.MM.YYYY")
+        : "-";
         }
     }
 }
