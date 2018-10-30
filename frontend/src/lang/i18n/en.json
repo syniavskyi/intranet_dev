@@ -37,7 +37,8 @@
         "reject": "Reject",
         "newMessage": "New message",
         "stopSlider": "Stop slider",
-        "startSlider": "Start slider"
+        "startSlider": "Start slider",
+        "confirmGenetate": "Confirm and generate"
     },
     "label": {
         "nationality": "Nationality",

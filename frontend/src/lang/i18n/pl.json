@@ -37,7 +37,8 @@
         "reject": "Odrzuć",
         "newMessage": "Nowa wiadomość",
         "stopSlider": "Zatrzymaj slider",
-        "startSlider": "Uruchom slider"
+        "startSlider": "Uruchom slider",
+        "confirmGenetate": "Zatwierdź i generuj"
      },
     "label": {
         "nationality": "Narodowość",
