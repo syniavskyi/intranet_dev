@@ -1,8 +1,9 @@
 <template>
+<div class="content">
+   <button @click="generate" v-if="showGenerateBtn" class="cv-modal-btn-bclear center-btn">Zatwierdź i generuj</button>
 <div id="content">
     <div class="Section1" >
     <!-- header with name and position-->
-    <button @click="generate" v-if="showGenerateBtn" class="cv-modal-btn-bclear">Zatwierdź i generuj</button>
       <table id="main-table" width="100%">
         <tr>
           <td>
@@ -159,6 +160,7 @@
       </table>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -357,7 +359,8 @@ export default {
 };
 </script>
 <style>
-#content {
+#content,
+.content {
   background: grey;
   /* display: flex; */
   justify-content: center;
@@ -416,5 +419,10 @@ export default {
   box-shadow: 0 0 8px #333;
   background: #333;
   color: white;
+}
+.center-btn {
+  margin: 10px auto auto;
+  background: white;
+  height: 30px;
 }
 </style>
