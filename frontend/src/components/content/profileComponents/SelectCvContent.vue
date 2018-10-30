@@ -63,9 +63,8 @@
             <label class="cv-modal-label">{{ $t("label.selectFormat") }}</label>
           </div>
           <div class="cv-modal-div-l">
-            <!-- <p>Wybierz pozycję</p> -->
             <select required class="cv-modal-select" v-model="cvElements.position">
-              <!-- <option v-for="position in userPositions" :key="position" :value="position"> {{position}}</option> -->
+              <option v-for="position in userPositions" :key="position" :value="position"> {{position}}</option>
             </select>
             <label class="cv-modal-label">{{ $t("label.selectPosition") }}</label>
           </div>

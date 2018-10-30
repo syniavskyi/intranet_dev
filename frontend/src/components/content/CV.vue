@@ -1,6 +1,6 @@
 <template>
 <div class="content">
-   <button @click="generate" v-if="showGenerateBtn" class="cv-modal-btn-bclear center-btn">Zatwierdź i generuj</button>
+   <button @click="generate" v-if="showGenerateBtn" class="cv-modal-btn-bclear center-btn">{{ $t("button.confirmGenerate") }}</button>
 <div id="content">
     <div class="Section1" >
     <!-- header with name and position-->
