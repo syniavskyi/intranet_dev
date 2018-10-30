@@ -239,9 +239,11 @@ export default {
       this.beforeEditingCache = utils.createClone(advert);
       this.editMode = true;
     },
-    saveAdvert(index) {
+    saveAdvert(advert) {
       this.editMode = false;
-      this.$store.dispatch("updateAdvert", index)
+      const data = utils.createClone(advert);
+      this.$store.dispatch("updateAdvert", data);
+      this.beforeEditingCache = data;
       // this.updateAdvert();
     },
     removeAdvert(advertId) {
