@@ -36,7 +36,8 @@
         "confirm": "Zatwierdź",
         "reject": "Odrzuć",
         "newMessage": "Nowa wiadomość",
-        "stopSlider": "Zatrzymaj slider"
+        "stopSlider": "Zatrzymaj slider",
+        "startSlider": "Uruchom slider"
      },
     "label": {
         "nationality": "Narodowość",
@@ -239,7 +240,9 @@
         "delegationConfirmQuestion": "Czy chcesz zatwierdzić delegację? Upewnij się, że wprowadzone dane są prawidłowe.",
         "failedToSaveDelegation": "Niepowodzenie podczas zapisu numeru delegacji",
         "userRegistered": "Utworzono konto dla {fullname}. Wiadomość z loginem oraz hasłem została wysłana na adres: {email}.",
-        "userNotregistered": "Konto dla {fullname} nie zostało utworzone"
+        "userNotregistered": "Konto dla {fullname} nie zostało utworzone",
+        "stoppedSlider": "Zatrzymano slider",
+        "startedSlider": "Uruchomiono slider"
     },
     "select": {
         "language": {

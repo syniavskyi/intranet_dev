@@ -28,10 +28,10 @@ const state = {
     slider: {
         slideIndex: 1,
         interval: "",
-        start: "Uruchom slider",
-        stop: "Zatrzymaj slider",
-        btnTxt: "Zatrzymaj slider",
-        sliderToast: "Zatrzymano slider"
+        start: i18n.t("button.startSlider"),
+        stop: i18n.t("button.stopSlider"),
+        btnTxt: i18n.t("button.stopSlider"),
+        sliderToast: i18n.t("message.stoppedSlider")
     },
     news: null,
     newsJson: {},
@@ -117,11 +117,11 @@ const actions = {
         // this.repeatSlider = false;
         if (evt.target.innerText === state.slider.start) { 
             evt.target.innerText = state.slider.stop
-            state.slider.sliderToast = "Uruchomiono slider"
+            state.slider.sliderToast = i18n.t("message.startedSlider")
             state.slider.interval = setInterval(() => {state.slider.slideIndex+=1; dispatch("runCarosuel", state.slider.slideIndex)}, 4000)
         } else { 
             evt.target.innerText = state.slider.start
-            state.slider.sliderToast = "Zatrzymano slider"
+            state.slider.sliderToast = i18n.t("message.stoppedSlider")
             clearInterval(state.slider.interval)
         }
         dispatch("displayToast");

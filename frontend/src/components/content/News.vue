@@ -134,9 +134,9 @@ export default {
       interval: "",
       editMode: false,
       beforeEditingCache: null,
-      stop: "Zatrzymaj slider",
-      start: "Uruchom slider",
-      sliderToast: "Zatrzymano slider",
+      stop: i18n.t("button.stopSlider"),
+      start: i18n.t("button.startSlider"),
+      sliderToast: i18n.t("message.stoppedSlider"),
       isAdvertValid: false,
       isMoreThanOneAdvert: true,
       advertLoaded: this.$store.getters.getShowAdverts,
@@ -300,17 +300,16 @@ export default {
       }
     },
     startStopSlider(evt) {
-      // this.repeatSlider = false;
       if (evt.target.innerText === this.start) {
         evt.target.innerText = this.stop;
-        this.sliderToast = "Uruchomiono slider";
+        this.sliderToast = i18n.t("message.startedSlider");
         this.interval = setInterval(() => {
           this.slideIndex += 1;
           this.runCarosuel(this.slideIndex);
         }, 4000);
       } else {
         evt.target.innerText = this.start;
-        this.sliderToast = "Zatrzymano slider";
+        this.sliderToast = i18n.t("message.stoppedSlider");
         clearInterval(this.interval);
       }
 
