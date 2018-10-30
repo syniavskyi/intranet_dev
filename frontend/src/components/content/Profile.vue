@@ -17,7 +17,7 @@
             </select>
             <label class="label-select-lang">{{ $t("label.language") }}</label>
           </div>
-          <button class="profile-header-button" @mouseout="onHoverOut" @mouseover="onHover" v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
+          <button  :disabled="permissionToEdit" class="profile-header-button" @mouseout="onHoverOut" @mouseover="onHover" v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
           <div v-if="editMode" class="header-button-save-reject">
             <p class="profile-error profile-error-data" v-if="!saveChangesSuccess">{{ $t("message.saveChangesError") }}</p>
             <button class="border-btn save-btn" @click="onSaveChanges" :disabled="disableSaveBtn">{{ $t("button.saveChanges") }}</button>
@@ -422,7 +422,7 @@ export default {
     },
     filteredTeamUsers() {
       let aFilteredUsers = this.usersList,
-        sTeam = this.userData.DepartmentId;
+      sTeam = this.usersList.find(o => o.UserAlias === localStorage.getItem('id')).DepartmentId;
 
       aFilteredUsers = aFilteredUsers.filter(function(oData) {
         return oData.DepartmentId === sTeam;

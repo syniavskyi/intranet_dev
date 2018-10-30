@@ -10,7 +10,8 @@ const state = {
     removeError: false,
     dataToRead: ["Domains", "Industries", "UserData", "UserList", "Projects", "Contractors"],
     avaliablityAuth: "",
-    availAccAuth: ""
+    availAccAuth: "",
+    permissionToEditAvail: false
 };
 
 const mutations = {
@@ -37,6 +38,9 @@ const mutations = {
     },
     SET_AVAIL_ACCEPT_AUTH(state, sAuth){
         state.availAccAuth = sAuth;
+    },
+    SET_PERMISSION_TO_EDIT_AVAIL(state, data) {
+        state.permissionToEditAvail = data;
     }
 };
 
@@ -99,8 +103,10 @@ const getters = {
     },
     getAvailAcceptAuth(state){
         return state.availAccAuth;
+    },
+    getPermissionToEditAvail(state) {
+        return state.permissionToEditAvail;
     }
-
 
 
 };

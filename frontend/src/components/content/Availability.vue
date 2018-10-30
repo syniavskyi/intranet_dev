@@ -156,7 +156,8 @@ export default {
             userProjects: 'userProjectsList',
             userAvail: 'getUserAvail',
             authType: 'getAvailabilityAuth',
-            authAcc: 'getAvailAcceptAuth'
+            authAcc: 'getAvailAcceptAuth',
+            permissionToEditAvail: "getPermissionToEditAvail"
         }),
         filteredUsers() {
             let aFilteredUsers = this.usersList,
@@ -228,7 +229,7 @@ export default {
         //     userAlias: oStore.getters.getLoginAlias
         // }
         // this.authType = utils.checkRole(data);
-        
+     
     },
     watch: {
         selectedType(value) {
@@ -237,7 +238,15 @@ export default {
         selectedUser(value){
             this.newLeave.UserId = value.UserAlias
             this.newProject.UserAlias = value.UserAlias
+
+        if(this.authType === '*') {
+          this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
+        } else if(this.authType === 'TEAM' && this.filteredUsers.find(o => o.UserAlias === this.selectedUser.UserAlias)) {
+          this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
+        } else {
+         this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', true);
         }
+         }
     },
     methods: {
         ...mapActions({

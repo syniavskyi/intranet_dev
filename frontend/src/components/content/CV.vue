@@ -1,6 +1,6 @@
 <template>
 <div class="content">
-   <button @click="generate" v-if="showGenerateBtn" class="cv-modal-btn-bclear center-btn">Zatwierdź i generuj</button>
+   <button @click="generate" class="cv-modal-btn-bclear center-btn">{{ $t("button.confirmGenerate") }}</button>
 <div id="content">
     <div class="Section1" >
     <!-- header with name and position-->
@@ -173,9 +173,7 @@ import { saveAs } from "file-saver";
 import i18n from "../../lang/lang";
 export default {
   data() {
-    return {
-      showGenerateBtn: true
-    };
+    return {};
   },
   beforeRouteLeave(to, from, next) {
     if(to.name === "Profile"){
@@ -233,7 +231,6 @@ export default {
     // },
     generateDocx() {
       let userData = this.userInfo;
-      this.showGenerateBtn = false;
       if (this.cvElements.photo) {this.convertImagesToBase64();}
       const preHtml = "<html xmlns:v='urn:schemas-microsoft-com:vml' xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns:m='http://schemas.microsoft.com/office/2004/12/omml' xmlns='http://www.w3.org/TR/REC-html40'> <head><meta http-equiv=Content-Type content='text/html; charset=utf-8'></head> <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml><![endif]--><body>",
         postHtml = "</body></html>";
