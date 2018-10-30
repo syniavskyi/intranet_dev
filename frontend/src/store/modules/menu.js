@@ -12,6 +12,9 @@ const mutations = {
     },
     SET_MENU_OVERLAY (state, show) {
         state.showMenuOverlay = show
+    },
+    CLEAR_AUTH_DATA() {
+        localStorage.clear();
     }
 };
 

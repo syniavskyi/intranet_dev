@@ -15,7 +15,7 @@
 
           <div class="documents-tiles-row">
             <!-- <input id="documents-row-1" class="documents-tiles-row-header-input" type="checkbox"> -->
-            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-1">Dokumenty</div>
+            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-1">{{ $t("header.documents") }}</div>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3" v-for="doc in docFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
@@ -36,7 +36,7 @@
           </div>
           <div class="documents-tiles-row">
             <!-- <input id="documents-row-2" class="documents-tiles-row-header-input" type="checkbox"> -->
-            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-2">Namiary na systemy</div>
+            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-2">{{ $t("header.systemData")}}</div>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3" v-for="doc in systemFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
@@ -57,7 +57,7 @@
           </div>
           <div class="documents-tiles-row">
             <!-- <input id="documents-row-3" class="documents-tiles-row-header-input" type="checkbox"> -->
-            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-3">Biuro</div>
+            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-3">{{ $t("header.office") }}</div>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3" v-for="doc in officeFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
@@ -78,7 +78,7 @@
           </div>
           <div class="documents-tiles-row">
             <!-- <input id="documents-row-4" class="documents-tiles-row-header-input" type="checkbox"> -->
-            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-4">Informacje</div>
+            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-4">{{ $t("header.information") }}</div>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3" v-for="doc in infoFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
@@ -99,7 +99,7 @@
           </div>
           <div class="documents-tiles-row">
             <input id="documents-row-5" class="documents-tiles-row-header-input" type="checkbox">
-            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-5">Instrukcje</div>
+            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-5">{{ $t("header.instructions") }}</div>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3" v-for="doc in instrFiles" :key="doc.FileId">
                 <div class="documents-tile-header">

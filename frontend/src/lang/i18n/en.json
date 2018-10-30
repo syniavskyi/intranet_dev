@@ -34,7 +34,9 @@
         "generatePDF": "Generate PDF",
         "yes": "Yes",
         "confirm": "Confirm",
-        "reject": "Reject"
+        "reject": "Reject",
+        "newMessage": "New message",
+        "stopSlider": "Stop slider"
     },
     "label": {
         "nationality": "Nationality",
@@ -160,7 +162,8 @@
         "newMessage": "New message",
         "addNewMessage": "Add new message",
         "emptyUsers": "List of users is empty or you do not have permission to see them",
-        "messageValidTo": "Message valid to"
+        "messageValidTo": "Message valid to",
+        "shortTime": "time:"
     },
     "header": {
         "login": "Log in to Intranet",
@@ -193,14 +196,20 @@
         "advance": "Advance",
         "education": "Education",
         "skills": "Skills",
-        "registration": "Rejestracja",
+        "registration": "Registration",
         "changePassword": "Change password",
         "generateCV": "Generate CV",
         "employeesList": "Employees List",
         "communicators": "Communicators",
         "delegationConfirm": "Delegation confirm",
         "userRegisteredTitle": "Account created",
-        "userNotRegisteredTitle": "Account not created"
+        "userNotRegisteredTitle": "Account not created",
+        "messages": "Messages",
+        "homepage": "Home",
+        "systemData": "System data",
+        "office": "Office",
+        "information": "Information",
+        "instructions": "Instructions"
     },
     "message": {
         "loginError": "Password or username are invalid.",

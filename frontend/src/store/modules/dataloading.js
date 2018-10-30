@@ -112,6 +112,35 @@ const mutations = {
 };
 
 const actions = {
+  getData({getters, dispatch, commit}, passedData){
+    let passedUserId, passedLang, bChangePage,
+        aRoles = getters.getRoleList,
+        sFirsLang;
+    // check and assign passed data
+    if(passedData){
+      passedUserId = passedData.user;
+      passedLang = passedData.lang;
+      bChangePage = passedData.changePage
+    }
+    // set user data - passed or saved in storage (for refresh reason)
+    let userData = {
+      user: passedUserId || localStorage.getItem("id"),
+      lang: passedLang || localStorage.getItem("lang"),
+      cvLang: getters.getSelectedCvLang || "PL",
+      changePage: bChangePage || false
+    };
+    // check if domains are read - if it has been read, get language of get domains by roles
+    if(aRoles.length > 0){
+      sFirsLang = aRoles[0].Language.toUpperCase();
+    }
+    // if read language equals user language - do not read domains again
+    if(sFirsLang === userData.lang){
+      commit('SET_TO_READ_EXCLUDED', getters.getPromisesToRead);
+    }
+    // finally read data
+    dispatch("loadData", userData);  
+  },
+
   loadData({
     state,
     dispatch,
@@ -120,40 +149,14 @@ const actions = {
   }, userData) {
    let aPromises; // prepare promises to read data
 
-   dispatch("setPromises", userData); 
+   dispatch("setPromises", userData); // set promises by passed array
    aPromises = getters.getPromiseList;
-   commit("SET_DISPLAY_LOADER", true);
-    axios.all(aPromises).then(res => {
-      dispatch("setDataInResponse", { res, userData }); 
+   commit("SET_DISPLAY_LOADER", true); // set loader
+    axios.all(aPromises).then(res => { // send promise
+      dispatch("setDataInResponse", { res, userData }); // set data from responses
     }).catch(error => {
-      console.log(error);
+      console.log(error); // catch error 
     });
-  },
-
-  getData({getters, dispatch, commit}, passedData){
-    let passedUserId, passedLang, bChangePage,
-        aRoles = getters.getRoleList,
-        sFirsLang;
-    if(passedData){
-      passedUserId = passedData.user;
-      passedLang = passedData.lang;
-      bChangePage = passedData.changePage
-    }
-    let userData = {
-      user: passedUserId || localStorage.getItem("id"),
-      lang: passedLang || localStorage.getItem("lang"),
-      cvLang: getters.getSelectedCvLang || "PL",
-      changePage: bChangePage || false
-    };
-    if(aRoles.length > 0){
-      sFirsLang = aRoles[0].Language.toUpperCase();
-    }
-    if(sFirsLang === userData.lang){
-      commit('SET_TO_READ_EXCLUDED', getters.getPromisesToRead);
-    }
-    dispatch("loadData", userData);
-
-    
   },
 
   getNewToken(){

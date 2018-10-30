@@ -34,7 +34,9 @@
         "generatePDF": "Generuj PDF",
         "yes": "Tak",
         "confirm": "Zatwierdź",
-        "reject": "Odrzuć"
+        "reject": "Odrzuć",
+        "newMessage": "Nowa wiadomość",
+        "stopSlider": "Zatrzymaj slider"
      },
     "label": {
         "nationality": "Narodowość",
@@ -159,7 +161,8 @@
         "newMessage": "Nowa wiadomość",
         "addNewMessage": "Dodaj nową wiadomość",
         "emptyUsers": "Lista użytkowników jest pusta jak kapusta albo nie masz pozwolenia do białego",
-        "messageValidTo": "Wiadomość aktualna do"
+        "messageValidTo": "Wiadomość aktualna do",
+        "shortTime": "godz."
     },
     "header": {
         "login": "Zaloguj się do Intranetu",
@@ -199,7 +202,13 @@
         "communicators": "Komunikatory",
         "delegationConfirm": "Zatwierdzenie delegacji",
         "userRegisteredTitle": "Konto zostało utworzone",
-        "userNotRegisteredTitle": "Konto nie zostało utworzone"
+        "userNotRegisteredTitle": "Konto nie zostało utworzone",
+        "messages": "Wiadomości",
+        "homepage": "Strona główna",
+        "systemData": "Dane systemu",
+        "office": "Biuro",
+        "information": "Informacje",
+        "instructions": "Instrukcje"
     },
     "message": {
         "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",
