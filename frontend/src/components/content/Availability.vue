@@ -155,7 +155,8 @@ export default {
             displayOverlay: 'getShowMenuOverlay',
             newProject: 'getNewProjectForUser',
             userProjects: 'userProjectsList',
-            userAvail: 'getUserAvail'
+            userAvail: 'getUserAvail',
+            permissionToEditAvail: "getPermissionToEditAvail"
         }),
         filteredUsers() {
             let aFilteredUsers = this.usersList,
@@ -222,7 +223,7 @@ export default {
       oStore.dispatch('getData', null);
         const data = {
             roles: oStore.getters.getUserAuth,
-            key: "ZDYSP_CREA",
+            key: "ZDYSP_ACC",
             dep: this.userData.DepartmentName,
             userAlias: oStore.getters.getLoginAlias
         }
@@ -236,7 +237,15 @@ export default {
         selectedUser(value){
             this.newLeave.UserId = value.UserAlias
             this.newProject.UserAlias = value.UserAlias
+
+        if(this.authType === '*') {
+          this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
+        } else if(this.authType === 'TEAM' && this.filteredUsers.find(o => o.UserAlias === this.selectedUser.UserAlias)) {
+          this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
+        } else {
+         this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', true);
         }
+         }
     },
     methods: {
         ...mapActions({

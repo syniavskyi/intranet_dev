@@ -8,7 +8,8 @@ const state = {
     saveDataSuccess: false,
     removeSuccess: false,
     removeError: false,
-    dataToRead: ["Domains", "Industries", "UserData", "UserList", "Projects", "Contractors"]
+    dataToRead: ["Domains", "Industries", "UserData", "UserList", "Projects", "Contractors"],
+    permissionToEditAvail: false
 };
 
 const mutations = {
@@ -29,7 +30,10 @@ const mutations = {
     },
     SET_REMOVE_SUCCESS(state, isSuccess) {
         state.removeSuccess = isSuccess
-    }
+    },
+    SET_PERMISSION_TO_EDIT_AVAIL(state, data) {
+        state.permissionToEditAvail = data;
+      },
 };
 
 const actions = {
@@ -85,8 +89,10 @@ const getters = {
     },
     getAvailabilityToRead(state){
         return state.dataToRead;
+    },
+    getPermissionToEditAvail(state) {
+        return state.permissionToEditAvail;
     }
-
 
 
 };
