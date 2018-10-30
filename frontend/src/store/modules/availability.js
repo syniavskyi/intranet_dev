@@ -8,7 +8,7 @@ const state = {
     saveDataSuccess: false,
     removeSuccess: false,
     removeError: false,
-    dataToRead: ["Domains", "UserData", "UserList", "Projects", "Contractors"]
+    dataToRead: ["Domains", "Industries", "UserData", "UserList", "Projects", "Contractors"]
 };
 
 const mutations = {

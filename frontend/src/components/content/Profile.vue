@@ -419,10 +419,14 @@ export default {
           new Date(),
           true
         ),
-        oFormatedDate = utils.setWorkExperience(
-          oCalculateDifference,
-          this.selectedCvLang
-        );
+        oFormatedDate;
+        // if there is some differences - show work experience
+        if(oCalculateDifference){
+          oFormatedDate = utils.setWorkExperience(
+            oCalculateDifference,
+            this.selectedCvLang
+          );
+        }
 
       return oFormatedDate.year + oFormatedDate.month + oFormatedDate.day;
     },

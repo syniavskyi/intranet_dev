@@ -66,7 +66,7 @@
                     <div class="high-prio-event" v-if="attr.customData.Priority=='H'"> </div>
                     <div class="event-attr">
                       <div class="event-time">
-                        <div> godz.{{ formatTime(attr.customData.EventTime)}} </div>
+                        <div> {{ $t("label.shortTime")}} {{ formatTime(attr.customData.EventTime)}} </div>
                         <div> {{ formatDate(attr.customData) }} </div>
                       </div>
                       <div class="event-attr-header">  {{ attr.customData.EventName }} </div>
