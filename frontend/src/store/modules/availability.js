@@ -8,7 +8,9 @@ const state = {
     saveDataSuccess: false,
     removeSuccess: false,
     removeError: false,
-    dataToRead: ["Domains", "Industries", "UserData", "UserList", "Projects", "Contractors"]
+    dataToRead: ["Domains", "Industries", "UserData", "UserList", "Projects", "Contractors"],
+    avaliablityAuth: "",
+    availAccAuth: ""
 };
 
 const mutations = {
@@ -29,6 +31,12 @@ const mutations = {
     },
     SET_REMOVE_SUCCESS(state, isSuccess) {
         state.removeSuccess = isSuccess
+    },
+    SET_AVAILABILITY_AUTH(state, sAuth){
+        state.avaliablityAuth = sAuth;
+    },
+    SET_AVAIL_ACCEPT_AUTH(state, sAuth){
+        state.availAccAuth = sAuth;
     }
 };
 
@@ -85,6 +93,12 @@ const getters = {
     },
     getAvailabilityToRead(state){
         return state.dataToRead;
+    },
+    getAvailabilityAuth(state){
+        return state.avaliablityAuth;
+    },
+    getAvailAcceptAuth(state){
+        return state.availAccAuth;
     }
 
 

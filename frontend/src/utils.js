@@ -224,23 +224,59 @@ export const formatTimeForBackend = function (data) {
   return "PT" + data.slice(0, 2) + "H" + data.slice(3, 5) + "M00S";
 }
 
+// check user role
 export const checkRole = function(data) {
-  const roles = data.roles;
-  let obj;
-
-          obj = roles.find(o => o.Key == data.key && o.Value === "*" && o.UserAlias === data.userAlias);
-              
-          if(obj) {
-           return '*';
-          } else {
-              obj = roles.find(o => o.Key == data.key && o.Value === "TEAM" && data.dep !== "" && o.UserAlias === data.userAlias);
-                  if(obj) {
-                    return 'TEAM';
-                  } else {
-                    return 'OWN';
-                  }
+  // const roles = data.roles; 
+  const aRoles = data; //get all roles
+  let aMaxRoles = { "ZMENU": [] },
+      oRole, oRoleByKey,
+      sValueWas, sValue;
+  for(let i = 0; i < aRoles.length; i++){
+    oRole = aRoles[i]; //current role in loop
+    oRoleByKey = aMaxRoles[oRole.Key]
+    if(oRole.Key === "ZMENU"){ // if authorization object is menu, just push it
+      aMaxRoles["ZMENU"].push(oRole.Value);
+    } else if(!oRoleByKey){ // if there is no key, push it
+      aMaxRoles[oRole.Key] = oRole.Value;
+    } else if(oRoleByKey){ // if author. object already in, get more significant
+      sValueWas = oRoleByKey.Value;
+      sValue = oRole.Value;
+      switch(oRole.Value){
+        case "*":
+          aMaxRoles[oRole.Key] = sValue;
+          break;
+        case "TEAM":
+          if(sValueWas !== "*"){
+            aMaxRoles[oRole.Key] = sValue; 
           }
-        }
+          break;
+        case "OWN":
+          if(sValueWas !== "*" || sValueWas !== "TEAM" ){
+            aMaxRoles[oRole.Key] = sValue; 
+          }
+          break;
+      }
+    } 
+  }
+  return aMaxRoles;
+
+
+  // let obj;
+  // obj = roles.find(o => o.Key == data.key && o.Value === "*" && o.UserAlias === data.userAlias);
+              
+  // if(obj) {
+  //     return '*';
+  //   } else {
+  //     obj = roles.find(o => o.Key == data.key && o.Value === "TEAM" && data.dep !== "" && o.UserAlias === data.userAlias);
+  //     if(obj) {
+  //       return 'TEAM';
+  //     } else {
+  //       return 'OWN';
+  //     }
+  //   }
+  }
+
+
  export const dateToValid = function(beforeData, newData) {
    let a = new Date(beforeData.getFullYear(), beforeData.getMonth(), beforeData.getDay());
    let b = new Date(newData.getFullYear(), newData.getMonth(), newData.getDay());

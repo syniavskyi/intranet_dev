@@ -71,9 +71,6 @@ const mutations = {
   SET_NEW_USER_FILES_LIST(state, data) {
     state.newUserFiles = data;
   },
-  SET_USER_AUTH(state, data) {
-    state.userAuth = data;
-  },
   SET_AVAIL_STATUS(state, data) {
     state.availStatus = data
   },
@@ -654,11 +651,14 @@ const actions = {
 
       dispatch('formatUserData', response.data.d); // format dates for date pickers and "is current" fields
       dispatch('getUserFilesData') // get data about all user files (cv, photos, documents etc.)
-      dispatch('loadUserPhoto', userData) //load user's photo for menu and profile
+      // dispatch('loadUserPhoto', userData) //load user's photo for menu and profile TO BE READ
       let oData = getters.getUserInfo;
-
-      commit('SET_USER_AUTH', oData.UserAuth.results) //set user authorization data
-
+      let aAuth = utils.checkRole(oData.UserAuth.results);
+      //set authorization for all objects - to optimize 
+      commit('SET_DELEGATION_AUTH', aAuth.ZDELEG);
+      commit('SET_CALENDAR_AUTH', aAuth.ZEVENT);
+      commit('SET_AVAILABILITY_AUTH', aAuth.ZDYSP_CREA);
+      commit('SET_AVAIL_ACCEPT_AUTH', aAuth.ZDYSP_ACC);
       commit('SET_USER_EDUCATION', oData.UserEducations.results); //set user education data for profile and cv
       commit('SET_USER_EXPERIENCE', oData.UserExperiences.results); //set user experience data for profile and cv
 

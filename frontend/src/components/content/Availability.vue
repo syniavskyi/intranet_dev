@@ -124,8 +124,7 @@ export default {
             selectedUser: null,
             showContent: false,
             selectedType: null,
-            selectedStatus: null,
-            authType: null
+            selectedStatus: null
         }
     },
     components: {
@@ -155,7 +154,9 @@ export default {
             displayOverlay: 'getShowMenuOverlay',
             newProject: 'getNewProjectForUser',
             userProjects: 'userProjectsList',
-            userAvail: 'getUserAvail'
+            userAvail: 'getUserAvail',
+            authType: 'getAvailabilityAuth',
+            authAcc: 'getAvailAcceptAuth'
         }),
         filteredUsers() {
             let aFilteredUsers = this.usersList,
@@ -165,10 +166,10 @@ export default {
                 selectedDep = this.selectedDepartment,
                 selectedBranch = this.selectedBranch
                 idBranch = 'WRO'; //TEMPORARY
-              aFilteredUsers = aFilteredUsers.filter(function(oData){ 
+                aFilteredUsers = aFilteredUsers.filter(function(oData){ 
                   return oData.DepartmentName === sTeam && idTeam === selectedDep && idBranch === selectedBranch;
-                  });
-              return aFilteredUsers
+                });
+              return aFilteredUsers;
         },
         leavesAttr() {
             return this.userAvail.map(t => ({
@@ -220,13 +221,13 @@ export default {
       let oStore = this.$store;
       oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getAvailabilityToRead);
       oStore.dispatch('getData', null);
-        const data = {
-            roles: oStore.getters.getUserAuth,
-            key: "ZDYSP_CREA",
-            dep: this.userData.DepartmentName,
-            userAlias: oStore.getters.getLoginAlias
-        }
-        this.authType = utils.checkRole(data);
+        // const data = {
+        //     roles: oStore.getters.getUserAuth,
+        //     key: "ZDYSP_CREA",
+        //     dep: this.userData.DepartmentName,
+        //     userAlias: oStore.getters.getLoginAlias
+        // }
+        // this.authType = utils.checkRole(data);
         
     },
     watch: {

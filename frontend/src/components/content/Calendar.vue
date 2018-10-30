@@ -194,7 +194,6 @@ export default {
       isSelected: false,
       selectedUser: false,
       selectedGroup: false,
-      authType: "",
       checkedNames: "",
       disabledButton: true,
       displayButton: true
@@ -220,13 +219,13 @@ export default {
     let oStore = this.$store;
       oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getEventsToRead);
       oStore.dispatch('getData', null);
-    const data = {
-      roles: this.$store.getters.getUserAuth,
-      key: "ZEVENT",
-      dep: this.userData.DepartmentName,
-      userAlias: this.$store.getters.getLoginAlias
-    };
-    this.authType = utils.checkRole(data);
+    // const data = {
+    //   roles: this.$store.getters.getUserAuth,
+    //   key: "ZEVENT",
+    //   dep: this.userData.DepartmentName,
+    //   userAlias: this.$store.getters.getLoginAlias
+    // };
+    // this.authType = utils.checkRole(data);
   },
   computed: {
     ...mapGetters({
@@ -241,7 +240,8 @@ export default {
       displayMenu: "getShowMenu",
       displayOverlay: "getShowMenuOverlay",
       filters: "getClearedFilters",
-      userData: "getUserInfo"
+      userData: "getUserInfo",
+      authType: "getCalendarAuth"
     }),
     filteredEvents() {
       let aEvents = this.events,
