@@ -63,7 +63,7 @@
                           <label class="prof-ainput-lbl">{{ $t("label.apartmentNumber") }}</label>
                         </div>
                         <div class="prof-input-uno">
-                          <vue-google-autocomplete required types="geocode" id="autocomplete" :country="['pl']" v-on:placechanged="setUserCity" placeholder="" @input="userData.City = value" :value="selectedCity"  @change="checkFormFields"></vue-google-autocomplete>
+                          <vue-google-autocomplete required types="geocode" id="autocomplete" :country="['pl']" v-on:placechanged="setUserCity" placeholder="" @input="userData.City = value" :value="userData.City"  @change="checkFormFields"></vue-google-autocomplete>
                           <span class="prof-div-bar"></span>
                           <label class="prof-ainput-lbl">{{ $t("label.city") }}</label>
                         </div>
@@ -193,28 +193,21 @@
                     </div>
                     <div class="profile-tile-inputs">
                       <div class="prof-input-s">
-                      <!-- <select v-model="userData.state" @change="checkFormFields" class="selectProfile" :class="editMode ? 'selectEdit' : 'selectDisabled'" :disabled="!editMode"> -->
-                      <select required v-if="editMode" v-model="userData.WorkTime" @change="checkFormFields" class="selectProfile selectEdit" >
-                        <option value="Full">{{ $t("label.fulltime") }}</option>
-                        <option value="1/2">1/2</option>
-                        <option value="1/3">1/3</option>
-                        <option value="2/3">2/3</option>
-                        <option value="1/4">1/4</option>
-                        <option value="3/4">3/4</option>
-                        <option value="1/5">1/5</option>
-                        <option value="2/5">2/5</option>
-                        <option value="3/5">3/5</option>
-                        <option value="4/5">4/5</option>
+                      <select required v-if="editMode" v-model="userData.WorkTime" @change="checkFormFields" class="selectProfile selectEdit">
+                        <option v-bind:key="key" v-for="(value,key) in workTime" :value="key">{{value}}</option>
                       </select>
+                      <!-- <select v-model="userData.state" @change="checkFormFields" class="selectProfile" :class="editMode ? 'selectEdit' : 'selectDisabled'" :disabled="!editMode"> -->
                       <!-- <p v-if="!editMode" class="inputDisabled">{{ userData.state }}</p> -->
-                      <select disabled v-if="!editMode" v-model="userData.WorkTime" @change="checkFormFields" class="selectProfile selectDisabled"></select>
+                      <select disabled v-if="!editMode" v-model="userData.WorkTime" @change="checkFormFields" class="selectProfile selectDisabled">
+                        <option v-bind:key="key" v-for="(value,key) in workTime" :value="key">{{value}}</option>
+                      </select>
                       <label class="label-profile">{{ $t("label.worktime") }}</label>
                     </div>
                     <div class="prof-input-s">
                       <!-- <masked-input mask="11.11.1111" @input="dateValidation" class="inputProfile" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.employmentDate" /> -->
                       <!-- <masked-input required v-if="editMode" mask="11.11.1111" @input="dateValidation" class="inputProfile inputEdit" v-model="userData.EmploymentDate" /> -->
                       <input :value="formatDate" disabled class="inputProfile inputDisabled" v-if="!editMode">
-                      <v-date-picker v-if="editMode" class="delegations-input-date inputDisabled" v-model="userData.EmploymentDate" :max-date="new Date()">
+                      <v-date-picker  @input="checkFormFields" v-if="editMode" class="delegations-input-date inputDisabled" v-model="userData.EmploymentDate" :max-date="new Date()">
                         <input value="userData.employmentDate"/>
                       </v-date-picker>
                       <!-- <input required v-if="editMode" @input="dateValidation" class="inputProfile inputEdit" v-model="userData.EmploymentDate"> -->
@@ -297,10 +290,21 @@ export default {
       showLeavePageDialog: false,
       routeToGo: null,
       newPosition: null,
-      selectedCity: null,
       selectedCvLang: i18n.locale,
       authType: "",
-      selectedUser: this.$store.getters.getLoginAlias || localStorage.getItem("id")
+      selectedUser: this.$store.getters.getLoginAlias || localStorage.getItem("id"),
+      workTime: {
+        "Full":  i18n.t("label.fulltime"),
+        "1/2": "1/2",
+        "1/3": "1/3",
+        "2/3": "2/3",
+        "1/4": "1/4",
+        "3/4": "3/4",
+        "1/5": "1/5",
+        "2/5": "2/5",
+        "3/5": "3/5",
+        "4/5": "4/5"
+      }
     };
   },
   validations: {

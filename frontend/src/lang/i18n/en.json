@@ -36,7 +36,8 @@
         "confirm": "Confirm",
         "reject": "Reject",
         "newMessage": "New message",
-        "stopSlider": "Stop slider"
+        "stopSlider": "Stop slider",
+        "startSlider": "Start slider"
     },
     "label": {
         "nationality": "Nationality",
@@ -240,7 +241,9 @@
         "delegationConfirmQuestion": "Do you want to confirm delegation? Make sure that entered data are valid",
         "failedToSaveDelegation": "Failed to save delegation",
         "userRegistered": "Account created for {fullname}. Message with login and password was sent to {email}.",
-        "userNotregistered": "Account creation failed for {fullname}"
+        "userNotregistered": "Account creation failed for {fullname}",
+        "stoppedSlider": "Slider was stopped",
+        "startedSlider": "Slider was started"
     },
     "select": {
         "language": {
