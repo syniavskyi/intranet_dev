@@ -291,7 +291,7 @@ export default {
       routeToGo: null,
       newPosition: null,
       selectedCvLang: i18n.locale,
-      authType: "",
+      authType: this.$store.getters.getUserAuth.ZPROF_ATCV,
       selectedUser: this.$store.getters.getLoginAlias || localStorage.getItem("id"),
       workTime: this.$store.getters.getWorkTime
     };
@@ -304,7 +304,8 @@ export default {
       }
     }
   },
-  // mounted() {
+  mounted() {
+    
   //   const sUserId = localStorage.getItem("id"),
   //               sLanguage = 'PL',
   //               sFileType = "USER-PHOTO",
@@ -320,7 +321,7 @@ export default {
   //               "')/$value";
 
   //         image.src = url
-  // },
+  },
 
 
   // set login language
@@ -347,12 +348,13 @@ export default {
       dep: this.userData.DepartmentName,
       userAlias: sUserAlias
     };
-    this.authType = utils.checkRole(data);
+    
     if(oStore.getters.getCookie){
       if(oStore.getters.getGoFromCv && oStore.getters.getRoleList.length > 0){ // if go from CV - do not read data
         oStore.commit("SET_GO_FROM_CV", false);
       } else {   
         oStore.dispatch('getData', null);
+        // this.authType = oStore.getters.getUserAuth;// utils.checkRole(data);
       }
     }
   },
@@ -420,7 +422,7 @@ export default {
     },
     filteredTeamUsers() {
       let aFilteredUsers = this.usersList,
-        sTeam = this.usersList.find(o => o.UserAlias === localStorage.getItem('id')).DepartmentId;
+      sTeam = this.usersList.find(o => o.UserAlias === localStorage.getItem('id')).DepartmentId;
 
       aFilteredUsers = aFilteredUsers.filter(function(oData) {
         return oData.DepartmentId === sTeam;
@@ -430,9 +432,10 @@ export default {
   },
   watch: {
       selectedUser(value) {
-        if(this.authType === '*') {
+        let profileActivityAuth = this.$store.getters.getUserAuth.ZPROF_ATCV;
+        if(profileActivityAuth === '*') {
           this.$store.commit('SET_PERMISSION_TO_EDIT', false);
-        } else if(this.authType === 'TEAM' && this.filteredTeamUsers.find(o => o.UserAlias === this.selectedUser)) {
+        } else if(profileActivityAuth === 'TEAM' && this.filteredTeamUsers.find(o => o.UserAlias === this.selectedUser)) {
           this.$store.commit('SET_PERMISSION_TO_EDIT', false);
         } else if(this.selectedUser === this.loginAlias) {
          this.$store.commit('SET_PERMISSION_TO_EDIT', false);

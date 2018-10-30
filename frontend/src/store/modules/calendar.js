@@ -29,7 +29,8 @@ const state = {
   aPriority: [],
   aEventType: [],
   editedData: {},
-  dataToRead: ["Domains", "Industries", "UserData", "UserList", "Events"]
+  dataToRead: ["Domains", "Industries", "UserData", "UserList", "Events"],
+  calendarAuth: ""
 };
 
 const mutations = {
@@ -56,6 +57,9 @@ const mutations = {
   },
   SET_CLEARED_FILTERS(state, data) {
     state.clearedFilters = data;
+  },
+  SET_CALENDAR_AUTH(state, sAuth){
+    state.calendarAuth = sAuth;
   }
 }
 
@@ -261,6 +265,9 @@ const getters = {
   },
   getEventsToRead(state){
     return state.dataToRead;
+  },
+  getCalendarAuth(state){
+    return state.calendarAuth;
   }
 };
 

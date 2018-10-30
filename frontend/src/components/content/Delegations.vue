@@ -159,8 +159,7 @@ export default {
     data() {
         return {
             delegationUsername: null,
-            generatingPdfMode: false,
-            authType: ''
+            generatingPdfMode: false
         }
     },
     mounted() {
@@ -173,6 +172,7 @@ export default {
       city = place.formatted_address
     this.newDelegation.destination = city
     });
+
     },
     components: {
         'app-menu': Menu,
@@ -183,16 +183,18 @@ export default {
         'delegation-table': DelegationTable,
         'confirm-dialog': Dialog
     },
+    
     created(){
         let oStore = this.$store;
-        const data = {
-            roles: oStore.getters.getUserAuth,
-            key: "ZDELEG",
-            dep: this.userData.DepartmentName,
-            userAlias: oStore.getters.getLoginAlias
-        }
-        this.authType = utils.checkRole(data);
+        // const data = {
+        //     roles: oStore.getters.getUserAuth,
+        //     key: "ZDELEG",
+        //     dep: this.userData.DepartmentName,
+        //     userAlias: oStore.getters.getLoginAlias
+        // }
+        // this.authType = utils.checkRole(data);
         oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getDelegationToRead);
+
         oStore.dispatch('getData', null);
     },
     computed: {
@@ -211,7 +213,8 @@ export default {
             delegationNumber: 'getNewDelegationNumber',
             showDialog: 'getShowConfirmDelegation',
             displayMenu: 'getShowMenu',
-            displayOverlay: 'getShowMenuOverlay'
+            displayOverlay: 'getShowMenuOverlay',
+            authType: "getDelegationAuth"
         }),
         disableSaveBtn() {
             return (this.newDelegationValidated && this.delegationTableValidated && this.accCostValidated) ? false : true
@@ -224,6 +227,7 @@ export default {
               return aFilteredUsers
         }
     },
+
     methods: {
         ...mapActions({
             checkNewDelegation: 'checkNewDelegation',

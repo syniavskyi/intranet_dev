@@ -38,7 +38,7 @@ const state = {
   },
   newDelegation: {
     number: null,
-    userId: null,
+    userId: localStorage.getItem("id"),
     createDate: null,
     destination: null,
     purpose: null,
@@ -54,7 +54,8 @@ const state = {
   NewDelegationNumber: null,
   showConfirmDelegation: false,
   createDelegationSuccess: null,
-  dataToRead: ["Domains", "UserData"]
+  dataToRead: ["Domains", "Industries", "UserList", "UserData"],
+  delegationAuth: ""
 };
 
 const mutations = {
@@ -78,6 +79,9 @@ const mutations = {
   },
   SET_CREATE_DELEG_SUCCESS(state, isSuccess) {
     state.createDelegationSuccess = isSuccess
+  },
+  SET_DELEGATION_AUTH(state, sAuth){
+    state.delegationAuth = sAuth;
   }
 };
 
@@ -436,6 +440,9 @@ const getters = {
   },
   getDelegationToRead(state){
     return state.dataToRead;
+  },
+  getDelegationAuth(state){
+    return state.delegationAuth;
   }
 };
 
