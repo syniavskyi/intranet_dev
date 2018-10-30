@@ -293,18 +293,7 @@ export default {
       selectedCvLang: i18n.locale,
       authType: "",
       selectedUser: this.$store.getters.getLoginAlias || localStorage.getItem("id"),
-      workTime: {
-        "Full":  i18n.t("label.fulltime"),
-        "1/2": "1/2",
-        "1/3": "1/3",
-        "2/3": "2/3",
-        "1/4": "1/4",
-        "3/4": "3/4",
-        "1/5": "1/5",
-        "2/5": "2/5",
-        "3/5": "3/5",
-        "4/5": "4/5"
-      }
+      workTime: this.$store.getters.getWorkTime
     };
   },
   validations: {
@@ -362,12 +351,7 @@ export default {
     if(oStore.getters.getCookie){
       if(oStore.getters.getGoFromCv && oStore.getters.getRoleList.length > 0){ // if go from CV - do not read data
         oStore.commit("SET_GO_FROM_CV", false);
-      } else { //else get actuall data
-        // let userData = {
-        //   user: sUserAlias,
-        //   lang: sLang,
-        //   cvLang: this.selectedCvLang.toUpperCase()
-        // }     
+      } else {   
         oStore.dispatch('getData', null);
       }
     }
@@ -579,8 +563,10 @@ export default {
         cvLang: cvLang,
         changePage: false
       };
-      // this.$store.dispatch("loadData", userData);
+      this.$store.commit("SET_PROMISE_TO_READ", this.$store.getters.getProfileToRead);
       this.$store.dispatch('getData', userData);
+      this.$store.commit("SET_WORK_TIME");
+      
     },
     onHover() {
       let mainEdits = document.querySelectorAll(".profile-main-edit");

@@ -27,7 +27,19 @@ const state = {
   ],
   showChangePasswordDialog: false,
   permissionToEdit: false,
-  dataToRead: ["NewToken", "Domains", "Industries", "UserData", "UserList", "Contractors", "Projects", "Languages", "SchoolDesc", "FieldOfStudy"]
+  dataToRead: ["NewToken", "Domains", "Industries", "UserData", "UserList", "Contractors", "Projects", "Languages", "SchoolDesc", "FieldOfStudy", "UserPhoto"],
+  workTime: {
+    "Full": i18n.t("label.fulltime"),
+    "1/2": "1/2",
+    "1/3": "1/3",
+    "2/3": "2/3",
+    "1/4": "1/4",
+    "3/4": "3/4",
+    "1/5": "1/5",
+    "2/5": "2/5",
+    "3/5": "3/5",
+    "4/5": "4/5"
+  }
 };
 
 const mutations = {
@@ -45,6 +57,9 @@ const mutations = {
   },
   SET_PERMISSION_TO_EDIT(state, data) {
     state.permissionToEdit = data;
+  },
+  SET_WORK_TIME(state){
+    state.workTime["Full"] = i18n.t("label.fulltime");
   }
 };
 
@@ -88,22 +103,20 @@ const actions = {
     commit('SET_USER_INFO', userData);
   },
   submitPhoto({
-    commit
+    commit, getters
   }, data) {
     let slugHeader = data.file.name + ';' + data.type + ';' + data.language + ';' + data.userId + ';' + data.file.type;
 
     axios({
       method: 'POST',
-      url: '/AttachmentMedias',
-      auth: {
-        username: 'psy',
-        password: 'ides01'
-      },
+      url: 'AttachmentMedias',
       data: data.file,
       headers: {
         "Content-type": data.file.type,
         "X-Requested-With": "XMLHttpRequest",
-        "Slug": slugHeader
+        "Slug": slugHeader,
+        "Cookie": getters.getCookie,
+        "x-csrf-token": getters.getToken
       }
     }).then(res => {
       // console.log(res);
@@ -182,6 +195,9 @@ const getters = {
   },
   getPermissionToEdit(state) {
     return state.permissionToEdit;
+  },
+  getWorkTime(state){
+    return state.workTime;
   }
 };
 

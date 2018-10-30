@@ -136,7 +136,7 @@ const actions = {
     // if read language equals user language - do not read domains again
     if(sFirsLang === userData.lang){
       commit('SET_TO_READ_EXCLUDED', getters.getPromisesToRead);
-    }
+    } 
     // finally read data
     dispatch("loadData", userData);  
   },
@@ -325,14 +325,24 @@ const actions = {
     })
   },
 
+  getUserPhoto({}, userData){
+    return axios({
+      method: 'GET',
+      url: `AttachmentMedias(FileId='USER-PHOTO',Language='PL',UserAlias='UIO')/$value`,
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+        "Cookie": getters.getCookie
+      }
+    })
+  },
+
   loadUserPhoto({
     commit,
     getters
   }, userData) {
-    const sUserId = userData.user,
+    const sUserId = "UIO",// userData.user,
       sLanguage = 'PL',
-      sFileType = "USER-PHOTO",
-      urlQuery = getters.getUrlQuery
+      sFileType = "USER-PHOTO";
     const url =
       " http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" +
       sFileType +
@@ -340,7 +350,7 @@ const actions = {
       sLanguage +
       "',UserAlias='" +
       sUserId +
-      "')/$value" + urlQuery;
+      "')/$value";
 
     let image = new Image();
 
@@ -372,7 +382,6 @@ const actions = {
     commit,
     getters
   }) {
-    let urlQuery = getters.getUrlQuery
     return axios({
       method: 'GET',
       url: "Adverts",
@@ -436,6 +445,10 @@ const actions = {
         case "NewToken":
           const newTokenPromise = dispatch('getNewToken').then(res => ( { res: res, promise: "NewToken" } ));
           aPromises.push(newTokenPromise);
+          break;
+        case "UserPhoto":
+          const userPhotoPromise = dispatch("getUserPhoto", userData).then(res => ({res: res, promise: "UserPhoto"}));
+          aPromises.push(userPhotoPromise);
           break;
         case "Domains":
           let domainPromise;
@@ -511,6 +524,8 @@ const actions = {
         case "NewToken":
           let sToken = aResponse.request.getResponseHeader('x-csrf-token');
           commit('SET_TOKEN', sToken);
+          break;
+        case "UserPhoto":
           break;
         default:
           let bEndFunction = false;
@@ -639,7 +654,7 @@ const actions = {
 
       dispatch('formatUserData', response.data.d); // format dates for date pickers and "is current" fields
       dispatch('getUserFilesData') // get data about all user files (cv, photos, documents etc.)
-      // dispatch('loadUserPhoto', userData) //load user's photo for menu and profile //TEMP
+      dispatch('loadUserPhoto', userData) //load user's photo for menu and profile
       let oData = getters.getUserInfo;
 
       commit('SET_USER_AUTH', oData.UserAuth.results) //set user authorization data
