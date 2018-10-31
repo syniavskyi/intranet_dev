@@ -1,6 +1,7 @@
 import axios from 'axios'
 import router from '@/router/index.js'
 import odata from 'odata'
+import { stat } from 'fs';
 let utils = require('../../utils')
 
 const state = {
@@ -105,6 +106,9 @@ const mutations = {
     data = data.filter(oItem => oItem !== "Domains");
     data.push("NewToken");
     state.promiseListToRead = data;
+  },
+  SET_USER_AUTH(state, aAuth){
+    state.userAuth = aAuth;
   }
 };
 
@@ -655,6 +659,7 @@ const actions = {
       let oData = getters.getUserInfo;
       let aAuth = utils.checkRole(oData.UserAuth.results);
       //set authorization for all objects - to optimize 
+      commit('SET_USER_AUTH', aAuth);
       commit('SET_DELEGATION_AUTH', aAuth.ZDELEG);
       commit('SET_CALENDAR_AUTH', aAuth.ZEVENT);
       commit('SET_AVAILABILITY_AUTH', aAuth.ZDYSP_CREA);
@@ -772,6 +777,9 @@ const getters = {
   },
   getGoFromCv(state){
     return state.goFromCv;
+  },
+  getUserAuth(state){
+    return state.userAuth;
   }
 };
 

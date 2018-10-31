@@ -162,7 +162,7 @@
                     <div class="profile-tile-inputs">
                       <div class="prof-input-s">
                          <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.section"> -->
-                        <input disabled class="inputProfile inputDisabled" v-model="userData.SectionName">
+                        <input disabled class="inputProfile inputDisabled" v-model="userData.BranchName">
                         <label class="label-profile">{{ $t("label.branch") }}</label>
                       </div>
                       <div class="prof-input-s">
