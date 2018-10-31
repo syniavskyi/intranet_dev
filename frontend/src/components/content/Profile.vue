@@ -150,7 +150,7 @@
                 <div class="profile-tile-header">
                   <div class="profile-tile-header-row">
                     <h2 class="prof-tile-h2">{{ $t("header.employee") }}</h2>
-                    <button @click="showChangePassword" :disabled="selectedUser !== loginAlias" class="func-btn">
+                    <button @click="showChangePassword" :disabled="selectedUser !== userToChangePassword" class="func-btn">
                       <span class="prof-btn-txt">{{ $t("header.changePassword") }}</span>
                       <span class="prof-btn-icon">&#x1f513;</span>
                     </button>
@@ -292,8 +292,9 @@ export default {
       newPosition: null,
       selectedCvLang: i18n.locale,
       authType: this.$store.getters.getUserAuth.ZPROF_ATCV,
-      selectedUser: this.$store.getters.getSelectedForCvUser || this.$store.getters.getLoginAlias || localStorage.getItem("id"),
-      workTime: this.$store.getters.getWorkTime
+      workTime: this.$store.getters.getWorkTime,
+      userToChangePassword: this.$store.getters.getLoginAlias || localStorage.getItem("id"),
+      selectedUser: this.$store.getters.getSelectedForCvUser || this.$store.getters.getLoginAlias || localStorage.getItem("id")
     };
   },
   validations: {
@@ -442,6 +443,7 @@ export default {
         } else {
          this.$store.commit('SET_PERMISSION_TO_EDIT', true);
         }
+        localStorage.setItem('cvUser', this.selectedUser);
       }
   },
 
@@ -553,7 +555,7 @@ export default {
     },
     // get data for selected language
     getNewData() {
-      this.$store.commit("SET_LANG", this.selectedCvLang);
+      this.$store.dispatch('setLanguage', this.selectedCvLang);
       let cvLang = this.selectedCvLang.toUpperCase();
       localStorage.setItem("lang", this.selectedCvLang.toUpperCase());
       if (!cvLang) {
