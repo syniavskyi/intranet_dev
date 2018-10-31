@@ -659,11 +659,7 @@ const actions = {
       let oData = getters.getUserInfo;
       let aAuth = utils.checkRole(oData.UserAuth.results);
       //set authorization for all objects - to optimize 
-      commit('SET_USER_AUTH', aAuth);
-      commit('SET_DELEGATION_AUTH', aAuth.ZDELEG);
-      commit('SET_CALENDAR_AUTH', aAuth.ZEVENT);
-      commit('SET_AVAILABILITY_AUTH', aAuth.ZDYSP_CREA);
-      commit('SET_AVAIL_ACCEPT_AUTH', aAuth.ZDYSP_ACC);
+      dispatch("_setAuthorizations", aAuth);
       commit('SET_USER_EDUCATION', oData.UserEducations.results); //set user education data for profile and cv
       commit('SET_USER_EXPERIENCE', oData.UserExperiences.results); //set user experience data for profile and cv
 
@@ -698,6 +694,15 @@ const actions = {
       commit('SET_DATA_LOADED', true)
 
       // dispatch('checkPageToDisplay', userData.changePage) //TEMP
+  },
+
+  _setAuthorizations({commit}, aAuth){
+    commit('SET_USER_AUTH', aAuth);
+    commit('SET_DELEGATION_AUTH', aAuth.ZDELEG);
+    commit('SET_CALENDAR_AUTH', aAuth.ZEVENT);
+    commit('SET_AVAILABILITY_AUTH', aAuth.ZDYSP_CREA);
+    commit('SET_AVAIL_ACCEPT_AUTH', aAuth.ZDYSP_ACC);
+    commit('SET_MENU_AUTH', aAuth.ZMENU);
   }
 };
 
