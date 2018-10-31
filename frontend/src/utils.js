@@ -228,14 +228,49 @@ export const formatTimeForBackend = function (data) {
 export const checkRole = function(data) {
   // const roles = data.roles; 
   const aRoles = data; //get all roles
-  let aMaxRoles = { "ZMENU": [] },
+  let aMaxRoles = { "ZMENU": {
+    home: false,
+    profile: false,
+    calendar: false,
+    employees: false,
+    documents: false,
+    availability: false,
+    delegations: false,
+    registration: false
+  } },
       oRole, oRoleByKey,
       sValueWas, sValue;
   for(let i = 0; i < aRoles.length; i++){
     oRole = aRoles[i]; //current role in loop
     oRoleByKey = aMaxRoles[oRole.Key]
     if(oRole.Key === "ZMENU"){ // if authorization object is menu, just push it
-      aMaxRoles["ZMENU"].push(oRole.Value);
+      switch(oRole.Value){
+        case "HOME":
+          aMaxRoles["ZMENU"].home = true;
+          break;
+        case "PROFILE":
+          aMaxRoles["ZMENU"].profile = true;
+          break;
+        case "CALENDAR":
+          aMaxRoles["ZMENU"].calendar = true;
+          break; 
+        case "EMPL":
+          aMaxRoles["ZMENU"].employees = true;
+          break;
+        case "DOCS":
+          aMaxRoles["ZMENU"].documents = true;
+          break;
+        case "AVAIL":
+          aMaxRoles["ZMENU"].availability = true;
+          break;
+        case "DELEG":
+          aMaxRoles["ZMENU"].delegations = true;
+          break;
+        case "REGISTR":
+          aMaxRoles["ZMENU"].registration = true;
+          break;
+      }
+      
     } else if(!oRoleByKey){ // if there is no key, push it
       aMaxRoles[oRole.Key] = oRole.Value;
     } else if(oRoleByKey){ // if author. object already in, get more significant

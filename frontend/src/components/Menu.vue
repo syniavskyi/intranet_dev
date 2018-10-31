@@ -13,7 +13,7 @@
         </div>
         <nav class="nav">
             <ul class="nav-list">
-                <li>
+                <li v-if="menuAuth.home">
                     <router-link class="nav-router-link" to="/news">
                         <button @click="closeMenu" class="nav-item">
                             <img class="nav-item-img" src="../assets/images/nav3/grey_616161/home-g-24.png">
@@ -21,7 +21,7 @@
                         </button>
                     </router-link>
                 </li>
-                <li>
+                <li v-if="menuAuth.profile">
                     <router-link class="nav-router-link" to="/profile">
                         <button @click="closeMenu" class="nav-item">
                             <img class="nav-item-img" src="../assets/images/nav3/grey_616161/account-g-24.png">
@@ -37,7 +37,7 @@
                         </button>
                     </router-link>
                 </li> -->
-                <li>
+                <li v-if="menuAuth.calendar">
                     <router-link class="nav-router-link" to="/calendar">
                         <button @click="closeMenu" class="nav-item">
                             <img class="nav-item-img" src="../assets/images/nav3/grey_616161/calendar-text-g-24.png">
@@ -45,7 +45,7 @@
                         </button>
                     </router-link>
                 </li>
-                <li>
+                <li v-if="menuAuth.employees">
                     <router-link class="nav-router-link"  to="/employees">
                         <button @click="closeMenu" class="nav-item">
                             <img class="nav-item-img" src="../assets/images/nav3/grey_616161/account-multiple-g-24.png">
@@ -61,7 +61,7 @@
                         </button>
                     </router-link>
                 </li> -->
-                <li>
+                <li v-if="menuAuth.documents">
                     <router-link class="nav-router-link" to="/files">
                         <button @click="closeMenu" class="nav-item">
                             <img class="nav-item-img" src="../assets/images/nav3/grey_616161/file-g-24.png">
@@ -69,7 +69,7 @@
                         </button>
                     </router-link>
                 </li>
-                <li>
+                <li v-if="menuAuth.availability">
                     <router-link class="nav-router-link" to="/availability">
                         <button @click="closeMenu" class="nav-item">
                              <img class="nav-item-img" src="../assets/images/nav3/grey_616161/account-search-g-24.png">
@@ -77,7 +77,7 @@
                         </button>
                     </router-link>
                 </li>
-                <li>
+                <li v-if="menuAuth.delegations">
                     <router-link class="nav-router-link" to="/delegations">
                         <button @click="closeMenu" class="nav-item">
                              <img class="nav-item-img" src="../assets/images/nav3/grey_616161/car-g-24.png">
@@ -85,7 +85,7 @@
                         </button>
                     </router-link>
                 </li>
-                 <li>
+                <li v-if="menuAuth.registration">
                     <router-link class="nav-router-link" to="/registration">
                         <button @click="closeMenu" class="nav-item">
                              <img class="nav-item-img" src="../assets/images/nav3/grey_616161/account-plus-24.png">
@@ -104,7 +104,8 @@ const utils = require("../utils")
 export default {
     computed: {
        ...mapGetters({
-        userPhotoUrl: 'getUserPhotoUrl'
+        userPhotoUrl: 'getUserPhotoUrl',
+        menuAuth: 'getMenuAuth'
       })
     },
     methods: {

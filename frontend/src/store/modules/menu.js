@@ -3,7 +3,8 @@ import router from '@/router/index.js'
 
 const state = {
     showMenu: true,
-    showMenuOverlay: false
+    showMenuOverlay: false,
+    menuAuth: ""
 };
 
 const mutations = {
@@ -15,6 +16,9 @@ const mutations = {
     },
     CLEAR_AUTH_DATA() {
         localStorage.clear();
+    },
+    SET_MENU_AUTH(state, oAuth) {
+        state.menuAuth = oAuth;
     }
 };
 
@@ -74,6 +78,9 @@ const getters = {
     },
     getShowMenuOverlay(state) {
         return state.showMenuOverlay
+    },
+    getMenuAuth(state){
+        return state.menuAuth;
     }
 };
 
