@@ -292,7 +292,7 @@ export default {
       newPosition: null,
       selectedCvLang: i18n.locale,
       authType: this.$store.getters.getUserAuth.ZPROF_ATCV,
-      selectedUser: this.$store.getters.getLoginAlias || localStorage.getItem("id"),
+      selectedUser: this.$store.getters.getSelectedForCvUser || this.$store.getters.getLoginAlias || localStorage.getItem("id"),
       workTime: this.$store.getters.getWorkTime
     };
   },
@@ -342,12 +342,12 @@ export default {
         sLang = localStorage.getItem("lang");
     oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getProfileToRead);
     
-    const data = {
-      roles: oStore.getters.getUserAuth,
-      key: "ZPROF_ATCV",
-      dep: this.userData.DepartmentName,
-      userAlias: sUserAlias
-    };
+    // const data = {
+    //   roles: oStore.getters.getUserAuth,
+    //   key: "ZPROF_ATCV",
+    //   dep: this.userData.DepartmentName,
+    //   userAlias: sUserAlias
+    // };
     
     if(oStore.getters.getCookie){
       if(oStore.getters.getGoFromCv && oStore.getters.getRoleList.length > 0){ // if go from CV - do not read data
@@ -555,7 +555,7 @@ export default {
     getNewData() {
       this.$store.commit("SET_LANG", this.selectedCvLang);
       let cvLang = this.selectedCvLang.toUpperCase();
-      localStorage.setItem("lang", this.selectedCvLang);
+      localStorage.setItem("lang", this.selectedCvLang.toUpperCase());
       if (!cvLang) {
         let cvLang = loginLanguage.toUpperCase();
       }
