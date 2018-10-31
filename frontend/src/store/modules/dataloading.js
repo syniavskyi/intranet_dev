@@ -102,7 +102,7 @@ const mutations = {
     state.goFromCv = isFromCv;
   },
   SET_TO_READ_EXCLUDED(state, data){
-    data = data.filter(oItem => oItem !== "Domains" && oItem !== "Industries" && oItem !== "SchoolDesc");
+    data = data.filter(oItem => oItem !== "Domains");
     data.push("NewToken");
     state.promiseListToRead = data;
   }
@@ -123,7 +123,7 @@ const actions = {
     let userData = {
       user: passedUserId || localStorage.getItem("id"),
       lang: passedLang || localStorage.getItem("lang"),
-      cvLang: getters.getSelectedCvLang || "PL",
+      cvLang: getters.getSelectedCvLang || localStorage.getItem("lang"),
       changePage: bChangePage || false
     };
     // check if domains are read - if it has been read, get language of get domains by roles
