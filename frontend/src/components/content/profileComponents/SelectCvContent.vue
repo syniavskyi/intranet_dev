@@ -62,11 +62,16 @@
             </select>
             <label class="cv-modal-label">{{ $t("label.selectFormat") }}</label>
           </div>
-          <div class="cv-modal-div-l">
+          <!-- <div class="cv-modal-div-l">
             <select required class="cv-modal-select" v-model="cvElements.position">
-              <!-- <option v-for="position in userPositions" :key="position" :value="position"> {{position}}</option> -->
+              <option v-for="position in userData.JobPosition" :key="position" :value="position"> {{position}}</option>
             </select>
             <label class="cv-modal-label">{{ $t("label.selectPosition") }}</label>
+          </div> -->
+          <div class="cv-modal-div-s">
+            <input required class="cv-modal-input" v-model="userData.JobPosition">
+            <span class="imodal-div-bar"></span>
+            <label v-if="userData.JobPosition === ''" class="cv-modal-label">{{ $t("label.selectPosition") }}</label>
           </div>
           <div class="cv-modal-div-s">
             <input required class="cv-modal-input">
@@ -99,7 +104,8 @@ export default {
       cvElements: "getCvElements",
       languageList: "getLanguageList",
       industryList: "getIndustryList",
-      getSelectedCvLang: "getSelectedCvLang"
+      getSelectedCvLang: "getSelectedCvLang",
+      userData: "getUserInfo"
       // userPositions: "getUserJobPositions"
     })
   },
@@ -121,6 +127,7 @@ export default {
       if(!this.cvElements.language){
         this.cvElements.language = this.$i18n.locale.toUpperCase();
       }
+      this.cvElements.position = this.userData.JobPosition;
       oStore.commit("SET_CV_ELEMENTS", this.cvElements);
       localStorage.setItem("Object", JSON.stringify(this.cvElements));
       this.$router.push({ name: "CV" });
@@ -203,9 +210,9 @@ export default {
   flex-direction: column;
 }
 
-.cv-modal-div-s {
+/* .cv-modal-div-s {
   width: 9.2rem;
-}
+} */
 
 .cv-modal-div {
   width: 10.1rem;
