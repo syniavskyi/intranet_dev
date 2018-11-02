@@ -34,9 +34,7 @@ const actions = {
     getters
   }, userId) {
     //get user availability for calendar and editing availability 
-    // userId = 'UIO'
-    let urlQuery = getters.getUrlQuery
-    const URL = "UserProjects" + urlQuery + "&$filter=UserAlias eq '" + userId + "'"
+    const URL = "UserProjects?$filter=UserAlias eq '" + userId + "'"
     axios.get(URL).then(res => {
       console.log(res)
       dispatch('formatUserProjects', res.data.d.results)

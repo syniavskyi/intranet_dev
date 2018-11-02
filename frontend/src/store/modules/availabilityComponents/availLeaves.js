@@ -22,8 +22,7 @@ const mutations = {
 const actions = {
     getUserAvail({commit, dispatch, getters}, userId) {
         //get user availability for calendar and editing availability 
-            let urlQuery = getters.getUrlQuery
-            const URL = "UserAvailabilities" + urlQuery + "&$filter=UserId eq '" + userId + "'"
+            const URL = "UserAvailabilities?$filter=UserId eq '" + userId + "'"
              axios.get(URL).then(res => {
                 dispatch('formatUserLeaves', res.data.d.results)
             }).catch(error => {

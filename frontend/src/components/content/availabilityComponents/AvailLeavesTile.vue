@@ -25,7 +25,7 @@
                         </v-date-picker>
                         <label class="ava-input-label-cool">{{ $t("label.dates") }}</label>
                     </div>
-                    <div class="ava-div-select-cool" v-if="authType === '*' || authType === 'TEAM' && selectedUser!==loginAlias">
+                    <div class="ava-div-select-cool" v-if="authType === '*' || authType === 'TEAM' && selectedUser!==loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId)">
                         <select required class="ava-select-cool" v-model="newLeave.StatusId" @change="checkFields">
                             <option v-for="status in availStatusList" :key="status.Key" :value="status.Key">{{ status.Value }}</option>
                         </select>
@@ -54,7 +54,8 @@ export default {
     data() {
         return {
             selectedDates: null,
-            disableAddNew: true
+            disableAddNew: true,
+            loginAlias: this.$store.getters.getLoginAlias || localStorage.getItem("id")
         }
     },
     computed: {
@@ -63,7 +64,7 @@ export default {
             availStatusList: 'getAvailStatus',
             usersList: 'usersList',
             availTypesList: 'getAvailType',
-            loginAlias: 'getLoginAlias'
+            filteredTeamUsers: 'getFilteredTeamUsers',
         }),
         formattedUsername() {
             const userId = this.selectedUser

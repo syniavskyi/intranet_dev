@@ -6,7 +6,7 @@
                 <h2>{{ $t("label.availabilityOverview") }}</h2>
                 <div class="availability-tile-underscore"></div>
             </div>
-             <button class="profile-edit-btn" v-if="!editMode"  @click="edit">{{ $t("button.edit") }}</button>
+             <button class="profile-edit-btn" v-if="!editMode" :disabled="permissionToEditAvail" @click="edit">{{ $t("button.edit") }}</button>
              <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-txt">{{ $t("button.finishEdit") }}</span><span class="prof-btn-icon">&#10004;</span></button>
         </div>
         <p class="ava-content-header" v-if="noAvailEntries">{{ $t("message.noEntriesForParameters") }}</p>
@@ -51,19 +51,15 @@
                     </div>
                     <div class="ava-tbs-item">
                         <div class="ava-tbs-ititle">{{ $t("label.status") }}</div>
-                        <select v-if="editMode && authType =='*'" class="selectProfile selectEdit" v-model="avail.StatusId" @change="checkFields(index, avail.EntryId)">
-                            <option v-for="status in availStatus" :key="status.Key" :value="status.Key">{{status.Value}}</option>
-                        </select>
-                         <select v-else disabled class="selectProfile selectDisabled" v-model="avail.StatusId">
+                         <select disabled class="selectProfile selectDisabled" v-model="avail.StatusId">
                             <option v-for="status in availStatus" :key="status.Key" :value="status.Key">{{status.Value}}</option>
                         </select>
                     </div>
-                    <div class="ava-tbs-item eduButtonsAvail" v-if="authType !== 'OWN' && newLeave.UserId !== loginAlias">
-                         <button v-show="editMode" :disabled="true" @click="confirm(index, avail.EntryId)">{{ $t("button.confirm") }}</button>
-                         <button v-show="editMode">{{ $t("button.reject") }}</button>
+                    <div class="ava-tbs-item eduButtonsAvail" v-if="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'">
+                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="true" @click="confirm(index, avail.EntryId)">{{ $t("button.confirm") }}</button>
+                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'">{{ $t("button.reject") }}</button>
                     </div>
                     <div class="ava-tbs-item eduButtonsAvail" v-else>
-                        <div class="ava-tbs-ititle"> {{ $t("label.options") }} </div>
                             <button v-if="editMode" :disabled="true" @click="save(index, avail)">{{ $t("button.save") }}</button>
                             <button v-if="editMode" @click="remove(index, avail)">{{ $t("button.delete") }}</button>
                     </div>
@@ -83,7 +79,7 @@ export default {
             invalidDates: false,
             editMode: false,
             _beforeEditingCache: null,
-            setFilterAllowed: true             
+            setFilterAllowed: true    
         }
     },
     computed: {
@@ -92,7 +88,10 @@ export default {
             availTypes: 'getAvailType',
             availStatus: 'getAvailStatus',
             loginAlias: "getLoginAlias",
-            newLeave: "getNewLeaveForUser"
+            newLeave: "getNewLeaveForUser",
+            authAcc: 'getAvailAcceptAuth',
+            filteredTeamUsers: 'getFilteredTeamUsers',
+            permissionToEditAvail: "getPermissionToEditAvail"
         }),
         filteredUserAvail() {
             let aFilteredAvail = this.userAvail,
