@@ -183,7 +183,7 @@ export default {
       rticles: "articles",
       displayMenu: "getShowMenu",
       displayOverlay: "getShowMenuOverlay",
-      events: "getEvents",
+      events: "getAllEvents",
       showToast: "getDisplayToast",
       showNewMessage: "getShowNewMessageDialog",
       advertsList: "getAdverts",

@@ -233,7 +233,7 @@ export default {
       branchList: "getBranchList",
       eventTypes: "getEventTypes",
       priorities: "getPriorities",
-      events: "getEvents",
+      events: "getAllEvents",
       addEvent: "getEventToChange",
       usersList: "usersList",
       targetGroup: "getTargetGroup",

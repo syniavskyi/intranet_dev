@@ -105,7 +105,7 @@ const actions = {
     getters,
     commit
   }) {
-    let oEvents = getters.getEvents;
+    let oEvents = getters.getAllEvents;
     for (let i = 0; i < oEvents.length; i++) {
       oEvents[i].DateFrom = utils.dateStringToObj(oEvents[i].DateFrom);
       oEvents[i].DateTo = oEvents[i].DateTo ? utils.dateStringToObj(oEvents[i].DateTo) : oEvents[i].DateFrom
@@ -118,7 +118,7 @@ const actions = {
     commit,
     getters
   }) {
-    const aEvents = getters.getEvents;
+    const aEvents = getters.getAllEvents;
     for (let i = 0; i < aEvents.length; i++) {
       if (aEvents[i].Priority == "L") {
         aEvents[i].color = '#fde997';
@@ -132,7 +132,8 @@ const actions = {
   },
   addNewEvent({
     getters,
-    dispatch
+    dispatch,
+    commit
   }, data) {
     data.DateFrom = getters.getSelectedDate;
     data.DateTo = !data.DateTo ? data.DateFrom : data.DateTo;
@@ -161,12 +162,14 @@ const actions = {
     }).then(res => {
         console.log(res)
         data.EventId = res.data.d.EventId;
+        dispatch('setColorPriority');
+        state.addEvent.color = state.priorityColor
+        state.aEvents.push(data);
+        commit("SET_PROMISE_TO_READ", ["Events"]);
+        dispatch('getData');
       }).catch(error => {
         console.log(error);
     })
-    dispatch('setColorPriority');
-    state.addEvent.color = state.priorityColor
-    state.aEvents.push(data);
 
   },
   editEvent({
@@ -197,7 +200,7 @@ const actions = {
         }
       }).then(res => {
           console.log(res);
-          let aEvents = getters.getEvents;
+          let aEvents = getters.getAllEvents;
           let pos = aEvents.findIndex(x => x.EventId === eventData.EventId);
          if (data.Action === 'U') {
           commit('SET_CLEARED_DATA', eventData);
@@ -245,7 +248,7 @@ const getters = {
   priorityColor() {
     return state.priorityColor;
   },
-  getEvents(state) {
+  getAllEvents(state) {
     return state.aEvents;
   },
   getPriorities(state) {
