@@ -333,23 +333,13 @@ export default {
     }
     this.$store.commit("SET_LANG", lang);
     next();
-  },
-
-  
+  },  
   created() {
     // this.getUserData(userData);
     let oStore = this.$store,
         sUserAlias = oStore.getters.getLoginAlias || localStorage.getItem("id"),
         sLang = localStorage.getItem("lang");
     oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getProfileToRead);
-    
-    // const data = {
-    //   roles: oStore.getters.getUserAuth,
-    //   key: "ZPROF_ATCV",
-    //   dep: this.userData.DepartmentName,
-    //   userAlias: sUserAlias
-    // };
-    
     if(oStore.getters.getCookie){
       if(oStore.getters.getGoFromCv && oStore.getters.getRoleList.length > 0){ // if go from CV - do not read data
         oStore.commit("SET_GO_FROM_CV", false);
@@ -480,10 +470,12 @@ export default {
       if (this.hasDataChanged === false) {
         this.showNoChangesAlert = true;
       } else {
-        this.$store.dispatch("saveUserData", this.userData);
+        let data = utils.createClone(this.userData)
+        this.$store.dispatch("saveUserData", data);
         this.editMode = !this.editMode;
       }
       this.disableSaveBtn = true;
+      this.userData = data;
     },
     checkIfDataChanged() {
       let currentData = Object.assign({}, this.userData),

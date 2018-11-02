@@ -161,14 +161,10 @@ export default {
         }),
         filteredUsers() {
             let aFilteredUsers = this.usersList,
-                sTeam = this.userData.DepartmentName,
-                idTeam = this.userData.DepartmentId,
-                idBranch = this.userData.BranchId,
                 selectedDep = this.selectedDepartment,
-                selectedBranch = this.selectedBranch
-                idBranch = 'WRO'; //TEMPORARY
+                selectedBranch = this.selectedBranch;
                 aFilteredUsers = aFilteredUsers.filter(function(oData){ 
-                  return oData.DepartmentName === sTeam && idTeam === selectedDep && idBranch === selectedBranch;
+                  return oData.DepartmentId === selectedDep && oData.BranchId === selectedBranch;
                 });
               return aFilteredUsers;
         },
@@ -222,30 +218,24 @@ export default {
       let oStore = this.$store;
       oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getAvailabilityToRead);
       oStore.dispatch('getData', null);
-        // const data = {
-        //     roles: oStore.getters.getUserAuth,
-        //     key: "ZDYSP_CREA",
-        //     dep: this.userData.DepartmentName,
-        //     userAlias: oStore.getters.getLoginAlias
-        // }
-        // this.authType = utils.checkRole(data);
-     
     },
     watch: {
         selectedType(value) {
             this.newLeave.TypeId = value
         },
         selectedUser(value){
-            this.newLeave.UserId = value.UserAlias
-            this.newProject.UserAlias = value.UserAlias
+            this.newLeave.UserId = value.UserAlias;
+            this.newProject.UserAlias = value.UserAlias;
+            let availAcceptaionAuth = this.$store.getters.getUserAuth.ZDYSP_ACC;
+            let availCreatingAuth = this.$store.getters.getUserAuth.ZDYSP_CREA;
 
-        if(this.authType === '*') {
-          this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
-        } else if(this.authType === 'TEAM' && this.filteredUsers.find(o => o.UserAlias === this.selectedUser.UserAlias)) {
-          this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
-        } else {
-         this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', true);
-        }
+        // if(this.authType === '*') {
+        //   this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
+        // } else if(this.authType === 'TEAM' && this.filteredUsers.find(o => o.UserAlias === this.selectedUser.UserAlias)) {
+        //   this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
+        // } else {
+        //  this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', true);
+        // }
          }
     },
     methods: {
