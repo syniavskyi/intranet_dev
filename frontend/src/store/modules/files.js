@@ -39,7 +39,7 @@ const actions = {
     let userId = localStorage.getItem('id');
     axios({
       method: 'GET',
-      url: "Attachments" + "?$filter=UserAlias eq " + "'" + userId + "'",
+      url: "Attachments?$filter=UserAlias eq " + "'" + userId + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -55,7 +55,7 @@ const actions = {
   }, fileType) {
     return axios({
       method: 'GET',
-      url: 'Attachments' + "?$filter=FileId eq '" + fileType + "'",
+      url: "Attachments?$filter=FileId eq '" + fileType + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
         "Cookie": getters.getCookie

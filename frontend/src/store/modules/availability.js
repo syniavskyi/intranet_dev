@@ -11,7 +11,9 @@ const state = {
     dataToRead: ["Domains", "Industries", "UserData", "UserList", "Projects", "Contractors"],
     avaliablityAuth: "",
     availAccAuth: "",
-    permissionToEditAvail: false
+    permissionToEditAvail: false,
+    permissionToEditProject: false,
+    filteredTeamUsers: []
 };
 
 const mutations = {
@@ -41,6 +43,12 @@ const mutations = {
     },
     SET_PERMISSION_TO_EDIT_AVAIL(state, data) {
         state.permissionToEditAvail = data;
+    },
+    SET_PERMISSION_TO_EDIT_PROJECT(state, data) {
+        state.permissionToEditProject = data;
+    },
+    SET_FILTERED_TEAM_USERS(state, data) {
+        state.filteredTeamUsers = data;
     }
 };
 
@@ -106,8 +114,13 @@ const getters = {
     },
     getPermissionToEditAvail(state) {
         return state.permissionToEditAvail;
+    },
+    getPermissionToEditProject(state) {
+        return state.permissionToEditProject;
+    },
+    getFilteredTeamUsers(state) {
+        return state.filteredTeamUsers;
     }
-
 
 };
 

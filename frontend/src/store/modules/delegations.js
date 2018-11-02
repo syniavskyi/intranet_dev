@@ -267,7 +267,7 @@ const actions = {
         let cookie = getters.getCookie;
         axios({
           method: 'POST',
-          url: 'Delegations' + urlQuery,
+          url: 'Delegations',
           data: data,
           headers: {
             "Content-Type": "application/json",
