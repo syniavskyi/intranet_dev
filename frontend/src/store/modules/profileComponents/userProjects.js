@@ -408,12 +408,16 @@ const actions = {
     let obj;
 
     if ([key] == "Industries") {
-      obj = industryList.find(o => o.IndustryId === object.id)
-      object.name = obj.IndustryName;
+      if(industryList.length > 0){
+        obj = industryList.find(o => o.IndustryId === object.id)
+        object.name = obj.IndustryName;
+      }
     }
     if ([key] == "Modules") {
-      obj = modulesList.find(o => o.Key === object.id)
-      object.name = obj.Value;
+      if(modulesList.length > 0){
+        obj = modulesList.find(o => o.Key === object.id)
+        object.name = obj.Value;
+      }
     }
     commit('SET_OBJECT', object);
   },
