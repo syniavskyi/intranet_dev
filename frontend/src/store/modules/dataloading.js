@@ -16,7 +16,7 @@ const state = {
   academicTitles: [],
   langLevels: [],
   workPositionList: [],
-  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_AVAIL_TYPE", "ZINTRANET_AVAIL_STATUS", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES", 'ZINTRANET_PRIORITY', 'ZINTRANET_EVENT_TYPE', 'ZINTRANET_TARGET_GROUP', 'ZINTRANET_ROLES'],
+  sapDomains: ["ZINTRANET_DEPARTMENT", "ZINTRANET_AVAIL_TYPE", "ZINTRANET_AVAIL_STATUS", "ZINTRANET_BRANCH", "ZINTRANET_STUDIES_TYPES", "ZINTANET_ACADEMIC_TITLES", "ZINTRANET_LANG_LEVEL", "ZWORK_POS", "ZINTRANET_SAP_MODULES", 'ZINTRANET_PRIORITY', 'ZINTRANET_EVENT_TYPE', 'ZINTRANET_TARGET_GROUP', 'ZINTRANET_ROLES', 'ZINTRANET_TRANSPORTS'],
   sapModulesList: [],
   newUserFiles: [],
   adverts: [],
@@ -29,7 +29,8 @@ const state = {
   selectedForCvUser: '',
   promiseListToRead: [],
   promiseList: [],
-  goFromCv: false //default
+  goFromCv: false, //default
+  transportList: []
 };
 
 const mutations = {
@@ -109,6 +110,9 @@ const mutations = {
   },
   SET_USER_AUTH(state, aAuth){
     state.userAuth = aAuth;
+  },
+  SET_TRANSPORT(state, data) {
+    state.transportList = data;
   }
 };
 
@@ -616,6 +620,9 @@ const actions = {
       case 'ZINTRANET_ROLES':
         sCommitName = 'SET_ROLES';
         break;
+      case 'ZINTRANET_TRANSPORTS':
+        sCommitName = 'SET_TRANSPORT';
+      break;
     }
 
     if(sCommitName.length > 0){
@@ -785,6 +792,9 @@ const getters = {
   },
   getUserAuth(state){
     return state.userAuth;
+  },
+  getTransportList(state) {
+    return state.transportList;
   }
 };
 

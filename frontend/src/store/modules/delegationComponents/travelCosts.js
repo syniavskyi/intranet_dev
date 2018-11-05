@@ -21,39 +21,6 @@ const state = {
     totalAmountCurr: 0,
     delegationCurrRate: 1
   }],
-  transportList: [{
-      id: "companyCar",
-      name: "Auto służbowe"
-    },
-    {
-      id: "privateCar",
-      name: "Auto prywatne"
-    },
-    {
-      id: "PKP",
-      name: "PKP"
-    },
-    {
-      id: "PKS",
-      name: "PKS"
-    },
-    {
-      id: "ship",
-      name: "Statek/prom"
-    },
-    {
-      id: "plane",
-      name: "Samolot"
-    },
-    {
-      id: "motocycle",
-      name: "Motocykl prywatny"
-    },
-    {
-      id: "moped",
-      name: "Motorower prywatny"
-    }
-  ],
   ratesForTransport: [{
     carLess: 0.5214,
     carMore: 0.8358,
@@ -132,9 +99,9 @@ const actions = {
       amount = (amount === "") ? 0 : parseFloat(amount)
       km = (km === "") ? 0 : parseFloat(km)
 
-      if (transport === "companyCar") {
+      if (transport === "COMCAR") {
         totalAmount = amount = km * transportRates.carMore * rate
-      } else if (transport === "privateCar") {
+      } else if (transport === "PRVCAR") {
         if (data[i].engineCapacity === true) {
           totalAmount = amount = km * transportRates.carMore * rate
         } else if (data[i].engineCapacity === false) {
@@ -142,9 +109,9 @@ const actions = {
         } else {
           totalAmount = amount = 0
         }
-      } else if (transport === "motocycle") {
+      } else if (transport === "MOTOR") {
         totalAmount = amount = km * transportRates.motocycle * rate
-      } else if (transport === "moped") {
+      } else if (transport === "MOPED") {
         totalAmount = amount = km * transportRates.moped * rate
       } else {
         totalAmount = amount * rate
@@ -222,9 +189,6 @@ const getters = {
   },
   getTravelCostValidated(state) {
     return state.costTrvValidated
-  },
-  getTransportList(state) {
-    return state.transportList
   },
   getRatesForTransport(state) {
     return state.ratesForTransport
