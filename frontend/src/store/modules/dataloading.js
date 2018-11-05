@@ -400,6 +400,7 @@ const actions = {
   setPromises({dispatch, commit, getters}, userData){
     var aPromises = [],
         aPromiseList = state.promiseListToRead;
+  if(aPromiseList){
     for(let i = 0; i < aPromiseList.length; i++){
       let sPromiseName = aPromiseList[i];
       switch(sPromiseName){
@@ -475,8 +476,9 @@ const actions = {
           }
           break;
       }
+      commit("SET_PROMISE_LIST", aPromises);
     }
-    commit("SET_PROMISE_LIST", aPromises);
+   }
   },
 
   setDataInResponse({dispatch,commit,getters}, data){
@@ -661,7 +663,7 @@ const actions = {
 
       dispatch('formatUserData', response.data.d); // format dates for date pickers and "is current" fields
       dispatch('getUserFilesData') // get data about all user files (cv, photos, documents etc.)
-      // dispatch('loadUserPhoto', userData) //load user's photo for menu and profile TO BE READ
+      dispatch('loadUserPhoto', userData) //load user's photo for menu and profile TO BE READ
       let oData = getters.getUserInfo;
       let aAuth = utils.checkRole(oData.UserAuth.results);
       //set authorization for all objects - to optimize 

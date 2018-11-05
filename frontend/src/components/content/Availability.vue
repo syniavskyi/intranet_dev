@@ -220,7 +220,7 @@ export default {
       let oStore = this.$store;
       oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getAvailabilityToRead);
       oStore.dispatch('getData', null);
-
+      
     //   filter users to make possibility to edit or accept avails
     let aFilteredUsers = this.usersList,
     idTeam = this.userData.DepartmentId;
