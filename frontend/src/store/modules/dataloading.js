@@ -396,83 +396,85 @@ const actions = {
   setPromises({dispatch, commit, getters}, userData){
     var aPromises = [],
         aPromiseList = state.promiseListToRead;
-    for(let i = 0; i < aPromiseList.length; i++){
-      let sPromiseName = aPromiseList[i];
-      switch(sPromiseName){
-        case "Adverts":
-          const advertsPromise =  dispatch("getAdverts").then(res => ({ res: res, promise: 'Adverts' }));
-          aPromises.push(advertsPromise);
-          break;
-        case "Events":
-          const eventsPromise = dispatch('getEvents').then(res => ({ res: res, promise: 'Events' }));
-          aPromises.push(eventsPromise);
-          break;
-        case "UserData":
-          const userDataPromise = dispatch('getUserData', userData).then(res => ({ res: res, promise: 'UserData' }));
-          aPromises.push(userDataPromise);
-          break;
-        case "Contractors":
-          const contractorPromise = dispatch('getContractorsList').then(res => ( { res: res, promise: "Contractors"}));
-          aPromises.push(contractorPromise);
-          break;
-        case "Industries":
-          const industriesPromise = dispatch('getIndustries', userData).then(res => ( { res: res, promise: "Industries"}));
-          aPromises.push(industriesPromise);
-          break;
-        case "Projects":
-          const projectPromise = dispatch('getProjectsList').then(res => ( { res: res, promise: "Projects"}));
-          aPromises.push(projectPromise);
-          break;
-        case "UserList":
-          const userListPromise = dispatch('getUsersLists').then(res => ( { res: res, promise: "UserList"}));
-          aPromises.push(userListPromise);
-          break;
-        case "Languages":
-          const languagesPromise = dispatch('getAllLanguages', userData).then(res => ( { res: res, promise: "Languages"}));
-          aPromises.push(languagesPromise);
-          break;
-        case "SchoolDesc":
-          const schoolDescPromise = dispatch('getSchoolDesc', userData.lang).then(res => ( { res: res, promise: "SchoolDesc"}));
-          aPromises.push(schoolDescPromise);
-          break;
-        case "FieldOfStudy":
-          const fieldOfStudyPromise = dispatch('getFieldOfStudyDesc', userData.lang).then(res => ( { res: res, promise: "FieldOfStudy"}));
-          aPromises.push(fieldOfStudyPromise);
-          break;
-        case "StarterDocs":
-          const starterDocsPromise = dispatch('getInfoDocs', userData).then(res => ( { res: res, promise: "StarterDocs" } ));
-          aPromises.push(starterDocsPromise);
-          break;
-        case "NewToken":
-          const newTokenPromise = dispatch('getNewToken').then(res => ( { res: res, promise: "NewToken" } ));
-          aPromises.push(newTokenPromise);
-          break;
-        case "UserPhoto":
-          const userPhotoPromise = dispatch("getUserPhoto", userData).then(res => ({res: res, promise: "UserPhoto"}));
-          aPromises.push(userPhotoPromise);
-          break;
-        case "Domains":
-          let domainPromise;
-          for (let i = 0; i < state.sapDomains.length; i++) {
-            let domainData = {
-              name: state.sapDomains[i],
-              lang: userData.lang
-            };
-            domainPromise = dispatch('getDomainValues', domainData).then(res => ( { res: res, promise: domainData.name}));
-            aPromises.push(domainPromise);
-          }
-          break;
-        case "Documents":
-          let documentPromise, fileType;
-          for (let i = 0; i < getters.getFileTypes.length; i++) {
-            fileType = getters.getFileTypes[i];
-            documentPromise = dispatch('getDocuments', fileType).then(res => ({ res: res, promise: fileType }));
-            aPromises.push(documentPromise);
-          }
-          break;
+    if(aPromiseList){
+      for(let i = 0; i < aPromiseList.length; i++){
+        let sPromiseName = aPromiseList[i];
+        switch(sPromiseName){
+          case "Adverts":
+            const advertsPromise =  dispatch("getAdverts").then(res => ({ res: res, promise: 'Adverts' }));
+            aPromises.push(advertsPromise);
+            break;
+          case "Events":
+            const eventsPromise = dispatch('getEvents').then(res => ({ res: res, promise: 'Events' }));
+            aPromises.push(eventsPromise);
+            break;
+          case "UserData":
+            const userDataPromise = dispatch('getUserData', userData).then(res => ({ res: res, promise: 'UserData' }));
+            aPromises.push(userDataPromise);
+            break;
+          case "Contractors":
+            const contractorPromise = dispatch('getContractorsList').then(res => ( { res: res, promise: "Contractors"}));
+            aPromises.push(contractorPromise);
+            break;
+          case "Industries":
+            const industriesPromise = dispatch('getIndustries', userData).then(res => ( { res: res, promise: "Industries"}));
+            aPromises.push(industriesPromise);
+            break;
+          case "Projects":
+            const projectPromise = dispatch('getProjectsList').then(res => ( { res: res, promise: "Projects"}));
+            aPromises.push(projectPromise);
+            break;
+          case "UserList":
+            const userListPromise = dispatch('getUsersLists').then(res => ( { res: res, promise: "UserList"}));
+            aPromises.push(userListPromise);
+            break;
+          case "Languages":
+            const languagesPromise = dispatch('getAllLanguages', userData).then(res => ( { res: res, promise: "Languages"}));
+            aPromises.push(languagesPromise);
+            break;
+          case "SchoolDesc":
+            const schoolDescPromise = dispatch('getSchoolDesc', userData.lang).then(res => ( { res: res, promise: "SchoolDesc"}));
+            aPromises.push(schoolDescPromise);
+            break;
+          case "FieldOfStudy":
+            const fieldOfStudyPromise = dispatch('getFieldOfStudyDesc', userData.lang).then(res => ( { res: res, promise: "FieldOfStudy"}));
+            aPromises.push(fieldOfStudyPromise);
+            break;
+          case "StarterDocs":
+            const starterDocsPromise = dispatch('getInfoDocs', userData).then(res => ( { res: res, promise: "StarterDocs" } ));
+            aPromises.push(starterDocsPromise);
+            break;
+          case "NewToken":
+            const newTokenPromise = dispatch('getNewToken').then(res => ( { res: res, promise: "NewToken" } ));
+            aPromises.push(newTokenPromise);
+            break;
+          case "UserPhoto":
+            const userPhotoPromise = dispatch("getUserPhoto", userData).then(res => ({res: res, promise: "UserPhoto"}));
+            aPromises.push(userPhotoPromise);
+            break;
+          case "Domains":
+            let domainPromise;
+            for (let i = 0; i < state.sapDomains.length; i++) {
+              let domainData = {
+                name: state.sapDomains[i],
+                lang: userData.lang
+              };
+              domainPromise = dispatch('getDomainValues', domainData).then(res => ( { res: res, promise: domainData.name}));
+              aPromises.push(domainPromise);
+            }
+            break;
+          case "Documents":
+            let documentPromise, fileType;
+            for (let i = 0; i < getters.getFileTypes.length; i++) {
+              fileType = getters.getFileTypes[i];
+              documentPromise = dispatch('getDocuments', fileType).then(res => ({ res: res, promise: fileType }));
+              aPromises.push(documentPromise);
+            }
+            break;
+        }
       }
+      commit("SET_PROMISE_LIST", aPromises);
     }
-    commit("SET_PROMISE_LIST", aPromises);
   },
 
   setDataInResponse({dispatch,commit,getters}, data){
@@ -655,7 +657,7 @@ const actions = {
 
       dispatch('formatUserData', response.data.d); // format dates for date pickers and "is current" fields
       dispatch('getUserFilesData') // get data about all user files (cv, photos, documents etc.)
-      // dispatch('loadUserPhoto', userData) //load user's photo for menu and profile TO BE READ
+      dispatch('loadUserPhoto', userData) //load user's photo for menu and profile TO BE READ
       let oData = getters.getUserInfo;
       let aAuth = utils.checkRole(oData.UserAuth.results);
       //set authorization for all objects - to optimize 

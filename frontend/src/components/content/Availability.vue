@@ -222,14 +222,6 @@ export default {
       let oStore = this.$store;
       oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getAvailabilityToRead);
       oStore.dispatch('getData', null);
-        // const data = {
-        //     roles: oStore.getters.getUserAuth,
-        //     key: "ZDYSP_CREA",
-        //     dep: this.userData.DepartmentName,
-        //     userAlias: oStore.getters.getLoginAlias
-        // }
-        // this.authType = utils.checkRole(data);
-     
     },
     watch: {
         selectedType(value) {

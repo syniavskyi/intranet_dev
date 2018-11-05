@@ -1,26 +1,33 @@
 import axios from 'axios'
 
 const state = {
-  dataToRead: ["Domains", "UserData"]
+  dataToRead: ["Industries", "Domains", "UserData", "NewToken"],
+  registerData: {
+    Fullname: "",
+    Email: "",
+    Role: "BTECH",
+    DepartmentId: "",
+    BranchId: "WRO",
+    Language: "PL"
+  }
 };
 
 const actions = {
   submitRegistration({
     commit, getters
   }, data) {
-    let sToken = getters.getToken;
-    data.Action = "R";
-    commit("SET_DIALOG_CONFIRM", true);
+    let registerData = getters.getRegistratinData;
+    registerData.Action = "R";
     commit("SET_DISPLAY_LOADER", true);
     axios({
       url: 'Users',
-      data: data,
+      data: registerData,
       method: 'post',
       headers: {
         "Content-Type": "application/json",
         "X-Requested-With": "XMLHttpRequest",
         "Cache-Control": "no-cache",
-        "x-csrf-token": sToken,
+        "x-csrf-token": getters.getToken,
         "Cookie": getters.getCookie
       }
     }).then(res => {
@@ -39,13 +46,35 @@ const actions = {
   }
 };
 
+const mutations = {
+    SET_REGISTER_DATA(state, oData){
+      state.registerData = oData;
+    },
+    SET_REGISTER_DEF_DATA(state){
+      state.registerData = {
+        Fullname: "",
+        Email: "",
+        Role: "ZINTRANET_BTECH_ALL",
+        DepartmentId: "",
+        BranchId: "WRO",
+        Language: "PL"
+      }
+    }
+};
+
 const getters = {
-  getRegistrationToRead(state){
+  getRegisterToRead(state){
     return state.dataToRead;
+  },
+  getRegistratinData(state){
+    return state.registerData;
   }
 };
 
 
 export default {
-  actions
+  state,
+  actions,
+  getters,
+  mutations
 }

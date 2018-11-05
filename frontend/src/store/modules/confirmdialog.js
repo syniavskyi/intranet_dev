@@ -14,7 +14,7 @@ const getters = {
 
 const mutations = {
     SET_DIALOG_CONFIRM(state, show) {
-        state.isDialogOpen = show
+        state.isDialogOpen = show;
     },
     SET_DIALOG_ERROR_STATUS(state){
         state.isError = state;

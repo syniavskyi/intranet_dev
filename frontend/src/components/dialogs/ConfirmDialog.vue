@@ -19,6 +19,7 @@ export default {
     methods: {
         closeConfirmDialog() {
             this.$store.commit("SET_DIALOG_CONFIRM", false);
+            this.$store.commit("SET_REGISTER_DEF_DATA");
         }
     }
 }
