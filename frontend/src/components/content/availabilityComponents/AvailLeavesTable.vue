@@ -56,10 +56,10 @@
                         </select>
                     </div>
                     <div class="ava-tbs-item eduButtonsAvail" v-if="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'">
-                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="true" @click="confirm(index, avail.EntryId)">{{ $t("button.confirm") }}</button>
-                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'">{{ $t("button.reject") }}</button>
+                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="permissionToEditAvail" @click="confirm(index, avail.EntryId)">{{ $t("button.confirm") }}</button>
+                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="permissionToEditAvail">{{ $t("button.reject") }}</button>
                     </div>
-                    <div class="ava-tbs-item eduButtonsAvail" v-else>
+                    <div class="ava-tbs-item" v-else>
                             <button v-if="editMode" :disabled="true" @click="save(index, avail)">{{ $t("button.save") }}</button>
                             <button v-if="editMode" @click="remove(index, avail)">{{ $t("button.delete") }}</button>
                     </div>
@@ -79,7 +79,8 @@ export default {
             invalidDates: false,
             editMode: false,
             _beforeEditingCache: null,
-            setFilterAllowed: true    
+            setFilterAllowed: true
+            // loginAlias: this.$store.getters.getLoginAlias || localStorage.getItem("id")
         }
     },
     computed: {
@@ -164,7 +165,7 @@ export default {
          edit() {
             this.editMode = true;
             this._beforeEditingCache = utils.createClone(this.userAvail);
-            this.checkDisabled();
+            // this.checkDisabled();
         },
         remove(index, data) {
             let avail = utils.createClone(data);
@@ -231,15 +232,15 @@ export default {
 
         },
       // set button disabled  
-        checkDisabled() {
-            for(let i = 0; i < this.filteredUserAvail.length; i++) {
-                if (this.filteredUserAvail[i].StatusId === 'CO') {
-                    document.getElementsByClassName("eduButtonsAvail")[i].children[0].disabled = true;
-                }   else {
-                   document.getElementsByClassName("eduButtonsAvail")[i].children[0].disabled = false;
-                }
-            }
-        },
+        // checkDisabled() {
+        //     for(let i = 0; i < this.filteredUserAvail.length; i++) {
+        //         if (this.filteredUserAvail[i].StatusId === 'CO') {
+        //             document.getElementsByClassName("eduButtonsAvail")[i].children[0].disabled = true;
+        //         }   else {
+        //            document.getElementsByClassName("eduButtonsAvail")[i].children[0].disabled = false;
+        //         }
+        //     }
+        // },
         confirm(index, entryId) {
           this.userAvail[entryId].StatusId = 'CO';
           document.getElementsByClassName("eduButtonsAvail")[index].children[0].disabled = true;

@@ -165,7 +165,8 @@
         "addNewMessage": "Add new message",
         "emptyUsers": "List of users is empty or you do not have permission to see them",
         "messageValidTo": "Message valid to",
-        "shortTime": "time:"
+        "shortTime": "time:",
+        "editProject": "You are not authorizied to edit"
     },
     "header": {
         "login": "Log in to Intranet",
