@@ -467,11 +467,11 @@ const actions = {
           }
           break;
         case "Documents":
-          let documentPromise, fileType;
-          for (let i = 0; i < getters.getFileTypes.length; i++) {
-            fileType = getters.getFileTypes[i];
-            documentPromise = dispatch('getDocuments', fileType).then(res => ({ res: res, promise: fileType }));
-            aPromises.push(documentPromise);
+          let documentPromise;
+          for (let j = 0; j < getters.getFileTypes.length; j++) {
+            let fileType = getters.getFileTypes[j];
+                documentPromise = dispatch('getDocuments', fileType).then(res => ({ res: res, promise: fileType }));
+                aPromises.push(documentPromise);
           }
           break;
       }
@@ -547,7 +547,6 @@ const actions = {
               dispatch("setDocumentList", { aResults, documentType })
               bEndFunction = true;
             }
-            
           }
           break;
       }

@@ -154,7 +154,7 @@ export default {
       this.$store.dispatch("setSideMenu", obj);
     },
     checkFileFormat(name) {
-      return name.slice(name.lastIndexOf("."));
+      return name.slice(name.lastIndexOf(".")).toLowerCase();
     },
     generateLink(file) {
       let url =
