@@ -7,7 +7,7 @@ const state = {
   informationFiles: [],
   instructionFiles: [],
   fileTypes: ['INFO', 'DOC', 'OFF', 'SAPB', 'INST'],
-  dataToRead: ["Documents"]
+  dataToRead: ["UserData", "Documents"]
 }
 
 const mutations = {
@@ -39,7 +39,7 @@ const actions = {
     let userId = localStorage.getItem('id');
     axios({
       method: 'GET',
-      url: "Attachments" + "?$filter=UserAlias eq " + "'" + userId + "'",
+      url: "Attachments?$filter=UserAlias eq " + "'" + userId + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
       }
@@ -55,28 +55,12 @@ const actions = {
   }, fileType) {
     return axios({
       method: 'GET',
-      url: 'Attachments' + "?$filter=FileId eq '" + fileType + "'",
+      url: "Attachments?$filter=FileId eq '" + fileType + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
         "Cookie": getters.getCookie
       }
     })
-    // .then(res => {
-    //   let oFiles = res.data.d.results;
-    //   if (fileType === 'INFO') {
-    //     commit('SET_INFORMATION_FILES', oFiles)
-    //   } else if (fileType === 'DOC') {
-    //     commit('SET_DOCUMENT_FILES', oFiles)
-    //   } else if (fileType === 'OFF') {
-    //     commit('SET_OFFICE_FILES', oFiles)
-    //   } else if (fileType === 'SAPB') {
-    //     commit('SET_SYSTEM_FILES', oFiles)
-    //   } else if (fileType === 'INST') {
-    //     commit('SET_INSTRUCTION_FILES', oFiles)
-    //   }
-    // }).catch(error => {
-    //   console.log(error);
-    // })
   },
   toggleDocTile({
     dispatch

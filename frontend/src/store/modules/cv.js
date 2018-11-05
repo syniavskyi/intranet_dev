@@ -71,12 +71,11 @@ const actions = {
     submitCv({
         commit, dispatch, getters
       }, data) {
-        let urlQuery = getters.getUrlQuery
         let slugHeader = data.file.name + ';' + data.type + ';' + data.language + ';' + data.userId + ';' +  data.file.type
     
         axios({
           method: 'POST',
-          url: 'AttachmentMedias' + urlQuery,
+          url: 'AttachmentMedias',
           data: data.file,
           headers: {
             "Content-type": data.file.type,
@@ -93,9 +92,8 @@ const actions = {
       updateCv({
         commit, dispatch, getters
       }, data) {
-        let urlQuery = getters.getUrlQuery
-        let slugHeader = data.file.name + ';' + data.type + ';' + data.language + ';' + data.userId + ';' +  data.file.type
-        let url = "AttachmentMedias(FileType='" + data.type + "',Language='" + data.language + "',UserAlias='" + data.userId + "')"   + "/$value"+ urlQuery
+        let slugHeader = data.file.name + ';' + data.type + ';' + data.language + ';' + data.userId + ';' +  data.file.type;
+        let url = "AttachmentMedias(FileType='" + data.type + "',Language='" + data.language + "',UserAlias='" + data.userId + "')/$value";
     
         axios({
           method: 'PUT',

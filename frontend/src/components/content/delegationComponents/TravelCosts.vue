@@ -67,7 +67,7 @@
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.transport") }}</div>
                             <div class="del-tbody2-item-txt">
                                 <select class="delegations-tselect" :id="index" v-model="cost.transport" @change="setFieldsValues(cost)">
-                                    <option v-for="transport in transportList" :key="transport.id" :value="transport.id">{{ transport.name }}</option>
+                                    <option v-for="transport in transportList" :key="transport.Key" :value="transport.Key">{{ transport.Value }}</option>
                                 </select>
                                 <div class="del-div-tcool">
                                     <input required :disabled="hideLicencePlateNo(cost)" :class="[{ 'delegations-tinput-disabled': hideLicencePlateNo(cost) },  'delegations-tinput', 'del-tinput-sfont']" @change="checkTravelFields" v-model="cost.licencePlateNo" />
@@ -211,7 +211,7 @@ export default {
             // type false  = not flat rate (kilometrówka), type  true = flat rate (ryczałt)
             cost.flatRate = null
             cost.kilometers = 0
-            cost.engineCapacity = (cost.transport === "companyCar") ? true : null
+            cost.engineCapacity = (cost.transport === "COMCAR") ? true : null
             cost.amount = 0
             cost.currency = null
 
@@ -224,25 +224,25 @@ export default {
                 cost.amount = 0
                 cost.currency = null
             } else {
-                cost.engineCapacity = (cost.transport === "companyCar") ? true : null
+                cost.engineCapacity = (cost.transport === "COMCAR") ? true : null
             }
             this.checkTravelFields()
         },
         disableReturnType(cost) {
             const type = cost.transport
-            return (type === "companyCar" || type === "privateCar" || type === "motocycle" || type === "moped") ? false : true
+            return (type === "COMCAR" || type === "PRVCAR" || type === "MOTOR" || type === "MOPED") ? false : true
         },
         disableCostAmount(cost) {
             const type = cost.transport
-            return (type === "companyCar" || type === "privateCar" || type === "motocycle" || type === "moped") ? true : false
+            return (type === "COMCAR" || type === "PRVCAR" || type === "MOTOR" || type === "MOPED") ? true : false
         },
         disableEngineCapacity(cost) {
             const type = cost.transport
-            return (type === "privateCar" && cost.flatRate == false) ? false : true
+            return (type === "PRVCAR" && cost.flatRate == false) ? false : true
         },
         disableKilometers(cost) {
             const type = cost.flatRate
-            if (type === "companyCar" || type === "privateCar" || type === "motocycle" || type === "moped") {
+            if (type === "COMCAR" || type === "PRVCAR" || type === "MOTOR" || type === "MOPED") {
                 return (type == false) ? false : true
             } else {
                 return false
@@ -250,7 +250,7 @@ export default {
         },
         hideLicencePlateNo(cost) {
             const type = cost.transport
-            return (type === "companyCar" || type === "privateCar" || type === "motocycle" || type === "moped") ? false : true
+            return (type === "COMCAR" || type === "PRVCAR" || type === "MOTOR" || type === "MOPED") ? false : true
         },
 
         toggleTile() {

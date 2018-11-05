@@ -183,7 +183,7 @@ export default {
       rticles: "articles",
       displayMenu: "getShowMenu",
       displayOverlay: "getShowMenuOverlay",
-      events: "getEvents",
+      events: "getAllEvents",
       showToast: "getDisplayToast",
       showNewMessage: "getShowNewMessageDialog",
       advertsList: "getAdverts",
@@ -199,11 +199,19 @@ export default {
         result.setDate(result.getDate() + days);
         return result;
           }
-
+     let substructDays = function(date, days) {
+        let result = new Date(date);
+        result.setDate(result.getDate() - days);
+        return result;
+          }    
+  
     let filteredEvents = this.events.filter(function(oItem){
-        return oItem.DateFrom > new Date() && oItem.DateFrom < addDays(new Date(), 7);
+      let eventDays = (oItem.DateTo - oItem.DateFrom) / 86400000;
+        return oItem.DateFrom > new Date() && oItem.DateFrom < addDays(new Date(), 7)
+            //  || oItem.DateTo > addDays(new Date(), eventDays)
+            || new Date() > substructDays(new Date(), eventDays) && oItem.DateFrom < new Date() && oItem.DateTo > new Date()
       });
-
+// new Date() > substructDays(new Date(), 7)
   return filteredEvents;
     }
   },

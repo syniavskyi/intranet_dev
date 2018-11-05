@@ -124,7 +124,8 @@ export default {
             selectedUser: null,
             showContent: false,
             selectedType: null,
-            selectedStatus: null
+            selectedStatus: null,
+            loginAlias: this.$store.getters.getLoginAlias || localStorage.getItem("id")
         }
     },
     components: {
@@ -157,18 +158,15 @@ export default {
             userAvail: 'getUserAvail',
             authType: 'getAvailabilityAuth',
             authAcc: 'getAvailAcceptAuth',
-            permissionToEditAvail: "getPermissionToEditAvail"
+            permissionToEditAvail: "getPermissionToEditAvail",
+
         }),
         filteredUsers() {
             let aFilteredUsers = this.usersList,
-                sTeam = this.userData.DepartmentName,
-                idTeam = this.userData.DepartmentId,
-                idBranch = this.userData.BranchId,
                 selectedDep = this.selectedDepartment,
-                selectedBranch = this.selectedBranch
-                idBranch = 'WRO'; //TEMPORARY
+                selectedBranch = this.selectedBranch;
                 aFilteredUsers = aFilteredUsers.filter(function(oData){ 
-                  return oData.DepartmentName === sTeam && idTeam === selectedDep && idBranch === selectedBranch;
+                  return oData.DepartmentId === selectedDep && oData.BranchId === selectedBranch;
                 });
               return aFilteredUsers;
         },
@@ -222,21 +220,35 @@ export default {
       let oStore = this.$store;
       oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getAvailabilityToRead);
       oStore.dispatch('getData', null);
+      
+    //   filter users to make possibility to edit or accept avails
+    let aFilteredUsers = this.usersList,
+    idTeam = this.userData.DepartmentId;
+    aFilteredUsers = aFilteredUsers.filter(function(oData){ 
+        return oData.DepartmentId === idTeam;
+    });
+    this.$store.commit('SET_FILTERED_TEAM_USERS', aFilteredUsers);   
     },
     watch: {
         selectedType(value) {
             this.newLeave.TypeId = value
         },
         selectedUser(value){
-            this.newLeave.UserId = value.UserAlias
-            this.newProject.UserAlias = value.UserAlias
+            this.newLeave.UserId = value.UserAlias;
+            this.newProject.UserAlias = value.UserAlias;
 
+        // check permission to create project or other avail type
         if(this.authType === '*') {
+          this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', false);
           this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
         } else if(this.authType === 'TEAM' && this.filteredUsers.find(o => o.UserAlias === this.selectedUser.UserAlias)) {
+          this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', false);
           this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
+         } else if(this.authType === 'OWN' && this.selectedUser.UserAlias === this.loginAlias) {
+          this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false); 
         } else {
-         this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', true);
+          this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', true);
+          this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', true);
         }
          }
     },
