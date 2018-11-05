@@ -47,12 +47,13 @@
                                             <option v-for="user in filteredUsers" :value="user" :key="user.UserAlias">{{ user.Fullname }}</option>
                                         </select>
                                         <label class="ava-select-label-cool">{{ $t("label.employee") }}</label>
-                                        <label class="prof-error" v-if="filteredUsers.length === 0">{{ $t("label.emptyUsers") }}</label>
+                                        <span>
+                                            <label class="avail-error" v-if="filteredUsers.length === 0">{{ $t("label.emptyUsers") }}</label>
+                                        </span>
                                     </div>
                                     <div class="ava-div-select-cool" v-if="selectedUser != null">
                                         <select required class="ava-select-cool" v-model="selectedType">
                                             <option v-for="type in availTypesList" :value="type.Key" :key="type.Key">{{type.Value}}</option>
-                                            <!-- <option v-for="branch in branchList" :key="branch.branchId" :value="selectedBranch = branch.branchId">{{ branch.branchName }}</option> -->
                                         </select>
                                         <button class="ava-select-reset" title="resetuj" v-if="selectedType" @click="selectedType = null">&#10006;</button>
                                         <label class="ava-select-label-cool">{{ $t("label.entryType") }}</label>
@@ -60,7 +61,6 @@
                                     <div class="ava-div-select-cool" v-if="selectedUser != null">
                                         <select required class="ava-select-cool" v-model="selectedStatus">
                                             <option v-for="status in availStatusList" :key="status.Key" :value="status.Key">{{ status.Value }}</option>
-                                             <!-- <option v-for="branch in branchList" :key="branch.branchId" :value="selectedBranch = branch.branchId">{{ branch.branchName }}</option> -->
                                         </select>
                                         <button class="ava-select-reset" title="resetuj" v-if="selectedStatus" @click="selectedStatus = null">&#10006;</button>
                                         <label class="ava-select-label-cool">{{ $t("label.status") }}</label>
@@ -245,6 +245,7 @@ export default {
           this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', false);
           this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
          } else if(this.authType === 'OWN' && this.selectedUser.UserAlias === this.loginAlias) {
+             this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', true);
           this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false); 
         } else {
           this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', true);

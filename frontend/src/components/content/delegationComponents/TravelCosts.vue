@@ -72,7 +72,7 @@
                                 <div class="del-div-tcool">
                                     <input required :disabled="hideLicencePlateNo(cost)" :class="[{ 'delegations-tinput-disabled': hideLicencePlateNo(cost) },  'delegations-tinput', 'del-tinput-sfont']" @change="checkTravelFields" v-model="cost.licencePlateNo" />
                                     <span class="delegations-div-bar"></span>
-                                    <label class="delegations-tlabel-cool">{{ $t("label.registrationNo") }}</label>
+                                    <label class="delegations-tlabel-cool" v-if="!cost.licencePlateNo">{{ $t("label.registrationNo") }}</label>
                                 </div>
                             </div>
                             <div class="del-tfoot2">&nbsp;</div>
