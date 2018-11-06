@@ -165,7 +165,8 @@
         "emptyUsers": "Lista użytkowników jest pusta jak kapusta albo nie masz pozwolenia do białego",
         "messageValidTo": "Wiadomość aktualna do",
         "shortTime": "godz.",
-        "editProject": "Nie posiadasz uprawnień do edycji"
+        "editProject": "Nie posiadasz uprawnień do edycji",
+        "selectInfo" : "Przytrzymaj ctrl, żeby zaznaczyć więcej wariantów"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",

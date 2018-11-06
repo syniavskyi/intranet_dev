@@ -32,9 +32,9 @@
                                     <input value="advert.ValidTo"/>
                                 </v-date-picker>
                                 <div class="advBtns" >
-                                    <button  class="clear-btn" @click="editAdvert(advert)">{{ $t("button.edit") }}</button>
-                                    <button  class="clear-btn" @click="saveAdvert(advert)" :disabled="!isAdvertValid">{{ $t("button.save") }}</button>
-                                    <button  class="clear-btn" @click="cancelEditing(index)">{{ $t("button.cancel") }}</button>
+                                    <button class="clear-btn" :disabled="loginAlias !== advert.CreatedBy" @click="editAdvert(advert)">{{ $t("button.edit") }}</button>
+                                    <button class="clear-btn" @click="saveAdvert(advert)" :disabled="!isAdvertValid">{{ $t("button.save") }}</button>
+                                    <button class="clear-btn" @click="cancelEditing(index)">{{ $t("button.cancel") }}</button>
                                     <button class="oclear-btn" @click="removeAdvert(advert.AdvertId)">X</button>
                                 </div>
                                 <button v-show="isMoreThanOneAdvert" @click="nextSlide(-1)" class="advLeft">&#8249;</button>
@@ -140,7 +140,8 @@ export default {
       isAdvertValid: false,
       isMoreThanOneAdvert: true,
       advertLoaded: this.$store.getters.getShowAdverts,
-      loading: true
+      loading: true,
+      loginAlias: this.$store.getters.getLoginAlias || localStorage.getItem("id")
     };
   },
   mounted() {
@@ -208,10 +209,8 @@ export default {
     let filteredEvents = this.events.filter(function(oItem){
       let eventDays = (oItem.DateTo - oItem.DateFrom) / 86400000;
         return oItem.DateFrom > new Date() && oItem.DateFrom < addDays(new Date(), 7)
-            //  || oItem.DateTo > addDays(new Date(), eventDays)
             || new Date() > substructDays(new Date(), eventDays) && oItem.DateFrom < new Date() && oItem.DateTo > new Date()
       });
-// new Date() > substructDays(new Date(), 7)
   return filteredEvents;
     }
   },
@@ -246,12 +245,21 @@ export default {
     editAdvert(advert) {
       this.beforeEditingCache = utils.createClone(advert);
       this.editMode = true;
+      // SPI
+      // let evt = document.addEventListener();
+      // evt.target.innerText;
+      // let evt = this.stop;
+      // this.startStopSlider(evt);
+      // clearInterval(this.interval);
     },
     saveAdvert(advert) {
       this.editMode = false;
       const data = utils.createClone(advert);
       this.$store.dispatch("updateAdvert", data);
       this.beforeEditingCache = data;
+      this.isAdvertValid = false;
+      //SPI
+      // this.runCarosuel(1);
       // this.updateAdvert();
     },
     removeAdvert(advertId) {

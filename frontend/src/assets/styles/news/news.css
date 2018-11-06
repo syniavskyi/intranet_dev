@@ -69,7 +69,12 @@ body {
     border: 1px solid lightgrey;
 
 }
-
+.modal-advert-header {
+    height: 15%;
+}
+.modal-advert-content {
+    height: 90%;
+}
 .adv-header {
     display: flex;
     min-height: 5rem;
