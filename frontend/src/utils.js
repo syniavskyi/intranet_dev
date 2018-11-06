@@ -103,8 +103,8 @@ export const formatToArray = function (data) {
         }
       }
     }
-    return data;
   }
+  return data;
   }
 }
 // format array to string, divedied by "||"

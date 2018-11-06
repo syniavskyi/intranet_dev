@@ -57,7 +57,7 @@
                     </div>
                     <div class="ava-tbs-item eduButtonsAvail" v-if="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'">
                          <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="permissionToEditAvail" @click="confirm(index, avail.EntryId)">{{ $t("button.confirm") }}</button>
-                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="permissionToEditAvail">{{ $t("button.reject") }}</button>
+                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="permissionToEditAvail" @click="remove(index, avail)">{{ $t("button.reject") }}</button>
                     </div>
                     <div class="ava-tbs-item" v-else>
                             <button v-if="editMode" :disabled="true" @click="save(index, avail)">{{ $t("button.save") }}</button>

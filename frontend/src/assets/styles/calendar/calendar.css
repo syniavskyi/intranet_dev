@@ -58,7 +58,7 @@
 }
 
 .user-list {
-    height: 20rem;
+    height: 19rem;
     width: 14rem;
     border: none;
     overflow: scroll;
@@ -379,7 +379,10 @@ marginForm button {
     display: flex;
     justify-content: space-between;
 }
-
+.event-select-error{
+    color: red;
+    font-size: .7rem;
+}
 @media (min-width: 44rem) {
     .calendar-header-menu {
         display: none;

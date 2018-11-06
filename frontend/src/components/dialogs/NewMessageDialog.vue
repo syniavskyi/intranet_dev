@@ -2,11 +2,11 @@
     <div> 
         <div class="modal-overlay"></div>
         <div class="modal-new-s">
-            <div class="modal-header-new">
+            <div class="modal-header-new modal-advert-header">
                 <h1 class="modal-title-new">{{ $t("label.addNewMessage") }}</h1>
                 <div @click="close" class="modal-exit-new">&#10006;</div>
             </div>
-            <div class="modal-content-new">
+            <div class="modal-content-new modal-advert-content">
                 <div class="m-wrap">
                     <div class="cd-for-input">
                         <textarea v-model="newAdvert.Message" required class="cd-textarea ta-height"></textarea>
@@ -57,6 +57,7 @@ export default {
 <style scoped>
 .ta-height {
     max-height: 10rem;
+    height: 6rem;
 }
 
 .m-wrap {

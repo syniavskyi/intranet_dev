@@ -81,7 +81,6 @@
                   </li>
                 </ul>
               </div>
-              <!-- to    </div> -->
               <!-- Modal for add event -->
               <div class="backdrop" v-if="dialogEvent"></div>
               <div class="modal-new-m " v-if="dialogEvent">
@@ -138,20 +137,21 @@
                       <label class="label-profile2">{{ $t("label.targetGroup") }}</label>
                     </div>
                     <div class="department" v-if="isSelected">
-                      <button class="privacy-button marginForm select-button" type="button" @click="selectedUser = !selectedUser">{{ $t("button.selectUser") }}</button>
+                      <label class="event-select-error" v-if="!selectedGroup && !selectedUser">{{ $t("label.selectInfo") }}</label>
+                      <button class="privacy-button marginForm select-button" type="button" @click="selectedUser = !selectedUser && selectedGroup === false">{{ $t("button.selectUser") }}</button>
                       <select multiple="true" class="user-list" v-if="selectedUser" v-model="addEvent.Employee">
                         <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias">
                           {{ user.Fullname }}
                         </option>
                       </select>
-                      <button class="privacy-button marginForm select-button" type="button" @click="selectedGroup = !selectedGroup">{{ $t("button.selectGroup") }}</button>
+                      <button class="privacy-button marginForm select-button" type="button" @click="selectedGroup = !selectedGroup && selectedUser === false">{{ $t("button.selectGroup") }}</button>
                         <select multiple="true" required class="user-list" v-if="selectedGroup" v-model="addEvent.TargetGroup">
                           <option v-for="group in targetGroup" :value="group.Key" :key="group.Key">
                             {{ group.Value }}
                             </option>
                         </select>
                       <button class="save-button" type="button" @click="isSelected = !isSelected">{{ $t("button.save") }}</button>
-                      <button class="save-button clear-button" type="button" @click="backToModal">{{ $t("button.clear") }}</button>
+                      <button class="save-button clear-button" type="button" @click="backToModal">{{ $t("button.back") }}</button>
                     </div>
                     <div class="event-feature event-visibility">
                       <label class="modal-label">{{ $t("label.visibility") }}</label>
@@ -219,13 +219,6 @@ export default {
     let oStore = this.$store;
       oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getEventsToRead);
       oStore.dispatch('getData', null);
-    // const data = {
-    //   roles: this.$store.getters.getUserAuth,
-    //   key: "ZEVENT",
-    //   dep: this.userData.DepartmentName,
-    //   userAlias: this.$store.getters.getLoginAlias
-    // };
-    // this.authType = utils.checkRole(data);
   },
   computed: {
     ...mapGetters({

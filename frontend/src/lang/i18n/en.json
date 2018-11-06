@@ -166,7 +166,8 @@
         "emptyUsers": "List of users is empty or you do not have permission to see them",
         "messageValidTo": "Message valid to",
         "shortTime": "time:",
-        "editProject": "You are not authorizied to edit"
+        "editProject": "You are not authorizied to edit",
+        "selectInfo" : "Press ctrl to select more variants"
     },
     "header": {
         "login": "Log in to Intranet",
