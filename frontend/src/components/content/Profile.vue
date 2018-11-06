@@ -403,13 +403,14 @@ export default {
         oFormatedDate;
         // if there is some differences - show work experience
         if(oCalculateDifference){
-          oFormatedDate = utils.setWorkExperience(
-            oCalculateDifference,
-            this.selectedCvLang
-          );
+          oFormatedDate = utils.setWorkExperience(oCalculateDifference);
         }
-
-      return oFormatedDate.year + oFormatedDate.month + oFormatedDate.day;
+          if(oFormatedDate.day.includes('NaN')) {
+            return i18n.t("message.lackOfData");
+            } else {
+            return oFormatedDate.year + oFormatedDate.month + oFormatedDate.day;
+          }
+           
     },
     filteredTeamUsers() {
       let aFilteredUsers = this.usersList,
