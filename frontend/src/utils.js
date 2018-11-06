@@ -1,4 +1,5 @@
 import moment from "moment";
+import i18n from './lang/lang';
 
 export const createRateDate = function (rateDate) {
   let day = parseFloat(moment(rateDate).format("D")),
@@ -131,7 +132,7 @@ export const formatToString = function (data) {
   return data;
 }
 
-export const setWorkExperiencePL = function (date) {
+export const setWorkExperience = function (date) {
   let oDates = {
     day: "",
     month: "",
@@ -141,78 +142,33 @@ export const setWorkExperiencePL = function (date) {
   if (date.years === 0) {
     oDates.year = "";
   } else if (date.years === 1) {
-    oDates.year = "rok ";
+    oDates.year = i18n.t("dates.year");
   } else if (date.years > 1 && date.years <= 4) {
-    oDates.year = date.years + " lata ";
+    oDates.year = date.years + i18n.t("dates.yearsF");
   } else if (date.years > 4) {
-    oDates.year = date.years + " lat ";
+    oDates.year = date.years + i18n.t("dates.yearsM");
   }
 
   if (date.months === 0) {
     oDates.month = "";
   } else if (date.months === 1) {
-    oDates.month = "miesiąc ";
+    oDates.month = i18n.t("dates.month");
   } else if (date.months > 1 && date.months <= 4) {
-    oDates.month = date.months + " miesiące ";
+    oDates.month = date.months + i18n.t("dates.monthsF");
   } else if (date.months > 4) {
-    oDates.month = date.months + " miesięcy ";
+    oDates.month = date.months + i18n.t("dates.monthsM");
   }
 
   if (date.days === 0) {
     oDates.day = "";
   } else if (date.days === 1) {
-    oDates.day = date.days + " dzień";
+    oDates.day = date.days + i18n.t("dates.day");
   } else {
-    oDates.day = date.days + " dni";
+    oDates.day = date.days + i18n.t("dates.days");
   }
 
   return oDates;
 }
-
-export const setWorkExperienceEN = function (date) {
-  let oDates = {
-    day: "",
-    month: "",
-    year: ""
-  }
-
-  if(date.years === 0) {
-    oDates.year = ""
-  } else if(date.years === 1) {
-    oDates.year = date.years + " year "
-  } else if(date.years > 1) {
-    oDates.year = date.years + " years ";
-  }
-
-  if(date.months === 0) {
-    oDates.month = ""
-  } else if(date.months === 1) {
-    oDates.month = date.months + " month "
-  } else if(date.months > 1) {
-    oDates.month = date.months + " months "
-  }
-
-  if(date.days === 0) {
-    oDates.day = ""
-  } else if(date.days === 1) {
-    oDates.day = date.days + " day"
-  } else if(date.days > 1) {
-    oDates.day = date.days + " days"
-  }
-
-  return oDates;
-}
-
-export const setWorkExperience = function (date, lang) {
-  let sFormattedDate;
-  if (lang === "pl") {
-    sFormattedDate = this.setWorkExperiencePL(date);
-  } else if (lang === "en") {
-    sFormattedDate = this.setWorkExperienceEN(date);
-  }
-
-  return sFormattedDate;
-};
 
 // format time from backend type to HH:mm:ss
 export const formatTimeForCalendar = function(data) {
@@ -294,23 +250,7 @@ export const checkRole = function(data) {
     } 
   }
   return aMaxRoles;
-
-
-  // let obj;
-  // obj = roles.find(o => o.Key == data.key && o.Value === "*" && o.UserAlias === data.userAlias);
-              
-  // if(obj) {
-  //     return '*';
-  //   } else {
-  //     obj = roles.find(o => o.Key == data.key && o.Value === "TEAM" && data.dep !== "" && o.UserAlias === data.userAlias);
-  //     if(obj) {
-  //       return 'TEAM';
-  //     } else {
-  //       return 'OWN';
-  //     }
-  //   }
   }
-
 
  export const dateToValid = function(beforeData, newData) {
    let a = new Date(beforeData.getFullYear(), beforeData.getMonth(), beforeData.getDay());

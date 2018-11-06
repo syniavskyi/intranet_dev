@@ -245,7 +245,8 @@
         "userRegistered": "Utworzono konto dla {fullname}. Wiadomość z loginem oraz hasłem została wysłana na adres: {email}.",
         "userNotregistered": "Konto dla {fullname} nie zostało utworzone",
         "stoppedSlider": "Zatrzymano slider",
-        "startedSlider": "Uruchomiono slider"
+        "startedSlider": "Uruchomiono slider",
+        "lackOfData": "Brak danych"
     },
     "select": {
         "language": {
@@ -318,5 +319,15 @@
         "saturday": "Sobota",
         "sunday": "Niedziela",
         "upcomingEvents": "Nadchodzące wydarzenia:"
+    },
+    "dates": {
+        "day": "dzień ",
+        "days": "dni ",
+        "month": " miesiąc ",
+        "monthsF": " miesiące ",
+        "monthsM": " miesięcy ",
+        "year": " rok ",
+        "yearsF": " lata ",
+        "yearsM": " lat "
     }
 }
