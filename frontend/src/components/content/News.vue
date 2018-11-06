@@ -40,7 +40,7 @@
                                 <button v-show="isMoreThanOneAdvert" @click="nextSlide(-1)" class="advLeft">&#8249;</button>
                                 <button v-show="isMoreThanOneAdvert" @click="nextSlide(1)" class="advRight">&#8250;</button>
                             </div>
-                            <button class="oclear-btn btn-s" @click="startStopSlider">{{stop}}</button>
+                            <button class="oclear-btn btn-s" id="halo" @click="startStopSlider">{{stop}}</button>
                             <!-- <div class="advControls">
                                 <a class="control-button">•</a>
                                 <a class="control-button">•</a>
@@ -245,12 +245,7 @@ export default {
     editAdvert(advert) {
       this.beforeEditingCache = utils.createClone(advert);
       this.editMode = true;
-      // SPI
-      // let evt = document.addEventListener();
-      // evt.target.innerText;
-      // let evt = this.stop;
-      // this.startStopSlider(evt);
-      // clearInterval(this.interval);
+      clearInterval(this.interval);
     },
     saveAdvert(advert) {
       this.editMode = false;
@@ -258,9 +253,10 @@ export default {
       this.$store.dispatch("updateAdvert", data);
       this.beforeEditingCache = data;
       this.isAdvertValid = false;
-      //SPI
-      // this.runCarosuel(1);
-      // this.updateAdvert();
+      this.interval = setInterval(() => {
+          this.slideIndex += 1;
+          this.runCarosuel(this.slideIndex);
+        }, 4000);
     },
     removeAdvert(advertId) {
       this.$store.dispatch('removeAdvert', advertId)
