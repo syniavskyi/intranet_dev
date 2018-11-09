@@ -1,5 +1,5 @@
 <template>
-  <div class="plane-component" >
+  <div class="plane-component">
     <!-- BEGIN OF DIALOG -->
     <confirm-dialog v-if="showDialog">
      <template slot="modal-title">
@@ -161,7 +161,8 @@ export default {
       cvLanguageList: "getCvLanguageList", 
       showDialog: "getDisplayConfirmDialog",
       branchList: "getBranchList",
-      registerData: "getRegistratinData"
+      registerData: "getRegistratinData",
+      menuAuth: "getMenuAuth"
     })
   }
 };

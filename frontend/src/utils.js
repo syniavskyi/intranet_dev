@@ -40,6 +40,9 @@ export const dateStringToObj = function (date) {
   if (date && date !== null) {
     return new Date(parseInt(date.substring(6, date.length - 2)));
   }
+  else {
+    return null;
+  }
 };
 // create independent clone without date changing
 export const createClone = function (data) {
