@@ -8,7 +8,7 @@ const state = {
     saveDataSuccess: false,
     removeSuccess: false,
     removeError: false,
-    dataToRead: ["Domains", "Industries", "UserData", "UserList", "Projects", "Contractors"],
+    dataToRead: ["NewToken", "Domains", "Industries", "UserData", "UserList", "Projects", "Contractors"],
     avaliablityAuth: "",
     availAccAuth: "",
     permissionToEditAvail: false,

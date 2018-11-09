@@ -186,15 +186,7 @@ export default {
     
     created(){
         let oStore = this.$store;
-        // const data = {
-        //     roles: oStore.getters.getUserAuth,
-        //     key: "ZDELEG",
-        //     dep: this.userData.DepartmentName,
-        //     userAlias: oStore.getters.getLoginAlias
-        // }
-        // this.authType = utils.checkRole(data);
         oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getDelegationToRead);
-
         oStore.dispatch('getData', null);
     },
     computed: {
