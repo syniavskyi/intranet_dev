@@ -166,7 +166,8 @@
         "messageValidTo": "Wiadomość aktualna do",
         "shortTime": "godz.",
         "editProject": "Nie posiadasz uprawnień do edycji",
-        "selectInfo" : "Przytrzymaj ctrl, żeby zaznaczyć więcej wariantów"
+        "selectInfo" : "Przytrzymaj ctrl, żeby zaznaczyć więcej wariantów",
+        "selected": "wybrano"
     },
     "header": {
         "login": "Zaloguj się do Intranetu",
@@ -246,7 +247,8 @@
         "userNotregistered": "Konto dla {fullname} nie zostało utworzone",
         "stoppedSlider": "Zatrzymano slider",
         "startedSlider": "Uruchomiono slider",
-        "lackOfData": "Brak danych"
+        "lackOfData": "Brak danych",
+        "notAuthToAddProject": "Nie posiadasz autoryzacji do dodawania nowego projektu"
     },
     "select": {
         "language": {

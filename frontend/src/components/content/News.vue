@@ -26,7 +26,7 @@
                                 <textarea @input="validateAdvert(advert)" :disabled="!editMode" class="n-textarea" v-model="advert.Message"/>
                                 <p class="table-p">{{formatAuthorName(advert.CreatedBy)}}</p>
                                 <p class="table-p" v-if="!editMode">  {{ $t("label.messageValidTo") }} {{ formatDate(advert.ValidTo) }} </p>
-                                <v-date-picker require class="cd-range" popoverDirection="bottom" mode="single" v-model="advert.ValidTo" :min-date="new Date()">
+                                <v-date-picker v-if="editMode" require class="cd-range" popoverDirection="bottom" mode="single" v-model="advert.ValidTo" :min-date="new Date()">
                                   <!-- @input="validateAdvert(advert)" v-if="editMode"   is-expanded mode="single"  value="advert.ValidTo" -->
                                     <!-- <input class="cd-range" v-model="advert.ValidTo" value="advert.ValidTo"/> -->
                                     <input value="advert.ValidTo"/>
@@ -35,7 +35,7 @@
                                     <button class="clear-btn" :disabled="loginAlias !== advert.CreatedBy" @click="editAdvert(advert)">{{ $t("button.edit") }}</button>
                                     <button class="clear-btn" @click="saveAdvert(advert)" :disabled="!isAdvertValid">{{ $t("button.save") }}</button>
                                     <button class="clear-btn" @click="cancelEditing(index)">{{ $t("button.cancel") }}</button>
-                                    <button class="oclear-btn" @click="removeAdvert(advert.AdvertId)">X</button>
+                                    <button class="oclear-btn" v-if="editMode" @click="removeAdvert(advert.AdvertId)">X</button>
                                 </div>
                                 <button v-show="isMoreThanOneAdvert" @click="nextSlide(-1)" class="advLeft">&#8249;</button>
                                 <button v-show="isMoreThanOneAdvert" @click="nextSlide(1)" class="advRight">&#8250;</button>
