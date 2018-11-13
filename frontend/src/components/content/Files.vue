@@ -27,6 +27,8 @@
                     <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank">
                       <div class="doc-file-img doc-file-pdf" v-if="checkFileFormat(doc.Filename) == '.pdf'"></div>
                       <div class="doc-file-img doc-file-doc" v-if="checkFileFormat(doc.Filename) == '.docx' || checkFileFormat(doc.Filename) == '.doc'"></div>
+                      <div class="doc-file-img doc-file-xls" v-if="checkFileFormat(doc.Filename) == '.xls'"></div>
+                      <div class="doc-file-img doc-file-zip" v-if="checkFileFormat(doc.Filename) == '.zip'"></div>
                       <div class="doc-file-desc">{{ doc.Filename }}</div>
                     </a>
                   </div>
@@ -48,6 +50,8 @@
                     <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank">
                       <div class="doc-file-img doc-file-pdf" v-if="checkFileFormat(doc.Filename) == '.pdf'"></div>
                       <div class="doc-file-img doc-file-doc" v-if="checkFileFormat(doc.Filename) == '.docx' || checkFileFormat(doc.Filename) == '.doc'"></div>
+                      <div class="doc-file-img doc-file-xls" v-if="checkFileFormat(doc.Filename) == '.xls'"></div>
+                      <div class="doc-file-img doc-file-zip" v-if="checkFileFormat(doc.Filename) == '.zip'"></div>
                       <div class="doc-file-desc">{{ doc.Filename }}</div>
                     </a>
                   </div>
@@ -69,6 +73,8 @@
                     <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank">
                       <div class="doc-file-img doc-file-pdf" v-if="checkFileFormat(doc.Filename) == '.pdf'"></div>
                       <div class="doc-file-img doc-file-doc" v-if="checkFileFormat(doc.Filename) == '.docx' || checkFileFormat(doc.Filename) == '.doc'"></div>
+                      <div class="doc-file-img doc-file-xls" v-if="checkFileFormat(doc.Filename) == '.xls'"></div>
+                      <div class="doc-file-img doc-file-zip" v-if="checkFileFormat(doc.Filename) == '.zip'"></div>
                       <div class="doc-file-desc">{{ doc.Filename }}</div>
                     </a>
                   </div>
@@ -90,6 +96,8 @@
                     <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank">
                       <div class="doc-file-img doc-file-pdf" v-if="checkFileFormat(doc.Filename) == '.pdf'"></div>
                       <div class="doc-file-img doc-file-doc" v-if="checkFileFormat(doc.Filename) == '.docx' || checkFileFormat(doc.Filename) == '.doc'"></div>
+                      <div class="doc-file-img doc-file-xls" v-if="checkFileFormat(doc.Filename) == '.xls'"></div>
+                      <div class="doc-file-img doc-file-zip" v-if="checkFileFormat(doc.Filename) == '.zip'"></div>
                       <div class="doc-file-desc">{{ doc.Filename }}</div>
                     </a>
                   </div>
@@ -111,6 +119,8 @@
                     <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank">
                       <div class="doc-file-img doc-file-pdf" v-if="checkFileFormat(doc.Filename) == '.pdf'"></div>
                       <div class="doc-file-img doc-file-doc" v-if="checkFileFormat(doc.Filename) == '.docx' || checkFileFormat(doc.Filename) == '.doc'"></div>
+                      <div class="doc-file-img doc-file-xls" v-if="checkFileFormat(doc.Filename) == '.xls'"></div>
+                      <div class="doc-file-img doc-file-zip" v-if="checkFileFormat(doc.Filename) == '.zip'"></div>
                       <div class="doc-file-desc">{{ doc.Filename }}</div>
                     </a>
                   </div>
