@@ -81,7 +81,8 @@
                             </div>
                         </div>
                     </div>
-                    <app-projects-tile :auth-type="authType" :selected-user="selectedUser.UserAlias" v-if="selectedType === 'PR' && showContent == true"></app-projects-tile>
+                    <app-not-authorized-projects-tile :auth-type="authType" :selected-user="selectedUser.UserAlias" v-if="selectedType === 'PR' && showContent == true && authType === 'OWN'"></app-not-authorized-projects-tile>
+                    <app-projects-tile :auth-type="authType" :selected-user="selectedUser.UserAlias" v-if="selectedType === 'PR' && showContent == true && authType !== 'OWN'"></app-projects-tile>
                     <app-leaves-tile   :auth-type="authType" :selected-user="selectedUser.UserAlias" :selected-type="selectedType"  v-if="selectedType !== 'PR' && showContent == true"></app-leaves-tile>
                </div>
                 <div class="availability-tiles-row">
@@ -112,6 +113,7 @@ import ProjectsTable from './availabilityComponents/AvailProjectsTable'
 import LeavesTable from './availabilityComponents/AvailLeavesTable'
 import ProjectsTile from './availabilityComponents/AvailProjectsTile'
 import LeavesTile from './availabilityComponents/AvailLeavesTile'
+import NotAuthProjectsTile from './availabilityComponents/AvailNotAuthorizedProjectsTile'
 const utils = require("../../utils");
 
 export default {
@@ -133,7 +135,8 @@ export default {
         'app-projects-table': ProjectsTable,
         'app-leaves-table': LeavesTable,
         'app-projects-tile': ProjectsTile,
-        'app-leaves-tile': LeavesTile
+        'app-leaves-tile': LeavesTile,
+        'app-not-authorized-projects-tile': NotAuthProjectsTile
     },
     computed: {
         ...mapGetters({
@@ -238,20 +241,20 @@ export default {
             this.newProject.UserAlias = value.UserAlias;
 
         // check permission to create project or other avail type
-        if(this.authType === '*') {
-          this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', false);
-          this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
-        } else if(this.authType === 'TEAM' && this.filteredUsers.find(o => o.UserAlias === this.selectedUser.UserAlias)) {
-          this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', false);
-          this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
-         } else if(this.authType === 'OWN' && this.selectedUser.UserAlias === this.loginAlias) {
-             this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', true);
-          this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false); 
-        } else {
-          this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', true);
-          this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', true);
-        }
-         }
+            if(this.authType === '*') {
+            this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', false);
+            this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
+            } else if(this.authType === 'TEAM' && this.filteredUsers.find(o => o.UserAlias === this.selectedUser.UserAlias)) {
+            this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', false);
+            this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
+            } else if(this.authType === 'OWN' && this.selectedUser.UserAlias === this.loginAlias) {
+                this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', true);
+            this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false); 
+            } else {
+            this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', true);
+            this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', true);
+            }
+           }
     },
     methods: {
         ...mapActions({

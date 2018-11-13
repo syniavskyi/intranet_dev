@@ -178,6 +178,11 @@ body {
     color: #ccc;
     font-size: .8rem;
 }
+.target-group-btn {
+    top: -.65rem;
+    font-size: 1rem;
+    color: rgb(255, 145, 0);
+}
 
 .content-weather {
     width: 100%;

@@ -167,7 +167,8 @@
         "messageValidTo": "Message valid to",
         "shortTime": "time:",
         "editProject": "You are not authorizied to edit",
-        "selectInfo" : "Press ctrl to select more variants"
+        "selectInfo" : "Press ctrl to select more variants",
+        "selected": "selected"
     },
     "header": {
         "login": "Log in to Intranet",
@@ -247,7 +248,8 @@
         "userNotregistered": "Account creation failed for {fullname}",
         "stoppedSlider": "Slider was stopped",
         "startedSlider": "Slider was started",
-        "lackOfData": "Lack of data"
+        "lackOfData": "Lack of data",
+        "notAuthToAddProject": "You are not authorized to add new project"
     },
     "select": {
         "language": {

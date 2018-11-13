@@ -18,7 +18,7 @@
                 <v-date-picker mode='single' :min-date="new Date()" v-model="selectedValue" :attributes="attributes" is-inline @dayclick='dayClicked'>
                 </v-date-picker>
               </div>
-              <div class="filters" v-if="authType==='*'">
+              <div class="filters">
                 <div class="ava-div-select-cool">
                   <select required class="ava-select-cool" v-model="filters.branch">
                     <option v-for="branch in branchList" :key="branch.Key" :value="branch.Key">{{ branch.Value }}</option>
@@ -34,17 +34,6 @@
                 <div class="ava-div-select-cool">
                   <select required class="ava-select-cool" v-model="filters.employee">
                     <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias">
-                      {{ user.Fullname }}
-                    </option>
-                  </select>
-                  <label class="ava-select-label-cool">{{ $t("label.employee") }}</label>
-                  <button @click="clearFilters">{{ $t("button.clear") }}</button>
-                </div>
-              </div>
-              <div class="filters" v-if="authType==='TEAM'">
-                <div class="ava-div-select-cool">
-                  <select required class="ava-select-cool" v-model="filters.employee">
-                    <option v-for="user in filteredTeamUsers" :value="user.UserAlias" :key="user.UserAlias">
                       {{ user.Fullname }}
                     </option>
                   </select>
@@ -75,8 +64,8 @@
                       <div> {{ attr.customData.EventPrivacy }} </div>
                     </div>
                     <div class="events-buttons">
-                      <button class="button edit-button" @click="editEventClick(attr.customData, $t)">{{ $t("button.edit") }}</button>
-                      <button class="button edit-button" @click="deleteEvent(attr.customData, $t)">{{ $t("button.delete") }}</button>
+                      <button class="button edit-button" :disabled="attr.customData.CreatedBy !== loginAlias && authType !== '*'" @click="editEventClick(attr.customData, $t)">{{ $t("button.edit") }}</button>
+                      <button class="button edit-button" :disabled="attr.customData.CreatedBy !== loginAlias && authType !== '*'" @click="deleteEvent(attr.customData, $t)">{{ $t("button.delete") }}</button>
                     </div>
                   </li>
                 </ul>
@@ -94,9 +83,6 @@
                       <input required class="inputEdit2 inputProfile2 input-active" v-model="addEvent.EventName" @blur="$v.addEvent.EventName.$touch()">
                       <span class="prof-div-bar"></span>
                       <label class="label-profile2">{{ $t("label.eventTitle") }}</label>
-                      <!-- <div class="error" v-if="!$v.addEvent.EventName.required">Username is required.</div> -->
-                      <!-- <tree-view :data="$v.addEvent.EventName" :options="{rootObjectKey: '$v.addEvent.EventName', maxDepth: 2}"></tree-view> -->
-                      <!-- <p class="prof-error" v-if="!$v.addEvent.EventName.required">{{ "halo, źle" }}</p> -->
                     </div>
                     <div class="prof-input2">
                       <input required class="inputEdit2 inputProfile2 input-active" type="time" v-model="addEvent.EventTime">
@@ -134,7 +120,8 @@
                     <div class="prof-input2">
                       <p class="click-paragraph">{{ $t("button.click") }}</p>
                       <button class="privacy-button marginForm" type="button" @click="isSelected = !isSelected"></button>
-                      <label class="label-profile2">{{ $t("label.targetGroup") }}</label>
+                      <label class="label-profile2 target-group-btn">{{ $t("label.targetGroup") }}</label>
+                      <label v-if="addEvent.TargetGroup.length !== 0 || addEvent.Employee.length !== 0" class="label-profile2">{{ $t("label.selected") }}</label>
                     </div>
                     <div class="department" v-if="isSelected">
                       <label class="event-select-error" v-if="!selectedGroup && !selectedUser">{{ $t("label.selectInfo") }}</label>
@@ -196,9 +183,12 @@ export default {
       selectedGroup: false,
       checkedNames: "",
       disabledButton: true,
-      displayButton: true
+      displayButton: true,
+      permission: false,
+      loginAlias: this.$store.getters.getLoginAlias || localStorage.getItem("id")
     };
   },
+  //sprawdź spi
   validations: {
     addEvent: {
       EventName: {
@@ -234,7 +224,8 @@ export default {
       displayOverlay: "getShowMenuOverlay",
       filters: "getClearedFilters",
       userData: "getUserInfo",
-      authType: "getCalendarAuth"
+      authType: "getCalendarAuth",
+      permissionToEditEvent: "getPermissionToEditEvent"
     }),
     filteredEvents() {
       let aEvents = this.events,
@@ -289,15 +280,6 @@ export default {
         }
       }
       return aEvents;
-    },
-    filteredTeamUsers() {
-      let aFilteredUsers = this.usersList,
-        sTeam = this.userData.DepartmentName;
-
-      aFilteredUsers = aFilteredUsers.filter(function(oData) {
-        return oData.DepartmentName === sTeam;
-      });
-      return aFilteredUsers;
     },
     // calendar attributes
     attributes() {
