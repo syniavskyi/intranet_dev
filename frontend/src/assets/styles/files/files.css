@@ -155,6 +155,9 @@
 .doc-file-xls {
     background-image: url(../../images/files/xls-48.png);
 }
+.doc-file-zip {
+    background-image: url(../../images/files/zip-48.png);
+}
 
 .doc-file-div {
     display:flex;
