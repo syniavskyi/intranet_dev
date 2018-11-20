@@ -104,7 +104,7 @@ export default {
       oStore.commit('SET_REGISTER_DEF_DATA');
       oStore.commit('SET_PROMISE_TO_READ', aPromisesToRead);
       oStore.dispatch('getData', null);
-      
+      this.checkRegistrationAuth(oStore);
   },
   validations: {
     registerData: {
@@ -149,6 +149,13 @@ export default {
         Language: this.Language.toUpperCase()
       });
       this.isLoading = false;
+    },
+    checkRegistrationAuth(oStore) {
+      var bAuth = oStore.getters.getUserAuth.ZMENU.registration;
+
+      if(!bAuth) {
+        this.$router.push({name: "News"})
+      }
     }
   },
   computed: {
