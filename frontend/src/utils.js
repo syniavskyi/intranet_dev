@@ -260,4 +260,10 @@ export const checkRole = function(data) {
    let b = new Date(newData.getFullYear(), newData.getMonth(), newData.getDay());
    return a.getTime() !== b.getTime();
  } 
+ //add one day to data send to backend 
+ export const addDays = function(date, days) {
+    let result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+    }
 const actions = {};
