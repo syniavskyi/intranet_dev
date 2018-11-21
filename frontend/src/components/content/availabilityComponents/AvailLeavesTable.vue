@@ -55,11 +55,11 @@
                             <option v-for="status in availStatus" :key="status.Key" :value="status.Key">{{status.Value}}</option>
                         </select>
                     </div>
-                    <div class="ava-tbs-item eduButtonsAvail" v-if="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'">
+                    <div class="ava-tbs-item" v-if="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'">
                          <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="permissionToEditAvail" @click="confirm(index, avail.EntryId)">{{ $t("button.confirm") }}</button>
                          <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="permissionToEditAvail" @click="remove(index, avail)">{{ $t("button.reject") }}</button>
                     </div>
-                    <div class="ava-tbs-item" v-else>
+                    <div class="ava-tbs-item eduButtonsAvail" v-else>
                             <button v-if="editMode" :disabled="true" @click="save(index, avail)">{{ $t("button.save") }}</button>
                             <button v-if="editMode" @click="remove(index, avail)">{{ $t("button.delete") }}</button>
                     </div>
@@ -79,8 +79,8 @@ export default {
             invalidDates: false,
             editMode: false,
             _beforeEditingCache: null,
-            setFilterAllowed: true
-            // loginAlias: this.$store.getters.getLoginAlias || localStorage.getItem("id")
+            setFilterAllowed: true,
+            loginAlias: this.$store.getters.getLoginAlias || localStorage.getItem("id")
         }
     },
     computed: {
@@ -215,16 +215,16 @@ export default {
              userEntryId.DateStart &&
              userEntryId.DateEnd &&
              userEntryId.StatusId) {
-                document.getElementsByClassName("eduButtonsAvail")[index].children[1].disabled = false;
+                document.getElementsByClassName("eduButtonsAvail")[index].children[0].disabled = false;
             }    else {
-                document.getElementsByClassName("eduButtonsAvail")[index].children[1].disabled = true;
+                document.getElementsByClassName("eduButtonsAvail")[index].children[0].disabled = true;
             }
 
             userEntryId.Filter = true;
         },
         save(index, data) {
              this.userAvail[data.EntryId].Filter = false;
-             document.getElementsByClassName("eduButtonsAvail")[index].children[1].disabled = true;
+             document.getElementsByClassName("eduButtonsAvail")[index].children[0].disabled = true;
              let avail = utils.createClone(data);
              avail.DateStartToChange = this._beforeEditingCache[index].DateStart;
              avail.DateEndToChange = this._beforeEditingCache[index].DateEnd;

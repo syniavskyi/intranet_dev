@@ -188,7 +188,6 @@ export default {
       loginAlias: this.$store.getters.getLoginAlias || localStorage.getItem("id")
     };
   },
-  //sprawdź spi
   validations: {
     addEvent: {
       EventName: {
