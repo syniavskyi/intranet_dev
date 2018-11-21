@@ -641,6 +641,12 @@
     padding-left: 0.5rem;
 }
 
+.notAuthToAddProject {
+    color: grey;
+    margin: auto;
+    font-size: 1.2rem;
+}
+
 
 @keyframes pulse {
     0% {
@@ -740,10 +746,7 @@
     .ava-thproj-item:nth-of-type(7) {
         width: 28%;
     }
-    .notAuthToAddProject {
-        margin: auto;
-        font-size: 1.2rem;
-    }
+    
 }
 
 @media (min-width: 44rem) {
