@@ -471,7 +471,7 @@ export default {
       if (this.hasDataChanged === false) {
         this.showNoChangesAlert = true;
       } else {
-        let data = utils.createClone(this.userData)
+        const data = utils.createClone(this.userData)
         this.$store.dispatch("saveUserData", data);
         this.editMode = !this.editMode;
       }

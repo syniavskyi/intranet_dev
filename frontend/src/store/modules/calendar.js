@@ -241,7 +241,7 @@ const actions = {
       employee: null
     }
     commit('SET_CLEARED_FILTERS', aFilters);
-  },
+  }
 };
 
 const getters = {

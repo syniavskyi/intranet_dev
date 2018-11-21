@@ -134,8 +134,9 @@ const actions = {
            console.log(error)
        });
     },
-    addNewAdvert({getters}, data){
+    addNewAdvert({getters, commit}, data2){
         const url = 'Adverts';
+        const data = utils.createClone(data2);
         data.ValidTo = utils.formatDateForBackend(data.ValidTo);
         data.CreatedBy = localStorage.getItem("id");
         axios({
@@ -151,6 +152,7 @@ const actions = {
             }
           }).then(res => {
               console.log(res);
+              commit("SET_SHOW_NEW_MESSAGE_DIALOG", false);
             }).catch(error => {
               console.log(error);
           })

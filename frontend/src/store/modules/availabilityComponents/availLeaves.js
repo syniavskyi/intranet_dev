@@ -82,6 +82,9 @@ const actions = {
              url = 'UserAvailabilities',
              sToken = getters.getToken,
             cookie = getters.getCookie;
+            if(!data.StatusId) {
+                data.StatusId = "PL";
+            }
         axios({
           url: url,
           method: 'post',
@@ -111,7 +114,7 @@ const actions = {
         delete data.Order;
         delete data.TypeName;
         // let urlD = "UserAvailabilities(UserId='" + data.UserId + "',TypeId='" + data.TypeId + "',DateStart=datetime'" + moment(data.DateStart).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(data.DateEnd).format("YYYY-MM-DD") + "T00:00:00')",
-        url = "UserAvailabilities(UserId='" + data.UserId + "',TypeId='" + data.TypeId + "',DateStart=datetime'" + moment(data.DateStartToChange).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(data.DateEndToChange).format("YYYY-MM-DD") + "T00:00:00')"
+        let url = "UserAvailabilities(UserId='" + data.UserId + "',TypeId='" + data.TypeId + "',DateStart=datetime'" + moment(data.DateStartToChange).format("YYYY-MM-DD") + "T00:00:00" + "',DateEnd=datetime'" + moment(data.DateEndToChange).format("YYYY-MM-DD") + "T00:00:00')"
         axios({
         url: url,
         method: 'put',
