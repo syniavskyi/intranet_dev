@@ -6,7 +6,6 @@
       <div class="component-content">
         <div class="content-header">
           <div class="content-header-title-and-menu">
-            <!-- <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="content-header-menu"> -->
             <div @click="showMenu" class="content-header-menu">&#9776;</div>
             <p class="content-header-title">{{ $t("header.documents") }}</p>
           </div>
@@ -14,8 +13,7 @@
         <div class="documents-page-tiles">
 
           <div class="documents-tiles-row">
-            <!-- <input id="documents-row-1" class="documents-tiles-row-header-input" type="checkbox"> -->
-            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-1">{{ $t("header.documents") }}</div>
+            <div @click.self="toggleDocTile" aria-expanded="false" class="documents-tiles-row-header">{{ $t("header.documents") }}</div>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3" v-for="doc in docFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
@@ -24,7 +22,7 @@
                 </div>
                 <div class="documents-tile-content">
                   <div class="documents-div">
-                    <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank">
+                    <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank" title="ściągnij">
                       <div class="doc-file-img doc-file-pdf" v-if="checkFileFormat(doc.Filename) == '.pdf'"></div>
                       <div class="doc-file-img doc-file-doc" v-if="checkFileFormat(doc.Filename) == '.docx' || checkFileFormat(doc.Filename) == '.doc'"></div>
                       <div class="doc-file-img doc-file-xls" v-if="checkFileFormat(doc.Filename) == '.xls'"></div>
@@ -37,8 +35,7 @@
             </div>
           </div>
           <div class="documents-tiles-row">
-            <!-- <input id="documents-row-2" class="documents-tiles-row-header-input" type="checkbox"> -->
-            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-2">{{ $t("header.systemData")}}</div>
+            <div @click.self="toggleDocTile" class="documents-tiles-row-header" aria-expanded="false">{{ $t("header.systemData")}}</div>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3" v-for="doc in systemFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
@@ -47,7 +44,7 @@
                 </div>
                 <div class="documents-tile-content">
                   <div class="documents-div">
-                    <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank">
+                    <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank" title="ściągnij">
                       <div class="doc-file-img doc-file-pdf" v-if="checkFileFormat(doc.Filename) == '.pdf'"></div>
                       <div class="doc-file-img doc-file-doc" v-if="checkFileFormat(doc.Filename) == '.docx' || checkFileFormat(doc.Filename) == '.doc'"></div>
                       <div class="doc-file-img doc-file-xls" v-if="checkFileFormat(doc.Filename) == '.xls'"></div>
@@ -60,8 +57,7 @@
             </div>
           </div>
           <div class="documents-tiles-row">
-            <!-- <input id="documents-row-3" class="documents-tiles-row-header-input" type="checkbox"> -->
-            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-3">{{ $t("header.office") }}</div>
+            <div @click.self="toggleDocTile" class="documents-tiles-row-header" aria-expanded="false">{{ $t("header.office") }}</div>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3" v-for="doc in officeFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
@@ -70,7 +66,7 @@
                 </div>
                 <div class="documents-tile-content">
                  <div class="documents-div">
-                    <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank">
+                    <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank" title="ściągnij">
                       <div class="doc-file-img doc-file-pdf" v-if="checkFileFormat(doc.Filename) == '.pdf'"></div>
                       <div class="doc-file-img doc-file-doc" v-if="checkFileFormat(doc.Filename) == '.docx' || checkFileFormat(doc.Filename) == '.doc'"></div>
                       <div class="doc-file-img doc-file-xls" v-if="checkFileFormat(doc.Filename) == '.xls'"></div>
@@ -83,8 +79,7 @@
             </div>
           </div>
           <div class="documents-tiles-row">
-            <!-- <input id="documents-row-4" class="documents-tiles-row-header-input" type="checkbox"> -->
-            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-4">{{ $t("header.information") }}</div>
+            <div @click.self="toggleDocTile" class="documents-tiles-row-header" aria-expanded="false">{{ $t("header.information") }}</div>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3" v-for="doc in infoFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
@@ -93,7 +88,7 @@
                 </div>
                 <div class="documents-tile-content">
                  <div class="documents-div">
-                    <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank">
+                    <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank" title="ściągnij">
                       <div class="doc-file-img doc-file-pdf" v-if="checkFileFormat(doc.Filename) == '.pdf'"></div>
                       <div class="doc-file-img doc-file-doc" v-if="checkFileFormat(doc.Filename) == '.docx' || checkFileFormat(doc.Filename) == '.doc'"></div>
                       <div class="doc-file-img doc-file-xls" v-if="checkFileFormat(doc.Filename) == '.xls'"></div>
@@ -106,8 +101,7 @@
             </div>
           </div>
           <div class="documents-tiles-row">
-            <input id="documents-row-5" class="documents-tiles-row-header-input" type="checkbox">
-            <div @click.self="toggleDocTile" class="documents-tiles-row-header" for="documents-row-5">{{ $t("header.instructions") }}</div>
+            <div @click.self="toggleDocTile" class="documents-tiles-row-header" aria-expanded="false">{{ $t("header.instructions") }}</div>
             <div class="documents-tiles-row-content">
               <div class="documents-tile documents-tile-1-3" v-for="doc in instrFiles" :key="doc.FileId">
                 <div class="documents-tile-header">
@@ -116,7 +110,7 @@
                 </div>
                 <div class="documents-tile-content">
                  <div class="documents-div">
-                    <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank">
+                    <a class="doc-file-div" :href="generateLink(doc.FileId)" target="_blank" title="ściągnij">
                       <div class="doc-file-img doc-file-pdf" v-if="checkFileFormat(doc.Filename) == '.pdf'"></div>
                       <div class="doc-file-img doc-file-doc" v-if="checkFileFormat(doc.Filename) == '.docx' || checkFileFormat(doc.Filename) == '.doc'"></div>
                       <div class="doc-file-img doc-file-xls" v-if="checkFileFormat(doc.Filename) == '.xls'"></div>
@@ -139,6 +133,11 @@ import i18n from "../../lang/lang";
 import { mapGetters } from "vuex";
 
 export default {
+  data() {
+    return {
+      closed: "true"
+    }
+  },
   computed: {
     ...mapGetters({
       infoFiles: "getInfoFiles",
@@ -177,7 +176,11 @@ export default {
         "')/$value";
       return url;
     },
-    toggleDocTile(evt) {
+    toggleDocTile(evt, target) {
+      if (evt.target.getAttribute("aria-expanded") === "false") {
+        evt.target.setAttribute("aria-expanded", true);
+        this.closed = true;
+      } else evt.target.setAttribute("aria-expanded", false);
       let el = evt.target.nextElementSibling,
         elChild = evt.target.nextElementSibling;
       const name = { el, elChild };
