@@ -24,13 +24,15 @@
             <button class="border-btn reject-btn" @click="onCancelEdit">{{ $t("button.cancel") }}</button>
           </div>
         </div>
-        <div class="cd-for-select">
-          <select v-model="selectedUser" @change="getNewData" required class="cd-select">
-            <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias">
-                {{ user.Fullname }}
-            </option>
-          </select>
-          <label class="cd-slabel">{{ $t("label.selectEmployee") }}</label>
+        <div class="profile-user-head">
+          <div class="cd-for-select">
+            <select v-model="selectedUser" @change="getNewData" required class="cd-tselect">
+              <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias">
+                  {{ user.Fullname }}
+              </option>
+            </select>
+            <label class="cd-tlabel">{{ $t("label.selectEmployee") }}</label>
+          </div>
         </div>
         <div class="profile-tiles">
           <div class="profile-tiles-row-wrap">
@@ -323,8 +325,6 @@ export default {
 
   //         image.src = url
   },
-
-
   // set login language
   beforeRouteLeave(to, from, next) {
     let lang = this.loginLanguage.toLowerCase();
@@ -332,6 +332,7 @@ export default {
       lang = "pl";
     }
     this.$store.commit("SET_LANG", lang);
+    this.$store.commit("SET_SELECTED_FOR_CV_USER", localStorage.getItem("id"));
     next();
   },  
   created() {

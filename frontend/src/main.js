@@ -38,6 +38,7 @@ require('./assets/styles/delegations/delegations.css');
 require('./assets/styles/calendar/calendar.css');
 require('./assets/styles/news/news.css');
 require('./assets/styles/pdf/pdf.css');
+require('./assets/styles/cd.css')
 
 
 Vue.config.productionTip = false
