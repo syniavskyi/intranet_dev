@@ -92,6 +92,12 @@
     align-self: center;
 }
 
+.profile-user-head {
+    display: flex;
+    width: 95%;
+    align-self: center;
+}
+
 .profile-tiles {
     margin:0;
     padding:0;
@@ -297,8 +303,6 @@
     width: 100%;
     /* align-items: center; */
 }
-
-
 
 .prof-div-content {
     display: flex;
