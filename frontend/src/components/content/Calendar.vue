@@ -322,7 +322,7 @@ export default {
       this.editEvent(data);
       this.editEventClick(data);
       let pos = this.selectedDay["attributes"].findIndex(x => x.customData.EventId === data.EventId);
-      this.selectedDay["attributes"][pos].customData = data;
+      // this.selectedDay["attributes"][pos].customData = data;
     },
     dayClicked(day) {
       this.selectedDay = day;

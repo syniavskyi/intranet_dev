@@ -222,19 +222,11 @@ export default {
     created() {
       let oStore = this.$store;
       oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getAvailabilityToRead);
-      oStore.dispatch('getData', null);
-      
-    //   filter users to make possibility to edit or accept avails
-    let aFilteredUsers = this.usersList,
-    idTeam = this.userData.DepartmentId;
-    aFilteredUsers = aFilteredUsers.filter(function(oData){ 
-        return oData.DepartmentId === idTeam;
-    });
-    this.$store.commit('SET_FILTERED_TEAM_USERS', aFilteredUsers);   
+      oStore.dispatch('getData', null);  
     },
     watch: {
         selectedType(value) {
-            this.newLeave.TypeId = value
+            this.newLeave.TypeId = value;
         },
         selectedUser(value){
             this.newLeave.UserId = value.UserAlias;
@@ -254,7 +246,16 @@ export default {
             this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', true);
             this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', true);
             }
-           }
+        },
+        selectedBranch(value) {
+    //   filter users to make possibility to edit or accept avails
+            let aFilteredUsers = this.usersList,
+            idTeam = this.userData.DepartmentId;
+            aFilteredUsers = aFilteredUsers.filter(function(oData){ 
+                return oData.DepartmentId === idTeam;
+            });
+            this.$store.commit('SET_FILTERED_TEAM_USERS', aFilteredUsers); 
+        }
     },
     methods: {
         ...mapActions({
