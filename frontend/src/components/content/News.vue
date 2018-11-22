@@ -174,8 +174,48 @@ export default {
     toast: Toast,
     "new-message": NewMessageDialog
   },
-  computed: {
-    ...mapGetters({
+  // computed: {
+  //   ...mapGetters({
+  //     geoLocation2: "geoLocation2",
+  //     weatherData: "weatherData",
+  //     today: "today",
+  //     articlesRaw: "articlesRaw",
+  //     articlesJson: "articlesJson",
+  //     rticles: "articles",
+  //     displayMenu: "getShowMenu",
+  //     displayOverlay: "getShowMenuOverlay",
+  //     events: "getAllEvents",
+  //     showToast: "getDisplayToast",
+  //     showNewMessage: "getShowNewMessageDialog",
+  //     advertsList: "getAdverts",
+  //     usersList: "usersList",
+  //     getShowAdverts: "getShowAdverts",
+  //     showAdvertsLoader: "getAdvertsLoader"
+  //   }),
+  //   eventsSrt: function() {
+  //    this.events.sort((a,b) => (a.DateFrom > b.DateFrom) ? 1 : ((b.DateFrom > a.DateFrom) ? -1 : 0)); 
+
+  //   let addDays = function(date, days) {
+  //       let result = new Date(date);
+  //       result.setDate(result.getDate() + days);
+  //       return result;
+  //         }
+  //    let substructDays = function(date, days) {
+  //       let result = new Date(date);
+  //       result.setDate(result.getDate() - days);
+  //       return result;
+  //         }    
+  
+  //   let filteredEvents = this.events.filter(function(oItem){
+  //     let eventDays = (oItem.DateTo - oItem.DateFrom) / 86400000;
+  //       return oItem.DateFrom > new Date() && oItem.DateFrom < addDays(new Date(), 7)
+  //           || new Date() > substructDays(new Date(), eventDays) && oItem.DateFrom < new Date() && oItem.DateTo > new Date()
+  //     });
+  // return filteredEvents;
+  //   }
+  // },
+  computed: Object.assign(
+    mapGetters({
       geoLocation2: "geoLocation2",
       weatherData: "weatherData",
       today: "today",
@@ -191,15 +231,15 @@ export default {
       usersList: "usersList",
       getShowAdverts: "getShowAdverts",
       showAdvertsLoader: "getAdvertsLoader"
-    }),
-    eventsSrt: function() {
-     this.events.sort((a,b) => (a.DateFrom > b.DateFrom) ? 1 : ((b.DateFrom > a.DateFrom) ? -1 : 0)); 
+    }), {
+      eventsSrt: function() {
+        this.events.sort((a,b) => (a.DateFrom > b.DateFrom) ? 1 : ((b.DateFrom > a.DateFrom) ? -1 : 0)); 
 
-    let addDays = function(date, days) {
-        let result = new Date(date);
-        result.setDate(result.getDate() + days);
-        return result;
-          }
+        let addDays = function(date, days) {
+          let result = new Date(date);
+          result.setDate(result.getDate() + days);
+          return result;
+        }
      let substructDays = function(date, days) {
         let result = new Date(date);
         result.setDate(result.getDate() - days);
@@ -211,9 +251,10 @@ export default {
         return oItem.DateFrom > new Date() && oItem.DateFrom < addDays(new Date(), 7)
             || new Date() > substructDays(new Date(), eventDays) && oItem.DateFrom < new Date() && oItem.DateTo > new Date()
       });
-  return filteredEvents;
+    return filteredEvents;
     }
-  },
+    }
+  ),
   methods: {
     ...mapActions([
       "geoLoc",

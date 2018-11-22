@@ -89,14 +89,49 @@ export default {
       oStore.commit('SET_PROMISE_TO_READ', ["Domains", "Industries", "UserData", "UserList"]);
       oStore.dispatch('getData', null);
   },
-  computed: {
-    ...mapGetters({
+  // computed: {
+  //   ...mapGetters({
+  //     usersList: "usersList",
+  //     departmentList: "getDepartmentList",
+  //     displayMenu: "getShowMenu",
+  //     displayOverlay: "getShowMenuOverlay"
+  //   }),
+  //   filteredUsers: function() {
+  //     let self = this,
+  //       aFilteredUsers = this.usersList,
+  //       aFilters = this.aFilters;
+
+  //     if (aFilters.user == "" && aFilters.department === null) {
+  //       aFilteredUsers = this.usersList;
+  //     } else {
+  //       let fnFilter;
+  //       if (aFilters.user) {
+  //         aFilteredUsers = self.usersList.filter(function(user) {
+  //           return (
+  //             user.Fullname.toLowerCase().indexOf(
+  //               aFilters.user.toLowerCase()
+  //             ) >= 0
+  //           );
+  //         });
+  //       }
+  //       if (aFilters.department) {
+  //         fnFilter = function(oItem) {
+  //           return oItem.DepartmentName === aFilters.department;
+  //         };
+  //         aFilteredUsers = aFilteredUsers.filter(fnFilter);
+  //       }
+  //     }
+  //     return aFilteredUsers;
+  //   }
+  // },
+  computed: Object.assign(
+    mapGetters({
       usersList: "usersList",
       departmentList: "getDepartmentList",
       displayMenu: "getShowMenu",
       displayOverlay: "getShowMenuOverlay"
-    }),
-    filteredUsers: function() {
+    }), {
+      filteredUsers: function() {
       let self = this,
         aFilteredUsers = this.usersList,
         aFilters = this.aFilters;
@@ -123,12 +158,25 @@ export default {
       }
       return aFilteredUsers;
     }
-  },
-  methods: {
-    ...mapActions({
+    }
+  ),
+  // methods: {
+  //   ...mapActions({
+  //     getUsersLists: "getUsersLists"
+  //   }),
+  //   clearFilters() {
+  //     this.aFilters = {};
+  //   },
+  //   showMenu(event) {
+  //     let name = { window, event };
+  //     this.$store.dispatch("setSideMenu", name);
+  //   }
+  // }
+  methods: Object.assign(
+    mapActions({
       getUsersLists: "getUsersLists"
-    }),
-    clearFilters() {
+    }), {
+       clearFilters() {
       this.aFilters = {};
     },
     showMenu(event) {
@@ -136,6 +184,7 @@ export default {
       this.$store.dispatch("setSideMenu", name);
     }
   }
+  )
 };
 </script>
 

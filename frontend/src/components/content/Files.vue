@@ -138,8 +138,19 @@ export default {
       closed: "true"
     }
   },
-  computed: {
-    ...mapGetters({
+  // computed: {
+  //   ...mapGetters({
+  //     infoFiles: "getInfoFiles",
+  //     docFiles: "getDocumentFiles",
+  //     instrFiles: "getInstructionFiles",
+  //     officeFiles: "getOfficeFiles",
+  //     systemFiles: "getSystemFiles",
+  //     displayMenu: "getShowMenu",
+  //     displayOverlay: "getShowMenuOverlay"
+  //   })
+  // },
+  computed: Object.assign(
+    mapGetters({
       infoFiles: "getInfoFiles",
       docFiles: "getDocumentFiles",
       instrFiles: "getInstructionFiles",
@@ -148,7 +159,7 @@ export default {
       displayMenu: "getShowMenu",
       displayOverlay: "getShowMenuOverlay"
     })
-  },
+  ),
   created() {
     let oStore = this.$store;
         oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getFilesToRead);
