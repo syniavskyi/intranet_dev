@@ -158,8 +158,21 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapGetters({
+  // computed: {
+  //   ...mapGetters({
+  //     displayMenu: "getShowMenu",
+  //     displayMenuOverlay: "getShowMenuOverlay",
+  //     isError: "getDialogErrorStatus",
+  //     roleList: "getRoleList",
+  //     departmentList: "getDepartmentList",
+  //     cvLanguageList: "getCvLanguageList", 
+  //     showDialog: "getDisplayConfirmDialog",
+  //     branchList: "getBranchList",
+  //     registerData: "getRegistratinData",
+  //     menuAuth: "getMenuAuth"
+  //   })
+  // }
+  computed: Object.assign(mapGetters({
       displayMenu: "getShowMenu",
       displayMenuOverlay: "getShowMenuOverlay",
       isError: "getDialogErrorStatus",
@@ -170,7 +183,6 @@ export default {
       branchList: "getBranchList",
       registerData: "getRegistratinData",
       menuAuth: "getMenuAuth"
-    })
-  }
+  }))
 };
 </script>

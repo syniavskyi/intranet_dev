@@ -66,11 +66,16 @@ import Menu from '../Menu.vue'
     components: {
         'app-menu': Menu
     },
-    computed: {
-        ...mapGetters([
+    // computed: {
+    //     ...mapGetters([
+    //         'showMenu'
+    //     ])
+    // },
+    computed: Object.assign(
+        mapGetters([
             'showMenu'
         ])
-    },
+    ),
     beforeCreate() {
         // if (this.showMenu === false) {
         //     this.$store.commit('DISPLAY_MENU', true)

@@ -198,10 +198,10 @@ export default {
   
      this.$i18n.locale  = retrievedObject.language.toLowerCase();
   },
-  methods: {
-    ...mapActions([
+  methods: Object.assign(
+    mapActions([
        "getIndustries"
-    ]),
+    ]), {
     generate(oEvent) {
       if (this.cvElements.format == "PDF") {
         this.generatePdf();
@@ -218,17 +218,6 @@ export default {
         return skillStr
       } else return
     },
-    // generatePdf() {
-    //   // not working
-    //   const pdf = new jsPDF('p', 'pt', 'letter'),
-    //         source = document.getElementById("content")[0];
-
-    //   pdf.addHTML(source).then(res => {
-    //       pdf.save('Test.pdf');
-    //   });
-    //     // pdf.fromHTML(source)
-    //     // pdf.save('Test.pdf')
-    // },
     generateDocx() {
       let userData = this.userInfo;
       if (this.cvElements.photo) {this.convertImagesToBase64();}
@@ -323,20 +312,29 @@ export default {
           if(IsCurrent === true) {
             return i18n.t("label.present");
           }
-    },
-    // setCvLanguage(language) {
-    //   this.$store.dispatch("setCvLanguage", language);
-    // },
-    // formatIndustryName(id) {
-    //   for (let i = 0; i < this.industryList.length; i++) {
-    //     if (id === this.industryList[i].id) {
-    //       return this.industryList[i].name;
-    //     }
-    //   }
-    // }
-  },
-  computed: {
-    ...mapGetters({
+    }
+  }
+  // },
+  ),
+  // computed: {
+  //   ...mapGetters({
+  //     userEducation: "getUserEducation",
+  //     userProjects: "getUserProjectsList",
+  //     userExperience: "getUserExperience",
+  //     userData: "userData",
+  //     cvElements: "getCvElements",
+  //     userInfo: "getUserInfo",
+  //     userLangs: "getUserLanguages",
+  //     userSkills: "getUserSkills",
+  //     schoolDesc: 'getSchoolDescList',
+  //     fieldOfStudyDesc: 'getFieldOfStudyDescList',
+  //     workPositions: 'getWorkPositions',
+  //     fullLanguageList: 'getFullLanguageList',
+  //     langLevels: 'getLangLevels'
+  //   })
+  // }
+  computed: Object.assign(
+    mapGetters({
       userEducation: "getUserEducation",
       userProjects: "getUserProjectsList",
       userExperience: "getUserExperience",
@@ -350,9 +348,8 @@ export default {
       workPositions: 'getWorkPositions',
       fullLanguageList: 'getFullLanguageList',
       langLevels: 'getLangLevels'
-
     })
-  }
+  )
 };
 </script>
 <style>

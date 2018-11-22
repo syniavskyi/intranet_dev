@@ -363,8 +363,68 @@ export default {
     "change-user-password": ChangePasswordDialog,
     VueGoogleAutocomplete: VueGoogleAutocomplete
   },
-  computed: {
-    ...mapGetters({
+  // computed: {
+  //   ...mapGetters({
+  //     userData: "getUserInfo",
+  //     saveChangesSuccess: "getSaveChangesSuccess",
+  //     photoUploadError: "getSavePhotoError",
+  //     cvLanguageList: "getCvLanguageList",
+  //     loginLanguage: "getLoginLanguage",
+  //     showSelectCv: "getShowSelectCvDialog",
+  //     showPasswordDialog: "getShowSelectChangePasswordDialog",
+  //     displayMenu: "getShowMenu",
+  //     displayOverlay: "getShowMenuOverlay",
+  //     usersList: "usersList",
+  //     userPhoto: "getUserPhotoUrl",
+  //     loginAlias: "getLoginAlias",
+  //     disabledBtnToEdit: "getDisabledBtnToEdit"
+  //   }),
+  //   formatAddress() {
+  //     const data = this.userData;
+  //     let address = data.Street + " " + data.BuildingNumber;
+  //     if (data.ApartmentNumber) {
+  //       address = address + "/" + data.ApartmentNumber;
+  //     }
+  //     address = address + ", " + data.PostalCode + " " + data.City;
+  //     return address;
+  //   },
+  //   formatDate() {
+  //     let date = this.userData.EmploymentDate;
+
+  //     return date !== null && date !== undefined
+  //       ? moment(date).format("DD.MM.YYYY")
+  //       : "-";
+  //   },
+  //   setFormatedDate() {
+  //     let oCalculateDifference = moment.preciseDiff(
+  //         this.userData.EmploymentDate,
+  //         new Date(),
+  //         true
+  //       ),
+  //       oFormatedDate;
+  //       // if there is some differences - show work experience
+  //       if(oCalculateDifference){
+  //         oFormatedDate = utils.setWorkExperience(oCalculateDifference);
+  //       }
+  //         if(oFormatedDate.day.includes('NaN')) {
+  //           return i18n.t("message.lackOfData");
+  //           } else {
+  //           return oFormatedDate.year + oFormatedDate.month + oFormatedDate.day;
+  //         }
+           
+  //   },
+  //   filteredTeamUsers() {
+  //     let aFilteredUsers = this.usersList,
+  //     sTeam = this.usersList.find(o => o.UserAlias === localStorage.getItem('id')).DepartmentId;
+
+  //     aFilteredUsers = aFilteredUsers.filter(function(oData) {
+  //       return oData.DepartmentId === sTeam;
+  //     });
+  //     return aFilteredUsers;
+  //   }
+  // },
+  computed: Object.assign(
+    mapGetters({
       userData: "getUserInfo",
       saveChangesSuccess: "getSaveChangesSuccess",
       photoUploadError: "getSavePhotoError",
@@ -378,8 +438,8 @@ export default {
       userPhoto: "getUserPhotoUrl",
       loginAlias: "getLoginAlias",
       disabledBtnToEdit: "getDisabledBtnToEdit"
-    }),
-    formatAddress() {
+    }), {
+      formatAddress() {
       const data = this.userData;
       let address = data.Street + " " + data.BuildingNumber;
       if (data.ApartmentNumber) {
@@ -422,7 +482,8 @@ export default {
       });
       return aFilteredUsers;
     }
-  },
+    }
+  ),
   watch: {
       selectedUser(value) {
         let profileActivityAuth = this.$store.getters.getUserAuth.ZPROF_ATCV;
@@ -443,12 +504,12 @@ export default {
   // this.showLeavePageDialog = true
   //     this.routeToGo = to.name
   // },
-  methods: {
-    ...mapActions({
+  methods: Object.assign(
+    mapActions({
       getUserData: "getUserData",
       getGoFromCv: "getGoFromCv"
-    }),
-    showMenu(event) {
+    }), {
+      showMenu(event) {
       let obj = { window, event };
       this.$store.dispatch("setSideMenu", obj);
     },
@@ -591,7 +652,157 @@ export default {
     //     }
     //     this.$router.push({name: this.routeToGo})
     // }
-  }
+    }
+  )
+  // methods: {
+  //   ...mapActions({
+  //     getUserData: "getUserData",
+  //     getGoFromCv: "getGoFromCv"
+  //   }),
+  //   showMenu(event) {
+  //     let obj = { window, event };
+  //     this.$store.dispatch("setSideMenu", obj);
+  //   },
+  //   onEdit() {
+  //     this.showNoChangesAlert = false;
+  //     this.editMode = !this.editMode;
+  //     this._beforeEditingCache = Object.assign({}, this.userData);
+  //   },
+  //   showChangePassword() {
+  //     this.$store.commit("SET_SHOW_CHANGE_PASSWORD_DIALOG", true);
+  //   },
+  //   onCancelEdit() {
+  //     Object.assign(this.userData, this._beforeEditingCache);
+  //     this._beforeEditingCache = null;
+  //     this.showNoChangesAlert = false;
+  //     this.editMode = !this.editMode;
+  //   },
+  //   onSaveChanges() {
+  //     this.showNoChangesAlert = false;
+  //     this.checkIfDataChanged();
+  //     if (this.hasDataChanged === false) {
+  //       this.showNoChangesAlert = true;
+  //     } else {
+  //       const data = utils.createClone(this.userData)
+  //       this.$store.dispatch("saveUserData", data);
+  //       this.editMode = !this.editMode;
+  //     }
+  //     this.disableSaveBtn = true;
+  //     this.userData = data;
+  //   },
+  //   checkIfDataChanged() {
+  //     let currentData = Object.assign({}, this.userData),
+  //       currDataProps = Object.getOwnPropertyNames(currentData),
+  //       beforeDataProps = Object.getOwnPropertyNames(this._beforeEditingCache);
+
+  //     for (let i = 0; i < beforeDataProps.length; i++) {
+  //       let propName = beforeDataProps[i];
+  //       if (currentData[propName] !== this._beforeEditingCache[propName]) {
+  //         this.hasDataChanged = true;
+  //         return;
+  //       } else {
+  //         this.hasDataChanged = false;
+  //       }
+  //     }
+  //   },
+  //   handlePhotoUpload() {
+  //     this.photo = this.$refs.photo.files[0];
+  //     this.disableSubmit = false;
+  //     let data = {
+  //       file: this.photo,
+  //       userId: localStorage.getItem("id"),
+  //       type: "USER-PHOTO",
+  //       language: "PL"
+  //     };
+  //     this.$store.dispatch("submitPhoto", data);
+  //   },
+  //   phoneValidation(value) {
+  //     const regex = new RegExp("^(?=.*[0-9])[- +()0-9]+$");
+  //     this.invalidPhone = regex.test(value.target.value) ? false : true;
+  //     this.checkFormFields();
+  //   },
+  //   dateValidation(value) {
+  //     const day = parseInt(value.slice(0, 2)),
+  //       month = parseInt(value.slice(3, 5));
+
+  //     this.invalidDate = day > 31 || month > 12 ? true : false;
+  //     this.disableSaveBtn = day > 31 || month > 12 ? true : false;
+
+  //     this.checkFormFields();
+  //   },
+  //   checkFormFields() {
+  //     if (
+  //       this.invalidPhone ||
+  //       this.invalidDate ||
+  //       this.$v.userData.Email.$invalid
+  //     ) {
+  //       this.disableSaveBtn = true;
+  //     } else {
+  //       this.checkIfDataChanged();
+  //       this.disableSaveBtn = this.hasDataChanged === true ? false : true;
+  //     }
+  //   },
+  //   generateCV() {},
+  //   addNewPositionForUser() {
+  //     const userPos = this.userPositions;
+  //     userPos.push(this.newPosition);
+  //     this.$store.commit("SET_USER_JOB_POS", userPos);
+  //   },
+  //   removeUserPosition(position) {
+  //     const userPos = this.userPositions;
+  //     for (let i = 0; userPos.length; i++) {
+  //       if (userPos[i] == position) {
+  //         userPos.splice(i, 1);
+  //         this.$store.commit("SET_USER_JOB_POS", userPos);
+  //         return;
+  //       }
+  //     }
+  //   },
+  //   // get data for selected language
+  //   getNewData() {
+  //     this.$store.dispatch('setLanguage', this.selectedCvLang);
+  //     let cvLang = this.selectedCvLang.toUpperCase();
+  //     localStorage.setItem("lang", this.selectedCvLang.toUpperCase());
+  //     if (!cvLang) {
+  //       let cvLang = loginLanguage.toUpperCase();
+  //     }
+  //     this.$store.commit("SET_SELECTED_FOR_CV_USER", this.selectedUser);
+  //     let userData = {
+  //       user: this.selectedUser,
+  //       lang: cvLang,
+  //       cvLang: cvLang,
+  //       changePage: false
+  //     };
+  //     this.$store.commit("SET_PROMISE_TO_READ", this.$store.getters.getProfileToRead);
+  //     this.$store.dispatch('getData', userData);
+  //     this.$store.commit("SET_WORK_TIME");
+      
+  //   },
+  //   onHover() {
+  //     let mainEdits = document.querySelectorAll(".profile-main-edit");
+  //     for (let i = 0; i < mainEdits.length; i++) {
+  //       mainEdits[i].style.boxShadow = "0 0 20px orange";
+  //     }
+  //   },
+  //   onHoverOut() {
+  //     let mainEdits = document.querySelectorAll(".profile-main-edit");
+  //     for (let i = 0; i < mainEdits.length; i++) {
+  //       mainEdits[i].style.boxShadow = "0 0 10px grey";
+  //     }
+  //   },
+  //   setUserCity: function (addressData, placeResultData, id) {
+  //     this.userData.City = addressData.locality;
+  //   }
+  //   // leavePage() {
+  //   //     if (this._beforeEditingProjects){
+  //   //         this.$store.commit('SET_EXP_LIST', this._beforeEditingProjects)
+  //   //     }
+  //   //     if (this._beforeEditingCache) {
+  //   //         Object.assign(this.userData, this._beforeEditingCache)
+  //   //     }
+  //   //     this.$router.push({name: this.routeToGo})
+  //   // }
+  // }
 };
 </script>
 

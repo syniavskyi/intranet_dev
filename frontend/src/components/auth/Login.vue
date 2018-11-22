@@ -117,15 +117,23 @@ export default {
       this.$store.dispatch("setLanguage", language);
     }
   },
-  computed: {
-    ...mapGetters({
-      loginError: "isLoginError",
+  // computed: {
+  //   ...mapGetters({
+  //     loginError: "isLoginError",
+  //     sendEmailSuccess: "isSendEmailSuccess",
+  //     sendEmailError: "isSendEmailError",
+  //     newPassword: "password",
+  //     languageList: "getLanguageList"
+  //   })
+  // }
+  computed: Object.assign(mapGetters({
+    loginError: "isLoginError",
       sendEmailSuccess: "isSendEmailSuccess",
       sendEmailError: "isSendEmailError",
       newPassword: "password",
       languageList: "getLanguageList"
     })
-  }
+  )
 };
 </script>
 

@@ -38,11 +38,16 @@ export default {
       this.$store.dispatch("setSideMenu", obj);
     }
   },
-  computed: {
-    ...mapGetters({
+  // computed: {
+  //   ...mapGetters({
+  //     showLoader: 'getDisplayLoader'
+  //   })
+  // }
+  computed: Object.assign(
+    mapGetters({
       showLoader: 'getDisplayLoader'
     })
-  }
+  )
 
 }
 </script>

@@ -209,8 +209,98 @@ export default {
       oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getEventsToRead);
       oStore.dispatch('getData', null);
   },
-  computed: {
-    ...mapGetters({
+  // computed: {
+  //   ...mapGetters({
+  //     departmentList: "getTargetGroup",
+  //     branchList: "getBranchList",
+  //     eventTypes: "getEventTypes",
+  //     priorities: "getPriorities",
+  //     events: "getAllEvents",
+  //     addEvent: "getEventToChange",
+  //     usersList: "usersList",
+  //     targetGroup: "getTargetGroup",
+  //     displayMenu: "getShowMenu",
+  //     displayOverlay: "getShowMenuOverlay",
+  //     filters: "getClearedFilters",
+  //     userData: "getUserInfo",
+  //     authType: "getCalendarAuth"
+  //   }),
+  //   filteredEvents() {
+  //     let aEvents = this.events,
+  //       aFilters = this.filters;
+  //     let aFilteredEvents = [];
+
+  //     if (
+  //       aFilters.branch === null &&
+  //       aFilters.department === null &&
+  //       aFilters.employee === null
+  //     ) {
+  //       return aEvents;
+  //     } else {
+  //       let fnFilter;
+  //       if (aFilters.department && aFilters.branch && aFilters.employee) {
+  //         fnFilter = function(oItem) {
+  //           return (
+  //             oItem.Department.includes(aFilters.department) &&
+  //             oItem.Branch.includes(aFilters.branch) &&
+  //             oItem.Employee.includes(aFilters.employee)
+  //           );
+  //         };
+  //       } else if (aFilters.department && aFilters.branch) {
+  //         fnFilter = function(oItem) {
+  //           return (
+  //             oItem.Department.includes(aFilters.department) &&
+  //             oItem.Branch.includes(aFilters.branch)
+  //           );
+  //         };
+  //       } else if (aFilters.branch && aFilters.employee) {
+  //         fnFilter = function(oItem) {
+  //           return (
+  //             oItem.Branch.includes(aFilters.branch) &&
+  //             oItem.Employee.includes(aFilters.employee)
+  //           );
+  //         };
+  //       } else if (aFilters.branch) {
+  //         fnFilter = function(oItem) {
+  //           return oItem.Branch.includes(aFilters.branch);
+  //         };
+  //       } else if (aFilters.department) {
+  //         fnFilter = function(oItem) {
+  //           return oItem.Department.includes(aFilters.department);
+  //         };
+  //       } else if (aFilters.employee) {
+  //         fnFilter = function(oItem) {
+  //           return oItem.Employee.includes(aFilters.employee);
+  //         };
+  //       }
+  //       if (fnFilter) {
+  //         aEvents = aEvents.filter(fnFilter);
+  //       }
+  //     }
+  //     return aEvents;
+  //   },
+  //   // calendar attributes
+  //   attributes() {
+  //     return this.filteredEvents.map(t => ({
+  //       dot: {
+  //         backgroundColor: t.color
+  //       },
+  //       highlight: {
+  //         backgroundColor: t.color
+  //       },
+  //       dates: {
+  //         start: t.DateFrom,
+  //         end: t.DateTo
+  //       },
+  //       customData: t,
+  //       popover: {
+  //         label: t.EventName
+  //       }
+  //     }));
+  //   }
+  // },
+  computed: Object.assign(
+    mapGetters({
       departmentList: "getTargetGroup",
       branchList: "getBranchList",
       eventTypes: "getEventTypes",
@@ -224,8 +314,8 @@ export default {
       filters: "getClearedFilters",
       userData: "getUserInfo",
       authType: "getCalendarAuth"
-    }),
-    filteredEvents() {
+    }), {
+      filteredEvents() {
       let aEvents = this.events,
         aFilters = this.filters;
       let aFilteredEvents = [];
@@ -298,20 +388,98 @@ export default {
         }
       }));
     }
-  },
+    }
+  ),
   components: {
     "app-menu": Menu
   },
-  methods: {
-    ...mapActions([
+  // methods: {
+  //   ...mapActions([
+  //     "clearForm",
+  //     "addNewEvent",
+  //     "clearFilters",
+  //     "editEvent",
+  //     "formatToArray"
+  //   ]),
+
+  //   showMenu(event) {
+  //     let obj = { window, event };
+  //     this.$store.dispatch("setSideMenu", obj);
+  //   },
+  //   // trigger function from js to adjust data for backend
+  //   editForm(data) {
+  //     data.Action = 'U';
+  //     this.editEvent(data);
+  //     this.editEventClick(data);
+  //     // let pos = this.selectedDay["attributes"].findIndex(x => x.customData.EventId === data.EventId);
+  //     // this.selectedDay["attributes"][pos].customData = data;
+  //   },
+  //   dayClicked(day) {
+  //     this.selectedDay = day;
+  //   },
+  //   // modal for new event
+  //   openDialog() {
+  //     this.clearForm();
+  //     this.performDialog();
+  //     this.displayButton = true;
+  //   },
+  //   performDialog() {
+  //     this.dialogEvent = !this.dialogEvent;
+  //   },
+  //   //open modal and assign data in edited event
+  //   editEventClick(data) {
+  //     this.performDialog();
+  //     let editedData = data;
+  //     // this.$store.commit('SET_CLEARED_DATA', utils.createClone(editedData));
+  //     Object.assign(this.addEvent, editedData);
+  //     this.disabledButton = false;
+  //     this.displayButton = false;
+  //   },
+  //   deleteEvent(data) {
+  //     let editedData = data;
+  //     editedData.Action = 'D'
+  //     Object.assign(this.addEvent, editedData);
+  //     this.editEvent(editedData);
+  //     let pos = this.selectedDay["attributes"].findIndex(x => x.customData.EventId === data.EventId);
+  //     this.selectedDay["attributes"].splice(pos, 1)
+  //   },
+  //   addNewEventBtn(data) {
+  //     this.$store.commit("SET_DATE_FROM", this.selectedValue);
+  //     this.addNewEvent(data);
+  //     this.performDialog();
+  //     let pos = this.selectedDay.attributes.length;
+  //     // this.selectedDay.attributes[pos] = { customData: { data }};
+  //   },
+  //   // permision to filter calendar
+  //   backToModal() {
+  //     this.isSelected = !this.isSelected;
+  //     this.addEvent.Employee = [];
+  //     this.addEvent.TargetGroup = [];
+  //   },
+  //   formatDate(event) {
+  //     if (event.DateTo <= event.DateFrom) {
+  //       return moment(event.DateFrom).format("DD.MM");
+  //     } else {
+  //       return (
+  //         moment(event.DateFrom).format("DD.MM") +
+  //         " - " +
+  //         moment(event.DateTo).format("DD.MM")
+  //       );
+  //     }
+  //   },
+  //   formatTime(time) {
+  //     return time.slice(0, 5);
+  //   }
+  // }
+  methods: Object.assign(
+    mapActions([
       "clearForm",
       "addNewEvent",
       "clearFilters",
       "editEvent",
       "formatToArray"
-    ]),
-
-    showMenu(event) {
+    ]), {
+      showMenu(event) {
       let obj = { window, event };
       this.$store.dispatch("setSideMenu", obj);
     },
@@ -380,6 +548,7 @@ export default {
       return time.slice(0, 5);
     }
   }
+  )
 };
 </script>
 

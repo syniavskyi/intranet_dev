@@ -189,8 +189,38 @@ export default {
         oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getDelegationToRead);
         oStore.dispatch('getData', null);
     },
-    computed: {
-        ...mapGetters({
+    // computed: {
+    //     ...mapGetters({
+    //         userData: 'getUserInfo',
+    //         accCostValidated: 'getAccCostValidated',
+    //         currencyList: 'getCurrencyList',
+    //         totalCosts: 'getTotalCosts',
+    //         newDelegation: 'getNewDelegation',
+    //         newDelegationValidated: 'getNewDelegationValidated',
+    //         delegationTableValidated: 'getDelegationTableValidated',
+    //         dailyAllowance: 'getDailyAllowance',
+    //         usersList: 'usersList',
+    //         totalCostsInCurr: 'getTotalCostsInCurr',
+    //         advanceData: 'getAdvanceData',
+    //         delegationNumber: 'getNewDelegationNumber',
+    //         showDialog: 'getShowConfirmDelegation',
+    //         displayMenu: 'getShowMenu',
+    //         displayOverlay: 'getShowMenuOverlay',
+    //         authType: "getDelegationAuth"
+    //     }),
+    //     disableSaveBtn() {
+    //         return (this.newDelegationValidated && this.delegationTableValidated && this.accCostValidated) ? false : true
+    //     },
+    //     filteredTeamUsers(){
+    //         let aFilteredUsers = this.usersList,
+    //             sTeam = this.userData.DepartmentName
+
+    //           aFilteredUsers = aFilteredUsers.filter(function(oData){ return oData.DepartmentName === sTeam });
+    //           return aFilteredUsers
+    //     }
+    // },
+    computed: Object.assign(
+        mapGetters({
             userData: 'getUserInfo',
             accCostValidated: 'getAccCostValidated',
             currencyList: 'getCurrencyList',
@@ -207,19 +237,19 @@ export default {
             displayMenu: 'getShowMenu',
             displayOverlay: 'getShowMenuOverlay',
             authType: "getDelegationAuth"
-        }),
-        disableSaveBtn() {
-            return (this.newDelegationValidated && this.delegationTableValidated && this.accCostValidated) ? false : true
-        },
-        filteredTeamUsers(){
-            let aFilteredUsers = this.usersList,
-                sTeam = this.userData.DepartmentName
+        }), {
+            disableSaveBtn() {
+                return (this.newDelegationValidated && this.delegationTableValidated && this.accCostValidated) ? false : true
+            },
+            filteredTeamUsers() {
+                let aFilteredUsers = this.usersList,
+                    sTeam = this.userData.DepartmentName
 
-              aFilteredUsers = aFilteredUsers.filter(function(oData){ return oData.DepartmentName === sTeam });
-              return aFilteredUsers
+                aFilteredUsers = aFilteredUsers.filter(function(oData){ return oData.DepartmentName === sTeam });
+                return aFilteredUsers
+            }
         }
-    },
-
+    ),
     methods: {
         ...mapActions({
             checkNewDelegation: 'checkNewDelegation',
