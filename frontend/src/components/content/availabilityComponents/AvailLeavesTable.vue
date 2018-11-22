@@ -55,9 +55,9 @@
                             <option v-for="status in availStatus" :key="status.Key" :value="status.Key">{{status.Value}}</option>
                         </select>
                     </div>
-                    <div class="ava-tbs-item confirmButtonAvail" v-if="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'">
-                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="permissionToEditAvail" @click="confirm(index, avail.EntryId, avail)">{{ $t("button.confirm") }}</button>
-                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="permissionToEditAvail" @click="remove(index, avail)">{{ $t("button.reject") }}</button>
+                    <div class="ava-tbs-item confirmButtonAvail" v-if="editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'">
+                         <button v-show="editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="permissionToEditAvail" @click="confirm(index, avail.EntryId, avail)">{{ $t("button.confirm") }}</button>
+                         <button v-show="editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="permissionToEditAvail" @click="remove(index, avail.EntryId, avail)">{{ $t("button.reject") }}</button>
                     </div>
                     <div class="ava-tbs-item eduButtonsAvail" v-else>
                             <button v-if="editMode" :disabled="true" @click="save(index, avail)">{{ $t("button.save") }}</button>
@@ -245,8 +245,21 @@ export default {
           this.userAvail[entryId].StatusId = 'CO';
           document.getElementsByClassName("confirmButtonAvail")[index].children[0].disabled = true;
           let avail = utils.createClone(data);
+          avail.Action = 'A'
+          avail.DateStartToChange = this._beforeEditingCache[index].DateStart;
+          avail.DateEndToChange = this._beforeEditingCache[index].DateEnd;
+          avail.TypeIdToChange = this._beforeEditingCache[index].TypeId;
+          this._beforeEditingCache[index] = avail;
           this.updateUserAvail(avail);
-        }
+        },
+       reject(index, entryId, data) {
+           // TEMPORARY FOR REJECTED STATUS
+         this.userAvail[entryId].StatusId = 'RE';
+         document.getElementsByClassName("confirmButtonAvail")[index].children[0].disabled = true;
+         let avail = utils.createClone(data);
+         avail.Action = 'R'
+         this.updateUserAvail(avail);
+       } 
     }
 }
 </script>

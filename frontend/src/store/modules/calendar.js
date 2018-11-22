@@ -135,8 +135,10 @@ const actions = {
     dispatch,
     commit
   }, data) {
-    data.DateFrom = getters.getSelectedDate;
-    data.DateTo = !data.DateTo ? data.DateFrom : data.DateTo;
+    // data.DateFrom = getters.getSelectedDate;
+    data.DateFrom = utils.addDays(getters.getSelectedDate, 1);
+    // data.DateTo = !data.DateTo ? data.DateFrom : data.DateTo;
+    data.DateTo = !data.DateTo ? utils.addDays(data.DateFrom, 1) : utils.addDays(data.DateTo, 1);
     let eventData = utils.createClone(data);
     eventData.DateFrom = utils.formatDateForBackend(data.DateFrom);
     eventData.DateTo = !eventData.DateTo ? eventData.DateFrom : utils.formatDateForBackend(eventData.DateTo);
@@ -145,8 +147,6 @@ const actions = {
     }
     eventData = utils.formatToString(eventData);
     delete eventData.color;
-    let sToken = getters.getToken;
-    let cookie = getters.getCookie;
     let url = 'Events';
     axios({
       url: url,
@@ -156,8 +156,8 @@ const actions = {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
-          "x-csrf-token": sToken,
-          "Cookie": cookie
+          "x-csrf-token": getters.getToken,
+          "Cookie": getters.getCookie
       }
     }).then(res => {
         console.log(res)
