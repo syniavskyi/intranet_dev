@@ -17,7 +17,7 @@
             </select>
             <label class="label-select-lang">{{ $t("label.language") }}</label>
           </div>
-          <button  :disabled="permissionToEdit" class="profile-header-button" @mouseout="onHoverOut" @mouseover="onHover" v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
+          <button  :disabled="disabledBtnToEdit" class="profile-header-button" @mouseout="onHoverOut" @mouseover="onHover" v-if="!editMode" @click="onEdit">{{ $t("button.editData") }}</button>
           <div v-if="editMode" class="header-button-save-reject">
             <p class="profile-error profile-error-data" v-if="!saveChangesSuccess">{{ $t("message.saveChangesError") }}</p>
             <button class="border-btn save-btn" @click="onSaveChanges" :disabled="disableSaveBtn">{{ $t("button.saveChanges") }}</button>
@@ -377,7 +377,7 @@ export default {
       usersList: "usersList",
       userPhoto: "getUserPhotoUrl",
       loginAlias: "getLoginAlias",
-      permissionToEdit: "getPermissionToEdit"
+      disabledBtnToEdit: "getDisabledBtnToEdit"
     }),
     formatAddress() {
       const data = this.userData;
@@ -427,13 +427,13 @@ export default {
       selectedUser(value) {
         let profileActivityAuth = this.$store.getters.getUserAuth.ZPROF_ATCV;
         if(profileActivityAuth === '*') {
-          this.$store.commit('SET_PERMISSION_TO_EDIT', false);
+          this.$store.commit('SET_DISABLED_BTN_TO_EDIT', false);
         } else if(profileActivityAuth === 'TEAM' && this.filteredTeamUsers.find(o => o.UserAlias === this.selectedUser)) {
-          this.$store.commit('SET_PERMISSION_TO_EDIT', false);
+          this.$store.commit('SET_DISABLED_BTN_TO_EDIT', false);
         } else if(this.selectedUser === this.loginAlias) {
-         this.$store.commit('SET_PERMISSION_TO_EDIT', false);
+         this.$store.commit('SET_DISABLED_BTN_TO_EDIT', false);
         } else {
-         this.$store.commit('SET_PERMISSION_TO_EDIT', true);
+         this.$store.commit('SET_DISABLED_BTN_TO_EDIT', true);
         }
         localStorage.setItem('cvUser', this.selectedUser);
       }

@@ -4,7 +4,7 @@
       <div class="profile-tile-header-row">
         <h2 class="profile-tile-title">{{ $t("header.experience") }}</h2>
         <div class="profile-table-buttons">
-          <button class="profile-edit-btn" :disabled="permissionToEdit" v-if="!editMode" @mouseover="onHover" @mouseout="onHoverOut" @click="edit">{{ $t("button.edit") }}</button>
+          <button class="profile-edit-btn" :disabled="disabledBtnToEdit" v-if="!editMode" @mouseover="onHover" @mouseout="onHoverOut" @click="edit">{{ $t("button.edit") }}</button>
           <button class="profile-edit-btn-e" v-if="editMode" @click="addUserExperience"><span class="prof-btn-txt">{{ $t("button.addNewEntry") }}</span><span class="prof-btn-icon">&plus;</span> </button>
           <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-icon">&#10004;</span><span class="prof-btn-txt">{{ $t("button.finishEdit") }}</span></button>
         </div>
@@ -86,7 +86,7 @@ export default {
     ...mapGetters({
       userExperience: "getUserExperience",
       workPositions: "getWorkPositions",
-      permissionToEdit: "getPermissionToEdit"
+      disabledBtnToEdit: "getDisabledBtnToEdit"
     })
   },
   mounted() {

@@ -11,8 +11,8 @@ const state = {
     dataToRead: ["NewToken", "Domains", "Industries", "UserData", "UserList", "Projects", "Contractors"],
     avaliablityAuth: "",
     availAccAuth: "",
-    permissionToEditAvail: false,
-    permissionToEditProject: false,
+    disabledBtnToEditAvail: false,
+    disabledBtnToEditProject: false,
     filteredTeamUsers: []
 };
 
@@ -41,11 +41,11 @@ const mutations = {
     SET_AVAIL_ACCEPT_AUTH(state, sAuth){
         state.availAccAuth = sAuth;
     },
-    SET_PERMISSION_TO_EDIT_AVAIL(state, data) {
-        state.permissionToEditAvail = data;
+    SET_DISABLED_BTN_TO_EDIT_AVAIL(state, data) {
+        state.disabledBtnToEditAvail = data;
     },
-    SET_PERMISSION_TO_EDIT_PROJECT(state, data) {
-        state.permissionToEditProject = data;
+    SET_DISABLED_BTN_TO_EDIT_PROJECT(state, data) {
+        state.disabledBtnToEditProject = data;
     },
     SET_FILTERED_TEAM_USERS(state, data) {
         state.filteredTeamUsers = data;
@@ -112,11 +112,11 @@ const getters = {
     getAvailAcceptAuth(state){
         return state.availAccAuth;
     },
-    getPermissionToEditAvail(state) {
-        return state.permissionToEditAvail;
+    getDisabledBtnToEditAvail(state) {
+        return state.disabledBtnToEditAvail;
     },
-    getPermissionToEditProject(state) {
-        return state.permissionToEditProject;
+    getDisabledBtnToEditProject(state) {
+        return state.disabledBtnToEditProject;
     },
     getFilteredTeamUsers(state) {
         return state.filteredTeamUsers;

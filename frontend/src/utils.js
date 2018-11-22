@@ -30,6 +30,7 @@ export const createRateDate = function (rateDate) {
 
 export const formatDateForBackend = function (date) {
   if(date){
+     date = this.formatTimeZone(date, 1);
     return "/Date(" + new Date(date).getTime().toString() + ")/";
   } else {
     return null;
@@ -261,9 +262,11 @@ export const checkRole = function(data) {
    return a.getTime() !== b.getTime();
  } 
  //add one day to data send to backend 
- export const addDays = function(date, days) {
-    let result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
-    }
+ export const formatTimeZone = function(oDate) {
+  var nUserOffset;
+  if (oDate) {
+    nUserOffset = oDate.getTimezoneOffset() * 60 * 1000;
+    return new Date(oDate.getTime() - nUserOffset);
+      }
+  }
 const actions = {};

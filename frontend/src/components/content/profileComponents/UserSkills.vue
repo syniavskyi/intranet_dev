@@ -4,7 +4,7 @@
       <div class="profile-tile-header-row">
         <h2 class="profile-tile-title">{{ $t("header.skills") }}</h2>
         <div class="profile-table-buttons">
-          <button class="profile-edit-btn" :disabled="permissionToEdit" v-if="!editMode" @mouseover="onHover" @mouseout="onHoverOut" @click="edit">{{ $t("button.edit") }}</button>
+          <button class="profile-edit-btn" :disabled="disabledBtnToEdit" v-if="!editMode" @mouseover="onHover" @mouseout="onHoverOut" @click="edit">{{ $t("button.edit") }}</button>
           <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-txt">{{ $t("button.cancel") }}</span><span class="prof-btn-icon">&plus;</span></button>
           <button class="profile-edit-btn-e" :disabled="bDisabled" v-if="editMode" @click="save()"><span class="prof-btn-txt">{{ $t("button.save") }}</span><span class="prof-btn-icon">&#10004;</span></button>
         </div>
@@ -133,7 +133,7 @@ export default {
       userLangs: "getUserLanguages",
       langLevels: "getLangLevels",
       fullLanguageList: "getFullLanguageList",
-      permissionToEdit: "getPermissionToEdit"
+      disabledBtnToEdit: "getDisabledBtnToEdit"
     })
   },
   methods: {

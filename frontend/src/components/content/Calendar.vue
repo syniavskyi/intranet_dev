@@ -223,8 +223,7 @@ export default {
       displayOverlay: "getShowMenuOverlay",
       filters: "getClearedFilters",
       userData: "getUserInfo",
-      authType: "getCalendarAuth",
-      permissionToEditEvent: "getPermissionToEditEvent"
+      authType: "getCalendarAuth"
     }),
     filteredEvents() {
       let aEvents = this.events,
@@ -321,7 +320,7 @@ export default {
       data.Action = 'U';
       this.editEvent(data);
       this.editEventClick(data);
-      let pos = this.selectedDay["attributes"].findIndex(x => x.customData.EventId === data.EventId);
+      // let pos = this.selectedDay["attributes"].findIndex(x => x.customData.EventId === data.EventId);
       // this.selectedDay["attributes"][pos].customData = data;
     },
     dayClicked(day) {
