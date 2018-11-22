@@ -5,8 +5,8 @@
                 <h2>{{ $t("label.projectsOverview") }}</h2>
                 <div class="availability-tile-underscore"></div>
             </div>
-             <button class="profile-edit-btn" v-if="!editMode" :disabled="permissionToEditProject" @click="edit">{{ $t("button.edit") }}</button>
-             <label class="avail-error" v-if="permissionToEditProject">{{ $t("label.editProject") }}</label>
+             <button class="profile-edit-btn" v-if="!editMode" :disabled="disabledBtnToEditProject" @click="edit">{{ $t("button.edit") }}</button>
+             <label class="avail-error" v-if="disabledBtnToEditProject">{{ $t("label.editProject") }}</label>
              <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-txt">{{ $t("button.finishEdit") }}</span><span class="prof-btn-icon">&#10004;</span></button>
         </div>
         <p class="ava-content-header" v-if="noAvailEntries">{{ $t("message.noEntriesForParameters") }}</p>
@@ -101,7 +101,7 @@ export default {
             availTypes: 'getAvailType',
             availStatus: 'getAvailStatus',
             allProjects: 'projectsList',
-            permissionToEditProject: "getPermissionToEditProject"
+            disabledBtnToEditProject: "getDisabledBtnToEditProject"
         }),
         noAvailEntries() {
             if (this.filteredUserProjects.length === 0) {

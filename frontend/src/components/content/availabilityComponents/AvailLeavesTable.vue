@@ -6,7 +6,7 @@
                 <h2>{{ $t("label.availabilityOverview") }}</h2>
                 <div class="availability-tile-underscore"></div>
             </div>
-             <button class="profile-edit-btn" v-if="!editMode" :disabled="permissionToEditAvail" @click="edit">{{ $t("button.edit") }}</button>
+             <button class="profile-edit-btn" v-if="!editMode" :disabled="disabledBtnToEditAvail" @click="edit">{{ $t("button.edit") }}</button>
              <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-txt">{{ $t("button.finishEdit") }}</span><span class="prof-btn-icon">&#10004;</span></button>
         </div>
         <p class="ava-content-header" v-if="noAvailEntries">{{ $t("message.noEntriesForParameters") }}</p>
@@ -56,11 +56,11 @@
                         </select>
                     </div>
                     <div class="ava-tbs-item confirmButtonAvail" v-if="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'">
-                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="permissionToEditAvail" @click="confirm(index, avail.EntryId, avail)">{{ $t("button.confirm") }}</button>
-                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="permissionToEditAvail" @click="reject(index, avail.EntryId, avail)">{{ $t("button.reject") }}</button>
+                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="disabledBtnToEditAvail" @click="confirm(index, avail.EntryId, avail)">{{ $t("button.confirm") }}</button>
+                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="disabledBtnToEditAvail" @click="reject(index, avail.EntryId, avail)">{{ $t("button.reject") }}</button>
                     </div>
                     <div class="ava-tbs-item eduButtonsAvail" v-else>
-                            <button v-if="editMode" :disabled="true" @click="save(index, avail)">{{ $t("button.save") }}</button>
+                            <button v-if="editMode" :disabled="true" @click="save(index, avail.EntryId, avail)">{{ $t("button.save") }}</button>
                             <button v-if="editMode" @click="remove(index, avail)">{{ $t("button.delete") }}</button>
                     </div>
                 </div>
@@ -92,7 +92,7 @@ export default {
             newLeave: "getNewLeaveForUser",
             authAcc: 'getAvailAcceptAuth',
             filteredTeamUsers: 'getFilteredTeamUsers',
-            permissionToEditAvail: "getPermissionToEditAvail"
+            disabledBtnToEditAvail: "getDisabledBtnToEditAvail"
         }),
         filteredUserAvail() {
             let aFilteredAvail = this.userAvail,
@@ -165,7 +165,6 @@ export default {
          edit() {
             this.editMode = true;
             this._beforeEditingCache = utils.createClone(this.userAvail);
-            // this.checkDisabled();
         },
         remove(index, data) {
             let avail = utils.createClone(data);
@@ -222,34 +221,24 @@ export default {
 
             userEntryId.Filter = true;
         },
-        save(index, data) {
-             this.userAvail[data.EntryId].Filter = false;
+        save(index, entryId, data) {
+             this.userAvail[entryId].Filter = false;
              document.getElementsByClassName("eduButtonsAvail")[index].children[0].disabled = true;
              let avail = utils.createClone(data);
-             avail.DateStartToChange = this._beforeEditingCache[index].DateStart;
-             avail.DateEndToChange = this._beforeEditingCache[index].DateEnd;
+             avail.DateStartToChange = this._beforeEditingCache[entryId].DateStart;
+             avail.DateEndToChange = this._beforeEditingCache[entryId].DateEnd;
              this.updateUserAvail(avail);
-
+             this._beforeEditingCache[entryId] = data;
         },
-      // set button disabled  
-        // checkDisabled() {
-        //     for(let i = 0; i < this.filteredUserAvail.length; i++) {
-        //         if (this.filteredUserAvail[i].StatusId === 'CO') {
-        //             document.getElementsByClassName("eduButtonsAvail")[i].children[0].disabled = true;
-        //         }   else {
-        //            document.getElementsByClassName("eduButtonsAvail")[i].children[0].disabled = false;
-        //         }
-        //     }
-        // },
         confirm(index, entryId, data) {
           this._beforeEditingCache = utils.createClone(this.userAvail);
           this.userAvail[entryId].StatusId = 'CO';
           document.getElementsByClassName("confirmButtonAvail")[index].children[0].disabled = true;
           let avail = utils.createClone(data);
           avail.Action = 'A'
-          avail.DateStartToChange = this._beforeEditingCache[index].DateStart;
-          avail.DateEndToChange = this._beforeEditingCache[index].DateEnd;
-          this._beforeEditingCache[index] = avail;
+          avail.DateStartToChange = this._beforeEditingCache[entryId].DateStart;
+          avail.DateEndToChange = this._beforeEditingCache[entryId].DateEnd;
+          this._beforeEditingCache[entryId] = data;
           this.updateUserAvail(avail);
         },
        reject(index, entryId, data) {
@@ -259,9 +248,9 @@ export default {
          document.getElementsByClassName("confirmButtonAvail")[index].children[0].disabled = true;
          let avail = utils.createClone(data);
          avail.Action = 'R'
-         avail.DateStartToChange = this._beforeEditingCache[index].DateStart;
-         avail.DateEndToChange = this._beforeEditingCache[index].DateEnd;
-         this.updateUserAvail(avail);
+         avail.DateStartToChange = this._beforeEditingCache[entryId].DateStart;
+         avail.DateEndToChange = this._beforeEditingCache[entryId].DateEnd;
+         this.updateUserAvail(data);
        } 
     }
 }

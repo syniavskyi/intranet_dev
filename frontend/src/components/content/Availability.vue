@@ -161,7 +161,7 @@ export default {
             userAvail: 'getUserAvail',
             authType: 'getAvailabilityAuth',
             authAcc: 'getAvailAcceptAuth',
-            permissionToEditAvail: "getPermissionToEditAvail",
+            disabledBtnToEditAvail: "getDisabledBtnToEditAvail",
 
         }),
         filteredUsers() {
@@ -232,19 +232,19 @@ export default {
             this.newLeave.UserId = value.UserAlias;
             this.newProject.UserAlias = value.UserAlias;
 
-        // check permission to create project or other avail type
+        // check if button is disabled to create project or other avail type
             if(this.authType === '*') {
-            this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', false);
-            this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
+            this.$store.commit('SET_DISABLED_BTN_TO_EDIT_PROJECT', false);
+            this.$store.commit('SET_DISABLED_BTN_TO_EDIT_AVAIL', false);
             } else if(this.authType === 'TEAM' && this.filteredUsers.find(o => o.UserAlias === this.selectedUser.UserAlias)) {
-            this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', false);
-            this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false);
+            this.$store.commit('SET_DISABLED_BTN_TO_EDIT_PROJECT', false);
+            this.$store.commit('SET_DISABLED_BTN_TO_EDIT_AVAIL', false);
             } else if(this.authType === 'OWN' && this.selectedUser.UserAlias === this.loginAlias) {
-                this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', true);
-            this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', false); 
+                this.$store.commit('SET_DISABLED_BTN_TO_EDIT_PROJECT', true);
+            this.$store.commit('SET_DISABLED_BTN_TO_EDIT_AVAIL', false); 
             } else {
-            this.$store.commit('SET_PERMISSION_TO_EDIT_PROJECT', true);
-            this.$store.commit('SET_PERMISSION_TO_EDIT_AVAIL', true);
+            this.$store.commit('SET_DISABLED_BTN_TO_EDIT_PROJECT', true);
+            this.$store.commit('SET_DISABLED_BTN_TO_EDIT_AVAIL', true);
             }
         },
         selectedBranch(value) {

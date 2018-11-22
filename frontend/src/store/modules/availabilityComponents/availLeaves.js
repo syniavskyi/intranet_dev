@@ -78,13 +78,13 @@ const actions = {
         })
     },
     addUserLeave({commit, getters, dispatch}) {
+        if(!getters.getNewLeaveForUser.StatusId) {
+            getters.getNewLeaveForUser.StatusId = "PL";
+        }
         let data  = JSON.parse(JSON.stringify(getters.getNewLeaveForUser)),
              url = 'UserAvailabilities',
              sToken = getters.getToken,
             cookie = getters.getCookie;
-            if(!data.StatusId) {
-                data.StatusId = "PL";
-            }
         axios({
           url: url,
           method: 'post',

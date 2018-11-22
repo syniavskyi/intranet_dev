@@ -26,7 +26,7 @@ const state = {
     }
   ],
   showChangePasswordDialog: false,
-  permissionToEdit: false,
+  disabledBtnToEdit: false,
   dataToRead: ["NewToken", "Domains", "FieldOfStudy", "SchoolDesc", "Industries", "UserData", "UserList", "Contractors", "Projects", "Languages"],
   workTime: {
     "Full": i18n.t("label.fulltime"),
@@ -55,8 +55,8 @@ const mutations = {
   SET_FILE_ERROR(state, isError) {
     state.uploadFileError = isError;
   },
-  SET_PERMISSION_TO_EDIT(state, data) {
-    state.permissionToEdit = data;
+  SET_DISABLED_BTN_TO_EDIT(state, data) {
+    state.disabledBtnToEdit = data;
   },
   SET_WORK_TIME(state){
     state.workTime["Full"] = i18n.t("label.fulltime");
@@ -193,8 +193,8 @@ const getters = {
   getProfileToRead(state){
     return state.dataToRead;
   },
-  getPermissionToEdit(state) {
-    return state.permissionToEdit;
+  getDisabledBtnToEdit(state) {
+    return state.disabledBtnToEdit;
   },
   getWorkTime(state){
     return state.workTime;

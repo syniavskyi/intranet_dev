@@ -65,7 +65,7 @@ export default {
             usersList: 'usersList',
             availTypesList: 'getAvailType',
             filteredTeamUsers: 'getFilteredTeamUsers',
-            permissionToEditAvail: "getPermissionToEditAvail"
+            disabledBtnToEditAvail: "getDisabledBtnToEditAvail"
         }),
         formattedUsername() {
             const userId = this.selectedUser
@@ -102,19 +102,19 @@ export default {
         ...mapActions({addNewLeave: 'addUserLeave'}),
         checkFields() {
             let obj = this.newLeave;
-            if(this.permissionToEditAvail===false) {
-            if(this.selectedUser === this.loginAlias && this.authType !== '*' && obj.DateStart && obj.DateEnd) {
-                this.disableAddNew = false;
-            } else {
-                for (let key in obj) {
-                if (!obj[key]){
-                    this.disableAddNew = true;
-                    return;
-                } else {
+            if(this.disabledBtnToEditAvail===false) {
+                if(this.selectedUser === this.loginAlias && this.authType !== '*' && obj.DateStart && obj.DateEnd) {
                     this.disableAddNew = false;
+                } else {
+                    for (let key in obj) {
+                        if (!obj[key]){
+                            this.disableAddNew = true;
+                            return;
+                        } else {
+                            this.disableAddNew = false;
+                        }
+                     }
                 }
-            }
-            }
             }
         },
         
