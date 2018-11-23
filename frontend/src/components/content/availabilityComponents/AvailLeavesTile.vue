@@ -40,6 +40,7 @@
                     <div class="ava-div-buttons">
                         <button class="ava-button" >{{ $t("button.cancel") }}</button>
                         <button :disabled="disableAddNew" class="ava-button ava-button-edit" @click="addNewLeave" >{{ $t("button.addNewEntry") }}</button>
+                        <label class="avail-error" v-if="disabledBtnToEditAvail">{{ $t("label.editProject") }}</label>
                     </div>
                 </div>
             </div>
