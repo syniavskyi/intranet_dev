@@ -27,8 +27,8 @@
               <span class="prof-span-0">&#8212;</span>
               <!-- &#9472; -->
               <div name="endDateDiv" :id="index">
-                <p class="prof-date-label" v-if="!editMode"> {{ formatDate(education.DateEnd) }} </p>
-                <div v-if="editMode" class="prof-input-xxs">
+                <p class="prof-date-label" v-if="!editMode && !education.IsCurrent"> {{ formatDate(education.DateEnd) }} </p>
+                <div v-if="editMode && !education.IsCurrent" class="prof-input-xxs">
                   <v-date-picker class="prof-input-date" popoverDirection="top" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" :min-date="education.DateStart" v-model="education.DateEnd">
                     <input value="education.DateEnd" />
                   </v-date-picker>
@@ -36,7 +36,7 @@
                 </div>
               </div>
               <label class="checkbox-wrap">
-                <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="education.IsCurrent"/>
+                <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="checkFields(index)" :checked="education.IsCurrent" :name="index" v-model="education.IsCurrent"/>
                 <div class="checkbox-in"></div>
                 <p style="padding:0;margin:0;">{{ $t("label.present") }}</p>
               </label>
@@ -119,9 +119,6 @@ export default {
       _beforeEditingCache: null,
       invalidDates: false
     };
-  },
-  mounted: function() {
-    this.setEduCheckbox();
   },
   computed: {
     ...mapGetters({
@@ -256,32 +253,6 @@ export default {
         this.invalidDates = formatStartDate > formatEndDate ? true : false;
       }
       this.checkFields(index);
-    },
-    // hover EndDate if field IsCurrent is checked
-    disableEndDateInput(value) {
-      const isCurrent = value.target.checked,
-        index = value.target.name,
-        input = document.getElementById(index);
-
-      if (isCurrent) {
-        input.setAttribute("style", "display: none;");
-        this.userEducation[index].DateEnd = null;
-      } else {
-        input.setAttribute("style", "display: flex;");
-      }
-      this.checkFields(index);
-    },
-    // set IsCurrent checkboxes checked
-    setEduCheckbox(index) {
-      let edu = this.$store.getters.getUserEducation;
-      let input;
-
-      for (let i = 0; i < edu.length; i++) {
-        if (edu[i].IsCurrent === true) {
-          input = document.getElementById(i);
-          input.setAttribute("style", "display: none");
-        }
-      }
     }
   }
 };
