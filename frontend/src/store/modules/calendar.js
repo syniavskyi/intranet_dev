@@ -135,10 +135,8 @@ const actions = {
     dispatch,
     commit
   }, data) {
-    // data.DateFrom = getters.getSelectedDate;
-    data.DateFrom = utils.addDays(getters.getSelectedDate, 1);
-    // data.DateTo = !data.DateTo ? data.DateFrom : data.DateTo;
-    data.DateTo = !data.DateTo ? utils.addDays(data.DateFrom, 1) : utils.addDays(data.DateTo, 1);
+    data.DateFrom = getters.getSelectedDate;
+    data.DateTo = !data.DateTo ? data.DateFrom : data.DateTo;
     let eventData = utils.createClone(data);
     eventData.DateFrom = utils.formatDateForBackend(data.DateFrom);
     eventData.DateTo = !eventData.DateTo ? eventData.DateFrom : utils.formatDateForBackend(eventData.DateTo);

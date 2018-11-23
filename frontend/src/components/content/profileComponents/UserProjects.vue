@@ -68,13 +68,13 @@
                 </v-date-picker>
                 <p class="table-p">{{ $t("label.endDate") }}</p>
                 <div name="endDateDiv" :id="formatId(index)">
-                  <p class="table-p" v-if="!projectEditMode"> {{ formatDate(userProjects[index].DateEnd) }} </p>
-                  <v-date-picker popoverDirection="top" :max-date="new Date()" :min-date="project.DateStart" v-if="projectEditMode" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateEnd">
+                  <p class="table-p" v-if="!projectEditMode && !project.IsCurrent"> {{ formatDate(userProjects[index].DateEnd) }} </p>
+                  <v-date-picker popoverDirection="top" :max-date="new Date()" :min-date="project.DateStart" v-if="projectEditMode && !project.IsCurrent" @input="validateDates(index)" class="profile-table-date-picker" is-expanded mode="single" v-model="userProjects[index].DateEnd">
                     <input value="userProjects[index].DateEnd"/>
                   </v-date-picker>
                 </div>
                 <label class="checkbox-wrap" >
-                  <input class="checkbox-margin" :disabled="!projectEditMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="userProjects[index].IsCurrent" />
+                  <input class="checkbox-margin" :disabled="!projectEditMode" type="checkbox" :checked="project.IsCurrent" @change="checkFields(index)" :name="index" v-model="userProjects[index].IsCurrent" />
                   <div class="checkbox-in"></div>
                   <p style="padding:0;margin:0;">{{ $t("label.present") }}</p>
                 </label>
@@ -143,9 +143,9 @@ export default {
       _beforeEditingProjects: null
     };
   },
-  mounted() {
-    this.setProCheckbox();
-  },
+  // mounted() {
+  //   this.setProCheckbox();
+  // },
   computed: {
     ...mapGetters({
       showProjectError: "getShowProjectError",
@@ -301,19 +301,6 @@ export default {
       this.$store.dispatch("addIndustry", data);
       this.checkFields(data.index);
     },
-    disableEndDateInput(value) {
-      const isCurrent = value.target.checked,
-        index = value.target.name,
-        input = document.getElementById(index + "p");
-
-      if (isCurrent) {
-        input.setAttribute("style", "display: none");
-        this.userProjects[index].DateEnd = null;
-      } else {
-        input.setAttribute("style", "display: flex");
-      }
-      this.checkFields(index);
-    },
     finishEditing() {
       this.onHoverOut(this.$el);
       this.$store.commit("SET_PROJECT_ERROR", false);
@@ -351,19 +338,6 @@ export default {
           formatStartDate > formatEndDate ? index + 1 : null;
       }
       this.checkFields(index);
-    },
-    setProCheckbox() {
-      let projects = this.$store.getters.getUserProjectsList;
-      let input;
-
-      for (let index in projects){
-        if (projects[index].IsCurrent === true) {
-          input = document.getElementById(index + "p");
-          input.setAttribute("style", "display: none");
-        } else {
-          let checkBoxes = document.querySelectorAll("checkbox:not(:checked)");
-        }
-      }
     }
   }
 };

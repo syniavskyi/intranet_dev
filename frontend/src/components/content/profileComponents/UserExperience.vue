@@ -26,8 +26,8 @@
               </div>
               <span class="prof-span-0">&#8212;</span>
               <div name="endDateDiv" :id="formatId(index)">
-                <p class="prof-date-label" v-if="!editMode"> {{ formatDate(experience.DateEnd) }} </p>
-                <div v-if="editMode" class="prof-input-xxs">
+                <p class="prof-date-label" v-if="!editMode && !experience.IsCurrent"> {{ formatDate(experience.DateEnd) }} </p>
+                <div v-if="editMode && !experience.IsCurrent" class="prof-input-xxs">
                   <v-date-picker class="prof-input-date" popoverDirection="top" :min-date="experience.DateStart" :max-date="new Date()" v-if="editMode" @input="validateDates(index)" is-expanded mode="single" v-model="experience.DateEnd">
                     <input value="experience.DateEnd" />
                   </v-date-picker>
@@ -35,7 +35,7 @@
                 </div>
               </div>
               <label class="checkbox-wrap">
-                <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="disableEndDateInput" :name="index" v-model="experience.IsCurrent" />
+                <input class="checkbox-margin" :disabled="!editMode" type="checkbox" @change="checkFields(index)" :checked="experience.IsCurrent" :name="index" v-model="experience.IsCurrent" />
                 <div class="checkbox-in"></div>
                 <p style="padding:0;margin:0;">{{ $t("label.present") }}</p>
               </label>
@@ -88,9 +88,6 @@ export default {
       workPositions: "getWorkPositions",
       disabledBtnToEdit: "getDisabledBtnToEdit"
     })
-  },
-  mounted() {
-    this.setExpCheckbox();
   },
   methods: {
     ...mapActions(["addUserExperience", "updateUserExp", "saveNewUserExp"]),
@@ -199,32 +196,6 @@ export default {
         this.invalidDates = formatStartDate > formatEndDate ? true : false;
       }
       this.checkFields(index);
-    },
-    // hover EndDate if field IsCurrent is checked
-    disableEndDateInput(value) {
-      const isCurrent = value.target.checked,
-        index = value.target.name,
-        input = document.getElementById(index + "e");
-
-      if (isCurrent) {
-        input.setAttribute("style", "display: none;");
-        this.userExperience[index].DateEnd = null;
-      } else {
-        input.setAttribute("style", "display: flex;");
-      }
-      this.checkFields(index);
-    },
-    // set IsCurrent checkboxes checked
-    setExpCheckbox(index) {
-      let exp = this.$store.getters.getUserExperience;
-      let input;
-
-      for (let i = 0; i < exp.length; i++) {
-        if (exp[i].IsCurrent === true) {
-          input = document.getElementById(i + "e");
-          input.setAttribute("style", "display: none");
-        }
-      }
     }
   }
 };
