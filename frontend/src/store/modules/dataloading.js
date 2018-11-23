@@ -147,7 +147,6 @@ const actions = {
   },
 
   loadData({
-    state,
     dispatch,
     getters,
     commit
@@ -178,7 +177,6 @@ const actions = {
   },
 
   getDomainValues({
-    commit,
     getters
   }, domainData) {
     if (domainData.lang === undefined) {
@@ -194,7 +192,6 @@ const actions = {
     });
   },
   getProjectsList({
-    commit,
     getters
   }) {
     return axios({
@@ -206,10 +203,7 @@ const actions = {
       }
     })
   },
-  getContractorsList({
-    commit,
-    getters
-  }) {
+  getContractorsList({}) {
     return axios({
       method: 'GET',
       url: 'Contractors',
@@ -220,14 +214,9 @@ const actions = {
   },
  
   getUserData({
-    commit,
     getters,
-    dispatch
   }, userData) {
-    let urlQuery = getters.getUrlQuery
-
     let sCookie = getters.getCookie;
-    
     let sUserAlias = userData.user || localStorage.getItem("id"),
         sLang = userData.lang || localStorage.getItem("lang");
     if(!sUserAlias){
@@ -244,54 +233,6 @@ const actions = {
         "Cookie": sCookie
       }
     })
-    // .then(res => {
-      // let sUserId = res.data.d.UserAlias;
-      // localStorage.setItem('id', sUserId);
-
-      // dispatch('formatUserData', res.data.d); // format dates for date pickers and "is current" fields
-      // dispatch('getUserFilesData') // get data about all user files (cv, photos, documents etc.)
-      // dispatch('loadUserPhoto', userData) //load user's photo for menu and profile
-      // let oData = getters.getUserInfo;
-
-      // commit('SET_USER_AUTH', oData.UserAuth.results) //set user authorization data
-
-      // commit('SET_USER_EDUCATION', oData.UserEducations.results); //set user education data for profile and cv
-      // commit('SET_USER_EXPERIENCE', oData.UserExperiences.results); //set user experience data for profile and cv
-
-      // commit('SET_USER_SKILLS', oData.UserSkills.results); //set user skills data for profile and cv
-      // let userSkills = utils.formatToArray(oData.UserSkills.results);
-      // if (userSkills) {
-      //   for(let key in userSkills[0]) {
-      //     if (userSkills[0][key][0] === "") {
-      //       userSkills[0][key] = [];
-      //     }
-      //   }
-      //   commit('SET_USER_SKILLS', userSkills[0]);
-      // }  else {
-      //     userSkills = {
-      //       SapModules: [],
-      //       ProgramLang: [],
-      //       Technologies: [],
-      //       Extensions: [],
-      //       AdditionalSkills: []
-      //     }
-      //     commit('SET_USER_SKILLS', userSkills);
-      // }
-
-      // commit('SET_USER_PROJECTS_LIST', oData.UserCvProjects.results); //set user projects data for profile and cv
-      // dispatch('adjustProjects');
-
-      // commit('SET_USER_LANGS', oData.UserLang.results);
-      // // dispatch('adjustLang');
-
-      // commit('SET_NEW_USER_FILES_LIST', oData.UserFiles.results); //set list of files for starter page for new user
-
-      // commit('SET_DATA_LOADED', true)
-
-      // dispatch('checkPageToDisplay', userData.changePage)
-    // }).catch(error => {
-    //   console.log(error);
-    // })
   },
   formatUserData({
     commit
@@ -301,7 +242,6 @@ const actions = {
       for (let key in data) {
         if (key === "UserCvProjects" || key === "UserEducations" || key === "UserExperiences") {
           let obj = data[key].results;
-          // for (let i = 0; i < obj.length; i++) {
           for (let index in obj) {
             if (obj[index].DateStart) {
               obj[index].DateStart = utils.dateStringToObj(obj[index].DateStart);
@@ -316,9 +256,7 @@ const actions = {
       commit('SET_USER_INFO', data);
     }
   },
-  getUsersLists({
-    commit
-  }) {
+  getUsersLists({}) {
     let sCookie = document.cookie;
     return axios({
       method: 'GET',
@@ -330,7 +268,7 @@ const actions = {
     })
   },
 
-  getUserPhoto({}, userData){
+  getUserPhoto({}){
     return axios({
       method: 'GET',
       url: `AttachmentMedias(FileId='USER-PHOTO',Language='PL',UserAlias='UIO')/$value`,
@@ -343,8 +281,7 @@ const actions = {
 
   loadUserPhoto({
     commit,
-    getters
-  }, userData) {
+  }) {
     const sUserId = "UIO",// userData.user,
       sLanguage = 'PL',
       sFileType = "USER-PHOTO";
@@ -384,7 +321,6 @@ const actions = {
     }
   },
   getAdverts({
-    commit,
     getters
   }) {
     return axios({
@@ -658,9 +594,6 @@ const actions = {
   },
 
   setUserData({dispatch, commit, getters}, response, userData){
-      let sUserId = response.data.d.UserAlias;
-      let sLang = response.data.d.Language;
-
       dispatch('formatUserData', response.data.d); // format dates for date pickers and "is current" fields
       dispatch('getUserFilesData') // get data about all user files (cv, photos, documents etc.)
       dispatch('loadUserPhoto', userData) //load user's photo for menu and profile TO BE READ
@@ -695,7 +628,6 @@ const actions = {
       dispatch('adjustProjects');
 
       commit('SET_USER_LANGS', oData.UserLang.results);
-      // dispatch('adjustLang');
 
       commit('SET_NEW_USER_FILES_LIST', oData.UserFiles.results); //set list of files for starter page for new user
 
@@ -755,9 +687,6 @@ const getters = {
   getNewUserFilesList(state) {
     return state.newUserFiles;
   },
-  // userAdverts(state) {
-  //   return state.userAdverts;
-  // },
   getUserAuth(state) {
     return state.userAuth;
   },
