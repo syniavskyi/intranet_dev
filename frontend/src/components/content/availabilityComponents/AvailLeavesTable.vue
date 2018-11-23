@@ -2,7 +2,6 @@
     <div class="availability-tile ava-tile-3">
         <div class="availability-tile-header">
             <div class="ava-tile-header-title">
-                            <!-- <h2>{{ $t("header.addProject") }}</h2> -->
                 <h2>{{ $t("label.availabilityOverview") }}</h2>
                 <div class="availability-tile-underscore"></div>
             </div>
@@ -56,11 +55,11 @@
                         </select>
                     </div>
                     <div class="ava-tbs-item confirmButtonAvail" v-if="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'">
-                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="disabledBtnToEditAvail" @click="confirm(index, avail.EntryId, avail)">{{ $t("button.confirm") }}</button>
-                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="disabledBtnToEditAvail" @click="reject(index, avail.EntryId, avail)">{{ $t("button.reject") }}</button>
+                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="disabledBtnToEditAvail" @click="operation({index, avail, operation: 'confirm'})">{{ $t("button.confirm") }}</button>
+                         <button v-show="!editMode && authAcc && newLeave.UserId !== loginAlias && filteredTeamUsers.find(o => o.UserAlias === newLeave.UserId) || authAcc ==='*'" :disabled="disabledBtnToEditAvail" @click="operation({index, avail, operation: 'reject'})">{{ $t("button.reject") }}</button>
                     </div>
                     <div class="ava-tbs-item eduButtonsAvail" v-else>
-                            <button v-if="editMode" :disabled="true" @click="save(index, avail.EntryId, avail)">{{ $t("button.save") }}</button>
+                            <button v-if="editMode" :disabled="true" @click="operation({index, avail, operation: 'save'})">{{ $t("button.save") }}</button>
                             <button v-if="editMode" @click="remove(index, avail)">{{ $t("button.delete") }}</button>
                     </div>
                 </div>
@@ -221,36 +220,25 @@ export default {
 
             userEntryId.Filter = true;
         },
-        save(index, entryId, data) {
-             this.userAvail[entryId].Filter = false;
-             document.getElementsByClassName("eduButtonsAvail")[index].children[0].disabled = true;
-             let avail = utils.createClone(data);
-             avail.DateStartToChange = this._beforeEditingCache[entryId].DateStart;
-             avail.DateEndToChange = this._beforeEditingCache[entryId].DateEnd;
-             this.updateUserAvail(avail);
-             this._beforeEditingCache[entryId] = data;
-        },
-        confirm(index, entryId, data) {
-          this._beforeEditingCache = utils.createClone(this.userAvail);
-          this.userAvail[entryId].StatusId = 'CO';
-          document.getElementsByClassName("confirmButtonAvail")[index].children[0].disabled = true;
-          let avail = utils.createClone(data);
-          avail.Action = 'A'
-          avail.DateStartToChange = this._beforeEditingCache[entryId].DateStart;
-          avail.DateEndToChange = this._beforeEditingCache[entryId].DateEnd;
-          this._beforeEditingCache[entryId] = data;
-          this.updateUserAvail(avail);
-        },
-       reject(index, entryId, data) {
-           // TEMPORARY FOR REJECTED STATUS
-         this._beforeEditingCache = utils.createClone(this.userAvail);
-         this.userAvail[entryId].StatusId = 'RE';
-         document.getElementsByClassName("confirmButtonAvail")[index].children[0].disabled = true;
-         let avail = utils.createClone(data);
-         avail.Action = 'R'
-         avail.DateStartToChange = this._beforeEditingCache[entryId].DateStart;
-         avail.DateEndToChange = this._beforeEditingCache[entryId].DateEnd;
-         this.updateUserAvail(data);
+       operation(fullData){
+           let avail = utils.createClone(fullData.avail);
+                if(fullData.operation === 'save') {
+                this.userAvail[fullData.avail.EntryId].Filter = false;
+                document.getElementsByClassName("eduButtonsAvail")[fullData.index].children[0].disabled = true;
+            } else if(fullData.operation === 'confirm' || fullData.operation === 'reject') {
+                this._beforeEditingCache = utils.createClone(this.userAvail);
+                document.getElementsByClassName("confirmButtonAvail")[fullData.index].children[0].disabled = true;
+                }   if(fullData.operation === "confirm") {
+                        this.userAvail[fullData.avail.EntryId].StatusId = 'CO';
+                        avail.Action = 'A';
+                    } else if(fullData.operation === "reject") {
+                        this.userAvail[fullData.avail.EntryId].StatusId = 'RE';
+                        avail.Action = 'R'
+                    }
+         avail.DateStartToChange = this._beforeEditingCache[fullData.avail.EntryId].DateStart;
+         avail.DateEndToChange = this._beforeEditingCache[fullData.avail.EntryId].DateEnd;
+         this._beforeEditingCache[fullData.avail.EntryId] = fullData.avail;
+         this.updateUserAvail(avail);
        } 
     }
 }

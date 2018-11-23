@@ -83,7 +83,6 @@
             <div class="prof-tbody-item">
               <div class="prof-tbody-item-title">{{ $t("table.Industry") }} </div>
               <div class="prof-tbody-item-txt">
-              <!-- :disabled="!projectEditMode" -->
                 <div class="prof-table-btns industry">
                   <button :disabled="!projectEditMode" class="profile-table-industry-button" @click="removeIndustry" :name="index" v-for="industry in userProjects[index].Industries" :key="industry.id" :value="industry.id"> {{ industry.name }}</button>
                 </div>
@@ -143,9 +142,6 @@ export default {
       _beforeEditingProjects: null
     };
   },
-  // mounted() {
-  //   this.setProCheckbox();
-  // },
   computed: {
     ...mapGetters({
       showProjectError: "getShowProjectError",
