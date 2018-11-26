@@ -34,11 +34,11 @@
               <div class="checkbox-in"></div>
               <p class="checkbox-label">{{ $t("label.phoneNumber") }}</p>
             </label>
-            <label class="checkbox-wrap cv-chkbx">
+            <!-- <label class="checkbox-wrap cv-chkbx">
               <input type="checkbox" name="date" v-model="cvElements.date">
               <div class="checkbox-in"></div>
               <p class="checkbox-label">{{ $t("label.dateOfBirth") }}</p>
-            </label>
+            </label> -->
             <label class="checkbox-wrap cv-chkbx">
               <input type="checkbox" name="date" v-model="cvElements.contractor">
               <div class="checkbox-in"></div>
@@ -68,13 +68,18 @@
             </select>
             <label class="cv-modal-label">{{ $t("label.selectPosition") }}</label>
           </div> -->
-          <div class="cv-modal-div-s">
+          <!-- <div class="cv-modal-div-s">
             <input required class="cv-modal-input" v-model="userData.JobPosition">
             <span class="imodal-div-bar"></span>
             <label v-if="userData.JobPosition === ''" class="cv-modal-label">{{ $t("label.selectPosition") }}</label>
+          </div> -->
+          <div class="cv-modal-div-s">
+            <input required class="cv-modal-input" v-model="cvElements.position">
+            <span class="imodal-div-bar"></span>
+            <label class="cv-modal-label">{{ $t("label.position") }}</label>
           </div>
           <div class="cv-modal-div-s">
-            <input required class="cv-modal-input">
+            <input required class="cv-modal-input" v-model="cvElements.entity">
             <span class="imodal-div-bar"></span>
             <label class="cv-modal-label">{{ $t("label.entity") }}</label>
           </div>
@@ -110,7 +115,6 @@ export default {
     })
   },
 
-
   methods: {
     ...mapActions([
       "selectAllCvElements",
@@ -127,7 +131,7 @@ export default {
       if(!this.cvElements.language){
         this.cvElements.language = this.$i18n.locale.toUpperCase();
       }
-      this.cvElements.position = this.userData.JobPosition;
+      this.cvElements.position = this.cvElements.position ? this.cvElements.position : this.userData.JobPosition;
       oStore.commit("SET_CV_ELEMENTS", this.cvElements);
       localStorage.setItem("Object", JSON.stringify(this.cvElements));
       this.$router.push({ name: "CV" });

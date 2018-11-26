@@ -171,6 +171,7 @@ import jszip from "jszip";
 import htmlDocx from "html-docx-js/dist/html-docx";
 import { saveAs } from "file-saver";
 import i18n from "../../lang/lang";
+import axios from 'axios';
 const utils = require("../../utils")
 export default {
   data() {
@@ -213,6 +214,7 @@ export default {
       } else {
         this.generateDocx();
       }
+      this._saveCVHistory(); // save information about generating CV to DB
     },
     fnLoop(skills) {
       let skillStr = "", i;
@@ -317,6 +319,36 @@ export default {
           if(IsCurrent === true) {
             return i18n.t("label.present");
           }
+    },
+    _saveCVHistory(){
+      let oCVOptions = JSON.parse(localStorage.getItem("Object")),
+          oData = {
+            CreatedFor: localStorage.getItem("id"),
+            Language: oCVOptions.language,
+            FileFormat: (this.cvElements.format == "PDF") ? "PDF" : "DOCX",
+            CvPosition: oCVOptions.position,
+            TargetEntity: oCVOptions.entity,
+            Name: oCVOptions.name,
+            Photo: oCVOptions.photo,
+            Email: oCVOptions.address,
+            Phone: oCVOptions.phone,
+            Contractor: oCVOptions.contractor
+          };
+      // save data to CV History 
+       axios({
+        url: "CVHistories",
+        method: 'post',
+        data: oData,
+        headers: {
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+          "Cache-Control": "no-cache",
+          "x-csrf-token": this.getToken,
+          "Cookie": this.getCookie
+        }
+      }).catch(error => {
+            console.log(error);
+      });
     }
   }
   // },
@@ -352,7 +384,9 @@ export default {
       fieldOfStudyDesc: 'getFieldOfStudyDescList',
       workPositions: 'getWorkPositions',
       fullLanguageList: 'getFullLanguageList',
-      langLevels: 'getLangLevels'
+      langLevels: 'getLangLevels',
+      getToken: 'getToken',
+      getCookie: 'getCookie'
     })
   )
 };
