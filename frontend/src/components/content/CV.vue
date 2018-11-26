@@ -171,6 +171,7 @@ import jszip from "jszip";
 import htmlDocx from "html-docx-js/dist/html-docx";
 import { saveAs } from "file-saver";
 import i18n from "../../lang/lang";
+const utils = require("../../utils")
 export default {
   data() {
     return {};
@@ -197,6 +198,10 @@ export default {
      oStore.dispatch("loadData", userData);
   
      this.$i18n.locale  = retrievedObject.language.toLowerCase();
+  },
+  created() {
+    let oStore = this.$store;
+    utils.checkAuthLink(this.$router.currentRoute.name, oStore.getters.getUserAuth.ZMENU);
   },
   methods: Object.assign(
     mapActions([

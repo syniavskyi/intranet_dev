@@ -131,6 +131,7 @@
 import Menu from "../Menu.vue";
 import i18n from "../../lang/lang";
 import { mapGetters } from "vuex";
+const utils = require("../../utils");
 
 export default {
   data() {
@@ -164,6 +165,7 @@ export default {
     let oStore = this.$store;
         oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getFilesToRead);
         oStore.dispatch('getData', null);
+        utils.checkAuthLink(this.$router.currentRoute.name, oStore.getters.getUserAuth.ZMENU);
   },
   mounted() {
     this.$nextTick(this.calcDocsHeight().then(height => {}));

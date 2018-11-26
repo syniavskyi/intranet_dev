@@ -88,6 +88,7 @@
 import Menu from "../Menu.vue";
 import i18n from "../../lang/lang";
 import { mapGetters, mapActions } from "vuex";
+const utils = require("../../utils")
 
 export default {
   data() {
@@ -101,6 +102,7 @@ export default {
   created() {
     this.getNewDocs();
     this.getInfoDocs();
+    utils.checkAuthLink(this.$router.currentRoute.name, this.$store.getters.getUserAuth.ZMENU);
   },
   computed: {
     ...mapGetters({

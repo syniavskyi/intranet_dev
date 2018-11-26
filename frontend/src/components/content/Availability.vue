@@ -114,7 +114,7 @@ import LeavesTable from './availabilityComponents/AvailLeavesTable'
 import ProjectsTile from './availabilityComponents/AvailProjectsTile'
 import LeavesTile from './availabilityComponents/AvailLeavesTile'
 import NotAuthProjectsTile from './availabilityComponents/AvailNotAuthorizedProjectsTile'
-const utils = require("../../utils");
+const utils = require("../../utils.js");
 
 export default {
     data() {
@@ -288,6 +288,7 @@ export default {
       let oStore = this.$store;
       oStore.commit('SET_PROMISE_TO_READ', oStore.getters.getAvailabilityToRead);
       oStore.dispatch('getData', null);  
+      utils.checkAuthLink(this.$router.currentRoute.name, oStore.getters.getUserAuth.ZMENU);
     },
     watch: {
         selectedType(value) {
