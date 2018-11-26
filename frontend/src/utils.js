@@ -269,7 +269,7 @@ export const checkRole = function(data) {
     return new Date(oDate.getTime() - nUserOffset);
       }
   }
-  export const checkAuthLink = function(oEvent, oStore) {
+  export const checkAuthLink = function(sCurrentPath, oStore) {
     var sCurrentPath = oEvent.currentRoute.name,
         sPath = sCurrentPath.toLowerCase();
 
