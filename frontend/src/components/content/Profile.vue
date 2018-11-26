@@ -349,6 +349,7 @@ export default {
         // this.authType = oStore.getters.getUserAuth;// utils.checkRole(data);
       }
     }
+    utils.checkAuthLink(this.$router.currentRoute.name, oStore.getters.getUserAuth.ZMENU);
   },
   components: {
     MaskedInput,

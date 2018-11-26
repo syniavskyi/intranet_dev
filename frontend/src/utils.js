@@ -269,4 +269,12 @@ export const checkRole = function(data) {
     return new Date(oDate.getTime() - nUserOffset);
       }
   }
+  export const checkAuthLink = function(oEvent, oStore) {
+    var sCurrentPath = oEvent.currentRoute.name,
+        sPath = sCurrentPath.toLowerCase();
+
+    if(oStore.hasOwnProperty(sPath) && !(oStore[sPath])) {
+      oEvent.push({name: "News"})
+    }
+  }
 const actions = {};

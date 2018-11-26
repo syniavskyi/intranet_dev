@@ -84,6 +84,8 @@ import Menu from "../Menu.vue";
 import { mapGetters } from "vuex";
 import Dialog from '../dialogs/ConfirmDialog'
 
+const utils = require("../../utils.js");
+
 export default {
   data() {
     return {
@@ -104,7 +106,8 @@ export default {
       oStore.commit('SET_REGISTER_DEF_DATA');
       oStore.commit('SET_PROMISE_TO_READ', aPromisesToRead);
       oStore.dispatch('getData', null);
-      this.checkRegistrationAuth(oStore);
+      // this.checkRegistrationAuth(oStore);
+      utils.checkAuthLink(this.$router, oStore.getters.getUserAuth.ZMENU);
   },
   validations: {
     registerData: {
@@ -150,13 +153,13 @@ export default {
       });
       this.isLoading = false;
     },
-    checkRegistrationAuth(oStore) {
-      var bAuth = oStore.getters.getUserAuth.ZMENU.registration;
+    // checkRegistrationAuth(oStore) {
+    //   var bAuth = oStore.getters.getUserAuth.ZMENU.registration;
 
-      if(!bAuth) {
-        this.$router.push({name: "News"})
-      }
-    }
+    //   if(!bAuth) {
+    //     this.$router.push({name: "News"})
+    //   }
+    // }
   },
   // computed: {
   //   ...mapGetters({

@@ -71,6 +71,7 @@
 import i18n from "../../lang/lang";
 import Menu from "../Menu.vue";
 import { mapGetters, mapActions } from "vuex";
+const utils = require("../../utils")
 
 export default {
   data() {
@@ -88,6 +89,7 @@ export default {
     let oStore = this.$store;
       oStore.commit('SET_PROMISE_TO_READ', ["Domains", "Industries", "UserData", "UserList"]);
       oStore.dispatch('getData', null);
+      utils.checkAuthLink(this.$router.currentRoute.name, oStore.getters.getUserAuth.ZMENU);
   },
   // computed: {
   //   ...mapGetters({

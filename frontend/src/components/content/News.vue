@@ -164,6 +164,7 @@ export default {
     this.$store.commit('SET_PROMISE_TO_READ', this.$store.getters.getNewsToRead);
     this.$store.dispatch('getData', null);
     this.$store.commit('SET_ADVERTS_LOADER', true);
+    utils.checkAuthLink(this.$router.currentRoute.name, this.$store.getters.getUserAuth.ZMENU);
   },
   destroyed() {
     clearInterval(this.interval);
