@@ -89,7 +89,7 @@ export default {
     let oStore = this.$store;
       oStore.commit('SET_PROMISE_TO_READ', ["Domains", "Industries", "UserData", "UserList"]);
       oStore.dispatch('getData', null);
-      utils.checkAuthLink(this.$router.currentRoute.name, oStore.getters.getUserAuth.ZMENU);
+      utils.checkAuthLink(this.$router, oStore.getters.getUserAuth.ZMENU);
   },
   // computed: {
   //   ...mapGetters({

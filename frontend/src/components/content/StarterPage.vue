@@ -102,7 +102,7 @@ export default {
   created() {
     this.getNewDocs();
     this.getInfoDocs();
-    utils.checkAuthLink(this.$router.currentRoute.name, this.$store.getters.getUserAuth.ZMENU);
+    utils.checkAuthLink(this.$router, this.$store.getters.getUserAuth.ZMENU);
   },
   computed: {
     ...mapGetters({
