@@ -9,13 +9,13 @@ const state = {
         date:true,
         name: true,
         language: null,
-        format: null,
+        format: "",
         contractor: true,
-        position: null
+        position: ""
     },
     cvFormats: ["DOCX", "DOC", "PDF"],
     showSelectCvDialog: false,
-    dataToRead: ["Domains", "Industries", "UserData", "UserList", "Contractors", "Projects", "Languages", "SchoolDesc", "FieldOfStudy"]
+    dataToRead: ["NewToken", "Domains", "Industries", "UserData", "UserList", "Contractors", "Projects", "Languages", "SchoolDesc", "FieldOfStudy"]
 };
 
 const mutations = {
