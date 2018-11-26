@@ -201,7 +201,7 @@ export default {
   },
   created() {
     let oStore = this.$store;
-    utils.checkAuthLink(this.$router.currentRoute.name, oStore.getters.getUserAuth.ZMENU);
+    utils.checkAuthLink(this.$router, oStore.getters.getUserAuth.ZMENU);
   },
   methods: Object.assign(
     mapActions([
