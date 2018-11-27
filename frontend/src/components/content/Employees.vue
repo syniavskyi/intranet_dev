@@ -71,6 +71,7 @@
 import i18n from "../../lang/lang";
 import Menu from "../Menu.vue";
 import { mapGetters, mapActions } from "vuex";
+import Modal from '../dialogs/MessageLogDialog';
 const utils = require("../../utils")
 
 export default {
@@ -83,7 +84,8 @@ export default {
     };
   },
   components: {
-    "app-menu": Menu
+    "app-menu": Menu,
+    "modal": Modal
   },
   created: function() {
     let oStore = this.$store;

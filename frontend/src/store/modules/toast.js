@@ -1,6 +1,13 @@
 const state = {
     showToast: false,
-    timeoutRunning: false
+    timeoutRunning: false,
+    showModal: false
+}
+
+const mutations = {
+    SET_SHOW_MODAL(state, data) {
+        state.showModal = data;
+    }
 }
 
 const actions = {
@@ -19,11 +26,15 @@ const actions = {
 const getters = {
     getDisplayToast(state) {
         return state.showToast
+    },
+    getShowModal(state){
+        return state.showModal;
     }
 }
 
 export default {
     state,
+    mutations,
     actions,
     getters
 }

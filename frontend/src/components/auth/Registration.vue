@@ -83,7 +83,7 @@ import i18n from "../../lang/lang";
 import Menu from "../Menu.vue";
 import { mapGetters } from "vuex";
 import Dialog from '../dialogs/ConfirmDialog'
-
+import Modal from '../dialogs/MessageLogDialog';
 const utils = require("../../utils.js");
 
 export default {
@@ -134,7 +134,8 @@ export default {
   },
   components: {
     "app-menu": Menu,
-    "confirm-dialog": Dialog
+    "confirm-dialog": Dialog,
+    "modal": Modal
   },
   methods: {
     showMenu(event) {

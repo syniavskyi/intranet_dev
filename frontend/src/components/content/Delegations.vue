@@ -152,6 +152,7 @@ import TravelCosts from './delegationComponents/TravelCosts'
 import AdvanceTable from './delegationComponents/AdvanceTable'
 import DelegationTable from './delegationComponents/DelegationTable'
 import Dialog from '../dialogs/ConfirmDelegationDialog'
+import Modal from '../dialogs/MessageLogDialog'
 
 let utils = require('../../utils')
 
@@ -181,7 +182,8 @@ export default {
         'travel-costs-table': TravelCosts,
         'advance-table': AdvanceTable,
         'delegation-table': DelegationTable,
-        'confirm-dialog': Dialog
+        'confirm-dialog': Dialog,
+        "modal": Modal
     },
     
     created(){
