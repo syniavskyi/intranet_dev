@@ -114,6 +114,7 @@ import LeavesTable from './availabilityComponents/AvailLeavesTable'
 import ProjectsTile from './availabilityComponents/AvailProjectsTile'
 import LeavesTile from './availabilityComponents/AvailLeavesTile'
 import NotAuthProjectsTile from './availabilityComponents/AvailNotAuthorizedProjectsTile'
+import Modal from '../dialogs/MessageLogDialog';
 const utils = require("../../utils.js");
 
 export default {
@@ -136,7 +137,8 @@ export default {
         'app-leaves-table': LeavesTable,
         'app-projects-tile': ProjectsTile,
         'app-leaves-tile': LeavesTile,
-        'app-not-authorized-projects-tile': NotAuthProjectsTile
+        'app-not-authorized-projects-tile': NotAuthProjectsTile,
+        'modal': Modal
     },
     computed: Object.assign(mapGetters({
             departmentList: 'getDepartmentList',
@@ -161,6 +163,7 @@ export default {
             authType: 'getAvailabilityAuth',
             authAcc: 'getAvailAcceptAuth',
             disabledBtnToEditAvail: "getDisabledBtnToEditAvail"
+
         }), {
         filteredUsers() {
             let aFilteredUsers = this.usersList,

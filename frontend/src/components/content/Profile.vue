@@ -275,6 +275,7 @@ import SelectCvContent from "./profileComponents/SelectCvContent";
 import UserCvTile from "./profileComponents/UserCvTile";
 import ChangePasswordDialog from "./profileComponents/ChangePasswordDialog";
 import i18n from "../../lang/lang";
+import Modal from '../dialogs/MessageLogDialog';
 const utils = require("../../utils");
 
 export default {
@@ -362,6 +363,7 @@ export default {
     "select-cv-content": SelectCvContent,
     "user-cv-tile": UserCvTile,
     "change-user-password": ChangePasswordDialog,
+    "modal": Modal,
     VueGoogleAutocomplete: VueGoogleAutocomplete
   },
   // computed: {

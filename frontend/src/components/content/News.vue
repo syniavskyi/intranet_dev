@@ -122,7 +122,7 @@ import moment from "moment";
 import Toast from "../dialogs/Toast";
 import NewMessageDialog from "../dialogs/NewMessageDialog";
 import Loader from '../dialogs/Loader.vue';
-
+import Modal from '../dialogs/MessageLogDialog';
 let utils = require("../../utils");
 
 export default {
@@ -173,7 +173,8 @@ export default {
     "app-menu": Menu,
     "loader": Loader,
     toast: Toast,
-    "new-message": NewMessageDialog
+    "new-message": NewMessageDialog,
+    "modal": Modal
   },
   // computed: {
   //   ...mapGetters({

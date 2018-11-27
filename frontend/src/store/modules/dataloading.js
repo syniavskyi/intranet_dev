@@ -436,15 +436,18 @@ const actions = {
       //SPI
       let message = response[j].res.headers,
           jsonStr = message["sap-message"];
-        try{
-          let messageObj = JSON.parse(jsonStr);
-          alert(messageObj.message); // chwilowe
-          // for(let i = 0; i < messageObj.details.length; i++) {
-            commit('SET_MESSAGE_LOG', messageObj.details);
-            //wywołaj okno
-          // }
-         }
-        catch(err){}
+          if(jsonStr) {
+            try{
+              let messageObj = JSON.parse(jsonStr);
+              // alert(messageObj.message); // chwilowe
+              for(let i = 0; i < messageObj.details.length; i++){
+                messageObj.details[i].showModal = true;
+              }
+                commit('SET_MESSAGE_LOG', messageObj.details);
+                commit('SET_SHOW_MODAL', true);
+             }
+            catch(err){}
+          }
       //SPI
       switch(sPromiseName){
         case "Adverts":

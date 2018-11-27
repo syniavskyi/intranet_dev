@@ -160,6 +160,9 @@
       </table>
     </div>
   </div>
+   <div v-if="showModal" v-for="message in messageLog" :value="message.message" :key="message.message">
+      <modal v-show="message.showModal" :message="{message}"/>
+  </div>
 </div>
 </template>
 
@@ -172,10 +175,14 @@ import htmlDocx from "html-docx-js/dist/html-docx";
 import { saveAs } from "file-saver";
 import i18n from "../../lang/lang";
 import axios from 'axios';
+import Modal from '../dialogs/MessageLogDialog';
 const utils = require("../../utils")
 export default {
   data() {
     return {};
+  },
+  components: {
+    "modal": Modal
   },
   beforeRouteLeave(to, from, next) {
     if(to.name === "Profile"){
@@ -386,7 +393,9 @@ export default {
       fullLanguageList: 'getFullLanguageList',
       langLevels: 'getLangLevels',
       getToken: 'getToken',
-      getCookie: 'getCookie'
+      getCookie: 'getCookie',
+      messageLog: "getMessageLog",
+      showModal: "getShowModal"
     })
   )
 };
