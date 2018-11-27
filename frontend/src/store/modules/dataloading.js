@@ -30,7 +30,8 @@ const state = {
   promiseListToRead: [],
   promiseList: [],
   goFromCv: false, //default
-  transportList: []
+  transportList: [],
+  messageLog: []
 };
 
 const mutations = {
@@ -113,6 +114,9 @@ const mutations = {
   },
   SET_TRANSPORT(state, data) {
     state.transportList = data;
+  },
+  SET_MESSAGE_LOG(state, data) {
+    state.messageLog = data;
   }
 };
 
@@ -428,7 +432,20 @@ const actions = {
           aResponse = response[j].res;
       if(aResponse.data.d){
         aResults = aResponse.data.d.results;
-      }  
+      }   
+      //SPI
+      let message = response[j].res.headers,
+          jsonStr = message["sap-message"];
+        try{
+          let messageObj = JSON.parse(jsonStr);
+          alert(messageObj.message); // chwilowe
+          // for(let i = 0; i < messageObj.details.length; i++) {
+            commit('SET_MESSAGE_LOG', messageObj.details);
+            //wywołaj okno
+          // }
+         }
+        catch(err){}
+      //SPI
       switch(sPromiseName){
         case "Adverts":
           dispatch("setAdvertList", aResponse);
@@ -725,6 +742,9 @@ const getters = {
   },
   getTransportList(state) {
     return state.transportList;
+  },
+  getMessageLog(state) {
+    return state.messageLog;
   }
 };
 
