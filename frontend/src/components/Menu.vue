@@ -95,9 +95,12 @@
                 </li>
             </ul>
         </nav>        
-         <div v-if="showModal" v-for="message in messageLog" :value="message.message" :key="message.message">
+         <!-- <div v-if="showModal" v-for="message in messageLog" :value="message.message" :key="message.message">
             <modal v-show="message.showModal" :message="{message}"/>
-        </div>
+        </div> -->
+        <!-- <div v-if="showModal"> -->
+            <modal v-show="showModal"/>
+        <!-- </div> -->
     </div>
 </template>
 

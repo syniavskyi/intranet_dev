@@ -20,6 +20,9 @@ const actions = {
                             }, time)
             state.timeoutRunning = true
         }
+    },
+    closeModal({commit}) {
+        commit('SET_SHOW_MODAL', false)
     }
 }
 

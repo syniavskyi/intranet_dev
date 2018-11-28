@@ -214,7 +214,8 @@
         "systemData": "System data",
         "office": "Office",
         "information": "Information",
-        "instructions": "Instructions"
+        "instructions": "Instructions",
+        "error": "Error"
     },
     "message": {
         "loginError": "Password or username are invalid.",

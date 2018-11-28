@@ -3,19 +3,19 @@
     <div class="modal-backdrop">
       <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
         <header class="modal-header">
-          <slot name="header">
-             {{message.message.severity}}
-          </slot>
+          <!-- <slot name="header"> -->
+           {{ $t("header.error") }}
+          <!-- </slot> -->
         </header>
-        <section class="modal-body">
-          <slot name="body">
-            {{message.message.message}}
-          </slot>
+        <section class="modal-body" v-for="(message, index) in messageLog" :key="index">
+          <!-- <slot name="body"> -->
+           {{index+1}}. {{message.message}}
+          <!-- </slot> -->
         </section>
         <footer class="modal-footer">
-          <slot name="footer">
-            <button type="button" class="btn-close" @click="close" aria-label="Close modal">X</button>
-          </slot>
+          <!-- <slot name="footer"> -->
+            <button type="button" class="btn-close" @click="closeModal" aria-label="Close modal">X</button>
+          <!-- </slot> -->
         </footer>
       </div>
     </div>
@@ -24,15 +24,21 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import i18n from "../../lang/lang";
 export default {
      name: 'modal',
-     props: ['message'],
-         methods: Object.assign(
-                mapActions(["closeModal"]), 
-                {
-                close() {
-                    this.message.message.showModal = false;
-                }})
+    //  props: ['message'],
+    computed: Object.assign(
+    mapGetters({
+      messageLog: "getMessageLog",
+      showModal: "getShowModal"
+    }), {}),
+     methods: Object.assign(
+         mapActions(["closeModal"]), 
+         {
+         close() {
+              this.message.message.showModal = false;
+        }})
 }
 </script>
 <style>
@@ -75,7 +81,7 @@ export default {
 
   .modal-body {
     position: relative;
-    padding: 20px 10px;
+    padding: 10px;
   }
 
   .btn-close {
