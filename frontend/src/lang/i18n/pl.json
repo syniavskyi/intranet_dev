@@ -213,7 +213,8 @@
         "systemData": "Dane systemu",
         "office": "Biuro",
         "information": "Informacje",
-        "instructions": "Instrukcje"
+        "instructions": "Instrukcje",
+        "error": "Błąd"
     },
     "message": {
         "loginError": "Wprowadzona nazwa użytkownika lub hasło są nieprawidłowe",

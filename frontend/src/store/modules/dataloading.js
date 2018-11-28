@@ -439,12 +439,7 @@ const actions = {
           if(jsonStr) {
             try{
               let messageObj = JSON.parse(jsonStr);
-              // alert(messageObj.message); // chwilowe
-              for(let i = 0; i < messageObj.details.length; i++){
-                messageObj.details[i].showModal = true;
-              }
-                commit('SET_MESSAGE_LOG', messageObj.details);
-                commit('SET_SHOW_MODAL', true);
+              commit('SET_MESSAGE_LOG', messageObj.details);
              }
             catch(err){}
           }
@@ -511,6 +506,7 @@ const actions = {
     }
     commit("SET_DISPLAY_LOADER", false);
     dispatch('checkPageToDisplay', userData.changePage);
+    commit('SET_SHOW_MODAL', true);
   },
 
   setAdvertList({commit}, response){
