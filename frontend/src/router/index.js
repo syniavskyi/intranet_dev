@@ -91,7 +91,8 @@ export default new Router({
     {
         path: '/cv',
         name: 'CV',
-        component: CV
+        component: CV,
+        beforeEnter: AuthGuard
     }
 ],
 linkExactActiveClass: 'active-router-link'
