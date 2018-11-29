@@ -39,7 +39,7 @@ const actions = {
     })
   },
   saveNewUserExp({
-    getters
+    getters, dispatch
   }, data) {
     getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = localStorage.getItem("id");
     data.DateStart = utils.formatDateForBackend(data.DateStart);
@@ -62,13 +62,14 @@ const actions = {
           "Cookie": getters.getCookie
       }
     }).then(res => {
-        console.log(res)
+      let message = res.headers;
+      dispatch('displayModal', message);
       }).catch(error => {
         console.log(error);
     })
   },
   updateUserExp({
-    getters
+    getters, dispatch
   }, data) {
     getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = localStorage.getItem("id");
     data.DateStart = utils.formatDateForBackend(data.DateStart);
@@ -91,7 +92,8 @@ const actions = {
           "Cookie": getters.getCookie
       }
     }).then(res => {
-        console.log(res)
+      let message = res.headers;
+      dispatch('displayModal', message);
       }).catch(error => {
         console.log(error);
     })

@@ -433,17 +433,10 @@ const actions = {
       if(aResponse.data.d){
         aResults = aResponse.data.d.results;
       }   
-      //SPI
-      let message = response[j].res.headers,
-          jsonStr = message["sap-message"];
-          if(jsonStr) {
-            try{
-              let messageObj = JSON.parse(jsonStr);
-              commit('SET_MESSAGE_LOG', messageObj.details);
-             }
-            catch(err){}
-          }
-      //SPI
+      // get logs from backend
+      let message = response[j].res.headers;
+      dispatch('displayModal', message);
+      
       switch(sPromiseName){
         case "Adverts":
           dispatch("setAdvertList", aResponse);
@@ -506,7 +499,6 @@ const actions = {
     }
     commit("SET_DISPLAY_LOADER", false);
     dispatch('checkPageToDisplay', userData.changePage);
-    commit('SET_SHOW_MODAL', true);
   },
 
   setAdvertList({commit}, response){

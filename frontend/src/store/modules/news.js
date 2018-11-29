@@ -108,7 +108,9 @@ const actions = {
                 "Cookie": getters.getCookie
             }
           }).then(res => {
-              console.log(res)
+              console.log(res);
+              let message = res.headers;
+              dispatch('displayModal', message);
             }).catch(error => {
               console.log(error);
           })
@@ -134,7 +136,7 @@ const actions = {
            console.log(error)
        });
     },
-    addNewAdvert({getters, commit}, data2){
+    addNewAdvert({getters, commit, dispatch}, data2){
         const url = 'Adverts';
         const data = utils.createClone(data2);
         data.ValidTo = utils.formatDateForBackend(data.ValidTo);
@@ -153,6 +155,8 @@ const actions = {
           }).then(res => {
               console.log(res);
               commit("SET_SHOW_NEW_MESSAGE_DIALOG", false);
+              let message = res.headers;
+              dispatch('displayModal', message);
             }).catch(error => {
               console.log(error);
           })

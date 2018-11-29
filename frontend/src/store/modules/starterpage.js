@@ -106,7 +106,7 @@ const actions = {
       console.log(error);
     })
   },
-  editSingleNewDoc({getters}, data) {
+  editSingleNewDoc({getters, dispatch}, data) {
     let sToken = getters.getToken;
     let cookie = getters.getCookie;
     const editData = {
@@ -130,7 +130,9 @@ const actions = {
           "Cookie": cookie
       }
     }).then(res => {
-        console.log(res)
+        console.log(res);
+        let message = res.headers;
+        dispatch('displayModal', message);
       }).catch(error => {
         console.log(error);
     })
@@ -151,6 +153,8 @@ const actions = {
         }
         }).then(res => {
             console.log(res);
+            let message = res.headers;
+            dispatch('displayModal', message);
         }).catch(error => {
             console.log(error);
         })
@@ -171,6 +175,8 @@ const actions = {
     }
     }).then(res => {
         console.log(res);
+        let message = res.headers;
+        dispatch('displayModal', message);
     }).catch(error => {
         console.log(error);
     })

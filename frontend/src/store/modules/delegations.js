@@ -279,6 +279,8 @@ const actions = {
         }).then(res => {
           commit('SET_CREATE_DELEG_SUCCESS',true)
           dispatch('clearDelegationForm')
+          let message = res.headers;
+          dispatch('displayModal', message);
         }).catch(error => { 
           console.log(error);
           commit('SET_CREATE_DELEG_SUCCESS',false)

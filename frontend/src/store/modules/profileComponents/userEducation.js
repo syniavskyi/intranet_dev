@@ -46,7 +46,7 @@ const actions = {
     })
   },
   editUserEducation({
-    getters
+    getters, dispatch
   }, data) {
     getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = localStorage.getItem("id");
     getters.getSelectedCvLang ?  data.Language = getters.getSelectedCvLang.toUpperCase() : data.Language = localStorage.getItem("lang");
@@ -69,13 +69,14 @@ const actions = {
           "Cookie": cookie
       }
     }).then(res => {
-        console.log(res)
+      let message = res.headers;
+      dispatch('displayModal', message);
       }).catch(error => {
         console.log(error);
     })
   },
   addUserEducation({
-    getters
+    getters, dispatch
   }, data) {
     getters.getSelectedForCvUser ? data.UserAlias = getters.getSelectedForCvUser : data.UserAlias = localStorage.getItem("id");
     getters.getSelectedCvLang ?  data.Language = getters.getSelectedCvLang.toUpperCase() : data.Language = localStorage.getItem("lang");
@@ -95,7 +96,8 @@ const actions = {
           "Cookie": getters.getCookie
       }
     }).then(res => {
-        console.log(res)
+      let message = res.headers;
+      dispatch('displayModal', message);
       }).catch(error => {
         console.log(error);
     })
