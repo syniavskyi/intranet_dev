@@ -5,6 +5,7 @@
     <loader v-if="showLoader"></loader>
       <!-- <transition name="slide-top" mode="out-in"> -->
          <router-view/>
+        <modal v-show="showModal"/>
       <!-- </transition> -->
   </div>
   <!-- </div> -->
@@ -13,13 +14,16 @@
 <script>
 import Menu from './components/Menu.vue'
 import Loader from './components/dialogs/Loader.vue'
+import Modal from './components/dialogs/MessageLogDialog';
 import { mapGetters } from 'vuex';
 export default {
   name: 'App',
   components: {
     'app-menu': Menu,
-    'loader': Loader
+    'loader': Loader,
+    'modal': Modal
   },
+  
 
   created() {
     window.addEventListener("resize", this.showMenu)
@@ -45,7 +49,9 @@ export default {
   // }
   computed: Object.assign(
     mapGetters({
-      showLoader: 'getDisplayLoader'
+      showLoader: 'getDisplayLoader',
+      // messageLog: "getMessageLog",
+      showModal: "getShowModal"
     })
   )
 
