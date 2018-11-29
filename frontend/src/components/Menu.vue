@@ -95,30 +95,17 @@
                 </li>
             </ul>
         </nav>        
-         <!-- <div v-if="showModal" v-for="message in messageLog" :value="message.message" :key="message.message">
-            <modal v-show="message.showModal" :message="{message}"/>
-        </div> -->
-        <!-- <div v-if="showModal"> -->
-            <modal v-show="showModal"/>
-        <!-- </div> -->
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import Modal from './dialogs/MessageLogDialog';
 const utils = require("../utils")
 export default {
-    components:{
-        "modal": Modal
-    },
     computed: {
        ...mapGetters({
         userPhotoUrl: 'getUserPhotoUrl',
-        menuAuth: 'getMenuAuth',
-        messageLog: "getMessageLog",
-        showModal: "getShowModal"
-
+        menuAuth: 'getMenuAuth'
       })
     },
     methods: {

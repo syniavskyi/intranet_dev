@@ -338,6 +338,7 @@ export default {
   },  
   created() {
     // this.getUserData(userData);
+    this.$store.commit('SET_DISABLED_BTN_TO_EDIT', false);
     let oStore = this.$store,
         sUserAlias = oStore.getters.getLoginAlias || localStorage.getItem("id"),
         sLang = localStorage.getItem("lang");
@@ -347,7 +348,6 @@ export default {
         oStore.commit("SET_GO_FROM_CV", false);
       } else {   
         oStore.dispatch('getData', null);
-        // this.authType = oStore.getters.getUserAuth;// utils.checkRole(data);
       }
     }
     utils.checkAuthLink(this.$router, oStore.getters.getUserAuth.ZMENU);

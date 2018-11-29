@@ -21,6 +21,7 @@ const actions = {
             state.timeoutRunning = true
         }
     },
+    //modal is dialog with message logs from backned
     closeModal({commit}) {
         commit('SET_SHOW_MODAL', false)
     },
