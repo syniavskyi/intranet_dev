@@ -109,7 +109,7 @@ const actions = {
     }
   },
   saveUserSkills({
-    getters
+    getters, dispatch
   }, newSkills) {
     newSkills = utils.formatToString(newSkills);
     getters.getSelectedCvLang ?  newSkills.Language = getters.getSelectedCvLang.toUpperCase() : newSkills.Language = localStorage.getItem("lang");
@@ -129,12 +129,13 @@ const actions = {
             "Cookie": cookie
         }
       }).then(res => {
-          console.log(res)
+          let message = res.headers;
+          dispatch('displayModal', message);
         }).catch(error => {
           console.log(error);
       })
   },
-  saveUserLangs({getters}, data) {
+  saveUserLangs({getters, dispatch}, data) {
     let sToken = getters.getToken;
     let cookie = getters.getCookie;
     getters.getSelectedCvLang ? data.Lang = getters.getSelectedCvLang.toUpperCase() : data.Lang = localStorage.getItem("lang");
@@ -152,12 +153,13 @@ const actions = {
           "Cookie": cookie
       }
     }).then(res => {
-        console.log(res)
+      let message = res.headers;
+      dispatch('displayModal', message);
       }).catch(error => {
         console.log(error);
     })
   },
-  updateUserLangs({getters}, data){
+  updateUserLangs({getters, dispatch}, data){
     let sToken = getters.getToken;
     getters.getSelectedCvLang ?  data.Lang = getters.getSelectedCvLang.toUpperCase() : data.Lang = localStorage.getItem("lang");
     getters.getSelectedForCvUser ? data.UserId = getters.getSelectedForCvUser : data.UserId = localStorage.getItem("id");
@@ -175,7 +177,8 @@ const actions = {
           "Cookie": getters.getCookie
       }
     }).then(res => {
-        console.log(res)
+        let message = res.headers;
+        dispatch('displayModal', message);
       }).catch(error => {
         console.log(error);
     })

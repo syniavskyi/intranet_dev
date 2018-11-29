@@ -3,19 +3,16 @@
     <div class="modal-backdrop">
       <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
         <header class="modal-header">
-          <!-- <slot name="header"> -->
            {{ $t("header.error") }}
-          <!-- </slot> -->
         </header>
-        <section class="modal-body" v-for="(message, index) in messageLog" :key="index">
-          <!-- <slot name="body"> -->
+        <section v-if="messageLog.length > 1" class="modal-body" v-for="(message, index) in messageLog" :key="index">
            {{index+1}}. {{message.message}}
-          <!-- </slot> -->
+        </section>
+        <section v-else class="modal-body" v-for="(message, index) in messageLog" :key="index">
+            {{message.message}}
         </section>
         <footer class="modal-footer">
-          <!-- <slot name="footer"> -->
             <button type="button" class="btn-close" @click="closeModal" aria-label="Close modal">X</button>
-          <!-- </slot> -->
         </footer>
       </div>
     </div>

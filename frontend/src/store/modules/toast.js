@@ -23,6 +23,17 @@ const actions = {
     },
     closeModal({commit}) {
         commit('SET_SHOW_MODAL', false)
+    },
+    displayModal({commit}, headers) {
+          let jsonStr = headers["sap-message"];
+          if(jsonStr) {
+            try{
+              let messageObj = JSON.parse(jsonStr);
+              commit('SET_MESSAGE_LOG', messageObj.details);
+              commit('SET_SHOW_MODAL', true);
+             }
+            catch(err){}
+          }
     }
 }
 

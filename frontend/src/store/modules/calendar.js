@@ -88,8 +88,6 @@ const actions = {
     commit('SET_COLOR_PRIORITY', color);
   },
   getEvents({
-    commit,
-    dispatch,
     getters
   }) {
     return axios({
@@ -165,6 +163,8 @@ const actions = {
         state.aEvents.push(data);
         commit("SET_PROMISE_TO_READ", ["Events"]);
         dispatch('getData');
+        let message = res.headers;
+        dispatch('displayModal', message);
       }).catch(error => {
         console.log(error);
     })
@@ -172,7 +172,7 @@ const actions = {
   },
   editEvent({
     commit,
-    getters
+    getters, dispatch
   },data) {
     let eventData = utils.createClone(data);
     eventData.DateFrom = utils.formatDateForBackend(data.DateFrom);
@@ -208,6 +208,8 @@ const actions = {
           commit('SET_EVENTS', aEvents);
          }        
           commit('SET_EVENTS', aEvents);
+          let message = res.headers;
+          dispatch('displayModal', message);
         }).catch(error => {
           console.log(error);
       })

@@ -85,7 +85,7 @@ const actions = {
     })
   },
   sendEmailWithPass({
-    commit
+    commit, dispatch
   }, email) {
     axios({
       method: 'post',
@@ -95,9 +95,11 @@ const actions = {
       },
       data: params
     }).then(res => {
-      commit('SET_EMAIL_SUCCESS', true)
+      commit('SET_EMAIL_SUCCESS', true);
+      let message = res.headers;
+      dispatch('displayModal', message);
     }).catch(error => {
-      commit('SET_EMAIL_ERROR', true)
+      commit('SET_EMAIL_ERROR', true);
       console.log(error)
     })
   },

@@ -66,10 +66,11 @@ const actions = {
             "Cookie": getters.getCookie
         }
         }).then(res => {
-            console.log(res);
             dispatch('hideAllMessages')
             commit('SET_REMOVE_ERROR', false)
             commit('SET_REMOVE_SUCCESS', true)
+            let message = res.headers;
+            dispatch('displayModal', message);
         }).catch(error => {
             console.log(error);
             dispatch('hideAllMessages');
@@ -97,8 +98,9 @@ const actions = {
               "Cookie": cookie
           }
         }).then(res => {
-            console.log(res);
             getters.getUserAvail.push(data);
+            let message = res.headers;
+            dispatch('displayModal', message);
           }).catch(error => {
             console.log(error);
         })
@@ -127,7 +129,8 @@ const actions = {
             "Cookie": getters.getCookie
         }
         }).then(res => {
-            console.log(res)
+            let message = res.headers;
+            dispatch('displayModal', message);
         }).catch(error => {
             console.log(error);
         })

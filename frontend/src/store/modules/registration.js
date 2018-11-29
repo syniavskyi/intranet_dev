@@ -14,7 +14,7 @@ const state = {
 
 const actions = {
   submitRegistration({
-    commit, getters
+    commit, getters, dispatch
   }, data) {
     let registerData = getters.getRegistratinData;
     registerData.Action = "R";
@@ -33,6 +33,8 @@ const actions = {
     }).then(res => {
       commit("SET_DISPLAY_LOADER", false);
       commit("SET_DIALOG_CONFIRM", true);
+      let message = res.headers;
+      dispatch('displayModal', message);
     }).catch(error => {
       commit("SET_DISPLAY_LOADER", false);
       commit("SET_DIALOG_ERROR_STATUS", true);

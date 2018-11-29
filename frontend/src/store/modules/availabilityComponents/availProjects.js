@@ -89,7 +89,6 @@ const actions = {
         "Cookie": cookie
       }
     }).then(res => {
-      console.log(res)
       dispatch('getUserProjects', data.UserAlias)
       commit('SET_NEW_PROJECT_FOR_USER', {
         UserAlias: null,
@@ -99,6 +98,8 @@ const actions = {
         StatusId: null,
         Description: null
       })
+      let message = res.headers;
+      dispatch('displayModal', message);
     }).catch(error => {
       console.log(error);
     })
@@ -135,7 +136,9 @@ const actions = {
         // commit('SET_EDIT_ERROR', false)
         // commit('SET_SAVE_DATA_SUCCESS', true)
         // commit('SET_PROJECT_TO_EDIT', {})
-        dispatch('getUserProjects', data.UserAlias)
+        dispatch('getUserProjects', data.UserAlias);
+        let message = res.headers;
+        dispatch('displayModal', message);
 
       })
       .catch(error => {
@@ -167,7 +170,9 @@ const actions = {
         // commit('SET_EDIT_ERROR', false)
         // commit('SET_SAVE_DATA_SUCCESS', true)
         // commit('SET_PROJECT_TO_EDIT', {})
-        dispatch('getUserProjects', data.UserAlias)
+        dispatch('getUserProjects', data.UserAlias);
+        let message = res.headers;
+        dispatch('displayModal', message);
 
       })
       .catch(error => {

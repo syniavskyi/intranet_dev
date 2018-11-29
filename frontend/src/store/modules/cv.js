@@ -84,7 +84,9 @@ const actions = {
           }
         }).then(res => {
           console.log(res);
-          dispatch('getUserFilesData')
+          dispatch('getUserFilesData');
+          let message = res.headers;
+          dispatch('displayModal', message);
         }).catch(error => { 
           console.log(error);
         })
@@ -107,6 +109,8 @@ const actions = {
         }).then(res => {
           console.log(res);
           dispatch('getUserFilesData')
+          let message = res.headers;
+          dispatch('displayModal', message);
         }).catch(error => { 
           console.log(error);
         })

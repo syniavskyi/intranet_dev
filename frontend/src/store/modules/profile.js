@@ -65,7 +65,7 @@ const mutations = {
 
 const actions = {
   saveUserData({
-    commit, getters
+    commit, getters, dispatch
   }, userData) {
     userData.Action = 'E'
     userData.Language = 'PL'
@@ -96,14 +96,15 @@ const actions = {
         "Cookie": getters.getCookie
       }
     }).then(res => {
-
+      let message = res.headers;
+      dispatch('displayModal', message);
     }).catch(error => { 
 
     }) 
     commit('SET_USER_INFO', userData);
   },
   submitPhoto({
-    commit, getters
+    commit, getters, dispatch
   }, data) {
     let slugHeader = data.file.name + ';' + data.type + ';' + data.language + ';' + data.userId + ';' + data.file.type;
 
@@ -119,14 +120,15 @@ const actions = {
         "x-csrf-token": getters.getToken
       }
     }).then(res => {
-      // console.log(res);
+      let message = res.headers;
+      dispatch('displayModal', message);
     }).catch(error => {
-      // console.log(error);
+      console.log(error);
     })
   },
 
   submitPassword({
-    getters
+    getters, dispatch
   }, userData) {
     let urlQuery = getters.getUrlQuery
     userData.Action = 'C'
@@ -153,7 +155,9 @@ const actions = {
           "Cookie": getters.getCookie
       }
     }).then(res => {
-        console.log(res)
+        console.log(res);
+        let message = res.headers;
+        dispatch('displayModal', message);
       }).catch(error => {
         console.log(error);
     })
