@@ -135,6 +135,7 @@
     flex-grow: 0;
     margin: 0.5rem 0;
     transition: box-shadow 0.25s ease;
+    position: relative;
 }
 .profile-tile-1-2:nth-of-type(1) {
     width: 100%;
@@ -1374,6 +1375,10 @@ max-width: max-content;
     cursor: pointer;
     background: rgb(173, 173, 173);
     color: rgb(90, 90, 90);
+}
+
+.skill-hint {
+    display: flex;
 }
 
 @media (min-width: 30rem) {
