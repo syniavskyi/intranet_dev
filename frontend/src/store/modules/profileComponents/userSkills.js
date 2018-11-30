@@ -11,7 +11,10 @@ const state = {
     AdditionalSkills: []
   },
   userLanguages: [],
-  fullLanguageList: []
+  fullLanguageList: [],
+  userSkillsDfLang: [],
+  dataForHint: false,
+  showHint: {}
 }
 
 const mutations = {
@@ -23,6 +26,15 @@ const mutations = {
   },
   SET_LANGUAGE_LIST(state, data) {
     state.fullLanguageList = data;
+  },
+  SET_USER_SKILLS_DF_LANG(state, data) {
+    state.userSkillsDfLang = data;
+  },
+  SET_DATA_FOR_HINT(state, data) {
+    state.dataForHint = data;
+  },
+  SET_SHOW_HINT(state, data) {
+    state.showHint = data;
   }
 }
 
@@ -204,10 +216,8 @@ const actions = {
   },
   // get list of languages
   getAllLanguages({
-    commit,
     getters
   }, userData) {
-
     return axios({
       method: 'GET',
       url: `Languages?$filter=LanguageId eq '${userData.cvLang}'`,
@@ -216,6 +226,24 @@ const actions = {
         "Cookie": getters.getCookie
       }
     })
+  },
+  getNewDataForHint({commit, dispatch}){
+      let lang = localStorage.getItem('lang').toUpperCase() === 'PL' ? lang = "EN" : lang = "PL";
+      commit('SET_DATA_FOR_HINT', true);
+      let dataToSend = {
+        user: localStorage.getItem('id'),
+        lang: lang,
+        changePage: false
+      }
+      commit("SET_PROMISE_TO_READ", ["UserData"]);
+      dispatch('getData', dataToSend);   
+  },
+  showHintFn({commit}, data) {
+    let oData = {
+      show: data.show,
+      name: data.name
+    }
+    commit("SET_SHOW_HINT", oData);
   }
 }
 
@@ -229,6 +257,15 @@ const getters = {
   getFullLanguageList(state) {
     return state.fullLanguageList;
   },
+  getUserSkillsDfLang(state) {
+    return state.userSkillsDfLang;
+  },
+  getDataForHint(state) {
+    return state.dataForHint;
+  },
+  getShowHint(state) {
+    return state.showHint;
+  }
 }
 
 export default {

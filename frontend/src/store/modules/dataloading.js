@@ -220,7 +220,8 @@ const actions = {
   getUserData({
     getters,
   }, userData) {
-    let sCookie = getters.getCookie;
+    let sCookie = getters.getCookie,
+    url;
     let sUserAlias = userData.user || localStorage.getItem("id"),
         sLang = userData.lang || localStorage.getItem("lang");
     if(!sUserAlias){
@@ -229,9 +230,11 @@ const actions = {
     if(!sLang){
       sLang = userData.lang;
     }
+    getters.getDataForHint ? url = 'Users' + '(UserAlias=' + "'" + sUserAlias.toUpperCase() + "'," + "Language='" + sLang + "')" + '?&$expand=UserSkills,UserAuth' :
+                          url = 'Users' + '(UserAlias=' + "'" + sUserAlias.toUpperCase() + "'," + "Language='" + sLang + "')" + '?&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang,UserFiles,UserAuth'
     return axios({
       method: 'GET',
-      url: 'Users' + '(UserAlias=' + "'" + sUserAlias.toUpperCase() + "'," + "Language='" + sLang + "')" + '?&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang,UserFiles,UserAuth',
+      url: url,
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
         "Cookie": sCookie
@@ -602,17 +605,32 @@ const actions = {
   },
 
   setUserData({dispatch, commit, getters}, response, userData){
+      //skillSet is name of commit
+      let skillSet;
       dispatch('formatUserData', response.data.d); // format dates for date pickers and "is current" fields
-      dispatch('getUserFilesData') // get data about all user files (cv, photos, documents etc.)
-      dispatch('loadUserPhoto', userData) //load user's photo for menu and profile TO BE READ
       let oData = getters.getUserInfo;
-      let aAuth = utils.checkRole(oData.UserAuth.results);
-      //set authorization for all objects - to optimize 
-      dispatch("_setAuthorizations", aAuth);
-      commit('SET_USER_EDUCATION', oData.UserEducations.results); //set user education data for profile and cv
-      commit('SET_USER_EXPERIENCE', oData.UserExperiences.results); //set user experience data for profile and cv
 
-      commit('SET_USER_SKILLS', oData.UserSkills.results); //set user skills data for profile and cv
+        if(!getters.getDataForHint) {
+          skillSet = 'SET_USER_SKILLS';     
+          dispatch('getUserFilesData') // get data about all user files (cv, photos, documents etc.)
+          dispatch('loadUserPhoto', userData) //load user's photo for menu and profile TO BE READ
+          let aAuth = utils.checkRole(oData.UserAuth.results);
+          dispatch("_setAuthorizations", aAuth);
+          //set authorization for all objects - to optimize      
+          commit('SET_USER_EDUCATION', oData.UserEducations.results); //set user education data for profile and cv
+          commit('SET_USER_EXPERIENCE', oData.UserExperiences.results); //set user experience data for profile and cv
+
+          commit('SET_USER_PROJECTS_LIST', oData.UserCvProjects.results); //set user projects data for profile and cv
+          dispatch('adjustProjects');
+    
+          commit('SET_USER_LANGS', oData.UserLang.results);
+    
+          commit('SET_NEW_USER_FILES_LIST', oData.UserFiles.results); //set list of files for starter page for new user 
+      } else {
+          skillSet = 'SET_USER_SKILLS_DF_LANG'
+      }
+
+      commit(skillSet, oData.UserSkills.results); //set user skills data for profile and cv
       let userSkills = utils.formatToArray(oData.UserSkills.results);
       if (userSkills) {
         for(let key in userSkills[0]) {
@@ -620,7 +638,7 @@ const actions = {
             userSkills[0][key] = [];
           }
         }
-        commit('SET_USER_SKILLS', userSkills[0]);
+        commit(skillSet, userSkills[0]);
       }  else {
           userSkills = {
             SapModules: [],
@@ -629,17 +647,10 @@ const actions = {
             Extensions: [],
             AdditionalSkills: []
           }
-          commit('SET_USER_SKILLS', userSkills);
+          commit(skillSet, userSkills);
       }
-
-      commit('SET_USER_PROJECTS_LIST', oData.UserCvProjects.results); //set user projects data for profile and cv
-      dispatch('adjustProjects');
-
-      commit('SET_USER_LANGS', oData.UserLang.results);
-
-      commit('SET_NEW_USER_FILES_LIST', oData.UserFiles.results); //set list of files for starter page for new user
-
-      commit('SET_DATA_LOADED', true)
+      commit('SET_DATA_LOADED', true);
+      commit('SET_DATA_FOR_HINT', false);
 
       // dispatch('checkPageToDisplay', userData.changePage) //TEMP
   },
