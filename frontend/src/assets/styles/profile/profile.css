@@ -1389,8 +1389,8 @@ max-width: max-content;
     cursor: pointer;
     border-radius: 50%;
     font-weight: 500;
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 1.6rem;
+    width: 1.6rem;
     color: grey;
     transition: box-shadow .3s, border .3s, color .3s;
 }
@@ -1412,6 +1412,8 @@ max-width: max-content;
 }
 
 .prof-skills-hint {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     right: 2rem;
     top: 2rem;
@@ -1438,6 +1440,12 @@ max-width: max-content;
     cursor: pointer;
     background: transparent;
     transition: background .3s, color .3s;
+    align-self: flex-end;
+}
+
+.prof-hint-item {
+    padding: .3rem 0;
+    color: #666;
 }
 
 .prof-hint-close:hover {

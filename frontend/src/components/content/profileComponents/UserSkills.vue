@@ -2,10 +2,10 @@
   <div class="profile-tile">
     <!-- SPi -->
       <div class="prof-skills-hint" v-if="showHint.show">
-          <div v-for="hint in showSingleHint(userSkillsDfLang)" :key="hint">
-            <p>{{hint}}&nbsp;</p> 
-         </div>
         <button class="prof-hint-close" @click="showHintFn({name: '', show: false})">X</button>
+          <div class="prof-hint-item" v-for="hint in showSingleHint(userSkillsDfLang)" :key="hint">
+            {{hint}}&nbsp;
+         </div>
      </div>
       <!-- SPi -->
     <div class="profile-tile-header">
