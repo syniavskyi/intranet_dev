@@ -1,19 +1,19 @@
 <template>
   <div class="profile-tile">
     <!-- SPi -->
-      <div class="department" v-if="showHint.show">
+      <div class="prof-skills-hint" v-if="showHint.show">
           <div v-for="hint in showSingleHint(userSkillsDfLang)" :key="hint">
             <p>{{hint}}&nbsp;</p> 
          </div>
-        <button @click="showHintFn({name: '', show: false})">X</button>
+        <button class="prof-hint-close" @click="showHintFn({name: '', show: false})">X</button>
      </div>
       <!-- SPi -->
     <div class="profile-tile-header">
       <div class="profile-tile-header-row">
         <h2 class="profile-tile-title">{{ $t("header.skills") }}</h2>
-          <button class="hint-class" @click="getNewDataForHint" v-if="editMode">?</button>
-          <div v-if="!editMode">{{ $t("message.hintReminder") }}</div>
-          <div v-if="editMode">{{ $t("message.hintInfo") }}</div>
+          <button class="btn-hint" @click="getNewDataForHint" v-if="editMode">&#63;</button>
+          <div class="prof-hint-tt" v-if="!editMode">{{ $t("message.hintReminder") }}</div>
+          <div class="prof-hint-tt" v-if="editMode">{{ $t("message.hintInfo") }}</div>
         <div class="profile-table-buttons">
           <button class="profile-edit-btn" :disabled="disabledBtnToEdit" v-if="!editMode" @mouseover="onHover" @mouseout="onHoverOut" @click="edit">{{ $t("button.edit") }}</button>
           <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-txt">{{ $t("button.cancel") }}</span><span class="prof-btn-icon">&plus;</span></button>
@@ -62,7 +62,7 @@
               <option disabled selected value>{{ $t("table.addModule") }}:</option>
               <option v-for="sapModule in modulesList" :key="sapModule.Key" :value="sapModule.Key" :id="sapModule.id" > {{ sapModule.Value }}</option>
             </select>
-            <button class="hint-class" @click="showHintFn({name: 'SapModules', show: true})" v-if="editMode">?</button>
+            <button class="btn-hint hint-abs" @click="showHintFn({name: 'SapModules', show: true})" v-if="editMode">?</button>
             <label :class="editMode ? 'label-select-profile' : 'label-skills'">{{ $t("label.sapModulesExp") }}</label>
             <div class="prof-skills-elems">
               <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="sapModule in userSkills.SapModules" :key="sapModule"  @click="removeModule(sapModule)">{{sapModule}}</button>
@@ -73,7 +73,7 @@
             <input v-on:keyup.enter="addProgramLang" required class="inputProfile inputEditPos" v-if="editMode" v-model="newProgramLang"/>
             <span class="prof-div-bar"></span>
             <button class="prof-div-pos-btn" v-if="editMode" @click="addProgramLang">+</button>
-            <button class="hint-class" @click="showHintFn({name: 'ProgramLang', show: true})" v-if="editMode">?</button>
+            <button class="btn-hint hint-abs" @click="showHintFn({name: 'ProgramLang', show: true})" v-if="editMode">?</button>
             <label :class="editMode ? 'label-profile': 'label-skills'">{{ $t("label.programmingLanguages") }}</label>
             <div class="prof-skills-elems">
               <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="lang in userSkills.ProgramLang" :key="lang"  @click="removeProgramLang(lang)">{{lang}}</button>
@@ -86,7 +86,7 @@
             <input v-on:keyup.enter="addTechnology" required class="inputProfile inputEditPos" v-if="editMode" v-model="newTechnology"/>
             <span class="prof-div-bar"></span>
             <button tooltip="usuń" class="prof-div-pos-btn" v-if="editMode" @click="addTechnology">+</button>
-            <button class="hint-class" @click="showHintFn({name: 'Technologies', show: true})" v-if="editMode">?</button>
+            <button class="btn-hint hint-abs" @click="showHintFn({name: 'Technologies', show: true})" v-if="editMode">?</button>
             <label :class="editMode ? 'label-profile': 'label-skills'">{{ $t("label.technologies") }}</label>
             <div class="prof-skills-elems">
               <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="tech in userSkills.Technologies" :key="tech"  @click="removeTechnology(tech)">{{tech}}</button>
@@ -97,7 +97,7 @@
             <input v-on:keyup.enter="addExtension" required class="inputProfile inputEditPos" v-if="editMode" v-model="newExtension"/>
             <span class="prof-div-bar"></span>
             <button class="prof-div-pos-btn" v-if="editMode" @click="addExtension">+</button>
-            <button class="hint-class" @click="showHintFn({name: 'Extensions', show: true})" v-if="editMode">?</button>
+            <button class="btn-hint hint-abs" @click="showHintFn({name: 'Extensions', show: true})" v-if="editMode">?</button>
             <label :class="editMode ? 'label-profile': 'label-skills'">{{ $t("label.extensions") }}</label>
             <div class="prof-skills-elems">
               <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="ext in userSkills.Extensions" :key="ext"  @click="removeExtension(ext)">{{ext}}</button>
@@ -108,7 +108,7 @@
             <input v-on:keyup.enter="addAdditional" required class="inputProfile inputEditPos" v-if="editMode" v-model="newAdditional"/>
             <span class="prof-div-bar"></span>
             <button class="prof-div-pos-btn" v-if="editMode" @click="addAdditional">+</button>
-            <button class="hint-class" @click="showHintFn({name: 'AdditionalSkills', show: true})" v-if="editMode">?</button>
+            <button class="btn-hint hint-abs" @click="showHintFn({name: 'AdditionalSkills', show: true})" v-if="editMode">?</button>
             <label :class="editMode ? 'label-profile': 'label-skills'">{{ $t("label.additionalSkills") }}</label>
             <div class="prof-skills-elems">
               <button title="usuń" class="prof-div-pos-elem" :disabled="!editMode" v-for="add in userSkills.AdditionalSkills" :key="add"  @click="removeAdditional(add)">{{add}}</button>
