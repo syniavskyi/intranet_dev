@@ -4,7 +4,7 @@
     <div class="modal-new-s" v-if="showRemindPassword">
       <div class="modal-header">
         <h1 class="modal-title">{{ $t("header.forgotPass") }}</h1>
-        <button class="modal-exit" @click="switchForgotPassword">&#10006;</button>
+        <button class="modal-close" @click="switchForgotPassword">&#10006;</button>
       </div>
       <div class="modal-email">
         <div class="cd-for-input-xxl">
@@ -19,7 +19,7 @@
           <p class="success-alert" v-if="sendEmailError">{{ $t("message.sendEmailError") }}</p>
         </transition>
       </div>
-      <button class="button modal-button" :disabled="$v.email.$invalid" type="button" @click="onResetPassword"><span class="span-arrow">{{ $t("button.resetPass") }}</span></button>
+      <button class="button" :disabled="$v.email.$invalid" type="button" @click="onResetPassword"><span class="span-arrow">{{ $t("button.resetPass") }}</span></button>
     </div>
     <div class="plane plane-login">
       <div class="plane-left">

@@ -10,66 +10,6 @@
     font-family: 'Open Sans';
 } */
 
-.modal-header {
-    padding: 0.5rem;
-    word-wrap: break-word;
-    border: 0;
-    border-top-left-radius: .2rem;
-    border-top-right-radius: .2rem;
-    background: #ff974b;
-    color: white;
-    margin:0rem;
-    display: flex;
-    justify-content: space-between;
-}
-
-.modal-title {
-    margin: 0;
-    font-family: 'Lato';
-}
-
-.modal-exit {
-    font-size: 1.3rem;
-    background: transparent;
-    border:0;
-    color: white;
-}
-
-.modal-exit:hover {
-    cursor: pointer;
-    color: lightgrey;
-}
-
-.modal-email {
-    display:flex;
-    flex-direction: column;
-    width: 90%;
-    align-items: center;
-    /* padding-left: 1rem; */
-    align-self: center;
-    height: 50%;
-    justify-content: center;
-    color: grey;
-}
-
-.modal-label {
-    margin: 0;
-}
-
-.modal-input {
-    width: 13rem;
-}
-
-.p-modal-txt {
-    align-self: center;
-    font-family: inherit;
-    color: grey;
-}
-.modal-button {
-    margin-bottom: 1rem;
-    align-self: center;
-}
-
 .plane-parent-login {
     flex-shrink: 0;
     min-height: 39rem;

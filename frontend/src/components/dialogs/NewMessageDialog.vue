@@ -2,23 +2,24 @@
     <div> 
         <div class="modal-backdrop"></div>
         <div class="modal-new-s">
-            <div class="modal-header-new modal-advert-header">
+            <header class="modal-header-new modal-advert-header">
                 <h1 class="modal-title-new">{{ $t("label.addNewMessage") }}</h1>
-                <div @click="close" class="modal-exit-new">&#10006;</div>
-            </div>
+                <button @click="close" class="modal-close">&#10006;</button>
+            </header>
             <div class="modal-content-new modal-advert-content">
-                <div class="m-wrap">
-                    <div class="cd-for-input">
-                        <textarea v-model="newAdvert.Message" required class="cd-textarea ta-height"></textarea>
-                        <span class="cd-span"></span>
-                        <label class="cd-label">{{ $t("label.newMessage") }}</label>
-                    </div>
-                    <p class="table-p"> {{ $t("label.messageValidTo") }} </p>
-                    <v-date-picker class="cd-range" popoverDirection="bottom" is-expanded mode="single" v-model="newAdvert.ValidTo"  :min-date="new Date()">
-                        <input required v-model="newAdvert.ValidTo" value="newAdvert.ValidTo"/>
-                    </v-date-picker>
-                    <button :disabled="!newAdvert.Message || !newAdvert.ValidTo || newAdvert.Message === '' " @click="addNewAdvert(newAdvert)" class="button">{{ $t("button.add") }}</button>
+                <div class="cd-for-input">
+                    <textarea v-model="newAdvert.Message" required class="cd-textarea ta-height"></textarea>
+                    <span class="cd-span"></span>
+                    <label class="cd-label">{{ $t("label.newMessage") }}</label>
                 </div>
+                <p class="table-p"> {{ $t("label.messageValidTo") }} </p>
+                <v-date-picker class="cd-range" popoverDirection="bottom" is-expanded mode="single" v-model="newAdvert.ValidTo"  :min-date="new Date()">
+                    <input required v-model="newAdvert.ValidTo" value="newAdvert.ValidTo"/>
+                </v-date-picker>
+                <button :disabled="!newAdvert.Message || !newAdvert.ValidTo || newAdvert.Message === '' " @click="addNewAdvert(newAdvert)" class="button">
+                    <!-- {{ $t("button.add") }} -->
+                    <span class="span-arrow">{{ $t("button.send") }}</span>
+                </button>
             </div>
         </div>
     </div>
@@ -60,11 +61,4 @@ export default {
     height: 6rem;
 }
 
-.m-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 80%;
-    justify-content: space-around;
-}
 </style>

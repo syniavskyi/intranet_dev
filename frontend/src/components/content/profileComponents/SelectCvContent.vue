@@ -1,9 +1,9 @@
 <template>
   <div class="modal-new">
-    <div class="modal-content">
+    <div class="modal-content-new">
       <div class="cv-modal-header">
         <h1 class="cv-modal-h1">{{ $t("header.generateCV") }}</h1>
-        <button class="cv-modal-close" @click="close">&#x2716;</button>
+        <button class="modal-close" @click="close">&#10006;</button>
       </div>
       <div class="cv-modal-content">
         <div class="cv-modal-tbuttons">
@@ -48,14 +48,14 @@
         </div>
         <div class="cv-modal-selects">
           <div class="cv-modal-div-s">
-          <!-- <p>Wybierz język</p> -->
+          <!-- Wybierz język -->
             <select required class="cv-modal-select" v-model="cvElements.language">
               <option v-for="language in languageList" :key="language.id" :value="language.id"> {{language.description}}</option>
             </select>
             <label class="cv-modal-label">{{ $t("label.selectLanguage") }}</label>
           </div>
           <div class="cv-modal-div">
-            <!-- <p>Wybierz format</p> -->
+            <!-- Wybierz format -->
             <select required class="cv-modal-select" v-model="cvElements.format">
               <option value="DOCX"> DOCX </option>
               <option value="PDF"> PDF </option>
@@ -151,22 +151,6 @@ export default {
   color: #333;
 }
 
-.cv-modal-close {
-  font-size: 1.5rem;
-  background: transparent;
-  color: #ccc;
-  font-weight: bold;
-  height: 1.2rem;
-  border: 0;
-  margin: 0.5rem;
-  transition: color 0.2s ease;
-  cursor: pointer;
-}
-
-.cv-modal-close:hover {
-  color: grey;
-}
-
 .cv-modal-content {
   display: flex;
   flex-direction: column;
@@ -213,10 +197,6 @@ export default {
   width: 10rem;
   flex-direction: column;
 }
-
-/* .cv-modal-div-s {
-  width: 9.2rem;
-} */
 
 .cv-modal-div {
   width: 10.1rem;

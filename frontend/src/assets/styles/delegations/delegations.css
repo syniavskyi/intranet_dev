@@ -1103,6 +1103,7 @@
 .del-modal-section {
     display: flex;
     flex-direction:column;
+    flex:1;
     align-self: center;
     width: 80%;
     align-items: center;
@@ -1111,6 +1112,7 @@
 
 .del-modal-h2 {
     display: flex;
+    margin: 0;
     color: #696969;
     font-weight: 400;
     text-align: center;
@@ -1119,7 +1121,7 @@
 
 .del-modal-h3 {
     font-size: 1.5rem;
-    margin-top: 0;
+    margin: 0;
     font-weight: 400;
     color: orange;
     text-align: center;
