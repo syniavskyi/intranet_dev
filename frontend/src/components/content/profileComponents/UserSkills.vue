@@ -16,7 +16,7 @@
           <div class="prof-hint-tt" v-if="editMode">{{ $t("message.hintInfoSkill") }}</div>
         <div class="profile-table-buttons">
           <button class="profile-edit-btn" :disabled="disabledBtnToEdit" v-if="!editMode" @mouseover="onHover" @mouseout="onHoverOut" @click="edit">{{ $t("button.edit") }}</button>
-          <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-txt">{{ $t("button.cancel") }}</span><span class="prof-btn-icon">&plus;</span></button>
+          <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-txt">{{ $t("button.cancel") }}</span><span class="prof-btn-icon">&#10005;</span></button>
           <button class="profile-edit-btn-e" :disabled="bDisabled" v-if="editMode" @click="save()"><span class="prof-btn-txt">{{ $t("button.save") }}</span><span class="prof-btn-icon">&#10004;</span></button>
         </div>
       </div>
