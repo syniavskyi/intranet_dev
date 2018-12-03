@@ -13,7 +13,7 @@
         <h2 class="profile-tile-title">{{ $t("header.skills") }}</h2>
           <button class="btn-hint" @click="getNewDataForHint" v-if="editMode">&#63;</button>
           <div class="prof-hint-tt" v-if="!editMode">{{ $t("message.hintReminder") }}</div>
-          <div class="prof-hint-tt" v-if="editMode">{{ $t("message.hintInfo") }}</div>
+          <div class="prof-hint-tt" v-if="editMode">{{ $t("message.hintInfoSkill") }}</div>
         <div class="profile-table-buttons">
           <button class="profile-edit-btn" :disabled="disabledBtnToEdit" v-if="!editMode" @mouseover="onHover" @mouseout="onHoverOut" @click="edit">{{ $t("button.edit") }}</button>
           <button class="profile-edit-btn-e" v-if="editMode" @click="cancel"><span class="prof-btn-txt">{{ $t("button.cancel") }}</span><span class="prof-btn-icon">&plus;</span></button>
@@ -151,7 +151,7 @@ export default {
       langLevels: "getLangLevels",
       fullLanguageList: "getFullLanguageList",
       disabledBtnToEdit: "getDisabledBtnToEdit",
-      showHint: "getShowHint",
+      showHint: "getShowHintSkill",
       userSkillsDfLang: "getUserSkillsDfLang"
     })
   },
