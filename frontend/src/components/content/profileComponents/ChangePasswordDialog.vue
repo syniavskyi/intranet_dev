@@ -4,7 +4,7 @@
         <div class="modal-new-s">
             <div class="modal-header-new">
                 <h1 class="modal-title-new">{{ $t("header.changePassword") }}</h1>
-                <div @click="close" class="modal-exit-new">&#10006;</div>
+                <button @click="close" class="modal-close">&#10006;</button>
             </div>
             <div class="modal-content-new">
                 <div class="cd-for-input">
@@ -22,7 +22,7 @@
                     <span class="cd-span"></span>
                     <label class="cd-label">{{ $t("label.confirmPassword") }}</label>
                 </div>
-                <button class="button login-button" @click="onSubmit">
+                <button class="button" @click="onSubmit">
                     <span class="loading-icon"></span>
                     <span class="span-arrow">{{ $t("button.send") }}</span>
                 </button>

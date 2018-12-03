@@ -1,12 +1,10 @@
 <template>
   <!-- <div id="app"> -->
-  <div class="display-row">
+  <div class="display-row" style="position: relative">
     <!-- <app-menu v-show="showMenu"/> -->
     <loader v-if="showLoader"></loader>
-      <!-- <transition name="slide-top" mode="out-in"> -->
-         <router-view/>
-        <modal v-show="showModal"/>
-      <!-- </transition> -->
+    <router-view/>
+    <modal v-show="showModal"/>
   </div>
   <!-- </div> -->
 </template>

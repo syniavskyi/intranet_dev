@@ -3,7 +3,7 @@
     <div class="modal-new-s">
         <div class="modal-header-new">
             <h1 class="modal-title-new">{{ $t("header.delegationConfirm") }}</h1>
-            <div @click="hideDialog" class="modal-exit-new">&#10006;</div>
+            <button @click="hideDialog" class="modal-close">&#10006;</button>
         </div>
         <div class="modal-content-new">
             <div class="del-modal-section">

@@ -2,10 +2,10 @@
     <div @click="closeConfirmDialog">
         <div class="modal-overlay"/>
         <div class="modal-new-xs" @click.stop>
-            <div class="modal-header-new">
+            <header class="modal-header-new">
                 <h1 class="modal-title-new"><slot name="modal-title"></slot></h1>
-                <div @click="closeConfirmDialog" class="modal-exit-new">&#10006;</div>
-            </div>
+                <button @click="closeConfirmDialog" class="modal-close">&#10006;</button>
+            </header>
             <div class="modal-content-new">
                 <div class="del-modal-section">
                     <slot name="modal-text"></slot>
