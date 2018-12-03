@@ -1425,6 +1425,9 @@ max-width: max-content;
 }
 
 .prof-hint-tt {
+    display: flex;
+    justify-content: center;
+    text-align: center;
     color: #929292;
     padding: 0 1rem;
     display: none;
@@ -1434,6 +1437,7 @@ max-width: max-content;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: .1rem .25rem;
     border: 0;
     color: grey;
     font-weight: bold;
@@ -1494,14 +1498,10 @@ max-width: max-content;
     
 }
 
-/* @media (min-width:0rem) and (max-width: 44rem) {
-    .plane-nav {
-        display: none;
-    }
-} */
 @media (min-width: 44rem) {
     .prof-hint-tt {
         display: flex;
+        width: 50%;
     }
     .profile-header-menu {
         display: none;
