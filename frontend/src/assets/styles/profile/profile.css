@@ -117,6 +117,7 @@
 }
 
 
+
 .profile-tiles-row-wrap {
     display: flex;
     flex-direction: column;
@@ -137,6 +138,7 @@
     transition: box-shadow 0.25s ease;
     position: relative;
 }
+
 .profile-tile-1-2:nth-of-type(1) {
     width: 100%;
     min-height: 28rem
@@ -212,6 +214,7 @@
 .prof-tile-h2 {
     margin:0;
     padding: 0.5rem .5rem;
+    padding-right: 0;
     font-weight: 500;
     color: #333;
     -webkit-font-smoothing: antialiased;
@@ -1377,8 +1380,77 @@ max-width: max-content;
     color: rgb(90, 90, 90);
 }
 
+.btn-hint {
+    display: flex;
+    justify-content: center;
+    background: transparent;
+    box-shadow: 0 0 4px grey;
+    border: 1px solid grey;
+    cursor: pointer;
+    border-radius: 50%;
+    font-weight: 500;
+    height: 1.6rem;
+    width: 1.6rem;
+    color: grey;
+    transition: box-shadow .3s, border .3s, color .3s;
+}
+
+.hint-abs {
+    position: absolute;
+    right: -2rem;
+    top: .4rem;
+}
+
+.btn-hint:hover {
+    box-shadow: 0 0 10px orange;
+    border: 1px solid orange;
+    color: orange;
+}
+
 .skill-hint {
     display: flex;
+}
+
+.prof-skills-hint {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+    box-shadow: 0 0 4px grey;
+    background-color: white;
+    padding: .5rem;
+    z-index: 5;
+    border-radius: 5px;
+}
+
+.prof-hint-tt {
+    color: #929292;
+    padding: 0 1rem;
+    display: none;
+}
+
+.prof-hint-close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    color: grey;
+    font-weight: bold;
+    cursor: pointer;
+    background: transparent;
+    transition: background .3s, color .3s;
+    align-self: flex-end;
+}
+
+.prof-hint-item {
+    padding: .3rem 0;
+    color: #666;
+}
+
+.prof-hint-close:hover {
+    color: #333;
+    background: #ccc;
 }
 
 @media (min-width: 30rem) {
@@ -1428,6 +1500,9 @@ max-width: max-content;
     }
 } */
 @media (min-width: 44rem) {
+    .prof-hint-tt {
+        display: flex;
+    }
     .profile-header-menu {
         display: none;
     }
