@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const state = {
+  loginForgotPassModal: false,
   loginError: false,
   sendEmailSuccess: false,
   sendEmailError: false,
@@ -14,6 +15,9 @@ const state = {
 }
 
 const mutations = {
+  SET_LOG_FORGOT_PASS_MODAL(state, show) {
+    state.loginForgotPassModal = show
+  },
   SET_LOGIN_ERROR(state, isError) {
     state.loginError = isError
   },
@@ -123,6 +127,9 @@ const actions = {
 }
 
 const getters = {
+  getLoginPassModal(state) {
+    return state.loginForgotPassModal
+  },
   isLoginError(state) {
     return state.loginError
   },

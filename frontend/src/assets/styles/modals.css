@@ -157,6 +157,7 @@
 .modal-item-err:last-of-type {
     border-bottom-left-radius: .45rem;
     border-bottom-right-radius: .45rem;
+    border-bottom: 0;
 }
 
 .btn-close {  
