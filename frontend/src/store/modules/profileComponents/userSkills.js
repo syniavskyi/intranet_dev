@@ -263,7 +263,7 @@ const getters = {
   getDataForHint(state) {
     return state.dataForHint;
   },
-  getShowHint(state) {
+  getShowHintSkill(state) {
     return state.showHint;
   }
 }

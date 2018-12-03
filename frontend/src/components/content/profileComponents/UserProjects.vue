@@ -3,7 +3,7 @@
     <div class="profile-tile-header">
       <div class="profile-tile-header-row">
         <h2 class="profile-tile-title">{{ $t("header.projects") }}</h2>
-        <div v-if="projectEditMode && !showHintAfterSave">{{ $t("message.hintProjectInfo") }}</div>
+        <div v-if="projectEditMode && !showHintAfterSave">{{ $t("message.hintInfoProject") }}</div>
         <div v-if="showHintAfterSave">{{ $t("message.hintReminder") }}</div>
         <div class="profile-table-buttons">
           <button class="profile-edit-btn" :disabled="disabledBtnToEdit" @click="editProjects" @mouseover="onHover" @mouseout="onHoverOut" v-if="!projectEditMode">{{ $t("button.editProjects") }}</button>
@@ -40,7 +40,7 @@
               <!-- SPi -->
               <div class="department" v-if="showHintProject.show">
                   <p>
-                      {{showSingleHint(index)}}
+                      {{showSingleHint()}}
                   </p>
                   <button @click="showHintFnProject({index: '', show: false})">X</button>
               </div>
@@ -354,7 +354,7 @@ export default {
       }
       this.checkFields(index);
     },
-      showSingleHint(index) {
+      showSingleHint() {
         let index2 = this.showHintProject.index;
         return this.userProjectsDfLang[index2].Description;
       }   
