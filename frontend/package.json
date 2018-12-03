@@ -7,7 +7,8 @@
     "scripts": {
         "dev": "node build/dev-server.js",
         "start": "node build/dev-server.js",
-        "build": "node build/build.js"
+        "build": "node build/build.js",
+        "deploy": "aws s3 sync --acl public-read --delete dist/ s3://intranetbtech"
     },
     "dependencies": {
         "axios": "^0.18.0",
