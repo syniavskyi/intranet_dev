@@ -235,7 +235,7 @@ const actions = {
         lang: lang,
         changePage: false
       }
-      commit("SET_PROMISE_TO_READ", ["UserData"]);
+      commit("SET_PROMISE_TO_READ", ["Industries", "UserData"]);
       dispatch('getData', dataToSend);   
   },
   showHintFn({commit}, data) {

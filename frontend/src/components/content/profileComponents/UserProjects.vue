@@ -3,8 +3,11 @@
     <div class="profile-tile-header">
       <div class="profile-tile-header-row">
         <h2 class="profile-tile-title">{{ $t("header.projects") }}</h2>
+        <div v-if="projectEditMode && !showHintAfterSave">{{ $t("message.hintProjectInfo") }}</div>
+        <div v-if="showHintAfterSave">{{ $t("message.hintReminder") }}</div>
         <div class="profile-table-buttons">
           <button class="profile-edit-btn" :disabled="disabledBtnToEdit" @click="editProjects" @mouseover="onHover" @mouseout="onHoverOut" v-if="!projectEditMode">{{ $t("button.editProjects") }}</button>
+          <button class="hint-class" @click="getNewDataForHint" v-if="projectEditMode">?</button>
           <button class="profile-edit-btn-e" v-if="projectEditMode" @click="addRow"><span class="prof-btn-txt">{{ $t("button.addProject") }}</span><span class="prof-btn-icon">&plus;</span></button>
           <button class="profile-edit-btn-e" v-if="projectEditMode" @click="finishEditing"><span class="prof-btn-txt">{{ $t("button.finishEdit") }}</span><span class="prof-btn-icon">&#10004;</span></button>
         </div>
@@ -34,6 +37,14 @@
           </div>
           <div class="prof-tbody">
             <div class="prof-tbody-row" v-for="(project, index) in userProjects" :key="index">
+              <!-- SPi -->
+              <div class="department" v-if="showHintProject.show">
+                  <p>
+                      {{showSingleHint(index)}}
+                  </p>
+                  <button @click="showHintFnProject({index: '', show: false})">X</button>
+              </div>
+              <!-- Spi -->
             <!-- class="prof-tbody-item" -->
               <div class="prof-tbody-item">
                 <div class="prof-tbody-item-title">{{ $t("label.eg") }}</div>
@@ -107,6 +118,7 @@
             </div>
             <div class="prof-tbody-item">
               <div class="prof-tbody-item-title">{{ $t("table.Descr") }} </div>
+              <button v-if="projectEditMode" @click="showHintFnProject({show: true, index: index})">?</button>
               <div class="prof-tbody-item-txt">
                 <!-- class="profile-table-textarea" -->
                 <textarea class="cd-textarea" :disabled="!projectEditMode" @input="checkFields(index)" v-model="userProjects[index].Description" />
@@ -139,7 +151,8 @@ export default {
       invalidDates: false,
       invalidDatePos: null,
       showEndInput: true,
-      _beforeEditingProjects: null
+      _beforeEditingProjects: null,
+      showHintAfterSave: false
     };
   },
   computed: {
@@ -151,13 +164,17 @@ export default {
       userProjects: "getUserProjectsList",
       ifModuleExist: "getModuleExist",
       errorProjectNo: "getErrorProjectNo",
-      disabledBtnToEdit: "getDisabledBtnToEdit"
+      disabledBtnToEdit: "getDisabledBtnToEdit",
+      userProjectsDfLang: "getUserProjectsListDfLang",
+      showHintProject: "getShowHintProject"
     })
   },
   methods: {
     ...mapActions({
       addRow: "addUserProjectsRow",
-      adjustProjects: "adjustProject"
+      adjustProjects: "adjustProject",
+      getNewDataForHint: "getNewDataForHint",
+      showHintFnProject: "showHintFnProject"
     }),
     remove(index) {
       let newData = utils.createClone(this.userProjects[index]);
@@ -182,6 +199,7 @@ export default {
       document.getElementsByClassName("projSaveButton")[
           index
         ].disabled = true;
+        this.showHintAfterSave = true;
     },
     checkFields(index) {
       let bChanged,
@@ -302,6 +320,7 @@ export default {
       this.$store.commit("SET_PROJECT_ERROR", false);
       this.$store.commit("SET_USER_PROJECTS_LIST", this._beforeEditingProjects);
       this.projectEditMode = false;
+      this.showHintAfterSave = false;
     },
     editProjects() {
       this.projectEditMode = true;
@@ -334,7 +353,11 @@ export default {
           formatStartDate > formatEndDate ? index + 1 : null;
       }
       this.checkFields(index);
-    }
+    },
+      showSingleHint(index) {
+        let index2 = this.showHintProject.index;
+        return this.userProjectsDfLang[index2].Description;
+      }   
   }
 };
 </script>
