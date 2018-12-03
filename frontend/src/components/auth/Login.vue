@@ -1,26 +1,5 @@
 <template>
 	<div class="plane-parent plane-parent-login">
-    <div class="modal-overlay" v-if="showRemindPassword"></div>
-    <div class="modal-new-s" v-if="showRemindPassword">
-      <div class="modal-header">
-        <h1 class="modal-title">{{ $t("header.forgotPass") }}</h1>
-        <button class="modal-close" @click="switchForgotPassword">&#10006;</button>
-      </div>
-      <div class="modal-email">
-        <div class="cd-for-input-xxl">
-          <input required class="cd-input" v-model="email">
-          <span class="cd-span"></span>
-          <label class="cd-label">{{ $t("label.enterEmail") }}</label>
-        </div>
-        <transition name="fade-alert">
-          <p class="success-alert" v-if="sendEmailSuccess">{{ $t("message.sendEmailSuccess") }}</p>
-        </transition>
-        <transition name="fade-alert">
-          <p class="success-alert" v-if="sendEmailError">{{ $t("message.sendEmailError") }}</p>
-        </transition>
-      </div>
-      <button class="button" :disabled="$v.email.$invalid" type="button" @click="onResetPassword"><span class="span-arrow">{{ $t("button.resetPass") }}</span></button>
-    </div>
     <div class="plane plane-login">
       <div class="plane-left">
         <img class="img-user" src="../../assets/images/grouper-256.png">
@@ -50,12 +29,14 @@
         </button>
       </div>
     </div>
+    <LoginForgotPassModal v-if="showRemindPassword"></LoginForgotPassModal>
   </div>
 </template>
 
 <script>
-import { required, minLength, email } from "vuelidate/lib/validators";
+import { required, minLength} from "vuelidate/lib/validators";
 import Icon from "vue-awesome/components/Icon";
+import LoginForgotPassModal from './LoginForgotPassModal';
 import { mapGetters } from "vuex";
 import i18n from "../../lang/lang";
 
@@ -64,11 +45,9 @@ export default {
     return {
       username: "",
       password: "",
-      showRemindPassword: false,
       isLoading: false,
       passwordFieldType: "password",
       eyeType: "eye",
-      email: "",
       selectedLang: i18n.locale
     };
   },
@@ -78,22 +57,20 @@ export default {
     }
   },
   components: {
-    Icon
+    Icon,
+    LoginForgotPassModal
   },
   validations: {
     password: { required, minLen: minLength(6) },
-    username: { required },
-    email: { required, email }
+    username: { required }
   },
   methods: {
     onSubmit() {
       this.isLoading = true;
       this.$store.commit("SET_DISPLAY_LOADER", true);
-      this.SelectedLang =
-        this.SelectedLang === undefined ? "PL" : this.SelectedLang;
+      this.SelectedLang = this.SelectedLang === undefined ? "PL" : this.SelectedLang;
 
-      this.$store
-        .dispatch("login", {
+      this.$store.dispatch("login", {
           username: this.username,
           password: this.password,
           language: this.selectedLang.toUpperCase()
@@ -103,15 +80,12 @@ export default {
       this.$store.commit("SET_LOGIN_LANGUAGE", this.selectedLang.toUpperCase());
     },
     switchForgotPassword() {
-      this.showRemindPassword = !this.showRemindPassword;
+      this.$store.commit("SET_LOG_FORGOT_PASS_MODAL", true);
     },
     switchPasswordVisibility() {
       this.passwordFieldType =
         this.passwordFieldType === "password" ? "text" : "password";
       this.eyeType = this.eyeType === "eye" ? "eye-slash" : "eye";
-    },
-    onResetPassword() {
-      this.$store.dispatch("sendEmailWithPass", this.email);
     },
     setLanguage(language) {
       this.$store.dispatch("setLanguage", language);
@@ -127,15 +101,11 @@ export default {
   //   })
   // }
   computed: Object.assign(mapGetters({
-    loginError: "isLoginError",
-      sendEmailSuccess: "isSendEmailSuccess",
-      sendEmailError: "isSendEmailError",
+      loginError: "isLoginError",
       newPassword: "password",
-      languageList: "getLanguageList"
+      languageList: "getLanguageList",
+      showRemindPassword: "getLoginPassModal"
     })
   )
 };
 </script>
-
-<style scoped>
-</style>

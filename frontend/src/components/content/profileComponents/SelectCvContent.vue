@@ -1,10 +1,10 @@
 <template>
   <div class="modal-new">
-    <div class="modal-content-new">
-      <div class="cv-modal-header">
+    <!-- <div class="modal-content-new"> -->
+      <header class="modal-header-new">
         <h1 class="cv-modal-h1">{{ $t("header.generateCV") }}</h1>
         <button class="modal-close" @click="close">&#10006;</button>
-      </div>
+      </header>
       <div class="cv-modal-content">
         <div class="cv-modal-tbuttons">
           <button class="cv-modal-btn-bclear" @click="selectAllCvElements">{{ $t("button.checkAll") }}</button>
@@ -89,7 +89,7 @@
         <button class="cv-modal-btn" @click="showCv">{{ $t("button.seePreview") }}</button>
         <button class="cv-modal-btn-clear" @click="close">{{ $t("button.close") }}</button>
       </div>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -154,15 +154,13 @@ export default {
 .cv-modal-content {
   display: flex;
   flex-direction: column;
-  height: 80%;
+  height: 79%;
   justify-content: space-around;
 }
 .cv-modal-tbuttons {
   display: flex;
   align-self: center;
   width: 80%;
-  /* height: 3rem; */
-  margin: 1rem;
   justify-content: space-around;
 }
 .cv-modal-middle {
@@ -170,8 +168,6 @@ export default {
   align-self: center;
   align-items: flex-start;
   width: 100%;
-  margin: 1rem;
-  /* height: 60%; */
   justify-content: space-around;
 }
 
@@ -347,8 +343,7 @@ export default {
   display: flex;
   align-self: flex-end;
   align-items: center;
-  margin: 1rem;
-  /* height: 20%; */
+  justify-content: flex-end;
 }
 
 .cv-modal-selects {
@@ -357,6 +352,7 @@ export default {
   width: 100%;
   align-self: center;
   justify-content: space-around;
+  height: 35%;
 }
 
 @media (min-width: 30rem) {
