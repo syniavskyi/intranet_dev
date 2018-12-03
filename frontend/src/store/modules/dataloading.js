@@ -230,8 +230,8 @@ const actions = {
     if(!sLang){
       sLang = userData.lang;
     }
-    getters.getDataForHint ? url = 'Users' + '(UserAlias=' + "'" + sUserAlias.toUpperCase() + "'," + "Language='" + sLang + "')" + '?&$expand=UserSkills,UserAuth' :
-                          url = 'Users' + '(UserAlias=' + "'" + sUserAlias.toUpperCase() + "'," + "Language='" + sLang + "')" + '?&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang,UserFiles,UserAuth'
+    getters.getDataForHint ? url = 'Users' + '(UserAlias=' + "'" + sUserAlias.toUpperCase() + "'," + "Language='" + sLang + "')" + '?&$expand=UserSkills,UserAuth,UserCvProjects' :
+                             url = 'Users' + '(UserAlias=' + "'" + sUserAlias.toUpperCase() + "'," + "Language='" + sLang + "')" + '?&$expand=UserEducations,UserExperiences,UserCvProjects,UserSkills,UserLang,UserFiles,UserAuth'
     return axios({
       method: 'GET',
       url: url,
@@ -611,7 +611,7 @@ const actions = {
       let oData = getters.getUserInfo;
 
         if(!getters.getDataForHint) {
-          skillSet = 'SET_USER_SKILLS';     
+          skillSet = 'SET_USER_SKILLS';
           dispatch('getUserFilesData') // get data about all user files (cv, photos, documents etc.)
           dispatch('loadUserPhoto', userData) //load user's photo for menu and profile TO BE READ
           let aAuth = utils.checkRole(oData.UserAuth.results);
@@ -619,16 +619,17 @@ const actions = {
           //set authorization for all objects - to optimize      
           commit('SET_USER_EDUCATION', oData.UserEducations.results); //set user education data for profile and cv
           commit('SET_USER_EXPERIENCE', oData.UserExperiences.results); //set user experience data for profile and cv
-
-          commit('SET_USER_PROJECTS_LIST', oData.UserCvProjects.results); //set user projects data for profile and cv
-          dispatch('adjustProjects');
     
           commit('SET_USER_LANGS', oData.UserLang.results);
     
           commit('SET_NEW_USER_FILES_LIST', oData.UserFiles.results); //set list of files for starter page for new user 
-      } else {
-          skillSet = 'SET_USER_SKILLS_DF_LANG'
+          
+          commit('SET_USER_PROJECTS_LIST', oData.UserCvProjects.results); //set user projects data for profile and cv
+          dispatch('adjustProjects');
+        } else {
+          skillSet = 'SET_USER_SKILLS_DF_LANG';
       }
+      commit('SET_USER_PROJECTS_LIST_DF_LANG', oData.UserCvProjects.results); //set user projects data for profile and cv
 
       commit(skillSet, oData.UserSkills.results); //set user skills data for profile and cv
       let userSkills = utils.formatToArray(oData.UserSkills.results);
@@ -702,7 +703,6 @@ const getters = {
   getModulesList(state) {
     return state.sapModulesList;
   },
-
   getNewUserFilesList(state) {
     return state.newUserFiles;
   },

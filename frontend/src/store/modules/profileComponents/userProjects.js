@@ -12,7 +12,9 @@ const state = {
   beforeEditingProjects: null,
   industryList: [],
   userProjectsList: [],
-  object: {}
+  object: {},
+  userProjectsListDfLang: [],
+  showHintProject: {}
 };
 
 const mutations = {
@@ -39,6 +41,12 @@ const mutations = {
   },
   SET_OBJECT(state, data) {
     state.object = data;
+  },
+  SET_USER_PROJECTS_LIST_DF_LANG(state, data) {
+    state.userProjectsListDfLang = data;
+  },
+  SET_SHOW_HINT_PROJECT(state, data) {
+    state.showHintProject = data;
   }
 }
 
@@ -69,6 +77,7 @@ const actions = {
     data.DateEnd = utils.formatDateForBackend(data.DateEnd);
     dispatch('formatProjectToString', data);
     data.IsCurrent = data.IsCurrent ? 'X' : '-';
+    data.Language = localStorage.getItem('lang');
     let sToken = getters.getToken;
     delete data.User;
     let url = 'UserCvProjects';
@@ -100,6 +109,7 @@ const actions = {
     dataToSend.IsCurrent = dataToSend.IsCurrent ? 'X' : '-';
     dataToSend.DateStartToChange = utils.formatDateForBackend(dataToSend.DateStartToChange);
     dataToSend.DateEndToChange = utils.formatDateForBackend(dataToSend.DateEndToChange);
+    dataToSend.Language = localStorage.getItem('lang');
     delete dataToSend.User;
     dispatch('formatProjectToString', dataToSend);
     let urlD = `UserCvProjects(UserAlias='${dataToSend.UserAlias}',DateStart=datetime'${moment(dataToSend.DateStart).format("YYYY-MM-DD")}T00:00:00',DateEnd=datetime'${moment(dataToSend.DateEnd).format("YYYY-MM-DD")}T00:00:00,ProjectName='${dataToSend.ProjectName},Language='${dataToSend.Language}')`;
@@ -271,13 +281,18 @@ const actions = {
   },
   // get industries name from text table
   getIndustries({
-    commit,
     getters
   }, userData) {
-    let lang = userData.cvLang;
-    if (userData.cvLang === undefined) {
-      lang = "PL";
+    let lang;
+    if(getters.getDataForHint) {
+      lang = localStorage.getItem('lang').toUpperCase() === 'PL' ? lang = "EN" : lang = "PL";
+    } else {
+      lang = userData.cvLang;
+        if (userData.cvLang === undefined) {
+          lang = "PL";
+        }
     }
+
     return axios({
       method: 'GET',
       url: `Industries?$filter=Lang eq '${lang}'`, 
@@ -423,6 +438,13 @@ const actions = {
     }
     commit('SET_OBJECT', object);
   },
+    showHintFnProject({commit}, data) {
+      let oData = {
+        show: data.show,
+        index: data.index
+      }
+      commit("SET_SHOW_HINT_PROJECT", oData);
+    }
 }
 
 const getters = {
@@ -449,6 +471,12 @@ const getters = {
   },
   getObject(state) {
     return state.object;
+  },
+  getUserProjectsListDfLang(state) {
+    return state.userProjectsListDfLang;
+  },
+  getShowHintProject(state) {
+    return state.showHintProject;
   }
 }
 
