@@ -160,15 +160,17 @@ const actions = {
         data.EventId = res.data.d.EventId;
         dispatch('setColorPriority');
         state.addEvent.color = state.priorityColor
-        state.aEvents.push(data);
-        commit("SET_PROMISE_TO_READ", ["Events"]);
-        dispatch('getData');
+        let aEvents = getters.getAllEvents;
+        aEvents.push(data);
+        commit("SET_EVENTS", aEvents);
         let message = res.headers;
         dispatch('displayModal', message);
+        commit("SET_PROMISE_TO_READ", ["NewToken", "Events"]);
+        dispatch('getData');
+        // location.reload();
       }).catch(error => {
         console.log(error);
     })
-
   },
   editEvent({
     commit,
@@ -210,6 +212,8 @@ const actions = {
           commit('SET_EVENTS', aEvents);
           let message = res.headers;
           dispatch('displayModal', message);
+          commit("SET_PROMISE_TO_READ", ["NewToken", "Events"]);
+          dispatch('getData');
         }).catch(error => {
           console.log(error);
       })

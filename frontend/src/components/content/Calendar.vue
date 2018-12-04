@@ -49,23 +49,23 @@
                   <button @click="openDialog" class="button modal-button add-button">{{ $t("button.add") }}</button>
                 </div>
                 <ul class="ul-event">
-                  <li v-for='attr in selectedDay.attributes' :key='attr.customData.EventId' class="delegations-inputs-section li-event">
-                    <div class="low-prio-event" v-if="attr.customData.Priority=='L'"> </div>
-                    <div class="medium-prio-event" v-if="attr.customData.Priority=='M'"> </div>
-                    <div class="high-prio-event" v-if="attr.customData.Priority=='H'"> </div>
+                  <li v-for='attr in filterEventForDay' :key='attr.EventId' class="delegations-inputs-section li-event">
+                    <div class="low-prio-event" v-if="attr.Priority=='L'"> </div>
+                    <div class="medium-prio-event" v-if="attr.Priority=='M'"> </div>
+                    <div class="high-prio-event" v-if="attr.Priority=='H'"> </div>
                     <div class="event-attr">
                       <div class="event-time">
-                        <div> {{ $t("label.shortTime")}} {{ formatTime(attr.customData.EventTime)}} </div>
-                        <div> {{ formatDate(attr.customData) }} </div>
+                        <div> {{ $t("label.shortTime")}} {{ formatTime(attr.EventTime)}} </div>
+                        <div> {{ formatDate(attr) }} </div>
                       </div>
-                      <div class="event-attr-header">  {{ attr.customData.EventName }} </div>
-                      <div> {{ attr.customData.Description}} </div>
-                      <div> {{ attr.customData.EventTypeName }} </div>
-                      <div> {{ attr.customData.EventPrivacy }} </div>
+                      <div class="event-attr-header">  {{ attr.EventName }} </div>
+                      <div> {{ attr.Description}} </div>
+                      <div> {{ attr.EventTypeName }} </div>
+                      <div> {{ attr.EventPrivacy }} </div>
                     </div>
                     <div class="events-buttons">
-                      <button class="button edit-button" :disabled="attr.customData.CreatedBy !== loginAlias && authType !== '*'" @click="editEventClick(attr.customData, $t)">{{ $t("button.edit") }}</button>
-                      <button class="button edit-button" :disabled="attr.customData.CreatedBy !== loginAlias && authType !== '*'" @click="deleteEvent(attr.customData, $t)">{{ $t("button.delete") }}</button>
+                      <button class="button edit-button" :disabled="attr.CreatedBy !== loginAlias && authType !== '*'" @click="editEventClick(attr, $t)">{{ $t("button.edit") }}</button>
+                      <button class="button edit-button" :disabled="attr.CreatedBy !== loginAlias && authType !== '*'" @click="deleteEvent(attr, $t)">{{ $t("button.delete") }}</button>
                     </div>
                   </li>
                 </ul>
@@ -73,10 +73,10 @@
               <!-- Modal for add event -->
               <div class="backdrop" v-if="dialogEvent"></div>
               <div class="modal-new-m " v-if="dialogEvent">
-                <div class="modal-content">
+                <div class="modal-content-new">
                   <div class="modal-header">
                     <h1 class="modal-title">{{ $t("header.addNewEvent") }}</h1>
-                    <button class="modal-exit" @click="performDialog">&#10006;</button>
+                    <button class="modal-close" @click="performDialog">&#10006;</button>
                   </div>
                   <div class="modal-calendar">
                     <div class="prof-input2">
@@ -321,7 +321,6 @@ export default {
       let aEvents = this.events,
         aFilters = this.filters;
       let aFilteredEvents = [];
-
       if (
         aFilters.branch === null &&
         aFilters.department === null &&
@@ -333,7 +332,7 @@ export default {
         if (aFilters.department && aFilters.branch && aFilters.employee) {
           fnFilter = function(oItem) {
             return (
-              oItem.Department.includes(aFilters.department) &&
+              oItem.TargetGroup.includes(aFilters.department) &&
               oItem.Branch.includes(aFilters.branch) &&
               oItem.Employee.includes(aFilters.employee)
             );
@@ -341,7 +340,7 @@ export default {
         } else if (aFilters.department && aFilters.branch) {
           fnFilter = function(oItem) {
             return (
-              oItem.Department.includes(aFilters.department) &&
+              oItem.TargetGroup.includes(aFilters.department) &&
               oItem.Branch.includes(aFilters.branch)
             );
           };
@@ -358,7 +357,7 @@ export default {
           };
         } else if (aFilters.department) {
           fnFilter = function(oItem) {
-            return oItem.Department.includes(aFilters.department);
+            return oItem.TargetGroup.includes(aFilters.department);
           };
         } else if (aFilters.employee) {
           fnFilter = function(oItem) {
@@ -370,6 +369,16 @@ export default {
         }
       }
       return aEvents;
+    },
+    filterEventForDay() {
+      let aEvents = this.events;
+      let fnFilter;
+      let day = this.selectedDay.date;
+
+        fnFilter = function(oItem) {
+            return oItem.DateFrom <= day.setHours(1) && day.setHours(1) <= oItem.DateTo;
+          };
+      return aEvents = aEvents.filter(fnFilter)   
     },
     // calendar attributes
     attributes() {
@@ -491,8 +500,6 @@ export default {
       data.Action = 'U';
       this.editEvent(data);
       this.editEventClick(data);
-      // let pos = this.selectedDay["attributes"].findIndex(x => x.customData.EventId === data.EventId);
-      // this.selectedDay["attributes"][pos].customData = data;
     },
     dayClicked(day) {
       this.selectedDay = day;
@@ -520,15 +527,11 @@ export default {
       editedData.Action = 'D'
       Object.assign(this.addEvent, editedData);
       this.editEvent(editedData);
-      let pos = this.selectedDay["attributes"].findIndex(x => x.customData.EventId === data.EventId);
-      this.selectedDay["attributes"].splice(pos, 1)
     },
     addNewEventBtn(data) {
       this.$store.commit("SET_DATE_FROM", this.selectedValue);
       this.addNewEvent(data);
       this.performDialog();
-      let pos = this.selectedDay.attributes.length;
-      // this.selectedDay.attributes[pos] = { customData: { data }};
     },
     // permision to filter calendar
     backToModal() {
