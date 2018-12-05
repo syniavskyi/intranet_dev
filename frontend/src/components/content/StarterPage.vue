@@ -55,7 +55,7 @@
                     <div class="starter-page-list-item-btns">
                       <a class="starter-page-file-btn" :href="generateLinks(list.FileId)">&#x21e3;</a>
                       <div v-if="checkFileFormat(list.Filename) == '.pdf'">
-                        <p class="starter-page-pdf"> {{  checkFileFormat(list.Filename)}}</p>
+                        <p class="starter-page-pdf"> {{checkFileFormat(list.Filename)}}</p>
                       </div>
                       <div v-if="checkFileFormat(list.Filename) == '.doc'">
                         <p class="starter-page-docx">{{checkFileFormat(list.Filename)}} </p>
@@ -102,9 +102,9 @@ export default {
     "modal": Modal
   },
   created() {
-    this.getNewDocs();
-    this.getInfoDocs();
-    utils.checkAuthLink(this.$router, this.$store.getters.getUserAuth.ZMENU);
+      this.$store.commit("SET_PROMISE_TO_READ", ["UserData", "StarterDocsInfo", "StarterDocsNew"]);
+      this.$store.dispatch('getData', null);
+      utils.checkAuthLink(this.$router, this.$store.getters.getUserAuth.ZMENU);
   },
   computed: {
     ...mapGetters({
