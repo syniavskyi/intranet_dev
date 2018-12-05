@@ -64,46 +64,30 @@ const actions = {
   },
   // get docs for new user
   getNewDocs({
-    commit,
     getters,
-    dispatch
   }) {
     let user = localStorage.getItem("id");
-    axios({
+    return axios({
       method: 'GET',
       url: "Attachments?$filter=FileId eq 'new' and UserAlias eq '" + user + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
         "Cookie": getters.getCookie
       }
-    }).then(res => {
-      let oAttachments = res.data.d.results;
-      commit('SET_DOC_LIST_NEW', oAttachments);
-      dispatch('checkStatus', oAttachments);
-    }).catch(error => {
-      console.log(error);
     })
   },
   // get informational docs
   getInfoDocs({
-    commit,
     getters,
-    dispatch
   }) {
     let user = localStorage.getItem("id");
-    axios({
+    return axios({
       method: 'GET',
       url: "Attachments?$filter=FileId eq 'info' and UserAlias eq '" + user + "'",
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
         "Cookie": getters.getCookie
       }
-    }).then(res => {
-      let oAttachments = res.data.d.results;
-      commit('SET_DOC_LIST_INFO', oAttachments);
-      dispatch('checkStatus', oAttachments);
-    }).catch(error => {
-      console.log(error);
     })
   },
   editSingleNewDoc({getters, dispatch}, data) {

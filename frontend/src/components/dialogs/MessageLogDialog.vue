@@ -11,7 +11,7 @@
             <section v-if="messageLog.length > 1" class="modal-item-err" v-for="(message, index) in messageLog" :key="index">
               {{index+1}}. {{message.message}}
             </section>
-            <section class="modal-item-err">
+            <section v-if="messageLog.length = 1" class="modal-item-err">
                 {{messageLog[0].message}}
             </section>
           </div>

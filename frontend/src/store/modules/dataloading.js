@@ -387,10 +387,14 @@ const actions = {
           const fieldOfStudyPromise = dispatch('getFieldOfStudyDesc', userData.lang).then(res => ( { res: res, promise: "FieldOfStudy"}));
           aPromises.push(fieldOfStudyPromise);
           break;
-        case "StarterDocs":
-          const starterDocsPromise = dispatch('getInfoDocs', userData).then(res => ( { res: res, promise: "StarterDocs" } ));
-          aPromises.push(starterDocsPromise);
+        case "StarterDocsInfo":
+          const starterDocsPromiseInfo = dispatch('getInfoDocs', userData).then(res => ( { res: res, promise: "StarterDocsInfo" } ));
+          aPromises.push(starterDocsPromiseInfo);
           break;
+        case "StarterDocsNew":
+          const starterDocsPromiseNew = dispatch('getNewDocs', userData).then(res => ( { res: res, promise: "StarterDocsNew" } ));
+          aPromises.push(starterDocsPromiseNew);
+          break;  
         case "NewToken":
           const newTokenPromise = dispatch('getNewToken').then(res => ( { res: res, promise: "NewToken" } ));
           aPromises.push(newTokenPromise);
@@ -471,10 +475,14 @@ const actions = {
         case "FieldOfStudy":
           commit('SET_FIELD_OF_STUDY_DESC_LIST', aResults);
           break;
-        case "StarterDocs":
+        case "StarterDocsInfo":
           commit('SET_DOC_LIST_INFO', aResults);
           dispatch('checkStatus', aResults);
           break;
+        case "StarterDocsNew":
+          commit('SET_DOC_LIST_NEW', aResults);
+          dispatch('checkStatus', aResults);
+          break;  
         case "NewToken":
           let sToken = aResponse.request.getResponseHeader('x-csrf-token');
           commit('SET_TOKEN', sToken);
