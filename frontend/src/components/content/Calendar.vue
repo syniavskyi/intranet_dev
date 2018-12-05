@@ -15,41 +15,40 @@
           <div class="calendar-in-row">
             <div class="cal-and-fils">
               <div class="calendar">
-                <v-date-picker mode='single' :min-date="new Date()" v-model="selectedValue" :attributes="attributes" is-inline @dayclick='dayClicked'>
-                </v-date-picker>
+                <v-date-picker mode='single' :min-date="new Date()" v-model="selectedValue" :attributes="attributes" is-inline @dayclick='dayClicked'/>
               </div>
               <div class="cal-filters">
-                <div class="ava-div-select-cool">
-                  <select required class="ava-select-cool" v-model="filters.branch">
+                <div class="cd-for-select">
+                  <select required class="cd-select" v-model="filters.branch">
                     <option v-for="branch in branchList" :key="branch.Key" :value="branch.Key">{{ branch.Value }}</option>
                   </select>
-                  <label class="ava-select-label-cool">{{ $t("label.branch") }}</label>
+                  <label class="cd-slabel">{{ $t("label.branch") }}</label>
                 </div>
-                <div class="ava-div-select-cool">
-                  <select required class="ava-select-cool" v-model="filters.department">
+                <div class="cd-for-select">
+                  <select required class="cd-select" v-model="filters.department">
                     <option v-for="department in departmentList" :key="department.Key" :value="department.Key">{{ department.Value }}</option>
                   </select>
-                  <label class="ava-select-label-cool">{{ $t("label.department") }}</label>
+                  <label class="cd-slabel">{{ $t("label.department") }}</label>
                 </div>
-                <div class="ava-div-select-cool">
-                  <select required class="ava-select-cool" v-model="filters.employee">
+                <div class="cd-for-select">
+                  <select required class="cd-select" v-model="filters.employee">
                     <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias">
                       {{ user.Fullname }}
                     </option>
                   </select>
-                  <label class="ava-select-label-cool">{{ $t("label.employee") }}</label>
-                  <button @click="clearFilters">{{ $t("button.clear") }}</button>
+                  <label class="cd-slabel">{{ $t("label.employee") }}</label>
+                  <button class="func-btn cal-btn" @click="clearFilters">{{ $t("button.clear") }}</button>
                 </div>
               </div>
             </div>
             <div class="calendar-tile">
               <div v-if='selectedDay' class="selectedDay">
                 <div class="add-event-header">
-                  <h3>{{ selectedDay.date.toLocaleDateString() }}</h3>
-                  <button @click="openDialog" class="button modal-button add-button">{{ $t("button.add") }}</button>
+                  <h3 class="add-event-title">{{ selectedDay.date.toLocaleDateString() }}</h3>
+                  <button @click="openDialog" class="button add-button">{{ $t("button.add") }}</button>
                 </div>
                 <ul class="ul-event">
-                  <li v-for='attr in filterEventForDay' :key='attr.EventId' class="delegations-inputs-section li-event">
+                  <li v-for='attr in filterEventForDay' :key='attr.EventId' class="li-event">
                     <div class="low-prio-event" v-if="attr.Priority=='L'"> </div>
                     <div class="medium-prio-event" v-if="attr.Priority=='M'"> </div>
                     <div class="high-prio-event" v-if="attr.Priority=='H'"> </div>
@@ -266,21 +265,3 @@ export default {
   )
 };
 </script>
-
-<style scoped>
-.calendar {
-  display: flex;
-}
-
-.selected-day {
-  margin-left: 10px;
-}
-
-/* .selected-day ul li:first-child {
-  margin-top: 10px;
-} */
-
-/* .selected-day ul li {
-  margin-bottom: 10px;
-} */
-</style>

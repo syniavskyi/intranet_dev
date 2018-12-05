@@ -11,15 +11,12 @@
     border-top-right-radius: 4px
 }
 
-
-
 .emp-filters {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     width: 100%;
     align-items: center;
-
 }
 
 .emp-section {
