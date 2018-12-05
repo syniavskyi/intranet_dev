@@ -74,8 +74,8 @@
                     </div>
                     <div class="ava-tbs-item eduButtonsProj">
                         <div class="ava-tbs-ititle">{{ $t("label.options") }}</div>
-                         <button v-if="editMode && authType !== 'OWN'" @click="update(index)" :disabled="true">{{ $t("button.save") }}</button>
-                         <button v-if="editMode && authType !== 'OWN'" @click="remove(project)">{{ $t("button.delete") }}</button>
+                        <button class="btn-delete-row" v-if="editMode && authType !== 'OWN'" @click="update(index)" :disabled="true">{{ $t("button.save") }}</button>
+                        <button class="btn-delete-row" v-if="editMode && authType !== 'OWN'" @click="remove(project)">{{ $t("button.delete") }}</button>
                     </div>
                 </div>
             </div>

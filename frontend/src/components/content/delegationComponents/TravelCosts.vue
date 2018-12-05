@@ -138,7 +138,7 @@
                         <div class="del-tbody2-item-travel-s">
                             <div class="del-tbody2-item-title"></div>
                             <div class="del-tbody2-item-txt">
-                                <button class="del-delete-row" @click="removeCostRow(index)">{{ $t("button.delete") }}</button>
+                                <button class="btn-delete-row" @click="removeCostRow(index)">{{ $t("button.delete") }}</button>
                             </div>
                             <div class="del-tfoot2">&nbsp;</div>
                         </div>

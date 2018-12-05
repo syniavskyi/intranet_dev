@@ -196,7 +196,7 @@
                     <div class="del-tbody-cols">
                         <div class="del-tbody-title"></div>
                         <div class="del-tbody-col">
-                            <button class="del-delete-row" @click="removeRow(index)">{{ $t("button.delete") }}</button>
+                            <button class="btn-delete-row" @click="removeRow(index)">{{ $t("button.delete") }}</button>
                         </div>
                     </div>
                 </div>
