@@ -30,8 +30,14 @@
 }
 .calendar-in-row {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 95%;
+}
+
+.cal-and-fils {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .calendar-tile {
@@ -130,14 +136,15 @@
     flex-direction: row;
     width: 10rem;
 }
-.filters {
+.cal-filters {
+    margin-left: .05rem;
+    padding-top: .5rem;
     font-family: inherit;
-    /* width: 40%; */
-    /* padding-right: 1rem; */
     background: white;
+    /* background: linear-gradient(to right, #d8d8d8 0%,white 1%,white 99%,#d8d8d8 100%); */
 }
-.filters select,
-.filters label{
+.cal-filters select,
+.cal-filters label{
     margin-left: 1rem;
     margin-top: .4rem;
 }
@@ -394,7 +401,19 @@ marginForm button {
         display: flex;
         flex-direction: row;
     }
+    .calendar-in-row {
+        flex-direction: row;
+    }
     
+}
+@media (min-width: 67rem){
+    .calendar-tile {
+        flex-direction: row;
+    }
+    .cal-filters {
+        /* align-self: center; */
+        width: 16rem;
+    }
 }
 @media (min-width: 85rem) {
     .event-feature {
@@ -413,14 +432,5 @@ marginForm button {
     }
     .select-button {
         width: 13rem;
-    }
-}
-@media (min-width: 67rem){
-    .calendar-tile {
-        flex-direction: row;
-    }
-    .filters {
-        /* align-self: center; */
-        width: 16rem;
     }
 }
