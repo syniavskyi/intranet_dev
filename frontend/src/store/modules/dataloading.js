@@ -287,7 +287,7 @@ const actions = {
   },
 
   loadUserPhoto({
-    commit,
+    commit, getters
   }) {
     const sUserId = "UIO",// userData.user,
       sLanguage = 'PL',
@@ -299,7 +299,7 @@ const actions = {
       sLanguage +
       "',UserAlias='" +
       sUserId +
-      "')/$value";
+      "')/$value?c=" + getters.getCookie;
 
     let image = new Image();
 

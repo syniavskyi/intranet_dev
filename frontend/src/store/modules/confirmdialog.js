@@ -16,8 +16,8 @@ const mutations = {
     SET_DIALOG_CONFIRM(state, show) {
         state.isDialogOpen = show;
     },
-    SET_DIALOG_ERROR_STATUS(state){
-        state.isError = state;
+    SET_DIALOG_ERROR_STATUS(state, data) {
+        state.isError = data;
     }
 }
 

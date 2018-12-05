@@ -108,6 +108,7 @@ export default {
       oStore.dispatch('getData', null);
       // this.checkRegistrationAuth(oStore);
       utils.checkAuthLink(this.$router, oStore.getters.getUserAuth.ZMENU);
+      oStore.commit("SET_DIALOG_ERROR_STATUS", false);
   },
   validations: {
     registerData: {
