@@ -71,7 +71,7 @@
                 </ul>
               </div>
               <!-- Modal for add event -->
-            <event-form v-if="dialogEvent" :selected-value="selectedValue" :disabled-edit-button="disabledEditButton" :display-save-button="displaySaveButton"></event-form>
+            <event-form v-if="dialogEvent" :selected-value="selectedValue" :display-save-button="displaySaveButton"></event-form>
               <!-- End modal for add event -->
             </div>
           </div>
@@ -100,7 +100,6 @@ export default {
       isSelected: false,
       selectedUser: false,
       selectedGroup: false,
-      disabledEditButton: true,
       displaySaveButton: true,
       loginAlias: this.$store.getters.getLoginAlias || localStorage.getItem("id")
     };
@@ -218,10 +217,8 @@ export default {
   methods: Object.assign(
     mapActions([
       "clearForm",
-      // "addNewEvent",
       "clearFilters",
       "editEvent",
-      // "formatToArray",
       "performDialog"
     ]), {
       showMenu(event) {
@@ -243,7 +240,6 @@ export default {
       this.performDialog();
       let editedData = data;
       Object.assign(this.addEvent, editedData);
-      this.disabledEditButton = false;
       this.displaySaveButton = false;
     },
     deleteEvent(data) {

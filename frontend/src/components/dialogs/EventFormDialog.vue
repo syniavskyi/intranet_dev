@@ -77,7 +77,7 @@
                     </div>
                   <div class="form-buttons">
                     <button class="button modal-button" :disabled="$v.$invalid" type="button" @click="addNewEventBtn(addEvent)" v-if="displaySaveButton"><span class="span-arrow">{{ $t("button.addEvent") }}</span></button>
-                    <button class="button modal-button" :disabled="disabledEditButton" @click="editForm(addEvent)">{{ $t("button.edit") }}</button>
+                    <button class="button modal-button" :disabled="$v.$invalid" v-if="!displaySaveButton" @click="editForm(addEvent)">{{ $t("button.edit") }}</button>
                   </div>
                 </div>
               </div>
