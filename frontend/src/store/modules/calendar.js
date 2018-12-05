@@ -30,7 +30,8 @@ const state = {
   aEventType: [],
   editedData: {},
   dataToRead: ["Domains", "Industries", "UserData", "UserList", "Events"],
-  calendarAuth: ""
+  calendarAuth: "",
+  dialogEvent: false
 };
 
 const mutations = {
@@ -60,6 +61,9 @@ const mutations = {
   },
   SET_CALENDAR_AUTH(state, sAuth){
     state.calendarAuth = sAuth;
+  },
+  SET_DIALOG_EVENT(state, data) {
+    state.dialogEvent = data;
   }
 }
 
@@ -245,6 +249,10 @@ const actions = {
       employee: null
     }
     commit('SET_CLEARED_FILTERS', aFilters);
+  },
+  performDialog({getters, commit}) {
+    let bDialog = !getters.getDialogEvent;
+    commit('SET_DIALOG_EVENT', bDialog);
   }
 };
 
@@ -275,6 +283,9 @@ const getters = {
   },
   getCalendarAuth(state){
     return state.calendarAuth;
+  },
+  getDialogEvent(state) {
+    return state.dialogEvent;
   }
 };
 
