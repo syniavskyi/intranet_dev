@@ -13,12 +13,12 @@
         </div>
         <div class="calendar-tiles">
           <div class="calendar-in-row">
-            <div style="display: flex; flex-direction:column">
+            <div class="cal-and-fils">
               <div class="calendar">
                 <v-date-picker mode='single' :min-date="new Date()" v-model="selectedValue" :attributes="attributes" is-inline @dayclick='dayClicked'>
                 </v-date-picker>
               </div>
-              <div class="filters">
+              <div class="cal-filters">
                 <div class="ava-div-select-cool">
                   <select required class="ava-select-cool" v-model="filters.branch">
                     <option v-for="branch in branchList" :key="branch.Key" :value="branch.Key">{{ branch.Value }}</option>
