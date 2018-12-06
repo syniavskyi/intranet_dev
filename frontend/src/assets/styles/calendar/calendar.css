@@ -121,10 +121,12 @@
 .event-feature{
     display: flex;
     flex-direction: column;
-    height: 3.4rem;
+    height: 2rem;
     justify-content: space-between;
     position: relative;
-     
+    width: 20.5rem;
+    align-items: center;
+    margin-bottom: 1rem;
 }
 .event-select, 
 .modal-input {
@@ -132,12 +134,6 @@
 }
 .input {
     padding: 0;
-}
-.event-visibility {
-    width: 20rem;
-    display: flex;
-    flex-direction: row;
-    width: 10rem;
 }
 .cal-filters {
     display: flex;
@@ -167,10 +163,6 @@
     text-indent: 0.3rem;
 }
 
-/* new */
-.form-pointer:hover {
-    cursor: pointer;
-}
 .click-paragraph {
     color: #ff5200eb;
     font-size: 12px;
@@ -381,7 +373,6 @@ marginForm button {
 }
 .event-attr-header {
     font-size: 20px;
-    /* color: #ccc; */
     color: #380303;
     font-weight: 480;
     display: flex;
@@ -415,7 +406,6 @@ marginForm button {
         width:80%;
     }
     .event-feature {
-        display: flex;
         flex-direction: row;
     }
 }
@@ -433,15 +423,6 @@ marginForm button {
     }
 }
 @media (min-width: 85rem) {
-    .event-feature {
-        display: flex;
-        justify-content: space-between;
-        width: 28rem;
-        flex-direction: row;
-    }
-    .event-visibility {
-        width: 20rem;
-    }
     .event-select, 
     .modal-input,
     .privacy-button {

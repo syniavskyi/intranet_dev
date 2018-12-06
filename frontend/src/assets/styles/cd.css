@@ -187,3 +187,33 @@
 }
 
 /* COOL (CONTENT) DIV INPUT / SELECT / TEXTAREA  - end */
+
+/* COOL RADIOBUTTON */
+.cd-rbtn {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    border-radius: 50%;
+    appearance: none;
+    border: 2px solid #999;
+    width: 1rem;
+    height: 1rem;
+    transition: border .3s;
+    margin:0;
+    cursor: pointer;
+}
+
+.cd-rbtn:checked {
+    border: 8px solid orange;
+    box-shadow: 0 0 10px orange;
+}
+
+.cd-rbtn:checked + label {
+    color: grey;
+}
+
+.cd-Lrbtn {
+    color: #999;
+    transition: color .1s;
+}
+/* COOL RADIOBUTTON */
