@@ -59,12 +59,13 @@
             <button class="save-button" type="button" @click="isSelected = !isSelected">{{ $t("button.save") }}</button>
             <button class="save-button clear-button" type="button" @click="backToModal">{{ $t("button.back") }}</button>
           </div>
-          <div class="event-feature event-visibility">
+          <div class="event-feature">
             <label class="modal-label">{{ $t("label.visibility") }}</label>
-            <input class="input-active" type="radio" id="prv" value="PRV" v-model="addEvent.EventPrivacy" :checked="addEvent.EventPrivacy == 'PRV'" @blur="$v.addEvent.EventPrivacy.$touch()">
-            <label for="prv">{{ $t("label.private") }}</label>
-            <input class="input-active" type="radio" id="pbl" value="PBL" v-model="addEvent.EventPrivacy" :checked="addEvent.EventPrivacy == 'PBL'" @blur="$v.addEvent.EventPrivacy.$touch()">
-            <label for="pbl">{{ $t("label.public") }}</label>
+            <input class="input-active cd-rbtn" type="radio" id="prv" value="PRV" v-model="addEvent.EventPrivacy" :checked="addEvent.EventPrivacy == 'PRV'" @blur="$v.addEvent.EventPrivacy.$touch()">
+            <label class="cd-Lrbtn" for="prv">{{ $t("label.private") }}</label>
+            <input class="cd-rbtn" type="radio" id="pbl" value="PBL" v-model="addEvent.EventPrivacy" :checked="addEvent.EventPrivacy == 'PBL'" @blur="$v.addEvent.EventPrivacy.$touch()">
+            <!-- input-active  -->
+            <label class="cd-Lrbtn" for="pbl">{{ $t("label.public") }}</label>
           </div>
         </div>
         <div class="form-buttons">

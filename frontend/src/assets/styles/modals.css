@@ -124,7 +124,10 @@
 }
 
 .modal-label {
-    margin: 0;
+    display: flex;
+    justify-content: center;
+    color: grey;
+    font: 1.4rem 'Roboto';
 }
 
 .modal-input {
