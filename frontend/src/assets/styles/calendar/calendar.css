@@ -107,7 +107,7 @@
 
 .department:before {
     position: absolute;
-    top: 13.4rem;
+    top: 15.92rem;
     left: -1.65rem;
     transform: rotate(-90deg);
     content: '';
