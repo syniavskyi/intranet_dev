@@ -8,12 +8,14 @@
     height: auto;
 }
 .modal-calendar{
-    align-items: center;
     display: flex;
+    align-items: center;
     flex-direction: column;
+    justify-content: space-around;
     width: 75%;
     align-self: center;
     margin-top: 2%;
+    height: 28rem;
 }
 
 .calendar-tiles {
@@ -54,6 +56,35 @@
 }
 .add-event-content {
     display: flex;
+}
+
+.cal-btn-edit,
+.cal-btn-del {
+    align-self: center;
+    border:0;
+    border-radius: 4px;
+    font: .9rem 'Roboto';
+    padding: .2rem .4rem;
+    transition: box-shadow .2s, color .2s, background-color .2s;
+    cursor: pointer;
+}
+
+.cal-btn-edit {
+    background: orange;
+    color: white;
+}
+
+.cal-btn-del {
+    background: transparent;
+    color: grey;
+}
+
+.cal-btn-edit:hover {
+    background: #c47f00;
+}
+
+.cal-btn-del:hover {
+    color: brown;
 }
 
 .department {
@@ -105,10 +136,9 @@
     cursor: pointer;
     color: grey;
     border-radius: 5px;
-    outline:none;
+    outline: none;
     transition: color .2s, border-color .2s, box-shadow .2s;
 } 
-
 
 .cal-back-btn:hover {
     color: #333;
@@ -164,12 +194,28 @@
 }
 
 .privacy-button:hover,
-.privacy-button:focus,
-.save-button:hover {
+.privacy-button:focus {
     cursor: pointer;
     outline: none;
     box-shadow: 0 0 8px rgb(241, 153, 51);
 }
+
+.evt-desc,
+.evt-type,
+.evt-priv {
+    display: flex;
+    color: #5e5e5e;
+    font-family: 'Roboto';
+}
+
+.evt-desc {
+    align-self: center;
+}
+
+.evt-priv {
+    font-size: .8rem;
+}
+
 
 .cal-group-label {
     position: absolute;
@@ -201,17 +247,16 @@
     margin-bottom: .3rem;
 }
 
-
-.event-feature{
+.event-feature {
     display: flex;
-    flex-direction: column;
-    height: 2rem;
+    height: 1.5rem;
     justify-content: space-between;
     position: relative;
     width: 20.5rem;
     align-items: center;
     margin-bottom: 1rem;
 }
+
 .event-select, 
 .modal-input {
     width: 13rem;
@@ -270,7 +315,6 @@
 .cal-input {
     width: 20.5rem;
     position: relative;
-    height: 3.4rem;
 }
 
 .cal-label {
@@ -287,15 +331,7 @@
     height: 2rem;
     width: 4.5rem;
 }
-.edit-button {
-    width: 3rem;
-    height: 1.6rem;
-    border: 0;
-    border-radius: 20%;
-    transition: all .3s ease;
-    font-size: .8rem;
-    font-weight: 200;
-}
+
 .events-buttons {
     display: flex;
     justify-content: space-around;
@@ -339,7 +375,10 @@
 }
 
 .event-attr {
-    height: 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 6.5rem;
     width: 15rem;
 }
 
@@ -362,7 +401,7 @@
 }
 .event-attr-header {
     font-size: 20px;
-    color: #380303;
+    color: #333;
     font-weight: 480;
     display: flex;
     justify-content: center;
@@ -395,9 +434,6 @@
     }
     .calendar-content {
         width:80%;
-    }
-    .event-feature {
-        flex-direction: row;
     }
 }
 

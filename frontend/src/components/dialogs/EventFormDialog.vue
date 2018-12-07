@@ -18,16 +18,16 @@
             <span class="cd-span"/>
             <label class="cd-label">{{ $t("label.eventTime") }}</label>
           </div>
+          <div class="cd-for-input-xl">
+            <input required class="cd-input" v-model="addEvent.Description">
+            <span class="cd-span"/>
+            <label class="cd-label">{{ $t("label.eventDescription") }}</label>
+          </div>
           <div class="cd-for-select-xl">
             <v-date-picker required class="cd-date" popoverDirection="bottom" is-expanded mode="single" v-model="addEvent.DateTo" :min-date="addEvent.DateFrom">
               <input value="addEvent.DateTo">
             </v-date-picker>
             <label class="cd-slabel">{{ $t("label.endDate") }} </label>
-          </div>
-          <div class="cd-for-input-xl">
-            <input required class="cd-input" v-model="addEvent.Description">
-            <span class="cd-span"/>
-            <label class="cd-label">{{ $t("label.eventDescription") }}</label>
           </div>
           <div class="cd-for-select-xl">
             <select required class="cd-select" v-model="addEvent.Priority" @blur="$v.addEvent.Priority.$touch()">

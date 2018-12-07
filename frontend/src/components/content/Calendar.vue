@@ -47,27 +47,27 @@
                 <button @click="openDialog" class="button add-button">{{ $t("button.add") }}</button>
               </div>
               <div class="add-event-content">
-                  <ul class="selected-day">
-                    <li v-for='attr in filterEventForDay' :key='attr.EventId' class="li-event">
-                      <div class="low-prio-event" v-if="attr.Priority=='L'"> </div>
-                      <div class="medium-prio-event" v-if="attr.Priority=='M'"> </div>
-                      <div class="high-prio-event" v-if="attr.Priority=='H'"> </div>
-                      <div class="event-attr">
-                        <div class="event-time">
-                          <div> {{ $t("label.shortTime")}} {{ formatTime(attr.EventTime)}} </div>
-                          <div> {{ formatDate(attr) }} </div>
-                        </div>
-                        <div class="event-attr-header">  {{ attr.EventName }} </div>
-                        <div> {{ attr.Description}} </div>
-                        <div> {{ attr.EventTypeName }} </div>
-                        <div> {{ attr.EventPrivacy }} </div>
+                <ul class="selected-day">
+                  <li v-for='attr in filterEventForDay' :key='attr.EventId' class="li-event">
+                    <div class="low-prio-event" v-if="attr.Priority=='L'"> </div>
+                    <div class="medium-prio-event" v-if="attr.Priority=='M'"> </div>
+                    <div class="high-prio-event" v-if="attr.Priority=='H'"> </div>
+                    <div class="event-attr">
+                      <div class="event-time">
+                        <div class="evt-desc"> {{ $t("label.shortTime")}} {{ formatTime(attr.EventTime)}} </div>
+                        <div class="evt-desc"> {{ formatDate(attr) }} </div>
                       </div>
-                      <div class="events-buttons">
-                        <button class="button edit-button" :disabled="attr.CreatedBy !== loginAlias && authType !== '*'" @click="editEventClick(attr, $t)">{{ $t("button.edit") }}</button>
-                        <button class="button edit-button" :disabled="attr.CreatedBy !== loginAlias && authType !== '*'" @click="deleteEvent(attr, $t)">{{ $t("button.delete") }}</button>
-                      </div>
-                    </li>
-                  </ul>
+                      <div class="event-attr-header">{{ attr.EventName }}</div>
+                      <div class="evt-desc"> {{ attr.Description}} </div>
+                      <div class="evt-type"> {{ attr.EventTypeName }} </div>
+                      <div class="evt-priv"> {{ attr.EventPrivacy }} </div>
+                    </div>
+                    <div class="events-buttons">
+                      <button class="cal-btn-edit" :disabled="attr.CreatedBy !== loginAlias && authType !== '*'" @click="editEventClick(attr, $t)">{{ $t("button.edit") }}</button>
+                      <button class="cal-btn-del" :disabled="attr.CreatedBy !== loginAlias && authType !== '*'" @click="deleteEvent(attr, $t)">{{ $t("button.delete") }}</button>
+                    </div>
+                  </li>
+                </ul>
               </div>
               <!-- Modal for add event -->
             <event-form v-if="dialogEvent" :selected-value="selectedValue" :display-save-button="displaySaveButton"></event-form>
