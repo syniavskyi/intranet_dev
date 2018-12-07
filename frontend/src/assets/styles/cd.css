@@ -2,8 +2,10 @@
 .cd-for-input-xs,
 .cd-for-input-s,
 .cd-for-input,
+.cd-for-input-xl,
 .cd-for-input-xxl,
-.cd-for-select {
+.cd-for-select,
+.cd-for-select-xl {
     display: flex;
     position: relative;
     flex-direction: column;
@@ -28,6 +30,12 @@
     width: 15rem;
 }
 
+.cd-for-input-xl,
+.cd-for-select-xl {
+    width: 20.5rem;
+    margin-bottom: 1rem;
+}
+
 .cd-for-input-xxl {
     width: 26rem;
 }
@@ -45,6 +53,7 @@
     text-indent: 0.5rem;
     border-bottom: 1px solid #757575;
     position: relative;
+    cursor: text;
 }
 
 .cd-textarea {
@@ -82,6 +91,27 @@
     border: 1px solid lightgrey;
 }
 
+.cd-date {
+    width: 20.5rem;
+    text-align: center;
+    border: 0;
+    display:flex;
+    align-items:center;
+}
+.cd-date input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20.5rem;
+    text-align: center;
+    height: 1.8rem;
+    border:0;
+    border-radius: 4px;
+    background: transparent;
+    font-size: 1rem;
+    border: 1px solid rgb(207, 207, 207);
+}
+
 .cd-label,
 .cd-slabel {
     display: flex;
@@ -93,6 +123,7 @@
     transition:0.3s ease all; 
     font-weight: 400;
     font-size:1.2rem;
+    padding: 0 .2rem;
 }
 
 /* transparent label */
@@ -114,13 +145,13 @@
 }
 
 .cd-slabel {
-    top: 0.3rem;
+    top: 0.25rem;
     left:0.3rem;
 }
 
 .cd-tlabel {
     top: 0.3rem;
-    left:0.3rem;
+    left: 0.3rem;
 }
 
 .cd-input:focus ~ label,
@@ -128,7 +159,8 @@
 .cd-select:focus ~ label,
 .cd-select:valid ~ label,
 .cd-textarea:focus ~ label,
-.cd-textarea:valid ~ label {
+.cd-textarea:valid ~ label,
+.cd-date ~ label {
     top: -.65rem;
     font-size: .9rem;
     color: rgb(255, 145, 0);
@@ -143,7 +175,6 @@
     background: linear-gradient(#D8D8D8 25%, white);
     padding: 0 .2rem;
 }
-
 
 .cd-span { position:relative; display:flex; width:100%; }
     

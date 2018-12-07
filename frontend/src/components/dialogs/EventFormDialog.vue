@@ -8,37 +8,38 @@
       </div>
       <div class="modal-content-new">
         <div class="modal-calendar">
-          <div class="prof-input2">
-            <input required class="inputEdit2 inputProfile2 input-active" v-model="addEvent.EventName" @blur="$v.addEvent.EventName.$touch()">
-            <span class="prof-div-bar"></span>
-            <label class="label-profile2">{{ $t("label.eventTitle") }}</label>
+          <div class="cd-for-input-xl">
+            <input required class="cd-input" v-model="addEvent.EventName" @blur="$v.addEvent.EventName.$touch()">
+            <span class="cd-span"/>
+            <label class="cd-label">{{ $t("label.eventTitle") }}</label>
           </div>
-          <div class="prof-input2">
-            <input required class="inputEdit2 inputProfile2 input-active" type="time" v-model="addEvent.EventTime">
-            <label class="label-profile2">{{ $t("label.eventTime") }}</label>
+          <div class="cd-for-input-xl">
+            <input required class="cd-input" type="time" v-model="addEvent.EventTime">
+            <span class="cd-span"/>
+            <label class="cd-label">{{ $t("label.eventTime") }}</label>
           </div>
-          <div class="prof-input2">
-            <v-date-picker required class="delegations-input-date inputProfile2 calendar-modal-date input-active" popoverDirection="" is-expanded mode="single" v-model="addEvent.DateTo" :min-date="addEvent.DateFrom">
-              <input value="addEvent.DateTo"/>
+          <div class="cd-for-select-xl">
+            <v-date-picker required class="cd-date" popoverDirection="bottom" is-expanded mode="single" v-model="addEvent.DateTo" :min-date="addEvent.DateFrom">
+              <input value="addEvent.DateTo">
             </v-date-picker>
-            <label class="delegations-label-cool-select">{{ $t("label.endDate") }} </label>
+            <label class="cd-slabel">{{ $t("label.endDate") }} </label>
           </div>
-          <div class="prof-input2">
-            <input required class="inputEdit2 inputProfile2 input-active" v-model="addEvent.Description">
-            <span class="prof-div-bar"></span>
-            <label class="label-profile2">{{ $t("label.eventDescription") }}</label>
+          <div class="cd-for-input-xl">
+            <input required class="cd-input" v-model="addEvent.Description">
+            <span class="cd-span"/>
+            <label class="cd-label">{{ $t("label.eventDescription") }}</label>
           </div>
-          <div class="prof-input2">
-            <select required class="ava-select-cool marginForm input-active"  v-model="addEvent.Priority" @blur="$v.addEvent.Priority.$touch()">
+          <div class="cd-for-select-xl">
+            <select required class="cd-select" v-model="addEvent.Priority" @blur="$v.addEvent.Priority.$touch()">
               <option v-for="priority in priorities" :value="priority.Key" :key="priority.Key">{{ priority.Value }}</option>
             </select>
-            <label class="label-profile2">{{ $t("label.priority") }}</label>
+            <label class="cd-slabel">{{ $t("label.priority") }}</label>
           </div>
-          <div class="prof-input2">
-            <select required class="marginForm ava-select-cool input-active" v-model="addEvent.EventType" @blur="$v.addEvent.EventType.$touch()">
+          <div class="cd-for-select-xl">
+            <select required class="cd-select" v-model="addEvent.EventType" @blur="$v.addEvent.EventType.$touch()">
               <option v-for="eventType in eventTypes" :value="eventType.Key" :key="eventType.Key">{{ eventType.Value }}</option>
             </select>
-            <label class="label-profile2">{{ $t("label.eventType") }}</label>
+            <label class="cd-slabel">{{ $t("label.eventType") }}</label>
           </div>
           <div class="prof-input2">
             <p class="click-paragraph">{{ $t("button.click") }}</p>
