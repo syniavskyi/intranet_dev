@@ -41,37 +41,40 @@
             </select>
             <label class="cd-slabel">{{ $t("label.eventType") }}</label>
           </div>
-          <div class="prof-input2">
+          <div class="cal-input">
+            <button class="privacy-button" type="button" @click="isSelected = !isSelected"></button>
             <p class="click-paragraph">{{ $t("button.click") }}</p>
-            <button class="privacy-button marginForm" type="button" @click="isSelected = !isSelected"></button>
-            <label class="label-profile2 target-group-btn">{{ $t("label.targetGroup") }}</label>
-            <label v-if="addEvent.TargetGroup.length !== 0 || addEvent.Employee.length !== 0" class="label-profile2">{{ $t("label.selected") }}</label>
+            <label class="cal-label">{{ $t("label.targetGroup") }}</label>
+            <label v-if="addEvent.TargetGroup.length !== 0 || addEvent.Employee.length !== 0" class="cal-group-label">{{ $t("label.selected") }}</label>
           </div>
           <div class="department" v-if="isSelected">
-            <label class="event-select-error" v-if="!selectedGroup && !selectedUser">{{ $t("label.selectInfo") }}</label>
-            <button class="privacy-button marginForm select-button" type="button" @click="selectedUser = !selectedUser && selectedGroup === false">{{ $t("button.selectUser") }}</button>
-            <select multiple="true" class="user-list" v-if="selectedUser" v-model="addEvent.Employee">
-              <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias">{{ user.Fullname }}</option>
-            </select>
-            <button class="privacy-button marginForm select-button" type="button" @click="selectedGroup = !selectedGroup && selectedUser === false">{{ $t("button.selectGroup") }}</button>
-            <select multiple="true" required class="user-list" v-if="selectedGroup" v-model="addEvent.TargetGroup">
-              <option v-for="group in targetGroup" :value="group.Key" :key="group.Key">{{ group.Value }}</option>
-            </select>
-            <button class="save-button" type="button" @click="isSelected = !isSelected">{{ $t("button.save") }}</button>
-            <button class="save-button clear-button" type="button" @click="backToModal">{{ $t("button.back") }}</button>
+            <div class="dep-selects">
+              <label class="event-select-error" v-if="selectedGroup || selectedUser">{{ $t("label.selectInfo") }}</label>
+              <button class="dep-btn" type="button" @click="selectedUser = !selectedUser && selectedGroup === false">{{ $t("button.selectUser") }}</button>
+              <select multiple="true" class="user-list" v-if="selectedUser" v-model="addEvent.Employee">
+                <option v-for="user in usersList" :value="user.UserAlias" :key="user.UserAlias">{{ user.Fullname }}</option>
+              </select>
+              <button class="dep-btn" type="button" @click="selectedGroup = !selectedGroup && selectedUser === false">{{ $t("button.selectGroup") }}</button>
+              <select multiple="true" required class="user-list" v-if="selectedGroup" v-model="addEvent.TargetGroup">
+                <option v-for="group in targetGroup" :value="group.Key" :key="group.Key">{{ group.Value }}</option>
+              </select>
+            </div>
+            <footer class="department-footer">
+              <button class="cal-back-btn" @click="backToModal">{{ $t("button.back") }}</button>
+              <button class="cal-save-btn" @click="isSelected = !isSelected">{{ $t("button.save") }}</button>
+            </footer>
           </div>
           <div class="event-feature">
             <label class="modal-label">{{ $t("label.visibility") }}</label>
-            <input class="input-active cd-rbtn" type="radio" id="prv" value="PRV" v-model="addEvent.EventPrivacy" :checked="addEvent.EventPrivacy == 'PRV'" @blur="$v.addEvent.EventPrivacy.$touch()">
+            <input class="cd-rbtn" type="radio" id="prv" value="PRV" v-model="addEvent.EventPrivacy" :checked="addEvent.EventPrivacy == 'PRV'" @blur="$v.addEvent.EventPrivacy.$touch()">
             <label class="cd-Lrbtn" for="prv">{{ $t("label.private") }}</label>
             <input class="cd-rbtn" type="radio" id="pbl" value="PBL" v-model="addEvent.EventPrivacy" :checked="addEvent.EventPrivacy == 'PBL'" @blur="$v.addEvent.EventPrivacy.$touch()">
-            <!-- input-active  -->
             <label class="cd-Lrbtn" for="pbl">{{ $t("label.public") }}</label>
           </div>
         </div>
         <div class="form-buttons">
-          <button class="button modal-button" :disabled="$v.$invalid" type="button" @click="addNewEventBtn(addEvent)" v-if="displaySaveButton"><span class="span-arrow">{{ $t("button.addEvent") }}</span></button>
-          <button class="button modal-button" :disabled="$v.$invalid" v-if="!displaySaveButton" @click="editForm(addEvent)">{{ $t("button.edit") }}</button>
+          <button class="button" :disabled="$v.$invalid" type="button" @click="addNewEventBtn(addEvent)" v-if="displaySaveButton"><span class="span-arrow">{{ $t("button.addEvent") }}</span></button>
+          <button class="button" :disabled="$v.$invalid" v-if="!displaySaveButton" @click="editForm(addEvent)">{{ $t("button.edit") }}</button>
         </div>
       </div>
     </div>
