@@ -71,10 +71,8 @@
               </div>
               <!-- Modal for add event -->
             <event-form v-if="dialogEvent" :selected-value="selectedValue" :display-save-button="displaySaveButton"></event-form>
-              <!-- End modal for add event -->
             </div>
           </div>
-          <!-- koniec rowa -->
         </div>
       </div>
     </div>
@@ -83,7 +81,6 @@
 
 <script>
 import moment from "moment";
-// import { required } from "vuelidate/lib/validators";
 import i18n from "../../lang/lang";
 import Menu from "../Menu.vue";
 import Form from "../dialogs/EventFormDialog";
