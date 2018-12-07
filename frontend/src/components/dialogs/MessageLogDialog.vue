@@ -11,7 +11,7 @@
             <section v-if="messageLog.length > 1" class="modal-item-err" v-for="(message, index) in messageLog" :key="index">
               {{index+1}}. {{message.message}}
             </section>
-            <section v-if="messageLog.length = 1" class="modal-item-err">
+            <section v-if="messageLog[0]" class="modal-item-err">
                 {{messageLog[0].message}}
             </section>
           </div>
@@ -25,7 +25,6 @@ import { mapGetters, mapActions } from "vuex";
 import i18n from "../../lang/lang";
 export default {
      name: 'modal',
-    //  props: ['message'],
     computed: Object.assign(
     mapGetters({
       messageLog: "getMessageLog",
