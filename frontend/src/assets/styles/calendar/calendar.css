@@ -57,25 +57,97 @@
 }
 
 .department {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    /* justify-content: center; */
     width: 14rem;
     position: absolute;
     right: 2rem;
     bottom: 2rem;
-    box-shadow: 0 0 4px;
+    box-shadow: 0 0 10px grey;
+    border-radius: 8px;
     background-color: white;
     padding: .2rem;
     height: 25rem;
     z-index: 5;
 }
 
+.department:before {
+    position: absolute;
+    top: 13.4rem;
+    left: -1.65rem;
+    transform: rotate(-90deg);
+    content: '';
+    border-style: solid;
+    border-width: 0 15px 22px 15px;
+    border-color: transparent transparent #dfdfdf transparent;
+}
+
+.dep-selects {
+    display: flex;
+    flex-direction: column;
+}
+
+.department-footer {
+    display: flex;
+    width: 92%;
+    justify-content: space-between;
+    padding: .2rem;
+}
+
+.cal-save-btn,
+.cal-back-btn {
+    display:flex;
+    justify-content: center;
+    font: .9rem 'Roboto';
+    cursor: pointer;
+    color: grey;
+    border-radius: 5px;
+    outline:none;
+    transition: color .2s, border-color .2s, box-shadow .2s;
+} 
+
+
+.cal-back-btn:hover {
+    color: #333;
+    box-shadow: 0 0 8px #333;
+}
+
+.cal-save-btn {
+    background-color: white;
+    border: 1px solid grey;
+    box-shadow: 0 0 4px rgb(173, 168, 163);
+}
+
+.cal-save-btn:hover {
+    color: orange;
+    border-color: orange;
+    box-shadow: 0 0 8px orange;
+}
+
+.cal-back-btn {
+    background-color: white;
+    border: 0;
+    box-shadow: 0 0 4px rgb(173, 168, 163);
+}
+
 .user-list {
     height: 19rem;
     width: 14rem;
     border: none;
-    overflow: scroll;
+    overflow: auto;
     font-size: .8rem;
-    margin: .1rem;
+    padding: 0 .5rem;
 }
+
+.user-list option {
+    color: #5c5c5c;
+    padding: .1rem;
+    font: .9rem 'Roboto';
+}
+
 .user-list:focus {
     outline: none;
 }
@@ -87,31 +159,49 @@
     border-radius: 3px;
     height: 2.2rem;
     width: 20.5rem;
+    box-shadow: 0 0 10px transparent;
+    transition: box-shadow .2s, border .2s;
 }
+
 .privacy-button:hover,
 .privacy-button:focus,
 .save-button:hover {
-   cursor: pointer;
-   outline: none;
-   box-shadow: 0 0 2px rgb(241, 153, 51);
-   border: .7px solid white;
-}
-.select-button {
-    width: 13rem;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 0 8px rgb(241, 153, 51);
 }
 
-.save-button {
+.cal-group-label {
     position: absolute;
-    right: .4rem;
-    bottom: .4rem;
-    background-color: white;
-    border: none;
-    box-shadow: 0 0 4px rgb(173, 168, 163);
+    left: .5rem;
+    top: .4rem;
+    color: orange;
+    font: 1.2rem 'Roboto';
 }
-.clear-button {
-    right: 4rem;
-    bottom: .4rem;
+
+.dep-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid #ccc;
+    height: 2rem;
+    border-radius: 4px;
+    color: grey;
+    font: 1.1rem 'Roboto';
+    transition: border-color .2s, color .2s; 
+    cursor: pointer;
 }
+
+.dep-btn:hover,
+.dep-btn:active {
+    color: orange;
+    border-color: orange;
+}
+
+.dep-btn:first-of-type {
+    margin-bottom: .3rem;
+}
+
+
 .event-feature{
     display: flex;
     flex-direction: column;
@@ -158,10 +248,12 @@
 }
 
 .click-paragraph {
+    margin:0;
     color: #ff5200eb;
     font-size: 12px;
     position: absolute;
-    right: 10px;
+    right: .7rem;
+    top: .65rem;
     pointer-events: none;
 }
 
@@ -175,118 +267,21 @@
 .form-buttons button {
     margin: 0;
 }
-.prof-input2 {
+.cal-input {
     width: 20.5rem;
     position: relative;
     height: 3.4rem;
 }
-.prof-input2-xxs {
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    width: 8rem;
-}
-.prof-input2-lang {
-    display: flex;
-    position: relative;
-    width: 4rem;
-    flex-direction: column;
-}
 
-.prof-input2-xs {
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    margin: 0 .5rem;
-    margin-bottom: .8rem;
-    flex-grow: 1;
-}
-.prof-input2-s,
-.prof-input2-ss {
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    width: 15rem;
-}
-
-.prof-input2-ss {
-    margin: 0 1rem;
-    margin-bottom: .8rem;
-}
-
-.prof-input2-m {
-    width: 16rem;
-}
-
-.prof-input2-l {
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    flex: 1;
-    margin: 0 .5rem;
-    margin-bottom: .8rem;
-    height: 3.6rem;
-}
-
-.inputEdit2:focus ~ label,
-.inputEdit2:valid ~ label {
+.cal-label {
+    position: absolute;
     top: -.65rem;
-    font-size: 1rem;
-    color: rgb(255, 145, 0);
+    left: .25rem;
+    color: orange;
+    background: white;
     padding: 0 .2rem;
 }
-.inputEdit2 ~ .prof-comm-img {
-    top: .34rem;
-}
 
-.inputEdit2 {
-    position: relative;
-    font-family: 'Roboto';
-    font-size: 1.2rem;
-    height: 2.2rem;
-    border: 0;
-    margin:0;
-    border-bottom: 1px solid grey;
-    width: 100%;
-    animation: border-trans;
-    animation-duration: 0.5s;
-}
-.inputEdit2:focus ~ span:before,
-.inputEdit2:hover ~ span:before,
-.inputEdit2:focus ~ span:after,
-.inputEdit2:hover ~ span:after {
-    width: 50%;
-}
-.inputEdit2:hover,
-.inputEdit2:focus {
-    outline :none;
-}
-.inputProfile2 {
-    box-sizing: border-box;
-    background: transparent;
-    text-indent: 0.3rem;
-}
-.label-profile2
- {
-    position: absolute;
-    padding: 0;
-    margin: 0;
-    font-family: 'Roboto';
-    align-self: flex-start;
-    transition:0.3s ease all; 
-    padding: 0 .5rem;
-    top: .3rem;
-    left: .2rem;
-    background: white;
-    font-size: 1.2rem;
-    pointer-events: none;
-    color: #999;
-}
-marginForm,
-marginForm select,
-marginForm button {
-    margin: .8rem 0 0 0;
-}
 /* neew */
 .add-button {
     height: 2rem;
@@ -389,6 +384,8 @@ marginForm button {
     justify-content: space-between;
 }
 .event-select-error{
+    width: 90%;
+    align-self: center;
     color: red;
     font-size: .7rem;
 }
@@ -421,8 +418,5 @@ marginForm button {
     .modal-input,
     .privacy-button {
         width: 20.5rem;
-    }
-    .select-button {
-        width: 13rem;
     }
 }
