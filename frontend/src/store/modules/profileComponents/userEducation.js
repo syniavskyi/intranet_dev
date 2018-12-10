@@ -65,8 +65,8 @@ const actions = {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
-          "x-csrf-token": sToken,
-          "Cookie": cookie
+          "x-csrf-token": sToken
+          // "Cookie": cookie
       }
     }).then(res => {
       let message = res.headers;
@@ -92,8 +92,8 @@ const actions = {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
-          "x-csrf-token": getters.getToken,
-          "Cookie": getters.getCookie
+          "x-csrf-token": getters.getToken
+          // "Cookie": getters.getCookie
       }
     }).then(res => {
       let message = res.headers;
@@ -114,8 +114,8 @@ const actions = {
       method: 'GET',
       url: `SchoolDesc?$filter=Language eq '${lang}'`,
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-        "Cookie": getters.getCookie
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        // "Cookie": getters.getCookie
       }
     })
   },
@@ -131,8 +131,8 @@ const actions = {
       method: 'GET',
       url: `FieldOfStudyDesc?$filter=Language eq '${lang}'`, 
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-        "Cookie": getters.getCookie
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        // "Cookie": getters.getCookie
       }
     })
   }

@@ -244,8 +244,8 @@ const actions = {
         method: 'GET',
         url: url,
         headers: {
-          "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-          "Cookie": getters.getCookie
+          "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+          // "Cookie": getters.getCookie
         }
       }).then(res => {
         commit('SET_NEW_DELEG_NO', res.data.d.DelegNo)
@@ -273,8 +273,8 @@ const actions = {
             "Content-Type": "application/json",
               "X-Requested-With": "XMLHttpRequest",
               "Cache-Control": "no-cache",
-              "x-csrf-token": sToken,
-              "Cookie": cookie
+              "x-csrf-token": sToken
+              // "Cookie": cookie
           }
         }).then(res => {
           commit('SET_CREATE_DELEG_SUCCESS',true)

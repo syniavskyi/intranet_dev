@@ -190,8 +190,8 @@ const actions = {
       method: 'GET',
       url: "Dictionaries" + "?$filter=Name eq '" + domainData.name + "' and Language eq '" + domainData.lang + "'",
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-        "Cookie": getters.getCookie
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        // "Cookie": getters.getCookie
       }
     });
   },
@@ -202,8 +202,8 @@ const actions = {
       method: 'GET',
       url: 'Projects',
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-        "Cookie": getters.getCookie
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        // "Cookie": getters.getCookie
       }
     })
   },
@@ -236,8 +236,8 @@ const actions = {
       method: 'GET',
       url: url,
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-        "Cookie": sCookie
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        // "Cookie": sCookie
       }
     })
   },
@@ -269,8 +269,8 @@ const actions = {
       method: 'GET',
       url: 'Users',
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-        "Cookie": sCookie
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        // "Cookie": sCookie
       }
     })
   },
@@ -280,8 +280,8 @@ const actions = {
       method: 'GET',
       url: `AttachmentMedias(FileId='USER-PHOTO',Language='PL',UserAlias='UIO')/$value`,
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-        "Cookie": getters.getCookie
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        // "Cookie": getters.getCookie
       }
     })
   },
@@ -334,8 +334,8 @@ const actions = {
       method: 'GET',
       url: "Adverts",
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-        "Cookie": getters.getCookie
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        // "Cookie": getters.getCookie
       }
     })
   },

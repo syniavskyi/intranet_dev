@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import store from '../store/store'
+import store from '@/store/store'
 
 import Login from '@/components/auth/Login'
 import Registration from '@/components/auth/Registration'
@@ -97,4 +97,8 @@ export default new Router({
 ],
 linkExactActiveClass: 'active-router-link'
 })
+
+// Router.beforeEnter((to,from, next) => {
+//     console.log(store)
+// });
 

@@ -93,6 +93,7 @@
     background-position: right;
     border: 1px solid lightgrey;
     outline-color: orange;
+    cursor: pointer;
 }
 
 .cd-date {
