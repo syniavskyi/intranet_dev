@@ -44,26 +44,7 @@ require('./assets/styles/modals.css');
 
 Vue.config.productionTip = false
 
-
-// axios.defaults.baseURL = 'http://10.0.2.6:8080/';
-// axios.defaults.baseURL = 'https://btech-intranet.herokuapp.com/';
-// axios.defaults.baseURL = 'http://10.0.2.5:8080/';
-// axios.defaults.baseURL = 'http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/';
-axios.defaults.baseURL = '/api/sap/opu/odata/sap/ZGW_INTRANET_SRV/';
-
-odata().config({
-    endpoint: 'http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/',
-    headers: [
-    {name:"X-Requested-With", value: "XMLHttpRequest"},
-    // {name:"Content-Type", value : "application/json"},
-    // {name:"Accept", value : "application/json"}
-],
-                //         "Content-type": "application/atom+xml; type=entry; charset=utf-8",      
-    // isWithCredentials: true,
-    format: 'json',
-    version: 3, 
-    autoFormat: false
-})
+axios.defaults.baseURL = window.location.origin + "/api/sap/opu/odata/sap/ZGW_INTRANET_SRV/";
 
 export const app = new Vue({
     el: '#app',
