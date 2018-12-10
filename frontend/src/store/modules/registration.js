@@ -33,8 +33,8 @@ const actions = {
     }).then(res => {
       commit("SET_DISPLAY_LOADER", false);
       commit("SET_DIALOG_CONFIRM", true);
-      let message = res.headers;
-      dispatch('displayModal', message);
+      // let message = res.headers;
+      // dispatch('displayModal', message);
     }).catch(error => {
       commit("SET_DISPLAY_LOADER", false);
       commit("SET_DIALOG_ERROR_STATUS", true);
