@@ -25,7 +25,7 @@ const mutations = {
 const actions = {
     logout({commit}){
         let URL2 = "?sap-user=''&sap-password=''&sap-language=''"
-        var URL1 = " http://nw5.local.pl:8050/sap/public/bc/icf/logoff"
+        var URL1 = "http://nw5.local.pl:8050/sap/public/bc/icf/logoff"
         axios.get(URL1).then(res => {
             axios({
                 method: 'get',
