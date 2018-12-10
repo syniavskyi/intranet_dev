@@ -71,8 +71,8 @@ const actions = {
       method: 'GET',
       url: "Attachments?$filter=FileId eq 'new' and UserAlias eq '" + user + "'",
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-        "Cookie": getters.getCookie
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        // "Cookie": getters.getCookie
       }
     })
   },
@@ -85,8 +85,8 @@ const actions = {
       method: 'GET',
       url: "Attachments?$filter=FileId eq 'info' and UserAlias eq '" + user + "'",
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-        "Cookie": getters.getCookie
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        // "Cookie": getters.getCookie
       }
     })
   },
@@ -110,8 +110,8 @@ const actions = {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
-          "x-csrf-token": sToken,
-          "Cookie": cookie
+          "x-csrf-token": sToken
+          // "Cookie": cookie
       }
     }).then(res => {
         console.log(res);
@@ -132,8 +132,8 @@ const actions = {
             "Content-Type": "application/json",
             "X-Requested-With": "XMLHttpRequest",
             "Cache-Control": "no-cache",
-            "x-csrf-token": sToken,
-            "Cookie": getters.getCookie
+            "x-csrf-token": sToken
+            // "Cookie": getters.getCookie
         }
         }).then(res => {
             console.log(res);
@@ -154,8 +154,8 @@ const actions = {
         "Content-Type": "application/json",
         "X-Requested-With": "XMLHttpRequest",
         "Cache-Control": "no-cache",
-        "x-csrf-token": sToken,
-        "Cookie": getters.getCookie
+        "x-csrf-token": sToken
+        // "Cookie": getters.getCookie
     }
     }).then(res => {
         console.log(res);

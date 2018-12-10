@@ -27,8 +27,8 @@ const actions = {
         "Content-Type": "application/json",
         "X-Requested-With": "XMLHttpRequest",
         "Cache-Control": "no-cache",
-        "x-csrf-token": getters.getToken,
-        "Cookie": getters.getCookie
+        "x-csrf-token": getters.getToken
+        // "Cookie": getters.getCookie
       }
     }).then(res => {
       commit("SET_DISPLAY_LOADER", false);

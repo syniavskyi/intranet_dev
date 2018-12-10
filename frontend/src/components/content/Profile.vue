@@ -178,14 +178,14 @@
                         <label class="label-profile">{{ $t("label.position") }}</label>
                       </div>
                       <!-- dodawanie nowej pozycji przez BO lub Management -->
-                      <div v-if="editMode" class="prof-input-s">
+                      <!-- <div v-if="editMode" class="prof-input-s">
                         <input disabled v-if="!editMode" class="inputProfile inputDisabled" v-model="newPosition"/>
                         <input v-on:keyup.enter="addNewPositionForUser" required v-if="editMode" class="inputProfile inputEditPos" v-model="newPosition"/>
                         <span class="prof-div-bar"></span>
                         <label class="label-profile">{{ $t("label.position") }}</label>
                         <button class="prof-div-pos-btn" @click="addNewPositionForUser">+</button>
                         <button class="prof-div-pos-elem" v-for="position in userPositions" :key="position" @click="removeUserPosition(position)">{{position}}</button>
-                      </div>
+                      </div> -->
                       <div class="prof-input-s">
                         <input v-if="editMode" required class="inputProfile inputEdit" @input="checkFormFields" v-model="userData.CurrentProject">
                         <input disabled v-if="!editMode" class="inputDisabled inputProfile" v-model="userData.CurrentProject">

@@ -137,8 +137,8 @@ const actions = {
             "Content-Type": "application/json",
             "X-Requested-With": "XMLHttpRequest",
             "Cache-Control": "no-cache",
-            "x-csrf-token": sToken,
-            "Cookie": cookie
+            "x-csrf-token": sToken
+            // "Cookie": cookie
         }
       }).then(res => {
           let message = res.headers;
@@ -161,8 +161,8 @@ const actions = {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
-          "x-csrf-token": sToken,
-          "Cookie": cookie
+          "x-csrf-token": sToken
+          // "Cookie": cookie
       }
     }).then(res => {
       let message = res.headers;
@@ -185,8 +185,8 @@ const actions = {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
-          "x-csrf-token": sToken,
-          "Cookie": getters.getCookie
+          "x-csrf-token": sToken
+          // "Cookie": getters.getCookie
       }
     }).then(res => {
         let message = res.headers;
@@ -222,8 +222,8 @@ const actions = {
       method: 'GET',
       url: `Languages?$filter=LanguageId eq '${userData.cvLang}'`,
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-        "Cookie": getters.getCookie
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        // "Cookie": getters.getCookie
       }
     })
   },

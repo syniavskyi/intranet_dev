@@ -88,12 +88,13 @@ const actions = {
       method: 'PUT',
       url: url,
       data: userData,
+      // withCredentials: true,
       headers: {
         "Content-Type": "application/json",
         "X-Requested-With": "XMLHttpRequest",
         "Cache-Control": "no-cache",
-        "x-csrf-token": sToken,
-        "Cookie": getters.getCookie
+        "x-csrf-token": sToken
+        // "Cookie": getters.getCookie
       }
     }).then(res => {
       let message = res.headers;
@@ -116,8 +117,8 @@ const actions = {
         "Content-type": data.file.type,
         "X-Requested-With": "XMLHttpRequest",
         "Slug": slugHeader,
-        "Cookie": getters.getCookie,
         "x-csrf-token": getters.getToken
+        // "Cookie": getters.getCookie
       }
     }).then(res => {
       let message = res.headers;

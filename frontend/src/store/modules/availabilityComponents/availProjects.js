@@ -85,8 +85,8 @@ const actions = {
         "Content-Type": "application/json",
         "X-Requested-With": "XMLHttpRequest",
         "Cache-Control": "no-cache",
-        "x-csrf-token": sToken,
-        "Cookie": cookie
+        "x-csrf-token": sToken
+        // "Cookie": cookie
       }
     }).then(res => {
       dispatch('getUserProjects', data.UserAlias)
@@ -128,8 +128,8 @@ const actions = {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
-          "x-csrf-token": sToken,
-          "Cookie": getters.getCookie
+          "x-csrf-token": sToken
+          // "Cookie": getters.getCookie
         }
       }).then(res => {
         // dispatch('hideAllMessages')
@@ -162,8 +162,8 @@ const actions = {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
-          "x-csrf-token": sToken,
-          "Cookie": getters.getCookie
+          "x-csrf-token": sToken
+          // "Cookie": getters.getCookie
         }
       }).then(res => {
         // dispatch('hideAllMessages')

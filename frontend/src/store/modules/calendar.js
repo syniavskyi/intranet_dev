@@ -98,8 +98,8 @@ const actions = {
       method: 'GET',
       url: 'Events',
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-        "Cookie": getters.getCookie
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        // "Cookie": getters.getCookie
       }
     })
   },
@@ -156,8 +156,8 @@ const actions = {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
-          "x-csrf-token": getters.getToken,
-          "Cookie": getters.getCookie
+          "x-csrf-token": getters.getToken
+          // "Cookie": getters.getCookie
       }
     }).then(res => {
         console.log(res)
@@ -199,8 +199,8 @@ const actions = {
             "Content-Type": "application/json",
             "X-Requested-With": "XMLHttpRequest",
             "Cache-Control": "no-cache",
-            "x-csrf-token": sToken,
-            "Cookie": cookie
+            "x-csrf-token": sToken
+            // "Cookie": cookie
         }
       }).then(res => {
           console.log(res);

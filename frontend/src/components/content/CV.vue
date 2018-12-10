@@ -350,8 +350,8 @@ export default {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
           "Cache-Control": "no-cache",
-          "x-csrf-token": this.getToken,
-          "Cookie": this.getCookie
+          "x-csrf-token": this.getToken
+          // "Cookie": this.getCookie
         }
       }).catch(error => {
             console.log(error);

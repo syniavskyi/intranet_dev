@@ -57,8 +57,8 @@ const actions = {
       method: 'GET',
       url: "Attachments?$filter=FileId eq '" + fileType + "'",
       headers: {
-        "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
-        "Cookie": getters.getCookie
+        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+        // "Cookie": getters.getCookie
       }
     })
   },
