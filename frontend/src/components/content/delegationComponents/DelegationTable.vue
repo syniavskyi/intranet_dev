@@ -38,7 +38,7 @@
                                 <div class="del-tbody-item">
                                     <div class="del-tbody-item-wrap">
                                         <vue-google-autocomplete types="geocode" required class="delegations-input-cool" placeholder="" id="firstLeavePlace" onfocus="value = ''" v-model="defaultCostsData.firstLeavePlace"></vue-google-autocomplete>
-                                        <span class="delegations-div-bar"></span>
+                                        <span class="del-div-bar"></span>
                                         <!-- <select class="delegations-tselect" @change="checkDelegationTable" v-model="defaultCostsData.firstLeavePlace">
                                             <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
                                         </select> -->
@@ -109,7 +109,7 @@
                                 <div class="del-tbody-item">
                                     <div class="del-tbody-item-wrap">
                                         <vue-google-autocomplete types="geocode" required class="delegations-input-cool" placeholder=""  id="secondArrivalPlace" onfocus="value = ''" @input="defaultCostsData.secondArrivalPlace = value"></vue-google-autocomplete>
-                                        <span class="delegations-div-bar"></span>
+                                        <span class="del-div-bar"></span>
                                         <!-- <select class="delegations-tselect" @change="checkDelegationTable" v-model="defaultCostsData.secondArrivalPlace">
                                             <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
                                         </select> -->
@@ -143,7 +143,7 @@
                                 <div class="del-tbody-item">
                                     <div class="del-tbody-item-wrap">
                                         <vue-google-autocomplete types="geocode" required class="delegations-input-cool" placeholder=""  :id="index + 'leave'" onfocus="value = ''" @input="customCosts[index].leavePlace = value"></vue-google-autocomplete>
-                                        <span class="delegations-div-bar"></span>
+                                        <span class="del-div-bar"></span>
                                     <!-- <input class="delegations-tinput-w" @input="checkDelegationTable" v-model="customCosts[index].leavePlace" /> -->
                                     </div>
                                 </div>
@@ -172,7 +172,7 @@
                                 <div class="del-tbody-item">
                                     <div class="del-tbody-item-wrap">
                                         <vue-google-autocomplete types="geocode" required class="delegations-input-cool" placeholder="" :id="index +'arrival'" onfocus="value = ''" @input="customCosts[index].arrivalPlace = value"></vue-google-autocomplete>
-                                        <span class="delegations-div-bar"></span>
+                                        <span class="del-div-bar"></span>
                                     <!-- <input class="delegations-tinput-w" @input="checkDelegationTable" v-model="customCosts[index].arrivalPlace" /> -->
                                     </div>
                                 </div>
