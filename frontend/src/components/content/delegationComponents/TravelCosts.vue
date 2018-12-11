@@ -26,7 +26,7 @@
                     <div class="del-tbody-2 del-tbody-2-travel" v-for="(cost, index) in travelCosts" :key="index">
                         <div class="del-tbody2-item-travel-l">
                             <div class="del-tbody2-item-title">{{ $t("table.delegations.docDate") }}</div>
-                            <div class="del-tbody2-item-txt">
+                            <div class="del-tbody2-item-txt" @mouseover="setOverflow" @mouseout="outOverflow">
                                 <v-date-picker class="delegations-tinput-date" mode="single" @change="getTravelRate(index)" v-model="cost.docDate">
                                     <input value="otherCosts[index].docDate" />
                                 </v-date-picker>
@@ -38,7 +38,7 @@
                             <div class="del-tbody2-item-txt">
                                 <div class="del-tbody-item-wrap">
                                     <input class="delegations-tinput" @input="checkTravelFields" v-model="cost.company" />
-                                    <span class="delegations-div-bar"></span>
+                                    <span class="del-div-bar"></span>
                                 </div>
                             </div>
                             <div class="del-tfoot2">&nbsp;</div>
@@ -48,7 +48,7 @@
                             <div class="del-tbody2-item-txt">
                                 <div class="del-tbody-item-wrap">
                                     <input class="delegations-tinput" @input="checkTravelFields" v-model="cost.docNo" />
-                                    <span class="delegations-div-bar"></span>
+                                    <span class="del-div-bar"></span>
                                 </div>
                             </div>
                             <div class="del-tfoot2">{{ $t("table.delegations.amount") }} {{newDelegation.currency}}</div>
@@ -71,7 +71,7 @@
                                 </select>
                                 <div class="del-div-tcool">
                                     <input required :disabled="hideLicencePlateNo(cost)" :class="[{ 'delegations-tinput-disabled': hideLicencePlateNo(cost) },  'delegations-tinput', 'del-tinput-sfont']" @change="checkTravelFields" v-model="cost.licencePlateNo" />
-                                    <span class="delegations-div-bar"></span>
+                                    <span class="del-div-bar"></span>
                                     <label class="delegations-tlabel-cool" v-if="!cost.licencePlateNo">{{ $t("label.registrationNo") }}</label>
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                             <div class="del-tbody2-item-txt">
                                 <div class="del-tbody-item-wrap">
                                     <input :disabled="disableKilometers(cost)" :class="[{ 'delegations-tinput-s-disabled': disableKilometers(cost) },  'delegations-tinput-s']" type="number" @change="updateTravelCosts" v-model="cost.kilometers" />
-                                    <span class="delegations-div-bar"></span>
+                                    <span class="del-div-bar"></span>
                                 </div>
                             </div>
                             <div class="del-tfoot2">&nbsp;</div>
@@ -122,7 +122,7 @@
                             <div class="del-tbody2-item-txt">
                                 <div class="del-tbody-item-wrap">
                                     <input :disabled="disableCostAmount(cost)" :class="[{ 'delegations-tinput-s-disabled': disableCostAmount(cost) },  'delegations-tinput-s']" type="number" min="0" @input="updateTravelCosts" v-model="cost.amount" />
-                                    <span class="delegations-div-bar"></span>
+                                    <span class="del-div-bar"></span>
                                 </div>
                             </div>
                             <div class="del-tfoot2">&nbsp;</div>
@@ -207,6 +207,12 @@ export default {
             updateTravelCosts: 'countTravelCosts',
             getTravelRate: 'getTravelRate'
         }),
+        setOverflow() {
+            this.$store.dispatch("setVisibleOverflow", this.$el)
+        },
+        outOverflow() {
+            this.$store.dispatch("setHiddenOverflow", this.$el)
+        },
         setFieldsValues(cost) {
             // type false  = not flat rate (kilometrówka), type  true = flat rate (ryczałt)
             cost.flatRate = null
