@@ -65,7 +65,7 @@
                           <label class="prof-ainput-lbl">{{ $t("label.apartmentNumber") }}</label>
                         </div>
                         <div class="prof-input-uno">
-                          <vue-google-autocomplete required types="geocode" id="autocomplete" :country="['pl']" v-on:placechanged="setUserCity" placeholder="" @input="userData.City = value" :value="userData.City"  @change="checkFormFields"></vue-google-autocomplete>
+                          <input required v-model="userData.City" v-on:input="checkFormFields()">
                           <span class="prof-div-bar"></span>
                           <label class="prof-ainput-lbl">{{ $t("label.city") }}</label>
                         </div>
@@ -163,17 +163,14 @@
                   <div class="profile-tile-inputs-section">
                     <div class="profile-tile-inputs">
                       <div class="prof-input-s">
-                         <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.section"> -->
                         <input disabled class="inputProfile inputDisabled" v-model="userData.BranchName">
                         <label class="label-profile">{{ $t("label.branch") }}</label>
                       </div>
                       <div class="prof-input-s">
-                        <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.branch"> -->
                         <input disabled class="inputDisabled inputProfile" v-model="userData.DepartmentName">
                         <label class="label-profile">{{ $t("label.department") }}</label>
                       </div>
                       <div class="prof-input-s">
-                        <!-- <input class="inputDisabled inputProfile" :disabled="true" v-model="userData.position"> -->
                         <input disabled class="inputProfile inputDisabled" v-model="userData.JobPosition">
                         <label class="label-profile">{{ $t("label.position") }}</label>
                       </div>
@@ -264,7 +261,6 @@ import htmlDocx from "html-docx-js/dist/html-docx";
 import { saveAs } from "file-saver";
 import { mapGetters, mapActions } from "vuex";
 
-import VueGoogleAutocomplete from "vue-google-autocomplete";
 import Menu from "../Menu.vue";
 import LeavePageDialog from "../dialogs/LeavePageDialog";
 import UserProjects from "./profileComponents/UserProjects";
@@ -337,7 +333,6 @@ export default {
     next();
   },  
   created() {
-    // this.getUserData(userData);
     this.$store.commit('SET_DISABLED_BTN_TO_EDIT', false);
     let oStore = this.$store,
         sUserAlias = oStore.getters.getLoginAlias || localStorage.getItem("id"),
@@ -363,69 +358,9 @@ export default {
     "select-cv-content": SelectCvContent,
     "user-cv-tile": UserCvTile,
     "change-user-password": ChangePasswordDialog,
-    "modal": Modal,
-    VueGoogleAutocomplete: VueGoogleAutocomplete
+    "modal": Modal
   },
-  // computed: {
-  //   ...mapGetters({
-  //     userData: "getUserInfo",
-  //     saveChangesSuccess: "getSaveChangesSuccess",
-  //     photoUploadError: "getSavePhotoError",
-  //     cvLanguageList: "getCvLanguageList",
-  //     loginLanguage: "getLoginLanguage",
-  //     showSelectCv: "getShowSelectCvDialog",
-  //     showPasswordDialog: "getShowSelectChangePasswordDialog",
-  //     displayMenu: "getShowMenu",
-  //     displayOverlay: "getShowMenuOverlay",
-  //     usersList: "usersList",
-  //     userPhoto: "getUserPhotoUrl",
-  //     loginAlias: "getLoginAlias",
-  //     disabledBtnToEdit: "getDisabledBtnToEdit"
-  //   }),
-  //   formatAddress() {
-  //     const data = this.userData;
-  //     let address = data.Street + " " + data.BuildingNumber;
-  //     if (data.ApartmentNumber) {
-  //       address = address + "/" + data.ApartmentNumber;
-  //     }
-  //     address = address + ", " + data.PostalCode + " " + data.City;
-  //     return address;
-  //   },
-  //   formatDate() {
-  //     let date = this.userData.EmploymentDate;
 
-  //     return date !== null && date !== undefined
-  //       ? moment(date).format("DD.MM.YYYY")
-  //       : "-";
-  //   },
-  //   setFormatedDate() {
-  //     let oCalculateDifference = moment.preciseDiff(
-  //         this.userData.EmploymentDate,
-  //         new Date(),
-  //         true
-  //       ),
-  //       oFormatedDate;
-  //       // if there is some differences - show work experience
-  //       if(oCalculateDifference){
-  //         oFormatedDate = utils.setWorkExperience(oCalculateDifference);
-  //       }
-  //         if(oFormatedDate.day.includes('NaN')) {
-  //           return i18n.t("message.lackOfData");
-  //           } else {
-  //           return oFormatedDate.year + oFormatedDate.month + oFormatedDate.day;
-  //         }
-           
-  //   },
-  //   filteredTeamUsers() {
-  //     let aFilteredUsers = this.usersList,
-  //     sTeam = this.usersList.find(o => o.UserAlias === localStorage.getItem('id')).DepartmentId;
-
-  //     aFilteredUsers = aFilteredUsers.filter(function(oData) {
-  //       return oData.DepartmentId === sTeam;
-  //     });
-  //     return aFilteredUsers;
-  //   }
-  // },
   computed: Object.assign(
     mapGetters({
       userData: "getUserInfo",
@@ -657,155 +592,6 @@ export default {
     // }
     }
   )
-  // methods: {
-  //   ...mapActions({
-  //     getUserData: "getUserData",
-  //     getGoFromCv: "getGoFromCv"
-  //   }),
-  //   showMenu(event) {
-  //     let obj = { window, event };
-  //     this.$store.dispatch("setSideMenu", obj);
-  //   },
-  //   onEdit() {
-  //     this.showNoChangesAlert = false;
-  //     this.editMode = !this.editMode;
-  //     this._beforeEditingCache = Object.assign({}, this.userData);
-  //   },
-  //   showChangePassword() {
-  //     this.$store.commit("SET_SHOW_CHANGE_PASSWORD_DIALOG", true);
-  //   },
-  //   onCancelEdit() {
-  //     Object.assign(this.userData, this._beforeEditingCache);
-  //     this._beforeEditingCache = null;
-  //     this.showNoChangesAlert = false;
-  //     this.editMode = !this.editMode;
-  //   },
-  //   onSaveChanges() {
-  //     this.showNoChangesAlert = false;
-  //     this.checkIfDataChanged();
-  //     if (this.hasDataChanged === false) {
-  //       this.showNoChangesAlert = true;
-  //     } else {
-  //       const data = utils.createClone(this.userData)
-  //       this.$store.dispatch("saveUserData", data);
-  //       this.editMode = !this.editMode;
-  //     }
-  //     this.disableSaveBtn = true;
-  //     this.userData = data;
-  //   },
-  //   checkIfDataChanged() {
-  //     let currentData = Object.assign({}, this.userData),
-  //       currDataProps = Object.getOwnPropertyNames(currentData),
-  //       beforeDataProps = Object.getOwnPropertyNames(this._beforeEditingCache);
-
-  //     for (let i = 0; i < beforeDataProps.length; i++) {
-  //       let propName = beforeDataProps[i];
-  //       if (currentData[propName] !== this._beforeEditingCache[propName]) {
-  //         this.hasDataChanged = true;
-  //         return;
-  //       } else {
-  //         this.hasDataChanged = false;
-  //       }
-  //     }
-  //   },
-  //   handlePhotoUpload() {
-  //     this.photo = this.$refs.photo.files[0];
-  //     this.disableSubmit = false;
-  //     let data = {
-  //       file: this.photo,
-  //       userId: localStorage.getItem("id"),
-  //       type: "USER-PHOTO",
-  //       language: "PL"
-  //     };
-  //     this.$store.dispatch("submitPhoto", data);
-  //   },
-  //   phoneValidation(value) {
-  //     const regex = new RegExp("^(?=.*[0-9])[- +()0-9]+$");
-  //     this.invalidPhone = regex.test(value.target.value) ? false : true;
-  //     this.checkFormFields();
-  //   },
-  //   dateValidation(value) {
-  //     const day = parseInt(value.slice(0, 2)),
-  //       month = parseInt(value.slice(3, 5));
-
-  //     this.invalidDate = day > 31 || month > 12 ? true : false;
-  //     this.disableSaveBtn = day > 31 || month > 12 ? true : false;
-
-  //     this.checkFormFields();
-  //   },
-  //   checkFormFields() {
-  //     if (
-  //       this.invalidPhone ||
-  //       this.invalidDate ||
-  //       this.$v.userData.Email.$invalid
-  //     ) {
-  //       this.disableSaveBtn = true;
-  //     } else {
-  //       this.checkIfDataChanged();
-  //       this.disableSaveBtn = this.hasDataChanged === true ? false : true;
-  //     }
-  //   },
-  //   generateCV() {},
-  //   addNewPositionForUser() {
-  //     const userPos = this.userPositions;
-  //     userPos.push(this.newPosition);
-  //     this.$store.commit("SET_USER_JOB_POS", userPos);
-  //   },
-  //   removeUserPosition(position) {
-  //     const userPos = this.userPositions;
-  //     for (let i = 0; userPos.length; i++) {
-  //       if (userPos[i] == position) {
-  //         userPos.splice(i, 1);
-  //         this.$store.commit("SET_USER_JOB_POS", userPos);
-  //         return;
-  //       }
-  //     }
-  //   },
-  //   // get data for selected language
-  //   getNewData() {
-  //     this.$store.dispatch('setLanguage', this.selectedCvLang);
-  //     let cvLang = this.selectedCvLang.toUpperCase();
-  //     localStorage.setItem("lang", this.selectedCvLang.toUpperCase());
-  //     if (!cvLang) {
-  //       let cvLang = loginLanguage.toUpperCase();
-  //     }
-  //     this.$store.commit("SET_SELECTED_FOR_CV_USER", this.selectedUser);
-  //     let userData = {
-  //       user: this.selectedUser,
-  //       lang: cvLang,
-  //       cvLang: cvLang,
-  //       changePage: false
-  //     };
-  //     this.$store.commit("SET_PROMISE_TO_READ", this.$store.getters.getProfileToRead);
-  //     this.$store.dispatch('getData', userData);
-  //     this.$store.commit("SET_WORK_TIME");
-      
-  //   },
-  //   onHover() {
-  //     let mainEdits = document.querySelectorAll(".profile-main-edit");
-  //     for (let i = 0; i < mainEdits.length; i++) {
-  //       mainEdits[i].style.boxShadow = "0 0 20px orange";
-  //     }
-  //   },
-  //   onHoverOut() {
-  //     let mainEdits = document.querySelectorAll(".profile-main-edit");
-  //     for (let i = 0; i < mainEdits.length; i++) {
-  //       mainEdits[i].style.boxShadow = "0 0 10px grey";
-  //     }
-  //   },
-  //   setUserCity: function (addressData, placeResultData, id) {
-  //     this.userData.City = addressData.locality;
-  //   }
-  //   // leavePage() {
-  //   //     if (this._beforeEditingProjects){
-  //   //         this.$store.commit('SET_EXP_LIST', this._beforeEditingProjects)
-  //   //     }
-  //   //     if (this._beforeEditingCache) {
-  //   //         Object.assign(this.userData, this._beforeEditingCache)
-  //   //     }
-  //   //     this.$router.push({name: this.routeToGo})
-  //   // }
-  // }
 };
 </script>
 
