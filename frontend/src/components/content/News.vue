@@ -34,7 +34,7 @@
                                 <div class="advBtns" >
                                     <button class="clear-btn" :disabled="loginAlias !== advert.CreatedBy" @click="editAdvert(advert)">{{ $t("button.edit") }}</button>
                                     <button class="clear-btn" @click="saveAdvert(advert)" :disabled="!isAdvertValid">{{ $t("button.save") }}</button>
-                                    <button class="clear-btn" @click="cancelEditing(index)">{{ $t("button.cancel") }}</button>
+                                    <button class="clear-btn" @click="cancelEditing(index)" :disabled="!editMode">{{ $t("button.cancel") }}</button>
                                     <button class="oclear-btn" v-if="editMode" @click="removeAdvert(advert.AdvertId)">X</button>
                                 </div>
                                 <button v-show="isMoreThanOneAdvert" @click="nextSlide(-1)" class="advLeft">&#8249;</button>
