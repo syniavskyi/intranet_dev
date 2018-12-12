@@ -3,11 +3,10 @@
     <div class="profile-nav-and-content">
       <app-menu v-show="displayMenu"></app-menu>
       <div class="modal-overlay" v-show="displayOverlay"></div>
-      <!-- <leave-page-dialog v-if="showLeavePageDialog" @action-selected="leavePage" @close="showLeavePageDialog = false"></leave-page-dialog> -->
+      <leave-page-dialog v-if="showLeavePageDialog"></leave-page-dialog>
       <div class="profile-content">
         <div class="profile-header">
           <div class="profile-header-title-and-menu">
-          <!-- <img src="../../assets/images/nav/if_menu-32.png" width="32px" class="profile-header-menu"> -->
             <div @click="showMenu" class="content-header-menu">&#9776;</div>
             <p class="profile-header-title">{{ $t("header.profile") }}</p>
           </div>
@@ -75,8 +74,8 @@
                           <label class="prof-ainput-lbl">{{ $t("label.postalCode") }}</label>
                         </div>
                       </div>
-                      <p v-if="!editMode" disabled class="inputProfile inputDisabled">{{formatAddress}}</p>
-                      <!-- <label class="label-profile">{{ $t("label.address") }}</label> -->
+                      <input v-if="!editMode" :value="formatAddress" disabled class="inputProfile inputDisabled">
+                      <label v-if="!editMode" class="label-profile">{{ $t("label.address") }}</label>
                     </div>
                     <div class="prof-input">
                       <!-- <input required class="inputProfile" @input="checkFormFields" :class="editMode ? 'inputEdit' : 'inputDisabled'" :disabled="!editMode" v-model="userData.email" @blur="$v.userData.email.$touch()"> -->
@@ -286,7 +285,6 @@ export default {
       invalidPhone: false,
       invalidDate: false,
       disableSaveBtn: true,
-      showLeavePageDialog: false,
       routeToGo: null,
       newPosition: null,
       selectedCvLang: i18n.locale,
@@ -305,7 +303,6 @@ export default {
     }
   },
   mounted() {
-    
   //   const sUserId = localStorage.getItem("id"),
   //               sLanguage = 'PL',
   //               sFileType = "USER-PHOTO",
@@ -330,7 +327,20 @@ export default {
     }
     this.$store.commit("SET_LANG", lang);
     this.$store.commit("SET_SELECTED_FOR_CV_USER", localStorage.getItem("id"));
-    next();
+
+    if (this.editMode && this.hasDataChanged) {
+      this.$store.commit('SET_LEAVE_PAGE_DIALOG', true)
+      if (this.leavePageFlag !== null) {
+        if (this.leavePageFlag === false) {
+          return
+        } else {
+          next()
+        }
+      }      
+    } else {
+      next()
+    }
+    // next();
   },  
   created() {
     this.$store.commit('SET_DISABLED_BTN_TO_EDIT', false);
@@ -361,8 +371,8 @@ export default {
     "modal": Modal
   },
 
-  computed: Object.assign(
-    mapGetters({
+  computed: {
+    ...mapGetters({
       userData: "getUserInfo",
       saveChangesSuccess: "getSaveChangesSuccess",
       photoUploadError: "getSavePhotoError",
@@ -375,9 +385,11 @@ export default {
       usersList: "usersList",
       userPhoto: "getUserPhotoUrl",
       loginAlias: "getLoginAlias",
-      disabledBtnToEdit: "getDisabledBtnToEdit"
-    }), {
-      formatAddress() {
+      disabledBtnToEdit: "getDisabledBtnToEdit",
+      showLeavePageDialog: "getLeavePageDialog",
+      leavePageFlag: "getLeavePageFlag"
+    }),
+    formatAddress() {
       const data = this.userData;
       let address = data.Street + " " + data.BuildingNumber;
       if (data.ApartmentNumber) {
@@ -394,22 +406,17 @@ export default {
         : "-";
     },
     setFormatedDate() {
-      let oCalculateDifference = moment.preciseDiff(
-          this.userData.EmploymentDate,
-          new Date(),
-          true
-        ),
-        oFormatedDate;
+      let oCalculateDifference = moment.preciseDiff(this.userData.EmploymentDate, new Date(), true),
+          oFormatedDate;
         // if there is some differences - show work experience
         if(oCalculateDifference){
           oFormatedDate = utils.setWorkExperience(oCalculateDifference);
         }
-          if(oFormatedDate.day.includes('NaN')) {
-            return i18n.t("message.lackOfData");
-            } else {
-            return oFormatedDate.year + oFormatedDate.month + oFormatedDate.day;
-          }
-           
+        if(oFormatedDate.day.includes('NaN')) {
+          return i18n.t("message.lackOfData");
+        } else {
+          return oFormatedDate.year + oFormatedDate.month + oFormatedDate.day;
+        }  
     },
     filteredTeamUsers() {
       let aFilteredUsers = this.usersList,
@@ -420,33 +427,44 @@ export default {
       });
       return aFilteredUsers;
     }
-    }
-  ),
-  watch: {
-      selectedUser(value) {
-        let profileActivityAuth = this.$store.getters.getUserAuth.ZPROF_ATCV;
-        if(profileActivityAuth === '*') {
-          this.$store.commit('SET_DISABLED_BTN_TO_EDIT', false);
-        } else if(profileActivityAuth === 'TEAM' && this.filteredTeamUsers.find(o => o.UserAlias === this.selectedUser)) {
-          this.$store.commit('SET_DISABLED_BTN_TO_EDIT', false);
-        } else if(this.selectedUser === this.loginAlias) {
-         this.$store.commit('SET_DISABLED_BTN_TO_EDIT', false);
-        } else {
-         this.$store.commit('SET_DISABLED_BTN_TO_EDIT', true);
-        }
-        localStorage.setItem('cvUser', this.selectedUser);
-      }
   },
-
-  // beforeRouteLeave (to, from , next) {
-  // this.showLeavePageDialog = true
-  //     this.routeToGo = to.name
+  // beforeRouteLeave(to, from , next) {
+  //   if (this.editMode && this.hasDataChanged) {
+  //     this.$store.commit('SET_LEAVE_PAGE_DIALOG', true)
+  //     if (this.leavePageFlag !== null) {
+  //       if (this.leavePageFlag === false) {
+  //         return
+  //       } else {
+  //         next()
+  //       }
+  //     }      
+  //   } else {
+  //     next()
+  //   }
   // },
-  methods: Object.assign(
-    mapActions({
+  watch: {
+    selectedUser(value) {
+      let profileActivityAuth = this.$store.getters.getUserAuth.ZPROF_ATCV;
+      if(profileActivityAuth === '*') {
+        this.$store.commit('SET_DISABLED_BTN_TO_EDIT', false);
+      } else if(profileActivityAuth === 'TEAM' && this.filteredTeamUsers.find(o => o.UserAlias === this.selectedUser)) {
+        this.$store.commit('SET_DISABLED_BTN_TO_EDIT', false);
+      } else if(this.selectedUser === this.loginAlias) {
+       this.$store.commit('SET_DISABLED_BTN_TO_EDIT', false);
+      } else {
+       this.$store.commit('SET_DISABLED_BTN_TO_EDIT', true);
+      }
+      localStorage.setItem('cvUser', this.selectedUser);
+    },
+    leavePageFlag(newFlag, oldFlag) {
+
+    }
+  },
+  methods: {
+    ...mapActions({
       getUserData: "getUserData",
       getGoFromCv: "getGoFromCv"
-    }), {
+    }),
       showMenu(event) {
       let obj = { window, event };
       this.$store.dispatch("setSideMenu", obj);
@@ -511,7 +529,7 @@ export default {
     },
     dateValidation(value) {
       const day = parseInt(value.slice(0, 2)),
-        month = parseInt(value.slice(3, 5));
+          month = parseInt(value.slice(3, 5));
 
       this.invalidDate = day > 31 || month > 12 ? true : false;
       this.disableSaveBtn = day > 31 || month > 12 ? true : false;
@@ -519,11 +537,7 @@ export default {
       this.checkFormFields();
     },
     checkFormFields() {
-      if (
-        this.invalidPhone ||
-        this.invalidDate ||
-        this.$v.userData.Email.$invalid
-      ) {
+      if (this.invalidPhone || this.invalidDate || this.$v.userData.Email.$invalid) {
         this.disableSaveBtn = true;
       } else {
         this.checkIfDataChanged();
@@ -580,18 +594,19 @@ export default {
     },
     setUserCity: function (addressData, placeResultData, id) {
       this.userData.City = addressData.locality;
+    },
+    leavePage() {
+      let leave = true
+      if (this._beforeEditingProjects){
+        this.$store.commit('SET_EXP_LIST', this._beforeEditingProjects)
+      }
+      if (this._beforeEditingCache) {
+        Object.assign(this.userData, this._beforeEditingCache)
+        return leave
+      }
+      // this.$router.push({name: this.routeToGo})
     }
-    // leavePage() {
-    //     if (this._beforeEditingProjects){
-    //         this.$store.commit('SET_EXP_LIST', this._beforeEditingProjects)
-    //     }
-    //     if (this._beforeEditingCache) {
-    //         Object.assign(this.userData, this._beforeEditingCache)
-    //     }
-    //     this.$router.push({name: this.routeToGo})
-    // }
-    }
-  )
+  }
 };
 </script>
 

@@ -5,6 +5,7 @@
     <loader v-if="showLoader"></loader>
     <router-view/>
     <modal v-show="showModal"/>
+    <warning-dialog></warning-dialog>
   </div>
   <!-- </div> -->
 </template>
@@ -12,14 +13,16 @@
 <script>
 import Menu from './components/Menu.vue'
 import Loader from './components/dialogs/Loader.vue'
-import Modal from './components/dialogs/MessageLogDialog';
+import Modal from './components/dialogs/MessageLogDialog'
+import WarningDialog from './components/dialogs/WarningDialog'
 import { mapGetters } from 'vuex';
 export default {
   name: 'App',
   components: {
     'app-menu': Menu,
     'loader': Loader,
-    'modal': Modal
+    'modal': Modal,
+    'warning-dialog': WarningDialog
   },
   
 
