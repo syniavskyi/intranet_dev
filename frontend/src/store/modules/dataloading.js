@@ -293,7 +293,8 @@ const actions = {
       sLanguage = 'PL',
       sFileType = "USER-PHOTO";
     const url =
-      " http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" +
+      window.location.origin + "/api/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" +
+      // " http://nw5.local.pl:8050/sap/opu/odata/sap/ZGW_INTRANET_SRV/AttachmentMedias(FileId='" +
       sFileType +
       "',Language='" +
       sLanguage +

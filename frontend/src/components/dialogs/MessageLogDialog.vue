@@ -24,17 +24,14 @@
 import { mapGetters, mapActions } from "vuex";
 import i18n from "../../lang/lang";
 export default {
-     name: 'modal',
-    computed: Object.assign(
-    mapGetters({
-      messageLog: "getMessageLog",
-      showModal: "getShowModal"
-    }), {}),
-     methods: Object.assign(
-         mapActions(["closeModal"]), 
-         {
-         close() {
-              this.message.message.showModal = false;
-        }})
+    name: 'modal',
+    computed: {
+      ...mapGetters({
+        messageLog: "getMessageLog",
+        showModal: "getShowModal"})
+    },
+    methods:  { 
+      ...mapActions(["closeModal"])
+    }
 }
 </script>

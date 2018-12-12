@@ -26,7 +26,7 @@ import cv from './modules/cv'
 import toast from './modules/toast'
 import loader from './modules/loader'
 import confirmDialog from './modules/confirmdialog'
-
+import dialogs from './modules/dialogs'
 import files from './modules/files'
 
 import settings from './modules/settings'
@@ -63,6 +63,7 @@ export default new Vuex.Store({
         toast,
         confirmDialog,
         loader,
-        files
+        files,
+        dialogs
     }
 });
