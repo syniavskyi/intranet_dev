@@ -37,7 +37,8 @@
                                 <div class="del-tbody-title">{{ $t("table.delegations.place") }}</div>
                                 <div class="del-tbody-item">
                                     <div class="del-tbody-item-wrap">
-                                        <vue-google-autocomplete types="geocode" required class="delegations-input-cool" placeholder="" id="firstLeavePlace" onfocus="value = ''" v-model="defaultCostsData.firstLeavePlace"></vue-google-autocomplete>
+                                        <input required class="delegations-input-cool" placeholder="" id="firstLeavePlace" v-model="defaultCostsData.firstLeavePlace" v-on:input="checkFormFields()" onfocus="value = ''">
+                                        <!-- <vue-google-autocomplete types="geocode" required class="delegations-input-cool" placeholder="" id="firstLeavePlace" onfocus="value = ''" v-model="defaultCostsData.firstLeavePlace"></vue-google-autocomplete> -->
                                         <span class="del-div-bar"></span>
                                         <!-- <select class="delegations-tselect" @change="checkDelegationTable" v-model="defaultCostsData.firstLeavePlace">
                                             <option v-for="department in departmentList" :key="department.depId" :value="department.depId">{{ department.depName }}</option>
